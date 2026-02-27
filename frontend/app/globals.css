@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-primary: #84A44A;
+  --brand-accent: #F19B13;
+  --brand-highlight: #EAF066;
+  --brand-sand: #E7C275;
+}
+
+body {
+  color: #111;
+  background: #f9fafb;
+}
+
+h1, h2, h3 {
+  font-family: "Clash Display", sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-4 rounded-lg transition-colors;
+  }
+
+  .btn-accent {
+    @apply bg-brand-accent hover:bg-brand-accent/90 text-white font-semibold py-2 px-4 rounded-lg transition-colors;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+  }
+}

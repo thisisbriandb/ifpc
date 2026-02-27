@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ifpc
+    username: ifpc
+    password: ifpc
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
