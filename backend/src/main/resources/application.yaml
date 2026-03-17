@@ -3,9 +3,9 @@ spring:
     name: api
 
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ifpc}
-    username: ${DB_USERNAME:ifpc}
-    password: ${DB_PASSWORD:ifpc}
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:ifpc}
+    username: ${PGUSER:ifpc}
+    password: ${PGPASSWORD:ifpc}
 
   jpa:
     hibernate:
