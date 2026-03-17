@@ -1,14 +1,21 @@
 /** @type {import('next').NextConfig} */
+const SPRING_URL = process.env.SPRING_URL || 'http://localhost:8080';
+const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
+
 const nextConfig = {
   async rewrites() {
     return [
       {
         source: '/api/auth/:path*',
-        destination: 'http://localhost:8080/api/auth/:path*',
+        destination: `${SPRING_URL}/api/auth/:path*`,
+      },
+      {
+        source: '/api/admin/:path*',
+        destination: `${SPRING_URL}/api/admin/:path*`,
       },
       {
         source: '/api/:path*',
-        destination: 'http://localhost:8000/api/:path*',
+        destination: `${FASTAPI_URL}/api/:path*`,
       },
     ];
   },
