@@ -3,11 +3,24 @@ spring:
     name: api
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ifpc
-    username: ifpc
-    password: ifpc
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ifpc}
+    username: ${DB_USERNAME:ifpc}
+    password: ${DB_PASSWORD:ifpc}
 
   jpa:
     hibernate:
       ddl-auto: update
     open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: ${PORT:8080}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration: 86400000
+
+jwt:
+  secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+  expiration: 86400000

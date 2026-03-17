@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FlaskConical, BarChart3, Settings, Home } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { FlaskConical, BarChart3, Settings, Home, LogOut, Shield, ShieldCheck, User } from "lucide-react";
+import { useAuthStore } from "@/lib/store";
+import { useEffect } from "react";
 
 const links = [
   { href: "/", label: "Accueil", icon: Home },
@@ -14,13 +16,34 @@ const links = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, isLoading, checkAuth, logout } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
+
+  const roleMeta: Record<string, { label: string; classes: string; icon: any }> = {
+    ADMIN:  { label: "Admin",  classes: "bg-red-100 text-red-700",           icon: Shield },
+    EXPERT: { label: "Expert", classes: "bg-orange-100 text-orange-700",     icon: ShieldCheck },
+    USER:   { label: "User",   classes: "bg-gray-100 text-gray-600",         icon: User },
+  };
+  const meta = user ? (roleMeta[user.role] ?? roleMeta.USER) : null;
+
+  // Ne pas afficher la sidebar sur la page de connexion
+  if (pathname === '/login') return null;
 
   return (
     <aside className="fixed top-0 left-0 h-screen w-56 bg-white border-r border-gray-200 flex flex-col z-50">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-3 px-5 py-5 border-b border-gray-100">
-        <div className="w-9 h-9 bg-brand-primary rounded-lg flex items-center justify-center flex-shrink-0">
-          <FlaskConical className="w-5 h-5 text-white" />
+        <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center">
+          <FlaskConical className="w-4 h-4 text-brand-primary" />
         </div>
         <div>
           <span className="font-clash font-bold text-lg text-gray-900 leading-none">IFPC</span>
@@ -29,7 +52,7 @@ export default function Sidebar() {
       </Link>
 
       {/* Nav links */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {links.map(({ href, label, icon: Icon }) => {
           const active = pathname === href;
           return (
@@ -48,6 +71,44 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      {/* Bottom: User section */}
+      <div className="px-3 py-4 border-t border-gray-100">
+        {!isLoading && (
+          user ? (
+            <div className="space-y-2">
+              {/* Role badge */}
+              {meta && (
+                <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md w-fit ${meta.classes}`}>
+                  <meta.icon className="w-3.5 h-3.5" />
+                  {meta.label}
+                </div>
+              )}
+              {/* User name + logout */}
+              <div className="flex items-center justify-between">
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-gray-900 truncate">{user.firstName} {user.lastName}</p>
+                  <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  title="Déconnexion"
+                  className="ml-2 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors shrink-0"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="flex items-center justify-center gap-2 w-full bg-brand-primary text-white text-sm font-bold py-2.5 rounded-lg hover:bg-brand-primary/90 transition-colors"
+            >
+              Se connecter
+            </Link>
+          )
+        )}
+      </div>
     </aside>
   );
 }

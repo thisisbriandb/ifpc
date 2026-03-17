@@ -4,6 +4,64 @@ const api = axios.create({
   baseURL: "/api",
 });
 
+api.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
+function saveToken(token: string) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem("token", token);
+  // Ecrire aussi dans un cookie accessible par le middleware Next.js
+  document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
+}
+
+function clearToken() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem("token");
+  document.cookie = "token=; path=/; max-age=0";
+}
+
+// ── Authentification ────────────────────────────────────────────────────────
+
+export async function login(data: any) {
+  const response = await api.post("/auth/login", data);
+  if (response.data?.token) saveToken(response.data.token);
+  return response.data;
+}
+
+export async function register(data: any) {
+  const response = await api.post("/auth/register", data);
+  if (response.data?.token) saveToken(response.data.token);
+  return response.data;
+}
+
+export async function getMe() {
+  const response = await api.get("/auth/me");
+  return response.data;
+}
+
+export function logout() {
+  clearToken();
+}
+
+// ── Admin ───────────────────────────────────────────────────────────────────
+
+export async function getUsers() {
+  const response = await api.get("/admin/users");
+  return response.data;
+}
+
+export async function updateUserRole(userId: number, role: string) {
+  const response = await api.put(`/admin/users/${userId}/role`, { role });
+  return response.data;
+}
+
 // ── Référentiels ────────────────────────────────────────────────────────────
 
 export async function getProduits() {

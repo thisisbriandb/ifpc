@@ -3,19 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --brand-primary: #84A44A;
-  --brand-accent: #F19B13;
-  --brand-highlight: #EAF066;
-  --brand-sand: #E7C275;
+  /* Brand */
+  --color-primary: #5C7A3A ;
+  --color-accent: #8F5622; /* plus sombre */
+  --color-highlight: #BFC97A;
+  --color-secondary: #C4A26B;
+
+  --color-success: #2E7D32;
+--color-warning: #F57C00;
+--color-danger: #C62828;
+--color-info: #1565C0;
+
+  /* Neutrals */
+  --color-bg: #F7F8F5;
+  --color-surface: #FFFFFF;
+  --color-border: #E2E5DC;
+
+  --color-text: #1E1E1E;
+  --color-text-muted: #6B7280;
 }
 
 body {
-  color: #111;
-  background: #f9fafb;
+  /* La police est maintenant gérée par la classe font-sans dans le layout */
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
-h1, h2, h3 {
-  font-family: "Clash Display", sans-serif;
+h1, h2, h3, h4 {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
@@ -26,7 +41,7 @@ h1, h2, h3 {
 
 @layer components {
   .btn-primary {
-    @apply bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-2 px-4 rounded-lg transition-colors;
+    @apply bg-brand-primary  text-white font-semibold py-2 px-4 rounded-lg transition-colors;
   }
 
   .btn-accent {

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
@@ -7,6 +7,7 @@ import csv
 import logging
 import pandas as pd
 import pasto
+from auth import get_optional_user, verify_advanced_access
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("ifpc")
@@ -87,9 +88,13 @@ async def get_clarifications():
 # ── Module 1 : Contrôle de pasteurisation ────────────────────────────────────
 
 @app.post("/api/pasteurisation/evaluer")
-async def evaluer_pasteurisation(request: EvaluateRequest):
+async def evaluer_pasteurisation(
+    request: EvaluateRequest,
+    user: Optional[dict] = Depends(get_optional_user)
+):
     """Évalue un cycle de pasteurisation à partir de données température/temps."""
     try:
+        verify_advanced_access(user, request.t_ref, request.z, request.microorganisme)
         result = pasto.evaluer_pasteurisation(
             temperatures=request.temperatures,
             temps=request.temps,
@@ -120,9 +125,11 @@ async def upload_file(
     procede: Optional[str] = None,
     ph: Optional[float] = None,
     titre_alcool: Optional[float] = None,
+    user: Optional[dict] = Depends(get_optional_user)
 ):
     """Upload un fichier Excel (.xlsx) ou CSV et évalue la pasteurisation."""
     try:
+        verify_advanced_access(user, t_ref, z, microorganisme)
         content = await file.read()
         filename = file.filename or ""
 
@@ -170,9 +177,13 @@ async def upload_file(
 
 
 @app.post("/api/pasteurisation/coller")
-async def paste_data(request: PasteDataRequest):
+async def paste_data(
+    request: PasteDataRequest,
+    user: Optional[dict] = Depends(get_optional_user)
+):
     """Évalue à partir de données collées (copier-coller depuis tableur)."""
     try:
+        verify_advanced_access(user, request.t_ref, request.z, request.microorganisme)
         logger.info("=== /coller reçu ===")
         logger.info(f"product_type={request.product_type}, t_ref={request.t_ref}, z={request.z}")
         logger.info(f"raw_text ({len(request.raw_text)} chars), premières lignes:")

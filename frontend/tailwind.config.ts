@@ -16,9 +16,9 @@ const config: Config = {
           sand: "#E7C275",
         },
       },
-      fontFamily: {
-        clash: ['"Clash Display"', "sans-serif"],
-      },
+     fontFamily: {
+  sans: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif"],
+},
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

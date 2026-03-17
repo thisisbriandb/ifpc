@@ -5,10 +5,10 @@ Application Next.js pour l'évaluation de la pasteurisation avec les couleurs de
 ## Couleurs de marque
 
 ```css
---brand-primary:   #84A44A  /* Vert principal */
---brand-accent:    #F19B13  /* Orange accent */
---brand-highlight: #EAF066  /* Jaune surbrillance */
---brand-sand:      #E7C275  /* Beige sable */
+- `--color-primary`:   #6F8F3D  /* Soft Green */
+- `--color-accent`:    #D8840F  /* Soft Orange */
+- `--color-highlight`: #DCE65A  /* Soft Lime */
+- `--color-secondary`: #D9B56A  /* Soft Sand/Beige */
 ```
 
 ## Installation

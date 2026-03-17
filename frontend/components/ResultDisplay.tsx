@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle, AlertTriangle, XCircle, ShieldAlert } from "lucide-react";
+import { CheckCircle, AlertTriangle, XCircle } from "lucide-react";
 
 interface RisqueData {
   niveau: string;
@@ -22,6 +22,12 @@ interface ResultData {
     produit: string;
     clarification: string | null;
     procede: string | null;
+    ph?: number;
+    titre_alcool?: number;
+  };
+  courbe?: {
+    temps: number[];
+    temperatures: number[];
   };
 }
 
@@ -29,121 +35,147 @@ interface Props {
   result: ResultData;
 }
 
-export default function ResultDisplay({ result }: Props) {
-  const statutConfig: Record<string, { icon: any; bg: string; border: string; text: string }> = {
-    conforme: {
-      icon: CheckCircle,
-      bg: "bg-green-50",
-      border: "border-brand-primary",
-      text: "text-brand-primary",
-    },
-    vigilance: {
-      icon: AlertTriangle,
-      bg: "bg-amber-50",
-      border: "border-brand-accent",
-      text: "text-brand-accent",
-    },
-    insuffisant: {
-      icon: XCircle,
-      bg: "bg-red-50",
-      border: "border-red-500",
-      text: "text-red-600",
-    },
+export function KPICards({ result }: Props) {
+  const statutConfig: Record<string, { icon: any; color: string; bg: string; border: string }> = {
+    conforme: { icon: CheckCircle, color: "text-emerald-600", bg: "bg-emerald-50/80", border: "border-emerald-200" },
+    vigilance: { icon: AlertTriangle, color: "text-amber-600", bg: "bg-amber-50/80", border: "border-amber-200" },
+    insuffisant: { icon: XCircle, color: "text-red-600", bg: "bg-red-50/80", border: "border-red-200" },
   };
 
   const cfg = statutConfig[result.statut] || statutConfig.insuffisant;
-  const Icon = cfg.icon;
+  const StatusIcon = cfg.icon;
+
+  const maxTemp = Math.max(...(result.courbe?.temperatures || [0]));
+  const duree = result.courbe?.temps && result.courbe.temps.length > 0
+    ? Math.max(...result.courbe.temps)
+    : 0;
 
   return (
-    <div className="space-y-4">
-      {/* Diagnostic principal */}
-      <div className={`${cfg.bg} border-2 ${cfg.border} rounded-xl p-6`}>
-        <div className="flex items-start gap-4">
-          <Icon className={`w-8 h-8 ${cfg.text} flex-shrink-0`} />
+    <div className="flex flex-col lg:flex-row gap-6">
+      {/* COMBINED DIAGNOSTIC CARD */}
+      <div className={`flex-1 p-6 md:p-8  shadow-[0_2px_15px_rgba(0,0,0,0.03)] flex flex-col relative overflow-hidden ${cfg.bg} ${cfg.border}`}>
+        {/* Bande de couleur latérale */}
+        <div className="absolute left-0 top-0 bottom-0 w-2" style={{ backgroundColor: result.risque.couleur }}></div>
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pl-4 mb-6">
+          {/* Statut */}
           <div className="flex-1">
-            <h3 className={`text-xl font-bold ${cfg.text} mb-1`}>
-              {result.statut === "conforme" && "Pasteurisation conforme"}
-              {result.statut === "vigilance" && "Vigilance requise"}
-              {result.statut === "insuffisant" && "Pasteurisation insuffisante"}
-            </h3>
-            <p className="text-gray-700">{result.message}</p>
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Verdict du lot</p>
+            <div className="flex items-center gap-3">
+              <StatusIcon className={`w-8 h-8 ${cfg.color}`} />
+              <h2 className={`text-3xl font-extrabold capitalize tracking-tight ${cfg.color}`}>{result.statut}</h2>
+            </div>
+          </div>
+
+          {/* Séparateur */}
+          <div className="hidden md:block w-px h-16 bg-gray-200/50"></div>
+
+          {/* VP */}
+          <div className="flex-1 md:text-center">
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Valeur Pasteurisatrice</p>
+            <div className="flex items-baseline md:justify-center gap-1">
+              <p className="text-4xl font-extrabold tracking-tight text-gray-900">{result.vp.toFixed(2)}</p>
+              <span className="text-sm font-bold text-gray-500">UP</span>
+            </div>
+          </div>
+
+          {/* Séparateur */}
+          <div className="hidden md:block w-px h-16 bg-gray-200/50"></div>
+
+          {/* Risque */}
+          <div className="flex-1 md:text-right">
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Risque</p>
+            <div className="flex items-center md:justify-end gap-2">
+              <p className="text-2xl font-bold capitalize text-gray-900">{result.risque.niveau}</p>
+            </div>
+            <p className="text-[11px] text-gray-400 font-medium">Score calculé : {result.risque.score}</p>
           </div>
         </div>
 
-        {/* VP bar */}
-        <div className="mt-4 bg-white/60 rounded-lg p-4">
-          <div className="flex justify-between text-sm font-medium mb-2">
-            <span>VP obtenue</span>
-            <span className={`${cfg.text} font-bold text-lg`}>{result.vp.toFixed(2)} UP</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
-            <div
-              className="h-3 rounded-full transition-all duration-500"
-              style={{
-                width: `${Math.min((result.vp / result.vp_cible) * 100, 100)}%`,
-                backgroundColor: result.risque.couleur,
-              }}
-            />
-          </div>
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>0</span>
-            <span className="font-medium">Cible : {result.vp_cible} UP</span>
-          </div>
+        {/* Message & Conseil intégrés */}
+        <div className="pl-4 border-t border-gray-200/50 pt-5 mt-auto">
+          <p className="text-[15px] font-medium text-gray-800 leading-relaxed mb-4">{result.message}</p>
+          {result.risque.conseil && (
+            <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/60 border border-gray-200/60 text-sm font-semibold text-gray-800">
+              <span className="uppercase text-[10px] tracking-wider text-gray-500 font-bold">Recommandation :</span>
+              {result.risque.conseil}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Indicateur de risque */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5">
-        <div className="flex items-center gap-3 mb-3">
-          <ShieldAlert className="w-5 h-5 text-gray-500" />
-          <h4 className="font-semibold text-gray-900">Niveau de risque</h4>
-        </div>
-        <div className="flex items-center gap-4">
-          <div
-            className="w-4 h-4 rounded-full flex-shrink-0"
-            style={{ backgroundColor: result.risque.couleur }}
-          />
-          <div>
-            <span className="font-bold capitalize" style={{ color: result.risque.couleur }}>
-              {result.risque.niveau}
-            </span>
-            <p className="text-sm text-gray-600 mt-0.5">{result.risque.conseil}</p>
+      {/* METRICS SECONDAIRES */}
+      <div className="w-full lg:w-72 flex md:flex-row lg:flex-col gap-4">
+        {/* Temp Max */}
+        <div className="bg-white p-6 rounded-2xl border border-brand-primary/30 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex-1 flex flex-col justify-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 rounded-bl-full pointer-events-none"></div>
+          <div className="flex items-center gap-2 mb-3 relative z-10">
+            <span className="w-3 h-3 rounded-full bg-brand-primary shadow-[0_0_8px_rgba(132,164,74,0.5)]"></span>
+            <p className="text-xs text-brand-primary font-bold uppercase tracking-wider">Température Max</p>
+          </div>
+          <div className="flex items-baseline gap-1 relative z-10">
+            <p className="text-4xl font-extrabold tracking-tight text-gray-900">{maxTemp.toFixed(1)}</p>
+            <span className="text-lg font-bold text-brand-primary">°C</span>
           </div>
         </div>
-      </div>
 
-      {/* Paramètres utilisés */}
-      <div className="bg-gray-50 rounded-xl border border-gray-200 p-5">
-        <h4 className="font-semibold text-gray-900 mb-3">Paramètres utilisés</h4>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
-          <div>
-            <span className="text-gray-500">Produit</span>
-            <p className="font-medium">{result.parametres.produit}</p>
-          </div>
-          <div>
-            <span className="text-gray-500">Microorganisme</span>
-            <p className="font-medium">{result.parametres.microorganisme}</p>
-          </div>
-          <div>
-            <span className="text-gray-500">Tref</span>
-            <p className="font-medium">{result.parametres.t_ref} °C</p>
-          </div>
-          <div>
-            <span className="text-gray-500">Z</span>
-            <p className="font-medium">{result.parametres.z} °C</p>
-          </div>
-          {result.parametres.clarification && (
-            <div>
-              <span className="text-gray-500">Clarification</span>
-              <p className="font-medium capitalize">{result.parametres.clarification}</p>
+        {/* Durée */}
+        {duree > 0 && (
+          <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex-1 flex flex-col justify-center relative overflow-hidden">
+            <div className="flex items-center gap-2 mb-3">
+              <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Durée du cycle</p>
             </div>
-          )}
-          {result.parametres.procede && (
-            <div>
-              <span className="text-gray-500">Procédé</span>
-              <p className="font-medium">{result.parametres.procede}</p>
+            <div className="flex items-baseline gap-1">
+              <p className="text-3xl font-extrabold tracking-tight text-gray-900">{duree.toFixed(0)}</p>
+              <span className="text-sm font-bold text-gray-500">min</span>
             </div>
-          )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function ParametersTable({ result }: Props) {
+  return (
+    <div className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+      <div className="p-5 grid grid-cols-2 gap-y-6 gap-x-4">
+        {[
+          { label: "Produit", value: result.parametres.produit },
+          { label: "Microorganisme", value: result.parametres.microorganisme },
+          { label: "Tref", value: `${result.parametres.t_ref} °C` },
+          { label: "Z", value: `${result.parametres.z} °C` },
+          { label: "Clarification", value: result.parametres.clarification },
+          { label: "Procédé", value: result.parametres.procede },
+          { label: "pH", value: result.parametres.ph },
+          { label: "Alcool", value: result.parametres.titre_alcool ? `${result.parametres.titre_alcool}%` : null },
+        ].filter(i => i.value !== null && i.value !== undefined).map((item, idx) => (
+          <div key={idx}>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">{item.label}</p>
+            <p className="text-sm font-medium text-gray-900 capitalize">{item.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function ResultDisplay({ result }: Props) {
+  return (
+    <div className="space-y-6">
+      <KPICards result={result} />
+
+      {/* Bloc Analyse redessiné sans icône, avec une bordure gauche d'indication */}
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex">
+        <div className="w-1.5 shrink-0" style={{ backgroundColor: result.risque.couleur }}></div>
+        <div className="p-5 flex-1">
+          <h4 className="font-bold text-gray-900 mb-2">Analyse du lot</h4>
+          <p className="text-sm text-gray-600 leading-relaxed mb-4">{result.message}</p>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-gray-50 border border-gray-100 text-gray-700">
+            <span className="uppercase text-[10px] tracking-wider text-gray-500">Conseil :</span>
+            {result.risque.conseil}
+          </div>
         </div>
       </div>
     </div>
