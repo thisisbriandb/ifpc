@@ -63,9 +63,6 @@ export default function Sidebar() {
     <aside className="fixed top-0 left-0 h-screen w-60 bg-white border-r border-gray-100 flex flex-col z-50">
       {/* Logo / Branding */}
       <Link href="/" className="flex items-center gap-3 px-5 py-6 border-b border-gray-100 group">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-primary to-brand-primary/70 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-          <Beaker className="w-5 h-5 text-white" />
-        </div>
         <div>
           <span className="font-bold text-lg text-gray-900 leading-none tracking-tight">IFPC</span>
           <span className="text-[10px] block text-gray-400 leading-tight font-medium">Outils filière cidricole</span>
