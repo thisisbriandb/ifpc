@@ -12,6 +12,10 @@ import {
   AlertCircle,
   CheckCircle2,
   AlertTriangle,
+  Thermometer,
+  Shield,
+  Users,
+  Settings,
 } from "lucide-react";
 
 interface RecentActivity {
@@ -30,11 +34,63 @@ const STATUS_META: Record<string, { icon: any; badge: string; label: string }> =
   insuffisant: { icon: AlertCircle, badge: "bg-red-100 text-red-700", label: "Insuffisant" },
 };
 
+interface Module {
+  title: string;
+  description: string;
+  icon: any;
+  color: string;
+  colorBg: string;
+  colorBorder: string;
+  adminOnly?: boolean;
+  children: { href: string; label: string; description: string; icon: any }[];
+}
+
+const modules: Module[] = [
+  {
+    title: "Pasteurisation",
+    description: "Outils de contrôle et d'aide à la pasteurisation des produits cidricoles",
+    icon: Thermometer,
+    color: "text-brand-primary",
+    colorBg: "bg-brand-primary/10",
+    colorBorder: "hover:border-brand-primary/30",
+    children: [
+      {
+        href: "/controle",
+        label: "Calcul de la VP",
+        description: "Analyser un cycle de pasteurisation et vérifier la conformité",
+        icon: FlaskConical,
+      },
+      {
+        href: "/bareme",
+        label: "Aide au barème",
+        description: "Obtenir un barème température / durée adapté",
+        icon: BarChart3,
+      },
+    ],
+  },
+  {
+    title: "Administration",
+    description: "Gestion des utilisateurs, rôles et configuration des produits",
+    icon: Shield,
+    color: "text-red-600",
+    colorBg: "bg-red-50",
+    colorBorder: "hover:border-red-200",
+    adminOnly: true,
+    children: [
+      {
+        href: "/admin",
+        label: "Panneau d'administration",
+        description: "Utilisateurs, approbations et paramètres produits",
+        icon: Settings,
+      },
+    ],
+  },
+];
+
 export default function Home() {
   const { user } = useAuthStore();
   const [activities, setActivities] = useState<RecentActivity[]>([]);
 
-  // Lire les activités récentes depuis le localStorage
   useEffect(() => {
     try {
       const stored = localStorage.getItem("ifpc_recent_activities");
@@ -44,60 +100,63 @@ export default function Home() {
     }
   }, []);
 
-  const greeting = () => {
-    const h = new Date().getHours();
-    if (h < 12) return "Bonjour";
-    if (h < 18) return "Bon après-midi";
-    return "Bonsoir";
-  };
-
   return (
     <div className="min-h-screen bg-[#F8FAFC] px-8 py-10">
-      <div className="max-w-4xl mx-auto space-y-10">
+      <div className="max-w-5xl mx-auto space-y-10">
 
-        {/* Welcome */}
+        {/* Header */}
         <header>
           <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-            {greeting()} 👋
+            Portail IFPC
           </h1>
           <p className="text-gray-400 mt-1 text-sm">
-            Tableau de bord IFPC · Outils filière cidricole
+            Accédez aux modules de la plateforme d&apos;aide à la décision pour la filière cidricole.
           </p>
         </header>
 
-        {/* Quick Actions */}
-        <section>
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Actions rapides</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link
-              href="/controle"
-              className="group bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-brand-primary/30 transition-all flex items-center gap-5"
-            >
-              <div className="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center shrink-0 group-hover:bg-brand-primary/20 transition-colors">
-                <FlaskConical className="w-6 h-6 text-brand-primary" />
-              </div>
-              <div className="flex-1">
-                <p className="font-bold text-gray-900">Calcul de la VP</p>
-                <p className="text-xs text-gray-400 mt-0.5">Analyser un cycle de pasteurisation</p>
-              </div>
-              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-brand-primary transition-colors" />
-            </Link>
+        {/* Module cards */}
+        <div className="space-y-8">
+          {modules.filter((mod) => !mod.adminOnly || user?.role === "ADMIN").map((mod) => {
+            const ModIcon = mod.icon;
+            return (
+              <section key={mod.title}>
+                {/* Module header */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-9 h-9 rounded-lg ${mod.colorBg} flex items-center justify-center`}>
+                    <ModIcon className={`w-5 h-5 ${mod.color}`} />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900">{mod.title}</h2>
+                    <p className="text-xs text-gray-400">{mod.description}</p>
+                  </div>
+                </div>
 
-            <Link
-              href="/bareme"
-              className="group bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md hover:border-brand-accent/30 transition-all flex items-center gap-5"
-            >
-              <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center shrink-0 group-hover:bg-brand-accent/20 transition-colors">
-                <BarChart3 className="w-6 h-6 text-brand-accent" />
-              </div>
-              <div className="flex-1">
-                <p className="font-bold text-gray-900">Aide au barème</p>
-                <p className="text-xs text-gray-400 mt-0.5">Obtenir un barème température/durée</p>
-              </div>
-              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-brand-accent transition-colors" />
-            </Link>
-          </div>
-        </section>
+                {/* Sub-module cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {mod.children.map((child) => {
+                    const ChildIcon = child.icon;
+                    return (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className={`group bg-white rounded-2xl border border-gray-200 p-5 ${mod.colorBorder} hover:shadow-md transition-all flex items-start gap-4`}
+                      >
+                        <div className={`w-11 h-11 rounded-xl ${mod.colorBg} flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform`}>
+                          <ChildIcon className={`w-5 h-5 ${mod.color}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-bold text-gray-900 group-hover:text-gray-700 transition-colors">{child.label}</p>
+                          <p className="text-xs text-gray-400 mt-1 leading-relaxed">{child.description}</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors mt-1 shrink-0" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
+        </div>
 
         {/* Recent Activities */}
         <section>
@@ -125,13 +184,6 @@ export default function Home() {
               <p className="text-sm text-gray-300 mt-1">
                 Vos analyses de pasteurisation apparaîtront ici.
               </p>
-              <Link
-                href="/controle"
-                className="mt-6 inline-flex items-center gap-2 bg-brand-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-brand-primary/90 transition-colors"
-              >
-                <FlaskConical className="w-4 h-4" />
-                Lancer une analyse
-              </Link>
             </div>
           ) : (
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden divide-y divide-gray-50">
