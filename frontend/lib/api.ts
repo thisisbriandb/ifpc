@@ -62,6 +62,38 @@ export async function updateUserRole(userId: number, role: string) {
   return response.data;
 }
 
+export async function getPendingUsers() {
+  const response = await api.get("/admin/pending");
+  return response.data;
+}
+
+export async function approveUser(userId: number) {
+  const response = await api.put(`/admin/users/${userId}/approve`);
+  return response.data;
+}
+
+export async function rejectUser(userId: number) {
+  const response = await api.delete(`/admin/users/${userId}/reject`);
+  return response.data;
+}
+
+// ── Product Config (Admin) ──────────────────────────────────────────────────
+
+export async function getProductConfig() {
+  const response = await api.get("/config/products");
+  return response.data;
+}
+
+export async function getAdminProductConfig() {
+  const response = await api.get("/admin/product-config");
+  return response.data;
+}
+
+export async function updateProductConfig(productType: string, vpCible: number, productName?: string) {
+  const response = await api.put(`/admin/product-config/${productType}`, { vpCible, productName });
+  return response.data;
+}
+
 // ── Référentiels ────────────────────────────────────────────────────────────
 
 export async function getProduits() {

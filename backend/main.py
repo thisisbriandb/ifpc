@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 import io
 import csv
+import re
 import logging
 import pandas as pd
 import pasto
@@ -134,22 +135,16 @@ async def upload_file(
         filename = file.filename or ""
 
         if filename.endswith((".xlsx", ".xls")):
-            df = pd.read_excel(io.BytesIO(content))
-        elif filename.endswith(".csv"):
-            text = content.decode("utf-8", errors="replace")
-            # Détection automatique du séparateur
-            sep = ";" if ";" in text.split("\n")[0] else ","
-            df = pd.read_csv(io.StringIO(text), sep=sep)
+            df = _read_excel_robust(content, filename)
+        elif filename.endswith(".csv") or filename.endswith(".txt") or filename.endswith(".tsv"):
+            df = _read_csv_robust(content)
         else:
             raise HTTPException(
                 status_code=400,
-                detail="Format non supporté. Utilisez .xlsx, .xls ou .csv",
+                detail="Format non supporté. Utilisez .xlsx, .xls, .csv ou .txt",
             )
 
-        temps_col, temp_col = _detect_columns(df)
-
-        temps_list = df[temps_col].astype(float).tolist()
-        temp_list = df[temp_col].astype(float).tolist()
+        temps_list, temp_list = _extract_numeric_columns(df)
 
         result = pasto.evaluer_pasteurisation(
             temperatures=temp_list,
@@ -173,6 +168,7 @@ async def upload_file(
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
+        logger.exception(f"Erreur upload: {e}")
         raise HTTPException(status_code=400, detail=f"Erreur de lecture du fichier : {e}")
 
 
@@ -259,18 +255,123 @@ async def health_check():
 
 # ── Helpers privés ───────────────────────────────────────────────────────────
 
+def _decode_bytes(content: bytes) -> str:
+    """Décode des bytes en essayant plusieurs encodages courants."""
+    for encoding in ["utf-8-sig", "utf-8", "latin-1", "cp1252", "iso-8859-1"]:
+        try:
+            return content.decode(encoding)
+        except (UnicodeDecodeError, ValueError):
+            continue
+    return content.decode("utf-8", errors="replace")
+
+
+def _read_excel_robust(content: bytes, filename: str) -> pd.DataFrame:
+    """Lecture robuste d'un fichier Excel avec gestion d'erreurs détaillée.
+    
+    Gère les fichiers enregistreur (DS1922E, etc.) qui ont des lignes de
+    métadonnées avant le vrai tableau de données. Scanne pour trouver la
+    ligne d'en-tête contenant 'Date/Heure' et 'Température'.
+    """
+    try:
+        df_raw = pd.read_excel(io.BytesIO(content), engine="openpyxl", header=None)
+    except Exception as e1:
+        raise ValueError(
+            f"Impossible de lire le fichier Excel '{filename}'. "
+            f"Vérifiez que le fichier n'est pas corrompu. Détail : {e1}"
+        )
+    if df_raw.empty:
+        raise ValueError("Le fichier Excel est vide.")
+
+    # Scan rows to find the real header containing date+temperature keywords
+    header_row_idx = None
+    for i, row in df_raw.iterrows():
+        row_text = " ".join(str(v).lower() for v in row.values if pd.notna(v))
+        has_date = any(k in row_text for k in ["date", "heure", "hour", "time"])
+        has_temp = any(k in row_text for k in ["temp", "°c", "celsius"])
+        if has_date and has_temp:
+            header_row_idx = i
+            logger.info(f"En-tête données trouvé à la ligne {i}: {list(row.values)}")
+            break
+
+    if header_row_idx is not None:
+        # Re-read with the correct header row
+        df = pd.read_excel(
+            io.BytesIO(content), engine="openpyxl",
+            header=header_row_idx,
+        )
+        # Drop any rows that are all NaN
+        df = df.dropna(how="all")
+        logger.info(f"Excel relu avec en-tête ligne {header_row_idx}: colonnes={list(df.columns)}, {len(df)} lignes")
+        return df
+
+    # Fallback: try standard read with first row as header
+    try:
+        df = pd.read_excel(io.BytesIO(content), engine="openpyxl")
+    except Exception:
+        df = df_raw
+        df.columns = [f"col_{i}" for i in range(len(df.columns))]
+
+    if df.empty:
+        raise ValueError("Le fichier Excel est vide.")
+    logger.info(f"Excel standard: colonnes={list(df.columns)}, {len(df)} lignes")
+    return df
+
+
+def _read_csv_robust(content: bytes) -> pd.DataFrame:
+    """Lecture robuste d'un fichier CSV avec détection d'encodage et séparateur."""
+    text = _decode_bytes(content)
+    first_line = text.split("\n")[0] if text else ""
+    if "\t" in first_line:
+        sep = "\t"
+    elif ";" in first_line:
+        sep = ";"
+    else:
+        sep = ","
+    try:
+        df = pd.read_csv(io.StringIO(text), sep=sep, engine="python", on_bad_lines="skip")
+    except Exception:
+        df = pd.read_csv(io.StringIO(text), sep=sep, header=None, engine="python", on_bad_lines="skip")
+    if df.empty:
+        raise ValueError("Le fichier CSV est vide ou illisible.")
+    return df
+
+
+def _clean_numeric(val) -> Optional[float]:
+    """Convertit une valeur en float, en gérant virgules décimales, espaces, unités."""
+    if isinstance(val, (int, float)):
+        if pd.isna(val):
+            return None
+        return float(val)
+    if not isinstance(val, str):
+        return None
+    s = str(val).strip().strip('"').strip()
+    s = re.sub(r'[°CcFf\s]+$', '', s).strip()
+    s = s.replace(" ", "")
+    s = s.replace(",", ".")
+    try:
+        return float(s)
+    except (ValueError, TypeError):
+        return None
+
+
 def _detect_columns(df: pd.DataFrame):
     """Détecte automatiquement les colonnes temps et température."""
-    cols_lower = {c: c.lower().strip() for c in df.columns}
+    cols_lower = {c: str(c).lower().strip() for c in df.columns}
 
     temps_col = None
     temp_col = None
 
+    TIME_KEYWORDS = ["temps", "time", "minute", "min", "sec", "durée", "duree",
+                     "dur\xe9e", "dur e", "heure", "hour", "date"]
+    TEMP_KEYWORDS = ["temp", "°c", "degre", "degree", "celsius", "temperature",
+                     "température", "temp\xe9rature"]
+
     for orig, low in cols_lower.items():
-        if any(k in low for k in ["temps", "time", "minute", "min", "sec", "durée", "duree"]):
+        if any(k in low for k in TIME_KEYWORDS):
             temps_col = orig
-        if any(k in low for k in ["temp", "°c", "degre", "degree", "celsius"]):
-            temp_col = orig
+        if any(k in low for k in TEMP_KEYWORDS):
+            if temp_col is None:
+                temp_col = orig
 
     # Fallback : première colonne = temps, deuxième = température
     if temps_col is None and temp_col is None and len(df.columns) >= 2:
@@ -285,6 +386,81 @@ def _detect_columns(df: pd.DataFrame):
     return temps_col, temp_col
 
 
+def _extract_numeric_columns(df: pd.DataFrame):
+    """Extrait deux listes numériques (temps, température) d'un DataFrame.
+    
+    Gère le cas où la colonne temps contient des datetime/Timestamp :
+    les convertit automatiquement en minutes écoulées depuis le premier point.
+    """
+    from datetime import datetime as _dt
+    temps_col, temp_col = _detect_columns(df)
+    logger.info(f"Colonnes détectées: temps='{temps_col}', temp='{temp_col}'")
+
+    # Check if time column contains datetime objects
+    time_is_datetime = False
+    for val in df[temps_col].dropna().head(5):
+        if isinstance(val, (_dt, pd.Timestamp)):
+            time_is_datetime = True
+            break
+
+    if time_is_datetime:
+        logger.info("Colonne temps contient des dates/heures → conversion en minutes écoulées")
+        datetime_rows = []
+        skipped = 0
+        for idx, row in df.iterrows():
+            t_raw = row[temps_col]
+            temp_val = _clean_numeric(row[temp_col])
+            if temp_val is None:
+                skipped += 1
+                continue
+            if isinstance(t_raw, (_dt, pd.Timestamp)):
+                datetime_rows.append((t_raw, temp_val))
+            elif isinstance(t_raw, str):
+                try:
+                    dt_parsed = _parse_french_datetime(t_raw)
+                    datetime_rows.append((dt_parsed, temp_val))
+                except ValueError:
+                    skipped += 1
+            else:
+                skipped += 1
+
+        if skipped > 0:
+            logger.info(f"{skipped} ligne(s) ignorée(s)")
+        if len(datetime_rows) < 2:
+            raise ValueError(
+                f"Pas assez de données exploitables ({len(datetime_rows)} point(s)). "
+                f"Vérifiez les colonnes temps='{temps_col}' et température='{temp_col}'."
+            )
+        return _datetime_rows_to_minutes(datetime_rows)
+
+    # Standard numeric columns
+    temps_list = []
+    temp_list = []
+    skipped = 0
+
+    for idx, row in df.iterrows():
+        t_val = _clean_numeric(row[temps_col])
+        temp_val = _clean_numeric(row[temp_col])
+        if t_val is not None and temp_val is not None:
+            temps_list.append(t_val)
+            temp_list.append(temp_val)
+        else:
+            skipped += 1
+
+    if skipped > 0:
+        logger.info(f"{skipped} ligne(s) ignorée(s) (non numériques ou en-tête)")
+
+    if len(temps_list) < 2:
+        raise ValueError(
+            f"Pas assez de données numériques exploitables (seulement {len(temps_list)} point(s) trouvé(s)). "
+            f"Colonnes détectées : temps='{temps_col}', température='{temp_col}'. "
+            f"Vérifiez que votre fichier contient au moins 2 lignes de données avec "
+            f"des valeurs numériques dans ces colonnes."
+        )
+
+    return temps_list, temp_list
+
+
 def _parse_pasted_text(raw_text: str):
     """Parse du texte collé en listes temps (minutes) / température (°C).
 
@@ -294,9 +470,19 @@ def _parse_pasted_text(raw_text: str):
       "Date / Heure" + "Température (°C)", dates françaises, champs CSV entre
       guillemets.
     """
+    # Nettoyer les caractères problématiques d'encodage
+    raw_text = raw_text.replace('\ufffd', '').replace('\x00', '')
+
     lines = [l.strip() for l in raw_text.strip().split("\n") if l.strip()]
     if len(lines) < 2:
-        raise ValueError("Il faut au moins 2 lignes de données")
+        raise ValueError(
+            "Il faut au moins 2 lignes de données.\n"
+            "Format attendu :\n"
+            "  Temps (min)    Température (°C)\n"
+            "  0              20\n"
+            "  1              45\n"
+            "  2              68"
+        )
 
     # ── 1. Tentative format enregistreur (CSV avec dates) ──────────────
     datetime_rows = _try_parse_logger_format(lines)
@@ -310,29 +496,40 @@ def _parse_pasted_text(raw_text: str):
     # ── 2. Fallback : format simple deux colonnes numériques ───────────
     temps_list: list[float] = []
     temp_list: list[float] = []
+    skipped_lines: list[str] = []
 
     for line in lines:
-        # Retirer les guillemets éventuels
-        line = line.replace('"', '')
-        # Essayer tab, puis ;, puis ,
-        for sep in ["\t", ";", ","]:
-            parts = line.split(sep)
+        line_clean = line.replace('"', '').strip()
+        # Détecter le séparateur
+        for sep in ["\t", ";", ",", r"\s{2,}"]:
+            if sep == r"\s{2,}":
+                parts = re.split(r'\s{2,}', line_clean)
+            else:
+                parts = line_clean.split(sep)
             if len(parts) >= 2:
                 break
         if len(parts) < 2:
-            continue
-        try:
-            t = float(parts[0].replace(",", ".").strip())
-            temp = float(parts[1].replace(",", ".").strip())
-            temps_list.append(t)
-            temp_list.append(temp)
-        except ValueError:
+            skipped_lines.append(line_clean)
             continue
 
+        t_val = _clean_numeric(parts[0])
+        temp_val = _clean_numeric(parts[1])
+        if t_val is not None and temp_val is not None:
+            temps_list.append(t_val)
+            temp_list.append(temp_val)
+        else:
+            skipped_lines.append(line_clean)
+
     if len(temps_list) < 2:
+        hint = ""
+        if skipped_lines:
+            hint = f"\nLignes ignorées (non numériques) : {skipped_lines[:3]}"
         raise ValueError(
-            "Pas assez de données numériques. "
-            "Format attendu : temps<tab>température  ou  export enregistreur CSV."
+            f"Pas assez de données numériques (seulement {len(temps_list)} point(s) trouvé(s)).\n"
+            f"Format attendu : deux colonnes séparées par tabulation, point-virgule ou virgule :\n"
+            f"  Temps (min)    Température (°C)\n"
+            f"  0              20\n"
+            f"  1              45{hint}"
         )
 
     return temps_list, temp_list
@@ -364,9 +561,13 @@ def _parse_french_datetime(s: str):
 
     # Formats courants des enregistreurs
     # "25/sept/2025 15:06:01"  ou  "25/09/2025 15:06:01"  ou  "2025-09-25 15:06:01"
+    # "9/24/25 11:01" (US short M/D/YY)
     # Essai format numérique standard
     for fmt in ("%d/%m/%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%d/%m/%Y %H:%M",
-                "%Y-%m-%dT%H:%M:%S", "%d-%m-%Y %H:%M:%S"):
+                "%Y-%m-%dT%H:%M:%S", "%d-%m-%Y %H:%M:%S",
+                "%m/%d/%y %H:%M", "%m/%d/%y %H:%M:%S",
+                "%m/%d/%Y %H:%M", "%m/%d/%Y %H:%M:%S",
+                "%Y/%m/%d %H:%M", "%Y/%m/%d %H:%M:%S"):
         try:
             return dt.strptime(s, fmt)
         except ValueError:
@@ -406,13 +607,26 @@ def _try_parse_logger_format(lines: list[str]):
     date_col = None
     temp_col = None
 
+    # Detect separator used in the data
+    _sep = ','
+    for line in lines[:5]:
+        if '\t' in line:
+            _sep = '\t'
+            break
+        elif ';' in line:
+            _sep = ';'
+            break
+
     for i, line in enumerate(lines):
         low = line.lower().replace('"', '').strip()
         # Chercher une ligne qui contient à la fois date/heure ET température
         if ("date" in low or "heure" in low) and ("temp" in low or "°c" in low):
-            # Parser cette ligne comme en-tête CSV
-            reader = _csv.reader([line])
-            headers = next(reader)
+            # Parser cette ligne comme en-tête
+            if _sep == '\t':
+                headers = [h.strip() for h in line.split('\t')]
+            else:
+                reader = _csv.reader([line], delimiter=_sep)
+                headers = next(reader)
             for j, h in enumerate(headers):
                 h_low = h.lower().strip()
                 if "date" in h_low or "heure" in h_low:
@@ -430,11 +644,14 @@ def _try_parse_logger_format(lines: list[str]):
     for line in lines[header_idx + 1:]:
         if not line.strip() or line.strip() == '""':
             continue
-        reader = _csv.reader([line])
-        try:
-            parts = next(reader)
-        except StopIteration:
-            continue
+        if _sep == '\t':
+            parts = [p.strip() for p in line.split('\t')]
+        else:
+            reader = _csv.reader([line], delimiter=_sep)
+            try:
+                parts = next(reader)
+            except StopIteration:
+                continue
         if len(parts) <= max(date_col, temp_col):
             continue
         try:

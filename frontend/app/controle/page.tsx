@@ -1,17 +1,13 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle } from "lucide-react";
+import { useState, useCallback, useEffect } from "react";
+import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle, Plus, Trash2, HelpCircle, LogOut, User as UserIcon, Shield } from "lucide-react";
 import ProductSelector from "@/components/ProductSelector";
-// Assure-toi d'exporter KPICards depuis ResultDisplay ou de l'importer correctement
 import { KPICards } from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
-import { uploadFile, collerDonnees } from "@/lib/api";
+import { uploadFile, collerDonnees, getProductConfig } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
-import { useEffect } from "react";
 import AuthModal from "@/components/AuthModal";
-import AdminPanel from "@/components/AdminPanel";
-import { LogOut, User as UserIcon, Shield } from "lucide-react";
 
 type InputMode = "upload" | "paste" | "manual";
 
@@ -63,16 +59,51 @@ export default function ControlePage() {
   const [ph, setPh] = useState("");
   const [titreAlcool, setTitreAlcool] = useState("");
 
+  const [vpCibleConfig, setVpCibleConfig] = useState<Record<string, number>>({});
+  const [showHelp, setShowHelp] = useState(false);
+
   const [file, setFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [pasteText, setPasteText] = useState("");
   const [manualData, setManualData] = useState("0\t20\n1\t35\n2\t50\n3\t60\n4\t68\n5\t72\n6\t72\n7\t72\n8\t65\n9\t50\n10\t30");
+  const [manualRows, setManualRows] = useState<{temps: string; temp: string}[]>([
+    {temps: "0", temp: "20"}, {temps: "1", temp: "35"}, {temps: "2", temp: "50"},
+    {temps: "3", temp: "60"}, {temps: "4", temp: "68"}, {temps: "5", temp: "72"},
+    {temps: "6", temp: "72"}, {temps: "7", temp: "72"}, {temps: "8", temp: "65"},
+    {temps: "9", temp: "50"}, {temps: "10", temp: "30"},
+  ]);
+
+  // Sync manualData from grid rows
+  const syncManualData = useCallback((rows: {temps: string; temp: string}[]) => {
+    setManualData(rows.map(r => `${r.temps}\t${r.temp}`).join("\n"));
+  }, []);
+
+  const addRow = () => {
+    const lastRow = manualRows[manualRows.length - 1];
+    const nextTime = lastRow ? String(parseFloat(lastRow.temps || "0") + 1) : "0";
+    const newRows = [...manualRows, { temps: nextTime, temp: "" }];
+    setManualRows(newRows);
+    syncManualData(newRows);
+  };
+
+  const removeRow = (idx: number) => {
+    if (manualRows.length <= 2) return;
+    const newRows = manualRows.filter((_, i) => i !== idx);
+    setManualRows(newRows);
+    syncManualData(newRows);
+  };
+
+  const updateRow = (idx: number, field: "temps" | "temp", value: string) => {
+    const newRows = [...manualRows];
+    newRows[idx] = { ...newRows[idx], [field]: value };
+    setManualRows(newRows);
+    syncManualData(newRows);
+  };
 
   // --- STATES UI (Nouveaux) ---
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isRawDataDrawerOpen, setIsRawDataDrawerOpen] = useState(false); // État pour le Pop-up des données brutes
+  const [isRawDataDrawerOpen, setIsRawDataDrawerOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
 
   // --- AUTH ---
   const { user, isLoading, checkAuth, logout } = useAuthStore();
@@ -80,6 +111,17 @@ export default function ControlePage() {
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  // Fetch admin VP cible config
+  useEffect(() => {
+    getProductConfig()
+      .then((data: { productType: string; vpCible: number }[]) => {
+        const map: Record<string, number> = {};
+        data.forEach(c => { map[c.productType] = c.vpCible; });
+        setVpCibleConfig(map);
+      })
+      .catch(() => {});
+  }, []);
 
   // --- LOGIQUE (inchangée) ---
   const buildParams = useCallback(() => {
@@ -93,8 +135,12 @@ export default function ControlePage() {
     if (zValue) params.z = parseFloat(zValue);
     if (ph) params.ph = parseFloat(ph);
     if (titreAlcool) params.titre_alcool = parseFloat(titreAlcool);
+    // Auto-apply VP cible from admin config
+    if (vpCibleConfig[productType]) {
+      params.vp_cible = vpCibleConfig[productType];
+    }
     return params;
-  }, [productType, microorganisme, clarification, procede, tRef, zValue, ph, titreAlcool]);
+  }, [productType, microorganisme, clarification, procede, tRef, zValue, ph, titreAlcool, vpCibleConfig]);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -172,8 +218,7 @@ export default function ControlePage() {
               user ? (
                 <div className="flex items-center gap-2">
                   <div 
-                    onClick={() => user.role === 'ADMIN' && setShowAdminPanel(!showAdminPanel)}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs uppercase cursor-pointer transition-transform hover:scale-105 ${
+                    className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs uppercase transition-transform hover:scale-105 ${
                       user.role === 'ADMIN' ? 'bg-red-100 text-red-700 shadow-sm' : 
                       user.role === 'EXPERT' ? 'bg-brand-accent/20 text-brand-accent' : 
                       'bg-brand-primary/10 text-brand-primary'
@@ -182,7 +227,7 @@ export default function ControlePage() {
                   >
                     {user.firstName.charAt(0)}{user.lastName.charAt(0)}
                   </div>
-                  <button onClick={() => { logout(); setShowAdminPanel(false); }} className="p-1.5 text-gray-400 hover:text-red-500 rounded-md transition-colors" title="Déconnexion">
+                  <button onClick={() => logout()} className="p-1.5 text-gray-400 hover:text-red-500 rounded-md transition-colors" title="Déconnexion">
                     <LogOut className="w-4 h-4" />
                   </button>
                 </div>
@@ -240,21 +285,71 @@ export default function ControlePage() {
                       </div>
                       <label className="text-sm text-brand-primary font-bold cursor-pointer hover:underline">
                         Parcourir les fichiers
-                        <input type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
+                        <input type="file" accept=".xlsx,.xls,.csv,.txt,.tsv" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
                       </label>
                       <p className="text-xs text-gray-500 mt-2">ou glissez-déposez ici</p>
+                      <p className="text-[10px] text-gray-400 mt-1">Formats : .xlsx, .xls, .csv, .txt</p>
                     </div>
                   )}
                 </div>
               )}
 
-              {(mode === "paste" || mode === "manual") && (
+              {mode === "paste" && (
                 <textarea
-                  value={mode === "paste" ? pasteText : manualData}
-                  onChange={(e) => mode === "paste" ? setPasteText(e.target.value) : setManualData(e.target.value)}
-                  placeholder={mode === "paste" ? "Temps\tTemp\n0\t20\n1\t45..." : ""}
+                  value={pasteText}
+                  onChange={(e) => setPasteText(e.target.value)}
+                  placeholder={"Temps\tTempérature\n0\t20\n1\t45\n2\t68..."}
                   className="w-full h-48 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none text-xs font-mono resize-none transition-all"
                 />
+              )}
+
+              {mode === "manual" && (
+                <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                  <div className="max-h-52 overflow-y-auto">
+                    <table className="w-full text-xs">
+                      <thead className="sticky top-0 z-10">
+                        <tr className="bg-gray-100 border-b border-gray-200">
+                          <th className="px-3 py-2 text-left font-bold text-gray-600 uppercase tracking-wider text-[10px] w-10">#</th>
+                          <th className="px-3 py-2 text-left font-bold text-gray-600 uppercase tracking-wider text-[10px]">Temps (min)</th>
+                          <th className="px-3 py-2 text-left font-bold text-gray-600 uppercase tracking-wider text-[10px]">Température (°C)</th>
+                          <th className="px-1 py-2 w-8"></th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50">
+                        {manualRows.map((row, idx) => (
+                          <tr key={idx} className="hover:bg-gray-50/50 group">
+                            <td className="px-3 py-1 text-gray-400 font-mono">{idx + 1}</td>
+                            <td className="px-1 py-1">
+                              <input
+                                type="text" inputMode="decimal" value={row.temps}
+                                onChange={(e) => updateRow(idx, "temps", e.target.value)}
+                                className="w-full px-2 py-1 border border-transparent hover:border-gray-200 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded text-xs font-mono outline-none bg-transparent"
+                              />
+                            </td>
+                            <td className="px-1 py-1">
+                              <input
+                                type="text" inputMode="decimal" value={row.temp}
+                                onChange={(e) => updateRow(idx, "temp", e.target.value)}
+                                className="w-full px-2 py-1 border border-transparent hover:border-gray-200 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded text-xs font-mono outline-none bg-transparent"
+                              />
+                            </td>
+                            <td className="px-1 py-1 text-center">
+                              <button onClick={() => removeRow(idx)} className="opacity-0 group-hover:opacity-100 p-0.5 text-gray-400 hover:text-red-500 transition-all" title="Supprimer">
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <button
+                    onClick={addRow}
+                    className="w-full flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-brand-primary hover:bg-brand-primary/5 border-t border-gray-100 transition-colors"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Ajouter une ligne
+                  </button>
+                </div>
               )}
 
               <button
@@ -269,7 +364,11 @@ export default function ControlePage() {
               {error && (
                 <div className="mt-4 bg-red-50 border border-red-100 rounded-xl p-4 text-red-600 text-sm font-medium flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
-                  <p>{error}</p>
+                  <div className="flex-1">
+                    {error.split('\n').map((line, i) => (
+                      <p key={i} className={i > 0 ? "mt-1 text-xs text-red-500" : ""}>{line}</p>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -278,21 +377,16 @@ export default function ControlePage() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Paramètres Produit</h3>
-                <button
-                  onClick={() => {
-                    if (!user || (user.role !== 'EXPERT' && user.role !== 'ADMIN')) {
-                      setIsAuthModalOpen(true);
-                      return;
-                    }
-                    setExpertMode(!expertMode);
-                  }}
-                  className={`text-[10px] font-bold px-2.5 py-1.5 rounded-md transition-colors ${expertMode ? "bg-brand-accent text-white shadow-sm" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
-                >
-                  MODE EXPERT
-                </button>
+                {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
+                  <button
+                    onClick={() => setExpertMode(!expertMode)}
+                    className={`text-[10px] font-bold px-2.5 py-1.5 rounded-md transition-colors ${expertMode ? "bg-brand-accent text-white shadow-sm" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                  >
+                    MODE EXPERT
+                  </button>
+                )}
               </div>
               <ProductSelector
-                // ... (tes props existantes)
                 productType={productType} onProductChange={setProductType}
                 microorganisme={microorganisme} onMicroChange={setMicroorganisme}
                 clarification={clarification} onClarificationChange={setClarification}
@@ -318,18 +412,16 @@ export default function ControlePage() {
 
       {/* --- MAIN CONTENT AREA (Dashboard) --- */}
       <main className="flex-1 overflow-y-auto relative bg-[#F8FAFC]">
-        {showAdminPanel ? (
-          <div className="p-8">
-            <header className="mb-6">
-              <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
-                <Shield className="w-8 h-8 text-red-500" />
-                Espace Administration
-              </h1>
-              <p className="text-gray-500 mt-2">Gérez les rôles et les accès des utilisateurs de la plateforme IFPC.</p>
-            </header>
-            <AdminPanel />
-          </div>
-        ) : result ? (
+        {/* Help button */}
+        <button
+          onClick={() => setShowHelp(true)}
+          className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-500 hover:text-brand-primary hover:border-brand-primary/30 transition-all shadow-sm"
+        >
+          <HelpCircle className="w-4 h-4" />
+          Aide
+        </button>
+
+        {result ? (
           <div className="max-w-7xl mx-auto p-8 space-y-8 animate-in fade-in duration-500">
 
             {/* Nouveau Header Pro */}
@@ -460,6 +552,68 @@ export default function ControlePage() {
 
       {/* MODAL D'AUTHENTIFICATION */}
       {isAuthModalOpen && <AuthModal onClose={() => setIsAuthModalOpen(false)} />}
+
+      {/* HELP MODAL */}
+      {showHelp && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gray-900/30 backdrop-blur-sm" onClick={() => setShowHelp(false)} />
+          <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 max-w-lg w-full mx-4 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+              <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-brand-primary" />
+                Aide &mdash; Calcul de la VP
+              </h3>
+              <button onClick={() => setShowHelp(false)} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="p-6 space-y-4 text-sm text-gray-600 leading-relaxed">
+              <div>
+                <h4 className="font-bold text-gray-900 mb-1">Qu&apos;est-ce que la VP ?</h4>
+                <p>
+                  La <strong>Valeur Pasteurisatrice (VP)</strong> quantifie l&apos;effet l&eacute;tal d&apos;un traitement thermique sur les microorganismes cibles. Elle s&apos;exprime en <strong>UP (Unit&eacute;s de Pasteurisation)</strong> et est calcul&eacute;e par la m&eacute;thode de Bigelow.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 mb-1">Comment utiliser cet outil ?</h4>
+                <ol className="list-decimal list-inside space-y-1 text-gray-500">
+                  <li><strong>Importez vos donn&eacute;es</strong> : fichier Excel/CSV, coll&eacute; ou saisie manuelle</li>
+                  <li><strong>Choisissez le produit</strong> et les param&egrave;tres de pasteurisation</li>
+                  <li><strong>Lancez l&apos;analyse</strong> pour obtenir la VP et le diagnostic</li>
+                </ol>
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 mb-1">Interpr&eacute;tation des r&eacute;sultats</h4>
+                <div className="grid grid-cols-3 gap-2 mt-2">
+                  <div className="flex items-center gap-2 bg-green-50 rounded-lg px-3 py-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
+                    <span className="text-xs font-bold text-green-700">Conforme</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-yellow-50 rounded-lg px-3 py-2">
+                    <AlertTriangle className="w-4 h-4 text-yellow-600 shrink-0" />
+                    <span className="text-xs font-bold text-yellow-700">Vigilance</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-red-50 rounded-lg px-3 py-2">
+                    <X className="w-4 h-4 text-red-500 shrink-0" />
+                    <span className="text-xs font-bold text-red-600">Insuffisant</span>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-3 text-xs text-blue-700">
+                <strong>Mode Expert :</strong> R&eacute;serv&eacute; aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoom&eacute;trique.
+              </div>
+            </div>
+            <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/50">
+              <button
+                onClick={() => setShowHelp(false)}
+                className="w-full py-2.5 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors"
+              >
+                Compris
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

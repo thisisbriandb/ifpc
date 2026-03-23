@@ -14,6 +14,10 @@ const nextConfig = {
         destination: `${SPRING_URL}/api/admin/:path*`,
       },
       {
+        source: '/api/config/:path*',
+        destination: `${SPRING_URL}/api/config/:path*`,
+      },
+      {
         source: '/api/:path*',
         destination: `${FASTAPI_URL}/api/:path*`,
       },

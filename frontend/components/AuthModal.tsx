@@ -13,6 +13,7 @@ export default function AuthModal({ onClose }: Props) {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pendingMessage, setPendingMessage] = useState<string | null>(null);
   
   const checkAuth = useAuthStore((state) => state.checkAuth);
 
@@ -27,11 +28,17 @@ export default function AuthModal({ onClose }: Props) {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setPendingMessage(null);
     try {
+      let response;
       if (isLogin) {
-        await login({ email: formData.email, password: formData.password });
+        response = await login({ email: formData.email, password: formData.password });
       } else {
-        await register(formData);
+        response = await register(formData);
+      }
+      if (response?.pending) {
+        setPendingMessage(response.message || "Votre compte est en attente de validation par un administrateur.");
+        return;
       }
       await checkAuth();
       onClose();
@@ -96,7 +103,13 @@ export default function AuthModal({ onClose }: Props) {
 
           {error && <p className="text-sm font-medium text-red-500 mt-2">{error}</p>}
 
-          <button disabled={loading} type="submit" className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 mt-6">
+          {pendingMessage && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-yellow-800 text-sm font-medium mt-2">
+              {pendingMessage}
+            </div>
+          )}
+
+          <button disabled={loading || !!pendingMessage} type="submit" className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 mt-6">
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {isLogin ? "Se connecter" : "S'inscrire"}
           </button>

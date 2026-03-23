@@ -25,27 +25,40 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER) // Par défaut, rôle USER
+                .role(Role.PENDING)
+                .enabled(false)
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token(null)
+                .message("Inscription enregistrée. Votre compte est en attente de validation par un administrateur.")
+                .pending(true)
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        var user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
+        if (user.getRole() == Role.PENDING || !user.isEnabled()) {
+            return AuthenticationResponse.builder()
+                    .token(null)
+                    .message("Votre compte est en attente de validation par un administrateur.")
+                    .pending(true)
+                    .build();
+        }
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .message(null)
+                .pending(false)
                 .build();
     }
 }

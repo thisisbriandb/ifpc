@@ -147,7 +147,7 @@ export default function ExpertPage() {
               ))}
             </div>
             <p className="text-xs text-gray-400 pt-2 border-t border-gray-100">
-              Pour activer ces paramètres dans l'interface, activez le <strong>MODE EXPERT</strong> dans le panneau de Configuration du lot sur la page Contrôle.
+              Pour activer ces paramètres dans l&apos;interface, activez le <strong>MODE EXPERT</strong> dans le panneau de Configuration du lot sur la page Contrôle.
             </p>
           </div>
         </div>
@@ -255,7 +255,7 @@ export default function ExpertPage() {
         </div>
 
         <p className="text-xs text-gray-400 mt-4 text-center">
-          Les modifications sont appliquées immédiatement. L'utilisateur devra se reconnecter pour que son nouveau rôle prenne effet.
+          Les modifications sont appliquées immédiatement. L&apos;utilisateur devra se reconnecter pour que son nouveau rôle prenne effet.
         </p>
       </div>
     </div>

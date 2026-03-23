@@ -29,6 +29,7 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pendingMessage, setPendingMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState<FormData>({
@@ -57,15 +58,23 @@ export default function LoginPage() {
 
     setLoading(true);
     setError(null);
+    setPendingMessage(null);
 
     try {
+      let response;
       if (isLogin) {
-        await login({
+        response = await login({
           email: form.email,
           password: form.password,
         });
       } else {
-        await register(form);
+        response = await register(form);
+      }
+
+      // Handle pending registration/login
+      if (response?.pending) {
+        setPendingMessage(response.message || "Votre compte est en attente de validation par un administrateur.");
+        return;
       }
 
       await checkAuth();
@@ -104,7 +113,7 @@ export default function LoginPage() {
 
         <div className="relative z-10 space-y-6">
           <h1 className="text-4xl font-extrabold text-white">
-            Plateforme d'aide à la prise de decision
+            Plateforme d&apos;aide à la prise de decision
           </h1>
           <p className="text-white/70 text-lg max-w-sm">
             Optimisez vos processus grâce à des outils avancés          </p>
@@ -187,9 +196,18 @@ export default function LoginPage() {
               <div className="text-red-600 text-sm">{error}</div>
             )}
 
+            {pendingMessage && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-yellow-800 text-sm font-medium flex items-start gap-3">
+                <svg className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                </svg>
+                {pendingMessage}
+              </div>
+            )}
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !!pendingMessage}
               className="w-full bg-brand-primary text-white py-3 rounded-xl flex justify-center items-center gap-2"
             >
               {loading ? (
@@ -208,6 +226,7 @@ export default function LoginPage() {
               onClick={() => {
                 setIsLogin((v) => !v);
                 setError(null);
+                setPendingMessage(null);
               }}
               className="text-brand-primary font-semibold"
             >

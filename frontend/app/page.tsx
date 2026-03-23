@@ -61,7 +61,7 @@ export default function Home() {
             {greeting()} 👋
           </h1>
           <p className="text-gray-400 mt-1 text-sm">
-            Tableau de bord IFPC · Pasteurisation &amp; Colorimétrie
+            Tableau de bord IFPC · Outils filière cidricole
           </p>
         </header>
 
@@ -77,7 +77,7 @@ export default function Home() {
                 <FlaskConical className="w-6 h-6 text-brand-primary" />
               </div>
               <div className="flex-1">
-                <p className="font-bold text-gray-900">Contrôle de lot</p>
+                <p className="font-bold text-gray-900">Calcul de la VP</p>
                 <p className="text-xs text-gray-400 mt-0.5">Analyser un cycle de pasteurisation</p>
               </div>
               <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-brand-primary transition-colors" />
@@ -111,7 +111,7 @@ export default function Home() {
                 }}
                 className="text-xs text-gray-400 hover:text-red-500 transition-colors"
               >
-                Effacer l'historique
+                Effacer l&apos;historique
               </button>
             )}
           </div>
