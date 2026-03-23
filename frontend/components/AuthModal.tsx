@@ -65,59 +65,59 @@ export default function AuthModal({ onClose }: Props) {
             : "Inscrivez-vous pour utiliser les fonctionnalités avancées."}
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {!isLogin && (
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Prénom</label>
+                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Prénom</label>
                 <div className="relative">
-                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input required type="text" value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-primary/20 outline-none transition-all" />
+                  <UserIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input required type="text" value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} className="input pl-10" placeholder="Prénom" />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Nom</label>
+                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Nom</label>
                 <div className="relative">
-                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input required type="text" value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-primary/20 outline-none transition-all" />
+                  <UserIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input required type="text" value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} className="input pl-10" placeholder="Nom" />
                 </div>
               </div>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Email</label>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Email</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-primary/20 outline-none transition-all" />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="input pl-10" placeholder="votre@email.com" />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Mot de passe</label>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Mot de passe</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-primary/20 outline-none transition-all" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="input pl-10" placeholder="••••••••" />
             </div>
           </div>
 
-          {error && <p className="text-sm font-medium text-red-500 mt-2">{error}</p>}
+          {error && <p className="text-sm font-medium text-red-500">{error}</p>}
 
           {pendingMessage && (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-yellow-800 text-sm font-medium mt-2">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3.5 text-yellow-800 text-sm font-medium">
               {pendingMessage}
             </div>
           )}
 
-          <button disabled={loading || !!pendingMessage} type="submit" className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 mt-6">
+          <button disabled={loading || !!pendingMessage} type="submit" className="w-full bg-brand-primary hover:bg-brand-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 mt-2">
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {isLogin ? "Se connecter" : "S'inscrire"}
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-gray-400 mt-6">
           {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}
-          <button type="button" onClick={() => setIsLogin(!isLogin)} className="font-bold text-brand-primary hover:underline ml-1">
+          <button type="button" onClick={() => { setIsLogin(!isLogin); setError(null); setPendingMessage(null); }} className="font-bold text-brand-primary hover:underline ml-1">
             {isLogin ? "S'inscrire" : "Se connecter"}
           </button>
         </p>

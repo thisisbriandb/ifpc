@@ -146,34 +146,40 @@ export default function LoginPage() {
               : "Commencez dès maintenant."}
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {!isLogin && (
               <div className="grid grid-cols-2 gap-4">
                 {(["firstName", "lastName"] as const).map((field) => (
-                  <input
-                    key={field}
-                    required
-                    disabled={loading}
-                    value={form[field]}
-                    onChange={update(field)}
-                    placeholder={field === "firstName" ? "Prénom" : "Nom"}
-                    className="input"
-                  />
+                  <div key={field} className="relative">
+                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input
+                      required
+                      disabled={loading}
+                      value={form[field]}
+                      onChange={update(field)}
+                      placeholder={field === "firstName" ? "Prénom" : "Nom"}
+                      className="input pl-10"
+                    />
+                  </div>
                 ))}
               </div>
             )}
 
-            <input
-              required
-              disabled={loading}
-              type="email"
-              value={form.email}
-              onChange={update("email")}
-              placeholder="Email"
-              className="input"
-            />
+            <div className="relative">
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                required
+                disabled={loading}
+                type="email"
+                value={form.email}
+                onChange={update("email")}
+                placeholder="Email"
+                className="input pl-10"
+              />
+            </div>
 
             <div className="relative">
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 required
                 disabled={loading}
@@ -181,14 +187,14 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={update("password")}
                 placeholder="Mot de passe"
-                className="input pr-10"
+                className="input pl-10 pr-11"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-colors"
               >
-                {showPassword ? <EyeOff /> : <Eye />}
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
 
@@ -208,31 +214,32 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading || !!pendingMessage}
-              className="w-full bg-brand-primary text-white py-3 rounded-xl flex justify-center items-center gap-2"
+              className="w-full bg-brand-primary hover:bg-brand-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl flex justify-center items-center gap-2 transition-all shadow-sm hover:shadow-md"
             >
               {loading ? (
-                <Loader2 className="animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
                 <>
                   {isLogin ? "Connexion" : "Créer un compte"}
-                  <ArrowRight />
+                  <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <p className="mt-8 text-center text-sm text-gray-400">
+            {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}{" "}
             <button
               onClick={() => {
                 setIsLogin((v) => !v);
                 setError(null);
                 setPendingMessage(null);
               }}
-              className="text-brand-primary font-semibold"
+              className="text-brand-primary font-bold hover:underline transition-all"
             >
-              {isLogin ? "Créer un compte" : "Se connecter"}
+              {isLogin ? "S'inscrire" : "Se connecter"}
             </button>
-          </div>
+          </p>
         </div>
       </div>
     </div>

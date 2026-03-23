@@ -7,7 +7,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
   const noSidebar = pathname === "/login";
 
   return (
-    <main className={noSidebar ? "" : "ml-56"}>
+    <main className={noSidebar ? "" : "ml-60"}>
       {children}
     </main>
   );

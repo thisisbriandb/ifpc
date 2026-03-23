@@ -60,9 +60,9 @@ export default function Sidebar() {
   if (pathname === '/login') return null;
 
   return (
-    <aside className="fixed top-0 left-0 h-screen w-56 bg-white border-r border-gray-200 flex flex-col z-50">
+    <aside className="fixed top-0 left-0 h-screen w-60 bg-white border-r border-gray-100 flex flex-col z-50">
       {/* Logo / Branding */}
-      <Link href="/" className="flex items-center gap-3 px-5 py-5 border-b border-gray-100 group">
+      <Link href="/" className="flex items-center gap-3 px-5 py-6 border-b border-gray-100 group">
         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-primary to-brand-primary/70 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
           <Beaker className="w-5 h-5 text-white" />
         </div>
@@ -73,7 +73,7 @@ export default function Sidebar() {
       </Link>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-1">
+      <nav className="flex-1 px-3 py-5 overflow-y-auto space-y-1">
         {/* Standalone links */}
         {standaloneLinks.map(({ href, label, icon: Icon }) => {
           const active = pathname === href;
@@ -81,9 +81,9 @@ export default function Sidebar() {
             <Link
               key={href}
               href={href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 active
-                  ? "bg-brand-primary/10 text-brand-primary"
+                  ? "bg-brand-primary/10 text-brand-primary shadow-sm"
                   : "text-gray-500 hover:text-brand-primary hover:bg-gray-50"
               }`}
             >
@@ -99,7 +99,7 @@ export default function Sidebar() {
           const GroupIcon = group.icon;
           const hasActiveChild = group.children.some((c) => pathname === c.href);
           return (
-            <div key={group.label} className="mt-3">
+            <div key={group.label} className="mt-4">
               <button
                 onClick={() => toggleGroup(group.label)}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-colors ${
@@ -113,16 +113,16 @@ export default function Sidebar() {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "" : "-rotate-90"}`} />
               </button>
               {isOpen && (
-                <div className="mt-1 ml-2 space-y-0.5">
+                <div className="mt-1.5 ml-2 space-y-1">
                   {group.children.map(({ href, label, icon: Icon }) => {
                     const active = pathname === href;
                     return (
                       <Link
                         key={href}
                         href={href}
-                        className={`flex items-center gap-3 pl-4 pr-3 py-2 rounded-lg text-sm font-medium transition-all border-l-2 ${
+                        className={`flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-xl text-sm font-medium transition-all border-l-2 ${
                           active
-                            ? "border-brand-primary bg-brand-primary/10 text-brand-primary"
+                            ? "border-brand-primary bg-brand-primary/10 text-brand-primary shadow-sm"
                             : "border-transparent text-gray-500 hover:text-brand-primary hover:bg-gray-50"
                         }`}
                       >
@@ -139,13 +139,13 @@ export default function Sidebar() {
 
         {/* Admin link */}
         {user?.role === "ADMIN" && (
-          <div className="mt-4 pt-3 border-t border-gray-100">
+          <div className="mt-5 pt-4 border-t border-gray-100">
             <Link
               href="/admin"
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 pathname === "/admin"
-                  ? "bg-red-50 text-red-600"
-                  : "text-red-600 hover:bg-red-50"
+                  ? "bg-red-50 text-red-600 shadow-sm"
+                  : "text-gray-500 hover:text-red-600 hover:bg-red-50"
               }`}
             >
               <Shield className="w-4 h-4 flex-shrink-0" />
@@ -156,25 +156,25 @@ export default function Sidebar() {
       </nav>
 
       {/* Bottom: User section */}
-      <div className="px-3 py-4 border-t border-gray-100">
+      <div className="px-3 py-5 border-t border-gray-100">
         {!isLoading && (
           user ? (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {meta && (
-                <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md w-fit ${meta.classes}`}>
-                  <meta.icon className="w-3.5 h-3.5" />
+                <div className={`flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1.5 rounded-lg w-fit ${meta.classes}`}>
+                  <meta.icon className="w-3 h-3" />
                   {meta.label}
                 </div>
               )}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-gray-900 truncate">{user.firstName} {user.lastName}</p>
-                  <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
+                  <p className="text-sm font-semibold text-gray-900 truncate">{user.firstName} {user.lastName}</p>
+                  <p className="text-[11px] text-gray-400 truncate mt-0.5">{user.email}</p>
                 </div>
                 <button
                   onClick={handleLogout}
                   title="Déconnexion"
-                  className="ml-2 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors shrink-0"
+                  className="ml-1 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -183,7 +183,7 @@ export default function Sidebar() {
           ) : (
             <Link
               href="/login"
-              className="flex items-center justify-center gap-2 w-full bg-brand-primary text-white text-sm font-bold py-2.5 rounded-lg hover:bg-brand-primary/90 transition-colors"
+              className="flex items-center justify-center gap-2 w-full bg-brand-primary text-white text-sm font-bold py-2.5 rounded-xl hover:bg-brand-primary/90 transition-all shadow-sm hover:shadow-md"
             >
               Se connecter
             </Link>
