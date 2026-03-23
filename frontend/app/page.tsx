@@ -15,21 +15,23 @@ interface RecentActivity {
   vpCible?: number;
 }
 
-const STATUS_LABELS: Record<string, { cls: string; label: string }> = {
-  conforme:    { cls: "text-green-600", label: "Conforme" },
-  vigilance:   { cls: "text-orange-600", label: "Vigilance" },
-  insuffisant: { cls: "text-red-600", label: "Insuffisant" },
+const STATUS_BADGE: Record<string, { bg: string; text: string; label: string }> = {
+  conforme:    { bg: "bg-green-50", text: "text-green-700", label: "Conforme" },
+  vigilance:   { bg: "bg-orange-50", text: "text-orange-700", label: "Vigilance" },
+  insuffisant: { bg: "bg-red-50", text: "text-red-700", label: "Insuffisant" },
 };
 
 interface SubModule {
   href: string;
   label: string;
   description: string;
+  tag?: string;
 }
 
 interface ModuleSection {
   title: string;
-  accent: string;
+  description: string;
+  borderColor: string;
   adminOnly?: boolean;
   items: SubModule[];
 }
@@ -37,18 +39,34 @@ interface ModuleSection {
 const modules: ModuleSection[] = [
   {
     title: "Pasteurisation",
-    accent: "brand-primary",
+    description: "Outils de contrôle et d'aide à la pasteurisation des produits cidricoles",
+    borderColor: "border-l-brand-primary",
     items: [
-      { href: "/controle", label: "Calcul de la VP", description: "Analyser un cycle et vérifier la conformité" },
-      { href: "/bareme",   label: "Aide au barème",  description: "Obtenir un barème température / durée" },
+      {
+        href: "/controle",
+        label: "Calcul de la VP",
+        description: "Importez ou saisissez un profil thermique pour évaluer la valeur pasteurisatrice et vérifier la conformité du traitement.",
+        tag: "Analyse",
+      },
+      {
+        href: "/bareme",
+        label: "Aide au barème",
+        description: "Obtenez un couple température / durée adapté à votre produit et à votre procédé de pasteurisation.",
+        tag: "Simulation",
+      },
     ],
   },
   {
     title: "Administration",
-    accent: "red-600",
+    description: "Gestion de la plateforme",
+    borderColor: "border-l-red-400",
     adminOnly: true,
     items: [
-      { href: "/admin", label: "Gestion", description: "Utilisateurs, approbations et paramètres produits" },
+      {
+        href: "/admin",
+        label: "Panneau d'administration",
+        description: "Gérez les utilisateurs, validez les inscriptions en attente et configurez les paramètres produits.",
+      },
     ],
   },
 ];
@@ -66,39 +84,60 @@ export default function Home() {
     }
   }, []);
 
-  return (
-    <div className="min-h-screen bg-[#F8FAFC] px-8 py-12">
-      <div className="max-w-3xl mx-auto">
+  const greeting = () => {
+    const h = new Date().getHours();
+    if (h < 12) return "Bonjour";
+    if (h < 18) return "Bon après-midi";
+    return "Bonsoir";
+  };
 
-        {/* Header */}
-        <header className="mb-12">
-          <h1 className="text-2xl font-bold text-gray-900">Portail IFPC</h1>
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] px-8 py-10">
+      <div className="max-w-4xl mx-auto space-y-10">
+
+        {/* Welcome */}
+        <header>
+          <h1 className="text-2xl font-bold text-gray-900">
+            {greeting()}{user ? `, ${user.firstName}` : ""}
+          </h1>
           <p className="text-gray-400 mt-1 text-sm">
-            Plateforme d&apos;aide à la décision pour la filière cidricole
+            Plateforme d&apos;aide à la décision · Filière cidricole
           </p>
         </header>
 
         {/* Modules */}
-        <div className="space-y-10">
+        <div className="space-y-8">
           {modules
             .filter((mod) => !mod.adminOnly || user?.role === "ADMIN")
             .map((mod) => (
               <section key={mod.title}>
-                <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
-                  {mod.title}
-                </h2>
-                <div className="space-y-2">
+                <div className="mb-3">
+                  <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{mod.title}</h2>
+                  <p className="text-sm text-gray-400 mt-0.5">{mod.description}</p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {mod.items.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="group flex items-center justify-between bg-white rounded-xl border border-gray-200 px-5 py-4 hover:border-gray-300 hover:shadow-sm transition-all"
+                      className={`group bg-white rounded-xl border border-gray-200 border-l-4 ${mod.borderColor} p-5 hover:shadow-md hover:border-gray-300 transition-all flex flex-col justify-between`}
                     >
                       <div>
-                        <p className="font-semibold text-gray-900 text-[15px]">{item.label}</p>
-                        <p className="text-sm text-gray-400 mt-0.5">{item.description}</p>
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="font-bold text-gray-900">{item.label}</p>
+                          {item.tag && (
+                            <span className="text-[11px] font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                              {item.tag}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-400 leading-relaxed">{item.description}</p>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500 group-hover:translate-x-0.5 transition-all shrink-0 ml-4" />
+                      <div className="flex items-center gap-1.5 mt-4 text-sm font-semibold text-brand-primary group-hover:gap-2.5 transition-all">
+                        Accéder
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -107,7 +146,7 @@ export default function Home() {
         </div>
 
         {/* Recent Activities */}
-        <section className="mt-12">
+        <section>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Activités récentes</h2>
             {activities.length > 0 && (
@@ -118,37 +157,43 @@ export default function Home() {
                 }}
                 className="text-xs text-gray-400 hover:text-red-500 transition-colors"
               >
-                Effacer
+                Effacer l&apos;historique
               </button>
             )}
           </div>
 
           {activities.length === 0 ? (
-            <p className="text-sm text-gray-300 py-6 text-center">
-              Aucune activité récente
-            </p>
+            <div className="bg-white rounded-xl border border-dashed border-gray-200 py-10 text-center">
+              <p className="font-medium text-gray-400">Aucune activité récente</p>
+              <p className="text-sm text-gray-300 mt-1">Vos analyses apparaîtront ici.</p>
+            </div>
           ) : (
             <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100 overflow-hidden">
               {activities.map((a) => {
-                const status = a.statut ? STATUS_LABELS[a.statut] : undefined;
+                const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
                 return (
                   <Link
                     key={a.id}
                     href={a.type === "controle" ? "/controle" : "/bareme"}
-                    className="flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/60 transition-colors"
+                    className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/60 transition-colors"
                   >
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">{a.label}</p>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-semibold text-gray-900 truncate">{a.label}</p>
+                        <span className="text-[11px] text-gray-300 font-medium shrink-0">
+                          {a.type === "controle" ? "VP" : "Barème"}
+                        </span>
+                      </div>
                       <p className="text-xs text-gray-400 mt-0.5">
-                        {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}
+                        {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })}
                         {a.vp !== undefined && (
-                          <span className="ml-2 font-mono">· VP {a.vp.toFixed(1)} UP</span>
+                          <span className="ml-2 font-mono text-gray-500">VP {a.vp.toFixed(1)} UP</span>
                         )}
                       </p>
                     </div>
-                    {status && (
-                      <span className={`text-xs font-semibold shrink-0 ml-4 ${status.cls}`}>
-                        {status.label}
+                    {badge && (
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full shrink-0 ml-4 ${badge.bg} ${badge.text}`}>
+                        {badge.label}
                       </span>
                     )}
                   </Link>
