@@ -1,7 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getProduits, getMicroorganismes, getProcedes } from "@/lib/api";
+
+// Fallback data mirroring backend pasto.py definitions
+const FALLBACK_PRODUITS = [
+  { id: "jus_pomme", nom: "Jus de pomme" },
+  { id: "cidre_doux", nom: "Cidre doux" },
+  { id: "cidre_demi_sec", nom: "Cidre demi-sec" },
+  { id: "cidre_brut", nom: "Cidre brut" },
+  { id: "cidre_extra_brut", nom: "Cidre extra-brut" },
+  { id: "jus_poire", nom: "Jus de poire" },
+];
+
+const FALLBACK_PROCEDES = [
+  { id: "flash", nom: "Pasteurisation flash" },
+  { id: "classique", nom: "Pasteurisation classique" },
+  { id: "tunnel", nom: "Tunnel / douchette" },
+];
 
 interface Props {
   productType: string;
@@ -34,15 +50,34 @@ export default function ProductSelector({
   ph, onPhChange,
   titreAlcool, onTitreAlcoolChange,
 }: Props) {
-  const [produits, setProduits] = useState<any[]>([]);
+  const [produits, setProduits] = useState<any[]>(FALLBACK_PRODUITS);
   const [micros, setMicros] = useState<any[]>([]);
-  const [procedes, setProcedes] = useState<any[]>([]);
+  const [procedes, setProcedes] = useState<any[]>(FALLBACK_PROCEDES);
+
+  const fetchWithRetry = useCallback(async (
+    fetcher: () => Promise<any[]>,
+    setter: (data: any[]) => void,
+    retries = 3,
+  ) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const data = await fetcher();
+        if (Array.isArray(data) && data.length > 0) {
+          setter(data);
+          return;
+        }
+      } catch {
+        // wait before retry
+      }
+      if (i < retries - 1) await new Promise(r => setTimeout(r, 2000));
+    }
+  }, []);
 
   useEffect(() => {
-    getProduits().then(setProduits).catch(() => {});
-    getMicroorganismes().then(setMicros).catch(() => {});
-    getProcedes().then(setProcedes).catch(() => {});
-  }, []);
+    fetchWithRetry(getProduits, setProduits);
+    fetchWithRetry(getMicroorganismes, setMicros);
+    fetchWithRetry(getProcedes, setProcedes);
+  }, [fetchWithRetry]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

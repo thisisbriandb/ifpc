@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/lib/store";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Clock, Trash2 } from "lucide-react";
+import { getHistory, deleteAnalysis, type HistoryEntry } from "@/lib/api";
 
 interface RecentActivity {
   id: string;
@@ -13,6 +14,7 @@ interface RecentActivity {
   statut?: string;
   vp?: number;
   vpCible?: number;
+  fromDb?: boolean;
 }
 
 const STATUS_BADGE: Record<string, { bg: string; text: string; label: string }> = {
@@ -76,13 +78,40 @@ export default function Home() {
   const [activities, setActivities] = useState<RecentActivity[]>([]);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem("ifpc_recent_activities");
-      if (stored) setActivities(JSON.parse(stored));
-    } catch {
-      setActivities([]);
+    let cancelled = false;
+    async function loadActivities() {
+      // Tenter de charger depuis l'API backend (persistant en BDD)
+      if (user) {
+        try {
+          const dbEntries = await getHistory();
+          if (!cancelled && Array.isArray(dbEntries) && dbEntries.length > 0) {
+            setActivities(dbEntries.map((e: HistoryEntry) => ({
+              id: String(e.id),
+              date: e.date,
+              type: e.type,
+              label: e.label,
+              statut: e.statut,
+              vp: e.vp,
+              vpCible: e.vpCible,
+              fromDb: true,
+            })));
+            return;
+          }
+        } catch {
+          // API indisponible, fallback localStorage
+        }
+      }
+      // Fallback : localStorage
+      try {
+        const stored = localStorage.getItem("ifpc_recent_activities");
+        if (!cancelled && stored) setActivities(JSON.parse(stored));
+      } catch {
+        if (!cancelled) setActivities([]);
+      }
     }
-  }, []);
+    loadActivities();
+    return () => { cancelled = true; };
+  }, [user]);
 
   const greeting = () => {
     const h = new Date().getHours();
@@ -148,16 +177,20 @@ export default function Home() {
         {/* Recent Activities */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Activités récentes</h2>
+            <div className="flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-gray-400" />
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Activités récentes</h2>
+            </div>
             {activities.length > 0 && (
               <button
                 onClick={() => {
                   localStorage.removeItem("ifpc_recent_activities");
                   setActivities([]);
                 }}
-                className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 transition-colors"
               >
-                Effacer l&apos;historique
+                <Trash2 className="w-3 h-3" />
+                Effacer
               </button>
             )}
           </div>
@@ -171,11 +204,14 @@ export default function Home() {
             <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100 overflow-hidden">
               {activities.map((a) => {
                 const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
+                const href = a.fromDb
+                  ? `/controle?history=${a.id}`
+                  : (a.type === "controle" ? "/controle" : "/bareme");
                 return (
                   <Link
                     key={a.id}
-                    href={a.type === "controle" ? "/controle" : "/bareme"}
-                    className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/60 transition-colors"
+                    href={href}
+                    className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/60 transition-colors group"
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
@@ -186,16 +222,21 @@ export default function Home() {
                       </div>
                       <p className="text-xs text-gray-400 mt-0.5">
                         {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })}
-                        {a.vp !== undefined && (
-                          <span className="ml-2 font-mono text-gray-500">VP {a.vp.toFixed(1)} UP</span>
+                        {a.vp !== undefined && a.vp !== null && (
+                          <span className="ml-2 font-mono text-gray-500">
+                            VP {a.vp.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
+                          </span>
                         )}
                       </p>
                     </div>
-                    {badge && (
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full shrink-0 ml-4 ${badge.bg} ${badge.text}`}>
-                        {badge.label}
-                      </span>
-                    )}
+                    <div className="flex items-center gap-2 shrink-0 ml-4">
+                      {badge && (
+                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badge.bg} ${badge.text}`}>
+                          {badge.label}
+                        </span>
+                      )}
+                      <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
+                    </div>
                   </Link>
                 );
               })}

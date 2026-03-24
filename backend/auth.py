@@ -1,10 +1,13 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import jwt
+import base64
 from typing import Optional
 
 # La même clé secrète que dans Spring Boot JwtService
-SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+# Spring Boot utilise Decoders.BASE64.decode() pour obtenir les bytes de la clé
+_SECRET_KEY_B64 = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+SECRET_KEY = base64.b64decode(_SECRET_KEY_B64)
 ALGORITHM = "HS256"
 
 security = HTTPBearer(auto_error=False)

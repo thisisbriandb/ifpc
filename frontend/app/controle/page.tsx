@@ -5,8 +5,9 @@ import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRigh
 import ProductSelector from "@/components/ProductSelector";
 import { KPICards } from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
-import { uploadFile, collerDonnees, getProductConfig } from "@/lib/api";
+import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
+import { useSearchParams } from "next/navigation";
 import AuthModal from "@/components/AuthModal";
 
 type InputMode = "upload" | "paste" | "manual";
@@ -43,6 +44,8 @@ interface PasteurisationResult {
 }
 
 export default function ControlePage() {
+  const searchParams = useSearchParams();
+
   // --- STATES METIER (inchangés) ---
   const [mode, setMode] = useState<InputMode>("upload");
   const [loading, setLoading] = useState(false);
@@ -123,6 +126,26 @@ export default function ControlePage() {
       .catch(() => {});
   }, []);
 
+  // Charger une analyse historique depuis ?history=ID
+  useEffect(() => {
+    const historyId = searchParams.get("history");
+    if (!historyId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const detail = await getAnalysisById(parseInt(historyId, 10));
+        if (cancelled) return;
+        if (detail.resultJson) {
+          const parsed = JSON.parse(detail.resultJson);
+          setResult(parsed);
+        }
+      } catch {
+        // Analyse introuvable ou erreur réseau
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [searchParams]);
+
   // --- LOGIQUE (inchangée) ---
   const buildParams = useCallback(() => {
     const params: Record<string, string | number | null> = {
@@ -161,18 +184,35 @@ export default function ControlePage() {
       }
       setResult(res);
       // --- Sauvegarder l'activité récente ---
+      const activityLabel = file?.name || (mode === "paste" ? "Données collées" : "Saisie manuelle");
+      try {
+        // Sauvegarde persistante en base via Spring Boot
+        await saveAnalysis({
+          type: "controle",
+          label: activityLabel,
+          statut: res.statut,
+          vp: res.vp,
+          vpCible: res.vp_cible,
+          parametres: JSON.stringify(res.parametres || {}),
+          courbe: JSON.stringify(res.courbe || {}),
+          resultJson: JSON.stringify(res),
+        });
+      } catch {
+        // Fallback localStorage si le backend Spring est indisponible
+      }
       try {
         const activity = {
           id: Date.now().toString(),
           date: new Date().toISOString(),
           type: "controle",
-          label: file?.name || (mode === "paste" ? "Données collées" : "Saisie manuelle"),
+          label: activityLabel,
           statut: res.statut,
-          vp: res.valeur_pasteurisatrice,
+          vp: res.vp,
+          vpCible: res.vp_cible,
         };
         const stored = localStorage.getItem("ifpc_recent_activities");
         const existing = stored ? JSON.parse(stored) : [];
-        const updated = [activity, ...existing].slice(0, 20); // max 20 entrées
+        const updated = [activity, ...existing].slice(0, 20);
         localStorage.setItem("ifpc_recent_activities", JSON.stringify(updated));
       } catch {}
 

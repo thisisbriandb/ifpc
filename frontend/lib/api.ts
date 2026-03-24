@@ -167,6 +167,54 @@ export async function collerDonnees(params: {
   return data;
 }
 
+// ── Historique des analyses ──────────────────────────────────────────────────
+
+export interface HistoryEntry {
+  id: number;
+  type: "controle" | "bareme";
+  label: string;
+  statut?: string;
+  vp?: number;
+  vpCible?: number;
+  date: string;
+  userEmail?: string;
+}
+
+export interface AnalysisDetail extends HistoryEntry {
+  parametres?: string;
+  courbe?: string;
+  resultJson?: string;
+}
+
+export async function saveAnalysis(params: {
+  type: string;
+  label: string;
+  statut?: string;
+  vp?: number;
+  vpCible?: number;
+  parametres?: string;
+  courbe?: string;
+  resultJson?: string;
+}) {
+  const { data } = await api.post("/history", params);
+  return data;
+}
+
+export async function getHistory(): Promise<HistoryEntry[]> {
+  const { data } = await api.get("/history");
+  return data;
+}
+
+export async function getAnalysisById(id: number): Promise<AnalysisDetail> {
+  const { data } = await api.get(`/history/${id}`);
+  return data;
+}
+
+export async function deleteAnalysis(id: number) {
+  const { data } = await api.delete(`/history/${id}`);
+  return data;
+}
+
 // ── Module 2 : Barème ───────────────────────────────────────────────────────
 
 export async function proposerBareme(params: {

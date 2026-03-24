@@ -136,15 +136,24 @@ async def upload_file(
 
         if filename.endswith((".xlsx", ".xls")):
             df = _read_excel_robust(content, filename)
+            temps_list, temp_list = _extract_numeric_columns(df)
         elif filename.endswith(".csv") or filename.endswith(".txt") or filename.endswith(".tsv"):
-            df = _read_csv_robust(content)
+            # Tenter d'abord le format enregistreur (DS1922E, etc.) qui a des
+            # en-têtes métadonnées avant la table de données
+            text = _decode_bytes(content)
+            lines = [l.strip() for l in text.strip().split("\n") if l.strip()]
+            logger_rows = _try_parse_logger_format(lines)
+            if logger_rows is not None and len(logger_rows) >= 2:
+                logger.info(f"Format enregistreur détecté (upload), {len(logger_rows)} lignes")
+                temps_list, temp_list = _datetime_rows_to_minutes(logger_rows)
+            else:
+                df = _read_csv_robust(content)
+                temps_list, temp_list = _extract_numeric_columns(df)
         else:
             raise HTTPException(
                 status_code=400,
                 detail="Format non supporté. Utilisez .xlsx, .xls, .csv ou .txt",
             )
-
-        temps_list, temp_list = _extract_numeric_columns(df)
 
         result = pasto.evaluer_pasteurisation(
             temperatures=temp_list,
