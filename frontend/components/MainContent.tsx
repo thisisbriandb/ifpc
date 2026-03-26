@@ -9,7 +9,7 @@ export default function MainContent({ children }: { children: React.ReactNode })
   const noSidebar = pathname === "/login";
 
   return (
-    <main className={`transition-all duration-300 ${noSidebar ? "" : collapsed ? "ml-16" : "ml-60"}`}>
+    <main className={`transition-all duration-200 ${noSidebar ? "" : collapsed ? "ml-[52px]" : "ml-56"}`}>
       {children}
     </main>
   );

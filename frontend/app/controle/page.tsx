@@ -134,8 +134,20 @@ function ControlePageInner() {
       .catch(() => {});
   }, []);
 
-  // Charger une analyse historique depuis ?history=ID
+  // Charger une analyse historique depuis localStorage ou ?history=ID
   useEffect(() => {
+    // 1) Check localStorage restore (set by dashboard click)
+    try {
+      const restore = localStorage.getItem("ifpc_restore_result");
+      if (restore) {
+        localStorage.removeItem("ifpc_restore_result");
+        const parsed = JSON.parse(restore);
+        setResult(parsed);
+        return;
+      }
+    } catch {}
+
+    // 2) Fallback: fetch from Spring Boot API via ?history=ID
     const historyId = searchParams.get("history");
     if (!historyId) return;
     let cancelled = false;
@@ -148,7 +160,17 @@ function ControlePageInner() {
           setResult(parsed);
         }
       } catch {
-        // Analyse introuvable ou erreur réseau
+        // 3) Last resort: try to find in localStorage activities
+        try {
+          const stored = localStorage.getItem("ifpc_recent_activities");
+          if (stored) {
+            const activities = JSON.parse(stored);
+            const match = activities.find((a: any) => a.id === historyId);
+            if (!cancelled && match?.resultJson) {
+              setResult(JSON.parse(match.resultJson));
+            }
+          }
+        } catch {}
       }
     })();
     return () => { cancelled = true; };
@@ -219,6 +241,7 @@ function ControlePageInner() {
           statut: res.statut,
           vp: res.vp,
           vpCible: res.vp_cible,
+          resultJson: JSON.stringify(res),
         };
         const stored = localStorage.getItem("ifpc_recent_activities");
         const existing = stored ? JSON.parse(stored) : [];

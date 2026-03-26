@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store";
 import {
   ArrowRight, Clock, Trash2,
@@ -24,6 +25,7 @@ interface RecentActivity {
   vp?: number;
   vpCible?: number;
   fromDb?: boolean;
+  resultJson?: string;
 }
 
 const STATUS_BADGE: Record<string, { bg: string; text: string; label: string }> = {
@@ -184,6 +186,7 @@ function ArcModule({ mod }: { mod: Module }) {
 
 export default function Home() {
   const { user } = useAuthStore();
+  const router = useRouter();
   const [activities, setActivities] = useState<RecentActivity[]>([]);
 
   useEffect(() => {
@@ -278,14 +281,20 @@ export default function Home() {
             <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100 overflow-hidden">
               {activities.map((a) => {
                 const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
-                const href = a.fromDb
-                  ? `/controle?history=${a.id}`
-                  : (a.type === "controle" ? "/controle" : "/bareme");
+                const handleClick = () => {
+                  // Store restore data for the contrôle page
+                  if (a.resultJson) {
+                    localStorage.setItem("ifpc_restore_result", a.resultJson);
+                  }
+                  const target = a.type === "controle" ? "/controle" : "/bareme";
+                  const href = a.fromDb ? `${target}?history=${a.id}` : target;
+                  router.push(href);
+                };
                 return (
-                  <Link
+                  <button
                     key={a.id}
-                    href={href}
-                    className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/60 transition-colors group"
+                    onClick={handleClick}
+                    className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50/60 transition-colors group text-left"
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
@@ -319,7 +328,7 @@ export default function Home() {
                       )}
                       <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
                     </div>
-                  </Link>
+                  </button>
                 );
               })}
             </div>

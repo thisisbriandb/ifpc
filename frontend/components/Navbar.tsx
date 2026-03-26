@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
-  FlaskConical, BarChart3, Home, LogOut, Shield, ShieldCheck, User,
-  ChevronDown, Thermometer,
+  FlaskConical, BarChart3, Home, LogOut, Shield, User,
+  ChevronRight, Thermometer, Palette, Container,
 } from "lucide-react";
 import { useAuthStore } from "@/lib/store";
 import { useSidebar } from "@/lib/sidebar-context";
@@ -13,7 +13,7 @@ import { useSidebar } from "@/lib/sidebar-context";
 interface NavGroup {
   label: string;
   icon: any;
-  children: { href: string; label: string; icon: any }[];
+  children: { href: string; label: string }[];
 }
 
 const navGroups: NavGroup[] = [
@@ -21,14 +21,26 @@ const navGroups: NavGroup[] = [
     label: "Pasteurisation",
     icon: Thermometer,
     children: [
-      { href: "/controle", label: "Calcul de la VP", icon: FlaskConical },
-      { href: "/bareme", label: "Aide au barème", icon: BarChart3 },
+      { href: "/controle", label: "Calcul VP" },
+      { href: "/bareme", label: "Aide barème" },
     ],
   },
-];
-
-const standaloneLinks = [
-  { href: "/", label: "Tableau de bord", icon: Home },
+  {
+    label: "Colorimétrie",
+    icon: Palette,
+    children: [
+      { href: "/colorimetrie/mesure", label: "Mesure" },
+      { href: "/colorimetrie/analyse", label: "Analyse" },
+    ],
+  },
+  {
+    label: "Gestion de cuves",
+    icon: Container,
+    children: [
+      { href: "/cuves", label: "Suivi cuves" },
+      { href: "/cuves/assemblage", label: "Assemblage" },
+    ],
+  },
 ];
 
 export default function Sidebar() {
@@ -36,27 +48,14 @@ export default function Sidebar() {
   const router = useRouter();
   const { user, isLoading, checkAuth, logout } = useAuthStore();
   const { collapsed, setCollapsed } = useSidebar();
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({ Pasteurisation: true });
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+  useEffect(() => { checkAuth(); }, [checkAuth]);
 
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
-  };
+  const handleLogout = () => { logout(); router.push("/login"); };
 
-  const toggleGroup = (label: string) => {
+  const toggleGroup = (label: string) =>
     setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }));
-  };
-
-  const roleMeta: Record<string, { label: string; classes: string; icon: any }> = {
-    ADMIN:  { label: "Administrateur", classes: "bg-red-100 text-red-700", icon: Shield },
-    EXPERT: { label: "Expert",         classes: "bg-orange-100 text-orange-700", icon: ShieldCheck },
-    USER:   { label: "Utilisateur",    classes: "bg-gray-100 text-gray-600", icon: User },
-  };
-  const meta = user ? (roleMeta[user.role] ?? roleMeta.USER) : null;
 
   if (pathname === "/login") return null;
 
@@ -64,182 +63,150 @@ export default function Sidebar() {
     <aside
       onMouseEnter={() => setCollapsed(false)}
       onMouseLeave={() => setCollapsed(true)}
-      className={`fixed top-0 left-0 h-screen bg-white border-r border-gray-100 flex flex-col z-50 transition-all duration-300 ${
-        collapsed ? "w-16" : "w-60"
+      className={`fixed top-0 left-0 h-screen bg-white/95 backdrop-blur-sm border-r border-gray-100 flex flex-col z-50 transition-all duration-200 overflow-hidden ${
+        collapsed ? "w-[52px]" : "w-56"
       }`}
     >
-      {/* Header: Logo */}
-      <div className="flex items-center px-4 py-5 border-b border-gray-100">
-        <Link href="/" className="min-w-0 flex items-center gap-2.5">
-          <span className="font-bold text-lg text-brand-primary leading-none tracking-tight shrink-0">IFPC</span>
-          {!collapsed && (
-            <span className="text-[10px] text-gray-400 leading-tight font-medium block truncate">Outils filière cidricole</span>
-          )}
-        </Link>
-      </div>
+      {/* Logo */}
+      <Link href="/" className="flex items-center gap-2 px-3.5 h-12 shrink-0 border-b border-gray-50">
+        <span className="font-bold text-base text-brand-primary shrink-0">IFPC</span>
+        {!collapsed && (
+          <span className="text-[9px] text-gray-400 font-medium truncate leading-tight">Filière cidricole</span>
+        )}
+      </Link>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-2 py-4 overflow-y-auto space-y-1">
-        {/* Standalone links */}
-        {standaloneLinks.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              title={collapsed ? label : undefined}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                collapsed ? "justify-center" : ""
-              } ${
-                active
-                  ? "bg-brand-primary/10 text-brand-primary"
-                  : "text-gray-500 hover:text-brand-primary hover:bg-gray-50"
-              }`}
-            >
-              <Icon className="w-4 h-4 shrink-0" />
-              {!collapsed && <span>{label}</span>}
-            </Link>
-          );
-        })}
+      {/* Nav */}
+      <nav className="flex-1 py-3 overflow-y-auto">
+        {/* Home */}
+        <div className="px-2 mb-1">
+          <Link
+            href="/"
+            title={collapsed ? "Accueil" : undefined}
+            className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${
+              collapsed ? "justify-center" : ""
+            } ${
+              pathname === "/"
+                ? "text-brand-primary font-semibold"
+                : "text-gray-400 hover:text-gray-700"
+            }`}
+          >
+            <Home className="w-[18px] h-[18px] shrink-0" />
+            {!collapsed && <span>Accueil</span>}
+          </Link>
+        </div>
 
-        {/* Grouped navigation */}
+        {/* Groups */}
         {navGroups.map((group) => {
-          const isOpen = openGroups[group.label] ?? false;
           const GroupIcon = group.icon;
-          const hasActiveChild = group.children.some((c) => pathname === c.href);
-
-          if (collapsed) {
-            return (
-              <div key={group.label} className="space-y-1 mt-3 pt-3 border-t border-gray-100">
-                {group.children.map(({ href, label, icon: Icon }) => {
-                  const active = pathname === href;
-                  return (
-                    <Link
-                      key={href}
-                      href={href}
-                      title={label}
-                      className={`flex items-center justify-center px-3 py-2.5 rounded-xl transition-all ${
-                        active
-                          ? "bg-brand-primary/10 text-brand-primary"
-                          : "text-gray-500 hover:text-brand-primary hover:bg-gray-50"
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                    </Link>
-                  );
-                })}
-              </div>
-            );
-          }
+          const hasActiveChild = group.children.some((c) => pathname.startsWith(c.href));
+          const isOpen = openGroups[group.label] ?? hasActiveChild;
 
           return (
-            <div key={group.label} className="mt-4">
-              <button
-                onClick={() => toggleGroup(group.label)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-colors ${
-                  hasActiveChild ? "text-brand-primary" : "text-gray-400 hover:text-gray-600"
-                }`}
-              >
-                <span className="flex items-center gap-2">
-                  <GroupIcon className="w-3.5 h-3.5" />
-                  {group.label}
-                </span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "" : "-rotate-90"}`} />
-              </button>
-              {isOpen && (
-                <div className="mt-1.5 ml-2 space-y-1">
-                  {group.children.map(({ href, label, icon: Icon }) => {
-                    const active = pathname === href;
-                    return (
-                      <Link
-                        key={href}
-                        href={href}
-                        className={`flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-xl text-sm font-medium transition-all border-l-2 ${
-                          active
-                            ? "border-brand-primary bg-brand-primary/10 text-brand-primary"
-                            : "border-transparent text-gray-500 hover:text-brand-primary hover:bg-gray-50"
-                        }`}
-                      >
-                        <Icon className="w-4 h-4 shrink-0" />
-                        {label}
-                      </Link>
-                    );
-                  })}
-                </div>
+            <div key={group.label} className="px-2 mt-1">
+              {collapsed ? (
+                /* Collapsed: only parent icon */
+                <Link
+                  href={group.children[0].href}
+                  title={group.label}
+                  className={`flex items-center justify-center py-2 rounded-lg transition-colors ${
+                    hasActiveChild
+                      ? "text-brand-primary"
+                      : "text-gray-400 hover:text-gray-600"
+                  }`}
+                >
+                  <GroupIcon className="w-[18px] h-[18px]" />
+                </Link>
+              ) : (
+                <>
+                  <button
+                    onClick={() => toggleGroup(group.label)}
+                    className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[13px] font-semibold transition-colors ${
+                      hasActiveChild ? "text-brand-primary" : "text-gray-400 hover:text-gray-600"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <GroupIcon className="w-[18px] h-[18px]" />
+                      {group.label}
+                    </span>
+                    <ChevronRight className={`w-3 h-3 transition-transform duration-150 ${isOpen ? "rotate-90" : ""}`} />
+                  </button>
+
+                  {isOpen && (
+                    <div className="ml-[30px] mt-0.5 space-y-0.5 border-l border-gray-100">
+                      {group.children.map(({ href, label }) => {
+                        const active = pathname === href;
+                        return (
+                          <Link
+                            key={href}
+                            href={href}
+                            className={`block pl-3 pr-2 py-1.5 text-[12px] transition-colors rounded-r-md ${
+                              active
+                                ? "text-brand-primary font-semibold border-l-2 border-brand-primary -ml-px"
+                                : "text-gray-400 hover:text-gray-700"
+                            }`}
+                          >
+                            {label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
               )}
             </div>
           );
         })}
 
-        {/* Admin link */}
+        {/* Admin */}
         {user?.role === "ADMIN" && (
-          <div className="mt-5 pt-4 border-t border-gray-100">
+          <div className="px-2 mt-3 pt-2 border-t border-gray-50">
             <Link
               href="/admin"
-              title={collapsed ? "Administration" : undefined}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+              title={collapsed ? "Admin" : undefined}
+              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${
                 collapsed ? "justify-center" : ""
               } ${
                 pathname === "/admin"
-                  ? "bg-red-50 text-red-600"
-                  : "text-gray-500 hover:text-red-600 hover:bg-red-50"
+                  ? "text-red-500 font-semibold"
+                  : "text-gray-400 hover:text-red-500"
               }`}
             >
-              <Shield className="w-4 h-4 shrink-0" />
+              <Shield className="w-[18px] h-[18px] shrink-0" />
               {!collapsed && <span>Administration</span>}
             </Link>
           </div>
         )}
       </nav>
 
-      {/* Bottom: User section */}
-      <div className="px-2 py-4 border-t border-gray-100">
+      {/* User */}
+      <div className="px-2 py-3 border-t border-gray-50 shrink-0">
         {!isLoading && (
           user ? (
             collapsed ? (
-              <div className="flex flex-col items-center gap-2">
-                {meta && (
-                  <div className={`p-1.5 rounded-lg ${meta.classes}`} title={meta.label}>
-                    <meta.icon className="w-3.5 h-3.5" />
-                  </div>
-                )}
-                <button
-                  onClick={handleLogout}
-                  title="Déconnexion"
-                  className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
-              </div>
+              <button onClick={handleLogout} title="Déconnexion" className="w-full flex justify-center p-2 text-gray-400 hover:text-red-500 rounded-lg transition-colors">
+                <LogOut className="w-4 h-4" />
+              </button>
             ) : (
-              <div className="space-y-3 px-1">
-                {meta && (
-                  <div className={`flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1.5 rounded-lg w-fit ${meta.classes}`}>
-                    <meta.icon className="w-3 h-3" />
-                    {meta.label}
-                  </div>
-                )}
-                <div className="flex items-center justify-between gap-2">
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-gray-900 truncate">{user.firstName} {user.lastName}</p>
-                    <p className="text-[11px] text-gray-400 truncate mt-0.5">{user.email}</p>
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    title="Déconnexion"
-                    className="ml-1 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
-                  >
-                    <LogOut className="w-4 h-4" />
-                  </button>
+              <div className="flex items-center gap-2 px-1">
+                <div className="w-7 h-7 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center text-[10px] font-bold shrink-0">
+                  {user.firstName.charAt(0)}{user.lastName.charAt(0)}
                 </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[11px] font-semibold text-gray-700 truncate">{user.firstName} {user.lastName}</p>
+                </div>
+                <button onClick={handleLogout} title="Déconnexion" className="p-1.5 text-gray-300 hover:text-red-500 rounded transition-colors shrink-0">
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
               </div>
             )
           ) : (
             <Link
               href="/login"
-              title={collapsed ? "Se connecter" : undefined}
-              className={`flex items-center justify-center gap-2 w-full bg-brand-primary text-white text-sm font-bold py-2.5 rounded-xl hover:bg-brand-primary/90 transition-all ${
-                collapsed ? "px-0" : ""
+              title={collapsed ? "Connexion" : undefined}
+              className={`flex items-center justify-center gap-2 w-full text-[12px] font-semibold py-2 rounded-lg transition-colors ${
+                collapsed
+                  ? "text-gray-400 hover:text-brand-primary"
+                  : "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20"
               }`}
             >
               {collapsed ? <User className="w-4 h-4" /> : "Se connecter"}
