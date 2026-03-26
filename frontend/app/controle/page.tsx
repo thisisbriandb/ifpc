@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, Suspense } from "react";
 import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle, Plus, Trash2, HelpCircle, LogOut, User as UserIcon, Shield } from "lucide-react";
 import ProductSelector from "@/components/ProductSelector";
 import { KPICards } from "@/components/ResultDisplay";
@@ -44,6 +44,14 @@ interface PasteurisationResult {
 }
 
 export default function ControlePage() {
+  return (
+    <Suspense>
+      <ControlePageInner />
+    </Suspense>
+  );
+}
+
+function ControlePageInner() {
   const searchParams = useSearchParams();
 
   // --- STATES METIER (inchangés) ---
