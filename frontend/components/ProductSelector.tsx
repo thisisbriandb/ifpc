@@ -79,125 +79,74 @@ export default function ProductSelector({
     fetchWithRetry(getProcedes, setProcedes);
   }, [fetchWithRetry]);
 
+  const selectCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white";
+  const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
+  const labelCls = "block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1";
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Type de produit
-        </label>
-        <select
-          value={productType}
-          onChange={(e) => onProductChange(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent outline-none text-sm"
-        >
-          {produits.map((p) => (
-            <option key={p.id} value={p.id}>{p.nom}</option>
-          ))}
-        </select>
+    <div className="space-y-2.5">
+      {/* Row 1: Produit + Clarification */}
+      <div className="grid grid-cols-2 gap-2">
+        <div>
+          <label className={labelCls}>Produit</label>
+          <select value={productType} onChange={(e) => onProductChange(e.target.value)} className={selectCls}>
+            {produits.map((p) => (
+              <option key={p.id} value={p.id}>{p.nom}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className={labelCls}>Clarification</label>
+          <select value={clarification} onChange={(e) => onClarificationChange(e.target.value)} className={selectCls}>
+            <option value="trouble">Trouble</option>
+            <option value="limpide">Limpide</option>
+          </select>
+        </div>
       </div>
 
+      {/* Row 2: Procédé */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Clarification
-        </label>
-        <select
-          value={clarification}
-          onChange={(e) => onClarificationChange(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent outline-none text-sm"
-        >
-          <option value="trouble">Trouble</option>
-          <option value="limpide">Limpide</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Procédé
-        </label>
-        <select
-          value={procede}
-          onChange={(e) => onProcedeChange(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent outline-none text-sm"
-        >
+        <label className={labelCls}>Procédé</label>
+        <select value={procede} onChange={(e) => onProcedeChange(e.target.value)} className={selectCls}>
           {procedes.map((p) => (
             <option key={p.id} value={p.id}>{p.nom}</option>
           ))}
         </select>
       </div>
 
+      {/* Expert fields */}
       {expertMode && (
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Microorganisme cible
-          </label>
-          <select
-            value={microorganisme}
-            onChange={(e) => onMicroChange(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none text-sm"
-          >
-            <option value="">Auto (selon produit)</option>
-            {micros.map((m) => (
-              <option key={m.id} value={m.id}>{m.nom}</option>
-            ))}
-          </select>
+        <div className="pt-1.5 border-t border-gray-100 space-y-2.5">
+          <div>
+            <label className={labelCls}>Microorganisme</label>
+            <select value={microorganisme} onChange={(e) => onMicroChange(e.target.value)} className={selectCls}>
+              <option value="">Auto (selon produit)</option>
+              {micros.map((m) => (
+                <option key={m.id} value={m.id}>{m.nom}</option>
+              ))}
+            </select>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className={labelCls}>Tref (°C)</label>
+              <input type="number" step="0.1" value={tRef} onChange={(e) => onTRefChange?.(e.target.value)} placeholder="60.0" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>Z (°C)</label>
+              <input type="number" step="0.1" value={zValue} onChange={(e) => onZChange?.(e.target.value)} placeholder="7.0" className={inputCls} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className={labelCls}>pH</label>
+              <input type="number" step="0.1" value={ph} onChange={(e) => onPhChange?.(e.target.value)} placeholder="3.5" className={inputCls} />
+            </div>
+            <div>
+              <label className={labelCls}>Alcool (%)</label>
+              <input type="number" step="0.1" value={titreAlcool} onChange={(e) => onTitreAlcoolChange?.(e.target.value)} placeholder="0.0" className={inputCls} />
+            </div>
+          </div>
         </div>
-      )}
-
-      {expertMode && (
-        <>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Tref (°C)
-            </label>
-            <input
-              type="number"
-              step="0.1"
-              value={tRef}
-              onChange={(e) => onTRefChange?.(e.target.value)}
-              placeholder="60.0"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none text-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Z (°C)
-            </label>
-            <input
-              type="number"
-              step="0.1"
-              value={zValue}
-              onChange={(e) => onZChange?.(e.target.value)}
-              placeholder="7.0"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none text-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              pH
-            </label>
-            <input
-              type="number"
-              step="0.1"
-              value={ph}
-              onChange={(e) => onPhChange?.(e.target.value)}
-              placeholder="3.5"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none text-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Titre alcoométrique (% vol.)
-            </label>
-            <input
-              type="number"
-              step="0.1"
-              value={titreAlcool}
-              onChange={(e) => onTitreAlcoolChange?.(e.target.value)}
-              placeholder="0.0"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none text-sm"
-            />
-          </div>
-        </>
       )}
     </div>
   );

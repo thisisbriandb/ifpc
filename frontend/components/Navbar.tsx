@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   FlaskConical, BarChart3, Home, LogOut, Shield, ShieldCheck, User,
-  ChevronDown, Thermometer, PanelLeftClose, PanelLeft,
+  ChevronDown, Thermometer,
 } from "lucide-react";
 import { useAuthStore } from "@/lib/store";
 import { useSidebar } from "@/lib/sidebar-context";
@@ -35,7 +35,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, isLoading, checkAuth, logout } = useAuthStore();
-  const { collapsed, toggle } = useSidebar();
+  const { collapsed, setCollapsed } = useSidebar();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({ Pasteurisation: true });
 
   useEffect(() => {
@@ -62,25 +62,20 @@ export default function Sidebar() {
 
   return (
     <aside
+      onMouseEnter={() => setCollapsed(false)}
+      onMouseLeave={() => setCollapsed(true)}
       className={`fixed top-0 left-0 h-screen bg-white border-r border-gray-100 flex flex-col z-50 transition-all duration-300 ${
         collapsed ? "w-16" : "w-60"
       }`}
     >
-      {/* Header: Logo + Toggle */}
-      <div className="flex items-center justify-between px-4 py-5 border-b border-gray-100">
-        {!collapsed && (
-          <Link href="/" className="min-w-0">
-            <span className="font-bold text-lg text-gray-900 leading-none tracking-tight block">IFPC</span>
-            <span className="text-[10px] text-gray-400 leading-tight font-medium block">Outils filière cidricole</span>
-          </Link>
-        )}
-        <button
-          onClick={toggle}
-          className={`p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors shrink-0 ${collapsed ? "mx-auto" : ""}`}
-          title={collapsed ? "Ouvrir le menu" : "Réduire le menu"}
-        >
-          {collapsed ? <PanelLeft className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
-        </button>
+      {/* Header: Logo */}
+      <div className="flex items-center px-4 py-5 border-b border-gray-100">
+        <Link href="/" className="min-w-0 flex items-center gap-2.5">
+          <span className="font-bold text-lg text-brand-primary leading-none tracking-tight shrink-0">IFPC</span>
+          {!collapsed && (
+            <span className="text-[10px] text-gray-400 leading-tight font-medium block truncate">Outils filière cidricole</span>
+          )}
+        </Link>
       </div>
 
       {/* Navigation */}

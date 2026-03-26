@@ -184,7 +184,7 @@ export default function ControlePage() {
       }
       setResult(res);
       // --- Sauvegarder l'activité récente ---
-      const activityLabel = file?.name || (mode === "paste" ? "Données collées" : "Saisie manuelle");
+      const activityLabel = res.parametres?.produit || file?.name || (mode === "paste" ? "Données collées" : "Saisie manuelle");
       try {
         // Sauvegarde persistante en base via Spring Boot
         await saveAnalysis({
@@ -206,6 +206,8 @@ export default function ControlePage() {
           date: new Date().toISOString(),
           type: "controle",
           label: activityLabel,
+          produit: res.parametres?.produit,
+          procede: res.parametres?.procede,
           statut: res.statut,
           vp: res.vp,
           vpCible: res.vp_cible,
@@ -241,188 +243,24 @@ export default function ControlePage() {
   return (
     <div className="h-screen flex bg-gray-50/50 font-sans text-gray-900 overflow-hidden">
 
-      {/* --- SIDEBAR GAUCHE (Configuration & Inputs) --- */}
+      {/* --- SIDEBAR GAUCHE --- */}
       <aside
-        className={`${isSidebarOpen ? "w-[340px]" : "w-0"
-          } transition-all duration-300 ease-in-out border-r border-gray-200 bg-white flex flex-col relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]`}
+        className={`${isSidebarOpen ? "w-[320px]" : "w-0"
+          } transition-all duration-300 ease-in-out border-r border-gray-100 bg-white flex flex-col relative z-20`}
       >
         <div className={`${isSidebarOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-200 flex flex-col h-full overflow-hidden`}>
-          <div className="h-16 border-b border-gray-100 flex items-center justify-between px-6 bg-white shrink-0">
-            <h2 className="font-bold text-gray-900 flex items-center gap-2">
-              <Settings2 className="w-5 h-5 text-brand-primary" />
-              Configuration
-            </h2>
-            
-            {/* User Profile */}
-            {!isLoading && (
-              user ? (
-                <div className="flex items-center gap-2">
-                  <div 
-                    className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs uppercase transition-transform hover:scale-105 ${
-                      user.role === 'ADMIN' ? 'bg-red-100 text-red-700 shadow-sm' : 
-                      user.role === 'EXPERT' ? 'bg-brand-accent/20 text-brand-accent' : 
-                      'bg-brand-primary/10 text-brand-primary'
-                    }`} 
-                    title={`${user.firstName} (${user.role})`}
-                  >
-                    {user.firstName.charAt(0)}{user.lastName.charAt(0)}
-                  </div>
-                  <button onClick={() => logout()} className="p-1.5 text-gray-400 hover:text-red-500 rounded-md transition-colors" title="Déconnexion">
-                    <LogOut className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  onClick={() => setIsAuthModalOpen(true)}
-                  className="flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:bg-brand-primary/5 px-2 py-1.5 rounded-md transition-colors"
-                >
-                  <UserIcon className="w-3.5 h-3.5" />
-                  Connexion
-                </button>
-              )
-            )}
-          </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar">
-            {/* Mode selection & Inputs */}
-            <div className="p-6 border-b border-gray-50">
-              <div className="flex p-1 bg-gray-100/80 rounded-lg mb-6">
-                {(Object.keys(modeConfig) as InputMode[]).map((m) => {
-                  const Icon = modeConfig[m].icon;
-                  return (
-                    <button
-                      key={m}
-                      onClick={() => setMode(m)}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all ${mode === m ? "bg-white text-brand-primary shadow-sm" : "text-gray-500 hover:text-gray-700"
-                        }`}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      {modeConfig[m].label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Input Area */}
-              {mode === "upload" && (
-                <div
-                  onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-                  onDragLeave={() => setDragActive(false)}
-                  onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${dragActive ? "border-brand-primary bg-brand-primary/5" : "border-gray-200 hover:border-brand-primary/30 hover:bg-gray-50/50"
-                    }`}
-                >
-                  {file ? (
-                    <div className="text-sm">
-                      <FileSpreadsheet className="w-10 h-10 text-brand-primary mx-auto mb-3" />
-                      <p className="font-bold text-gray-900 truncate px-2">{file.name}</p>
-                      <button onClick={() => setFile(null)} className="text-xs text-red-500 hover:text-red-600 font-medium mt-3">Retirer le fichier</button>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Upload className="w-5 h-5 text-gray-400" />
-                      </div>
-                      <label className="text-sm text-brand-primary font-bold cursor-pointer hover:underline">
-                        Parcourir les fichiers
-                        <input type="file" accept=".xlsx,.xls,.csv,.txt,.tsv" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-                      </label>
-                      <p className="text-xs text-gray-500 mt-2">ou glissez-déposez ici</p>
-                      <p className="text-[10px] text-gray-400 mt-1">Formats : .xlsx, .xls, .csv, .txt</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {mode === "paste" && (
-                <textarea
-                  value={pasteText}
-                  onChange={(e) => setPasteText(e.target.value)}
-                  placeholder={"Temps\tTempérature\n0\t20\n1\t45\n2\t68..."}
-                  className="w-full h-48 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none text-xs font-mono resize-none transition-all"
-                />
-              )}
-
-              {mode === "manual" && (
-                <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
-                  <div className="max-h-52 overflow-y-auto">
-                    <table className="w-full text-xs">
-                      <thead className="sticky top-0 z-10">
-                        <tr className="bg-gray-100 border-b border-gray-200">
-                          <th className="px-3 py-2 text-left font-bold text-gray-600 uppercase tracking-wider text-[10px] w-10">#</th>
-                          <th className="px-3 py-2 text-left font-bold text-gray-600 uppercase tracking-wider text-[10px]">Temps (min)</th>
-                          <th className="px-3 py-2 text-left font-bold text-gray-600 uppercase tracking-wider text-[10px]">Température (°C)</th>
-                          <th className="px-1 py-2 w-8"></th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-50">
-                        {manualRows.map((row, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50/50 group">
-                            <td className="px-3 py-1 text-gray-400 font-mono">{idx + 1}</td>
-                            <td className="px-1 py-1">
-                              <input
-                                type="text" inputMode="decimal" value={row.temps}
-                                onChange={(e) => updateRow(idx, "temps", e.target.value)}
-                                className="w-full px-2 py-1 border border-transparent hover:border-gray-200 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded text-xs font-mono outline-none bg-transparent"
-                              />
-                            </td>
-                            <td className="px-1 py-1">
-                              <input
-                                type="text" inputMode="decimal" value={row.temp}
-                                onChange={(e) => updateRow(idx, "temp", e.target.value)}
-                                className="w-full px-2 py-1 border border-transparent hover:border-gray-200 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/20 rounded text-xs font-mono outline-none bg-transparent"
-                              />
-                            </td>
-                            <td className="px-1 py-1 text-center">
-                              <button onClick={() => removeRow(idx)} className="opacity-0 group-hover:opacity-100 p-0.5 text-gray-400 hover:text-red-500 transition-all" title="Supprimer">
-                                <Trash2 className="w-3 h-3" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                  <button
-                    onClick={addRow}
-                    className="w-full flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-brand-primary hover:bg-brand-primary/5 border-t border-gray-100 transition-colors"
-                  >
-                    <Plus className="w-3.5 h-3.5" /> Ajouter une ligne
-                  </button>
-                </div>
-              )}
-
-              <button
-                onClick={handleSubmit}
-                disabled={loading}
-                className="w-full btn-primary py-3 text-sm mt-6 flex items-center justify-center gap-2 shadow-lg shadow-brand-primary/20 rounded-xl font-bold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors"
-              >
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Activity className="w-5 h-5" />}
-                {loading ? "Calcul en cours..." : "Lancer l'analyse"}
-              </button>
-
-              {error && (
-                <div className="mt-4 bg-red-50 border border-red-100 rounded-xl p-4 text-red-600 text-sm font-medium flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    {error.split('\n').map((line, i) => (
-                      <p key={i} className={i > 0 ? "mt-1 text-xs text-red-500" : ""}>{line}</p>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
+          <div className="flex-1 overflow-y-auto">
             {/* Product Parameters */}
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Paramètres Produit</h3>
+            <div className="px-4 pt-4 pb-3">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Produit</h3>
                 {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
                   <button
                     onClick={() => setExpertMode(!expertMode)}
-                    className={`text-[10px] font-bold px-2.5 py-1.5 rounded-md transition-colors ${expertMode ? "bg-brand-accent text-white shadow-sm" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                    className={`text-[10px] font-bold px-2 py-1 rounded transition-colors ${expertMode ? "bg-brand-accent text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
                   >
-                    MODE EXPERT
+                    EXPERT
                   </button>
                 )}
               </div>
@@ -437,6 +275,134 @@ export default function ControlePage() {
                 ph={ph} onPhChange={setPh}
                 titreAlcool={titreAlcool} onTitreAlcoolChange={setTitreAlcool}
               />
+            </div>
+
+            <div className="mx-4 border-t border-gray-100" />
+
+            {/* Data input */}
+            <div className="px-4 py-3">
+              <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Données</h3>
+              <div className="flex p-0.5 bg-gray-100 rounded-lg mb-3">
+                {(Object.keys(modeConfig) as InputMode[]).map((m) => {
+                  const Icon = modeConfig[m].icon;
+                  return (
+                    <button
+                      key={m}
+                      onClick={() => setMode(m)}
+                      className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all ${mode === m ? "bg-white text-brand-primary shadow-sm" : "text-gray-400 hover:text-gray-600"
+                        }`}
+                    >
+                      <Icon className="w-3 h-3" />
+                      {modeConfig[m].label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {mode === "upload" && (
+                <div
+                  onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                  onDragLeave={() => setDragActive(false)}
+                  onDrop={handleDrop}
+                  className={`border-2 border-dashed rounded-lg p-5 text-center transition-all ${dragActive ? "border-brand-primary bg-brand-primary/5" : "border-gray-200 hover:border-brand-primary/30"
+                    }`}
+                >
+                  {file ? (
+                    <div className="text-sm">
+                      <FileSpreadsheet className="w-8 h-8 text-brand-primary mx-auto mb-2" />
+                      <p className="font-semibold text-gray-900 truncate text-xs">{file.name}</p>
+                      <button onClick={() => setFile(null)} className="text-[10px] text-red-500 hover:text-red-600 font-medium mt-2">Retirer</button>
+                    </div>
+                  ) : (
+                    <div>
+                      <Upload className="w-5 h-5 text-gray-300 mx-auto mb-2" />
+                      <label className="text-xs text-brand-primary font-bold cursor-pointer hover:underline">
+                        Parcourir
+                        <input type="file" accept=".xlsx,.xls,.csv,.txt,.tsv" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
+                      </label>
+                      <p className="text-[10px] text-gray-400 mt-1">ou glissez-déposez</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {mode === "paste" && (
+                <textarea
+                  value={pasteText}
+                  onChange={(e) => setPasteText(e.target.value)}
+                  placeholder={"Temps\tTempérature\n0\t20\n1\t45\n2\t68..."}
+                  className="w-full h-36 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none text-[11px] font-mono resize-none"
+                />
+              )}
+
+              {mode === "manual" && (
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <div className="max-h-44 overflow-y-auto">
+                    <table className="w-full text-[11px]">
+                      <thead className="sticky top-0 z-10">
+                        <tr className="bg-gray-50 border-b border-gray-200">
+                          <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase w-8">#</th>
+                          <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">Temps</th>
+                          <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">T°C</th>
+                          <th className="w-6"></th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50">
+                        {manualRows.map((row, idx) => (
+                          <tr key={idx} className="group">
+                            <td className="px-2 py-0.5 text-gray-300 font-mono">{idx + 1}</td>
+                            <td className="px-1 py-0.5">
+                              <input
+                                type="text" inputMode="decimal" value={row.temps}
+                                onChange={(e) => updateRow(idx, "temps", e.target.value)}
+                                className="w-full px-1.5 py-0.5 border border-transparent focus:border-brand-primary rounded text-[11px] font-mono outline-none bg-transparent"
+                              />
+                            </td>
+                            <td className="px-1 py-0.5">
+                              <input
+                                type="text" inputMode="decimal" value={row.temp}
+                                onChange={(e) => updateRow(idx, "temp", e.target.value)}
+                                className="w-full px-1.5 py-0.5 border border-transparent focus:border-brand-primary rounded text-[11px] font-mono outline-none bg-transparent"
+                              />
+                            </td>
+                            <td className="px-0.5 py-0.5">
+                              <button onClick={() => removeRow(idx)} className="opacity-0 group-hover:opacity-100 p-0.5 text-gray-400 hover:text-red-500" title="Supprimer">
+                                <Trash2 className="w-2.5 h-2.5" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <button
+                    onClick={addRow}
+                    className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] font-semibold text-brand-primary hover:bg-brand-primary/5 border-t border-gray-100"
+                  >
+                    <Plus className="w-3 h-3" /> Ligne
+                  </button>
+                </div>
+              )}
+
+              <button
+                onClick={handleSubmit}
+                disabled={loading}
+                className="w-full mt-3 py-2.5 text-sm flex items-center justify-center gap-2 rounded-lg font-bold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors disabled:opacity-60"
+              >
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Activity className="w-4 h-4" />}
+                {loading ? "Calcul..." : "Lancer l'analyse"}
+              </button>
+
+              {error && (
+                <div className="mt-3 bg-red-50 border border-red-100 rounded-lg p-3 text-red-600 text-xs font-medium flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    {error.split('\n').map((line, i) => (
+                      <p key={i} className={i > 0 ? "mt-0.5 text-[10px] text-red-500" : ""}>{line}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
