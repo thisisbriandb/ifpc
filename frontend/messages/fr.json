@@ -1,0 +1,55 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "loading": "Chargement...",
+    "success": "Succès",
+    "error": "Erreur",
+    "back": "Retour",
+    "language": "Langue",
+    "french": "Français",
+    "english": "English"
+  },
+  "profile": {
+    "title": "Mon profil",
+    "personalInfo": "Informations personnelles",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Adresse e-mail",
+    "role": "Rôle",
+    "updateProfile": "Mettre à jour",
+    "profileUpdated": "Profil mis à jour avec succès.",
+    "changePassword": "Changer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "passwordMismatch": "Les mots de passe ne correspondent pas.",
+    "passwordChanged": "Mot de passe modifié avec succès.",
+    "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères.",
+    "preferences": "Préférences",
+    "language": "Langue de l'interface",
+    "languageChanged": "Langue modifiée."
+  },
+  "nav": {
+    "home": "Accueil",
+    "pasteurisation": "Pasteurisation",
+    "calculVP": "Calcul VP",
+    "aideBareme": "Aide barème",
+    "colorimetrie": "Colorimétrie",
+    "mesure": "Mesure",
+    "analyse": "Analyse",
+    "gestionCuves": "Gestion de cuves",
+    "suiviCuves": "Suivi cuves",
+    "assemblage": "Assemblage",
+    "admin": "Administration",
+    "profile": "Mon profil",
+    "logout": "Déconnexion",
+    "login": "Se connecter"
+  },
+  "roles": {
+    "ADMIN": "Administrateur",
+    "EXPERT": "Expert",
+    "USER": "Utilisateur",
+    "PENDING": "En attente"
+  }
+}

@@ -50,6 +50,18 @@ export function logout() {
   clearToken();
 }
 
+// ── Profile ─────────────────────────────────────────────────────────────────
+
+export async function updateProfile(data: { firstName?: string; lastName?: string }) {
+  const response = await api.put("/auth/profile", data);
+  return response.data;
+}
+
+export async function changePassword(data: { currentPassword: string; newPassword: string }) {
+  const response = await api.put("/auth/password", data);
+  return response.data;
+}
+
 // ── Admin ───────────────────────────────────────────────────────────────────
 
 export async function getUsers() {

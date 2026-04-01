@@ -183,19 +183,27 @@ export default function Sidebar() {
         {!isLoading && (
           user ? (
             collapsed ? (
-              <button onClick={handleLogout} title="Déconnexion" className="w-full flex justify-center p-2 text-gray-400 hover:text-red-500 rounded-lg transition-colors">
-                <LogOut className="w-4 h-4" />
-              </button>
+              <div className="flex flex-col items-center gap-1.5">
+                <Link href="/profil" title="Mon profil" className="p-2 text-gray-400 hover:text-brand-primary rounded-lg transition-colors">
+                  <User className="w-4 h-4" />
+                </Link>
+                <button onClick={handleLogout} title="Déconnexion" className="p-2 text-gray-400 hover:text-red-500 rounded-lg transition-colors">
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
             ) : (
-              <div className="flex items-center gap-2 px-1">
-                <div className="w-7 h-7 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center text-[10px] font-bold shrink-0">
-                  {user.firstName.charAt(0)}{user.lastName.charAt(0)}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[11px] font-semibold text-gray-700 truncate">{user.firstName} {user.lastName}</p>
-                </div>
-                <button onClick={handleLogout} title="Déconnexion" className="p-1.5 text-gray-300 hover:text-red-500 rounded transition-colors shrink-0">
+              <div className="space-y-1.5">
+                <Link href="/profil" className="flex items-center gap-2 px-1 py-1 rounded-lg hover:bg-gray-50 transition-colors group">
+                  <div className="w-7 h-7 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center text-[10px] font-bold shrink-0">
+                    {user.firstName.charAt(0)}{user.lastName.charAt(0)}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] font-semibold text-gray-700 truncate group-hover:text-brand-primary transition-colors">{user.firstName} {user.lastName}</p>
+                  </div>
+                </Link>
+                <button onClick={handleLogout} className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] text-gray-400 hover:text-red-500 hover:bg-red-50/50 transition-colors">
                   <LogOut className="w-3.5 h-3.5" />
+                  Déconnexion
                 </button>
               </div>
             )

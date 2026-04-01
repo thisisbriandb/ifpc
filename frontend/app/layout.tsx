@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/Navbar";
 import MainContent from "@/components/MainContent";
 import { SidebarProvider } from "@/lib/sidebar-context";
+import { I18nProvider } from "@/lib/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <SidebarProvider>
-          <Sidebar />
-          <MainContent>{children}</MainContent>
-        </SidebarProvider>
+        <I18nProvider>
+          <SidebarProvider>
+            <Sidebar />
+            <MainContent>{children}</MainContent>
+          </SidebarProvider>
+        </I18nProvider>
       </body>
     </html>
   );

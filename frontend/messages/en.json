@@ -1,0 +1,55 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "back": "Back",
+    "language": "Language",
+    "french": "Français",
+    "english": "English"
+  },
+  "profile": {
+    "title": "My Profile",
+    "personalInfo": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "role": "Role",
+    "updateProfile": "Update",
+    "profileUpdated": "Profile updated successfully.",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "passwordMismatch": "Passwords do not match.",
+    "passwordChanged": "Password changed successfully.",
+    "passwordTooShort": "Password must be at least 6 characters.",
+    "preferences": "Preferences",
+    "language": "Interface Language",
+    "languageChanged": "Language changed."
+  },
+  "nav": {
+    "home": "Home",
+    "pasteurisation": "Pasteurisation",
+    "calculVP": "VP Calculation",
+    "aideBareme": "Scale Guide",
+    "colorimetrie": "Colorimetry",
+    "mesure": "Measurement",
+    "analyse": "Analysis",
+    "gestionCuves": "Tank Management",
+    "suiviCuves": "Tank Tracking",
+    "assemblage": "Blending",
+    "admin": "Administration",
+    "profile": "My Profile",
+    "logout": "Sign Out",
+    "login": "Sign In"
+  },
+  "roles": {
+    "ADMIN": "Administrator",
+    "EXPERT": "Expert",
+    "USER": "User",
+    "PENDING": "Pending"
+  }
+}

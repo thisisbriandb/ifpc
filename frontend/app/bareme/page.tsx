@@ -125,10 +125,18 @@ export default function BaremePage() {
 
           <div className="border-t border-gray-100" />
 
+          {/* T° consigne */}
+          <div>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">T° consigne (°C)</p>
+            <input type="number" step="1" min="50" max="100" value={tConsigne}
+              onChange={e => setTConsigne(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-bold text-brand-primary outline-none focus:border-brand-primary" />
+          </div>
+
           {/* Pasteurisateur */}
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Pasteurisateur</p>
-            <div className="flex gap-1.5 mb-2">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Type de pasteurisateur</p>
+            <div className="flex gap-1.5">
               {[["Flash", "flash"], ["Tunnel", "tunnel"]].map(([label, val]) => (
                 <button key={val as string} onClick={() => setPasteType(val as "flash" | "tunnel")}
                   className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
@@ -137,10 +145,6 @@ export default function BaremePage() {
                 </button>
               ))}
             </div>
-            <p className="text-[10px] text-gray-400 mb-1">T° consigne (°C)</p>
-            <input type="number" step="1" min="50" max="100" value={tConsigne}
-              onChange={e => setTConsigne(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-bold text-brand-primary outline-none focus:border-brand-primary" />
           </div>
 
           {/* Expert — microorganisme parameterization */}
