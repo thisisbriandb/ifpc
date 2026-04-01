@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { AlertTriangle, Info, Flame } from "lucide-react";
+import { AlertTriangle, Info, Timer, Thermometer, FlaskConical, ShieldCheck } from "lucide-react";
 
 // ── Données de référence ──────────────────────────────────────────────────
 
@@ -21,13 +21,6 @@ const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }>
   cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "levures",                          vp_cible: 5  },
   autre:            { nom: "Autre",              micro: "alicyclobacillus_acidoterrestris", vp_cible: 15 },
 };
-
-function computeBareme(tRef: number, z: number, vpCible: number) {
-  return [60, 63, 65, 68, 70, 72, 75, 78, 80, 85, 90, 95].map((t) => {
-    const L = Math.pow(10, (t - tRef) / z);
-    return { t, min: +(vpCible / L).toFixed(3), sec: +((vpCible / L) * 60).toFixed(1), L: +L.toFixed(4) };
-  });
-}
 
 // ── Page ──────────────────────────────────────────────────────────────────
 
@@ -57,9 +50,8 @@ export default function BaremePage() {
     if (!tC) return null;
     const L = Math.pow(10, (tC - tRef) / z);
     const holdMin = vp / L;
-    const baremes = computeBareme(tRef, z, vp);
-    return { micro, tRef, z, vp: +vp.toFixed(2), tC, holdMin, holdSec: holdMin * 60, baremes };
-  }, [productType, trouble, pasteType, tConsigne, microKey, customTref, customZ]);
+    return { micro, tRef, z, vp: +vp.toFixed(2), tC, L: +L.toFixed(4), holdMin, holdSec: holdMin * 60 };
+  }, [productType, trouble, tConsigne, microKey, customTref, customZ]);
 
   // Alertes
   const alertes = useMemo(() => {
@@ -72,6 +64,8 @@ export default function BaremePage() {
     if (alcN > 4) a.push({ type: "info", msg: `Alcool ${alcN}% vol. — protection partielle, la VP cible peut être abaissée en mode expert.` });
     return a;
   }, [computed, ph, alcool, pasteType]);
+
+  const produit = PRODUITS[productType];
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-[#F8FAFC]">
@@ -86,10 +80,10 @@ export default function BaremePage() {
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {/* Left — inputs */}
+        {/* Left — Demande */}
         <div className="w-72 flex-shrink-0 border-r border-gray-100 bg-white overflow-y-auto p-4 space-y-4">
 
-          {/* Produit */}
+          {/* Infos déclaratives — Produit */}
           <div>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Produit</p>
             <select value={productType} onChange={e => setProductType(e.target.value)}
@@ -98,7 +92,7 @@ export default function BaremePage() {
             </select>
           </div>
 
-          {/* Clarté */}
+          {/* Infos déclaratives — Clarté */}
           <div>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Clarté</p>
             <div className="flex gap-1.5">
@@ -112,23 +106,24 @@ export default function BaremePage() {
             </div>
           </div>
 
-          {/* Physico-chimie */}
+          {/* Infos déclaratives — Physico-chimie */}
           <div>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Physico-chimie</p>
             <div className="grid grid-cols-2 gap-2">
-              {[["pH", ph, setPh, "3.5", "0.1"], ["Alcool %", alcool, setAlcool, "4.5", "0.1"]].map(
-                ([label, val, set, ph_holder, step]) => (
-                  <div key={label as string}>
-                    <p className="text-[10px] text-gray-400 mb-1">{label as string}</p>
-                    <input type="number" step={step as string} placeholder={ph_holder as string}
-                      value={val as string}
-                      onChange={e => (set as any)(e.target.value)}
-                      className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-primary" />
-                  </div>
-                )
-              )}
+              <div>
+                <p className="text-[10px] text-gray-400 mb-1">pH</p>
+                <input type="number" step="0.1" placeholder="3.5" value={ph} onChange={e => setPh(e.target.value)}
+                  className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-primary" />
+              </div>
+              <div>
+                <p className="text-[10px] text-gray-400 mb-1">Alcool %</p>
+                <input type="number" step="0.1" placeholder="4.5" value={alcool} onChange={e => setAlcool(e.target.value)}
+                  className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-primary" />
+              </div>
             </div>
           </div>
+
+          <div className="border-t border-gray-100" />
 
           {/* Pasteurisateur */}
           <div>
@@ -148,108 +143,127 @@ export default function BaremePage() {
               className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-bold text-brand-primary outline-none focus:border-brand-primary" />
           </div>
 
-          {/* Expert */}
+          {/* Expert — microorganisme parameterization */}
           {expertMode && (
             <div className="border-t border-gray-100 pt-3 space-y-3">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Expert</p>
-              <select value={microKey} onChange={e => setMicroKey(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:border-brand-accent">
-                <option value="">— Micro-organisme par défaut —</option>
-                {Object.entries(MICROORGANISMES).map(([k, v]) => <option key={k} value={k}>{v.nom}</option>)}
-              </select>
+              <p className="text-[10px] font-bold text-brand-accent uppercase tracking-widest">Paramétrage expert</p>
+              <div>
+                <p className="text-[10px] text-gray-400 mb-1">Micro-organisme cible</p>
+                <select value={microKey} onChange={e => setMicroKey(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:border-brand-accent">
+                  <option value="">— Par défaut ({MICROORGANISMES[produit?.micro]?.nom}) —</option>
+                  {Object.entries(MICROORGANISMES).map(([k, v]) => <option key={k} value={k}>{v.nom}</option>)}
+                </select>
+              </div>
               <div className="grid grid-cols-2 gap-2">
-                {[["Tref (°C)", customTref, setCustomTref, "60"], ["Z (°C)", customZ, setCustomZ, "7"]].map(
-                  ([label, val, set, ph]) => (
-                    <div key={label as string}>
-                      <p className="text-[10px] text-gray-400 mb-1">{label as string}</p>
-                      <input type="number" step="0.1" placeholder={ph as string} value={val as string}
-                        onChange={e => (set as any)(e.target.value)}
-                        className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-accent" />
-                    </div>
-                  )
-                )}
+                <div>
+                  <p className="text-[10px] text-gray-400 mb-1">Tref (°C)</p>
+                  <input type="number" step="0.1" placeholder="60" value={customTref}
+                    onChange={e => setCustomTref(e.target.value)}
+                    className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-accent" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 mb-1">Z (°C)</p>
+                  <input type="number" step="0.1" placeholder="7" value={customZ}
+                    onChange={e => setCustomZ(e.target.value)}
+                    className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-accent" />
+                </div>
               </div>
             </div>
           )}
         </div>
 
-        {/* Right — résultats */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4">
+        {/* Right — Résultat */}
+        <div className="flex-1 overflow-y-auto p-5">
           {computed ? (
-            <>
-              {/* Recommandation */}
-              <div className="bg-white rounded-xl border border-gray-100 p-5">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Recommandation</p>
-                <p className="text-2xl font-extrabold text-brand-primary">
-                  {computed.tC}°C ·{" "}
-                  {computed.holdSec < 60
-                    ? `${computed.holdSec.toFixed(1)} s`
-                    : `${computed.holdMin.toFixed(2)} min`}
-                </p>
-                <div className="flex gap-4 mt-3 text-xs text-gray-400">
-                  <span>VP cible <strong className="text-gray-700">{computed.vp} UP</strong></span>
-                  <span>Tref <strong className="text-gray-700">{computed.tRef}°C</strong></span>
-                  <span>Z <strong className="text-gray-700">{computed.z}°C</strong></span>
-                  <span className="truncate">Micro <strong className="text-gray-700 italic">{computed.micro.nom}</strong></span>
+            <div className="max-w-xl mx-auto space-y-4">
+              {/* RÉSULTAT PRINCIPAL — la réponse directe */}
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <div className="px-6 py-5">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Résultat</p>
+                  <div className="flex items-end gap-6">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Thermometer className="w-5 h-5 text-brand-accent" />
+                        <span className="text-xs font-semibold text-gray-400">Température</span>
+                      </div>
+                      <p className="text-4xl font-extrabold text-gray-900">{computed.tC}<span className="text-lg text-gray-400 ml-0.5">°C</span></p>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Timer className="w-5 h-5 text-brand-primary" />
+                        <span className="text-xs font-semibold text-gray-400">Durée de maintien</span>
+                      </div>
+                      <p className="text-4xl font-extrabold text-brand-primary">
+                        {computed.holdSec < 60
+                          ? <>{computed.holdSec.toFixed(1)}<span className="text-lg text-gray-400 ml-1">sec</span></>
+                          : <>{computed.holdMin.toFixed(2)}<span className="text-lg text-gray-400 ml-1">min</span></>}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contexte compact */}
+                <div className="px-6 py-3 bg-gray-50 border-t border-gray-100 flex flex-wrap gap-x-5 gap-y-1 text-xs text-gray-400">
+                  <span>VP cible <strong className="text-gray-600">{computed.vp} UP</strong></span>
+                  <span>Taux létal <strong className="text-gray-600">{computed.L}</strong></span>
+                  <span>Procédé <strong className="text-gray-600">{pasteType === "flash" ? "Flash" : "Tunnel"}</strong></span>
+                  <span>{trouble ? "Trouble" : "Limpide"}</span>
                 </div>
               </div>
 
               {/* Alertes */}
-              {alertes.map((a, i) => {
-                const Icon = a.type === "info" ? Info : AlertTriangle;
-                const cls = a.type === "danger"
-                  ? "bg-red-50 border-red-100 text-red-700"
-                  : a.type === "warning"
-                  ? "bg-amber-50 border-amber-100 text-amber-700"
-                  : "bg-blue-50 border-blue-100 text-blue-700";
-                return (
-                  <div key={i} className={`flex items-start gap-2.5 p-3 rounded-lg border text-sm ${cls}`}>
-                    <Icon className="w-4 h-4 mt-0.5 shrink-0" />
-                    {a.msg}
-                  </div>
-                );
-              })}
-
-              {/* Table */}
-              <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-                <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
-                  <p className="text-sm font-bold text-gray-700">Table des barèmes</p>
-                  <span className="text-xs text-gray-400 flex items-center gap-1">
-                    <Flame className="w-3.5 h-3.5" /> L = 10<sup>(T−Tref)/Z</sup>
-                  </span>
+              {alertes.length > 0 && (
+                <div className="space-y-2">
+                  {alertes.map((a, i) => {
+                    const Icon = a.type === "info" ? Info : AlertTriangle;
+                    const cls = a.type === "danger"
+                      ? "bg-red-50 border-red-100 text-red-700"
+                      : a.type === "warning"
+                      ? "bg-amber-50 border-amber-100 text-amber-700"
+                      : "bg-blue-50 border-blue-100 text-blue-700";
+                    return (
+                      <div key={i} className={`flex items-start gap-2.5 p-3 rounded-lg border text-sm ${cls}`}>
+                        <Icon className="w-4 h-4 mt-0.5 shrink-0" />
+                        {a.msg}
+                      </div>
+                    );
+                  })}
                 </div>
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="bg-gray-50 text-left">
-                      {["T °C", "Durée (min)", "Durée (sec)", "Taux létal"].map(h => (
-                        <th key={h} className="px-5 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider">{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50">
-                    {computed.baremes.map(b => {
-                      const isActive = b.t === computed.tC;
-                      const isRef = b.t === computed.tRef;
-                      return (
-                        <tr key={b.t} className={isActive ? "bg-brand-primary/8 font-semibold" : isRef ? "bg-yellow-50/60" : "hover:bg-gray-50/40"}>
-                          <td className="px-5 py-2">
-                            {b.t}°C
-                            {isActive && <span className="ml-2 text-[10px] bg-brand-primary/20 text-brand-primary px-1.5 py-0.5 rounded-full">consigne</span>}
-                            {isRef && <span className="ml-2 text-[10px] bg-yellow-200 text-yellow-700 px-1.5 py-0.5 rounded-full">Tref</span>}
-                          </td>
-                          <td className="px-5 py-2 font-mono">{b.min < 0.01 ? "< 0.01" : b.min}</td>
-                          <td className="px-5 py-2 font-mono">{b.sec < 0.1 ? "< 0.1" : b.sec}</td>
-                          <td className="px-5 py-2 font-mono text-gray-400">{b.L}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              )}
+
+              {/* Recommandation — en bas, plus discret */}
+              <div className="bg-white rounded-xl border border-gray-100 p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <FlaskConical className="w-4 h-4 text-gray-400" />
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Paramètres de calcul</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="bg-gray-50 rounded-lg px-3 py-2">
+                    <p className="text-[10px] text-gray-400 mb-0.5">Micro-organisme</p>
+                    <p className="font-semibold text-gray-700 text-xs italic">{computed.micro.nom}</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg px-3 py-2">
+                    <p className="text-[10px] text-gray-400 mb-0.5">Produit</p>
+                    <p className="font-semibold text-gray-700 text-xs">{produit?.nom}</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg px-3 py-2">
+                    <p className="text-[10px] text-gray-400 mb-0.5">Tref</p>
+                    <p className="font-semibold text-gray-700 text-xs">{computed.tRef}°C</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg px-3 py-2">
+                    <p className="text-[10px] text-gray-400 mb-0.5">Z</p>
+                    <p className="font-semibold text-gray-700 text-xs">{computed.z}°C</p>
+                  </div>
+                </div>
               </div>
-            </>
+            </div>
           ) : (
-            <div className="h-full flex items-center justify-center text-gray-300 text-sm">
-              Renseignez les paramètres pour obtenir un barème.
+            <div className="h-full flex items-center justify-center">
+              <div className="text-center">
+                <ShieldCheck className="w-10 h-10 text-gray-200 mx-auto mb-3" />
+                <p className="text-sm text-gray-400">Renseignez les paramètres pour obtenir le barème.</p>
+              </div>
             </div>
           )}
         </div>
