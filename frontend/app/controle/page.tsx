@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useCallback, useEffect, Suspense } from "react";
-import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle, Plus, Trash2, HelpCircle, LogOut, User as UserIcon, Shield } from "lucide-react";
+import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle, Plus, Trash2, HelpCircle, LogOut, User as UserIcon, Shield, Pencil, Save } from "lucide-react";
 import ProductSelector from "@/components/ProductSelector";
 import { KPICards } from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
-import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById } from "@/lib/api";
+import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById, getHelpText, updateHelpText } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
 import { useSearchParams } from "next/navigation";
 import AuthModal from "@/components/AuthModal";
@@ -51,6 +51,21 @@ export default function ControlePage() {
   );
 }
 
+const DEFAULT_HELP_TEXT = `Qu'est-ce que la VP ?
+La Valeur Pasteurisatrice (VP) quantifie l'effet létal d'un traitement thermique sur les microorganismes cibles. Elle s'exprime en UP (Unités de Pasteurisation) et est calculée par la méthode de Bigelow.
+
+Comment utiliser cet outil ?
+1. Importez vos données : fichier Excel/CSV, collé ou saisie manuelle
+2. Choisissez le produit et les paramètres de pasteurisation
+3. Lancez l'analyse pour obtenir la VP et le diagnostic
+
+Interprétation des résultats
+• Conforme : la VP atteint ou dépasse la cible
+• Vigilance : la VP est proche de la cible
+• Insuffisant : la VP est en dessous de la cible
+
+Mode Expert : Réservé aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoométrique.`;
+
 function ControlePageInner() {
   const searchParams = useSearchParams();
 
@@ -72,6 +87,10 @@ function ControlePageInner() {
 
   const [vpCibleConfig, setVpCibleConfig] = useState<Record<string, number>>({});
   const [showHelp, setShowHelp] = useState(false);
+  const [helpContent, setHelpContent] = useState<string | null>(null);
+  const [helpEditing, setHelpEditing] = useState(false);
+  const [helpDraft, setHelpDraft] = useState("");
+  const [helpSaving, setHelpSaving] = useState(false);
 
   const [file, setFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -133,6 +152,29 @@ function ControlePageInner() {
       })
       .catch(() => {});
   }, []);
+
+  // Fetch help text when modal opens
+  useEffect(() => {
+    if (!showHelp) return;
+    getHelpText("calcul_vp")
+      .then((res) => {
+        if (res.content) setHelpContent(res.content);
+      })
+      .catch(() => {});
+  }, [showHelp]);
+
+  const handleHelpSave = async () => {
+    setHelpSaving(true);
+    try {
+      await updateHelpText("calcul_vp", helpDraft);
+      setHelpContent(helpDraft);
+      setHelpEditing(false);
+    } catch {
+      // silently fail
+    } finally {
+      setHelpSaving(false);
+    }
+  };
 
   // Charger une analyse historique depuis localStorage ou ?history=ID
   useEffect(() => {
@@ -593,61 +635,71 @@ function ControlePageInner() {
       {/* HELP MODAL */}
       {showHelp && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-gray-900/30 backdrop-blur-sm" onClick={() => setShowHelp(false)} />
+          <div className="absolute inset-0 bg-gray-900/30 backdrop-blur-sm" onClick={() => { setShowHelp(false); setHelpEditing(false); }} />
           <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 max-w-lg w-full mx-4 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
               <h3 className="font-bold text-gray-900 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-brand-primary" />
                 Aide &mdash; Calcul de la VP
               </h3>
-              <button onClick={() => setShowHelp(false)} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-1">
+                {user?.role === "ADMIN" && !helpEditing && (
+                  <button
+                    onClick={() => { setHelpEditing(true); setHelpDraft(helpContent || DEFAULT_HELP_TEXT); }}
+                    title="Modifier"
+                    className="p-1.5 text-gray-400 hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                )}
+                <button onClick={() => { setShowHelp(false); setHelpEditing(false); }} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-            <div className="p-6 space-y-4 text-sm text-gray-600 leading-relaxed">
-              <div>
-                <h4 className="font-bold text-gray-900 mb-1">Qu&apos;est-ce que la VP ?</h4>
-                <p>
-                  La <strong>Valeur Pasteurisatrice (VP)</strong> quantifie l&apos;effet l&eacute;tal d&apos;un traitement thermique sur les microorganismes cibles. Elle s&apos;exprime en <strong>UP (Unit&eacute;s de Pasteurisation)</strong> et est calcul&eacute;e par la m&eacute;thode de Bigelow.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-bold text-gray-900 mb-1">Comment utiliser cet outil ?</h4>
-                <ol className="list-decimal list-inside space-y-1 text-gray-500">
-                  <li><strong>Importez vos donn&eacute;es</strong> : fichier Excel/CSV, coll&eacute; ou saisie manuelle</li>
-                  <li><strong>Choisissez le produit</strong> et les param&egrave;tres de pasteurisation</li>
-                  <li><strong>Lancez l&apos;analyse</strong> pour obtenir la VP et le diagnostic</li>
-                </ol>
-              </div>
-              <div>
-                <h4 className="font-bold text-gray-900 mb-1">Interpr&eacute;tation des r&eacute;sultats</h4>
-                <div className="grid grid-cols-3 gap-2 mt-2">
-                  <div className="flex items-center gap-2 bg-green-50 rounded-lg px-3 py-2">
-                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
-                    <span className="text-xs font-bold text-green-700">Conforme</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-yellow-50 rounded-lg px-3 py-2">
-                    <AlertTriangle className="w-4 h-4 text-yellow-600 shrink-0" />
-                    <span className="text-xs font-bold text-yellow-700">Vigilance</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-red-50 rounded-lg px-3 py-2">
-                    <X className="w-4 h-4 text-red-500 shrink-0" />
-                    <span className="text-xs font-bold text-red-600">Insuffisant</span>
-                  </div>
+
+            {helpEditing ? (
+              <div className="p-6 space-y-3">
+                <p className="text-xs text-gray-400">Modifiez le texte d&apos;aide ci-dessous. Le contenu sera visible par tous les utilisateurs.</p>
+                <textarea
+                  value={helpDraft}
+                  onChange={(e) => setHelpDraft(e.target.value)}
+                  rows={14}
+                  className="w-full border border-gray-200 rounded-xl p-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary resize-y"
+                />
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleHelpSave}
+                    disabled={helpSaving}
+                    className="flex items-center gap-1.5 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors disabled:opacity-50"
+                  >
+                    {helpSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                    Enregistrer
+                  </button>
+                  <button
+                    onClick={() => setHelpEditing(false)}
+                    className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    Annuler
+                  </button>
                 </div>
               </div>
-              <div className="bg-blue-50 rounded-lg p-3 text-xs text-blue-700">
-                <strong>Mode Expert :</strong> R&eacute;serv&eacute; aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoom&eacute;trique.
+            ) : (
+              <div className="p-6 text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                {helpContent || DEFAULT_HELP_TEXT}
               </div>
-            </div>
-            <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/50">
-              <button
-                onClick={() => setShowHelp(false)}
-                className="w-full py-2.5 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors"
-              >
-                Compris
-              </button>
-            </div>
+            )}
+
+            {!helpEditing && (
+              <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/50">
+                <button
+                  onClick={() => setShowHelp(false)}
+                  className="w-full py-2.5 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors"
+                >
+                  Compris
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

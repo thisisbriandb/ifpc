@@ -94,6 +94,18 @@ export async function updateProductConfig(productType: string, vpCible: number, 
   return response.data;
 }
 
+// ── Help Text ────────────────────────────────────────────────────────────────
+
+export async function getHelpText(key: string): Promise<{ key: string; content: string | null }> {
+  const { data } = await api.get(`/config/help/${key}`);
+  return data;
+}
+
+export async function updateHelpText(key: string, content: string): Promise<{ key: string; content: string }> {
+  const { data } = await api.put(`/admin/help/${key}`, { content });
+  return data;
+}
+
 // ── Référentiels ────────────────────────────────────────────────────────────
 
 export async function getProduits() {

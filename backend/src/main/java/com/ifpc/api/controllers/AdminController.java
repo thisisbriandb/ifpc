@@ -1,8 +1,10 @@
 package com.ifpc.api.controllers;
 
+import com.ifpc.api.models.HelpText;
 import com.ifpc.api.models.ProductConfig;
 import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
+import com.ifpc.api.repositories.HelpTextRepository;
 import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ public class AdminController {
 
     private final UserRepository userRepository;
     private final ProductConfigRepository productConfigRepository;
+    private final HelpTextRepository helpTextRepository;
 
     // ── Admin-only endpoints ─────────────────────────────────────────────
 
@@ -118,10 +121,31 @@ public class AdminController {
         return ResponseEntity.ok(configs);
     }
 
+    // ── Help text (admin write, public read) ─────────────────────────────
+
+    @GetMapping("/api/config/help/{key}")
+    public ResponseEntity<HelpTextDto> getHelpText(@PathVariable String key) {
+        return helpTextRepository.findByTextKey(key)
+                .map(h -> ResponseEntity.ok(new HelpTextDto(h.getTextKey(), h.getContent())))
+                .orElse(ResponseEntity.ok(new HelpTextDto(key, null)));
+    }
+
+    @PutMapping("/api/admin/help/{key}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<HelpTextDto> updateHelpText(@PathVariable String key, @RequestBody HelpTextUpdateRequest request) {
+        HelpText helpText = helpTextRepository.findByTextKey(key)
+                .orElse(HelpText.builder().textKey(key).content("").build());
+        helpText.setContent(request.content());
+        helpTextRepository.save(helpText);
+        return ResponseEntity.ok(new HelpTextDto(helpText.getTextKey(), helpText.getContent()));
+    }
+
     // ── DTOs ─────────────────────────────────────────────────────────────
 
     public record UserDto(Long id, String firstName, String lastName, String email, String role, boolean enabled) {}
     public record RoleUpdateRequest(String role) {}
     public record ProductConfigUpdateRequest(Double vpCible, String productName) {}
     public record ProductConfigDto(String productType, String productName, Double vpCible) {}
+    public record HelpTextDto(String key, String content) {}
+    public record HelpTextUpdateRequest(String content) {}
 }
