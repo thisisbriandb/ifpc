@@ -60,9 +60,9 @@ Comment utiliser cet outil ?
 3. Lancez l'analyse pour obtenir la VP et le diagnostic
 
 Interprétation des résultats
-• Conforme : la VP atteint ou dépasse la cible
-• Vigilance : la VP est proche de la cible
-• Insuffisant : la VP est en dessous de la cible
+• Conforme : la Valeur Pasteurisatrice atteint ou dépasse la cible
+• Vigilance : la Valeur Pasteurisatrice est proche de la cible
+• Insuffisant : la Valeur Pasteurisatrice est en dessous de la cible
 
 Mode Expert : Réservé aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoométrique.`;
 

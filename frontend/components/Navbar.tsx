@@ -21,7 +21,7 @@ const navGroups: NavGroup[] = [
     label: "Pasteurisation",
     icon: Thermometer,
     children: [
-      { href: "/controle", label: "Calcul VP" },
+      { href: "/controle", label: "Calcul Valeur Pasteurisatrice" },
       { href: "/bareme", label: "Aide barème" },
     ],
   },
