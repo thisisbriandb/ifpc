@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "axios": "^1.6.8",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
     "next-intl": "^4.8.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
     "recharts": "^2.12.7",
     "zustand": "^5.0.12"
   },

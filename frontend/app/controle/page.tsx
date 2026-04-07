@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useCallback, useEffect, Suspense } from "react";
-import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle, Plus, Trash2, HelpCircle, LogOut, User as UserIcon, Shield, Pencil, Save } from "lucide-react";
+import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle, Plus, Trash2, HelpCircle, LogOut, User as UserIcon, Shield, Pencil, Save, Eye } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import ProductSelector from "@/components/ProductSelector";
 import { KPICards } from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
@@ -91,6 +92,7 @@ function ControlePageInner() {
   const [helpEditing, setHelpEditing] = useState(false);
   const [helpDraft, setHelpDraft] = useState("");
   const [helpSaving, setHelpSaving] = useState(false);
+  const [helpPreview, setHelpPreview] = useState(false);
 
   const [file, setFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -660,13 +662,44 @@ function ControlePageInner() {
 
             {helpEditing ? (
               <div className="p-6 space-y-3">
-                <p className="text-xs text-gray-400">Modifiez le texte d&apos;aide ci-dessous. Le contenu sera visible par tous les utilisateurs.</p>
-                <textarea
-                  value={helpDraft}
-                  onChange={(e) => setHelpDraft(e.target.value)}
-                  rows={14}
-                  className="w-full border border-gray-200 rounded-xl p-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary resize-y"
-                />
+                {/* Edit / Preview tabs */}
+                <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-lg w-fit">
+                  <button
+                    onClick={() => setHelpPreview(false)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                      !helpPreview ? "bg-white text-gray-800 shadow-sm" : "text-gray-400 hover:text-gray-600"
+                    }`}
+                  >
+                    <Pencil className="w-3 h-3" />
+                    Éditer
+                  </button>
+                  <button
+                    onClick={() => setHelpPreview(true)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                      helpPreview ? "bg-white text-gray-800 shadow-sm" : "text-gray-400 hover:text-gray-600"
+                    }`}
+                  >
+                    <Eye className="w-3 h-3" />
+                    Aperçu
+                  </button>
+                </div>
+
+                {helpPreview ? (
+                  <div className="min-h-[200px] border border-gray-200 rounded-xl p-4 prose prose-sm prose-gray max-w-none overflow-y-auto max-h-72">
+                    <ReactMarkdown>{helpDraft}</ReactMarkdown>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-xs text-gray-400">Markdown supporté : **gras**, *italique*, # titres, - listes, `code`…</p>
+                    <textarea
+                      value={helpDraft}
+                      onChange={(e) => setHelpDraft(e.target.value)}
+                      rows={13}
+                      className="w-full border border-gray-200 rounded-xl p-3 text-sm text-gray-700 font-mono focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary resize-y"
+                    />
+                  </>
+                )}
+
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handleHelpSave}
@@ -677,7 +710,7 @@ function ControlePageInner() {
                     Enregistrer
                   </button>
                   <button
-                    onClick={() => setHelpEditing(false)}
+                    onClick={() => { setHelpEditing(false); setHelpPreview(false); }}
                     className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
                   >
                     Annuler
@@ -685,8 +718,8 @@ function ControlePageInner() {
                 </div>
               </div>
             ) : (
-              <div className="p-6 text-sm text-gray-600 leading-relaxed whitespace-pre-line">
-                {helpContent || DEFAULT_HELP_TEXT}
+              <div className="p-6 prose prose-sm prose-gray max-w-none overflow-y-auto max-h-[60vh]">
+                <ReactMarkdown>{helpContent || DEFAULT_HELP_TEXT}</ReactMarkdown>
               </div>
             )}
 
