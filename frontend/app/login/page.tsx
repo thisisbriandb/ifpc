@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { login, register } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
+import { useI18n } from "@/lib/i18n";
 
 type FormData = {
   firstName: string;
@@ -25,6 +26,7 @@ type FormData = {
 export default function LoginPage() {
   const router = useRouter();
   const { user, checkAuth } = useAuthStore();
+  const { t } = useI18n();
 
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -73,7 +75,7 @@ export default function LoginPage() {
 
       // Handle pending registration/login
       if (response?.pending) {
-        setPendingMessage(response.message || "Votre compte est en attente de validation par un administrateur.");
+        setPendingMessage(response.message || t("login.defaultError"));
         return;
       }
 
@@ -83,7 +85,7 @@ export default function LoginPage() {
       const message =
         (err as any)?.response?.data?.message ||
         (err as any)?.response?.data?.detail ||
-        "Une erreur est survenue. Réessayez.";
+        t("login.defaultError");
 
       setError(message);
     } finally {
@@ -113,17 +115,18 @@ export default function LoginPage() {
 
         <div className="relative z-10 space-y-6">
           <h1 className="text-4xl font-extrabold text-white">
-            Plateforme d&apos;aide à la prise de decision
+            {t("login.heroTitle")}
           </h1>
           <p className="text-white/70 text-lg max-w-sm">
-            Optimisez vos processus grâce à des outils avancés          </p>
+            {t("login.heroSubtitle")}
+          </p>
         </div>
 
         <div className="relative z-10 flex gap-8">
           {[
-            { val: "99.9%", label: "Précision" },
-            { val: "<1s", label: "Temps réel" },
-            { val: "3", label: "Accès" },
+            { val: "99.9%", label: t("login.statPrecision") },
+            { val: "<1s", label: t("login.statRealtime") },
+            { val: "3", label: t("login.statAccess") },
           ].map((item) => (
             <div key={item.label}>
               <p className="text-2xl font-bold text-white">{item.val}</p>
@@ -137,13 +140,11 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <h2 className="text-3xl font-extrabold text-gray-900 mb-2">
-            {isLogin ? "Bon retour" : "Créer un compte"}
+            {isLogin ? t("login.welcomeBack") : t("login.createAccount")}
           </h2>
 
           <p className="text-gray-400 mb-8 text-sm">
-            {isLogin
-              ? "Connectez-vous à votre espace."
-              : "Commencez dès maintenant."}
+            {isLogin ? t("login.signInSubtitle") : t("login.registerSubtitle")}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -157,7 +158,7 @@ export default function LoginPage() {
                       disabled={loading}
                       value={form[field]}
                       onChange={update(field)}
-                      placeholder={field === "firstName" ? "Prénom" : "Nom"}
+                      placeholder={field === "firstName" ? t("login.firstName") : t("login.lastName")}
                       className="input pl-10"
                     />
                   </div>
@@ -173,7 +174,7 @@ export default function LoginPage() {
                 type="email"
                 value={form.email}
                 onChange={update("email")}
-                placeholder="Email"
+                placeholder={t("login.email")}
                 className="input pl-10"
               />
             </div>
@@ -186,7 +187,7 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 value={form.password}
                 onChange={update("password")}
-                placeholder="Mot de passe"
+                placeholder={t("login.password")}
                 className="input pl-10 pr-11"
               />
               <button
@@ -220,7 +221,7 @@ export default function LoginPage() {
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
                 <>
-                  {isLogin ? "Connexion" : "Créer un compte"}
+                  {isLogin ? t("login.signIn") : t("login.register")}
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -228,7 +229,7 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-8 text-center text-sm text-gray-400">
-            {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}{" "}
+            {isLogin ? t("login.noAccount") : t("login.hasAccount")}{" "}
             <button
               onClick={() => {
                 setIsLogin((v) => !v);
@@ -237,7 +238,7 @@ export default function LoginPage() {
               }}
               className="text-brand-primary font-bold hover:underline transition-all"
             >
-              {isLogin ? "S'inscrire" : "Se connecter"}
+              {isLogin ? t("login.signUp") : t("login.connect")}
             </button>
           </p>
         </div>

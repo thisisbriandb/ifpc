@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { AlertTriangle, Info, Timer, Thermometer, FlaskConical, ShieldCheck } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 // ── Données de référence ──────────────────────────────────────────────────
 
@@ -25,6 +26,7 @@ const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }>
 // ── Page ──────────────────────────────────────────────────────────────────
 
 export default function BaremePage() {
+  const { t } = useI18n();
   const [productType, setProductType] = useState("jus_pomme");
   const [trouble, setTrouble] = useState(true);
   const [pasteType, setPasteType] = useState<"flash" | "tunnel">("flash");
@@ -59,11 +61,11 @@ export default function BaremePage() {
     const a: { type: "danger" | "warning" | "info"; msg: string }[] = [];
     const phN = parseFloat(ph);
     const alcN = parseFloat(alcool);
-    if (phN > 3.8) a.push({ type: "danger", msg: `pH élevé (${phN}) — risque fort de refermentation.` });
-    if (pasteType === "flash" && computed.holdMin > 1) a.push({ type: "warning", msg: `Temps de maintien > 1 min pour un flash : augmentez la T° consigne.` });
-    if (alcN > 4) a.push({ type: "info", msg: `Alcool ${alcN}% vol. — protection partielle, la VP cible peut être abaissée en mode expert.` });
+    if (phN > 3.8) a.push({ type: "danger", msg: t("bareme.alertHighPH", { ph: phN }) });
+    if (pasteType === "flash" && computed.holdMin > 1) a.push({ type: "warning", msg: t("bareme.alertFlashTime") });
+    if (alcN > 4) a.push({ type: "info", msg: t("bareme.alertAlcohol", { n: alcN }) });
     return a;
-  }, [computed, ph, alcool, pasteType]);
+  }, [computed, ph, alcool, pasteType, t]);
 
   const produit = PRODUITS[productType];
 
@@ -71,11 +73,11 @@ export default function BaremePage() {
     <div className="h-screen flex flex-col overflow-hidden bg-[#F8FAFC]">
       {/* Header */}
       <div className="flex-shrink-0 px-5 py-3 bg-white border-b border-gray-100 flex items-center justify-between">
-        <h1 className="font-bold text-gray-900 font-clash">Aide au barème</h1>
+        <h1 className="font-bold text-gray-900 font-clash">{t("bareme.title")}</h1>
         <label className="flex items-center gap-2 text-xs cursor-pointer select-none">
           <input type="checkbox" checked={expertMode} onChange={e => setExpertMode(e.target.checked)}
             className="w-3.5 h-3.5 rounded accent-brand-accent" />
-          <span className="font-semibold text-brand-accent">Mode expert</span>
+          <span className="font-semibold text-brand-accent">{t("bareme.expertMode")}</span>
         </label>
       </div>
 
@@ -85,7 +87,7 @@ export default function BaremePage() {
 
           {/* Infos déclaratives — Produit */}
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Produit</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{t("bareme.product")}</p>
             <select value={productType} onChange={e => setProductType(e.target.value)}
               className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-primary">
               {Object.entries(PRODUITS).map(([k, v]) => <option key={k} value={k}>{v.nom}</option>)}
@@ -94,7 +96,7 @@ export default function BaremePage() {
 
            {/* T° consigne */}
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">T° consigne (°C)</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{t("bareme.tempConsigne")}</p>
             <input type="number" step="1" min="50" max="100" value={tConsigne}
               onChange={e => setTConsigne(e.target.value)}
               className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm font-bold text-brand-primary outline-none focus:border-brand-primary" />
@@ -102,9 +104,9 @@ export default function BaremePage() {
 
           {/* Infos déclaratives — Clarté */}
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Clarté</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{t("bareme.clarity")}</p>
             <div className="flex gap-1.5">
-              {[["Trouble", true], ["Limpide", false]].map(([label, val]) => (
+              {[[t("bareme.turbid"), true], [t("bareme.clear"), false]].map(([label, val]) => (
                 <button key={String(val)} onClick={() => setTrouble(val as boolean)}
                   className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     trouble === val ? "bg-brand-primary text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
@@ -116,15 +118,15 @@ export default function BaremePage() {
 
           {/* Infos déclaratives — Physico-chimie */}
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Physico-chimie</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{t("bareme.physicoChem")}</p>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <p className="text-[10px] text-gray-400 mb-1">pH</p>
+                <p className="text-[10px] text-gray-400 mb-1">{t("bareme.ph")}</p>
                 <input type="number" step="0.1" placeholder="3.5" value={ph} onChange={e => setPh(e.target.value)}
                   className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-primary" />
               </div>
               <div>
-                <p className="text-[10px] text-gray-400 mb-1">Alcool %</p>
+                <p className="text-[10px] text-gray-400 mb-1">{t("bareme.alcohol")}</p>
                 <input type="number" step="0.1" placeholder="4.5" value={alcool} onChange={e => setAlcool(e.target.value)}
                   className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-primary" />
               </div>
@@ -137,9 +139,9 @@ export default function BaremePage() {
 
           {/* Pasteurisateur */}
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Type de pasteurisateur</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{t("bareme.pastType")}</p>
             <div className="flex gap-1.5">
-              {[["Flash", "flash"], ["Tunnel", "tunnel"]].map(([label, val]) => (
+              {[[t("bareme.flash"), "flash"], [t("bareme.tunnel"), "tunnel"]].map(([label, val]) => (
                 <button key={val as string} onClick={() => setPasteType(val as "flash" | "tunnel")}
                   className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     pasteType === val ? "bg-brand-accent text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
@@ -152,24 +154,24 @@ export default function BaremePage() {
           {/* Expert — microorganisme parameterization */}
           {expertMode && (
             <div className="border-t border-gray-100 pt-3 space-y-3">
-              <p className="text-[10px] font-bold text-brand-accent uppercase tracking-widest">Paramétrage expert</p>
+              <p className="text-[10px] font-bold text-brand-accent uppercase tracking-widest">{t("bareme.expertParams")}</p>
               <div>
-                <p className="text-[10px] text-gray-400 mb-1">Micro-organisme cible</p>
+                <p className="text-[10px] text-gray-400 mb-1">{t("bareme.microTarget")}</p>
                 <select value={microKey} onChange={e => setMicroKey(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:border-brand-accent">
-                  <option value="">— Par défaut ({MICROORGANISMES[produit?.micro]?.nom}) —</option>
+                  <option value="">{t("bareme.microDefault", { name: MICROORGANISMES[produit?.micro]?.nom })}</option>
                   {Object.entries(MICROORGANISMES).map(([k, v]) => <option key={k} value={k}>{v.nom}</option>)}
                 </select>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <p className="text-[10px] text-gray-400 mb-1">Tref (°C)</p>
+                  <p className="text-[10px] text-gray-400 mb-1">{t("bareme.tref")}</p>
                   <input type="number" step="0.1" placeholder="60" value={customTref}
                     onChange={e => setCustomTref(e.target.value)}
                     className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-accent" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-400 mb-1">Z (°C)</p>
+                  <p className="text-[10px] text-gray-400 mb-1">{t("bareme.z")}</p>
                   <input type="number" step="0.1" placeholder="7" value={customZ}
                     onChange={e => setCustomZ(e.target.value)}
                     className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm outline-none focus:border-brand-accent" />
@@ -186,24 +188,24 @@ export default function BaremePage() {
               {/* RÉSULTAT PRINCIPAL — la réponse directe */}
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 <div className="px-6 py-5">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Résultat</p>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">{t("bareme.result")}</p>
                   <div className="flex items-end gap-6">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <Thermometer className="w-5 h-5 text-brand-accent" />
-                        <span className="text-xs font-semibold text-gray-400">Température</span>
+                        <span className="text-xs font-semibold text-gray-400">{t("bareme.temperature")}</span>
                       </div>
                       <p className="text-4xl font-extrabold text-gray-900">{computed.tC}<span className="text-lg text-gray-400 ml-0.5">°C</span></p>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <Timer className="w-5 h-5 text-brand-primary" />
-                        <span className="text-xs font-semibold text-gray-400">Durée de maintien</span>
+                        <span className="text-xs font-semibold text-gray-400">{t("bareme.holdTime")}</span>
                       </div>
                       <p className="text-4xl font-extrabold text-brand-primary">
                         {computed.holdSec < 60
-                          ? <>{computed.holdSec.toFixed(1)}<span className="text-lg text-gray-400 ml-1">sec</span></>
-                          : <>{computed.holdMin.toFixed(2)}<span className="text-lg text-gray-400 ml-1">min</span></>}
+                          ? <>{computed.holdSec.toFixed(1)}<span className="text-lg text-gray-400 ml-1">{t("bareme.sec")}</span></>
+                          : <>{computed.holdMin.toFixed(2)}<span className="text-lg text-gray-400 ml-1">{t("bareme.min")}</span></>}
                       </p>
                     </div>
                   </div>
@@ -211,10 +213,10 @@ export default function BaremePage() {
 
                 {/* Contexte compact */}
                 <div className="px-6 py-3 bg-gray-50 border-t border-gray-100 flex flex-wrap gap-x-5 gap-y-1 text-xs text-gray-400">
-                  <span>VP cible <strong className="text-gray-600">{computed.vp} UP</strong></span>
-                  <span>Taux létal <strong className="text-gray-600">{computed.L}</strong></span>
-                  <span>Procédé <strong className="text-gray-600">{pasteType === "flash" ? "Flash" : "Tunnel"}</strong></span>
-                  <span>{trouble ? "Trouble" : "Limpide"}</span>
+                  <span>{t("bareme.vpCible")} <strong className="text-gray-600">{computed.vp} {t("bareme.up")}</strong></span>
+                  <span>{t("bareme.lethalRate")} <strong className="text-gray-600">{computed.L}</strong></span>
+                  <span>{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? t("bareme.flash") : t("bareme.tunnel")}</strong></span>
+                  <span>{trouble ? t("bareme.turbid") : t("bareme.clear")}</span>
                 </div>
               </div>
 
@@ -242,15 +244,15 @@ export default function BaremePage() {
               <div className="bg-white rounded-xl border border-gray-100 p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <FlaskConical className="w-4 h-4 text-gray-400" />
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Paramètres de calcul</p>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{t("bareme.calcParams")}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
-                    <p className="text-[10px] text-gray-400 mb-0.5">Micro-organisme</p>
+                    <p className="text-[10px] text-gray-400 mb-0.5">{t("bareme.micro")}</p>
                     <p className="font-semibold text-gray-700 text-xs italic">{computed.micro.nom}</p>
                   </div>
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
-                    <p className="text-[10px] text-gray-400 mb-0.5">Produit</p>
+                    <p className="text-[10px] text-gray-400 mb-0.5">{t("bareme.product")}</p>
                     <p className="font-semibold text-gray-700 text-xs">{produit?.nom}</p>
                   </div>
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
@@ -268,7 +270,7 @@ export default function BaremePage() {
             <div className="h-full flex items-center justify-center">
               <div className="text-center">
                 <ShieldCheck className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-                <p className="text-sm text-gray-400">Renseignez les paramètres pour obtenir le barème.</p>
+                <p className="text-sm text-gray-400">{t("bareme.emptyState")}</p>
               </div>
             </div>
           )}

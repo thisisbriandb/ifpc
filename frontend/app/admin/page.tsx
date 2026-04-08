@@ -11,6 +11,7 @@ import {
   Shield, ShieldCheck, ShieldAlert, Users, Loader2, Search,
   CheckCircle, XCircle, Save, Settings2, UserCheck, Package,
 } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 interface UserData {
   id: number;
@@ -22,19 +23,21 @@ interface UserData {
   lastLogin: string | null;
 }
 
-function formatLastLogin(iso: string | null): string {
-  if (!iso) return "Jamais";
-  const d = new Date(iso);
-  const now = new Date();
-  const diffMs = now.getTime() - d.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffH = Math.floor(diffMin / 60);
-  const diffD = Math.floor(diffH / 24);
-  if (diffMin < 1) return "À l'instant";
-  if (diffMin < 60) return `Il y a ${diffMin} min`;
-  if (diffH < 24) return `Il y a ${diffH}h`;
-  if (diffD < 7) return `Il y a ${diffD}j`;
-  return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+function makeFormatLastLogin(t: (k: string, p?: Record<string, string | number>) => string) {
+  return function formatLastLogin(iso: string | null): string {
+    if (!iso) return t("admin.never");
+    const d = new Date(iso);
+    const now = new Date();
+    const diffMs = now.getTime() - d.getTime();
+    const diffMin = Math.floor(diffMs / 60000);
+    const diffH = Math.floor(diffMin / 60);
+    const diffD = Math.floor(diffH / 24);
+    if (diffMin < 1) return t("admin.justNow");
+    if (diffMin < 60) return t("admin.minutesAgo", { n: diffMin });
+    if (diffH < 24) return t("admin.hoursAgo", { n: diffH });
+    if (diffD < 7) return t("admin.daysAgo", { n: diffD });
+    return d.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+  };
 }
 
 interface ProductConfigData {
@@ -44,11 +47,11 @@ interface ProductConfigData {
   vpCible: number;
 }
 
-const ROLE_META: Record<string, { label: string; badge: string; icon: any }> = {
-  ADMIN: { label: "Admin", badge: "bg-red-100 text-red-700", icon: ShieldAlert },
-  EXPERT: { label: "Expert", badge: "bg-orange-100 text-orange-700", icon: ShieldCheck },
-  USER: { label: "User", badge: "bg-gray-100 text-gray-600", icon: Users },
-  PENDING: { label: "En attente", badge: "bg-yellow-100 text-yellow-700", icon: Loader2 },
+const ROLE_BADGES: Record<string, { badge: string; icon: any }> = {
+  ADMIN:   { badge: "bg-red-100 text-red-700",    icon: ShieldAlert },
+  EXPERT:  { badge: "bg-orange-100 text-orange-700", icon: ShieldCheck },
+  USER:    { badge: "bg-gray-100 text-gray-600",  icon: Users },
+  PENDING: { badge: "bg-yellow-100 text-yellow-700", icon: Loader2 },
 };
 
 type Tab = "users" | "config" | "pending";
@@ -56,6 +59,8 @@ type Tab = "users" | "config" | "pending";
 export default function AdminPage() {
   const router = useRouter();
   const { user, isLoading } = useAuthStore();
+  const { t } = useI18n();
+  const formatLastLogin = makeFormatLastLogin(t);
   const [activeTab, setActiveTab] = useState<Tab>("pending");
 
   // Users state
@@ -116,7 +121,7 @@ export default function AdminPage() {
     try {
       await updateUserRole(userId, newRole);
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u).filter(u => u.role !== "ADMIN"));
-    } catch { alert("Erreur lors de la mise à jour."); }
+    } catch { alert(t("admin.updateError")); }
     finally { setUpdatingId(null); }
   };
 
@@ -125,17 +130,17 @@ export default function AdminPage() {
     try {
       await approveUser(userId);
       setPendingUsers(prev => prev.filter(u => u.id !== userId));
-    } catch { alert("Erreur lors de l&apos;approbation."); }
+    } catch { alert(t("admin.approveError")); }
     finally { setProcessingId(null); }
   };
 
   const handleReject = async (userId: number) => {
-    if (!confirm("Rejeter et supprimer cet utilisateur ?")) return;
+    if (!confirm(t("admin.confirmReject"))) return;
     setProcessingId(userId);
     try {
       await rejectUser(userId);
       setPendingUsers(prev => prev.filter(u => u.id !== userId));
-    } catch { alert("Erreur lors du rejet."); }
+    } catch { alert(t("admin.rejectError")); }
     finally { setProcessingId(null); }
   };
 
@@ -146,7 +151,7 @@ export default function AdminPage() {
       const config = configs.find(c => c.productType === productType);
       await updateProductConfig(productType, vpCible, config?.productName);
       setConfigs(prev => prev.map(c => c.productType === productType ? { ...c, vpCible } : c));
-    } catch { alert("Erreur lors de la sauvegarde."); }
+    } catch { alert(t("admin.saveError")); }
     finally { setSavingConfig(null); }
   };
 
@@ -163,9 +168,9 @@ export default function AdminPage() {
   if (!isAdmin) return null;
 
   const tabs: { id: Tab; label: string; icon: any; badge?: number }[] = [
-    { id: "pending", label: "Demandes", icon: UserCheck, badge: pendingUsers.length },
-    { id: "users", label: "Utilisateurs", icon: Users },
-    { id: "config", label: "Config Produits", icon: Package },
+    { id: "pending", label: t("admin.tabRequests"), icon: UserCheck, badge: pendingUsers.length },
+    { id: "users", label: t("admin.tabUsers"), icon: Users },
+    { id: "config", label: t("admin.tabConfig"), icon: Package },
   ];
 
   return (
@@ -178,8 +183,8 @@ export default function AdminPage() {
               <Shield className="w-5 h-5 text-red-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold text-gray-900">Administration</h1>
-              <p className="text-sm text-red-600 font-medium">Gestion de la plateforme IFPC</p>
+              <h1 className="text-2xl font-extrabold text-gray-900">{t("admin.title")}</h1>
+              <p className="text-sm text-red-600 font-medium">{t("admin.subtitle")}</p>
             </div>
           </div>
         </header>
@@ -216,7 +221,7 @@ export default function AdminPage() {
             <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
               <h3 className="font-bold text-gray-900 flex items-center gap-2">
                 <UserCheck className="w-5 h-5 text-yellow-600" />
-                Demandes d&apos;inscription en attente
+                {t("admin.pendingTitle")}
               </h3>
             </div>
             {pendingLoading ? (
@@ -224,7 +229,7 @@ export default function AdminPage() {
             ) : pendingUsers.length === 0 ? (
               <div className="p-12 text-center text-gray-400">
                 <UserCheck className="w-10 h-10 mx-auto mb-3 text-gray-200" />
-                <p className="font-medium">Aucune demande en attente</p>
+                <p className="font-medium">{t("admin.noPending")}</p>
               </div>
             ) : (
               <div className="divide-y divide-gray-50">
@@ -248,13 +253,13 @@ export default function AdminPage() {
                             onClick={() => handleApprove(u.id)}
                             className="flex items-center gap-1.5 px-3 py-2 bg-green-50 text-green-700 text-xs font-bold rounded-lg hover:bg-green-100 transition-colors"
                           >
-                            <CheckCircle className="w-4 h-4" /> Approuver
+                            <CheckCircle className="w-4 h-4" /> {t("admin.approve")}
                           </button>
                           <button
                             onClick={() => handleReject(u.id)}
                             className="flex items-center gap-1.5 px-3 py-2 bg-red-50 text-red-600 text-xs font-bold rounded-lg hover:bg-red-100 transition-colors"
                           >
-                            <XCircle className="w-4 h-4" /> Rejeter
+                            <XCircle className="w-4 h-4" /> {t("admin.reject")}
                           </button>
                         </>
                       )}
@@ -273,7 +278,7 @@ export default function AdminPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Rechercher par nom ou email..."
+                placeholder={t("admin.searchPlaceholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-red-100 focus:border-red-300 outline-none transition-all"
@@ -287,17 +292,18 @@ export default function AdminPage() {
                   <table className="w-full text-left text-sm">
                     <thead className="bg-gray-50 border-b border-gray-100">
                       <tr>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Utilisateur</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Email</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Rôle actuel</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Dernière connexion</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Modifier</th>
+                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colUser")}</th>
+                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colEmail")}</th>
+                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colRole")}</th>
+                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colLastLogin")}</th>
+                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">{t("admin.colEdit")}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
                       {filteredUsers.map(u => {
-                        const meta = ROLE_META[u.role] ?? ROLE_META.USER;
-                        const MetaIcon = meta.icon;
+                        const roleMeta = ROLE_BADGES[u.role] ?? ROLE_BADGES.USER;
+                        const roleLabel = t(`admin.roleLabels.${u.role}`) !== `admin.roleLabels.${u.role}` ? t(`admin.roleLabels.${u.role}`) : u.role;
+                        const RoleIcon = roleMeta.icon;
                         return (
                           <tr key={u.id} className="hover:bg-gray-50/40 transition-colors">
                             <td className="px-6 py-4">
@@ -310,9 +316,9 @@ export default function AdminPage() {
                             </td>
                             <td className="px-6 py-4 text-gray-400">{u.email}</td>
                             <td className="px-6 py-4">
-                              <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-md ${meta.badge}`}>
-                                <MetaIcon className="w-3.5 h-3.5" />
-                                {meta.label}
+                              <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-md ${roleMeta.badge}`}>
+                                <RoleIcon className="w-3.5 h-3.5" />
+                                {roleLabel}
                               </span>
                             </td>
                             <td className="px-6 py-4">
@@ -344,7 +350,7 @@ export default function AdminPage() {
                         );
                       })}
                       {filteredUsers.length === 0 && (
-                        <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400">Aucun utilisateur trouvé.</td></tr>
+                        <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400">{t("admin.noUsers")}</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -360,10 +366,10 @@ export default function AdminPage() {
             <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
               <h3 className="font-bold text-gray-900 flex items-center gap-2">
                 <Settings2 className="w-5 h-5 text-brand-primary" />
-                Configuration des VP cibles par produit
+                {t("admin.configTitle")}
               </h3>
               <p className="text-xs text-gray-400 mt-1">
-                Ces valeurs sont automatiquement utilis&eacute;es par la page Calcul de la VP.
+                {t("admin.configSubtitle")}
               </p>
             </div>
             {configsLoading ? (
@@ -381,7 +387,7 @@ export default function AdminPage() {
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1.5">
-                          <label className="text-xs text-gray-500 font-medium">VP cible (UP) :</label>
+                          <label className="text-xs text-gray-500 font-medium">{t("admin.vpCibleLabel")}</label>
                           <input
                             type="number"
                             step="0.5"
@@ -404,14 +410,14 @@ export default function AdminPage() {
                           ) : (
                             <Save className="w-3.5 h-3.5" />
                           )}
-                          Sauver
+                          {t("admin.saveCta")}
                         </button>
                       </div>
                     </div>
                   );
                 })}
                 {configs.length === 0 && (
-                  <div className="p-12 text-center text-gray-400">Aucune configuration trouv&eacute;e.</div>
+                  <div className="p-12 text-center text-gray-400">{t("admin.noConfig")}</div>
                 )}
               </div>
             )}

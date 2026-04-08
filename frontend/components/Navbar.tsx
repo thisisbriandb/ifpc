@@ -9,53 +9,59 @@ import {
 } from "lucide-react";
 import { useAuthStore } from "@/lib/store";
 import { useSidebar } from "@/lib/sidebar-context";
+import { useI18n } from "@/lib/i18n";
 
 interface NavGroup {
+  key: string;
   label: string;
   icon: any;
   children: { href: string; label: string }[];
 }
-
-const navGroups: NavGroup[] = [
-  {
-    label: "Pasteurisation",
-    icon: Thermometer,
-    children: [
-      { href: "/controle", label: "Calcul Valeur Pasteurisatrice" },
-      { href: "/bareme", label: "Aide barème" },
-    ],
-  },
-  {
-    label: "Colorimétrie",
-    icon: Palette,
-    children: [
-      { href: "/colorimetrie/mesure", label: "Mesure" },
-      { href: "/colorimetrie/analyse", label: "Analyse" },
-    ],
-  },
-  {
-    label: "Gestion de cuves",
-    icon: Container,
-    children: [
-      { href: "/cuves", label: "Suivi cuves" },
-      { href: "/cuves/assemblage", label: "Assemblage" },
-    ],
-  },
-];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, isLoading, checkAuth, logout } = useAuthStore();
   const { collapsed, setCollapsed } = useSidebar();
+  const { t } = useI18n();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   useEffect(() => { checkAuth(); }, [checkAuth]);
 
   const handleLogout = () => { logout(); router.push("/login"); };
 
-  const toggleGroup = (label: string) =>
-    setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }));
+  const toggleGroup = (key: string) =>
+    setOpenGroups((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const navGroups: NavGroup[] = [
+    {
+      key: "pasteurisation",
+      label: t("nav.pasteurisation"),
+      icon: Thermometer,
+      children: [
+        { href: "/controle", label: t("nav.calculVP") },
+        { href: "/bareme", label: t("nav.aideBareme") },
+      ],
+    },
+    {
+      key: "colorimetrie",
+      label: t("nav.colorimetrie"),
+      icon: Palette,
+      children: [
+        { href: "/colorimetrie/mesure", label: t("nav.mesure") },
+        { href: "/colorimetrie/analyse", label: t("nav.analyse") },
+      ],
+    },
+    {
+      key: "cuves",
+      label: t("nav.gestionCuves"),
+      icon: Container,
+      children: [
+        { href: "/cuves", label: t("nav.suiviCuves") },
+        { href: "/cuves/assemblage", label: t("nav.assemblage") },
+      ],
+    },
+  ];
 
   if (pathname === "/login") return null;
 
@@ -71,7 +77,7 @@ export default function Sidebar() {
       <Link href="/" className="flex items-center gap-2 px-3.5 h-12 shrink-0 border-b border-gray-50">
         <span className="font-bold text-base text-brand-primary shrink-0">IFPC</span>
         {!collapsed && (
-          <span className="text-[9px] text-gray-400 font-medium truncate leading-tight">Filière cidricole</span>
+          <span className="text-[9px] text-gray-400 font-medium truncate leading-tight">{t("nav.subTitle")}</span>
         )}
       </Link>
 
@@ -81,7 +87,7 @@ export default function Sidebar() {
         <div className="px-2 mb-1">
           <Link
             href="/"
-            title={collapsed ? "Accueil" : undefined}
+            title={collapsed ? t("nav.home") : undefined}
             className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${
               collapsed ? "justify-center" : ""
             } ${
@@ -91,7 +97,7 @@ export default function Sidebar() {
             }`}
           >
             <Home className="w-[18px] h-[18px] shrink-0" />
-            {!collapsed && <span>Accueil</span>}
+            {!collapsed && <span>{t("nav.home")}</span>}
           </Link>
         </div>
 
@@ -99,10 +105,10 @@ export default function Sidebar() {
         {navGroups.map((group) => {
           const GroupIcon = group.icon;
           const hasActiveChild = group.children.some((c) => pathname.startsWith(c.href));
-          const isOpen = openGroups[group.label] ?? hasActiveChild;
+          const isOpen = openGroups[group.key] ?? hasActiveChild;
 
           return (
-            <div key={group.label} className="px-2 mt-1">
+            <div key={group.key} className="px-2 mt-1">
               {collapsed ? (
                 /* Collapsed: only parent icon */
                 <Link
@@ -119,7 +125,7 @@ export default function Sidebar() {
               ) : (
                 <>
                   <button
-                    onClick={() => toggleGroup(group.label)}
+                    onClick={() => toggleGroup(group.key)}
                     className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[13px] font-semibold transition-colors ${
                       hasActiveChild ? "text-brand-primary" : "text-gray-400 hover:text-gray-600"
                     }`}
@@ -172,7 +178,7 @@ export default function Sidebar() {
               }`}
             >
               <Shield className="w-[18px] h-[18px] shrink-0" />
-              {!collapsed && <span>Administration</span>}
+              {!collapsed && <span>{t("nav.admin")}</span>}
             </Link>
           </div>
         )}
@@ -184,10 +190,10 @@ export default function Sidebar() {
           user ? (
             collapsed ? (
               <div className="flex flex-col items-center gap-1.5">
-                <Link href="/profil" title="Mon profil" className="p-2 text-gray-400 hover:text-brand-primary rounded-lg transition-colors">
+                <Link href="/profil" title={t("nav.profile")} className="p-2 text-gray-400 hover:text-brand-primary rounded-lg transition-colors">
                   <User className="w-4 h-4" />
                 </Link>
-                <button onClick={handleLogout} title="Déconnexion" className="p-2 text-gray-400 hover:text-red-500 rounded-lg transition-colors">
+                <button onClick={handleLogout} title={t("nav.logout")} className="p-2 text-gray-400 hover:text-red-500 rounded-lg transition-colors">
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
@@ -203,21 +209,21 @@ export default function Sidebar() {
                 </Link>
                 <button onClick={handleLogout} className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] text-gray-400 hover:text-red-500 hover:bg-red-50/50 transition-colors">
                   <LogOut className="w-3.5 h-3.5" />
-                  Déconnexion
+                  {t("nav.logout")}
                 </button>
               </div>
             )
           ) : (
             <Link
               href="/login"
-              title={collapsed ? "Connexion" : undefined}
+              title={collapsed ? t("nav.loginTitle") : undefined}
               className={`flex items-center justify-center gap-2 w-full text-[12px] font-semibold py-2 rounded-lg transition-colors ${
                 collapsed
                   ? "text-gray-400 hover:text-brand-primary"
                   : "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20"
               }`}
             >
-              {collapsed ? <User className="w-4 h-4" /> : "Se connecter"}
+              {collapsed ? <User className="w-4 h-4" /> : t("nav.login")}
             </Link>
           )
         )}

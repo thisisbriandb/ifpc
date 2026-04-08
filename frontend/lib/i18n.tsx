@@ -11,7 +11,7 @@ type Locale = "fr" | "en";
 interface I18nContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: (key: string) => string;
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 const I18nContext = createContext<I18nContextType>({
@@ -33,14 +33,20 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("ifpc_locale", l);
   };
 
-  const t = (key: string): string => {
+  const t = (key: string, params?: Record<string, string | number>): string => {
     const parts = key.split(".");
     let obj: any = messages[locale];
     for (const p of parts) {
       if (obj == null) return key;
       obj = obj[p];
     }
-    return typeof obj === "string" ? obj : key;
+    let result = typeof obj === "string" ? obj : key;
+    if (params) {
+      Object.entries(params).forEach(([k, v]) => {
+        result = result.replace(`{${k}}`, String(v));
+      });
+    }
+    return result;
   };
 
   return (
