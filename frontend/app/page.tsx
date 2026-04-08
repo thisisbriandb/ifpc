@@ -11,6 +11,7 @@ import {
   Shield, Users, Settings,
 } from "lucide-react";
 import { getHistory, type HistoryEntry } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -28,15 +29,15 @@ interface RecentActivity {
   resultJson?: string;
 }
 
-const STATUS_BADGE: Record<string, { bg: string; text: string; label: string }> = {
-  conforme:    { bg: "bg-green-50",   text: "text-green-700",  label: "Conforme" },
-  vigilance:   { bg: "bg-orange-50",  text: "text-orange-700", label: "Vigilance" },
-  insuffisant: { bg: "bg-red-50",     text: "text-red-700",    label: "Insuffisant" },
+const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
+  conforme:    { bg: "bg-green-50",   text: "text-green-700"  },
+  vigilance:   { bg: "bg-orange-50",  text: "text-orange-700" },
+  insuffisant: { bg: "bg-red-50",     text: "text-red-700"    },
 };
 
-const MODULE_META: Record<string, { label: string; icon: any; iconColor: string; pill: string }> = {
-  controle: { label: "Contrôle Valeur Pasteurisatrice",  icon: FlaskConical, iconColor: "text-brand-primary", pill: "bg-brand-primary/10 text-brand-primary" },
-  bareme:   { label: "Aide barème",  icon: BarChart3,    iconColor: "text-brand-accent",  pill: "bg-brand-accent/10 text-brand-accent"  },
+const MODULE_META: Record<string, { icon: any; iconColor: string; pill: string }> = {
+  controle: { icon: FlaskConical, iconColor: "text-brand-primary", pill: "bg-brand-primary/10 text-brand-primary" },
+  bareme:   { icon: BarChart3,    iconColor: "text-brand-accent",  pill: "bg-brand-accent/10 text-brand-accent"  },
 };
 
 // ── Module data ──────────────────────────────────────────────────────────────
@@ -58,45 +59,6 @@ interface Module {
   adminOnly?: boolean;
 }
 
-const modules: Module[] = [
-  {
-    key: "pasto",
-    label: "Pasteurisation",
-    icon: Thermometer,
-    gradient: "from-brand-primary to-brand-primary/80",
-    ring: "ring-brand-primary/20",
-    subColor: "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 border-brand-primary/20",
-    subModules: [
-      { href: "/controle", label: "Calcul VP", icon: FlaskConical },
-      { href: "/bareme",   label: "Barème",    icon: BarChart3 },
-    ],
-  },
-  {
-    key: "colori",
-    label: "Colorimétrie",
-    icon: Palette,
-    gradient: "from-brand-accent to-brand-sand",
-    ring: "ring-brand-accent/20",
-    subColor: "bg-brand-accent/10 text-brand-accent hover:bg-brand-accent/20 border-brand-accent/20",
-    subModules: [
-      { href: "#", label: "Mesure",  icon: Pipette },
-      { href: "#", label: "Analyse", icon: ScanEye },
-    ],
-  },
-  {
-    key: "admin",
-    label: "Administration",
-    icon: Shield,
-    gradient: "from-gray-600 to-gray-500",
-    ring: "ring-gray-200",
-    subColor: "bg-gray-100 text-gray-600 hover:bg-gray-200 border-gray-200",
-    adminOnly: true,
-    subModules: [
-      { href: "/admin",  label: "Utilisateurs", icon: Users },
-      { href: "/expert", label: "Config",       icon: Settings },
-    ],
-  },
-];
 
 // ── Arc Module Component ─────────────────────────────────────────────────────
 
@@ -194,8 +156,49 @@ const PREVIEW_COUNT = 3;
 export default function Home() {
   const { user } = useAuthStore();
   const router = useRouter();
+  const { t } = useI18n();
   const [activities, setActivities] = useState<RecentActivity[]>([]);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+
+  const modules: Module[] = [
+    {
+      key: "pasto",
+      label: t("home.modules.pasteurisation"),
+      icon: Thermometer,
+      gradient: "from-brand-primary to-brand-primary/80",
+      ring: "ring-brand-primary/20",
+      subColor: "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 border-brand-primary/20",
+      subModules: [
+        { href: "/controle", label: t("home.modules.calculVP"), icon: FlaskConical },
+        { href: "/bareme",   label: t("home.modules.bareme"),   icon: BarChart3 },
+      ],
+    },
+    {
+      key: "colori",
+      label: t("home.modules.colorimetrie"),
+      icon: Palette,
+      gradient: "from-brand-accent to-brand-sand",
+      ring: "ring-brand-accent/20",
+      subColor: "bg-brand-accent/10 text-brand-accent hover:bg-brand-accent/20 border-brand-accent/20",
+      subModules: [
+        { href: "#", label: t("home.modules.mesure"),  icon: Pipette },
+        { href: "#", label: t("home.modules.analyse"), icon: ScanEye },
+      ],
+    },
+    {
+      key: "admin",
+      label: t("home.modules.admin"),
+      icon: Shield,
+      gradient: "from-gray-600 to-gray-500",
+      ring: "ring-gray-200",
+      subColor: "bg-gray-100 text-gray-600 hover:bg-gray-200 border-gray-200",
+      adminOnly: true,
+      subModules: [
+        { href: "/admin",  label: t("home.modules.users"),  icon: Users },
+        { href: "/expert", label: t("home.modules.config"), icon: Settings },
+      ],
+    },
+  ];
 
   useEffect(() => {
     let cancelled = false;
@@ -231,9 +234,9 @@ export default function Home() {
 
   const greeting = () => {
     const h = new Date().getHours();
-    if (h < 12) return "Bonjour";
-    if (h < 18) return "Bon après-midi";
-    return "Bonsoir";
+    if (h < 12) return t("home.greetingMorning");
+    if (h < 18) return t("home.greetingAfternoon");
+    return t("home.greetingEvening");
   };
 
   const visibleModules = modules.filter((m) => !m.adminOnly || user?.role === "ADMIN");
@@ -247,9 +250,7 @@ export default function Home() {
           <h1 className="text-2xl font-bold text-gray-900">
             {greeting()}{user ? `, ${user.firstName}` : ""}
           </h1>
-          <p className="text-gray-400 mt-1 text-sm">
-            Plateforme d&apos;aide à la décision · Filière cidricole
-          </p>
+          <p className="text-gray-400 mt-1 text-sm">{t("home.subtitle")}</p>
         </header>
 
         {/* Module arcs */}
@@ -264,7 +265,7 @@ export default function Home() {
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-gray-400" />
-              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Activités récentes</h2>
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("home.recentActivities")}</h2>
             </div>
             {activities.length > 0 && (
               <button
@@ -275,7 +276,7 @@ export default function Home() {
                 className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 transition-colors"
               >
                 <Trash2 className="w-3 h-3" />
-                Effacer
+                {t("home.clear")}
               </button>
             )}
           </div>
@@ -303,14 +304,14 @@ export default function Home() {
                         <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${meta.pill}`}>
                           <GroupIcon className="w-3.5 h-3.5" />
                         </div>
-                        <span className="text-xs font-bold text-gray-700 tracking-wide">{meta.label}</span>
-                        <span className="text-[10px] text-gray-400 font-medium ml-1">— récents en premier</span>
-                        <span className="ml-auto text-[11px] font-semibold text-gray-400">{items.length} entrée{items.length > 1 ? "s" : ""}</span>
+                        <span className="text-xs font-bold text-gray-700 tracking-wide">{t(`home.moduleMeta.${type}`)}</span>
+                        <span className="text-[10px] text-gray-400 font-medium ml-1">— {t("home.recentFirst")}</span>
+                        <span className="ml-auto text-[11px] font-semibold text-gray-400">{items.length} {items.length > 1 ? t("home.entries") : t("home.entry")}</span>
                       </div>
 
                       {/* Entries */}
                       {items.length === 0 ? (
-                        <div className="px-5 py-6 text-center text-xs text-gray-300 italic">Aucune analyse enregistrée</div>
+                        <div className="px-5 py-6 text-center text-xs text-gray-300 italic">{t("home.noEntries")}</div>
                       ) : (() => {
                         const isExpanded = expandedGroups[type] ?? false;
                         const visible = isExpanded ? items : items.slice(0, PREVIEW_COUNT);
@@ -372,9 +373,9 @@ export default function Home() {
                                       )}
                                     </div>
                                     <div className="flex items-center gap-2 shrink-0 ml-4">
-                                      {badge && (
+                                      {badge && a.statut && (
                                         <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badge.bg} ${badge.text}`}>
-                                          {badge.label}
+                                          {t(`home.statut.${a.statut}`)}
                                         </span>
                                       )}
                                       <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
@@ -391,8 +392,8 @@ export default function Home() {
                                 className="w-full py-2.5 text-[11px] font-semibold text-gray-400 hover:text-brand-primary hover:bg-gray-50/60 transition-colors border-t border-gray-50"
                               >
                                 {isExpanded
-                                  ? "▲ Réduire"
-                                  : `▼ Voir ${hiddenCount} autre${hiddenCount > 1 ? "s" : ""}`}
+                                  ? `▲ ${t("home.collapse")}`
+                                  : `▼ ${hiddenCount > 1 ? t("home.showMorePlural", { n: hiddenCount }) : t("home.showMore", { n: hiddenCount })}`}
                               </button>
                             )}
                           </>

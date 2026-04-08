@@ -144,6 +144,41 @@
     "alertFlashTime": "Temps de maintien > 1 min pour un flash : augmentez la T° consigne.",
     "alertAlcohol": "Alcool {n}% vol. — protection partielle, la VP cible peut être abaissée en mode expert."
   },
+  "home": {
+    "greetingMorning": "Bonjour",
+    "greetingAfternoon": "Bon après-midi",
+    "greetingEvening": "Bonsoir",
+    "subtitle": "Plateforme d'aide à la décision · Filière cidricole",
+    "recentActivities": "Activités récentes",
+    "clear": "Effacer",
+    "recentFirst": "récents en premier",
+    "entry": "entrée",
+    "entries": "entrées",
+    "noEntries": "Aucune analyse enregistrée",
+    "collapse": "Réduire",
+    "showMore": "Voir {n} autre",
+    "showMorePlural": "Voir {n} autres",
+    "modules": {
+      "pasteurisation": "Pasteurisation",
+      "calculVP": "Calcul VP",
+      "bareme": "Barème",
+      "colorimetrie": "Colorimétrie",
+      "mesure": "Mesure",
+      "analyse": "Analyse",
+      "admin": "Administration",
+      "users": "Utilisateurs",
+      "config": "Config"
+    },
+    "moduleMeta": {
+      "controle": "Contrôle Valeur Pasteurisatrice",
+      "bareme": "Aide barème"
+    },
+    "statut": {
+      "conforme": "Conforme",
+      "vigilance": "Vigilance",
+      "insuffisant": "Insuffisant"
+    }
+  },
   "roles": {
     "ADMIN": "Administrateur",
     "EXPERT": "Expert",

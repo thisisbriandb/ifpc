@@ -144,6 +144,41 @@
     "alertFlashTime": "Hold time > 1 min for flash: increase the target temperature.",
     "alertAlcohol": "Alcohol {n}% vol. — partial protection, target VP can be lowered in expert mode."
   },
+  "home": {
+    "greetingMorning": "Good morning",
+    "greetingAfternoon": "Good afternoon",
+    "greetingEvening": "Good evening",
+    "subtitle": "Decision support platform · Cider industry",
+    "recentActivities": "Recent activities",
+    "clear": "Clear",
+    "recentFirst": "most recent first",
+    "entry": "entry",
+    "entries": "entries",
+    "noEntries": "No analyses recorded",
+    "collapse": "Collapse",
+    "showMore": "Show {n} more",
+    "showMorePlural": "Show {n} more",
+    "modules": {
+      "pasteurisation": "Pasteurisation",
+      "calculVP": "VP Calculation",
+      "bareme": "Schedule",
+      "colorimetrie": "Colorimetry",
+      "mesure": "Measurement",
+      "analyse": "Analysis",
+      "admin": "Administration",
+      "users": "Users",
+      "config": "Config"
+    },
+    "moduleMeta": {
+      "controle": "Pasteurisation Value Control",
+      "bareme": "Schedule guide"
+    },
+    "statut": {
+      "conforme": "Compliant",
+      "vigilance": "Caution",
+      "insuffisant": "Insufficient"
+    }
+  },
   "roles": {
     "ADMIN": "Administrator",
     "EXPERT": "Expert",
