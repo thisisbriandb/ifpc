@@ -19,6 +19,22 @@ interface UserData {
   email: string;
   role: string;
   enabled: boolean;
+  lastLogin: string | null;
+}
+
+function formatLastLogin(iso: string | null): string {
+  if (!iso) return "Jamais";
+  const d = new Date(iso);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffH = Math.floor(diffMin / 60);
+  const diffD = Math.floor(diffH / 24);
+  if (diffMin < 1) return "À l'instant";
+  if (diffMin < 60) return `Il y a ${diffMin} min`;
+  if (diffH < 24) return `Il y a ${diffH}h`;
+  if (diffD < 7) return `Il y a ${diffD}j`;
+  return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
 }
 
 interface ProductConfigData {
@@ -274,6 +290,7 @@ export default function AdminPage() {
                         <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Utilisateur</th>
                         <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Email</th>
                         <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Rôle actuel</th>
+                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Dernière connexion</th>
                         <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Modifier</th>
                       </tr>
                     </thead>
@@ -298,6 +315,16 @@ export default function AdminPage() {
                                 {meta.label}
                               </span>
                             </td>
+                            <td className="px-6 py-4">
+                              <span
+                                title={u.lastLogin ? new Date(u.lastLogin).toLocaleString("fr-FR") : ""}
+                                className={`text-xs font-medium ${
+                                  u.lastLogin ? "text-gray-500" : "text-gray-300 italic"
+                                }`}
+                              >
+                                {formatLastLogin(u.lastLogin)}
+                              </span>
+                            </td>
                             <td className="px-6 py-4 text-right">
                               {updatingId === u.id ? (
                                 <Loader2 className="w-4 h-4 animate-spin text-gray-400 ml-auto" />
@@ -317,7 +344,7 @@ export default function AdminPage() {
                         );
                       })}
                       {filteredUsers.length === 0 && (
-                        <tr><td colSpan={4} className="px-6 py-12 text-center text-gray-400">Aucun utilisateur trouvé.</td></tr>
+                        <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400">Aucun utilisateur trouvé.</td></tr>
                       )}
                     </tbody>
                   </table>

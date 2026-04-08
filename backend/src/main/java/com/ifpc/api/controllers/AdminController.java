@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = userRepository.findAll().stream()
-                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole().name(), user.isEnabled()))
+                .map(user -> new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole().name(), user.isEnabled(), user.getLastLogin()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
@@ -58,7 +59,7 @@ public class AdminController {
     public ResponseEntity<List<UserDto>> getPendingUsers() {
         List<UserDto> pending = userRepository.findAll().stream()
                 .filter(u -> u.getRole() == Role.PENDING)
-                .map(u -> new UserDto(u.getId(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getRole().name(), u.isEnabled()))
+                .map(u -> new UserDto(u.getId(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getRole().name(), u.isEnabled(), u.getLastLogin()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(pending);
     }
@@ -142,7 +143,7 @@ public class AdminController {
 
     // ── DTOs ─────────────────────────────────────────────────────────────
 
-    public record UserDto(Long id, String firstName, String lastName, String email, String role, boolean enabled) {}
+    public record UserDto(Long id, String firstName, String lastName, String email, String role, boolean enabled, LocalDateTime lastLogin) {}
     public record RoleUpdateRequest(String role) {}
     public record ProductConfigUpdateRequest(Double vpCible, String productName) {}
     public record ProductConfigDto(String productType, String productName, Double vpCible) {}
