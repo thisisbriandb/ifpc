@@ -170,7 +170,7 @@
       "config": "Config"
     },
     "moduleMeta": {
-      "controle": "Contrôle Valeur Pasteurisatrice",
+      "controle": "Calcul Valeur Pasteurisatrice",
       "bareme": "Aide barème"
     },
     "statut": {

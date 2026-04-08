@@ -10,7 +10,6 @@ const FALLBACK_PRODUITS = [
   { id: "cidre_demi_sec", nom: "Cidre demi-sec" },
   { id: "cidre_brut", nom: "Cidre brut" },
   { id: "cidre_extra_brut", nom: "Cidre extra-brut" },
-  { id: "jus_poire", nom: "Jus de poire" },
 ];
 
 const FALLBACK_PROCEDES = [

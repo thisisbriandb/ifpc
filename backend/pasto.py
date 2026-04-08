@@ -5,40 +5,74 @@ from typing import Dict, List, Optional, Tuple
 # Base de données des microorganismes (Tref en °C, Z en °C, VP cible en UP)
 # ---------------------------------------------------------------------------
 MICROORGANISMES: Dict[str, Dict] = {
-    "alicyclobacillus_acidoterrestris": {
+    # Alicyclobacillus acidoterrestris — jus de pomme
+    "alicyclo_std": {
         "nom": "Alicyclobacillus acidoterrestris",
-        "t_ref": 60.0,
-        "z": 7.0,
-        "vp_cible_min": 15.0,
-        "description": "Bactérie thermorésistante des jus acides",
+        "t_ref": 95.0,
+        "z": 10.9,
+        "d_ref": 20.8,
+        "vp_cible_min": 104.0,
+        "description": "Réf. standard — D=20,8 min à 95°C",
     },
-    "levures": {
-        "nom": "Levures",
-        "t_ref": 60.0,
-        "z": 7.0,
-        "vp_cible_min": 5.0,
-        "description": "Levures de refermentation",
+    "alicyclo_res": {
+        "nom": "Alicyclobacillus acidoterrestris",
+        "t_ref": 95.0,
+        "z": 16.4,
+        "d_ref": 27.8,
+        "vp_cible_min": 139.0,
+        "description": "Réf. résistante — D=27,8 min à 95°C (défaut jus de pomme)",
     },
-    "moisissures": {
-        "nom": "Moisissures",
-        "t_ref": 60.0,
-        "z": 7.0,
-        "vp_cible_min": 10.0,
-        "description": "Moisissures thermorésistantes",
+    # Pathogènes (communs jus pomme + cidre)
+    "ecoli": {
+        "nom": "Escherichia coli",
+        "t_ref": 62.0,
+        "z": 6.0,
+        "d_ref": 1.5,
+        "vp_cible_min": 7.5,
+        "description": "Pathogène entérique — D=1,5 min à 62°C",
     },
+    "salmonella": {
+        "nom": "Salmonella",
+        "t_ref": 62.0,
+        "z": 6.0,
+        "d_ref": 0.5,
+        "vp_cible_min": 2.5,
+        "description": "Pathogène entérique — D=0,5 min à 62°C",
+    },
+    # Byssochlamys fulva — jus de pomme
     "byssochlamys_fulva": {
         "nom": "Byssochlamys fulva",
-        "t_ref": 60.0,
-        "z": 7.0,
-        "vp_cible_min": 20.0,
-        "description": "Moisissure thermorésistante des fruits",
+        "t_ref": 95.0,
+        "z": 7.1,
+        "d_ref": 1.8,
+        "vp_cible_min": 9.0,
+        "description": "Moisissure thermorésistante — D=1,8 min à 95°C",
     },
-    "lactobacilles": {
-        "nom": "Lactobacilles",
+    # Saccharomyces cerevisiae — jus de pomme
+    "saccharo_jus": {
+        "nom": "Saccharomyces cerevisiae",
         "t_ref": 60.0,
-        "z": 7.0,
-        "vp_cible_min": 5.0,
-        "description": "Bactéries lactiques d'altération",
+        "z": 4.0,
+        "d_ref": 22.5,
+        "vp_cible_min": 112.5,
+        "description": "Jus de pomme — D=22,5 min à 60°C",
+    },
+    # Saccharomyces cerevisiae — cidre
+    "saccharo_cidre_low": {
+        "nom": "Saccharomyces cerevisiae",
+        "t_ref": 60.0,
+        "z": 4.0,
+        "d_ref": 0.4,
+        "vp_cible_min": 2.0,
+        "description": "Cidre — D=0,4 min à 60°C",
+    },
+    "saccharo_cidre": {
+        "nom": "Saccharomyces cerevisiae",
+        "t_ref": 60.0,
+        "z": 4.0,
+        "d_ref": 1.1,
+        "vp_cible_min": 5.5,
+        "description": "Cidre réf. — D=1,1 min à 60°C (défaut cidre)",
     },
 }
 
@@ -48,45 +82,38 @@ MICROORGANISMES: Dict[str, Dict] = {
 PRODUITS: Dict[str, Dict] = {
     "jus_pomme": {
         "nom": "Jus de pomme",
-        "microorganisme_defaut": "alicyclobacillus_acidoterrestris",
-        "vp_cible_min": 15.0,
+        "microorganisme_defaut": "alicyclo_res",
+        "vp_cible_min": 139.0,
         "ph_typique": 3.5,
         "description": "Jus de pomme pasteurisé",
     },
     "cidre_doux": {
         "nom": "Cidre doux",
-        "microorganisme_defaut": "levures",
-        "vp_cible_min": 10.0,
+        "microorganisme_defaut": "saccharo_cidre",
+        "vp_cible_min": 5.5,
         "ph_typique": 3.6,
         "description": "Cidre doux (< 3% vol.)",
     },
     "cidre_demi_sec": {
         "nom": "Cidre demi-sec",
-        "microorganisme_defaut": "levures",
-        "vp_cible_min": 8.0,
+        "microorganisme_defaut": "saccharo_cidre",
+        "vp_cible_min": 5.5,
         "ph_typique": 3.5,
         "description": "Cidre demi-sec (3-4% vol.)",
     },
     "cidre_brut": {
         "nom": "Cidre brut",
-        "microorganisme_defaut": "levures",
-        "vp_cible_min": 5.0,
+        "microorganisme_defaut": "saccharo_cidre",
+        "vp_cible_min": 5.5,
         "ph_typique": 3.4,
         "description": "Cidre brut (4-5% vol.)",
     },
     "cidre_extra_brut": {
         "nom": "Cidre extra-brut",
-        "microorganisme_defaut": "levures",
-        "vp_cible_min": 5.0,
+        "microorganisme_defaut": "saccharo_cidre",
+        "vp_cible_min": 5.5,
         "ph_typique": 3.3,
         "description": "Cidre extra-brut (> 5% vol.)",
-    },
-    "jus_poire": {
-        "nom": "Jus de poire",
-        "microorganisme_defaut": "alicyclobacillus_acidoterrestris",
-        "vp_cible_min": 15.0,
-        "ph_typique": 3.8,
-        "description": "Jus de poire pasteurisé",
     },
 }
 

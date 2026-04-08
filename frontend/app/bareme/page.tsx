@@ -6,21 +6,23 @@ import { useI18n } from "@/lib/i18n";
 
 // ── Données de référence ──────────────────────────────────────────────────
 
-const MICROORGANISMES: Record<string, { nom: string; t_ref: number; z: number; vp_cible: number }> = {
-  alicyclobacillus_acidoterrestris: { nom: "Alicyclobacillus acidoterrestris", t_ref: 60, z: 7, vp_cible: 15 },
-  levures:           { nom: "Levures d'altération",  t_ref: 60, z: 7, vp_cible: 5  },
-  moisissures:       { nom: "Moisissures",           t_ref: 60, z: 7, vp_cible: 10 },
-  byssochlamys_fulva:{ nom: "Byssochlamys fulva",    t_ref: 60, z: 7, vp_cible: 20 },
-  lactobacilles:     { nom: "Lactobacilles",         t_ref: 60, z: 7, vp_cible: 5  },
+const MICROORGANISMES: Record<string, { nom: string; t_ref: number; z: number; d_ref: number; vp_cible: number }> = {
+  alicyclo_std:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 10.9, d_ref: 20.8, vp_cible: 104   },
+  alicyclo_res:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 16.4, d_ref: 27.8, vp_cible: 139   },
+  ecoli:              { nom: "Escherichia coli",                  t_ref: 62, z: 6.0,  d_ref: 1.5,  vp_cible: 7.5  },
+  salmonella:         { nom: "Salmonella",                        t_ref: 62, z: 6.0,  d_ref: 0.5,  vp_cible: 2.5  },
+  byssochlamys_fulva: { nom: "Byssochlamys fulva",                t_ref: 95, z: 7.1,  d_ref: 1.8,  vp_cible: 9    },
+  saccharo_jus:       { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 22.5, vp_cible: 112.5 },
+  saccharo_cidre_low: { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 0.4,  vp_cible: 2    },
+  saccharo_cidre:     { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 1.1,  vp_cible: 5.5  },
 };
 
 const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }> = {
-  jus_pomme:        { nom: "Jus de pomme",      micro: "alicyclobacillus_acidoterrestris", vp_cible: 15 },
-  cidre_doux:       { nom: "Cidre doux",         micro: "levures",                          vp_cible: 10 },
-  cidre_demi_sec:   { nom: "Cidre demi-sec",     micro: "levures",                          vp_cible: 8  },
-  cidre_brut:       { nom: "Cidre brut",         micro: "levures",                          vp_cible: 5  },
-  cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "levures",                          vp_cible: 5  },
-  autre:            { nom: "Autre",              micro: "alicyclobacillus_acidoterrestris", vp_cible: 15 },
+  jus_pomme:        { nom: "Jus de pomme",      micro: "alicyclo_res",   vp_cible: 139 },
+  cidre_doux:       { nom: "Cidre doux",         micro: "saccharo_cidre", vp_cible: 5.5 },
+  cidre_demi_sec:   { nom: "Cidre demi-sec",     micro: "saccharo_cidre", vp_cible: 5.5 },
+  cidre_brut:       { nom: "Cidre brut",         micro: "saccharo_cidre", vp_cible: 5.5 },
+  cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "saccharo_cidre", vp_cible: 5.5 },
 };
 
 // ── Page ──────────────────────────────────────────────────────────────────
@@ -159,8 +161,10 @@ export default function BaremePage() {
                 <p className="text-[10px] text-gray-400 mb-1">{t("bareme.microTarget")}</p>
                 <select value={microKey} onChange={e => setMicroKey(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:border-brand-accent">
-                  <option value="">{t("bareme.microDefault", { name: MICROORGANISMES[produit?.micro]?.nom })}</option>
-                  {Object.entries(MICROORGANISMES).map(([k, v]) => <option key={k} value={k}>{v.nom}</option>)}
+                  <option value="">{t("bareme.microDefault", { name: `${MICROORGANISMES[produit?.micro]?.nom} — D=${MICROORGANISMES[produit?.micro]?.d_ref} min` })}</option>
+                  {Object.entries(MICROORGANISMES).map(([k, v]) => (
+                    <option key={k} value={k}>{v.nom} — D={v.d_ref} min @ {v.t_ref}°C</option>
+                  ))}
                 </select>
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -262,6 +266,10 @@ export default function BaremePage() {
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
                     <p className="text-[10px] text-gray-400 mb-0.5">Z</p>
                     <p className="font-semibold text-gray-700 text-xs">{computed.z}°C</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg px-3 py-2">
+                    <p className="text-[10px] text-gray-400 mb-0.5">D (Tref)</p>
+                    <p className="font-semibold text-gray-700 text-xs">{computed.micro.d_ref} min</p>
                   </div>
                 </div>
               </div>
