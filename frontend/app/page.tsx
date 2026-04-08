@@ -283,12 +283,15 @@ export default function Home() {
               <p className="text-sm text-gray-300 mt-1">Vos analyses apparaîtront ici.</p>
             </div>
           ) : (() => {
-            // Group by module type, preserving insertion order
+            // Group by module type, then sort each group by VP descending
             const grouped = activities.reduce<Record<string, RecentActivity[]>>((acc, a) => {
               if (!acc[a.type]) acc[a.type] = [];
               acc[a.type].push(a);
               return acc;
             }, {});
+            Object.values(grouped).forEach(items =>
+              items.sort((a, b) => (b.vp ?? -Infinity) - (a.vp ?? -Infinity))
+            );
 
             return (
               <div className="space-y-4">
@@ -303,6 +306,7 @@ export default function Home() {
                           <GroupIcon className="w-3.5 h-3.5" />
                         </div>
                         <span className="text-xs font-bold text-gray-700 tracking-wide">{meta.label}</span>
+                        <span className="text-[10px] text-gray-400 font-medium ml-1">— trié par VP ↓</span>
                         <span className="ml-auto text-[11px] font-semibold text-gray-400">{items.length} entrée{items.length > 1 ? "s" : ""}</span>
                       </div>
 
@@ -310,6 +314,7 @@ export default function Home() {
                       <div className="divide-y divide-gray-50">
                         {items.map((a) => {
                           const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
+                          const vpPct = a.vp != null && a.vpCible ? Math.min((a.vp / a.vpCible) * 100, 100) : null;
                           const handleClick = () => {
                             if (a.resultJson) {
                               localStorage.setItem("ifpc_restore_result", a.resultJson);
@@ -338,12 +343,27 @@ export default function Home() {
                                   {a.procede && (
                                     <span className="ml-1.5 text-gray-500">&middot; {a.procede}</span>
                                   )}
-                                  {a.vp !== undefined && a.vp !== null && (
-                                    <span className="ml-1.5 font-mono text-gray-500">
-                                      VP {a.vp.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
-                                    </span>
-                                  )}
                                 </p>
+                                {vpPct !== null && (
+                                  <div className="mt-1.5 flex items-center gap-2">
+                                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden max-w-[120px]">
+                                      <div
+                                        className={`h-full rounded-full transition-all ${
+                                          vpPct >= 100 ? "bg-green-400" : vpPct >= 70 ? "bg-orange-400" : "bg-red-400"
+                                        }`}
+                                        style={{ width: `${vpPct}%` }}
+                                      />
+                                    </div>
+                                    <span className="text-[11px] font-mono font-semibold text-gray-600">
+                                      {a.vp!.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
+                                    </span>
+                                  </div>
+                                )}
+                                {a.vp != null && vpPct === null && (
+                                  <span className="text-[11px] font-mono text-gray-500 mt-0.5 block">
+                                    VP {a.vp.toFixed(1)} UP
+                                  </span>
+                                )}
                               </div>
                               <div className="flex items-center gap-2 shrink-0 ml-4">
                                 {badge && (
