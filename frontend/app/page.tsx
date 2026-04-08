@@ -35,10 +35,21 @@ const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
   insuffisant: { bg: "bg-red-50",     text: "text-red-700"    },
 };
 
-const MODULE_META: Record<string, { icon: any; iconColor: string; pill: string }> = {
-  controle: { icon: FlaskConical, iconColor: "text-brand-primary", pill: "bg-brand-primary/10 text-brand-primary" },
-  bareme:   { icon: BarChart3,    iconColor: "text-brand-accent",  pill: "bg-brand-accent/10 text-brand-accent"  },
-};
+interface HistorySubMeta { type: string; icon: any; pill: string; }
+interface HistoryParentMeta { key: string; icon: any; gradient: string; headerPill: string; subModules: HistorySubMeta[]; }
+
+const HISTORY_MODULES: HistoryParentMeta[] = [
+  {
+    key: "pasteurisation",
+    icon: Thermometer,
+    gradient: "from-brand-primary to-brand-primary/80",
+    headerPill: "bg-brand-primary/10 text-brand-primary",
+    subModules: [
+      { type: "controle", icon: FlaskConical, pill: "bg-brand-primary/10 text-brand-primary" },
+      { type: "bareme",   icon: BarChart3,    pill: "bg-brand-accent/10  text-brand-accent"  },
+    ],
+  },
+];
 
 // ── Module data ──────────────────────────────────────────────────────────────
 
@@ -294,111 +305,123 @@ export default function Home() {
 
             return (
               <div className="space-y-4">
-                {Object.entries(MODULE_META).map(([type, meta]) => {
-                  const items = grouped[type] ?? [];
-                  const GroupIcon = meta.icon;
+                {HISTORY_MODULES.map(parent => {
+                  const ParentIcon = parent.icon;
+                  const totalEntries = parent.subModules.reduce((sum, sub) => sum + (grouped[sub.type]?.length ?? 0), 0);
                   return (
-                    <div key={type} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                      {/* Group header */}
-                      <div className="flex items-center gap-2.5 px-5 py-3 border-b border-gray-100 bg-gray-50/60">
-                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${meta.pill}`}>
-                          <GroupIcon className="w-3.5 h-3.5" />
+                    <div key={parent.key} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+
+                      {/* ── Parent module header ── */}
+                      <div className="flex items-center gap-2.5 px-5 py-3 border-b border-gray-100 bg-gray-50/80">
+                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center bg-gradient-to-br ${parent.gradient} text-white shadow-sm`}>
+                          <ParentIcon className="w-4 h-4" />
                         </div>
-                        <span className="text-xs font-bold text-gray-700 tracking-wide">{t(`home.moduleMeta.${type}`)}</span>
-                        <span className="text-[10px] text-gray-400 font-medium ml-1">— {t("home.recentFirst")}</span>
-                        <span className="ml-auto text-[11px] font-semibold text-gray-400">{items.length} {items.length > 1 ? t("home.entries") : t("home.entry")}</span>
+                        <span className="text-sm font-bold text-gray-800">{t(`home.modules.${parent.key}`)}</span>
+                        <span className="ml-auto text-[11px] font-semibold text-gray-400">
+                          {totalEntries} {totalEntries > 1 ? t("home.entries") : t("home.entry")}
+                        </span>
                       </div>
 
-                      {/* Entries */}
-                      {items.length === 0 ? (
-                        <div className="px-5 py-6 text-center text-xs text-gray-300 italic">{t("home.noEntries")}</div>
-                      ) : (() => {
-                        const isExpanded = expandedGroups[type] ?? false;
+                      {/* ── Sub-modules ── */}
+                      {parent.subModules.map((sub, subIdx) => {
+                        const items = grouped[sub.type] ?? [];
+                        const SubIcon = sub.icon;
+                        const isExpanded = expandedGroups[sub.type] ?? false;
                         const visible = isExpanded ? items : items.slice(0, PREVIEW_COUNT);
                         const hiddenCount = items.length - PREVIEW_COUNT;
                         return (
-                          <>
-                            <div className="divide-y divide-gray-50">
-                              {visible.map((a) => {
-                                const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
-                                const vpPct = a.vp != null && a.vpCible ? Math.min((a.vp / a.vpCible) * 100, 100) : null;
-                                const handleClick = () => {
-                                  if (a.resultJson) {
-                                    localStorage.setItem("ifpc_restore_result", a.resultJson);
-                                  }
-                                  const target = a.type === "controle" ? "/controle" : "/bareme";
-                                  const href = a.fromDb ? `${target}?history=${a.id}` : target;
-                                  router.push(href);
-                                };
-                                return (
-                                  <button
-                                    key={a.id}
-                                    onClick={handleClick}
-                                    className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/60 transition-colors group text-left"
-                                  >
-                                    <div className="min-w-0 flex-1">
-                                      <div className="flex items-center gap-2">
-                                        <p className="text-sm font-semibold text-gray-900 truncate">{a.label}</p>
-                                        {a.produit && a.produit !== a.label && (
-                                          <span className="text-[11px] font-medium text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full shrink-0">
-                                            {a.produit}
-                                          </span>
-                                        )}
-                                      </div>
-                                      <p className="text-xs text-gray-400 mt-0.5">
-                                        {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })}
-                                        {a.procede && (
-                                          <span className="ml-1.5 text-gray-500">&middot; {a.procede}</span>
-                                        )}
-                                      </p>
-                                      {vpPct !== null && (
-                                        <div className="mt-1.5 flex items-center gap-2">
-                                          <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden max-w-[120px]">
-                                            <div
-                                              className={`h-full rounded-full transition-all ${
-                                                vpPct >= 100 ? "bg-green-400" : vpPct >= 70 ? "bg-orange-400" : "bg-red-400"
-                                              }`}
-                                              style={{ width: `${vpPct}%` }}
-                                            />
-                                          </div>
-                                          <span className="text-[11px] font-mono font-semibold text-gray-600">
-                                            {a.vp!.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
-                                          </span>
-                                        </div>
-                                      )}
-                                      {a.vp != null && vpPct === null && (
-                                        <span className="text-[11px] font-mono text-gray-500 mt-0.5 block">
-                                          VP {a.vp.toFixed(1)} UP
-                                        </span>
-                                      )}
-                                    </div>
-                                    <div className="flex items-center gap-2 shrink-0 ml-4">
-                                      {badge && a.statut && (
-                                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badge.bg} ${badge.text}`}>
-                                          {t(`home.statut.${a.statut}`)}
-                                        </span>
-                                      )}
-                                      <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
-                                    </div>
-                                  </button>
-                                );
-                              })}
+                          <div key={sub.type} className={subIdx > 0 ? "border-t border-gray-100" : ""}>
+
+                            {/* Sub-module header */}
+                            <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-50/40">
+                              <div className={`w-5 h-5 rounded-md flex items-center justify-center ${sub.pill}`}>
+                                <SubIcon className="w-3 h-3" />
+                              </div>
+                              <span className="text-[11px] font-bold text-gray-600 tracking-wide">{t(`home.moduleMeta.${sub.type}`)}</span>
+                              <span className="text-[10px] text-gray-400 font-medium ml-1">— {t("home.recentFirst")}</span>
+                              <span className="ml-auto text-[11px] font-semibold text-gray-400">
+                                {items.length} {items.length > 1 ? t("home.entries") : t("home.entry")}
+                              </span>
                             </div>
 
-                            {/* Expand / collapse toggle */}
-                            {items.length > PREVIEW_COUNT && (
-                              <button
-                                onClick={() => setExpandedGroups(prev => ({ ...prev, [type]: !isExpanded }))}
-                                className="w-full py-2.5 text-[11px] font-semibold text-gray-400 hover:text-brand-primary hover:bg-gray-50/60 transition-colors border-t border-gray-50"
-                              >
-                                {isExpanded
-                                  ? `▲ ${t("home.collapse")}`
-                                  : `▼ ${hiddenCount > 1 ? t("home.showMorePlural", { n: hiddenCount }) : t("home.showMore", { n: hiddenCount })}`}
-                              </button>
+                            {/* Entries or empty state */}
+                            {items.length === 0 ? (
+                              <div className="px-5 py-4 text-center text-xs text-gray-300 italic">{t("home.noEntries")}</div>
+                            ) : (
+                              <>
+                                <div className="divide-y divide-gray-50">
+                                  {visible.map((a) => {
+                                    const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
+                                    const vpPct = a.vp != null && a.vpCible ? Math.min((a.vp / a.vpCible) * 100, 100) : null;
+                                    const handleClick = () => {
+                                      if (a.resultJson) localStorage.setItem("ifpc_restore_result", a.resultJson);
+                                      const target = a.type === "controle" ? "/controle" : "/bareme";
+                                      const href = a.fromDb ? `${target}?history=${a.id}` : target;
+                                      router.push(href);
+                                    };
+                                    return (
+                                      <button
+                                        key={a.id}
+                                        onClick={handleClick}
+                                        className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/60 transition-colors group text-left"
+                                      >
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex items-center gap-2">
+                                            <p className="text-sm font-semibold text-gray-900 truncate">{a.label}</p>
+                                            {a.produit && a.produit !== a.label && (
+                                              <span className="text-[11px] font-medium text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full shrink-0">
+                                                {a.produit}
+                                              </span>
+                                            )}
+                                          </div>
+                                          <p className="text-xs text-gray-400 mt-0.5">
+                                            {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })}
+                                            {a.procede && <span className="ml-1.5 text-gray-500">&middot; {a.procede}</span>}
+                                          </p>
+                                          {vpPct !== null && (
+                                            <div className="mt-1.5 flex items-center gap-2">
+                                              <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden max-w-[120px]">
+                                                <div
+                                                  className={`h-full rounded-full transition-all ${vpPct >= 100 ? "bg-green-400" : vpPct >= 70 ? "bg-orange-400" : "bg-red-400"}`}
+                                                  style={{ width: `${vpPct}%` }}
+                                                />
+                                              </div>
+                                              <span className="text-[11px] font-mono font-semibold text-gray-600">
+                                                {a.vp!.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
+                                              </span>
+                                            </div>
+                                          )}
+                                          {a.vp != null && vpPct === null && (
+                                            <span className="text-[11px] font-mono text-gray-500 mt-0.5 block">VP {a.vp.toFixed(1)} UP</span>
+                                          )}
+                                        </div>
+                                        <div className="flex items-center gap-2 shrink-0 ml-4">
+                                          {badge && a.statut && (
+                                            <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badge.bg} ${badge.text}`}>
+                                              {t(`home.statut.${a.statut}`)}
+                                            </span>
+                                          )}
+                                          <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
+                                        </div>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                                {items.length > PREVIEW_COUNT && (
+                                  <button
+                                    onClick={() => setExpandedGroups(prev => ({ ...prev, [sub.type]: !isExpanded }))}
+                                    className="w-full py-2.5 text-[11px] font-semibold text-gray-400 hover:text-brand-primary hover:bg-gray-50/60 transition-colors border-t border-gray-50"
+                                  >
+                                    {isExpanded
+                                      ? `▲ ${t("home.collapse")}`
+                                      : `▼ ${hiddenCount > 1 ? t("home.showMorePlural", { n: hiddenCount }) : t("home.showMore", { n: hiddenCount })}`}
+                                  </button>
+                                )}
+                              </>
                             )}
-                          </>
+                          </div>
                         );
-                      })()}
+                      })}
                     </div>
                   );
                 })}
