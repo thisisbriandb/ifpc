@@ -35,7 +35,7 @@ const STATUS_BADGE: Record<string, { bg: string; text: string; label: string }> 
 };
 
 const MODULE_META: Record<string, { label: string; icon: any; iconColor: string; pill: string }> = {
-  controle: { label: "Contrôle VP",  icon: FlaskConical, iconColor: "text-brand-primary", pill: "bg-brand-primary/10 text-brand-primary" },
+  controle: { label: "Contrôle Valeur Pasteurisatrice",  icon: FlaskConical, iconColor: "text-brand-primary", pill: "bg-brand-primary/10 text-brand-primary" },
   bareme:   { label: "Aide barème",  icon: BarChart3,    iconColor: "text-brand-accent",  pill: "bg-brand-accent/10 text-brand-accent"  },
 };
 
@@ -280,26 +280,21 @@ export default function Home() {
             )}
           </div>
 
-          {activities.length === 0 ? (
-            <div className="bg-white rounded-xl border border-dashed border-gray-200 py-10 text-center">
-              <p className="font-medium text-gray-400">Aucune activité récente</p>
-              <p className="text-sm text-gray-300 mt-1">Vos analyses apparaîtront ici.</p>
-            </div>
-          ) : (() => {
-            // Group by module type, then sort each group by VP descending
+          {(() => {
+            // Build a map of type → sorted entries (date desc)
             const grouped = activities.reduce<Record<string, RecentActivity[]>>((acc, a) => {
               if (!acc[a.type]) acc[a.type] = [];
               acc[a.type].push(a);
               return acc;
             }, {});
             Object.values(grouped).forEach(items =>
-              items.sort((a, b) => (b.vp ?? -Infinity) - (a.vp ?? -Infinity))
+              items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
             );
 
             return (
               <div className="space-y-4">
-                {Object.entries(grouped).map(([type, items]) => {
-                  const meta = MODULE_META[type] ?? { label: type, icon: FlaskConical, iconColor: "text-gray-400", pill: "bg-gray-100 text-gray-500" };
+                {Object.entries(MODULE_META).map(([type, meta]) => {
+                  const items = grouped[type] ?? [];
                   const GroupIcon = meta.icon;
                   return (
                     <div key={type} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
@@ -309,12 +304,14 @@ export default function Home() {
                           <GroupIcon className="w-3.5 h-3.5" />
                         </div>
                         <span className="text-xs font-bold text-gray-700 tracking-wide">{meta.label}</span>
-                        <span className="text-[10px] text-gray-400 font-medium ml-1">— trié par VP ↓</span>
+                        <span className="text-[10px] text-gray-400 font-medium ml-1">— récents en premier</span>
                         <span className="ml-auto text-[11px] font-semibold text-gray-400">{items.length} entrée{items.length > 1 ? "s" : ""}</span>
                       </div>
 
                       {/* Entries */}
-                      {(() => {
+                      {items.length === 0 ? (
+                        <div className="px-5 py-6 text-center text-xs text-gray-300 italic">Aucune analyse enregistrée</div>
+                      ) : (() => {
                         const isExpanded = expandedGroups[type] ?? false;
                         const visible = isExpanded ? items : items.slice(0, PREVIEW_COUNT);
                         const hiddenCount = items.length - PREVIEW_COUNT;
