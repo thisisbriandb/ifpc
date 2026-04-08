@@ -189,10 +189,13 @@ function ArcModule({ mod }: { mod: Module }) {
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
+const PREVIEW_COUNT = 3;
+
 export default function Home() {
   const { user } = useAuthStore();
   const router = useRouter();
   const [activities, setActivities] = useState<RecentActivity[]>([]);
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -311,72 +314,93 @@ export default function Home() {
                       </div>
 
                       {/* Entries */}
-                      <div className="divide-y divide-gray-50">
-                        {items.map((a) => {
-                          const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
-                          const vpPct = a.vp != null && a.vpCible ? Math.min((a.vp / a.vpCible) * 100, 100) : null;
-                          const handleClick = () => {
-                            if (a.resultJson) {
-                              localStorage.setItem("ifpc_restore_result", a.resultJson);
-                            }
-                            const target = a.type === "controle" ? "/controle" : "/bareme";
-                            const href = a.fromDb ? `${target}?history=${a.id}` : target;
-                            router.push(href);
-                          };
-                          return (
-                            <button
-                              key={a.id}
-                              onClick={handleClick}
-                              className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/60 transition-colors group text-left"
-                            >
-                              <div className="min-w-0 flex-1">
-                                <div className="flex items-center gap-2">
-                                  <p className="text-sm font-semibold text-gray-900 truncate">{a.label}</p>
-                                  {a.produit && a.produit !== a.label && (
-                                    <span className="text-[11px] font-medium text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full shrink-0">
-                                      {a.produit}
-                                    </span>
-                                  )}
-                                </div>
-                                <p className="text-xs text-gray-400 mt-0.5">
-                                  {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })}
-                                  {a.procede && (
-                                    <span className="ml-1.5 text-gray-500">&middot; {a.procede}</span>
-                                  )}
-                                </p>
-                                {vpPct !== null && (
-                                  <div className="mt-1.5 flex items-center gap-2">
-                                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden max-w-[120px]">
-                                      <div
-                                        className={`h-full rounded-full transition-all ${
-                                          vpPct >= 100 ? "bg-green-400" : vpPct >= 70 ? "bg-orange-400" : "bg-red-400"
-                                        }`}
-                                        style={{ width: `${vpPct}%` }}
-                                      />
+                      {(() => {
+                        const isExpanded = expandedGroups[type] ?? false;
+                        const visible = isExpanded ? items : items.slice(0, PREVIEW_COUNT);
+                        const hiddenCount = items.length - PREVIEW_COUNT;
+                        return (
+                          <>
+                            <div className="divide-y divide-gray-50">
+                              {visible.map((a) => {
+                                const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
+                                const vpPct = a.vp != null && a.vpCible ? Math.min((a.vp / a.vpCible) * 100, 100) : null;
+                                const handleClick = () => {
+                                  if (a.resultJson) {
+                                    localStorage.setItem("ifpc_restore_result", a.resultJson);
+                                  }
+                                  const target = a.type === "controle" ? "/controle" : "/bareme";
+                                  const href = a.fromDb ? `${target}?history=${a.id}` : target;
+                                  router.push(href);
+                                };
+                                return (
+                                  <button
+                                    key={a.id}
+                                    onClick={handleClick}
+                                    className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/60 transition-colors group text-left"
+                                  >
+                                    <div className="min-w-0 flex-1">
+                                      <div className="flex items-center gap-2">
+                                        <p className="text-sm font-semibold text-gray-900 truncate">{a.label}</p>
+                                        {a.produit && a.produit !== a.label && (
+                                          <span className="text-[11px] font-medium text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full shrink-0">
+                                            {a.produit}
+                                          </span>
+                                        )}
+                                      </div>
+                                      <p className="text-xs text-gray-400 mt-0.5">
+                                        {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })}
+                                        {a.procede && (
+                                          <span className="ml-1.5 text-gray-500">&middot; {a.procede}</span>
+                                        )}
+                                      </p>
+                                      {vpPct !== null && (
+                                        <div className="mt-1.5 flex items-center gap-2">
+                                          <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden max-w-[120px]">
+                                            <div
+                                              className={`h-full rounded-full transition-all ${
+                                                vpPct >= 100 ? "bg-green-400" : vpPct >= 70 ? "bg-orange-400" : "bg-red-400"
+                                              }`}
+                                              style={{ width: `${vpPct}%` }}
+                                            />
+                                          </div>
+                                          <span className="text-[11px] font-mono font-semibold text-gray-600">
+                                            {a.vp!.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
+                                          </span>
+                                        </div>
+                                      )}
+                                      {a.vp != null && vpPct === null && (
+                                        <span className="text-[11px] font-mono text-gray-500 mt-0.5 block">
+                                          VP {a.vp.toFixed(1)} UP
+                                        </span>
+                                      )}
                                     </div>
-                                    <span className="text-[11px] font-mono font-semibold text-gray-600">
-                                      {a.vp!.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
-                                    </span>
-                                  </div>
-                                )}
-                                {a.vp != null && vpPct === null && (
-                                  <span className="text-[11px] font-mono text-gray-500 mt-0.5 block">
-                                    VP {a.vp.toFixed(1)} UP
-                                  </span>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-2 shrink-0 ml-4">
-                                {badge && (
-                                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badge.bg} ${badge.text}`}>
-                                    {badge.label}
-                                  </span>
-                                )}
-                                <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
+                                    <div className="flex items-center gap-2 shrink-0 ml-4">
+                                      {badge && (
+                                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badge.bg} ${badge.text}`}>
+                                          {badge.label}
+                                        </span>
+                                      )}
+                                      <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+
+                            {/* Expand / collapse toggle */}
+                            {items.length > PREVIEW_COUNT && (
+                              <button
+                                onClick={() => setExpandedGroups(prev => ({ ...prev, [type]: !isExpanded }))}
+                                className="w-full py-2.5 text-[11px] font-semibold text-gray-400 hover:text-brand-primary hover:bg-gray-50/60 transition-colors border-t border-gray-50"
+                              >
+                                {isExpanded
+                                  ? "▲ Réduire"
+                                  : `▼ Voir ${hiddenCount} autre${hiddenCount > 1 ? "s" : ""}`}
+                              </button>
+                            )}
+                          </>
+                        );
+                      })()}
                     </div>
                   );
                 })}
