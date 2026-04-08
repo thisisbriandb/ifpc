@@ -118,10 +118,25 @@ export default function ProductSelector({
         <div className="pt-1.5 border-t border-gray-100 space-y-2.5">
           <div>
             <label className={labelCls}>Microorganisme</label>
-            <select value={microorganisme} onChange={(e) => onMicroChange(e.target.value)} className={selectCls}>
+            <select
+              value={microorganisme}
+              onChange={(e) => {
+                const id = e.target.value;
+                onMicroChange(id);
+                const selected = micros.find((m) => m.id === id);
+                if (selected) {
+                  onTRefChange?.(String(selected.t_ref));
+                  onZChange?.(String(selected.z));
+                } else {
+                  onTRefChange?.("");
+                  onZChange?.("");
+                }
+              }}
+              className={selectCls}
+            >
               <option value="">Auto (selon produit)</option>
               {micros.map((m) => (
-                <option key={m.id} value={m.id}>{m.nom}</option>
+                <option key={m.id} value={m.id}>{m.nom} — D={m.d_ref} min @ {m.t_ref}°C</option>
               ))}
             </select>
           </div>
