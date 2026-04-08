@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store";
 import {
-  ArrowRight, Clock, Trash2,
+  ArrowRight, Clock, Trash2, ChevronDown,
   Thermometer, FlaskConical, BarChart3,
   Pipette, ScanEye, Palette,
   Shield, Users, Settings,
@@ -35,18 +35,18 @@ const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
   insuffisant: { bg: "bg-red-50",     text: "text-red-700"    },
 };
 
-interface HistorySubMeta { type: string; icon: any; pill: string; }
-interface HistoryParentMeta { key: string; icon: any; gradient: string; headerPill: string; subModules: HistorySubMeta[]; }
+interface HistorySubMeta { type: string; dot: string; bar: string; }
+interface HistoryParentMeta { key: string; icon: any; accent: string; iconColor: string; subModules: HistorySubMeta[]; }
 
 const HISTORY_MODULES: HistoryParentMeta[] = [
   {
     key: "pasteurisation",
     icon: Thermometer,
-    gradient: "from-brand-primary to-brand-primary/80",
-    headerPill: "bg-brand-primary/10 text-brand-primary",
+    accent: "border-l-[3px] border-brand-primary",
+    iconColor: "text-brand-primary",
     subModules: [
-      { type: "controle", icon: FlaskConical, pill: "bg-brand-primary/10 text-brand-primary" },
-      { type: "bareme",   icon: BarChart3,    pill: "bg-brand-accent/10  text-brand-accent"  },
+      { type: "controle", dot: "bg-brand-primary",     bar: "bg-brand-primary/30"  },
+      { type: "bareme",   dot: "bg-brand-accent",      bar: "bg-brand-accent/30"   },
     ],
   },
 ];
@@ -170,6 +170,7 @@ export default function Home() {
   const { t } = useI18n();
   const [activities, setActivities] = useState<RecentActivity[]>([]);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const [openModules, setOpenModules] = useState<Record<string, boolean>>({ pasteurisation: true });
 
   const modules: Module[] = [
     {
@@ -293,7 +294,6 @@ export default function Home() {
           </div>
 
           {(() => {
-            // Build a map of type → sorted entries (date desc)
             const grouped = activities.reduce<Record<string, RecentActivity[]>>((acc, a) => {
               if (!acc[a.type]) acc[a.type] = [];
               acc[a.type].push(a);
@@ -304,124 +304,100 @@ export default function Home() {
             );
 
             return (
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {HISTORY_MODULES.map(parent => {
                   const ParentIcon = parent.icon;
                   const totalEntries = parent.subModules.reduce((sum, sub) => sum + (grouped[sub.type]?.length ?? 0), 0);
+                  const isOpen = openModules[parent.key] ?? false;
                   return (
-                    <div key={parent.key} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                    <div key={parent.key} className={`bg-white rounded-xl border border-gray-200 overflow-hidden ${parent.accent}`}>
 
-                      {/* ── Parent module header ── */}
-                      <div className="flex items-center gap-2.5 px-5 py-3 border-b border-gray-100 bg-gray-50/80">
-                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center bg-gradient-to-br ${parent.gradient} text-white shadow-sm`}>
-                          <ParentIcon className="w-4 h-4" />
-                        </div>
-                        <span className="text-sm font-bold text-gray-800">{t(`home.modules.${parent.key}`)}</span>
-                        <span className="ml-auto text-[11px] font-semibold text-gray-400">
-                          {totalEntries} {totalEntries > 1 ? t("home.entries") : t("home.entry")}
-                        </span>
-                      </div>
+                      {/* ── Accordion trigger ── */}
+                      <button
+                        onClick={() => setOpenModules(prev => ({ ...prev, [parent.key]: !isOpen }))}
+                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50/50 transition-colors text-left"
+                      >
+                        <ParentIcon className={`w-4 h-4 shrink-0 ${parent.iconColor}`} />
+                        <span className="flex-1 text-sm font-semibold text-gray-700">{t(`home.modules.${parent.key}`)}</span>
+                        {totalEntries > 0 && (
+                          <span className="text-[11px] font-semibold text-gray-400 tabular-nums mr-1">{totalEntries}</span>
+                        )}
+                        <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+                      </button>
 
-                      {/* ── Sub-modules ── */}
-                      {parent.subModules.map((sub, subIdx) => {
-                        const items = grouped[sub.type] ?? [];
-                        const SubIcon = sub.icon;
-                        const isExpanded = expandedGroups[sub.type] ?? false;
-                        const visible = isExpanded ? items : items.slice(0, PREVIEW_COUNT);
-                        const hiddenCount = items.length - PREVIEW_COUNT;
-                        return (
-                          <div key={sub.type} className={subIdx > 0 ? "border-t border-gray-100" : ""}>
+                      {/* ── Expanded content ── */}
+                      {isOpen && (
+                        <div className="border-t border-gray-100">
+                          {parent.subModules.map((sub, subIdx) => {
+                            const items = grouped[sub.type] ?? [];
+                            const isExpanded = expandedGroups[sub.type] ?? false;
+                            const visible = isExpanded ? items : items.slice(0, PREVIEW_COUNT);
+                            const hiddenCount = items.length - PREVIEW_COUNT;
+                            return (
+                              <div key={sub.type} className={subIdx > 0 ? "border-t border-gray-100" : ""}>
 
-                            {/* Sub-module header */}
-                            <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-50/40">
-                              <div className={`w-5 h-5 rounded-md flex items-center justify-center ${sub.pill}`}>
-                                <SubIcon className="w-3 h-3" />
-                              </div>
-                              <span className="text-[11px] font-bold text-gray-600 tracking-wide">{t(`home.moduleMeta.${sub.type}`)}</span>
-                              <span className="text-[10px] text-gray-400 font-medium ml-1">— {t("home.recentFirst")}</span>
-                              <span className="ml-auto text-[11px] font-semibold text-gray-400">
-                                {items.length} {items.length > 1 ? t("home.entries") : t("home.entry")}
-                              </span>
-                            </div>
+                                {/* Sub-module label */}
+                                <div className="flex items-center gap-2 px-4 pt-2.5 pb-1">
+                                  <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${sub.dot}`} />
+                                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    {t(`home.moduleMeta.${sub.type}`)}
+                                  </span>
+                                </div>
 
-                            {/* Entries or empty state */}
-                            {items.length === 0 ? (
-                              <div className="px-5 py-4 text-center text-xs text-gray-300 italic">{t("home.noEntries")}</div>
-                            ) : (
-                              <>
-                                <div className="divide-y divide-gray-50">
-                                  {visible.map((a) => {
-                                    const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
-                                    const vpPct = a.vp != null && a.vpCible ? Math.min((a.vp / a.vpCible) * 100, 100) : null;
-                                    const handleClick = () => {
-                                      if (a.resultJson) localStorage.setItem("ifpc_restore_result", a.resultJson);
-                                      const target = a.type === "controle" ? "/controle" : "/bareme";
-                                      const href = a.fromDb ? `${target}?history=${a.id}` : target;
-                                      router.push(href);
-                                    };
-                                    return (
-                                      <button
-                                        key={a.id}
-                                        onClick={handleClick}
-                                        className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/60 transition-colors group text-left"
-                                      >
-                                        <div className="min-w-0 flex-1">
-                                          <div className="flex items-center gap-2">
-                                            <p className="text-sm font-semibold text-gray-900 truncate">{a.label}</p>
-                                            {a.produit && a.produit !== a.label && (
-                                              <span className="text-[11px] font-medium text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full shrink-0">
-                                                {a.produit}
+                                {items.length === 0 ? (
+                                  <p className="px-4 pb-3 text-[11px] text-gray-300 italic">{t("home.noEntries")}</p>
+                                ) : (
+                                  <>
+                                    <div className="divide-y divide-gray-50">
+                                      {visible.map((a) => {
+                                        const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
+                                        const handleClick = () => {
+                                          if (a.resultJson) localStorage.setItem("ifpc_restore_result", a.resultJson);
+                                          const target = a.type === "controle" ? "/controle" : "/bareme";
+                                          const href = a.fromDb ? `${target}?history=${a.id}` : target;
+                                          router.push(href);
+                                        };
+                                        return (
+                                          <button
+                                            key={a.id}
+                                            onClick={handleClick}
+                                            className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50/60 transition-colors group text-left"
+                                          >
+                                            <span className={`w-0.5 h-7 rounded-full shrink-0 ${sub.bar}`} />
+                                            <div className="min-w-0 flex-1">
+                                              <p className="text-xs font-semibold text-gray-800 truncate">{a.label}</p>
+                                              <p className="text-[10px] text-gray-400">
+                                                {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}
+                                                {a.procede && <span className="ml-1">&middot; {a.procede}</span>}
+                                              </p>
+                                            </div>
+                                            {badge && a.statut && (
+                                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${badge.bg} ${badge.text}`}>
+                                                {t(`home.statut.${a.statut}`)}
                                               </span>
                                             )}
-                                          </div>
-                                          <p className="text-xs text-gray-400 mt-0.5">
-                                            {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })}
-                                            {a.procede && <span className="ml-1.5 text-gray-500">&middot; {a.procede}</span>}
-                                          </p>
-                                          {vpPct !== null && (
-                                            <div className="mt-1.5 flex items-center gap-2">
-                                              <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden max-w-[120px]">
-                                                <div
-                                                  className={`h-full rounded-full transition-all ${vpPct >= 100 ? "bg-green-400" : vpPct >= 70 ? "bg-orange-400" : "bg-red-400"}`}
-                                                  style={{ width: `${vpPct}%` }}
-                                                />
-                                              </div>
-                                              <span className="text-[11px] font-mono font-semibold text-gray-600">
-                                                {a.vp!.toFixed(1)}{a.vpCible ? ` / ${a.vpCible.toFixed(1)}` : ""} UP
-                                              </span>
-                                            </div>
-                                          )}
-                                          {a.vp != null && vpPct === null && (
-                                            <span className="text-[11px] font-mono text-gray-500 mt-0.5 block">VP {a.vp.toFixed(1)} UP</span>
-                                          )}
-                                        </div>
-                                        <div className="flex items-center gap-2 shrink-0 ml-4">
-                                          {badge && a.statut && (
-                                            <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badge.bg} ${badge.text}`}>
-                                              {t(`home.statut.${a.statut}`)}
-                                            </span>
-                                          )}
-                                          <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-brand-primary transition-colors" />
-                                        </div>
+                                            <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-brand-primary transition-colors shrink-0" />
+                                          </button>
+                                        );
+                                      })}
+                                    </div>
+                                    {items.length > PREVIEW_COUNT && (
+                                      <button
+                                        onClick={() => setExpandedGroups(prev => ({ ...prev, [sub.type]: !isExpanded }))}
+                                        className="w-full py-2 text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors border-t border-gray-50"
+                                      >
+                                        {isExpanded
+                                          ? `▲ ${t("home.collapse")}`
+                                          : `▼ ${hiddenCount > 1 ? t("home.showMorePlural", { n: hiddenCount }) : t("home.showMore", { n: hiddenCount })}`}
                                       </button>
-                                    );
-                                  })}
-                                </div>
-                                {items.length > PREVIEW_COUNT && (
-                                  <button
-                                    onClick={() => setExpandedGroups(prev => ({ ...prev, [sub.type]: !isExpanded }))}
-                                    className="w-full py-2.5 text-[11px] font-semibold text-gray-400 hover:text-brand-primary hover:bg-gray-50/60 transition-colors border-t border-gray-50"
-                                  >
-                                    {isExpanded
-                                      ? `▲ ${t("home.collapse")}`
-                                      : `▼ ${hiddenCount > 1 ? t("home.showMorePlural", { n: hiddenCount }) : t("home.showMore", { n: hiddenCount })}`}
-                                  </button>
+                                    )}
+                                  </>
                                 )}
-                              </>
-                            )}
-                          </div>
-                        );
-                      })}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
