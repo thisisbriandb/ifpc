@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -125,20 +126,34 @@ public class AdminController {
     // ── Help text (admin write, public read) ─────────────────────────────
 
     @GetMapping("/api/config/help/{key}")
-    public ResponseEntity<HelpTextDto> getHelpText(@PathVariable String key) {
-        return helpTextRepository.findByTextKey(key)
-                .map(h -> ResponseEntity.ok(new HelpTextDto(h.getTextKey(), h.getContent())))
-                .orElse(ResponseEntity.ok(new HelpTextDto(key, null)));
+    public ResponseEntity<HelpTextDto> getHelpText(@PathVariable String key, @RequestParam(defaultValue = "fr") String locale) {
+        String normalizedLocale = normalizeLocale(locale);
+        String localizedKey = localizedHelpKey(key, normalizedLocale);
+        return helpTextRepository.findByTextKey(localizedKey)
+                .or(() -> helpTextRepository.findByTextKey(key))
+                .map(h -> ResponseEntity.ok(new HelpTextDto(key, h.getContent(), normalizedLocale)))
+                .orElse(ResponseEntity.ok(new HelpTextDto(key, null, normalizedLocale)));
     }
 
     @PutMapping("/api/admin/help/{key}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HelpTextDto> updateHelpText(@PathVariable String key, @RequestBody HelpTextUpdateRequest request) {
-        HelpText helpText = helpTextRepository.findByTextKey(key)
-                .orElse(HelpText.builder().textKey(key).content("").build());
+        String normalizedLocale = normalizeLocale(request.locale());
+        String localizedKey = localizedHelpKey(key, normalizedLocale);
+        HelpText helpText = helpTextRepository.findByTextKey(localizedKey)
+                .orElse(HelpText.builder().textKey(localizedKey).content("").build());
         helpText.setContent(request.content());
         helpTextRepository.save(helpText);
-        return ResponseEntity.ok(new HelpTextDto(helpText.getTextKey(), helpText.getContent()));
+        return ResponseEntity.ok(new HelpTextDto(key, helpText.getContent(), normalizedLocale));
+    }
+
+    private static String normalizeLocale(String locale) {
+        String value = locale == null ? "fr" : locale.toLowerCase(Locale.ROOT);
+        return value.equals("en") ? "en" : "fr";
+    }
+
+    private static String localizedHelpKey(String key, String locale) {
+        return key + "__" + locale;
     }
 
     // ── DTOs ─────────────────────────────────────────────────────────────
@@ -147,6 +162,6 @@ public class AdminController {
     public record RoleUpdateRequest(String role) {}
     public record ProductConfigUpdateRequest(Double vpCible, String productName) {}
     public record ProductConfigDto(String productType, String productName, Double vpCible) {}
-    public record HelpTextDto(String key, String content) {}
-    public record HelpTextUpdateRequest(String content) {}
+    public record HelpTextDto(String key, String content, String locale) {}
+    public record HelpTextUpdateRequest(String content, String locale) {}
 }

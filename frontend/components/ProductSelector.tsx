@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { getProduits, getMicroorganismes, getProcedes } from "@/lib/api";
+import { getClarifications, getProduits, getMicroorganismes, getProcedes } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
 // Fallback data mirroring backend pasto.py definitions
 const FALLBACK_PRODUITS = [
@@ -16,6 +17,11 @@ const FALLBACK_PROCEDES = [
   { id: "flash", nom: "Pasteurisation flash" },
   { id: "classique", nom: "Pasteurisation classique" },
   { id: "tunnel", nom: "Tunnel / douchette" },
+];
+
+const FALLBACK_CLARIFICATIONS = [
+  { id: "trouble", nom: "Trouble" },
+  { id: "limpide", nom: "Limpide" },
 ];
 
 interface Props {
@@ -49,9 +55,11 @@ export default function ProductSelector({
   ph, onPhChange,
   titreAlcool, onTitreAlcoolChange,
 }: Props) {
+  const { t, locale } = useI18n();
   const [produits, setProduits] = useState<any[]>(FALLBACK_PRODUITS);
   const [micros, setMicros] = useState<any[]>([]);
   const [procedes, setProcedes] = useState<any[]>(FALLBACK_PROCEDES);
+  const [clarifications, setClarifications] = useState<any[]>(FALLBACK_CLARIFICATIONS);
 
   const fetchWithRetry = useCallback(async (
     fetcher: () => Promise<any[]>,
@@ -73,10 +81,11 @@ export default function ProductSelector({
   }, []);
 
   useEffect(() => {
-    fetchWithRetry(getProduits, setProduits);
-    fetchWithRetry(getMicroorganismes, setMicros);
-    fetchWithRetry(getProcedes, setProcedes);
-  }, [fetchWithRetry]);
+    fetchWithRetry(() => getProduits(locale), setProduits);
+    fetchWithRetry(() => getMicroorganismes(locale), setMicros);
+    fetchWithRetry(() => getProcedes(locale), setProcedes);
+    fetchWithRetry(() => getClarifications(locale), setClarifications);
+  }, [fetchWithRetry, locale]);
 
   const selectCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white";
   const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
@@ -87,7 +96,7 @@ export default function ProductSelector({
       {/* Row 1: Produit + Clarification */}
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <label className={labelCls}>Produit</label>
+          <label className={labelCls}>{t("productSelector.product")}</label>
           <select value={productType} onChange={(e) => onProductChange(e.target.value)} className={selectCls}>
             {produits.map((p) => (
               <option key={p.id} value={p.id}>{p.nom}</option>
@@ -95,17 +104,18 @@ export default function ProductSelector({
           </select>
         </div>
         <div>
-          <label className={labelCls}>Clarification</label>
+          <label className={labelCls}>{t("productSelector.clarification")}</label>
           <select value={clarification} onChange={(e) => onClarificationChange(e.target.value)} className={selectCls}>
-            <option value="trouble">Trouble</option>
-            <option value="limpide">Limpide</option>
+            {clarifications.map((item) => (
+              <option key={item.id} value={item.id}>{item.nom}</option>
+            ))}
           </select>
         </div>
       </div>
 
       {/* Row 2: Procédé */}
       <div>
-        <label className={labelCls}>Procédé</label>
+        <label className={labelCls}>{t("productSelector.process")}</label>
         <select value={procede} onChange={(e) => onProcedeChange(e.target.value)} className={selectCls}>
           {procedes.map((p) => (
             <option key={p.id} value={p.id}>{p.nom}</option>
@@ -117,7 +127,7 @@ export default function ProductSelector({
       {expertMode && (
         <div className="pt-1.5 border-t border-gray-100 space-y-2.5">
           <div>
-            <label className={labelCls}>Microorganisme</label>
+            <label className={labelCls}>{t("productSelector.microorganism")}</label>
             <select
               value={microorganisme}
               onChange={(e) => {
@@ -134,7 +144,7 @@ export default function ProductSelector({
               }}
               className={selectCls}
             >
-              <option value="">Auto (selon produit)</option>
+              <option value="">{t("productSelector.autoByProduct")}</option>
               {micros.map((m) => (
                 <option key={m.id} value={m.id}>{m.nom} — D={m.d_ref} min @ {m.t_ref}°C</option>
               ))}
@@ -156,7 +166,7 @@ export default function ProductSelector({
               <input type="number" step="0.1" value={ph} onChange={(e) => onPhChange?.(e.target.value)} placeholder="3.5" className={inputCls} />
             </div>
             <div>
-              <label className={labelCls}>Alcool (%)</label>
+              <label className={labelCls}>{t("productSelector.alcohol")}</label>
               <input type="number" step="0.1" value={titreAlcool} onChange={(e) => onTitreAlcoolChange?.(e.target.value)} placeholder="0.0" className={inputCls} />
             </div>
           </div>

@@ -25,10 +25,18 @@ const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }>
   cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "saccharo_cidre", vp_cible: 5.5 },
 };
 
+const PRODUCT_LABELS: Record<string, { fr: string; en: string }> = {
+  jus_pomme: { fr: "Jus de pomme", en: "Apple juice" },
+  cidre_doux: { fr: "Cidre doux", en: "Sweet cider" },
+  cidre_demi_sec: { fr: "Cidre demi-sec", en: "Semi-dry cider" },
+  cidre_brut: { fr: "Cidre brut", en: "Dry cider" },
+  cidre_extra_brut: { fr: "Cidre extra-brut", en: "Extra-dry cider" },
+};
+
 // ── Page ──────────────────────────────────────────────────────────────────
 
 export default function BaremePage() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [productType, setProductType] = useState("jus_pomme");
   const [trouble, setTrouble] = useState(true);
   const [pasteType, setPasteType] = useState<"flash" | "tunnel">("flash");
@@ -70,6 +78,7 @@ export default function BaremePage() {
   }, [computed, ph, alcool, pasteType, t]);
 
   const produit = PRODUITS[productType];
+  const productLabel = (key: string) => PRODUCT_LABELS[key]?.[locale] || PRODUITS[key]?.nom || key;
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-[#F8FAFC]">
@@ -92,7 +101,7 @@ export default function BaremePage() {
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{t("bareme.product")}</p>
             <select value={productType} onChange={e => setProductType(e.target.value)}
               className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-primary">
-              {Object.entries(PRODUITS).map(([k, v]) => <option key={k} value={k}>{v.nom}</option>)}
+              {Object.entries(PRODUITS).map(([k]) => <option key={k} value={k}>{productLabel(k)}</option>)}
             </select>
           </div>
 
@@ -257,14 +266,14 @@ export default function BaremePage() {
                   </div>
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
                     <p className="text-[10px] text-gray-400 mb-0.5">{t("bareme.product")}</p>
-                    <p className="font-semibold text-gray-700 text-xs">{produit?.nom}</p>
+                    <p className="font-semibold text-gray-700 text-xs">{productLabel(productType)}</p>
                   </div>
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
-                    <p className="text-[10px] text-gray-400 mb-0.5">Tref</p>
+                    <p className="text-[10px] text-gray-400 mb-0.5">{t("bareme.tref")}</p>
                     <p className="font-semibold text-gray-700 text-xs">{computed.tRef}°C</p>
                   </div>
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
-                    <p className="text-[10px] text-gray-400 mb-0.5">Z</p>
+                    <p className="text-[10px] text-gray-400 mb-0.5">{t("bareme.z")}</p>
                     <p className="font-semibold text-gray-700 text-xs">{computed.z}°C</p>
                   </div>
                   <div className="bg-gray-50 rounded-lg px-3 py-2">

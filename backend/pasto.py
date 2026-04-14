@@ -1,6 +1,8 @@
 import math
 from typing import Dict, List, Optional, Tuple
 
+SUPPORTED_LOCALES = {"fr", "en"}
+
 # ---------------------------------------------------------------------------
 # Base de données des microorganismes (Tref en °C, Z en °C, VP cible en UP)
 # ---------------------------------------------------------------------------
@@ -125,6 +127,87 @@ PROCEDES = {
     "tunnel": {"nom": "Tunnel / douchette", "description": "Pasteurisation en bouteille"},
 }
 
+TRANSLATIONS = {
+    "products": {
+        "jus_pomme": {"fr": "Jus de pomme", "en": "Apple juice"},
+        "cidre_doux": {"fr": "Cidre doux", "en": "Sweet cider"},
+        "cidre_demi_sec": {"fr": "Cidre demi-sec", "en": "Semi-dry cider"},
+        "cidre_brut": {"fr": "Cidre brut", "en": "Dry cider"},
+        "cidre_extra_brut": {"fr": "Cidre extra-brut", "en": "Extra-dry cider"},
+    },
+    "procedes": {
+        "flash": {"fr": "Pasteurisation flash", "en": "Flash pasteurisation"},
+        "classique": {"fr": "Pasteurisation classique", "en": "Conventional pasteurisation"},
+        "tunnel": {"fr": "Tunnel / douchette", "en": "Tunnel / spray"},
+    },
+    "clarifications": {
+        "trouble": {"fr": "Trouble", "en": "Turbid"},
+        "limpide": {"fr": "Limpide", "en": "Clear"},
+    },
+    "risk_levels": {
+        "faible": {"fr": "faible", "en": "low"},
+        "modéré": {"fr": "modéré", "en": "moderate"},
+        "élevé": {"fr": "élevé", "en": "high"},
+    },
+    "risk_advice": {
+        "faible": {
+            "fr": "Conditions de pasteurisation satisfaisantes.",
+            "en": "Pasteurisation conditions are satisfactory.",
+        },
+        "modéré": {
+            "fr": "Vérifiez les conditions de stockage et la chaîne du froid.",
+            "en": "Check storage conditions and the cold chain.",
+        },
+        "élevé": {
+            "fr": "Pasteurisation probablement insuffisante. Risque d'altération ou de refermentation.",
+            "en": "Pasteurisation is likely insufficient. Risk of spoilage or re-fermentation.",
+        },
+    },
+}
+
+
+def normalize_locale(locale: Optional[str]) -> str:
+    value = (locale or "fr").lower()
+    return value if value in SUPPORTED_LOCALES else "fr"
+
+
+def translate(group: str, key: str, locale: str, fallback: Optional[str] = None) -> str:
+    lang = normalize_locale(locale)
+    return TRANSLATIONS.get(group, {}).get(key, {}).get(lang, fallback or key)
+
+
+def localize_product_name(product_type: str, locale: str) -> str:
+    fallback = PRODUITS.get(product_type, {}).get("nom", product_type)
+    return translate("products", product_type, locale, fallback)
+
+
+def localize_procede_name(procede: Optional[str], locale: str) -> Optional[str]:
+    if procede is None:
+        return None
+    fallback = PROCEDES.get(procede, {}).get("nom", procede)
+    return translate("procedes", procede, locale, fallback)
+
+
+def localize_clarification_name(clarification: Optional[str], locale: str) -> Optional[str]:
+    if clarification is None:
+        return None
+    return translate("clarifications", clarification, locale, clarification)
+
+
+def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, locale: str) -> str:
+    lang = normalize_locale(locale)
+    if lang == "en":
+        if statut == "conforme":
+            return f"Pasteurisation compliant. PU = {vp_obtenue:.2f} (target >= {vp_cible:.1f})."
+        if statut == "vigilance":
+            return f"Pasteurisation close to threshold. PU = {vp_obtenue:.2f} (target >= {vp_cible:.1f}). Safety margin is limited."
+        return f"Pasteurisation insufficient. PU = {vp_obtenue:.2f} (target >= {vp_cible:.1f})."
+    if statut == "conforme":
+        return f"Pasteurisation conforme. VP = {vp_obtenue:.2f} UP (cible >= {vp_cible:.1f} UP)."
+    if statut == "vigilance":
+        return f"Pasteurisation proche du seuil. VP = {vp_obtenue:.2f} UP (cible >= {vp_cible:.1f} UP). Marge insuffisante."
+    return f"Pasteurisation insuffisante. VP = {vp_obtenue:.2f} UP (cible >= {vp_cible:.1f} UP)."
+
 
 # ---------------------------------------------------------------------------
 # Calcul VP par méthode de Bigelow
@@ -189,6 +272,7 @@ def evaluer_pasteurisation(
     temperatures: List[float],
     temps: List[float],
     product_type: str = "jus_pomme",
+    locale: str = "fr",
     t_ref: Optional[float] = None,
     z: Optional[float] = None,
     vp_cible: Optional[float] = None,
@@ -220,6 +304,7 @@ def evaluer_pasteurisation(
     )
 
     # --- Calcul VP ---
+    lang = normalize_locale(locale)
     result_vp = calculer_vp_bigelow(temperatures, temps, effective_t_ref, effective_z)
     vp_obtenue = result_vp["vp"]
 
@@ -227,27 +312,16 @@ def evaluer_pasteurisation(
     ratio = vp_obtenue / effective_vp_cible if effective_vp_cible > 0 else 0
     if ratio >= 1.0:
         statut = "conforme"
-        message = (
-            f"Pasteurisation conforme. VP = {vp_obtenue:.2f} UP "
-            f"(cible ≥ {effective_vp_cible:.1f} UP)."
-        )
     elif ratio >= 0.8:
         statut = "vigilance"
-        message = (
-            f"Pasteurisation proche du seuil. VP = {vp_obtenue:.2f} UP "
-            f"(cible ≥ {effective_vp_cible:.1f} UP). Marge insuffisante."
-        )
     else:
         statut = "insuffisant"
-        message = (
-            f"Pasteurisation insuffisante. VP = {vp_obtenue:.2f} UP "
-            f"(cible ≥ {effective_vp_cible:.1f} UP)."
-        )
+    message = build_diagnostic_message(statut, vp_obtenue, effective_vp_cible, lang)
 
     # --- Risque ---
     risque = evaluer_risque(
         vp_obtenue, effective_vp_cible, product_type, micro_key,
-        ph=ph, titre_alcool=titre_alcool,
+        ph=ph, titre_alcool=titre_alcool, locale=lang,
     )
 
     return {
@@ -260,9 +334,11 @@ def evaluer_pasteurisation(
             "t_ref": effective_t_ref,
             "z": effective_z,
             "microorganisme": micro["nom"] if micro else micro_key,
-            "produit": produit["nom"],
-            "clarification": clarification,
-            "procede": PROCEDES.get(procede, {}).get("nom", procede),
+            "produit": localize_product_name(product_type, lang),
+            "clarification": localize_clarification_name(clarification, lang),
+            "procede": localize_procede_name(procede, lang),
+            "ph": ph,
+            "titre_alcool": titre_alcool,
         },
         "courbe": {
             "temps": result_vp["temps"],
@@ -283,6 +359,7 @@ def evaluer_risque(
     microorganisme: str,
     ph: Optional[float] = None,
     titre_alcool: Optional[float] = None,
+    locale: str = "fr",
 ) -> Dict:
     """Calcule un indicateur de risque (faible / modéré / élevé)."""
     score = 0
@@ -314,18 +391,16 @@ def evaluer_risque(
     if score <= 1:
         niveau = "faible"
         couleur = "#84A44A"
-        conseil = "Conditions de pasteurisation satisfaisantes."
     elif score <= 3:
         niveau = "modéré"
         couleur = "#F19B13"
-        conseil = "Vérifiez les conditions de stockage et la chaîne du froid."
     else:
         niveau = "élevé"
         couleur = "#E53E3E"
-        conseil = "Pasteurisation probablement insuffisante. Risque d'altération ou de refermentation."
+    conseil = translate("risk_advice", niveau, locale, "")
 
     return {
-        "niveau": niveau,
+        "niveau": translate("risk_levels", niveau, locale, niveau),
         "score": score,
         "couleur": couleur,
         "conseil": conseil,
@@ -337,6 +412,7 @@ def evaluer_risque(
 # ---------------------------------------------------------------------------
 def proposer_bareme(
     product_type: str,
+    locale: str = "fr",
     microorganisme: Optional[str] = None,
     clarification: str = "trouble",
     procede: str = "classique",
@@ -372,14 +448,16 @@ def proposer_bareme(
             "taux_letal": round(l, 4),
         })
 
+    lang = normalize_locale(locale)
+
     return {
-        "produit": produit["nom"],
+        "produit": localize_product_name(product_type, lang),
         "microorganisme": micro["nom"],
         "t_ref": t_ref,
         "z": z,
         "vp_cible": round(vp_cible, 2),
-        "clarification": clarification,
-        "procede": PROCEDES.get(procede, {}).get("nom", procede),
+        "clarification": localize_clarification_name(clarification, lang),
+        "procede": localize_procede_name(procede, lang),
         "baremes": baremes,
     }
 
@@ -387,13 +465,20 @@ def proposer_bareme(
 # ---------------------------------------------------------------------------
 # Utilitaires d'accès aux référentiels
 # ---------------------------------------------------------------------------
-def get_produits() -> List[Dict]:
-    return [{"id": k, **v} for k, v in PRODUITS.items()]
+def get_produits(locale: str = "fr") -> List[Dict]:
+    lang = normalize_locale(locale)
+    return [{"id": k, **v, "nom": localize_product_name(k, lang)} for k, v in PRODUITS.items()]
 
 
-def get_microorganismes() -> List[Dict]:
+def get_microorganismes(locale: str = "fr") -> List[Dict]:
     return [{"id": k, **v} for k, v in MICROORGANISMES.items()]
 
 
-def get_procedes() -> List[Dict]:
-    return [{"id": k, **v} for k, v in PROCEDES.items()]
+def get_procedes(locale: str = "fr") -> List[Dict]:
+    lang = normalize_locale(locale)
+    return [{"id": k, **v, "nom": localize_procede_name(k, lang)} for k, v in PROCEDES.items()]
+
+
+def get_clarifications(locale: str = "fr") -> List[Dict]:
+    lang = normalize_locale(locale)
+    return [{"id": key, "nom": localize_clarification_name(key, lang)} for key in CLARIFICATIONS]

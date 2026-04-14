@@ -10,6 +10,7 @@ import {
   Area,
   ComposedChart,
 } from "recharts";
+import { useI18n } from "@/lib/i18n";
 
 interface CourbeData {
   temps: number[];
@@ -29,18 +30,18 @@ function fmtNumber(n: unknown, digits = 2) {
   return Number.isFinite(x) ? x.toFixed(digits) : "—";
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label, t }: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
       <div className="bg-white p-3 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-gray-100 min-w-[150px]">
-        <p className="text-sm font-bold text-gray-700 mb-3 border-b border-gray-50 pb-2">Temps : {label} min</p>
+        <p className="text-sm font-bold text-gray-700 mb-3 border-b border-gray-50 pb-2">{t("chart.timeMinutes", { n: label })}</p>
         <div className="flex flex-col gap-2">
           {data.temperature !== undefined && (
             <div className="flex items-center justify-between gap-4">
               <span className="text-xs flex items-center gap-1.5 font-semibold text-gray-500">
                 <span className="w-2 h-2 rounded-full bg-brand-primary"></span>
-                Température
+                {t("chart.temperature")}
               </span>
               <span className="text-sm font-bold" style={{ color: "var(--color-primary)" }}>{data.temperature.toFixed(1)} °C</span>
             </div>
@@ -49,7 +50,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
             <div className="flex items-center justify-between gap-4">
               <span className="text-xs flex items-center gap-1.5 font-semibold text-gray-500">
                 <span className="w-2 h-2 rounded-full bg-brand-accent"></span>
-                VP Cumulée
+                {t("chart.cumulativeVp")}
               </span>
               <span className="text-sm font-bold" style={{ color: "var(--color-accent)" }}>{data.vp_cumulee.toFixed(2)} UP</span>
             </div>
@@ -75,6 +76,7 @@ function buildData(courbe: CourbeData) {
 }
 
 export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
+  const { t } = useI18n();
   const data = buildData(courbe);
 
   return (
@@ -83,15 +85,15 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
       {/* Courbe de température */}
 <div className="space-y-4">
   <div className="flex items-center justify-between">
-    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Cinétique thermique (°C)</h4>
+    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("chart.thermalKinetics")}</h4>
     <div className="flex gap-4">
       <div className="flex items-center gap-1.5">
         <span className="w-2 h-2 rounded-full bg-brand-primary"></span>
-        <span className="text-[10px] font-bold text-gray-500 uppercase">Température</span>
+        <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.temperature")}</span>
       </div>
       <div className="flex items-center gap-1.5">
         <span className="w-2 h-2 rounded-full bg-brand-accent"></span>
-        <span className="text-[10px] font-bold text-gray-500 uppercase">Tref</span>
+        <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.tref")}</span>
       </div>
     </div>
   </div>
@@ -111,7 +113,7 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
           tick={{ fontSize: 10, fill: "#9ca3af" }} 
           axisLine={false} 
           tickLine={false}
-          tickFormatter={(v) => `${v} min`}
+          tickFormatter={(v) => t("chart.minutesShort", { n: v })}
           minTickGap={30}
         />
         <YAxis 
@@ -121,13 +123,13 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
           tickLine={false}
           domain={['auto', 'auto']}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomTooltip t={t} />} />
         <ReferenceLine 
           yAxisId="temp" 
           y={tRef} 
           stroke="var(--color-accent)" 
           strokeDasharray="5 5" 
-          label={{ value: `Tref ${tRef}°C`, position: 'insideTopRight', fill: 'var(--color-accent)', fontSize: 10, fontWeight: 'bold' }} 
+          label={{ value: t("chart.trefLabel", { n: tRef }), position: 'insideTopRight', fill: 'var(--color-accent)', fontSize: 10, fontWeight: 'bold' }} 
         />
         <Area 
           yAxisId="temp" 
@@ -147,15 +149,15 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
       {/* Courbe de VP cumulée */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Accumulation VP (UP)</h4>
+          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("chart.vpAccumulation")}</h4>
           <div className="flex gap-4">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-brand-accent"></span>
-              <span className="text-[10px] font-bold text-gray-500 uppercase">VP Cumulée</span>
+              <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.cumulativeVp")}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-red-500"></span>
-              <span className="text-[10px] font-bold text-gray-500 uppercase">Objectif</span>
+              <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.target")}</span>
             </div>
           </div>
         </div>
@@ -175,7 +177,7 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
                 tick={{ fontSize: 10, fill: "#9ca3af" }} 
                 axisLine={false} 
                 tickLine={false}
-                tickFormatter={(v) => `${v} min`}
+                tickFormatter={(v) => t("chart.minutesShort", { n: v })}
                 minTickGap={30}
               />
               <YAxis 
@@ -183,12 +185,12 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
                 axisLine={false} 
                 tickLine={false}
               />
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={<CustomTooltip t={t} />} />
               <ReferenceLine 
                 y={vpCible} 
                 stroke="#ef4444" 
                 strokeDasharray="5 5" 
-                label={{ value: `Cible ${vpCible} UP`, position: 'insideTopRight', fill: '#ef4444', fontSize: 10, fontWeight: 'bold' }} 
+                label={{ value: t("chart.targetLabel", { n: vpCible }), position: 'insideTopRight', fill: '#ef4444', fontSize: 10, fontWeight: 'bold' }} 
               />
               <Area 
                 type="monotone" 

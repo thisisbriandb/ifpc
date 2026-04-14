@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle, AlertTriangle, XCircle } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 interface RisqueData {
   niveau: string;
@@ -36,6 +37,7 @@ interface Props {
 }
 
 export function KPICards({ result }: Props) {
+  const { t } = useI18n();
   const statutConfig: Record<string, { icon: any; color: string; bg: string; border: string }> = {
     conforme: { icon: CheckCircle, color: "text-emerald-600", bg: "bg-emerald-50/80", border: "border-emerald-200" },
     vigilance: { icon: AlertTriangle, color: "text-amber-600", bg: "bg-amber-50/80", border: "border-amber-200" },
@@ -60,7 +62,7 @@ export function KPICards({ result }: Props) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pl-4 mb-6">
           {/* Statut */}
           <div className="flex-1">
-            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Verdict du lot</p>
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">{t("resultDisplay.lotVerdict")}</p>
             <div className="flex items-center gap-3">
               <StatusIcon className={`w-8 h-8 ${cfg.color}`} />
               <h2 className={`text-3xl font-extrabold capitalize tracking-tight ${cfg.color}`}>{result.statut}</h2>
@@ -72,7 +74,7 @@ export function KPICards({ result }: Props) {
 
           {/* VP */}
           <div className="flex-1 md:text-center">
-            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Valeur Pasteurisatrice</p>
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">{t("resultDisplay.pasteurisationValue")}</p>
             <div className="flex items-baseline md:justify-center gap-1">
               <p className="text-4xl font-extrabold tracking-tight text-gray-900">{result.vp.toFixed(2)}</p>
               <span className="text-sm font-bold text-gray-500">UP</span>
@@ -84,11 +86,11 @@ export function KPICards({ result }: Props) {
 
           {/* Risque */}
           <div className="flex-1 md:text-right">
-            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Risque</p>
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">{t("resultDisplay.risk")}</p>
             <div className="flex items-center md:justify-end gap-2">
               <p className="text-2xl font-bold capitalize text-gray-900">{result.risque.niveau}</p>
             </div>
-            <p className="text-[11px] text-gray-400 font-medium">Score calculé : {result.risque.score}</p>
+            <p className="text-[11px] text-gray-400 font-medium">{t("resultDisplay.score", { n: result.risque.score })}</p>
           </div>
         </div>
 
@@ -97,7 +99,7 @@ export function KPICards({ result }: Props) {
           <p className="text-[15px] font-medium text-gray-800 leading-relaxed mb-4">{result.message}</p>
           {result.risque.conseil && (
             <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/60 border border-gray-200/60 text-sm font-semibold text-gray-800">
-              <span className="uppercase text-[10px] tracking-wider text-gray-500 font-bold">Recommandation :</span>
+              <span className="uppercase text-[10px] tracking-wider text-gray-500 font-bold">{t("resultDisplay.recommendation")}</span>
               {result.risque.conseil}
             </div>
           )}
@@ -111,7 +113,7 @@ export function KPICards({ result }: Props) {
           <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 rounded-bl-full pointer-events-none"></div>
           <div className="flex items-center gap-2 mb-3 relative z-10">
             <span className="w-3 h-3 rounded-full bg-brand-primary shadow-[0_0_8px_rgba(132,164,74,0.5)]"></span>
-            <p className="text-xs text-brand-primary font-bold uppercase tracking-wider">Température Max</p>
+            <p className="text-xs text-brand-primary font-bold uppercase tracking-wider">{t("resultDisplay.maxTemperature")}</p>
           </div>
           <div className="flex items-baseline gap-1 relative z-10">
             <p className="text-4xl font-extrabold tracking-tight text-gray-900">{maxTemp.toFixed(1)}</p>
@@ -123,7 +125,7 @@ export function KPICards({ result }: Props) {
         {duree > 0 && (
           <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex-1 flex flex-col justify-center relative overflow-hidden">
             <div className="flex items-center gap-2 mb-3">
-              <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Durée du cycle</p>
+              <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">{t("resultDisplay.cycleDuration")}</p>
             </div>
             <div className="flex items-baseline gap-1">
               <p className="text-3xl font-extrabold tracking-tight text-gray-900">{duree.toFixed(0)}</p>
@@ -137,18 +139,19 @@ export function KPICards({ result }: Props) {
 }
 
 export function ParametersTable({ result }: Props) {
+  const { t } = useI18n();
   return (
     <div className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
       <div className="p-5 grid grid-cols-2 gap-y-6 gap-x-4">
         {[
-          { label: "Produit", value: result.parametres.produit },
-          { label: "Microorganisme", value: result.parametres.microorganisme },
+          { label: t("resultDisplay.product"), value: result.parametres.produit },
+          { label: t("resultDisplay.microorganism"), value: result.parametres.microorganisme },
           { label: "Tref", value: `${result.parametres.t_ref} °C` },
           { label: "Z", value: `${result.parametres.z} °C` },
-          { label: "Clarification", value: result.parametres.clarification },
-          { label: "Procédé", value: result.parametres.procede },
+          { label: t("resultDisplay.clarification"), value: result.parametres.clarification },
+          { label: t("resultDisplay.process"), value: result.parametres.procede },
           { label: "pH", value: result.parametres.ph },
-          { label: "Alcool", value: result.parametres.titre_alcool ? `${result.parametres.titre_alcool}%` : null },
+          { label: t("resultDisplay.alcohol"), value: result.parametres.titre_alcool ? `${result.parametres.titre_alcool}%` : null },
         ].filter(i => i.value !== null && i.value !== undefined).map((item, idx) => (
           <div key={idx}>
             <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">{item.label}</p>
@@ -161,6 +164,7 @@ export function ParametersTable({ result }: Props) {
 }
 
 export default function ResultDisplay({ result }: Props) {
+  const { t } = useI18n();
   return (
     <div className="space-y-6">
       <KPICards result={result} />
@@ -169,11 +173,11 @@ export default function ResultDisplay({ result }: Props) {
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex">
         <div className="w-1.5 shrink-0" style={{ backgroundColor: result.risque.couleur }}></div>
         <div className="p-5 flex-1">
-          <h4 className="font-bold text-gray-900 mb-2">Analyse du lot</h4>
+          <h4 className="font-bold text-gray-900 mb-2">{t("resultDisplay.analysisTitle")}</h4>
           <p className="text-sm text-gray-600 leading-relaxed mb-4">{result.message}</p>
 
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-gray-50 border border-gray-100 text-gray-700">
-            <span className="uppercase text-[10px] tracking-wider text-gray-500">Conseil :</span>
+            <span className="uppercase text-[10px] tracking-wider text-gray-500">{t("resultDisplay.advice")}</span>
             {result.risque.conseil}
           </div>
         </div>

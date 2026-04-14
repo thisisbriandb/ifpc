@@ -10,6 +10,7 @@ import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisB
 import { useAuthStore } from "@/lib/store";
 import { useSearchParams } from "next/navigation";
 import AuthModal from "@/components/AuthModal";
+import { useI18n } from "@/lib/i18n";
 
 type InputMode = "upload" | "paste" | "manual";
 
@@ -52,23 +53,10 @@ export default function ControlePage() {
   );
 }
 
-const DEFAULT_HELP_TEXT = `Qu'est-ce que la VP ?
-La Valeur Pasteurisatrice (VP) quantifie l'effet létal d'un traitement thermique sur les microorganismes cibles. Elle s'exprime en UP (Unités de Pasteurisation) et est calculée par la méthode de Bigelow.
-
-Comment utiliser cet outil ?
-1. Importez vos données : fichier Excel/CSV, collé ou saisie manuelle
-2. Choisissez le produit et les paramètres de pasteurisation
-3. Lancez l'analyse pour obtenir la VP et le diagnostic
-
-Interprétation des résultats
-• Conforme : la Valeur Pasteurisatrice atteint ou dépasse la cible
-• Vigilance : la Valeur Pasteurisatrice est proche de la cible
-• Insuffisant : la Valeur Pasteurisatrice est en dessous de la cible
-
-Mode Expert : Réservé aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoométrique.`;
-
 function ControlePageInner() {
   const searchParams = useSearchParams();
+  const { t, locale } = useI18n();
+  const defaultHelpText = t("controle.defaultHelp");
 
   // --- STATES METIER (inchangés) ---
   const [mode, setMode] = useState<InputMode>("upload");
@@ -158,17 +146,18 @@ function ControlePageInner() {
   // Fetch help text when modal opens
   useEffect(() => {
     if (!showHelp) return;
-    getHelpText("calcul_vp")
+    getHelpText("calcul_vp", locale)
       .then((res) => {
         if (res.content) setHelpContent(res.content);
+        else setHelpContent(defaultHelpText);
       })
       .catch(() => {});
-  }, [showHelp]);
+  }, [showHelp, locale, defaultHelpText]);
 
   const handleHelpSave = async () => {
     setHelpSaving(true);
     try {
-      await updateHelpText("calcul_vp", helpDraft);
+      await updateHelpText("calcul_vp", helpDraft, locale);
       setHelpContent(helpDraft);
       setHelpEditing(false);
     } catch {
@@ -245,20 +234,21 @@ function ControlePageInner() {
     setResult(null);
     try {
       const params = buildParams();
+      params.locale = locale;
       let res;
       if (mode === "upload") {
-        if (!file) { setError("Veuillez sélectionner un fichier"); setLoading(false); return; }
+        if (!file) { setError(t("controle.errors.selectFile")); setLoading(false); return; }
         res = await uploadFile(file, params);
       } else if (mode === "paste") {
-        if (!pasteText.trim()) { setError("Veuillez coller des données"); setLoading(false); return; }
-        res = await collerDonnees({ raw_text: pasteText, product_type: productType, ...params });
+        if (!pasteText.trim()) { setError(t("controle.errors.pasteData")); setLoading(false); return; }
+        res = await collerDonnees({ raw_text: pasteText, product_type: productType, locale, ...params });
       } else {
-        if (!manualData.trim()) { setError("Veuillez saisir des données"); setLoading(false); return; }
-        res = await collerDonnees({ raw_text: manualData, product_type: productType, ...params });
+        if (!manualData.trim()) { setError(t("controle.errors.manualData")); setLoading(false); return; }
+        res = await collerDonnees({ raw_text: manualData, product_type: productType, locale, ...params });
       }
       setResult(res);
       // --- Sauvegarder l'activité récente ---
-      const activityLabel = res.parametres?.produit || file?.name || (mode === "paste" ? "Données collées" : "Saisie manuelle");
+      const activityLabel = res.parametres?.produit || file?.name || (mode === "paste" ? t("controle.pastedDataLabel") : t("controle.manualDataLabel"));
       try {
         // Sauvegarde persistante en base via Spring Boot
         await saveAnalysis({
@@ -296,7 +286,7 @@ function ControlePageInner() {
       // Optionnel : fermer la sidebar d'input une fois le résultat obtenu pour laisser toute la place
       if (window.innerWidth < 1024) setIsSidebarOpen(false);
     } catch (err: any) {
-      setError(err.response?.data?.detail || err.message || "Erreur inconnue");
+      setError(err.response?.data?.detail || err.message || t("controle.errors.unknown"));
     } finally {
       setLoading(false);
     }
@@ -310,9 +300,9 @@ function ControlePageInner() {
   }, []);
 
   const modeConfig: Record<InputMode, { icon: any; label: string }> = {
-    upload: { icon: Upload, label: "Fichier" },
-    paste: { icon: ClipboardPaste, label: "Coller" },
-    manual: { icon: Keyboard, label: "Saisie" },
+    upload: { icon: Upload, label: t("controle.modeUpload") },
+    paste: { icon: ClipboardPaste, label: t("controle.modePaste") },
+    manual: { icon: Keyboard, label: t("controle.modeManual") },
   };
 
   return (
@@ -329,7 +319,7 @@ function ControlePageInner() {
             {/* Product Parameters */}
             <div className="px-4 pt-4 pb-3">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Produit</h3>
+                <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">{t("controle.productSection")}</h3>
                 {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
                   <button
                     onClick={() => setExpertMode(!expertMode)}
@@ -356,7 +346,7 @@ function ControlePageInner() {
 
             {/* Data input */}
             <div className="px-4 py-3">
-              <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Données</h3>
+              <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">{t("controle.dataSection")}</h3>
               <div className="flex p-0.5 bg-gray-100 rounded-lg mb-3">
                 {(Object.keys(modeConfig) as InputMode[]).map((m) => {
                   const Icon = modeConfig[m].icon;
@@ -386,16 +376,16 @@ function ControlePageInner() {
                     <div className="text-sm">
                       <FileSpreadsheet className="w-8 h-8 text-brand-primary mx-auto mb-2" />
                       <p className="font-semibold text-gray-900 truncate text-xs">{file.name}</p>
-                      <button onClick={() => setFile(null)} className="text-[10px] text-red-500 hover:text-red-600 font-medium mt-2">Retirer</button>
+                      <button onClick={() => setFile(null)} className="text-[10px] text-red-500 hover:text-red-600 font-medium mt-2">{t("controle.removeFile")}</button>
                     </div>
                   ) : (
                     <div>
                       <Upload className="w-5 h-5 text-gray-300 mx-auto mb-2" />
                       <label className="text-xs text-brand-primary font-bold cursor-pointer hover:underline">
-                        Parcourir
+                        {t("controle.browse")}
                         <input type="file" accept=".xlsx,.xls,.csv,.txt,.tsv" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
                       </label>
-                      <p className="text-[10px] text-gray-400 mt-1">ou glissez-déposez</p>
+                      <p className="text-[10px] text-gray-400 mt-1">{t("controle.dragDrop")}</p>
                     </div>
                   )}
                 </div>
@@ -405,7 +395,7 @@ function ControlePageInner() {
                 <textarea
                   value={pasteText}
                   onChange={(e) => setPasteText(e.target.value)}
-                  placeholder={"Temps\tTempérature\n0\t20\n1\t45\n2\t68..."}
+                  placeholder={t("controle.inputPlaceholder")}
                   className="w-full h-36 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none text-[11px] font-mono resize-none"
                 />
               )}
@@ -417,8 +407,8 @@ function ControlePageInner() {
                       <thead className="sticky top-0 z-10">
                         <tr className="bg-gray-50 border-b border-gray-200">
                           <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase w-8">#</th>
-                          <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">Temps</th>
-                          <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">T°C</th>
+                          <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">{t("controle.time")}</th>
+                          <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">{t("controle.temp")}</th>
                           <th className="w-6"></th>
                         </tr>
                       </thead>
@@ -441,7 +431,7 @@ function ControlePageInner() {
                               />
                             </td>
                             <td className="px-0.5 py-0.5">
-                              <button onClick={() => removeRow(idx)} className="opacity-0 group-hover:opacity-100 p-0.5 text-gray-400 hover:text-red-500" title="Supprimer">
+                              <button onClick={() => removeRow(idx)} className="opacity-0 group-hover:opacity-100 p-0.5 text-gray-400 hover:text-red-500" title={t("controle.manualRowDelete")}>
                                 <Trash2 className="w-2.5 h-2.5" />
                               </button>
                             </td>
@@ -454,7 +444,7 @@ function ControlePageInner() {
                     onClick={addRow}
                     className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] font-semibold text-brand-primary hover:bg-brand-primary/5 border-t border-gray-100"
                   >
-                    <Plus className="w-3 h-3" /> Ligne
+                    <Plus className="w-3 h-3" /> {t("controle.manualAddRow")}
                   </button>
                 </div>
               )}
@@ -465,7 +455,7 @@ function ControlePageInner() {
                 className="w-full mt-3 py-2.5 text-sm flex items-center justify-center gap-2 rounded-lg font-bold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors disabled:opacity-60"
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Activity className="w-4 h-4" />}
-                {loading ? "Calcul..." : "Lancer l'analyse"}
+                {loading ? t("controle.calculating") : t("controle.launchAnalysis")}
               </button>
 
               {error && (
@@ -499,7 +489,7 @@ function ControlePageInner() {
           className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-500 hover:text-brand-primary hover:border-brand-primary/30 transition-all shadow-sm"
         >
           <HelpCircle className="w-4 h-4" />
-          Aide
+          {t("controle.help")}
         </button>
 
         {result ? (
@@ -510,16 +500,16 @@ function ControlePageInner() {
               <div>
                 <p className="text-sm font-bold text-brand-primary mb-1 flex items-center gap-2">
                   <CheckCircle className="w-4 h-4" />
-                  Analyse Terminée
+                  {t("controle.analysisDone")}
                 </p>
-                <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Rapport de Pasteurisation</h1>
+                <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">{t("controle.reportTitle")}</h1>
               </div>
               <button
                 onClick={() => setIsRawDataDrawerOpen(true)}
                 className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm"
               >
                 <TableIcon className="w-4 h-4 text-gray-500" />
-                Voir les données brutes
+                {t("controle.rawData")}
               </button>
             </header>
 
@@ -532,7 +522,7 @@ function ControlePageInner() {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-primary/40 to-brand-accent/40"></div>
                 <h3 className="font-bold text-gray-900 flex items-center gap-2">
                   <LayoutDashboard className="w-5 h-5 text-gray-400" />
-                  Cinétique Thermique & Évolution des UP
+                  {t("controle.thermalKinetics")}
                 </h3>
               </div>
               <div className="p-6 h-[450px]">
@@ -554,16 +544,16 @@ function ControlePageInner() {
               <div className="w-24 h-24 bg-white rounded-full border-8 border-gray-50 flex items-center justify-center mx-auto mb-6 shadow-sm">
                 <Activity className="w-10 h-10 text-brand-primary/50" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">Prêt à analyser votre lot</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">{t("controle.titleReady")}</h2>
               <p className="text-gray-500 mb-8 leading-relaxed">
-                Utilisez le panneau de configuration à gauche pour définir vos paramètres et importer vos relevés de température.
+                {t("controle.subtitleReady")}
               </p>
               {!isSidebarOpen && (
                 <button
                   onClick={() => setIsSidebarOpen(true)}
                   className="inline-flex items-center gap-2 text-white bg-brand-primary px-6 py-3 rounded-full font-bold hover:bg-brand-primary/90 transition-all shadow-md shadow-brand-primary/20"
                 >
-                  Ouvrir la configuration <ChevronRight className="w-4 h-4" />
+                  {t("controle.openConfig")} <ChevronRight className="w-4 h-4" />
                 </button>
               )}
             </div>
@@ -588,10 +578,10 @@ function ControlePageInner() {
               <div>
                 <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                   <TableIcon className="w-5 h-5 text-gray-400" />
-                  Données Brutes du Lot
+                  {t("controle.rawDataTitle")}
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">
-                  Extraction des {result.courbe.temps.length} points de mesure
+                  {t("controle.rawDataSubtitle", { n: result.courbe.temps.length })}
                 </p>
               </div>
               <button
@@ -609,9 +599,9 @@ function ControlePageInner() {
                   <table className="w-full text-left text-sm">
                     <thead className="sticky top-0 bg-gray-50 border-b border-gray-200 shadow-sm z-10">
                       <tr>
-                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">Temps (min)</th>
-                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">Temp (°C)</th>
-                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">VP Cumulée</th>
+                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.time")} (min)</th>
+                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.temp")} (°C)</th>
+                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.rawDataVp")}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
@@ -642,13 +632,13 @@ function ControlePageInner() {
             <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
               <h3 className="font-bold text-gray-900 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-brand-primary" />
-                Aide &mdash; Calcul de la VP
+                {t("controle.helpTitle")}
               </h3>
               <div className="flex items-center gap-1">
                 {user?.role === "ADMIN" && !helpEditing && (
                   <button
-                    onClick={() => { setHelpEditing(true); setHelpDraft(helpContent || DEFAULT_HELP_TEXT); }}
-                    title="Modifier"
+                    onClick={() => { setHelpEditing(true); setHelpDraft(helpContent || defaultHelpText); }}
+                    title={t("controle.helpEdit")}
                     className="p-1.5 text-gray-400 hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
                   >
                     <Pencil className="w-4 h-4" />
@@ -671,7 +661,7 @@ function ControlePageInner() {
                     }`}
                   >
                     <Pencil className="w-3 h-3" />
-                    Éditer
+                    {t("controle.helpEditTab")}
                   </button>
                   <button
                     onClick={() => setHelpPreview(true)}
@@ -680,7 +670,7 @@ function ControlePageInner() {
                     }`}
                   >
                     <Eye className="w-3 h-3" />
-                    Aperçu
+                    {t("controle.helpPreviewTab")}
                   </button>
                 </div>
 
@@ -690,7 +680,7 @@ function ControlePageInner() {
                   </div>
                 ) : (
                   <>
-                    <p className="text-xs text-gray-400">Markdown supporté : **gras**, *italique*, # titres, - listes, `code`…</p>
+                    <p className="text-xs text-gray-400">{t("controle.helpMarkdownHint")}</p>
                     <textarea
                       value={helpDraft}
                       onChange={(e) => setHelpDraft(e.target.value)}
@@ -707,19 +697,19 @@ function ControlePageInner() {
                     className="flex items-center gap-1.5 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors disabled:opacity-50"
                   >
                     {helpSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                    Enregistrer
+                    {t("controle.helpSaved")}
                   </button>
                   <button
                     onClick={() => { setHelpEditing(false); setHelpPreview(false); }}
                     className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
                   >
-                    Annuler
+                    {t("common.cancel")}
                   </button>
                 </div>
               </div>
             ) : (
               <div className="p-6 prose prose-sm prose-gray max-w-none overflow-y-auto max-h-[60vh]">
-                <ReactMarkdown>{helpContent || DEFAULT_HELP_TEXT}</ReactMarkdown>
+                <ReactMarkdown>{helpContent || defaultHelpText}</ReactMarkdown>
               </div>
             )}
 
@@ -729,7 +719,7 @@ function ControlePageInner() {
                   onClick={() => setShowHelp(false)}
                   className="w-full py-2.5 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors"
                 >
-                  Compris
+                  {t("controle.helpDismiss")}
                 </button>
               </div>
             )}

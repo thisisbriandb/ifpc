@@ -108,35 +108,35 @@ export async function updateProductConfig(productType: string, vpCible: number, 
 
 // ── Help Text ────────────────────────────────────────────────────────────────
 
-export async function getHelpText(key: string): Promise<{ key: string; content: string | null }> {
-  const { data } = await api.get(`/config/help/${key}`);
+export async function getHelpText(key: string, locale = "fr"): Promise<{ key: string; content: string | null; locale: string }> {
+  const { data } = await api.get(`/config/help/${key}`, { params: { locale } });
   return data;
 }
 
-export async function updateHelpText(key: string, content: string): Promise<{ key: string; content: string }> {
-  const { data } = await api.put(`/admin/help/${key}`, { content });
+export async function updateHelpText(key: string, content: string, locale = "fr"): Promise<{ key: string; content: string; locale: string }> {
+  const { data } = await api.put(`/admin/help/${key}`, { content, locale });
   return data;
 }
 
 // ── Référentiels ────────────────────────────────────────────────────────────
 
-export async function getProduits() {
-  const { data } = await api.get("/referentiels/produits");
+export async function getProduits(locale = "fr") {
+  const { data } = await api.get("/referentiels/produits", { params: { locale } });
   return data;
 }
 
-export async function getMicroorganismes() {
+export async function getMicroorganismes(locale = "fr") {
   const { data } = await api.get("/referentiels/microorganismes");
   return data;
 }
 
-export async function getProcedes() {
-  const { data } = await api.get("/referentiels/procedes");
+export async function getProcedes(locale = "fr") {
+  const { data } = await api.get("/referentiels/procedes", { params: { locale } });
   return data;
 }
 
-export async function getClarifications() {
-  const { data } = await api.get("/referentiels/clarifications");
+export async function getClarifications(locale = "fr") {
+  const { data } = await api.get("/referentiels/clarifications", { params: { locale } });
   return data;
 }
 
@@ -146,6 +146,7 @@ export interface EvaluateParams {
   temperatures: number[];
   temps: number[];
   product_type: string;
+  locale?: string;
   microorganisme?: string | null;
   t_ref?: number | null;
   z?: number | null;
@@ -178,6 +179,7 @@ export async function uploadFile(file: File, params: Record<string, any>) {
 export async function collerDonnees(params: {
   raw_text: string;
   product_type: string;
+  locale?: string;
   microorganisme?: string | null;
   t_ref?: number | null;
   z?: number | null;
@@ -243,6 +245,7 @@ export async function deleteAnalysis(id: number) {
 
 export async function proposerBareme(params: {
   product_type: string;
+  locale?: string;
   microorganisme?: string | null;
   clarification: string;
   procede: string;

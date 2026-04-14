@@ -34,6 +34,7 @@ class EvaluateRequest(BaseModel):
     temperatures: List[float]
     temps: List[float]
     product_type: str = "jus_pomme"
+    locale: str = "fr"
     microorganisme: Optional[str] = None
     t_ref: Optional[float] = None
     z: Optional[float] = None
@@ -46,6 +47,7 @@ class EvaluateRequest(BaseModel):
 
 class BaremeRequest(BaseModel):
     product_type: str = "jus_pomme"
+    locale: str = "fr"
     microorganisme: Optional[str] = None
     clarification: str = "trouble"
     procede: str = "classique"
@@ -54,6 +56,7 @@ class BaremeRequest(BaseModel):
 class PasteDataRequest(BaseModel):
     raw_text: str
     product_type: str = "jus_pomme"
+    locale: str = "fr"
     microorganisme: Optional[str] = None
     t_ref: Optional[float] = None
     z: Optional[float] = None
@@ -67,23 +70,23 @@ class PasteDataRequest(BaseModel):
 # ── Référentiels ─────────────────────────────────────────────────────────────
 
 @app.get("/api/referentiels/produits")
-async def get_produits():
-    return pasto.get_produits()
+async def get_produits(locale: str = "fr"):
+    return pasto.get_produits(locale)
 
 
 @app.get("/api/referentiels/microorganismes")
-async def get_microorganismes():
-    return pasto.get_microorganismes()
+async def get_microorganismes(locale: str = "fr"):
+    return pasto.get_microorganismes(locale)
 
 
 @app.get("/api/referentiels/procedes")
-async def get_procedes():
-    return pasto.get_procedes()
+async def get_procedes(locale: str = "fr"):
+    return pasto.get_procedes(locale)
 
 
 @app.get("/api/referentiels/clarifications")
-async def get_clarifications():
-    return pasto.CLARIFICATIONS
+async def get_clarifications(locale: str = "fr"):
+    return pasto.get_clarifications(locale)
 
 
 # ── Module 1 : Contrôle de pasteurisation ────────────────────────────────────
@@ -100,6 +103,7 @@ async def evaluer_pasteurisation(
             temperatures=request.temperatures,
             temps=request.temps,
             product_type=request.product_type,
+            locale=request.locale,
             t_ref=request.t_ref,
             z=request.z,
             vp_cible=request.vp_cible,
@@ -118,6 +122,7 @@ async def evaluer_pasteurisation(
 async def upload_file(
     file: UploadFile = File(...),
     product_type: str = "jus_pomme",
+    locale: str = "fr",
     microorganisme: Optional[str] = None,
     t_ref: Optional[float] = None,
     z: Optional[float] = None,
@@ -159,6 +164,7 @@ async def upload_file(
             temperatures=temp_list,
             temps=temps_list,
             product_type=product_type,
+            locale=locale,
             t_ref=t_ref,
             z=z,
             vp_cible=vp_cible,
@@ -204,6 +210,7 @@ async def paste_data(
             temperatures=temp_list,
             temps=temps_list,
             product_type=request.product_type,
+            locale=request.locale,
             t_ref=request.t_ref,
             z=request.z,
             vp_cible=request.vp_cible,
@@ -232,6 +239,7 @@ async def proposer_bareme(request: BaremeRequest):
     try:
         return pasto.proposer_bareme(
             product_type=request.product_type,
+            locale=request.locale,
             microorganisme=request.microorganisme,
             clarification=request.clarification,
             procede=request.procede,
