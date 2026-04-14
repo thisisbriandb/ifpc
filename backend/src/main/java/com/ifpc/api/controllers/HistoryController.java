@@ -26,6 +26,7 @@ public class HistoryController {
         AnalysisHistory history = AnalysisHistory.builder()
                 .type(request.type())
                 .label(request.label())
+                .lotIdentifier(request.lotIdentifier())
                 .statut(request.statut())
                 .vp(request.vp())
                 .vpCible(request.vpCible())
@@ -52,7 +53,7 @@ public class HistoryController {
 
         List<HistoryDto> dtos = analyses.stream()
                 .map(a -> new HistoryDto(
-                        a.getId(), a.getType(), a.getLabel(), a.getStatut(),
+                        a.getId(), a.getType(), a.getLabel(), a.getLotIdentifier(), a.getStatut(),
                         a.getVp(), a.getVpCible(), a.getCreatedAt().toString(),
                         a.getUserEmail()
                 ))
@@ -95,13 +96,13 @@ public class HistoryController {
     // ── DTOs ──────────────────────────────────────────────────────────────
 
     public record SaveAnalysisRequest(
-            String type, String label, String statut,
+            String type, String label, String lotIdentifier, String statut,
             Double vp, Double vpCible,
             String parametres, String courbe, String resultJson
     ) {}
 
     public record HistoryDto(
-            Long id, String type, String label, String statut,
+            Long id, String type, String label, String lotIdentifier, String statut,
             Double vp, Double vpCible, String date, String userEmail
     ) {}
 }

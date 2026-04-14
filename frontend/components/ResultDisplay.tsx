@@ -21,6 +21,7 @@ interface ResultData {
     z: number;
     microorganisme: string;
     produit: string;
+    lot_identifier?: string;
     clarification: string | null;
     procede: string | null;
     ph?: number;
@@ -145,6 +146,7 @@ export function ParametersTable({ result }: Props) {
       <div className="p-5 grid grid-cols-2 gap-y-6 gap-x-4">
         {[
           { label: t("resultDisplay.product"), value: result.parametres.produit },
+          { label: t("resultDisplay.lotIdentifier"), value: result.parametres.lot_identifier },
           { label: t("resultDisplay.microorganism"), value: result.parametres.microorganisme },
           { label: "Tref", value: `${result.parametres.t_ref} °C` },
           { label: "Z", value: `${result.parametres.z} °C` },

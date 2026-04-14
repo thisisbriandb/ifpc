@@ -199,6 +199,7 @@ export interface HistoryEntry {
   id: number;
   type: "controle" | "bareme";
   label: string;
+  lotIdentifier?: string;
   statut?: string;
   vp?: number;
   vpCible?: number;
@@ -215,6 +216,7 @@ export interface AnalysisDetail extends HistoryEntry {
 export async function saveAnalysis(params: {
   type: string;
   label: string;
+  lotIdentifier?: string;
   statut?: string;
   vp?: number;
   vpCible?: number;

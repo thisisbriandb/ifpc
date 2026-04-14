@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { getClarifications, getProduits, getMicroorganismes, getProcedes } from "@/lib/api";
+import { getProduits, getMicroorganismes, getProcedes } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 
 // Fallback data mirroring backend pasto.py definitions
@@ -19,18 +19,11 @@ const FALLBACK_PROCEDES = [
   { id: "tunnel", nom: "Tunnel / douchette" },
 ];
 
-const FALLBACK_CLARIFICATIONS = [
-  { id: "trouble", nom: "Trouble" },
-  { id: "limpide", nom: "Limpide" },
-];
-
 interface Props {
   productType: string;
   onProductChange: (v: string) => void;
   microorganisme: string;
   onMicroChange: (v: string) => void;
-  clarification: string;
-  onClarificationChange: (v: string) => void;
   procede: string;
   onProcedeChange: (v: string) => void;
   expertMode?: boolean;
@@ -47,7 +40,6 @@ interface Props {
 export default function ProductSelector({
   productType, onProductChange,
   microorganisme, onMicroChange,
-  clarification, onClarificationChange,
   procede, onProcedeChange,
   expertMode = false,
   tRef, onTRefChange,
@@ -59,7 +51,6 @@ export default function ProductSelector({
   const [produits, setProduits] = useState<any[]>(FALLBACK_PRODUITS);
   const [micros, setMicros] = useState<any[]>([]);
   const [procedes, setProcedes] = useState<any[]>(FALLBACK_PROCEDES);
-  const [clarifications, setClarifications] = useState<any[]>(FALLBACK_CLARIFICATIONS);
 
   const fetchWithRetry = useCallback(async (
     fetcher: () => Promise<any[]>,
@@ -84,7 +75,6 @@ export default function ProductSelector({
     fetchWithRetry(() => getProduits(locale), setProduits);
     fetchWithRetry(() => getMicroorganismes(locale), setMicros);
     fetchWithRetry(() => getProcedes(locale), setProcedes);
-    fetchWithRetry(() => getClarifications(locale), setClarifications);
   }, [fetchWithRetry, locale]);
 
   const selectCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white";
@@ -93,24 +83,13 @@ export default function ProductSelector({
 
   return (
     <div className="space-y-2.5">
-      {/* Row 1: Produit + Clarification */}
-      <div className="grid grid-cols-2 gap-2">
-        <div>
-          <label className={labelCls}>{t("productSelector.product")}</label>
-          <select value={productType} onChange={(e) => onProductChange(e.target.value)} className={selectCls}>
-            {produits.map((p) => (
-              <option key={p.id} value={p.id}>{p.nom}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className={labelCls}>{t("productSelector.clarification")}</label>
-          <select value={clarification} onChange={(e) => onClarificationChange(e.target.value)} className={selectCls}>
-            {clarifications.map((item) => (
-              <option key={item.id} value={item.id}>{item.nom}</option>
-            ))}
-          </select>
-        </div>
+      <div>
+        <label className={labelCls}>{t("productSelector.product")}</label>
+        <select value={productType} onChange={(e) => onProductChange(e.target.value)} className={selectCls}>
+          {produits.map((p) => (
+            <option key={p.id} value={p.id}>{p.nom}</option>
+          ))}
+        </select>
       </div>
 
       {/* Row 2: Procédé */}

@@ -28,6 +28,9 @@ public class AnalysisHistory {
     @Column(nullable = false)
     private String label;
 
+    // N° lot ou identifiant produit saisi par l'utilisateur
+    private String lotIdentifier;
+
     // Résultat : "conforme", "vigilance", "insuffisant"
     private String statut;
 

@@ -32,6 +32,7 @@ interface PasteurisationResult {
     z: number;
     microorganisme: string;
     produit: string;
+    lot_identifier?: string;
     clarification: string | null;
     procede: string | null;
     ph?: number;
@@ -66,6 +67,7 @@ function ControlePageInner() {
   const [expertMode, setExpertMode] = useState(false);
 
   const [productType, setProductType] = useState("jus_pomme");
+  const [lotIdentifier, setLotIdentifier] = useState("");
   const [microorganisme, setMicroorganisme] = useState("");
   const [clarification, setClarification] = useState("trouble");
   const [procede, setProcede] = useState("classique");
@@ -246,20 +248,28 @@ function ControlePageInner() {
         if (!manualData.trim()) { setError(t("controle.errors.manualData")); setLoading(false); return; }
         res = await collerDonnees({ raw_text: manualData, product_type: productType, locale, ...params });
       }
-      setResult(res);
+      const enrichedResult = {
+        ...res,
+        parametres: {
+          ...(res.parametres || {}),
+          lot_identifier: lotIdentifier || undefined,
+        },
+      };
+      setResult(enrichedResult);
       // --- Sauvegarder l'activité récente ---
-      const activityLabel = res.parametres?.produit || file?.name || (mode === "paste" ? t("controle.pastedDataLabel") : t("controle.manualDataLabel"));
+      const activityLabel = lotIdentifier || res.parametres?.produit || file?.name || (mode === "paste" ? t("controle.pastedDataLabel") : t("controle.manualDataLabel"));
       try {
         // Sauvegarde persistante en base via Spring Boot
         await saveAnalysis({
           type: "controle",
           label: activityLabel,
-          statut: res.statut,
-          vp: res.vp,
-          vpCible: res.vp_cible,
-          parametres: JSON.stringify(res.parametres || {}),
-          courbe: JSON.stringify(res.courbe || {}),
-          resultJson: JSON.stringify(res),
+          lotIdentifier: lotIdentifier || undefined,
+          statut: enrichedResult.statut,
+          vp: enrichedResult.vp,
+          vpCible: enrichedResult.vp_cible,
+          parametres: JSON.stringify(enrichedResult.parametres || {}),
+          courbe: JSON.stringify(enrichedResult.courbe || {}),
+          resultJson: JSON.stringify(enrichedResult),
         });
       } catch {
         // Fallback localStorage si le backend Spring est indisponible
@@ -270,12 +280,13 @@ function ControlePageInner() {
           date: new Date().toISOString(),
           type: "controle",
           label: activityLabel,
-          produit: res.parametres?.produit,
-          procede: res.parametres?.procede,
-          statut: res.statut,
-          vp: res.vp,
-          vpCible: res.vp_cible,
-          resultJson: JSON.stringify(res),
+          lotIdentifier: lotIdentifier || undefined,
+          produit: enrichedResult.parametres?.produit,
+          procede: enrichedResult.parametres?.procede,
+          statut: enrichedResult.statut,
+          vp: enrichedResult.vp,
+          vpCible: enrichedResult.vp_cible,
+          resultJson: JSON.stringify(enrichedResult),
         };
         const stored = localStorage.getItem("ifpc_recent_activities");
         const existing = stored ? JSON.parse(stored) : [];
@@ -332,7 +343,6 @@ function ControlePageInner() {
               <ProductSelector
                 productType={productType} onProductChange={setProductType}
                 microorganisme={microorganisme} onMicroChange={setMicroorganisme}
-                clarification={clarification} onClarificationChange={setClarification}
                 procede={procede} onProcedeChange={setProcede}
                 expertMode={expertMode}
                 tRef={tRef} onTRefChange={setTRef}
@@ -340,6 +350,33 @@ function ControlePageInner() {
                 ph={ph} onPhChange={setPh}
                 titreAlcool={titreAlcool} onTitreAlcoolChange={setTitreAlcool}
               />
+
+              <div className="mt-2.5">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{t("controle.claritySection")}</p>
+                <div className="flex gap-1.5">
+                  {[[t("bareme.turbid"), "trouble"], [t("bareme.clear"), "limpide"]].map(([label, value]) => (
+                    <button
+                      key={value as string}
+                      onClick={() => setClarification(value as string)}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                        clarification === value ? "bg-brand-primary text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                      }`}
+                    >
+                      {label as string}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-2.5">
+                <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">{t("controle.lotIdentifier")}</label>
+                <input
+                  type="text"
+                  value={lotIdentifier}
+                  onChange={(e) => setLotIdentifier(e.target.value)}
+                  className="w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white"
+                />
+              </div>
             </div>
 
             <div className="mx-4 border-t border-gray-100" />
