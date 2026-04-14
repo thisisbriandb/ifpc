@@ -203,6 +203,7 @@ export interface HistoryEntry {
   statut?: string;
   vp?: number;
   vpCible?: number;
+  parametres?: string;
   date: string;
   userEmail?: string;
 }

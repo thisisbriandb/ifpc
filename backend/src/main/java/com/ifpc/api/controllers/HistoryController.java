@@ -54,7 +54,7 @@ public class HistoryController {
         List<HistoryDto> dtos = analyses.stream()
                 .map(a -> new HistoryDto(
                         a.getId(), a.getType(), a.getLabel(), a.getLotIdentifier(), a.getStatut(),
-                        a.getVp(), a.getVpCible(), a.getCreatedAt().toString(),
+                        a.getVp(), a.getVpCible(), a.getParametres(), a.getCreatedAt().toString(),
                         a.getUserEmail()
                 ))
                 .toList();
@@ -103,6 +103,6 @@ public class HistoryController {
 
     public record HistoryDto(
             Long id, String type, String label, String lotIdentifier, String statut,
-            Double vp, Double vpCible, String date, String userEmail
+            Double vp, Double vpCible, String parametres, String date, String userEmail
     ) {}
 }

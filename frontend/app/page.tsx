@@ -20,6 +20,7 @@ interface RecentActivity {
   date: string;
   type: "controle" | "bareme";
   label: string;
+  lotIdentifier?: string;
   produit?: string;
   procede?: string;
   statut?: string;
@@ -27,6 +28,7 @@ interface RecentActivity {
   vpCible?: number;
   fromDb?: boolean;
   resultJson?: string;
+  parametres?: string;
 }
 
 const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
@@ -167,7 +169,7 @@ const PREVIEW_COUNT = 3;
 export default function Home() {
   const { user } = useAuthStore();
   const router = useRouter();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [activities, setActivities] = useState<RecentActivity[]>([]);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
   const [openModules, setOpenModules] = useState<Record<string, boolean>>({ pasteurisation: true });
@@ -224,9 +226,11 @@ export default function Home() {
               date: e.date,
               type: e.type,
               label: e.label,
+              lotIdentifier: e.lotIdentifier,
               statut: e.statut,
               vp: e.vp,
               vpCible: e.vpCible,
+              parametres: e.parametres,
               fromDb: true,
             })));
             return;
@@ -252,6 +256,53 @@ export default function Home() {
   };
 
   const visibleModules = modules.filter((m) => !m.adminOnly || user?.role === "ADMIN");
+
+  const productLabels: Record<string, { fr: string; en: string }> = {
+    jus_pomme: { fr: "Jus de pomme", en: "Apple juice" },
+    cidre_doux: { fr: "Cidre doux", en: "Sweet cider" },
+    cidre_demi_sec: { fr: "Cidre demi-sec", en: "Semi-dry cider" },
+    cidre_brut: { fr: "Cidre brut", en: "Dry cider" },
+    cidre_extra_brut: { fr: "Cidre extra-brut", en: "Extra-dry cider" },
+  };
+
+  const processLabels: Record<string, { fr: string; en: string }> = {
+    flash: { fr: "Pasteurisation flash", en: "Flash pasteurisation" },
+    classique: { fr: "Pasteurisation classique", en: "Conventional pasteurisation" },
+    tunnel: { fr: "Tunnel / douchette", en: "Tunnel / spray" },
+  };
+
+  const productNameToKey: Record<string, string> = Object.fromEntries(
+    Object.entries(productLabels).flatMap(([key, values]) => Object.values(values).map((name) => [name, key]))
+  );
+
+  const processNameToKey: Record<string, string> = Object.fromEntries(
+    Object.entries(processLabels).flatMap(([key, values]) => Object.values(values).map((name) => [name, key]))
+  );
+
+  const translateProduct = (value?: string) => {
+    if (!value) return value;
+    const key = productNameToKey[value];
+    return key ? productLabels[key][locale] : value;
+  };
+
+  const translateProcess = (value?: string) => {
+    if (!value) return value;
+    const key = processNameToKey[value];
+    return key ? processLabels[key][locale] : value;
+  };
+
+  const activityMeta = (activity: RecentActivity) => {
+    let parametres: any = null;
+    try {
+      parametres = activity.parametres ? JSON.parse(activity.parametres) : null;
+    } catch {}
+
+    const produit = translateProduct(parametres?.produit || activity.produit);
+    const procede = translateProcess(parametres?.procede || activity.procede);
+    const title = activity.lotIdentifier || produit || activity.label;
+
+    return { produit, procede, title };
+  };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] px-8 py-10">
@@ -351,6 +402,7 @@ export default function Home() {
                                     <div className="divide-y divide-gray-50">
                                       {visible.map((a) => {
                                         const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
+                                        const meta = activityMeta(a);
                                         const handleClick = () => {
                                           if (a.resultJson) localStorage.setItem("ifpc_restore_result", a.resultJson);
                                           const target = a.type === "controle" ? "/controle" : "/bareme";
@@ -365,10 +417,10 @@ export default function Home() {
                                           >
                                             <span className={`w-0.5 h-7 rounded-full shrink-0 ${sub.bar}`} />
                                             <div className="min-w-0 flex-1">
-                                              <p className="text-xs font-semibold text-gray-800 truncate">{a.label}</p>
+                                              <p className="text-xs font-semibold text-gray-800 truncate">{meta.title}</p>
                                               <p className="text-[10px] text-gray-400">
-                                                {new Date(a.date).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}
-                                                {a.procede && <span className="ml-1">&middot; {a.procede}</span>}
+                                                {new Date(a.date).toLocaleString(locale === "en" ? "en-GB" : "fr-FR", { dateStyle: "short", timeStyle: "short" })}
+                                                {meta.procede && <span className="ml-1">&middot; {meta.procede}</span>}
                                               </p>
                                             </div>
                                             {badge && a.statut && (
