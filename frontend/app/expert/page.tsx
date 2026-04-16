@@ -77,7 +77,7 @@ export default function ExpertPage() {
   // == VUE UTILISATEUR : accès limité ===
   if (user?.role === "USER" || !user) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-8">
+      <div className="min-h-screen bg-brand-gray flex items-center justify-center p-8">
         <div className="max-w-md text-center">
           <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
             <Lock className="w-9 h-9 text-gray-400" />
@@ -111,7 +111,7 @@ export default function ExpertPage() {
   // == VUE EXPERT (non admin) : info sur ses droits ===
   if (user?.role === "EXPERT") {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] p-8">
+      <div className="min-h-screen bg-brand-gray p-8">
         <div className="max-w-2xl mx-auto">
           <header className="mb-8">
             <div className="flex items-center gap-3 mb-2">
@@ -157,7 +157,7 @@ export default function ExpertPage() {
 
   // == VUE ADMIN : gestion des utilisateurs ===
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-8">
+    <div className="min-h-screen bg-brand-gray p-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <header className="mb-8">

@@ -10,15 +10,18 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          primary: "#84A44A",
-          accent: "#F19B13",
-          highlight: "#EAF066",
-          sand: "#E7C275",
+          primary: "#628d17",
+          accent: "#ee8c00",
+          highlight: "#eaf066",
+          sand: "#e7c275",
+          gray: "#f6f8f9",
+          text: "#2a2a2a",
+          link: "#67a5db",
         },
       },
-     fontFamily: {
-  sans: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif"],
-},
+      fontFamily: {
+        sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

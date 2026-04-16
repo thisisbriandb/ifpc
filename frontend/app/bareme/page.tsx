@@ -81,7 +81,7 @@ export default function BaremePage() {
   const productLabel = (key: string) => PRODUCT_LABELS[key]?.[locale] || PRODUITS[key]?.nom || key;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-[#F8FAFC]">
+    <div className="h-screen flex flex-col overflow-hidden bg-brand-gray">
       {/* Header */}
       <div className="flex-shrink-0 px-5 py-3 bg-white border-b border-gray-100 flex items-center justify-between">
         <h1 className="font-bold text-gray-900 font-clash">{t("bareme.title")}</h1>

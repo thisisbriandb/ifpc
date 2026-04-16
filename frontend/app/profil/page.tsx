@@ -76,7 +76,7 @@ export default function ProfilPage() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[#F8FAFC]">
+      <div className="h-screen flex items-center justify-center bg-brand-gray">
         <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
       </div>
     );
@@ -90,7 +90,7 @@ export default function ProfilPage() {
   const roleName = t(`roles.${user.role}`) !== `roles.${user.role}` ? t(`roles.${user.role}`) : user.role;
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="min-h-screen bg-brand-gray">
       {/* Header */}
       <div className="bg-white border-b border-gray-100 px-5 py-3 flex items-center gap-3">
         <button onClick={() => router.back()} className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">

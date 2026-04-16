@@ -174,7 +174,7 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-8">
+    <div className="min-h-screen bg-brand-gray p-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <header className="mb-8">

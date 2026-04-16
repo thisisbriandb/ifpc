@@ -3,34 +3,34 @@
 @tailwind utilities;
 
 :root {
-  /* Brand */
-  --color-primary: #5C7A3A ;
-  --color-accent: #8F5622; /* plus sombre */
-  --color-highlight: #BFC97A;
-  --color-secondary: #C4A26B;
+  /* Brand — charte graphique IFPC */
+  --color-primary: #628d17;
+  --color-accent: #ee8c00;
+  --color-highlight: #eaf066;
+  --color-sand: #e7c275;
 
-  --color-success: #2E7D32;
---color-warning: #F57C00;
---color-danger: #C62828;
---color-info: #1565C0;
+  --color-success: #628d17;
+  --color-warning: #ee8c00;
+  --color-danger: #C62828;
+  --color-info: #67a5db;
 
   /* Neutrals */
-  --color-bg: #F7F8F5;
+  --color-bg: #f6f8f9;
   --color-surface: #FFFFFF;
-  --color-border: #E2E5DC;
+  --color-border: rgba(0, 0, 0, 0.06);
 
-  --color-text: #1E1E1E;
+  --color-text: #2a2a2a;
   --color-text-muted: #6B7280;
+  --color-link: #67a5db;
 }
 
 body {
-  /* La police est maintenant gérée par la classe font-sans dans le layout */
   color: var(--color-text);
   background: var(--color-bg);
 }
 
 h1, h2, h3, h4 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
 }
 
 @layer utilities {

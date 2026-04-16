@@ -94,7 +94,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#F8FAFC]">
+    <div className="min-h-screen flex bg-brand-gray">
       {/* LEFT PANEL */}
       <div className="hidden lg:flex w-1/2 bg-brand-primary flex-col justify-between p-12 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />

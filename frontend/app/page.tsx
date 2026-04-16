@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store";
 import {
@@ -32,9 +33,9 @@ interface RecentActivity {
 }
 
 const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
-  conforme:    { bg: "bg-green-50",   text: "text-green-700"  },
-  vigilance:   { bg: "bg-orange-50",  text: "text-orange-700" },
-  insuffisant: { bg: "bg-red-50",     text: "text-red-700"    },
+  conforme:    { bg: "bg-brand-primary/10", text: "text-brand-primary" },
+  vigilance:   { bg: "bg-brand-accent/10",  text: "text-brand-accent"  },
+  insuffisant: { bg: "bg-red-50",            text: "text-red-700"       },
 };
 
 interface HistorySubMeta { type: string; dot: string; bar: string; }
@@ -305,12 +306,13 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] px-8 py-10">
+    <div className="min-h-screen bg-brand-gray px-8 py-10">
       <div className="max-w-4xl mx-auto space-y-12">
 
         {/* Welcome */}
         <header className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <Image src="/assets/logo.png" alt="IFPC" width={64} height={64} className="mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-brand-text">
             {greeting()}{user ? `, ${user.firstName}` : ""}
           </h1>
           <p className="text-gray-400 mt-1 text-sm">{t("home.subtitle")}</p>

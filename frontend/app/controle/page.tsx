@@ -317,12 +317,12 @@ function ControlePageInner() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-50/50 font-sans text-gray-900 overflow-hidden">
+    <div className="h-screen flex bg-brand-gray font-sans text-brand-text overflow-hidden">
 
       {/* --- SIDEBAR GAUCHE --- */}
       <aside
         className={`${isSidebarOpen ? "w-[320px]" : "w-0"
-          } transition-all duration-300 ease-in-out border-r border-gray-100 bg-white flex flex-col relative z-20`}
+          } transition-all duration-300 ease-in-out border-r border-black/[0.06] bg-white flex flex-col relative z-20`}
       >
         <div className={`${isSidebarOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-200 flex flex-col h-full overflow-hidden`}>
 
@@ -371,17 +371,17 @@ function ControlePageInner() {
                   type="text"
                   value={lotIdentifier}
                   onChange={(e) => setLotIdentifier(e.target.value)}
-                  className="w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white"
+                  className="w-full px-2.5 py-1.5 border border-black/[0.06] rounded-md focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white"
                 />
               </div>
             </div>
 
-            <div className="mx-4 my-1 border-t border-gray-100" />
+            <div className="mx-4 my-1 border-t border-black/[0.04]" />
 
             {/* Data input */}
             <div className="px-4 py-3">
               <h3 className="text-xs font-semibold text-gray-500 mb-3">{t("controle.dataSection")}</h3>
-              <div className="flex p-0.5 bg-gray-100 rounded-lg mb-3">
+              <div className="flex p-0.5 bg-gray-100 rounded-md mb-3">
                 {(Object.keys(modeConfig) as InputMode[]).map((m) => {
                   const Icon = modeConfig[m].icon;
                   return (
@@ -403,13 +403,13 @@ function ControlePageInner() {
                   onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
                   onDragLeave={() => setDragActive(false)}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-lg p-5 text-center transition-all ${dragActive ? "border-brand-primary bg-brand-primary/5" : "border-gray-200 hover:border-brand-primary/30"
+                  className={`border border-dashed rounded-lg p-5 text-center transition-all ${dragActive ? "border-brand-primary bg-brand-primary/5" : "border-black/[0.08] hover:border-brand-primary/30"
                     }`}
                 >
                   {file ? (
                     <div className="text-sm">
                       <FileSpreadsheet className="w-8 h-8 text-brand-primary mx-auto mb-2" />
-                      <p className="font-semibold text-gray-900 truncate text-xs">{file.name}</p>
+                      <p className="font-semibold text-brand-text truncate text-xs">{file.name}</p>
                       <button onClick={() => setFile(null)} className="text-[10px] text-red-500 hover:text-red-600 font-medium mt-2">{t("controle.removeFile")}</button>
                     </div>
                   ) : (
@@ -430,16 +430,16 @@ function ControlePageInner() {
                   value={pasteText}
                   onChange={(e) => setPasteText(e.target.value)}
                   placeholder={t("controle.inputPlaceholder")}
-                  className="w-full h-36 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none text-[11px] font-mono resize-none"
+                  className="w-full h-36 px-3 py-2 bg-gray-50 border border-black/[0.06] rounded-lg focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none text-[11px] font-mono resize-none"
                 />
               )}
 
               {mode === "manual" && (
-                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                <div className="border border-black/[0.06] rounded-lg overflow-hidden">
                   <div className="max-h-44 overflow-y-auto">
                     <table className="w-full text-[11px]">
                       <thead className="sticky top-0 z-10">
-                        <tr className="bg-gray-50 border-b border-gray-200">
+                        <tr className="bg-gray-50 border-b border-black/[0.06]">
                           <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase w-8">#</th>
                           <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">{t("controle.time")}</th>
                           <th className="px-2 py-1.5 text-left font-bold text-gray-500 text-[9px] uppercase">{t("controle.temp")}</th>
@@ -476,7 +476,7 @@ function ControlePageInner() {
                   </div>
                   <button
                     onClick={addRow}
-                    className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] font-semibold text-brand-primary hover:bg-brand-primary/5 border-t border-gray-100"
+                    className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] font-semibold text-brand-primary hover:bg-brand-primary/5 border-t border-black/[0.04]"
                   >
                     <Plus className="w-3 h-3" /> {t("controle.manualAddRow")}
                   </button>
@@ -493,7 +493,7 @@ function ControlePageInner() {
               </button>
 
               {error && (
-                <div className="mt-3 bg-red-50 border border-red-100 rounded-lg p-3 text-red-600 text-xs font-medium flex items-start gap-2">
+                <div className="mt-3 bg-red-50/60 border border-red-200/30 rounded-lg p-3 text-red-600 text-xs font-medium flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                   <div className="flex-1">
                     {error.split('\n').map((line, i) => (
@@ -509,52 +509,52 @@ function ControlePageInner() {
         {/* Toggle Button */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="absolute -right-4 top-8 w-8 h-8 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm z-30 hover:bg-gray-50 transition-colors"
+          className="absolute -right-4 top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full flex items-center justify-center shadow-sm z-30 hover:bg-gray-50 transition-colors"
         >
           {isSidebarOpen ? <ChevronLeft className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-500" />}
         </button>
       </aside>
 
       {/* --- MAIN CONTENT AREA (Dashboard) --- */}
-      <main className="flex-1 overflow-y-auto relative bg-[#F8FAFC]">
+      <main className="flex-1 overflow-y-auto relative bg-brand-gray">
         {/* Help button */}
         <button
           onClick={() => setShowHelp(true)}
-          className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-500 hover:text-brand-primary hover:border-brand-primary/30 transition-colors"
+          className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 bg-white border border-black/[0.06] rounded-lg text-xs font-semibold text-gray-400 hover:text-brand-primary hover:border-brand-primary/20 transition-colors"
         >
           <HelpCircle className="w-4 h-4" />
           {t("controle.help")}
         </button>
 
         {result ? (
-          <div className="max-w-5xl mx-auto p-6 lg:p-8 space-y-5 animate-in fade-in duration-500">
+          <div className="max-w-4xl mx-auto p-6 lg:p-8 animate-in fade-in duration-500">
 
-            {/* Compact header bar */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 min-w-0">
-                <h1 className="text-lg font-bold text-gray-900 truncate">{result.parametres.produit}</h1>
+            {/* ── Header — product + lot ── */}
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-baseline gap-2 min-w-0">
+                <h1 className="text-sm font-bold text-brand-text uppercase tracking-wide truncate">{result.parametres.produit}</h1>
                 {result.parametres.lot_identifier && (
-                  <span className="text-xs font-medium text-gray-400 shrink-0">#{result.parametres.lot_identifier}</span>
+                  <span className="text-xs font-mono text-gray-400">#{result.parametres.lot_identifier}</span>
                 )}
               </div>
               <button
                 onClick={() => setIsRawDataDrawerOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-colors"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-black/[0.06] rounded-md text-[10px] font-medium text-gray-400 hover:text-brand-text hover:border-black/[0.12] transition-colors"
               >
-                <TableIcon className="w-3.5 h-3.5" />
+                <TableIcon className="w-3 h-3" />
                 {t("controle.rawData")}
               </button>
             </div>
 
-            {/* KPI Cards */}
+            {/* ── Decision block: verdict + metrics (tight) ── */}
             <KPICards result={result} />
 
-            {/* Chart */}
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-              <div className="px-5 py-3.5 border-b border-gray-100 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-gray-700">{t("controle.thermalKinetics")}</h3>
+            {/* ── Explanation: chart (separated) ── */}
+            <div className="mt-8 bg-white rounded-lg border border-black/[0.06] overflow-hidden">
+              <div className="px-5 py-3 border-b border-black/[0.04]">
+                <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{t("controle.thermalKinetics")}</h3>
               </div>
-              <div className="p-5 h-[420px]">
+              <div className="px-5 py-4 h-[360px]">
                 <TemperatureChart
                   courbe={result.courbe}
                   tRef={result.parametres.t_ref}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
@@ -74,8 +75,8 @@ export default function Sidebar() {
       }`}
     >
       {/* Logo */}
-      <Link href="/" className="flex items-center gap-2 px-3.5 h-12 shrink-0 border-b border-gray-50">
-        <span className="font-bold text-base text-brand-primary shrink-0">IFPC</span>
+      <Link href="/" className="flex items-center gap-2.5 px-2.5 h-14 shrink-0 border-b border-gray-50">
+        <Image src="/assets/logo.png" alt="IFPC" width={34} height={34} className="shrink-0" />
         {!collapsed && (
           <span className="text-[9px] text-gray-400 font-medium truncate leading-tight">{t("nav.subTitle")}</span>
         )}

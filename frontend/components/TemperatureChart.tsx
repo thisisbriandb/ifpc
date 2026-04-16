@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -7,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
-  Area,
+  Line,
   ComposedChart,
 } from "recharts";
 import { useI18n } from "@/lib/i18n";
@@ -25,41 +26,26 @@ interface Props {
   vpCible: number;
 }
 
-function fmtNumber(n: unknown, digits = 2) {
-  const x = typeof n === "number" && Number.isFinite(n) ? n : NaN;
-  return Number.isFinite(x) ? x.toFixed(digits) : "—";
-}
-
 const CustomTooltip = ({ active, payload, label, t }: any) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div className="bg-white p-3 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-gray-100 min-w-[150px]">
-        <p className="text-sm font-bold text-gray-700 mb-3 border-b border-gray-50 pb-2">{t("chart.timeMinutes", { n: label })}</p>
-        <div className="flex flex-col gap-2">
-          {data.temperature !== undefined && (
-            <div className="flex items-center justify-between gap-4">
-              <span className="text-xs flex items-center gap-1.5 font-semibold text-gray-500">
-                <span className="w-2 h-2 rounded-full bg-brand-primary"></span>
-                {t("chart.temperature")}
-              </span>
-              <span className="text-sm font-bold" style={{ color: "var(--color-primary)" }}>{data.temperature.toFixed(1)} °C</span>
-            </div>
-          )}
-          {data.vp_cumulee !== undefined && (
-            <div className="flex items-center justify-between gap-4">
-              <span className="text-xs flex items-center gap-1.5 font-semibold text-gray-500">
-                <span className="w-2 h-2 rounded-full bg-brand-accent"></span>
-                {t("chart.cumulativeVp")}
-              </span>
-              <span className="text-sm font-bold" style={{ color: "var(--color-accent)" }}>{data.vp_cumulee.toFixed(2)} UP</span>
-            </div>
-          )}
+  if (!active || !payload?.length) return null;
+  const data = payload[0].payload;
+  return (
+    <div className="bg-white/95 backdrop-blur-sm px-3 py-2 rounded-md border border-black/[0.06] shadow-sm text-[11px]">
+      <p className="font-mono font-bold text-brand-text mb-1.5">{label} min</p>
+      {data.temperature !== undefined && (
+        <div className="flex justify-between gap-6">
+          <span className="text-gray-400">{t("chart.temperature")}</span>
+          <span className="font-mono font-bold text-brand-text">{data.temperature.toFixed(1)}°C</span>
         </div>
-      </div>
-    );
-  }
-  return null;
+      )}
+      {data.vp_cumulee !== undefined && (
+        <div className="flex justify-between gap-6">
+          <span className="text-gray-400">VP</span>
+          <span className="font-mono font-bold text-gray-500">{data.vp_cumulee.toFixed(2)} UP</span>
+        </div>
+      )}
+    </div>
+  );
 };
 
 function buildData(courbe: CourbeData) {
@@ -75,135 +61,126 @@ function buildData(courbe: CourbeData) {
   return out;
 }
 
+type ChartView = "temp" | "vp" | "both";
+
 export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
   const { t } = useI18n();
+  const [view, setView] = useState<ChartView>("both");
   const data = buildData(courbe);
 
+  const showTemp = view === "temp" || view === "both";
+  const showVp = view === "vp" || view === "both";
+
+  const views: { key: ChartView; label: string }[] = [
+    { key: "temp", label: `${t("chart.temperature")} (°C)` },
+    { key: "vp", label: "VP (UP)" },
+    { key: "both", label: t("chart.bothCurves") },
+  ];
+
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-      {/* Courbe de température */}
-      {/* Courbe de température */}
-<div className="space-y-4">
-  <div className="flex items-center justify-between">
-    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("chart.thermalKinetics")}</h4>
-    <div className="flex gap-4">
-      <div className="flex items-center gap-1.5">
-        <span className="w-2 h-2 rounded-full bg-brand-primary"></span>
-        <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.temperature")}</span>
+    <div className="h-full flex flex-col gap-2">
+      {/* Toggle — pill switch */}
+      <div className="flex items-center gap-1 bg-gray-100/80 rounded-md p-0.5 w-fit">
+        {views.map((v) => (
+          <button
+            key={v.key}
+            onClick={() => setView(v.key)}
+            className={`px-2.5 py-1 rounded text-[10px] font-semibold transition-all ${
+              view === v.key
+                ? "bg-white text-brand-text shadow-sm"
+                : "text-gray-400 hover:text-gray-600"
+            }`}
+          >
+            {v.label}
+          </button>
+        ))}
       </div>
-      <div className="flex items-center gap-1.5">
-        <span className="w-2 h-2 rounded-full bg-brand-accent"></span>
-        <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.tref")}</span>
-      </div>
-    </div>
-  </div>
-  
-  <div className="h-[300px] w-full bg-white rounded-xl p-2 shadow-sm"> {/* fond blanc et ombre légère */}
-    <ResponsiveContainer width="100%" height="100%">
-      <ComposedChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-        <defs>
-          <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.2}/>
-            <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0.0}/>
-          </linearGradient>
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" /> {/* grille plus claire */}
-        <XAxis 
-          dataKey="temps" 
-          tick={{ fontSize: 10, fill: "#9ca3af" }} 
-          axisLine={false} 
-          tickLine={false}
-          tickFormatter={(v) => t("chart.minutesShort", { n: v })}
-          minTickGap={30}
-        />
-        <YAxis 
-          yAxisId="temp" 
-          tick={{ fontSize: 10, fill: "#9ca3af" }} 
-          axisLine={false} 
-          tickLine={false}
-          domain={['auto', 'auto']}
-        />
-        <Tooltip content={<CustomTooltip t={t} />} />
-        <ReferenceLine 
-          yAxisId="temp" 
-          y={tRef} 
-          stroke="var(--color-accent)" 
-          strokeDasharray="5 5" 
-          label={{ value: t("chart.trefLabel", { n: tRef }), position: 'insideTopRight', fill: 'var(--color-accent)', fontSize: 10, fontWeight: 'bold' }} 
-        />
-        <Area 
-          yAxisId="temp" 
-          type="monotone" 
-          dataKey="temperature" 
-          stroke="var(--color-primary)" 
-          strokeWidth={2.5}
-          fill="url(#tempGradient)" 
-          dot={{ r: 2, fill: "var(--color-primary)", strokeWidth: 0 }}
-          activeDot={{ r: 4, strokeWidth: 0, fill: "var(--color-primary)" }}
-        />
-      </ComposedChart>
-    </ResponsiveContainer>
-  </div>
-</div>
 
-      {/* Courbe de VP cumulée */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("chart.vpAccumulation")}</h4>
-          <div className="flex gap-4">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-brand-accent"></span>
-              <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.cumulativeVp")}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-red-500"></span>
-              <span className="text-[10px] font-bold text-gray-500 uppercase">{t("chart.target")}</span>
-            </div>
-          </div>
-        </div>
+      {/* Chart */}
+      <div className="flex-1 min-h-0">
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart data={data} margin={{ top: 8, right: 8, left: -15, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f3f3" />
+            <XAxis
+              dataKey="temps"
+              tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(v) => `${v}′`}
+              minTickGap={30}
+            />
+            {/* Left axis — temperature */}
+            {showTemp && (
+              <YAxis
+                yAxisId="temp"
+                tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
+                axisLine={false}
+                tickLine={false}
+                domain={["auto", "auto"]}
+                tickFormatter={(v) => `${v}°`}
+                label={{ value: "°C", position: "insideTopLeft", offset: 10, style: { fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" } }}
+              />
+            )}
+            {/* Right axis — VP */}
+            {showVp && (
+              <YAxis
+                yAxisId="vp"
+                orientation={showTemp ? "right" : "left"}
+                tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
+                axisLine={false}
+                tickLine={false}
+                label={{ value: "UP", position: showTemp ? "insideTopRight" : "insideTopLeft", offset: 10, style: { fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" } }}
+              />
+            )}
+            <Tooltip content={<CustomTooltip t={t} />} />
 
-        <div className="h-[300px] w-full bg-white shadow-sm rounded-xl p-2">
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <defs>
-                <linearGradient id="vpGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--color-accent)" stopOpacity={0.2}/>
-                  <stop offset="95%" stopColor="var(--color-accent)" stopOpacity={0.0}/>
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-              <XAxis 
-                dataKey="temps" 
-                tick={{ fontSize: 10, fill: "#9ca3af" }} 
-                axisLine={false} 
-                tickLine={false}
-                tickFormatter={(v) => t("chart.minutesShort", { n: v })}
-                minTickGap={30}
+            {/* Reference lines */}
+            {showTemp && (
+              <ReferenceLine
+                yAxisId="temp"
+                y={tRef}
+                stroke="var(--color-accent)"
+                strokeDasharray="4 4"
+                strokeWidth={1}
               />
-              <YAxis 
-                tick={{ fontSize: 10, fill: "#9ca3af" }} 
-                axisLine={false} 
-                tickLine={false}
+            )}
+            {showVp && (
+              <ReferenceLine
+                yAxisId="vp"
+                y={vpCible}
+                stroke="var(--color-danger)"
+                strokeDasharray="4 4"
+                strokeWidth={1}
               />
-              <Tooltip content={<CustomTooltip t={t} />} />
-              <ReferenceLine 
-                y={vpCible} 
-                stroke="#ef4444" 
-                strokeDasharray="5 5" 
-                label={{ value: t("chart.targetLabel", { n: vpCible }), position: 'insideTopRight', fill: '#ef4444', fontSize: 10, fontWeight: 'bold' }} 
+            )}
+
+            {/* Temperature line */}
+            {showTemp && (
+              <Line
+                yAxisId="temp"
+                type="monotone"
+                dataKey="temperature"
+                stroke="var(--color-primary)"
+                strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 3, strokeWidth: 0, fill: "var(--color-primary)" }}
               />
-              <Area 
-                type="monotone" 
-                dataKey="vp_cumulee" 
-                stroke="var(--color-accent)" 
-                strokeWidth={2.5}
-                fill="url(#vpGradient)" 
-                dot={{ r: 2, fill: "var(--color-accent)", strokeWidth: 0 }}
-                activeDot={{ r: 4, strokeWidth: 0, fill: "var(--color-accent)" }}
+            )}
+            {/* VP line */}
+            {showVp && (
+              <Line
+                yAxisId="vp"
+                type="monotone"
+                dataKey="vp_cumulee"
+                stroke={showTemp ? "#9ca3af" : "var(--color-primary)"}
+                strokeWidth={showTemp ? 1.5 : 2}
+                strokeDasharray={showTemp ? "6 3" : undefined}
+                dot={false}
+                activeDot={{ r: 3, strokeWidth: 0, fill: showTemp ? "#9ca3af" : "var(--color-primary)" }}
               />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
+            )}
+          </ComposedChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

@@ -215,7 +215,10 @@
     "microorganism": "Microorganisme",
     "clarification": "Clarification",
     "process": "Procédé",
-    "alcohol": "Alcool"
+    "alcohol": "Alcool",
+    "targetReachedAt": "Objectif atteint à {n} min",
+    "targetNeverReached": "Objectif non atteint",
+    "kFactor": "k (VP/D)"
   },
   "chart": {
     "timeMinutes": "Temps : {n} min",
@@ -227,7 +230,10 @@
     "vpAccumulation": "Accumulation VP (UP)",
     "trefLabel": "Tref {n}°C",
     "targetLabel": "Cible {n} UP",
-    "minutesShort": "{n} min"
+    "minutesShort": "{n} min",
+    "pastoZone": "Zone de pasteurisation",
+    "targetReached": "Cible atteinte",
+    "bothCurves": "Les deux"
   },
   "home": {
     "greetingMorning": "Bonjour",
