@@ -54,62 +54,54 @@ export function KPICards({ result }: Props) {
     : 0;
 
   return (
-    <div className="space-y-4">
-      {/* Row 1 — three equal KPI cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {/* Statut */}
-        <div className={`rounded-lg border p-4 ${cfg.bg} ${cfg.border}`}>
-          <p className="text-xs font-semibold text-gray-500 mb-2">{t("resultDisplay.lotVerdict")}</p>
-          <div className="flex items-center gap-2">
-            <StatusIcon className={`w-5 h-5 ${cfg.color}`} />
-            <span className={`text-sm font-bold px-2 py-0.5 rounded ${cfg.badge} capitalize`}>{result.statut}</span>
+    <div className="flex flex-col md:flex-row gap-4">
+      {/* LEFT — verdict block (dominant) */}
+      <div className={`flex-[3] rounded-lg border ${cfg.border} ${cfg.bg} p-5 flex flex-col`}>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            <StatusIcon className={`w-6 h-6 ${cfg.color}`} />
+            <span className={`text-sm font-bold px-2.5 py-0.5 rounded ${cfg.badge} capitalize`}>{result.statut}</span>
           </div>
+          <p className="text-xs font-medium text-gray-400">{t("resultDisplay.lotVerdict")}</p>
         </div>
 
-        {/* VP */}
-        <div className="rounded-lg border border-gray-200 bg-white p-4">
-          <p className="text-xs font-semibold text-gray-500 mb-2">{t("resultDisplay.pasteurisationValue")}</p>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-gray-900 tabular-nums">{result.vp.toFixed(2)}</span>
-            <span className="text-sm font-medium text-gray-400">/ {result.vp_cible.toFixed(1)} UP</span>
-          </div>
+        <div className="flex items-baseline gap-2 mb-5">
+          <span className="text-3xl font-bold text-gray-900 tabular-nums">{result.vp.toFixed(2)}</span>
+          <span className="text-sm font-medium text-gray-400">/ {result.vp_cible.toFixed(1)} UP</span>
         </div>
 
-        {/* Risque */}
-        <div className="rounded-lg border border-gray-200 bg-white p-4">
-          <p className="text-xs font-semibold text-gray-500 mb-2">{t("resultDisplay.risk")}</p>
-          <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold text-gray-900 capitalize">{result.risque.niveau}</span>
-            <span className="text-xs font-medium text-gray-400">{t("resultDisplay.score", { n: result.risque.score })}</span>
-          </div>
+        <div className="mt-auto border-t pt-3" style={{ borderColor: `${result.risque.couleur}30` }}>
+          <p className="text-sm text-gray-700 leading-relaxed">{result.message}</p>
+          {result.risque.conseil && (
+            <p className="text-xs text-gray-500 mt-1.5">{result.risque.conseil}</p>
+          )}
         </div>
       </div>
 
-      {/* Row 2 — secondary metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="rounded-lg border border-gray-200 bg-white p-4">
+      {/* RIGHT — stacked metrics */}
+      <div className="flex-[1] flex flex-col gap-3 min-w-[160px]">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 flex-1">
+          <p className="text-xs font-semibold text-gray-500 mb-1">{t("resultDisplay.risk")}</p>
+          <span className="text-lg font-bold text-gray-900 capitalize">{result.risque.niveau}</span>
+          <p className="text-[11px] text-gray-400 mt-0.5">{t("resultDisplay.score", { n: result.risque.score })}</p>
+        </div>
+
+        <div className="rounded-lg border border-gray-200 bg-white p-4 flex-1">
           <p className="text-xs font-semibold text-gray-500 mb-1">{t("resultDisplay.maxTemperature")}</p>
           <div className="flex items-baseline gap-1">
-            <span className="text-xl font-bold text-gray-900 tabular-nums">{maxTemp.toFixed(1)}</span>
+            <span className="text-lg font-bold text-gray-900 tabular-nums">{maxTemp.toFixed(1)}</span>
             <span className="text-sm font-medium text-gray-400">°C</span>
           </div>
         </div>
+
         {duree > 0 && (
-          <div className="rounded-lg border border-gray-200 bg-white p-4">
+          <div className="rounded-lg border border-gray-200 bg-white p-4 flex-1">
             <p className="text-xs font-semibold text-gray-500 mb-1">{t("resultDisplay.cycleDuration")}</p>
             <div className="flex items-baseline gap-1">
-              <span className="text-xl font-bold text-gray-900 tabular-nums">{duree.toFixed(0)}</span>
+              <span className="text-lg font-bold text-gray-900 tabular-nums">{duree.toFixed(0)}</span>
               <span className="text-sm font-medium text-gray-400">min</span>
             </div>
           </div>
-        )}
-      </div>
-
-      {/* Message & conseil */}
-      <div className="border-l-2 pl-4 py-1" style={{ borderColor: result.risque.couleur }}>
-        <p className="text-sm font-medium text-gray-700 leading-relaxed">{result.message}</p>
-        {result.risque.conseil && (
-          <p className="text-xs text-gray-500 mt-1">{result.risque.conseil}</p>
         )}
       </div>
     </div>
