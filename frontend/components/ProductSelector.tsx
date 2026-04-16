@@ -79,7 +79,7 @@ export default function ProductSelector({
 
   const selectCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white";
   const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
-  const labelCls = "block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1";
+  const labelCls = "block text-xs font-semibold text-gray-500 mb-1";
 
   return (
     <div className="space-y-2.5">
