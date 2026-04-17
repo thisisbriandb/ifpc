@@ -1,0 +1,368 @@
+"use client";
+
+import { useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Search, Trash2, ChevronLeft, ChevronRight,
+  ArrowRight, Calendar, Filter,
+} from "lucide-react";
+import { getHistory, deleteAnalysis, type HistoryEntry } from "@/lib/api";
+import { useAuthStore } from "@/lib/store";
+import { useI18n } from "@/lib/i18n";
+
+// ── Constants ────────────────────────────────────────────────────────────────
+
+const PAGE_SIZE = 15;
+
+const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
+  conforme:    { bg: "bg-brand-primary/10", text: "text-brand-primary" },
+  vigilance:   { bg: "bg-brand-accent/10",  text: "text-brand-accent"  },
+  insuffisant: { bg: "bg-red-50",            text: "text-red-700"       },
+};
+
+type DateFilter = "all" | "today" | "week" | "month";
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function startOfDay(d: Date) {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function matchesDateFilter(dateStr: string, filter: DateFilter): boolean {
+  if (filter === "all") return true;
+  const d = new Date(dateStr);
+  const now = new Date();
+  if (filter === "today") return startOfDay(d).getTime() === startOfDay(now).getTime();
+  if (filter === "week") {
+    const weekAgo = new Date(now);
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    return d >= weekAgo;
+  }
+  if (filter === "month") {
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }
+  return true;
+}
+
+// ── Page ─────────────────────────────────────────────────────────────────────
+
+export default function HistoriquePage() {
+  const router = useRouter();
+  const { t, locale } = useI18n();
+  const { user } = useAuthStore();
+
+  const [entries, setEntries] = useState<HistoryEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Filters
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [statutFilter, setStatutFilter] = useState<string>("all");
+  const [dateFilter, setDateFilter] = useState<DateFilter>("all");
+
+  // Pagination
+  const [page, setPage] = useState(1);
+
+  // Delete
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+
+  // ── Load ──
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      try {
+        if (user) {
+          const data = await getHistory();
+          if (!cancelled) setEntries(data);
+        } else {
+          // Fallback localStorage
+          try {
+            const stored = localStorage.getItem("ifpc_recent_activities");
+            if (!cancelled && stored) {
+              const parsed = JSON.parse(stored);
+              setEntries(parsed.map((a: any, i: number) => ({ ...a, id: a.id ?? i })));
+            }
+          } catch {}
+        }
+      } catch {
+        // Fallback localStorage
+        try {
+          const stored = localStorage.getItem("ifpc_recent_activities");
+          if (!cancelled && stored) {
+            const parsed = JSON.parse(stored);
+            setEntries(parsed.map((a: any, i: number) => ({ ...a, id: a.id ?? i })));
+          }
+        } catch {}
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, [user]);
+
+  // ── Filter + search ──
+  const filtered = useMemo(() => {
+    let list = [...entries];
+
+    // Sort newest first
+    list.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    // Type filter
+    if (typeFilter !== "all") list = list.filter((e) => e.type === typeFilter);
+
+    // Statut filter
+    if (statutFilter !== "all") list = list.filter((e) => e.statut === statutFilter);
+
+    // Date filter
+    list = list.filter((e) => matchesDateFilter(e.date, dateFilter));
+
+    // Search
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (e) =>
+          e.label?.toLowerCase().includes(q) ||
+          e.lotIdentifier?.toLowerCase().includes(q) ||
+          e.statut?.toLowerCase().includes(q) ||
+          e.type?.toLowerCase().includes(q)
+      );
+    }
+
+    return list;
+  }, [entries, typeFilter, statutFilter, dateFilter, search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  // Reset page when filters change
+  useEffect(() => { setPage(1); }, [search, typeFilter, statutFilter, dateFilter]);
+
+  // ── Delete handler ──
+  const handleDelete = async (id: number) => {
+    if (!confirm(t("historique.confirmDelete"))) return;
+    setDeletingId(id);
+    try {
+      await deleteAnalysis(id);
+      setEntries((prev) => prev.filter((e) => e.id !== id));
+    } catch {
+      // Also remove from localStorage fallback
+      try {
+        const stored = localStorage.getItem("ifpc_recent_activities");
+        if (stored) {
+          const list = JSON.parse(stored).filter((a: any) => String(a.id) !== String(id));
+          localStorage.setItem("ifpc_recent_activities", JSON.stringify(list));
+          setEntries((prev) => prev.filter((e) => e.id !== id));
+        }
+      } catch {}
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  // ── Navigate to analysis ──
+  const openEntry = (e: HistoryEntry) => {
+    const target = e.type === "controle" ? "/controle" : "/bareme";
+    router.push(`${target}?history=${e.id}`);
+  };
+
+  // ── Unique types in data ──
+  const types = useMemo(() => Array.from(new Set(entries.map((e) => e.type))), [entries]);
+  const statuts = useMemo(() => Array.from(new Set(entries.map((e) => e.statut).filter(Boolean))), [entries]);
+
+  const dateOptions: { key: DateFilter; label: string }[] = [
+    { key: "all",   label: t("historique.allDates") },
+    { key: "today", label: t("historique.today") },
+    { key: "week",  label: t("historique.thisWeek") },
+    { key: "month", label: t("historique.thisMonth") },
+  ];
+
+  return (
+    <div className="max-w-5xl mx-auto px-6 py-8">
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-xl font-bold text-brand-text">{t("historique.title")}</h1>
+        <p className="text-sm text-gray-400 mt-0.5">{t("historique.subtitle")}</p>
+      </div>
+
+      {/* Filters bar */}
+      <div className="flex flex-wrap items-center gap-2 mb-5">
+        {/* Search */}
+        <div className="relative flex-1 min-w-[200px] max-w-sm">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={t("historique.search")}
+            className="w-full pl-8 pr-3 py-2 text-xs border border-black/[0.06] rounded-lg bg-white focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none"
+          />
+        </div>
+
+        {/* Type filter */}
+        <select
+          value={typeFilter}
+          onChange={(e) => setTypeFilter(e.target.value)}
+          className="px-3 py-2 text-xs border border-black/[0.06] rounded-lg bg-white focus:ring-1 focus:ring-brand-primary outline-none"
+        >
+          <option value="all">{t("historique.allTypes")}</option>
+          {types.map((typ) => (
+            <option key={typ} value={typ}>{t(`historique.${typ}`)}</option>
+          ))}
+        </select>
+
+        {/* Statut filter */}
+        <select
+          value={statutFilter}
+          onChange={(e) => setStatutFilter(e.target.value)}
+          className="px-3 py-2 text-xs border border-black/[0.06] rounded-lg bg-white focus:ring-1 focus:ring-brand-primary outline-none"
+        >
+          <option value="all">{t("historique.allStatuts")}</option>
+          {statuts.map((s) => (
+            <option key={s} value={s!}>{t(`home.statut.${s}`)}</option>
+          ))}
+        </select>
+
+        {/* Date filter */}
+        <div className="flex items-center gap-1 bg-gray-100/80 rounded-lg p-0.5">
+          {dateOptions.map((opt) => (
+            <button
+              key={opt.key}
+              onClick={() => setDateFilter(opt.key)}
+              className={`px-2.5 py-1.5 rounded-md text-[10px] font-semibold transition-all ${
+                dateFilter === opt.key
+                  ? "bg-white text-brand-text shadow-sm"
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Count */}
+        <span className="text-[10px] text-gray-400 font-mono ml-auto">
+          {t("historique.entries", { count: filtered.length })}
+        </span>
+      </div>
+
+      {/* Table */}
+      {loading ? (
+        <div className="text-center py-16 text-sm text-gray-400">…</div>
+      ) : pageItems.length === 0 ? (
+        <div className="text-center py-16">
+          <Filter className="w-6 h-6 text-gray-300 mx-auto mb-2" />
+          <p className="text-sm text-gray-400">{t("historique.noResults")}</p>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg border border-black/[0.06] overflow-hidden">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="border-b border-gray-100 text-[10px] text-gray-400 uppercase tracking-wider">
+                <th className="text-left px-4 py-2.5 font-bold">Date</th>
+                <th className="text-left px-4 py-2.5 font-bold">Type</th>
+                <th className="text-left px-4 py-2.5 font-bold">Lot / Label</th>
+                <th className="text-left px-4 py-2.5 font-bold">VP</th>
+                <th className="text-left px-4 py-2.5 font-bold">Statut</th>
+                <th className="text-right px-4 py-2.5 font-bold"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {pageItems.map((entry) => {
+                const badge = entry.statut ? STATUS_BADGE[entry.statut] : undefined;
+                return (
+                  <tr
+                    key={entry.id}
+                    className="hover:bg-gray-50/50 transition-colors group cursor-pointer"
+                    onClick={() => openEntry(entry)}
+                  >
+                    <td className="px-4 py-3 font-mono text-gray-500 whitespace-nowrap">
+                      {new Date(entry.date).toLocaleString(
+                        locale === "en" ? "en-GB" : "fr-FR",
+                        { dateStyle: "short", timeStyle: "short" }
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${entry.type === "controle" ? "bg-brand-primary" : "bg-brand-accent"}`} />
+                        {t(`historique.${entry.type}`)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 font-medium text-gray-800 max-w-[200px] truncate">
+                      {entry.lotIdentifier ? (
+                        <span className="font-mono text-gray-500">#{entry.lotIdentifier}</span>
+                      ) : (
+                        entry.label
+                      )}
+                    </td>
+                    <td className="px-4 py-3 font-mono text-gray-600">
+                      {entry.vp != null ? (
+                        <>
+                          {entry.vp.toFixed(2)}
+                          {entry.vpCible != null && (
+                            <span className="text-gray-400 ml-1">/ {entry.vpCible.toFixed(1)}</span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-gray-300">—</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      {badge && entry.statut ? (
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.bg} ${badge.text}`}>
+                          {t(`home.statut.${entry.statut}`)}
+                        </span>
+                      ) : (
+                        <span className="text-gray-300">—</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleDelete(entry.id); }}
+                          disabled={deletingId === entry.id}
+                          className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                          title={t("historique.delete")}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                        <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-brand-primary transition-colors" />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between mt-4">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage <= 1}
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-brand-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+            {t("historique.previous")}
+          </button>
+          <span className="text-[11px] text-gray-400 font-mono">
+            {t("historique.page", { current: currentPage, total: totalPages })}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage >= totalPages}
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-brand-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            {t("historique.next")}
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

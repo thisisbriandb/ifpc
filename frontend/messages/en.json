@@ -26,7 +26,8 @@
     "profile": "My Profile",
     "logout": "Sign Out",
     "login": "Sign In",
-    "loginTitle": "Sign In"
+    "loginTitle": "Sign In",
+    "historique": "History"
   },
   "login": {
     "welcomeBack": "Welcome back",
@@ -142,7 +143,19 @@
     "emptyState": "Fill in the parameters to get the scale.",
     "alertHighPH": "High pH ({ph}) — high risk of re-fermentation.",
     "alertFlashTime": "Hold time > 1 min for flash: increase the target temperature.",
-    "alertAlcohol": "Alcohol {n}% vol. — partial protection, target VP can be lowered in expert mode."
+    "alertAlcohol": "Alcohol {n}% vol. — partial protection, VP target can be lowered in expert mode.",
+    "verdictOk": "Feasible",
+    "verdictDifficult": "Demanding",
+    "verdictImpossible": "Unfeasible",
+    "narrativeOk": "At {temp}°C, hold for {time} to pasteurise your {product}.",
+    "narrativeDifficult": "At {temp}°C, holding for {time} is long for a {process}. Increase the temperature.",
+    "narrativeImpossible": "At {temp}°C, the required time ({time}) is unrealistic. Significantly increase the temperature.",
+    "narrativeContext": "Target: destroy {micro} (VP = {vp} PU).",
+    "stepProduct": "Your product",
+    "stepProcess": "Your process",
+    "stepParams": "Conditions",
+    "holdTimeLabel": "Required hold time",
+    "atTemp": "at {temp}°C"
   },
   "productSelector": {
     "product": "Product",
@@ -247,6 +260,7 @@
     "entries": "entries",
     "noEntries": "No analyses recorded",
     "collapse": "Collapse",
+    "viewAll": "View all",
     "showMore": "Show {n} more",
     "showMorePlural": "Show {n} more",
     "modules": {
@@ -269,6 +283,27 @@
       "vigilance": "Caution",
       "insuffisant": "Insufficient"
     }
+  },
+  "historique": {
+    "title": "Analysis History",
+    "subtitle": "All your past analyses, across all modules.",
+    "search": "Search by lot, product…",
+    "allTypes": "All types",
+    "allStatuts": "All statuses",
+    "allDates": "All dates",
+    "today": "Today",
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "noResults": "No analyses found.",
+    "delete": "Delete",
+    "confirmDelete": "Delete this analysis?",
+    "deleted": "Analysis deleted",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {current} / {total}",
+    "entries": "{count} analysis(es)",
+    "controle": "VP Control",
+    "bareme": "Schedule"
   },
   "roles": {
     "ADMIN": "Administrator",

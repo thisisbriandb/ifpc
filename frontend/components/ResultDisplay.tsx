@@ -68,15 +68,47 @@ function computeInsights(result: ResultData) {
   return { ratio, k, multiplierText, vpReachedAtMin };
 }
 
+const RING_COLORS: Record<string, { stroke: string; text: string; bg: string; badge: string }> = {
+  conforme:    { stroke: "var(--color-primary)", text: "text-brand-primary", bg: "bg-brand-primary/5", badge: "bg-brand-primary/8 text-brand-primary border-brand-primary/15" },
+  vigilance:   { stroke: "var(--color-accent)",  text: "text-brand-accent",  bg: "bg-brand-accent/5",  badge: "bg-brand-accent/8 text-brand-accent border-brand-accent/15" },
+  insuffisant: { stroke: "#dc2626",              text: "text-red-700",       bg: "bg-red-50",          badge: "bg-red-500/10 text-red-700 border-red-500/20" },
+};
+
+function VPGauge({ vp, vpCible, statut }: { vp: number; vpCible: number; statut: string }) {
+  const cfg = RING_COLORS[statut] || RING_COLORS.insuffisant;
+  const ratio = vpCible > 0 ? Math.min(vp / vpCible, 1) : 0;
+
+  const size = 110;
+  const strokeW = 6;
+  const r = (size - strokeW) / 2;
+  const circumference = 2 * Math.PI * r;
+  const filled = circumference * ratio;
+
+  return (
+    <div className="relative shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#f3f4f6" strokeWidth={strokeW} />
+        <circle
+          cx={size / 2} cy={size / 2} r={r} fill="none"
+          stroke={cfg.stroke} strokeWidth={strokeW}
+          strokeDasharray={`${filled} ${circumference - filled}`}
+          strokeLinecap="round"
+          className="transition-all duration-700 ease-out"
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className={`text-xl font-bold font-mono tracking-tight leading-none ${cfg.text}`}>
+          {vp >= 100 ? vp.toFixed(0) : vp.toFixed(2)}
+        </span>
+        <span className="text-[9px] text-gray-400 uppercase tracking-wider mt-0.5">UP</span>
+      </div>
+    </div>
+  );
+}
+
 export function KPICards({ result }: Props) {
   const { t } = useI18n();
-  const statutConfig: Record<string, { color: string; badge: string }> = {
-    conforme:    { color: "text-brand-primary", badge: "bg-brand-primary/8 text-brand-primary border-brand-primary/15" },
-    vigilance:   { color: "text-brand-accent",  badge: "bg-brand-accent/8 text-brand-accent border-brand-accent/15" },
-    insuffisant: { color: "text-red-600",       badge: "bg-red-500/6 text-red-600 border-red-500/10" },
-  };
-
-  const cfg = statutConfig[result.statut] || statutConfig.insuffisant;
+  const cfg = RING_COLORS[result.statut] || RING_COLORS.insuffisant;
 
   const maxTemp = Math.max(...(result.courbe?.temperatures || [0]));
   const duree = result.courbe?.temps && result.courbe.temps.length > 0
@@ -86,52 +118,41 @@ export function KPICards({ result }: Props) {
   const { ratio, k, multiplierText, vpReachedAtMin } = computeInsights(result);
 
   return (
-    <div className="space-y-2">
-      {/* ── VERDICT — open, no box ── */}
-      <div className="px-1">
-        {/* Score */}
-        <span className={`text-5xl font-bold font-mono tracking-tighter leading-none ${cfg.color}`}>
-          {result.vp.toFixed(2)}
-        </span>
+    <div className="space-y-3">
+      {/* ── VERDICT — circle + text side by side ── */}
+      <div className="flex items-center gap-5">
+        {/* Circular gauge */}
+        <VPGauge vp={result.vp} vpCible={result.vp_cible} statut={result.statut} />
 
-        {/* Status line: ratio + badge */}
-        <div className="flex items-center gap-2.5 mt-2">
-          <span className="text-sm font-mono text-gray-400">
-            / {result.vp_cible.toFixed(1)} UP
-          </span>
-          <span className={`text-sm font-mono ${
-            ratio < 1 ? "text-red-500 font-bold" :
-            ratio >= 50 ? "text-brand-accent font-extrabold" :
-            ratio >= 5 ? "text-brand-accent font-bold" :
-            "text-gray-400 font-medium"
-          }`}>
-            {multiplierText}
-          </span>
-          <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${cfg.badge}`}>{result.statut}</span>
-        </div>
+        {/* Right: statut, conseil, k */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2.5">
+            <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${cfg.badge}`}>
+              {result.statut}
+            </span>
+            <span className="text-xs font-mono text-gray-400">
+              / {result.vp_cible.toFixed(1)} UP
+            </span>
+            {k !== null && (
+              <span className="text-xs font-mono text-gray-400 border-l border-gray-200 pl-2.5">
+                k = {k.toFixed(1)}
+              </span>
+            )}
+          </div>
 
-        {/* Primary text: conseil if available, otherwise message */}
-        <p className="text-[13px] text-gray-500 leading-relaxed max-w-xl mt-3">
-          {result.risque.conseil || result.message}
-        </p>
+          <p className="text-[13px] text-gray-600 leading-relaxed mt-2 max-w-md">
+            {result.risque.conseil || result.message}
+          </p>
 
-        {/* Timeline + k insight */}
-        <div className="flex items-center gap-3 mt-2 text-[11px] font-mono text-gray-400">
-          {vpReachedAtMin !== null ? (
-            <span>{t("resultDisplay.targetReachedAt", { n: vpReachedAtMin.toFixed(0) })}</span>
-          ) : (
-            <span>{t("resultDisplay.targetNeverReached")}</span>
-          )}
-          {k !== null && (
-            <>
-              <span className="text-gray-300">·</span>
-              <span>k = {k.toFixed(2)}</span>
-            </>
-          )}
+          <p className="text-[11px] font-mono text-gray-400 mt-1.5">
+            {vpReachedAtMin !== null
+              ? t("resultDisplay.targetReachedAt", { n: vpReachedAtMin.toFixed(0) })
+              : t("resultDisplay.targetNeverReached")}
+          </p>
         </div>
       </div>
 
-      {/* ── METRICS — single data strip ── */}
+      {/* ── METRICS — compact strip ── */}
       <div className="flex items-center gap-0 rounded-lg border border-black/[0.06] bg-white overflow-hidden">
         <div className="flex-1 px-4 py-2.5">
           <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("resultDisplay.maxTemperature")}</p>
@@ -154,12 +175,13 @@ export function KPICards({ result }: Props) {
           <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.t_ref}</span>
           <span className="text-[10px] text-gray-400 ml-0.5">°C</span>
         </div>
-        {k !== null && (
+        {k !== null && result.parametres.d_ref && (
           <>
-            <div className="w-px h-8 bg-brand-primary/20" />
+            <div className="w-px h-8 bg-black/[0.06]" />
             <div className="flex-1 px-4 py-2.5">
-              <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("resultDisplay.kFactor")}</p>
-              <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{k.toFixed(2)}</span>
+              <p className="text-[9px] text-gray-400 uppercase tracking-wider">D (Tref)</p>
+              <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.d_ref}</span>
+              <span className="text-[10px] text-gray-400 ml-0.5">min</span>
             </div>
           </>
         )}

@@ -26,7 +26,8 @@
     "profile": "Mon profil",
     "logout": "Déconnexion",
     "login": "Se connecter",
-    "loginTitle": "Connexion"
+    "loginTitle": "Connexion",
+    "historique": "Historique"
   },
   "login": {
     "welcomeBack": "Bon retour",
@@ -142,7 +143,19 @@
     "emptyState": "Renseignez les paramètres pour obtenir le barème.",
     "alertHighPH": "pH élevé ({ph}) — risque fort de refermentation.",
     "alertFlashTime": "Temps de maintien > 1 min pour un flash : augmentez la T° consigne.",
-    "alertAlcohol": "Alcool {n}% vol. — protection partielle, la VP cible peut être abaissée en mode expert."
+    "alertAlcohol": "Alcool {n}% vol. — protection partielle, la VP cible peut être abaissée en mode expert.",
+    "verdictOk": "Réalisable",
+    "verdictDifficult": "Exigeant",
+    "verdictImpossible": "Irréalisable",
+    "narrativeOk": "À {temp}°C, maintenez {time} pour pasteuriser votre {product}.",
+    "narrativeDifficult": "À {temp}°C, il faut maintenir {time} — c'est long pour un {process}. Augmentez la température.",
+    "narrativeImpossible": "À {temp}°C, le temps nécessaire ({time}) est irréaliste. Augmentez significativement la température.",
+    "narrativeContext": "Cible : détruire {micro} (VP = {vp} UP).",
+    "stepProduct": "Votre produit",
+    "stepProcess": "Votre procédé",
+    "stepParams": "Conditions",
+    "holdTimeLabel": "Temps de maintien nécessaire",
+    "atTemp": "à {temp}°C"
   },
   "productSelector": {
     "product": "Produit",
@@ -247,6 +260,7 @@
     "entries": "entrées",
     "noEntries": "Aucune analyse enregistrée",
     "collapse": "Réduire",
+    "viewAll": "Voir tout",
     "showMore": "Voir {n} autre",
     "showMorePlural": "Voir {n} autres",
     "modules": {
@@ -269,6 +283,27 @@
       "vigilance": "Vigilance",
       "insuffisant": "Insuffisant"
     }
+  },
+  "historique": {
+    "title": "Historique des analyses",
+    "subtitle": "Toutes vos analyses passées, tous modules confondus.",
+    "search": "Rechercher par lot, produit…",
+    "allTypes": "Tous types",
+    "allStatuts": "Tous statuts",
+    "allDates": "Toutes dates",
+    "today": "Aujourd'hui",
+    "thisWeek": "Cette semaine",
+    "thisMonth": "Ce mois",
+    "noResults": "Aucune analyse trouvée.",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer cette analyse ?",
+    "deleted": "Analyse supprimée",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page {current} / {total}",
+    "entries": "{count} analyse(s)",
+    "controle": "Contrôle VP",
+    "bareme": "Barème"
   },
   "roles": {
     "ADMIN": "Administrateur",

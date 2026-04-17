@@ -333,6 +333,7 @@ def evaluer_pasteurisation(
         "parametres": {
             "t_ref": effective_t_ref,
             "z": effective_z,
+            "d_ref": micro["d_ref"] if micro else None,
             "microorganisme": micro["nom"] if micro else micro_key,
             "produit": localize_product_name(product_type, lang),
             "clarification": localize_clarification_name(clarification, lang),
@@ -347,6 +348,52 @@ def evaluer_pasteurisation(
             "vp_cumulee": result_vp["vp_cumulee"],
         },
     }
+
+
+def _build_conseil(
+    niveau: str,
+    vp_obtenue: float,
+    vp_cible: float,
+    produit_nom: str,
+    lang: str,
+) -> str:
+    """Construit un conseil contextuel à partir des données réelles."""
+    vp_str = f"{vp_obtenue:.2f}"
+    cible_str = f"{vp_cible:.1f}"
+    ratio = vp_obtenue / vp_cible if vp_cible > 0 else 0
+
+    if lang == "en":
+        if niveau == "faible":
+            return (
+                f"Treatment validated — the achieved PU ({vp_str} UP) exceeds the "
+                f"{cible_str} UP target by a wide margin. {produit_nom} is stabilised."
+            )
+        if niveau == "modéré":
+            return (
+                f"The PU reached ({vp_str} UP) meets the {cible_str} UP target but "
+                f"with a limited safety margin. Monitor the cold chain for {produit_nom}."
+            )
+        return (
+            f"PU insufficient ({vp_str} UP vs target {cible_str} UP, "
+            f"ratio {ratio:.0%}). For {produit_nom}, retreatment or "
+            f"an adjustment of the pasteurisation schedule is recommended."
+        )
+    # Français
+    if niveau == "faible":
+        return (
+            f"Traitement validé — la VP obtenue ({vp_str} UP) dépasse largement "
+            f"la cible de {cible_str} UP. {produit_nom} stabilisé."
+        )
+    if niveau == "modéré":
+        return (
+            f"VP atteinte ({vp_str} UP) mais marge limitée par rapport à la cible "
+            f"({cible_str} UP). Surveillez la chaîne du froid pour {produit_nom}."
+        )
+    return (
+        f"VP insuffisante ({vp_str} UP vs cible {cible_str} UP, "
+        f"ratio {ratio:.0%}). Pour {produit_nom}, un retraitement ou "
+        f"un ajustement du barème est recommandé."
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -397,7 +444,11 @@ def evaluer_risque(
     else:
         niveau = "élevé"
         couleur = "#E53E3E"
-    conseil = translate("risk_advice", niveau, locale, "")
+
+    # --- Conseil contextuel dynamique ---
+    lang = normalize_locale(locale)
+    produit_nom = localize_product_name(product_type, lang) or product_type
+    conseil = _build_conseil(niveau, vp_obtenue, vp_cible, produit_nom, lang)
 
     return {
         "niveau": translate("risk_levels", niveau, locale, niveau),

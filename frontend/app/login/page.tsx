@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Mail,
   Lock,
@@ -10,7 +11,6 @@ import {
   Eye,
   EyeOff,
   Loader2,
-  FlaskConical,
 } from "lucide-react";
 import { login, register } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
@@ -102,9 +102,7 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20" />
 
         <div className="relative z-10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
-            <FlaskConical className="w-5 h-5 text-white" />
-          </div>
+          <Image src="/assets/logo.png" alt="IFPC" width={44} height={44} className="rounded-xl" />
           <div>
             <span className="font-bold text-xl text-white block">IFPC</span>
             <span className="text-xs text-white/60">
@@ -122,17 +120,10 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <div className="relative z-10 flex gap-8">
-          {[
-            { val: "99.9%", label: t("login.statPrecision") },
-            { val: "<1s", label: t("login.statRealtime") },
-            { val: "3", label: t("login.statAccess") },
-          ].map((item) => (
-            <div key={item.label}>
-              <p className="text-2xl font-bold text-white">{item.val}</p>
-              <p className="text-sm text-white/50">{item.label}</p>
-            </div>
-          ))}
+        <div className="relative z-10">
+          <p className="text-sm text-white/40">
+            © IFPC — Institut Français des Productions Cidricoles
+          </p>
         </div>
       </div>
 

@@ -30,6 +30,7 @@ interface PasteurisationResult {
   parametres: {
     t_ref: number;
     z: number;
+    d_ref?: number;
     microorganisme: string;
     produit: string;
     lot_identifier?: string;
@@ -67,7 +68,25 @@ function ControlePageInner() {
   const [expertMode, setExpertMode] = useState(false);
 
   const [productType, setProductType] = useState("jus_pomme");
-  const [lotIdentifier, setLotIdentifier] = useState("");
+  const [lotIdentifier, setLotIdentifier] = useState(() => {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const dateTag = `${yyyy}-${mm}${dd}`;
+    let seq = 1;
+    try {
+      const stored = localStorage.getItem("ifpc_recent_activities");
+      if (stored) {
+        const activities = JSON.parse(stored) as { type?: string; date?: string }[];
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+        seq = activities.filter(
+          (a) => a.type === "controle" && a.date?.startsWith(todayStr)
+        ).length + 1;
+      }
+    } catch {}
+    return `LOT-${dateTag}-${String(seq).padStart(3, "0")}`;
+  });
   const [microorganisme, setMicroorganisme] = useState("");
   const [clarification, setClarification] = useState("trouble");
   const [procede, setProcede] = useState("classique");
@@ -559,6 +578,7 @@ function ControlePageInner() {
                   courbe={result.courbe}
                   tRef={result.parametres.t_ref}
                   vpCible={result.vp_cible}
+                  statut={result.statut}
                 />
               </div>
             </div>

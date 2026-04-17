@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store";
 import {
-  ArrowRight, Clock, Trash2, ChevronDown,
+  ArrowRight, Clock, ChevronDown,
   Thermometer, FlaskConical, BarChart3,
   Pipette, ScanEye, Palette,
   Shield, Users, Settings,
@@ -172,7 +172,6 @@ export default function Home() {
   const router = useRouter();
   const { t, locale } = useI18n();
   const [activities, setActivities] = useState<RecentActivity[]>([]);
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
   const [openModules, setOpenModules] = useState<Record<string, boolean>>({ pasteurisation: true });
 
   const modules: Module[] = [
@@ -333,16 +332,13 @@ export default function Home() {
               <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("home.recentActivities")}</h2>
             </div>
             {activities.length > 0 && (
-              <button
-                onClick={() => {
-                  localStorage.removeItem("ifpc_recent_activities");
-                  setActivities([]);
-                }}
-                className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 transition-colors"
+              <Link
+                href="/historique"
+                className="flex items-center gap-1 text-xs text-gray-400 hover:text-brand-primary transition-colors"
               >
-                <Trash2 className="w-3 h-3" />
-                {t("home.clear")}
-              </button>
+                {t("home.viewAll")}
+                <ArrowRight className="w-3 h-3" />
+              </Link>
             )}
           </div>
 
@@ -383,9 +379,7 @@ export default function Home() {
                         <div className="border-t border-gray-100">
                           {parent.subModules.map((sub, subIdx) => {
                             const items = grouped[sub.type] ?? [];
-                            const isExpanded = expandedGroups[sub.type] ?? false;
-                            const visible = isExpanded ? items : items.slice(0, PREVIEW_COUNT);
-                            const hiddenCount = items.length - PREVIEW_COUNT;
+                            const visible = items.slice(0, PREVIEW_COUNT);
                             return (
                               <div key={sub.type} className={subIdx > 0 ? "border-t border-gray-100" : ""}>
 
@@ -436,14 +430,12 @@ export default function Home() {
                                       })}
                                     </div>
                                     {items.length > PREVIEW_COUNT && (
-                                      <button
-                                        onClick={() => setExpandedGroups(prev => ({ ...prev, [sub.type]: !isExpanded }))}
-                                        className="w-full py-2 text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors border-t border-gray-50"
+                                      <Link
+                                        href="/historique"
+                                        className="w-full block py-2 text-center text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors border-t border-gray-50"
                                       >
-                                        {isExpanded
-                                          ? `▲ ${t("home.collapse")}`
-                                          : `▼ ${hiddenCount > 1 ? t("home.showMorePlural", { n: hiddenCount }) : t("home.showMore", { n: hiddenCount })}`}
-                                      </button>
+                                        {t("home.viewAll")} →
+                                      </Link>
                                     )}
                                   </>
                                 )}

@@ -24,6 +24,7 @@ interface Props {
   courbe: CourbeData;
   tRef: number;
   vpCible: number;
+  statut?: string;
 }
 
 const CustomTooltip = ({ active, payload, label, t }: any) => {
@@ -63,13 +64,20 @@ function buildData(courbe: CourbeData) {
 
 type ChartView = "temp" | "vp" | "both";
 
-export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
+const STATUT_COLORS: Record<string, string> = {
+  conforme: "var(--color-primary)",
+  vigilance: "var(--color-accent)",
+  insuffisant: "#dc2626",
+};
+
+export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Props) {
   const { t } = useI18n();
   const [view, setView] = useState<ChartView>("both");
   const data = buildData(courbe);
 
   const showTemp = view === "temp" || view === "both";
   const showVp = view === "vp" || view === "both";
+  const vpColor = STATUT_COLORS[statut || ""] || "#9ca3af";
 
   const views: { key: ChartView; label: string }[] = [
     { key: "temp", label: `${t("chart.temperature")} (°C)` },
@@ -148,9 +156,9 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
               <ReferenceLine
                 yAxisId="vp"
                 y={vpCible}
-                stroke="var(--color-danger)"
+                stroke={vpColor}
                 strokeDasharray="4 4"
-                strokeWidth={1}
+                strokeWidth={1.5}
               />
             )}
 
@@ -172,11 +180,11 @@ export default function TemperatureChart({ courbe, tRef, vpCible }: Props) {
                 yAxisId="vp"
                 type="monotone"
                 dataKey="vp_cumulee"
-                stroke={showTemp ? "#9ca3af" : "var(--color-primary)"}
+                stroke={showTemp ? vpColor : vpColor}
                 strokeWidth={showTemp ? 1.5 : 2}
                 strokeDasharray={showTemp ? "6 3" : undefined}
                 dot={false}
-                activeDot={{ r: 3, strokeWidth: 0, fill: showTemp ? "#9ca3af" : "var(--color-primary)" }}
+                activeDot={{ r: 3, strokeWidth: 0, fill: vpColor }}
               />
             )}
           </ComposedChart>

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   FlaskConical, BarChart3, Home, LogOut, Shield, User,
-  ChevronRight, Thermometer, Palette, Container,
+  ChevronRight, Thermometer, Palette, Container, Clock,
 } from "lucide-react";
 import { useAuthStore } from "@/lib/store";
 import { useSidebar } from "@/lib/sidebar-context";
@@ -104,6 +104,7 @@ export default function Sidebar() {
 
         {/* Groups */}
         {navGroups.map((group) => {
+          // Admin-only groups filtered elsewhere if needed
           const GroupIcon = group.icon;
           const hasActiveChild = group.children.some((c) => pathname.startsWith(c.href));
           const isOpen = openGroups[group.key] ?? hasActiveChild;
@@ -163,6 +164,24 @@ export default function Sidebar() {
             </div>
           );
         })}
+
+        {/* Historique — cross-module, after features */}
+        <div className="px-2 mt-2 pt-2 border-t border-gray-100">
+          <Link
+            href="/historique"
+            title={collapsed ? t("nav.historique") : undefined}
+            className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${
+              collapsed ? "justify-center" : ""
+            } ${
+              pathname === "/historique"
+                ? "text-brand-primary font-semibold"
+                : "text-gray-400 hover:text-gray-700"
+            }`}
+          >
+            <Clock className="w-[18px] h-[18px] shrink-0" />
+            {!collapsed && <span>{t("nav.historique")}</span>}
+          </Link>
+        </div>
 
         {/* Admin */}
         {user?.role === "ADMIN" && (
