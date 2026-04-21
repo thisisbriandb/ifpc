@@ -49,8 +49,7 @@ export default function Sidebar() {
       label: t("nav.colorimetrie"),
       icon: Palette,
       children: [
-        { href: "/colorimetrie/mesure", label: t("nav.mesure") },
-        { href: "/colorimetrie/analyse", label: t("nav.analyse") },
+        { href: "/colorimetrie/assemblage", label: t("colori.title") },
       ],
     },
     {

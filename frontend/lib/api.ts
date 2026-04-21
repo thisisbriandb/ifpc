@@ -256,3 +256,39 @@ export async function proposerBareme(params: {
   const { data } = await api.post("/bareme/proposer", params);
   return data;
 }
+
+// ── Module 3 : Colorimétrie — Assemblage ────────────────────────────────────
+
+export interface AssemblageResult {
+  cible:   { L: number; a: number; b: number; hex: string };
+  obtenu:  { L: number; a: number; b: number; hex: string };
+  delta_e: number;
+  delta_e_method?: string;
+  volume_total: number;
+  proportions: { nom: string; pct: number; litres: number }[];
+  cuves: { nom: string; L: number; a: number; b: number; hex: string }[];
+  spectre: {
+    wavelengths: number[];
+    do_mix: number[];
+    do_cuves: number[][];
+  };
+}
+
+export async function assemblageCouleur(
+  file: File,
+  target: { L: number; a: number; b: number },
+  volume_total: number = 1000
+): Promise<AssemblageResult> {
+  const formData = new FormData();
+  formData.append("file", file);
+  const { data } = await api.post("/colorimetrie/assemblage", formData, {
+    params: {
+      target_L: target.L,
+      target_a: target.a,
+      target_b: target.b,
+      volume_total,
+    },
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return data;
+}

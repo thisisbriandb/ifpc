@@ -18,6 +18,21 @@ const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
   conforme:    { bg: "bg-brand-primary/10", text: "text-brand-primary" },
   vigilance:   { bg: "bg-brand-accent/10",  text: "text-brand-accent"  },
   insuffisant: { bg: "bg-red-50",            text: "text-red-700"       },
+  REUSSI:      { bg: "bg-brand-primary/10", text: "text-brand-primary" },
+  ACCEPTABLE:  { bg: "bg-brand-accent/10",  text: "text-brand-accent"  },
+  ECART:       { bg: "bg-red-50",            text: "text-red-700"       },
+};
+
+const TYPE_DOT: Record<string, string> = {
+  controle:   "bg-brand-primary",
+  bareme:     "bg-brand-accent",
+  assemblage: "bg-purple-500",
+};
+
+const TYPE_ROUTE: Record<string, string> = {
+  controle:   "/controle",
+  bareme:     "/bareme",
+  assemblage: "/colorimetrie/assemblage",
 };
 
 type DateFilter = "all" | "today" | "week" | "month";
@@ -164,7 +179,7 @@ export default function HistoriquePage() {
 
   // ── Navigate to analysis ──
   const openEntry = (e: HistoryEntry) => {
-    const target = e.type === "controle" ? "/controle" : "/bareme";
+    const target = TYPE_ROUTE[e.type] || "/controle";
     router.push(`${target}?history=${e.id}`);
   };
 
@@ -286,7 +301,7 @@ export default function HistoriquePage() {
                     </td>
                     <td className="px-4 py-3">
                       <span className="inline-flex items-center gap-1.5">
-                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${entry.type === "controle" ? "bg-brand-primary" : "bg-brand-accent"}`} />
+                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${TYPE_DOT[entry.type] || "bg-gray-300"}`} />
                         {t(`historique.${entry.type}`)}
                       </span>
                     </td>
