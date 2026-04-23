@@ -12,8 +12,8 @@ import { useI18n } from "@/lib/i18n";
 export default function CuvesPage() {
   const { t } = useI18n();
   const { user } = useAuthStore();
-  const canEdit = user?.role === "ADMIN" || user?.role === "EXPERT";
-  const isAdmin = user?.role === "ADMIN";
+  const canEdit = !!user;
+  const isAdmin = !!user;
 
   const [cuves, setCuves] = useState<Cuve[]>([]);
   const [loading, setLoading] = useState(true);
