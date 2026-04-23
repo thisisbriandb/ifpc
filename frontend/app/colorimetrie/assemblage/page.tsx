@@ -137,7 +137,7 @@ export default function AssemblagePage() {
           label: `Assemblage L*${target.L} a*${target.a} b*${target.b}`,
           statut: data.delta_e < 3 ? "REUSSI" : data.delta_e < 6 ? "ACCEPTABLE" : "ECART",
           vp: data.delta_e,
-          parametres: JSON.stringify({ target, volume_total: vol, file: file.name }),
+          parametres: JSON.stringify({ target, volume_total: vol, file: file?.name }),
           resultJson: JSON.stringify(data),
         });
         setSavedFlash(true);
@@ -314,7 +314,7 @@ export default function AssemblagePage() {
                       <div className="flex items-center gap-3 p-3 rounded-xl bg-brand-accent/5 border border-brand-accent/10">
                         <FileSpreadsheet className="w-5 h-5 text-brand-accent shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-bold text-brand-text truncate">{file.name}</p>
+                          <p className="text-xs font-bold text-brand-text truncate">{file?.name}</p>
                           <p className="text-[9px] text-brand-accent/60 uppercase font-bold tracking-wider">{t("colori.fileSelected")}</p>
                         </div>
                         <button type="button" onClick={() => handleFile(null)} className="p-1 text-gray-400 hover:text-red-500 transition-colors">

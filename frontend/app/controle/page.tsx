@@ -440,7 +440,7 @@ function ControlePageInner() {
                   {file ? (
                     <div className="text-sm">
                       <FileSpreadsheet className="w-8 h-8 text-brand-primary mx-auto mb-2" />
-                      <p className="font-semibold text-brand-text truncate text-xs">{file.name}</p>
+                      <p className="font-semibold text-brand-text truncate text-xs">{file?.name}</p>
                       <button onClick={() => setFile(null)} className="text-[10px] text-red-500 hover:text-red-600 font-medium mt-2">{t("controle.removeFile")}</button>
                     </div>
                   ) : (
