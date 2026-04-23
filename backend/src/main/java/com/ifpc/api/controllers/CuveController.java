@@ -29,13 +29,11 @@ public class CuveController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EXPERT')")
     public Cuve createCuve(@RequestBody Cuve cuve) {
         return cuveRepository.save(cuve);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EXPERT')")
     public ResponseEntity<Cuve> updateCuve(@PathVariable Long id, @RequestBody Cuve cuveDetails) {
         return cuveRepository.findById(id)
                 .map(cuve -> {
@@ -56,7 +54,6 @@ public class CuveController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteCuve(@PathVariable Long id) {
         return cuveRepository.findById(id)
                 .map(cuve -> {
