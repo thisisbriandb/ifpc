@@ -53,6 +53,15 @@ class BaremeRequest(BaseModel):
     clarification: str = "trouble"
     procede: str = "classique"
 
+class AssemblageDbRequest(BaseModel):
+    wavelengths: list
+    names: list
+    do_matrix_list: list
+    target_L: float
+    target_a: float
+    target_b: float
+    volume_total: float = 1000.0
+
 
 class PasteDataRequest(BaseModel):
     raw_text: str
@@ -284,6 +293,31 @@ async def colorimetrie_assemblage(
     except Exception as e:
         logger.exception(f"Erreur assemblage: {e}")
         raise HTTPException(status_code=400, detail=f"Erreur de traitement : {e}")
+
+@app.post("/api/colorimetrie/assemblage-db")
+async def colorimetrie_assemblage_db(
+    request: AssemblageDbRequest,
+    user: Optional[dict] = Depends(get_optional_user),
+):
+    """
+    Calcule les proportions optimales d'assemblage à partir de données de spectres déjà extraites (DB).
+    """
+    try:
+        result = colori.assembler_donnees(
+            wavelengths=request.wavelengths,
+            names=request.names,
+            do_matrix_list=request.do_matrix_list,
+            target_L=request.target_L,
+            target_a=request.target_a,
+            target_b=request.target_b,
+            volume_total=request.volume_total,
+        )
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(f"Erreur assemblage-db: {e}")
+        raise HTTPException(status_code=500, detail=f"Erreur de calcul : {e}")
 
 
 # ── Utilitaires ──────────────────────────────────────────────────────────────

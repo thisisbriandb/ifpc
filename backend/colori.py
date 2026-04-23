@@ -349,6 +349,84 @@ def find_best_blend(
 
 # ── API publique du module ──────────────────────────────────────────────────
 
+def assembler_donnees(
+    wavelengths: list,
+    names: list,
+    do_matrix_list: list,  # list of lists, shape (n_cuves, n_wavelengths)
+    target_L: float,
+    target_a: float,
+    target_b: float,
+    volume_total: float = 1000.0,
+) -> dict:
+    """
+    Similaire à assembler(), mais accepte les listes de données déjà parsées (depuis DB).
+    do_matrix_list : [[do1, do2, ...], [do1, do2, ...], ...]
+    """
+    wl = np.array(wavelengths, dtype=float)
+    # On attend do_matrix de forme (n_wavelengths, n_cuves)
+    do_matrix = np.array(do_matrix_list, dtype=float).T
+
+    if len(wl) < 10:
+        raise ValueError("Spectre trop court : au moins 10 points sont nécessaires.")
+
+    do_cie = resample_to_cie(wl, do_matrix)
+    n_cuves = do_cie.shape[1]
+
+    # Lab* de chaque cuvée seule
+    cuves_info = []
+    for i in range(n_cuves):
+        L, a, b = do_to_lab(do_cie[:, i])
+        cuves_info.append({
+            "nom": names[i],
+            "L": round(L, 2),
+            "a": round(a, 2),
+            "b": round(b, 2),
+            "hex": lab_to_rgb_hex(L, a, b),
+        })
+
+    target_lab = (float(target_L), float(target_a), float(target_b))
+    weights, lab_obtenu, de = find_best_blend(do_cie, target_lab)
+
+    # Spectre DO du mélange final
+    do_mix_user = do_matrix @ weights
+    spectre = {
+        "wavelengths": wl.tolist(),
+        "do_mix": do_mix_user.tolist(),
+        "do_cuves": [do_matrix[:, i].tolist() for i in range(n_cuves)],
+    }
+
+    volume_total = max(0.0, float(volume_total))
+    proportions = [
+        {
+            "nom": names[i],
+            "pct": round(float(weights[i]) * 100, 2),
+            "litres": round(float(weights[i]) * volume_total, 1),
+        }
+        for i in range(n_cuves)
+    ]
+
+    return {
+        "cible": {
+            "L": round(target_lab[0], 2),
+            "a": round(target_lab[1], 2),
+            "b": round(target_lab[2], 2),
+            "hex": lab_to_rgb_hex(*target_lab),
+        },
+        "obtenu": {
+            "L": round(lab_obtenu[0], 2),
+            "a": round(lab_obtenu[1], 2),
+            "b": round(lab_obtenu[2], 2),
+            "hex": lab_to_rgb_hex(*lab_obtenu),
+        },
+        "delta_e": round(de, 3),
+        "delta_e_method": "CIEDE2000",
+        "volume_total": volume_total,
+        "proportions": proportions,
+        "cuves": cuves_info,
+        "spectre": spectre,
+    }
+
+
 def assembler(
     file_content: bytes,
     filename: str,
