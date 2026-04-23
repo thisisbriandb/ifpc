@@ -8,6 +8,7 @@ import re
 import logging
 import pandas as pd
 import pasto
+import colori
 from auth import get_optional_user, verify_advanced_access
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -246,6 +247,43 @@ async def proposer_bareme(request: BaremeRequest):
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+# ── Module 3 : Colorimétrie — Assemblage ─────────────────────────────────────
+
+@app.post("/api/colorimetrie/assemblage")
+async def colorimetrie_assemblage(
+    file: UploadFile = File(...),
+    target_L: float = 0.0,
+    target_a: float = 0.0,
+    target_b: float = 0.0,
+    volume_total: float = 1000.0,
+    user: Optional[dict] = Depends(get_optional_user),
+):
+    """
+    Calcule les proportions optimales d'assemblage pour atteindre une couleur L*a*b* cible.
+
+    Upload d'un fichier CSV/Excel avec :
+    - Colonne 1 : longueur d'onde (nm)
+    - Colonnes suivantes : DO de chaque cuvée
+    """
+    try:
+        content = await file.read()
+        filename = file.filename or "spectres.csv"
+        result = colori.assembler(
+            file_content=content,
+            filename=filename,
+            target_L=target_L,
+            target_a=target_a,
+            target_b=target_b,
+            volume_total=volume_total,
+        )
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(f"Erreur assemblage: {e}")
+        raise HTTPException(status_code=400, detail=f"Erreur de traitement : {e}")
 
 
 # ── Utilitaires ──────────────────────────────────────────────────────────────
