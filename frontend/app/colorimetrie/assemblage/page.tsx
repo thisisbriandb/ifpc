@@ -373,7 +373,9 @@ export default function AssemblagePage() {
                 </div>
                 <p className="text-sm font-bold text-brand-text">{t("colori.emptyState")}</p>
                 <p className="text-xs text-gray-400 mt-1 max-w-[240px] leading-relaxed mx-auto">
-                   Configurez les paramètres {typeof window !== 'undefined' && window.innerWidth < 1024 ? 'ci-dessous' : 'à gauche'} pour lancer la simulation d'assemblage.
+                   {"Configurez les paramètres "}
+                   {typeof window !== "undefined" && window.innerWidth < 1024 ? "ci-dessous" : "à gauche"}
+                   {" pour lancer la simulation d'assemblage."}
                 </p>
               </div>
             )}
