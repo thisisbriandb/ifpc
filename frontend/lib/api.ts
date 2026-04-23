@@ -292,3 +292,60 @@ export async function assemblageCouleur(
   });
   return data;
 }
+
+export async function assemblageCouleurDb(
+  data: {
+    wavelengths: number[];
+    names: string[];
+    do_matrix_list: number[][];
+    target_L: number;
+    target_a: number;
+    target_b: number;
+    volume_total?: number;
+  }
+): Promise<AssemblageResult> {
+  const response = await api.post("/colorimetrie/assemblage-db", data);
+  return response.data;
+}
+
+// ── Module 4 : Gestion de cuves ─────────────────────────────────────────────
+
+export interface Cuve {
+  id?: number;
+  nom: string;
+  volumeMax: number;
+  volumeActuel: number;
+  typeProduit?: string;
+  statut?: string;
+  lotIdentifier?: string;
+  colorL?: number;
+  colorA?: number;
+  colorB?: number;
+  colorHex?: string;
+  spectrumJson?: string;
+  updatedAt?: string;
+}
+
+export async function getCuves(): Promise<Cuve[]> {
+  const { data } = await api.get("/cuves");
+  return data;
+}
+
+export async function getCuve(id: number): Promise<Cuve> {
+  const { data } = await api.get(`/cuves/${id}`);
+  return data;
+}
+
+export async function createCuve(cuve: Cuve): Promise<Cuve> {
+  const { data } = await api.post("/cuves", cuve);
+  return data;
+}
+
+export async function updateCuve(id: number, cuve: Cuve): Promise<Cuve> {
+  const { data } = await api.put(`/cuves/${id}`, cuve);
+  return data;
+}
+
+export async function deleteCuve(id: number): Promise<void> {
+  await api.delete(`/cuves/${id}`);
+}

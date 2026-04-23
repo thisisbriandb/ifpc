@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Upload, FileSpreadsheet, X, Palette, Loader2,
   AlertCircle, Sparkles, Download, ChevronDown, Check,
@@ -10,7 +10,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend, ResponsiveContainer,
 } from "recharts";
-import { assemblageCouleur, saveAnalysis, AssemblageResult } from "@/lib/api";
+import { assemblageCouleur, assemblageCouleurDb, saveAnalysis, getCuves, updateCuve, AssemblageResult, type Cuve } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 
 // ── ΔE interpretation ──────────────────────────────────────────────────────
@@ -73,6 +73,18 @@ export default function AssemblagePage() {
   const [showSpectrum, setShowSpectrum] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
 
+  // DB selection state
+  const [useDb, setUseDb] = useState(false);
+  const [dbCuves, setDbCuves] = useState<Cuve[]>([]);
+  const [selectedCuveIds, setSelectedCuvesIds] = useState<number[]>([]);
+  const [savingToDb, setSavingToDb] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    if (useDb) {
+      getCuves().then(data => setDbCuves(data.filter(c => !!c.spectrumJson))).catch(() => {});
+    }
+  }, [useDb]);
+
   const handleFile = (f: File | null) => { setFile(f); setError(null); };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -84,7 +96,9 @@ export default function AssemblagePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) { setError(t("colori.errorFileRequired")); return; }
+    if (!useDb && !file) { setError(t("colori.errorFileRequired")); return; }
+    if (useDb && selectedCuveIds.length === 0) { setError("Veuillez sélectionner au moins une cuve."); return; }
+    
     setError(null);
     setLoading(true);
     setSavedFlash(false);
@@ -95,7 +109,25 @@ export default function AssemblagePage() {
         b: parseFloat(targetB) || 0,
       };
       const vol = Math.max(0, parseFloat(volume) || 0);
-      const data = await assemblageCouleur(file, target, vol);
+      
+      let data;
+      if (useDb) {
+        const selected = dbCuves.filter(c => selectedCuveIds.includes(c.id!));
+        // On suppose que tous les spectres ont les mêmes longueurs d'onde
+        const firstSpec = JSON.parse(selected[0].spectrumJson!);
+        data = await assemblageCouleurDb({
+          wavelengths: firstSpec.wavelengths,
+          names: selected.map(c => c.nom),
+          do_matrix_list: selected.map(c => JSON.parse(c.spectrumJson!).do),
+          target_L: target.L,
+          target_a: target.a,
+          target_b: target.b,
+          volume_total: vol,
+        });
+      } else {
+        data = await assemblageCouleur(file!, target, vol);
+      }
+      
       setResult(data);
       setShowSpectrum(false);
 
@@ -116,6 +148,39 @@ export default function AssemblagePage() {
       setResult(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const saveCuveToDb = async (idx: number) => {
+    if (!result) return;
+    const c = result.cuves[idx];
+    const spec = {
+      wavelengths: result.spectre.wavelengths,
+      do: result.spectre.do_cuves[idx]
+    };
+    
+    setSavingToDb(prev => ({ ...prev, [c.nom]: true }));
+    try {
+      const all = await getCuves();
+      const existing = all.find(tank => tank.nom === c.nom);
+      
+      if (existing && existing.id) {
+        await updateCuve(existing.id, {
+          ...existing,
+          colorL: c.L,
+          colorA: c.a,
+          colorB: c.b,
+          colorHex: c.hex,
+          spectrumJson: JSON.stringify(spec)
+        });
+        alert(`Cuve "${c.nom}" mise à jour.`);
+      } else {
+        alert(`Aucune cuve nommée "${c.nom}" trouvée en base. Créez-la d'abord dans l'onglet Gestion de cuves.`);
+      }
+    } catch (err) {
+      alert("Erreur lors de la sauvegarde.");
+    } finally {
+      setSavingToDb(prev => ({ ...prev, [c.nom]: false }));
     }
   };
 
@@ -189,43 +254,80 @@ export default function AssemblagePage() {
                 </div>
               </div>
 
-              {/* Import Fichier */}
+              {/* Import Fichier / DB toggle */}
               <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm">
-                <div className="flex items-center justify-between gap-2 mb-4">
+                <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
                     <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">{t("colori.stepSpectra")}</p>
                   </div>
-                  <button type="button" onClick={downloadCsvTemplate} className="text-gray-400 hover:text-brand-primary transition-colors">
-                    <Download className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex bg-gray-100 p-0.5 rounded-lg">
+                    <button type="button" onClick={() => setUseDb(false)} className={`px-2 py-1 text-[10px] font-bold rounded-md transition-all ${!useDb ? 'bg-white shadow-sm' : 'text-gray-400'}`}>FICHIER</button>
+                    <button type="button" onClick={() => setUseDb(true)} className={`px-2 py-1 text-[10px] font-bold rounded-md transition-all ${useDb ? 'bg-white shadow-sm' : 'text-gray-400'}`}>BASE</button>
+                  </div>
                 </div>
 
-                {!file ? (
-                  <div
-                    onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-                    onDragLeave={() => setDragActive(false)}
-                    onDrop={handleDrop}
-                    onClick={() => inputRef.current?.click()}
-                    className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
-                      dragActive ? "border-brand-accent bg-brand-accent/5" : "border-gray-100 hover:border-brand-accent/40 hover:bg-gray-50/50"
-                    }`}
-                  >
-                    <Upload className="w-6 h-6 text-gray-300 mx-auto mb-2" />
-                    <p className="text-xs font-bold text-brand-text">{t("colori.uploadCta")}</p>
-                    <p className="text-[10px] text-gray-400 mt-1">{t("colori.dropHint")}</p>
+                {useDb ? (
+                  <div className="space-y-3">
+                    {dbCuves.length === 0 ? (
+                      <p className="text-xs text-gray-400 italic py-4 text-center">Aucune cuve avec spectre trouvée.</p>
+                    ) : (
+                      <div className="max-h-48 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+                        {dbCuves.map(c => (
+                          <label key={c.id} className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors border border-transparent has-[:checked]:border-brand-accent/20 has-[:checked]:bg-brand-accent/5">
+                            <input
+                              type="checkbox"
+                              checked={selectedCuveIds.includes(c.id!)}
+                              onChange={(e) => {
+                                if (e.target.checked) setSelectedCuvesIds(prev => [...prev, c.id!]);
+                                else setSelectedCuvesIds(prev => prev.filter(id => id !== c.id));
+                              }}
+                              className="w-4 h-4 rounded accent-brand-accent"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-bold text-gray-700 truncate">{c.nom}</p>
+                              <p className="text-[10px] text-gray-400 truncate">{c.lotIdentifier || c.typeProduit}</p>
+                            </div>
+                            {c.colorHex && <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: c.colorHex }} />}
+                          </label>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3 p-3 rounded-xl bg-brand-accent/5 border border-brand-accent/10">
-                    <FileSpreadsheet className="w-5 h-5 text-brand-accent shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold text-brand-text truncate">{file.name}</p>
-                      <p className="text-[9px] text-brand-accent/60 uppercase font-bold tracking-wider">{t("colori.fileSelected")}</p>
+                  <>
+                    {!file ? (
+                      <div
+                        onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                        onDragLeave={() => setDragActive(false)}
+                        onDrop={handleDrop}
+                        onClick={() => inputRef.current?.click()}
+                        className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+                          dragActive ? "border-brand-accent bg-brand-accent/5" : "border-gray-100 hover:border-brand-accent/40 hover:bg-gray-50/50"
+                        }`}
+                      >
+                        <Upload className="w-6 h-6 text-gray-300 mx-auto mb-2" />
+                        <p className="text-xs font-bold text-brand-text">{t("colori.uploadCta")}</p>
+                        <p className="text-[10px] text-gray-400 mt-1">{t("colori.dropHint")}</p>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-3 p-3 rounded-xl bg-brand-accent/5 border border-brand-accent/10">
+                        <FileSpreadsheet className="w-5 h-5 text-brand-accent shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold text-brand-text truncate">{file.name}</p>
+                          <p className="text-[9px] text-brand-accent/60 uppercase font-bold tracking-wider">{t("colori.fileSelected")}</p>
+                        </div>
+                        <button type="button" onClick={() => handleFile(null)} className="p-1 text-gray-400 hover:text-red-500 transition-colors">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+                    <div className="mt-3 flex justify-end gap-3">
+                      <button type="button" onClick={downloadCsvTemplate} className="flex items-center gap-1 text-[10px] font-bold text-gray-400 hover:text-brand-primary transition-colors">
+                        <Download className="w-3 h-3" /> {t("colori.downloadTemplate")}
+                      </button>
                     </div>
-                    <button type="button" onClick={() => handleFile(null)} className="p-1 text-gray-400 hover:text-red-500 transition-colors">
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
+                  </>
                 )}
                 <input ref={inputRef} type="file" accept=".csv,.xlsx,.xls,.tsv,.txt" onChange={(e) => handleFile(e.target.files?.[0] || null)} className="hidden" />
               </div>
@@ -239,7 +341,7 @@ export default function AssemblagePage() {
 
               <button
                 type="submit"
-                disabled={loading || !file}
+                disabled={loading || (!useDb && !file) || (useDb && selectedCuveIds.length === 0)}
                 className="w-full flex items-center justify-center gap-2 py-3.5 bg-brand-primary text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-primary/20 hover:bg-brand-primary/90 transition-all disabled:opacity-40 disabled:shadow-none"
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
@@ -302,7 +404,20 @@ export default function AssemblagePage() {
                                 <div className="w-3 h-3 rounded-full shrink-0 shadow-inner" style={{ backgroundColor: cuve.hex }} />
                                 <span className="text-[11px] font-bold text-brand-text truncate">{p.nom}</span>
                               </div>
-                              <span className="text-xs font-black font-mono text-brand-text">{p.pct.toFixed(1)}%</span>
+                              <div className="flex items-center gap-3">
+                                {!useDb && (
+                                  <button
+                                    type="button"
+                                    onClick={() => saveCuveToDb(i)}
+                                    disabled={savingToDb[p.nom]}
+                                    title="Mettre à jour la cuve en base"
+                                    className="text-[9px] font-bold text-brand-primary hover:underline disabled:opacity-50"
+                                  >
+                                    {savingToDb[p.nom] ? "..." : "SAUVER DB"}
+                                  </button>
+                                )}
+                                <span className="text-xs font-black font-mono text-brand-text">{p.pct.toFixed(1)}%</span>
+                              </div>
                             </div>
                             <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                               <div className="h-full rounded-full transition-all duration-700" style={{ width: `${p.pct}%`, backgroundColor: cuve.hex }} />

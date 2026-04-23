@@ -276,7 +276,7 @@ function ControlePageInner() {
       };
       setResult(enrichedResult);
       // --- Sauvegarder l'activité récente ---
-      const activityLabel = lotIdentifier || res.parametres?.produit || file?.name || (mode === "paste" ? t("controle.pastedDataLabel") : t("controle.manualDataLabel"));
+      const activityLabel = res.parametres?.produit || lotIdentifier || file?.name || (mode === "paste" ? t("controle.pastedDataLabel") : t("controle.manualDataLabel"));
       try {
         // Sauvegarde persistante en base via Spring Boot
         await saveAnalysis({
@@ -346,8 +346,8 @@ function ControlePageInner() {
         />
       )}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 bg-white border-r border-black/[0.06] transition-all duration-300 ease-in-out flex flex-col
-          ${isSidebarOpen ? "w-[300px] sm:w-[320px] translate-x-0" : "w-0 -translate-x-full lg:translate-x-0"}
+        className={`fixed lg:static inset-y-0 left-0 z-40 bg-white border-r border-black/[0.06] transition-all duration-300 ease-in-out flex flex-col overflow-hidden shadow-2xl lg:shadow-none
+          ${isSidebarOpen ? "w-[300px] sm:w-[320px] translate-x-0" : "w-0 -translate-x-full lg:translate-x-0 lg:border-r-0"}
         `}
       >
         <div className={`${isSidebarOpen ? "opacity-100" : "opacity-0 lg:opacity-100"} transition-opacity duration-200 flex flex-col h-full overflow-hidden w-[300px] sm:w-[320px]`}>
@@ -540,7 +540,9 @@ function ControlePageInner() {
         {/* Toggle Button (Desktop) */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="hidden lg:flex absolute -right-4 top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full items-center justify-center shadow-sm z-30 hover:bg-gray-50 transition-colors"
+          className={`hidden lg:flex absolute top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full items-center justify-center shadow-sm z-30 hover:bg-gray-50 transition-all duration-300 ease-in-out
+            ${isSidebarOpen ? "left-[284px] sm:left-[304px]" : "left-4"}
+          `}
         >
           {isSidebarOpen ? <ChevronLeft className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-500" />}
         </button>

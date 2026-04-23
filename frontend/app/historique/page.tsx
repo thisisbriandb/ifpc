@@ -302,21 +302,38 @@ export default function HistoriquePage() {
 
                   <h3 className="font-bold text-gray-900 mb-1 truncate pr-8">
                     {entry.lotIdentifier ? (
-                      <span className="font-mono text-gray-700">#{entry.lotIdentifier}</span>
+                      <>
+                        <span className="font-mono text-gray-700">
+                          <span className="text-[10px] text-gray-400 uppercase font-sans mr-1">Lot:</span>
+                          {entry.lotIdentifier}
+                        </span>
+                        {entry.label && entry.label !== entry.lotIdentifier && (
+                          <span className="text-gray-400 font-normal text-sm ml-2">
+                            — {entry.label}
+                          </span>
+                        )}
+                      </>
                     ) : (
                       entry.label
                     )}
                   </h3>
 
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-50">
-                    <div className="flex items-center gap-3">
-                       <span className="inline-flex items-center gap-1.5 text-[11px] text-gray-500">
-                        <span className={`w-2 h-2 rounded-full shrink-0 ${TYPE_DOT[entry.type] || "bg-gray-300"}`} />
-                        {t(`historique.${entry.type}`)}
-                      </span>
-                      {entry.vp != null && (
-                        <span className="text-[11px] font-mono text-gray-600 font-bold bg-gray-50 px-2 py-0.5 rounded">
-                          {entry.vp.toFixed(2)} UP
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-3">
+                        <span className="inline-flex items-center gap-1.5 text-[11px] text-gray-500">
+                          <span className={`w-2 h-2 rounded-full shrink-0 ${TYPE_DOT[entry.type] || "bg-gray-300"}`} />
+                          {t(`historique.${entry.type}`)}
+                        </span>
+                        {entry.vp != null && (
+                          <span className="text-[10px] font-mono text-gray-600 font-bold bg-gray-50 px-2 py-0.5 rounded border border-gray-100">
+                            Fourni: {entry.vp.toFixed(2)} UP
+                          </span>
+                        )}
+                      </div>
+                      {entry.vpCible != null && (
+                        <span className="text-[10px] font-mono text-gray-400 bg-gray-50/50 px-2 py-0.5 rounded border border-gray-50 w-fit">
+                          Cible: {entry.vpCible.toFixed(1)} UP
                         </span>
                       )}
                     </div>
@@ -362,21 +379,37 @@ export default function HistoriquePage() {
                             {t(`historique.${entry.type}`)}
                           </span>
                         </td>
-                        <td className="px-4 py-3 font-medium text-gray-800 max-w-[200px] truncate">
+                        <td className="px-4 py-3 font-medium text-gray-800 max-w-[300px] truncate">
                           {entry.lotIdentifier ? (
-                            <span className="font-mono text-gray-500">#{entry.lotIdentifier}</span>
+                            <div className="flex items-center">
+                              <span className="font-mono text-gray-700 shrink-0">
+                                <span className="text-[9px] text-gray-400 uppercase font-sans mr-1">Lot:</span>
+                                {entry.lotIdentifier}
+                              </span>
+                              {entry.label && entry.label !== entry.lotIdentifier && (
+                                <span className="text-gray-400 font-normal text-[11px] ml-2 truncate">
+                                  — {entry.label}
+                                </span>
+                              )}
+                            </div>
                           ) : (
                             entry.label
                           )}
                         </td>
                         <td className="px-4 py-3 font-mono text-gray-600">
                           {entry.vp != null ? (
-                            <>
-                              {entry.vp.toFixed(2)}
+                            <div className="flex flex-col leading-tight">
+                              <span className="whitespace-nowrap">
+                                <span className="text-gray-400 text-[9px] uppercase font-sans mr-1">Fourni:</span>
+                                {entry.vp.toFixed(2)}
+                              </span>
                               {entry.vpCible != null && (
-                                <span className="text-gray-400 ml-1">/ {entry.vpCible.toFixed(1)}</span>
+                                <span className="whitespace-nowrap text-gray-400">
+                                  <span className="text-gray-400 text-[9px] uppercase font-sans mr-1">Cible:</span>
+                                  {entry.vpCible.toFixed(1)}
+                                </span>
                               )}
-                            </>
+                            </div>
                           ) : (
                             <span className="text-gray-300">—</span>
                           )}
