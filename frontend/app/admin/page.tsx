@@ -174,30 +174,30 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-brand-gray p-8">
+    <div className="min-h-screen bg-brand-gray p-4 sm:p-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <header className="mb-8">
+        <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center shrink-0">
               <Shield className="w-5 h-5 text-red-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold text-gray-900">{t("admin.title")}</h1>
-              <p className="text-sm text-red-600 font-medium">{t("admin.subtitle")}</p>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900">{t("admin.title")}</h1>
+              <p className="text-xs sm:text-sm text-red-600 font-medium">{t("admin.subtitle")}</p>
             </div>
           </div>
         </header>
 
         {/* Tabs */}
-        <div className="flex gap-1 p-1 bg-gray-100 rounded-xl mb-6 w-fit">
+        <div className="flex gap-1 p-1 bg-gray-100 rounded-xl mb-6 w-full sm:w-fit overflow-x-auto no-scrollbar">
           {tabs.map(tab => {
             const Icon = tab.icon;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold transition-all ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
                   activeTab === tab.id
                     ? "bg-white text-gray-900 shadow-sm"
                     : "text-gray-500 hover:text-gray-700"
@@ -218,8 +218,8 @@ export default function AdminPage() {
         {/* ── Tab: Pending Users ──────────────────────────────── */}
         {activeTab === "pending" && (
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
-              <h3 className="font-bold text-gray-900 flex items-center gap-2">
+            <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50">
+              <h3 className="font-bold text-gray-900 flex items-center gap-2 text-sm sm:text-base">
                 <UserCheck className="w-5 h-5 text-yellow-600" />
                 {t("admin.pendingTitle")}
               </h3>
@@ -234,30 +234,30 @@ export default function AdminPage() {
             ) : (
               <div className="divide-y divide-gray-50">
                 {pendingUsers.map(u => (
-                  <div key={u.id} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50/50 transition-colors">
+                  <div key={u.id} className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors gap-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-bold text-sm uppercase">
+                      <div className="w-9 h-9 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-bold text-sm uppercase shrink-0">
                         {u.firstName.charAt(0)}{u.lastName.charAt(0)}
                       </div>
-                      <div>
-                        <p className="font-semibold text-gray-900">{u.firstName} {u.lastName}</p>
-                        <p className="text-sm text-gray-400">{u.email}</p>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-gray-900 truncate">{u.firstName} {u.lastName}</p>
+                        <p className="text-sm text-gray-400 truncate">{u.email}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 ml-12 sm:ml-0">
                       {processingId === u.id ? (
                         <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
                       ) : (
                         <>
                           <button
                             onClick={() => handleApprove(u.id)}
-                            className="flex items-center gap-1.5 px-3 py-2 bg-green-50 text-green-700 text-xs font-bold rounded-lg hover:bg-green-100 transition-colors"
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 bg-green-50 text-green-700 text-xs font-bold rounded-lg hover:bg-green-100 transition-colors"
                           >
                             <CheckCircle className="w-4 h-4" /> {t("admin.approve")}
                           </button>
                           <button
                             onClick={() => handleReject(u.id)}
-                            className="flex items-center gap-1.5 px-3 py-2 bg-red-50 text-red-600 text-xs font-bold rounded-lg hover:bg-red-100 transition-colors"
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 bg-red-50 text-red-600 text-xs font-bold rounded-lg hover:bg-red-100 transition-colors"
                           >
                             <XCircle className="w-4 h-4" /> {t("admin.reject")}
                           </button>
@@ -293,9 +293,9 @@ export default function AdminPage() {
                     <thead className="bg-gray-50 border-b border-gray-100">
                       <tr>
                         <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colUser")}</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colEmail")}</th>
+                        <th className="hidden md:table-cell px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colEmail")}</th>
                         <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colRole")}</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colLastLogin")}</th>
+                        <th className="hidden lg:table-cell px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colLastLogin")}</th>
                         <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">{t("admin.colEdit")}</th>
                       </tr>
                     </thead>
@@ -311,17 +311,20 @@ export default function AdminPage() {
                                 <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm uppercase shrink-0">
                                   {u.firstName.charAt(0)}{u.lastName.charAt(0)}
                                 </div>
-                                <span className="font-semibold text-gray-900">{u.firstName} {u.lastName}</span>
+                                <div className="flex flex-col">
+                                  <span className="font-semibold text-gray-900">{u.firstName} {u.lastName}</span>
+                                  <span className="md:hidden text-[11px] text-gray-400 truncate max-w-[120px]">{u.email}</span>
+                                </div>
                               </div>
                             </td>
-                            <td className="px-6 py-4 text-gray-400">{u.email}</td>
+                            <td className="hidden md:table-cell px-6 py-4 text-gray-400">{u.email}</td>
                             <td className="px-6 py-4">
-                              <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-md ${roleMeta.badge}`}>
+                              <span className={`inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-md ${roleMeta.badge}`}>
                                 <RoleIcon className="w-3.5 h-3.5" />
-                                {roleLabel}
+                                <span className="hidden sm:inline">{roleLabel}</span>
                               </span>
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="hidden lg:table-cell px-6 py-4">
                               <span
                                 title={u.lastLogin ? new Date(u.lastLogin).toLocaleString("fr-FR") : ""}
                                 className={`text-xs font-medium ${
@@ -338,7 +341,7 @@ export default function AdminPage() {
                                 <select
                                   value={u.role}
                                   onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                                  className="bg-white border border-gray-200 text-gray-700 text-xs font-bold rounded-lg px-3 py-2 ml-auto block outline-none hover:border-gray-300 cursor-pointer transition-colors focus:ring-2 focus:ring-red-100"
+                                  className="bg-white border border-gray-200 text-gray-700 text-[10px] sm:text-xs font-bold rounded-lg px-2 sm:px-3 py-2 ml-auto block outline-none hover:border-gray-300 cursor-pointer transition-colors focus:ring-2 focus:ring-red-100"
                                 >
                                   <option value="USER">USER</option>
                                   <option value="EXPERT">EXPERT</option>
@@ -363,8 +366,8 @@ export default function AdminPage() {
         {/* ── Tab: Product Config ─────────────────────────────── */}
         {activeTab === "config" && (
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
-              <h3 className="font-bold text-gray-900 flex items-center gap-2">
+            <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50">
+              <h3 className="font-bold text-gray-900 flex items-center gap-2 text-sm sm:text-base">
                 <Settings2 className="w-5 h-5 text-brand-primary" />
                 {t("admin.configTitle")}
               </h3>
@@ -380,26 +383,26 @@ export default function AdminPage() {
                   const edited = editedConfigs[config.productType];
                   const changed = edited !== undefined && edited !== config.vpCible;
                   return (
-                    <div key={config.productType} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50/50 transition-colors">
+                    <div key={config.productType} className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors gap-4">
                       <div>
                         <p className="font-semibold text-gray-900">{config.productName}</p>
-                        <p className="text-xs text-gray-400 font-mono">{config.productType}</p>
+                        <p className="text-[10px] text-gray-400 font-mono">{config.productType}</p>
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-between sm:justify-end gap-3">
                         <div className="flex items-center gap-1.5">
-                          <label className="text-xs text-gray-500 font-medium">{t("admin.vpCibleLabel")}</label>
+                          <label className="text-[10px] text-gray-500 font-medium">{t("admin.vpCibleLabel")}</label>
                           <input
                             type="number"
                             step="0.5"
                             value={editedConfigs[config.productType] ?? config.vpCible}
                             onChange={(e) => setEditedConfigs(prev => ({ ...prev, [config.productType]: parseFloat(e.target.value) || 0 }))}
-                            className="w-20 px-2 py-1.5 border border-gray-200 rounded-lg text-sm font-mono text-center focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none"
+                            className="w-16 sm:w-20 px-2 py-1.5 border border-gray-200 rounded-lg text-xs sm:text-sm font-mono text-center focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none"
                           />
                         </div>
                         <button
                           onClick={() => handleSaveConfig(config.productType)}
                           disabled={!changed || savingConfig === config.productType}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                          className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] sm:text-xs font-bold rounded-lg transition-all ${
                             changed
                               ? "bg-brand-primary text-white hover:bg-brand-primary/90 shadow-sm"
                               : "bg-gray-100 text-gray-400 cursor-not-allowed"
@@ -410,7 +413,7 @@ export default function AdminPage() {
                           ) : (
                             <Save className="w-3.5 h-3.5" />
                           )}
-                          {t("admin.saveCta")}
+                          <span className="hidden sm:inline">{t("admin.saveCta")}</span>
                         </button>
                       </div>
                     </div>

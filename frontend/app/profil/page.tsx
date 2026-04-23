@@ -120,21 +120,23 @@ export default function ProfilPage() {
 
   return (
     <div className="min-h-screen bg-brand-gray">
-      <div className="max-w-lg mx-auto px-5 py-8 space-y-6">
+      <div className="max-w-lg mx-auto px-4 sm:px-5 py-6 sm:py-8 space-y-6">
 
         {/* ── Avatar header ── */}
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
-            <span className="text-lg font-bold text-brand-primary">{initials}</span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0">
+            <span className="text-base sm:text-lg font-bold text-brand-primary">{initials}</span>
           </div>
           <div className="min-w-0">
-            <h1 className="text-lg font-bold text-brand-text truncate">
+            <h1 className="text-base sm:text-lg font-bold text-brand-text truncate">
               {user.firstName} {user.lastName}
             </h1>
-            <div className="flex items-center gap-2 mt-0.5">
-              <Mail className="w-3 h-3 text-gray-400" />
-              <span className="text-xs text-gray-400 truncate">{user.email}</span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${ROLE_BADGE[user.role] || ROLE_BADGE.USER}`}>
+            <div className="flex flex-wrap items-center gap-2 mt-0.5">
+              <div className="flex items-center gap-1">
+                <Mail className="w-3 h-3 text-gray-400" />
+                <span className="text-[11px] sm:text-xs text-gray-400 truncate max-w-[150px]">{user.email}</span>
+              </div>
+              <span className={`text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full border ${ROLE_BADGE[user.role] || ROLE_BADGE.USER}`}>
                 {roleName}
               </span>
             </div>
@@ -145,7 +147,7 @@ export default function ProfilPage() {
         <form onSubmit={handleProfileSubmit} className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden">
           <div className="px-5 py-6 space-y-4">
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{t("profile.personalInfo")}</p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="text-[11px] font-semibold text-gray-500 mb-1.5 block">{t("profile.firstName")}</label>
                 <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required
@@ -181,7 +183,7 @@ export default function ProfilPage() {
               <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} required
                 className={inputAccentCls} />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="text-[11px] font-semibold text-gray-500 mb-1.5 block">{t("profile.newPassword")}</label>
                 <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} required minLength={6}

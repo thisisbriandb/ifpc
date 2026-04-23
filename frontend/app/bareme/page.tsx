@@ -120,6 +120,8 @@ export default function BaremePage() {
   const [customTref, setCustomTref] = useState("");
   const [customZ, setCustomZ] = useState("");
 
+  const [isConfigOpen, setIsConfigOpen] = useState(true);
+
   const computed = useMemo(() => {
     const produit = PRODUITS[productType];
     if (!produit) return null;
@@ -176,20 +178,40 @@ export default function BaremePage() {
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-brand-gray">
       {/* Header */}
-      <div className="flex-shrink-0 px-5 py-3 bg-white border-b border-gray-100 flex items-center justify-between">
-        <h1 className="font-bold text-gray-900 font-clash">{t("bareme.title")}</h1>
-        {canExpert && (
-          <label className="flex items-center gap-2 text-xs cursor-pointer select-none">
-            <input type="checkbox" checked={expertMode} onChange={e => setExpertMode(e.target.checked)}
-              className="w-3.5 h-3.5 rounded accent-brand-accent" />
-            <span className="font-semibold text-brand-accent">{t("bareme.expertMode")}</span>
-          </label>
-        )}
+      <div className="flex-shrink-0 px-4 sm:px-5 py-3 bg-white border-b border-gray-100 flex items-center justify-between">
+        <h1 className="font-bold text-gray-900 font-clash text-sm sm:text-base">{t("bareme.title")}</h1>
+        <div className="flex items-center gap-4">
+          {canExpert && (
+            <label className="flex items-center gap-2 text-xs cursor-pointer select-none">
+              <input type="checkbox" checked={expertMode} onChange={e => setExpertMode(e.target.checked)}
+                className="w-3.5 h-3.5 rounded accent-brand-accent" />
+              <span className="hidden sm:inline font-semibold text-brand-accent">{t("bareme.expertMode")}</span>
+              <span className="sm:hidden font-semibold text-brand-accent">EXPERT</span>
+            </label>
+          )}
+        </div>
       </div>
 
-      <div className="flex-1 flex overflow-hidden">
-        {/* ── Left — Configuration ── */}
-        <div className="w-72 flex-shrink-0 border-r border-gray-100 bg-white overflow-y-auto p-5 space-y-6">
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Backdrop for mobile */}
+        {isConfigOpen && (
+          <div className="lg:hidden absolute inset-0 bg-gray-900/20 backdrop-blur-sm z-30"
+            onClick={() => setIsConfigOpen(false)} />
+        )}
+
+        {/* ── Left — Configuration (Drawer on mobile) ── */}
+        <div className={`
+          fixed lg:static inset-y-0 left-0 z-40 w-72 sm:w-80 flex-shrink-0 border-r border-gray-100 bg-white transition-transform duration-300 ease-in-out
+          ${isConfigOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        `}>
+          <div className="flex flex-col h-full overflow-hidden">
+            <div className="lg:hidden flex items-center justify-between p-4 border-b border-gray-50">
+              <span className="font-bold text-brand-text">Paramètres</span>
+              <button onClick={() => setIsConfigOpen(false)} className="p-1 text-gray-400">
+                <ChevronDown className="w-6 h-6 rotate-90" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-5 space-y-6">
 
           {/* HERO — T° consigne — the most important input */}
           <section>
@@ -276,22 +298,42 @@ export default function BaremePage() {
             </section>
           )}
         </div>
+            {/* View Result Button (Mobile only) */}
+            <div className="lg:hidden p-4 bg-gray-50 border-t border-gray-100">
+              <button
+                onClick={() => setIsConfigOpen(false)}
+                className="w-full py-3 bg-brand-primary text-white font-bold rounded-xl shadow-lg shadow-brand-primary/20"
+              >
+                Voir le résultat
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* ── Right — Verdict ── */}
-        <div className="flex-1 overflow-y-auto p-5">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5">
+          {/* Mobile Config Toggle */}
+          {!isConfigOpen && (
+            <button
+              onClick={() => setIsConfigOpen(true)}
+              className="lg:hidden fixed bottom-6 right-6 z-30 w-12 h-12 bg-brand-accent text-white rounded-full shadow-lg flex items-center justify-center animate-in zoom-in duration-300"
+            >
+              <Info className="w-6 h-6" />
+            </button>
+          )}
           {computed && verdict && vcfg ? (
             <div className="max-w-xl mx-auto space-y-4">
 
               {/* ── Primary: Gauge + Narrative ── */}
               <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden">
-                <div className="px-6 py-6">
-                  <div className="flex items-center gap-6">
+                <div className="px-4 py-6 sm:px-6">
+                  <div className="flex flex-col sm:flex-row items-center gap-6">
                     {/* Circular gauge */}
                     <HoldTimeGauge holdSec={computed.holdSec} holdMin={computed.holdMin} verdict={verdict} />
 
                     {/* Right: verdict + narrative */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2.5 mb-2">
+                    <div className="flex-1 min-w-0 text-center sm:text-left">
+                      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 mb-2">
                         <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded border ${vcfg.badge}`}>
                           {t(`bareme.${VERDICT_LABEL[verdict]}`)}
                         </span>
@@ -312,11 +354,11 @@ export default function BaremePage() {
                 </div>
 
                 {/* Context strip */}
-                <div className="px-6 py-2.5 bg-gray-50/80 border-t border-black/[0.04] flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-gray-400">
+                <div className="px-4 sm:px-6 py-2.5 bg-gray-50/80 border-t border-black/[0.04] flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] text-gray-400 text-center">
                   <span>{t("bareme.vpCible")} <strong className="text-gray-600">{computed.vp} {t("bareme.up")}</strong></span>
                   <span>{t("bareme.lethalRate")} <strong className="text-gray-600">{computed.L}</strong></span>
-                  <span>{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? t("bareme.flash") : t("bareme.tunnel")}</strong></span>
-                  <span>{trouble ? t("bareme.turbid") : t("bareme.clear")}</span>
+                  <span className="hidden sm:inline">{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? t("bareme.flash") : t("bareme.tunnel")}</strong></span>
+                  <span className="hidden sm:inline">{trouble ? t("bareme.turbid") : t("bareme.clear")}</span>
                 </div>
               </div>
 
@@ -341,25 +383,22 @@ export default function BaremePage() {
               )}
 
               {/* ── Technical params — bottom, compact ── */}
-              <div className="flex items-center gap-0 rounded-lg border border-black/[0.06] bg-white overflow-hidden">
-                <div className="flex-1 px-4 py-2.5">
+              <div className="grid grid-cols-2 sm:flex sm:items-center gap-0 rounded-lg border border-black/[0.06] bg-white overflow-hidden divide-x divide-y sm:divide-y-0 divide-black/[0.06]">
+                <div className="px-4 py-2.5 col-span-2 sm:flex-1">
                   <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("bareme.micro")}</p>
                   <p className="text-xs font-semibold text-brand-text truncate italic">{computed.micro.nom}</p>
                 </div>
-                <div className="w-px h-8 bg-black/[0.06]" />
-                <div className="flex-1 px-4 py-2.5">
+                <div className="px-4 py-2.5 sm:flex-1">
                   <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("bareme.tref")}</p>
-                  <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{computed.tRef}</span>
+                  <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{computed.tRef}</span>
                   <span className="text-[10px] text-gray-400 ml-0.5">°C</span>
                 </div>
-                <div className="w-px h-8 bg-black/[0.06]" />
-                <div className="flex-1 px-4 py-2.5">
+                <div className="px-4 py-2.5 sm:flex-1">
                   <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("bareme.z")}</p>
-                  <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{computed.z}</span>
+                  <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{computed.z}</span>
                   <span className="text-[10px] text-gray-400 ml-0.5">°C</span>
                 </div>
-                <div className="w-px h-8 bg-black/[0.06]" />
-                <div className="flex-1 px-4 py-2.5">
+                <div className="hidden sm:block px-4 py-2.5 sm:flex-1">
                   <p className="text-[9px] text-gray-400 uppercase tracking-wider">D (Tref)</p>
                   <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{computed.micro.d_ref}</span>
                   <span className="text-[10px] text-gray-400 ml-0.5">min</span>

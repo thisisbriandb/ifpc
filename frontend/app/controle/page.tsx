@@ -314,7 +314,7 @@ function ControlePageInner() {
       } catch {}
 
       // Optionnel : fermer la sidebar d'input une fois le résultat obtenu pour laisser toute la place
-      if (window.innerWidth < 1024) setIsSidebarOpen(false);
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) setIsSidebarOpen(false);
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || t("controle.errors.unknown"));
     } finally {
@@ -338,13 +338,25 @@ function ControlePageInner() {
   return (
     <div className="h-screen flex bg-brand-gray font-sans text-brand-text overflow-hidden">
 
-      {/* --- SIDEBAR GAUCHE --- */}
+      {/* --- SIDEBAR GAUCHE (DRAWER MOBILE) --- */}
+      {isSidebarOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-gray-900/20 backdrop-blur-sm z-30 transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <aside
-        className={`${isSidebarOpen ? "w-[320px]" : "w-0"
-          } transition-all duration-300 ease-in-out border-r border-black/[0.06] bg-white flex flex-col relative z-20`}
+        className={`fixed lg:static inset-y-0 left-0 z-40 bg-white border-r border-black/[0.06] transition-all duration-300 ease-in-out flex flex-col
+          ${isSidebarOpen ? "w-[300px] sm:w-[320px] translate-x-0" : "w-0 -translate-x-full lg:translate-x-0"}
+        `}
       >
-        <div className={`${isSidebarOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-200 flex flex-col h-full overflow-hidden`}>
-
+        <div className={`${isSidebarOpen ? "opacity-100" : "opacity-0 lg:opacity-100"} transition-opacity duration-200 flex flex-col h-full overflow-hidden w-[300px] sm:w-[320px]`}>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04] lg:hidden">
+            <h2 className="font-bold text-brand-text">Configuration</h2>
+            <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 text-gray-400">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
           <div className="flex-1 overflow-y-auto">
             {/* Product Parameters */}
             <div className="px-4 pt-4 pb-3 space-y-3">
@@ -525,10 +537,10 @@ function ControlePageInner() {
           </div>
         </div>
 
-        {/* Toggle Button */}
+        {/* Toggle Button (Desktop) */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="absolute -right-4 top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full flex items-center justify-center shadow-sm z-30 hover:bg-gray-50 transition-colors"
+          className="hidden lg:flex absolute -right-4 top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full items-center justify-center shadow-sm z-30 hover:bg-gray-50 transition-colors"
         >
           {isSidebarOpen ? <ChevronLeft className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-500" />}
         </button>
@@ -536,6 +548,15 @@ function ControlePageInner() {
 
       {/* --- MAIN CONTENT AREA (Dashboard) --- */}
       <main className="flex-1 overflow-y-auto relative bg-brand-gray">
+        {/* Mobile Toggle Button */}
+        {!isSidebarOpen && (
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="lg:hidden fixed bottom-6 right-6 z-30 w-12 h-12 bg-brand-primary text-white rounded-full shadow-lg flex items-center justify-center animate-in zoom-in duration-300"
+          >
+            <Settings2 className="w-6 h-6" />
+          </button>
+        )}
         {/* Help button */}
         <button
           onClick={() => setShowHelp(true)}
@@ -546,10 +567,10 @@ function ControlePageInner() {
         </button>
 
         {result ? (
-          <div className="max-w-4xl mx-auto p-6 lg:p-8 animate-in fade-in duration-500">
+          <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-in fade-in duration-500">
 
             {/* ── Header — product + lot ── */}
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-3">
               <div className="flex items-baseline gap-2 min-w-0">
                 <h1 className="text-sm font-bold text-brand-text uppercase tracking-wide truncate">{result.parametres.produit}</h1>
                 {result.parametres.lot_identifier && (
@@ -558,7 +579,7 @@ function ControlePageInner() {
               </div>
               <button
                 onClick={() => setIsRawDataDrawerOpen(true)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-black/[0.06] rounded-md text-[10px] font-medium text-gray-400 hover:text-brand-text hover:border-black/[0.12] transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 border border-black/[0.06] rounded-md text-[10px] font-medium text-gray-400 hover:text-brand-text hover:border-black/[0.12] transition-colors bg-white sm:bg-transparent"
               >
                 <TableIcon className="w-3 h-3" />
                 {t("controle.rawData")}
@@ -569,11 +590,11 @@ function ControlePageInner() {
             <KPICards result={result} />
 
             {/* ── Explanation: chart (separated) ── */}
-            <div className="mt-8 bg-white rounded-lg border border-black/[0.06] overflow-hidden">
+            <div className="mt-6 sm:mt-8 bg-white rounded-lg border border-black/[0.06] overflow-hidden">
               <div className="px-5 py-3 border-b border-black/[0.04]">
                 <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{t("controle.thermalKinetics")}</h3>
               </div>
-              <div className="px-5 py-4 h-[360px]">
+              <div className="px-2 sm:px-5 py-4 h-[300px] sm:h-[360px]">
                 <TemperatureChart
                   courbe={result.courbe}
                   tRef={result.parametres.t_ref}

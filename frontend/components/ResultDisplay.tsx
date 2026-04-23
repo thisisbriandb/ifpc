@@ -118,33 +118,33 @@ export function KPICards({ result }: Props) {
   const { ratio, k, multiplierText, vpReachedAtMin } = computeInsights(result);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4 sm:space-y-6">
       {/* ── VERDICT — circle + text side by side ── */}
-      <div className="flex items-center gap-5">
+      <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8">
         {/* Circular gauge */}
         <VPGauge vp={result.vp} vpCible={result.vp_cible} statut={result.statut} />
 
         {/* Right: statut, conseil, k */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2.5">
-            <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${cfg.badge}`}>
+        <div className="flex-1 min-w-0 text-center sm:text-left">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+            <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded border ${cfg.badge}`}>
               {result.statut}
             </span>
             <span className="text-xs font-mono text-gray-400">
               / {result.vp_cible.toFixed(1)} UP
             </span>
             {k !== null && (
-              <span className="text-xs font-mono text-gray-400 border-l border-gray-200 pl-2.5">
+              <span className="text-xs font-mono text-gray-400 border-l border-gray-200 pl-2.5 hidden sm:inline">
                 k = {k.toFixed(1)}
               </span>
             )}
           </div>
 
-          <p className="text-[13px] text-gray-600 leading-relaxed mt-2 max-w-md">
+          <p className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0">
             {result.risque.conseil || result.message}
           </p>
 
-          <p className="text-[11px] font-mono text-gray-400 mt-1.5">
+          <p className="text-[10px] sm:text-[11px] font-mono text-gray-400 mt-2">
             {vpReachedAtMin !== null
               ? t("resultDisplay.targetReachedAt", { n: vpReachedAtMin.toFixed(0) })
               : t("resultDisplay.targetNeverReached")}
@@ -153,37 +153,38 @@ export function KPICards({ result }: Props) {
       </div>
 
       {/* ── METRICS — compact strip ── */}
-      <div className="flex items-center gap-0 rounded-lg border border-black/[0.06] bg-white overflow-hidden">
-        <div className="flex-1 px-4 py-2.5">
+      <div className="grid grid-cols-2 sm:flex sm:items-center gap-0 rounded-xl border border-black/[0.06] bg-white overflow-hidden divide-x divide-y sm:divide-y-0 divide-black/[0.06]">
+        <div className="px-4 py-2.5 sm:flex-1">
           <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("resultDisplay.maxTemperature")}</p>
-          <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{maxTemp.toFixed(1)}</span>
-          <span className="text-[10px] text-gray-400 ml-0.5">°C</span>
+          <div className="flex items-baseline gap-0.5">
+            <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{maxTemp.toFixed(1)}</span>
+            <span className="text-[10px] text-gray-400">°C</span>
+          </div>
         </div>
         {duree > 0 && (
-          <>
-            <div className="w-px h-8 bg-black/[0.06]" />
-            <div className="flex-1 px-4 py-2.5">
-              <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("resultDisplay.cycleDuration")}</p>
-              <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{duree.toFixed(0)}</span>
-              <span className="text-[10px] text-gray-400 ml-0.5">min</span>
+          <div className="px-4 py-2.5 sm:flex-1">
+            <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("resultDisplay.cycleDuration")}</p>
+            <div className="flex items-baseline gap-0.5">
+              <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{duree.toFixed(0)}</span>
+              <span className="text-[10px] text-gray-400">min</span>
             </div>
-          </>
+          </div>
         )}
-        <div className="w-px h-8 bg-black/[0.06]" />
-        <div className="flex-1 px-4 py-2.5">
+        <div className="px-4 py-2.5 sm:flex-1 border-t-0 sm:border-t-0">
           <p className="text-[9px] text-gray-400 uppercase tracking-wider">Tref</p>
-          <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.t_ref}</span>
-          <span className="text-[10px] text-gray-400 ml-0.5">°C</span>
+          <div className="flex items-baseline gap-0.5">
+            <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.t_ref}</span>
+            <span className="text-[10px] text-gray-400">°C</span>
+          </div>
         </div>
         {k !== null && result.parametres.d_ref && (
-          <>
-            <div className="w-px h-8 bg-black/[0.06]" />
-            <div className="flex-1 px-4 py-2.5">
-              <p className="text-[9px] text-gray-400 uppercase tracking-wider">D (Tref)</p>
-              <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.d_ref}</span>
-              <span className="text-[10px] text-gray-400 ml-0.5">min</span>
+          <div className="px-4 py-2.5 sm:flex-1">
+            <p className="text-[9px] text-gray-400 uppercase tracking-wider">D (Tref)</p>
+            <div className="flex items-baseline gap-0.5">
+              <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.d_ref}</span>
+              <span className="text-[10px] text-gray-400">min</span>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
@@ -194,7 +195,7 @@ export function ParametersTable({ result }: Props) {
   const { t } = useI18n();
   return (
     <div className="bg-gray-50 rounded-lg border border-black/[0.06] overflow-hidden">
-      <div className="p-5 grid grid-cols-2 gap-y-6 gap-x-4">
+      <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-6 gap-x-4">
         {[
           { label: t("resultDisplay.product"), value: result.parametres.produit },
           { label: t("resultDisplay.lotIdentifier"), value: result.parametres.lot_identifier },
@@ -223,13 +224,13 @@ export default function ResultDisplay({ result }: Props) {
       <KPICards result={result} />
 
       {/* Bloc Analyse redessiné sans icône, avec une bordure gauche d'indication */}
-      <div className="bg-white rounded-lg border border-black/[0.06] overflow-hidden flex">
-        <div className="w-1.5 shrink-0" style={{ backgroundColor: result.risque.couleur }}></div>
+      <div className="bg-white rounded-lg border border-black/[0.06] overflow-hidden flex flex-col sm:flex-row">
+        <div className="w-full sm:w-1.5 h-1.5 sm:h-auto shrink-0" style={{ backgroundColor: result.risque.couleur }}></div>
         <div className="p-5 flex-1">
           <h4 className="font-bold text-brand-text mb-2">{t("resultDisplay.analysisTitle")}</h4>
           <p className="text-sm text-gray-600 leading-relaxed mb-4">{result.message}</p>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-gray-50 border border-gray-100 text-gray-700">
+          <div className="inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-gray-50 border border-gray-100 text-gray-700">
             <span className="uppercase text-[10px] tracking-wider text-gray-500">{t("resultDisplay.advice")}</span>
             {result.risque.conseil}
           </div>

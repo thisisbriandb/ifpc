@@ -138,9 +138,9 @@ export default function LoginPage() {
             {isLogin ? t("login.signInSubtitle") : t("login.registerSubtitle")}
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             {!isLogin && (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {(["firstName", "lastName"] as const).map((field) => (
                   <div key={field} className="relative">
                     <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />

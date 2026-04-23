@@ -82,11 +82,11 @@ function ArcModule({ mod }: { mod: Module }) {
   const count = mod.subModules.length;
 
   // Compute arc positions for sub-modules (semi-circle below parent)
-  const ARC_RADIUS = 90;
+  const ARC_RADIUS = 80; // Slightly smaller for mobile
   const getArcPosition = (index: number, total: number) => {
     // Spread evenly across 180° arc (π), centered below
-    const startAngle = Math.PI * 0.15;
-    const endAngle   = Math.PI * 0.85;
+    const startAngle = Math.PI * 0.1;
+    const endAngle   = Math.PI * 0.9;
     const angle = total === 1
       ? Math.PI / 2
       : startAngle + (index / (total - 1)) * (endAngle - startAngle);
@@ -101,7 +101,7 @@ function ArcModule({ mod }: { mod: Module }) {
       className="relative flex flex-col items-center z-10"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      style={{ width: 200, height: 100 }}
+      style={{ width: 160, height: 120 }}
     >
       {/* Main module icon */}
       <button
@@ -113,7 +113,7 @@ function ArcModule({ mod }: { mod: Module }) {
       >
         <Icon className="w-7 h-7" />
       </button>
-      <span className="mt-2 text-xs font-bold text-gray-600 tracking-wide">{mod.label}</span>
+      <span className="mt-2 text-xs font-bold text-gray-600 tracking-wide text-center px-2">{mod.label}</span>
 
       {/* Semi-circle arc of sub-modules */}
       <div className="absolute top-8 left-1/2 z-20" style={{ width: 0, height: 0 }}>
@@ -139,7 +139,7 @@ function ArcModule({ mod }: { mod: Module }) {
               <div className={`w-11 h-11 rounded-xl border ${mod.subColor} flex items-center justify-center shadow-sm transition-all hover:scale-110 hover:shadow-md`}>
                 <SubIcon className="w-5 h-5" />
               </div>
-              <span className="mt-1 text-[10px] font-semibold text-gray-500 whitespace-nowrap">{sub.label}</span>
+              <span className="mt-1 text-[9px] font-semibold text-gray-500 whitespace-nowrap">{sub.label}</span>
             </Link>
           );
         })}
@@ -148,11 +148,11 @@ function ArcModule({ mod }: { mod: Module }) {
       {/* Decorative arc line (SVG) */}
       <svg
         className={`absolute top-12 left-1/2 -translate-x-1/2 transition-opacity duration-300 ${open ? "opacity-20" : "opacity-0"}`}
-        width="200" height="110" viewBox="-100 -10 200 110"
+        width="180" height="100" viewBox="-90 -10 180 100"
         fill="none"
       >
         <path
-          d={`M ${ARC_RADIUS * Math.cos(Math.PI * 0.15)} ${ARC_RADIUS * Math.sin(Math.PI * 0.15)} A ${ARC_RADIUS} ${ARC_RADIUS} 0 0 0 ${ARC_RADIUS * Math.cos(Math.PI * 0.85)} ${ARC_RADIUS * Math.sin(Math.PI * 0.85)}`}
+          d={`M ${ARC_RADIUS * Math.cos(Math.PI * 0.1)} ${ARC_RADIUS * Math.sin(Math.PI * 0.1)} A ${ARC_RADIUS} ${ARC_RADIUS} 0 0 0 ${ARC_RADIUS * Math.cos(Math.PI * 0.9)} ${ARC_RADIUS * Math.sin(Math.PI * 0.9)}`}
           stroke="currentColor"
           strokeWidth="1.5"
           strokeDasharray="4 4"
@@ -305,20 +305,20 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-gray px-8 py-10">
-      <div className="max-w-4xl mx-auto space-y-12">
+    <div className="min-h-screen bg-brand-gray px-4 sm:px-8 py-6 sm:py-10">
+      <div className="max-w-4xl mx-auto space-y-10 sm:space-y-12">
 
         {/* Welcome */}
         <header className="text-center">
-          <Image src="/assets/logo.png" alt="IFPC" width={64} height={64} className="mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-brand-text">
+          <Image src="/assets/logo.png" alt="IFPC" width={64} height={64} className="mx-auto mb-4 w-12 h-12 sm:w-16 sm:h-16" />
+          <h1 className="text-xl sm:text-2xl font-bold text-brand-text">
             {greeting()}{user ? `, ${user.firstName}` : ""}
           </h1>
-          <p className="text-gray-400 mt-1 text-sm">{t("home.subtitle")}</p>
+          <p className="text-gray-400 mt-1 text-xs sm:text-sm">{t("home.subtitle")}</p>
         </header>
 
         {/* Module arcs */}
-        <div className="flex justify-center gap-12 flex-wrap pt-2 overflow-visible relative z-10">
+        <div className="flex justify-center gap-6 sm:gap-12 flex-wrap pt-2 overflow-visible relative z-10">
           {visibleModules.map((mod) => (
             <ArcModule key={mod.key} mod={mod} />
           ))}

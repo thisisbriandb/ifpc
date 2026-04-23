@@ -50,33 +50,33 @@ export default function AuthModal({ onClose }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/40 backdrop-blur-sm">
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8 relative animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/40 backdrop-blur-sm p-4">
+      <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 sm:p-8 relative animate-in fade-in zoom-in-95 duration-200">
         <button onClick={onClose} className="absolute right-4 top-4 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors">
           <X className="w-5 h-5" />
         </button>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">
           {isLogin ? "Connexion" : "Créer un compte"}
         </h2>
-        <p className="text-sm text-gray-500 mb-6">
+        <p className="text-xs sm:text-sm text-gray-500 mb-6">
           {isLogin 
             ? "Connectez-vous pour accéder à vos réglages experts." 
             : "Inscrivez-vous pour utiliser les fonctionnalités avancées."}
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {!isLogin && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Prénom</label>
+                <label className="block text-[10px] font-bold text-gray-700 uppercase tracking-wider mb-1.5">Prénom</label>
                 <div className="relative">
                   <UserIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input required type="text" value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} className="input pl-10" placeholder="Prénom" />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Nom</label>
+                <label className="block text-[10px] font-bold text-gray-700 uppercase tracking-wider mb-1.5">Nom</label>
                 <div className="relative">
                   <UserIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input required type="text" value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} className="input pl-10" placeholder="Nom" />
@@ -86,7 +86,7 @@ export default function AuthModal({ onClose }: Props) {
           )}
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Email</label>
+            <label className="block text-[10px] font-bold text-gray-700 uppercase tracking-wider mb-1.5">Email</label>
             <div className="relative">
               <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="input pl-10" placeholder="votre@email.com" />
@@ -94,7 +94,7 @@ export default function AuthModal({ onClose }: Props) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Mot de passe</label>
+            <label className="block text-[10px] font-bold text-gray-700 uppercase tracking-wider mb-1.5">Mot de passe</label>
             <div className="relative">
               <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="input pl-10" placeholder="••••••••" />

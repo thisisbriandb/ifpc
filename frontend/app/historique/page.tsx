@@ -195,7 +195,7 @@ export default function HistoriquePage() {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-xl font-bold text-brand-text">{t("historique.title")}</h1>
@@ -203,9 +203,9 @@ export default function HistoriquePage() {
       </div>
 
       {/* Filters bar */}
-      <div className="flex flex-wrap items-center gap-2 mb-5">
+      <div className="flex flex-col md:flex-row md:items-center gap-3 mb-6">
         {/* Search */}
-        <div className="relative flex-1 min-w-[200px] max-w-sm">
+        <div className="relative flex-1">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
           <input
             type="text"
@@ -216,37 +216,39 @@ export default function HistoriquePage() {
           />
         </div>
 
-        {/* Type filter */}
-        <select
-          value={typeFilter}
-          onChange={(e) => setTypeFilter(e.target.value)}
-          className="px-3 py-2 text-xs border border-black/[0.06] rounded-lg bg-white focus:ring-1 focus:ring-brand-primary outline-none"
-        >
-          <option value="all">{t("historique.allTypes")}</option>
-          {types.map((typ) => (
-            <option key={typ} value={typ}>{t(`historique.${typ}`)}</option>
-          ))}
-        </select>
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Type filter */}
+          <select
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="flex-1 sm:flex-none px-3 py-2 text-xs border border-black/[0.06] rounded-lg bg-white focus:ring-1 focus:ring-brand-primary outline-none"
+          >
+            <option value="all">{t("historique.allTypes")}</option>
+            {types.map((typ) => (
+              <option key={typ} value={typ}>{t(`historique.${typ}`)}</option>
+            ))}
+          </select>
 
-        {/* Statut filter */}
-        <select
-          value={statutFilter}
-          onChange={(e) => setStatutFilter(e.target.value)}
-          className="px-3 py-2 text-xs border border-black/[0.06] rounded-lg bg-white focus:ring-1 focus:ring-brand-primary outline-none"
-        >
-          <option value="all">{t("historique.allStatuts")}</option>
-          {statuts.map((s) => (
-            <option key={s} value={s!}>{t(`home.statut.${s}`)}</option>
-          ))}
-        </select>
+          {/* Statut filter */}
+          <select
+            value={statutFilter}
+            onChange={(e) => setStatutFilter(e.target.value)}
+            className="flex-1 sm:flex-none px-3 py-2 text-xs border border-black/[0.06] rounded-lg bg-white focus:ring-1 focus:ring-brand-primary outline-none"
+          >
+            <option value="all">{t("historique.allStatuts")}</option>
+            {statuts.map((s) => (
+              <option key={s} value={s!}>{t(`home.statut.${s}`)}</option>
+            ))}
+          </select>
+        </div>
 
         {/* Date filter */}
-        <div className="flex items-center gap-1 bg-gray-100/80 rounded-lg p-0.5">
+        <div className="flex items-center gap-1 bg-gray-100/80 rounded-lg p-0.5 overflow-x-auto no-scrollbar">
           {dateOptions.map((opt) => (
             <button
               key={opt.key}
               onClick={() => setDateFilter(opt.key)}
-              className={`px-2.5 py-1.5 rounded-md text-[10px] font-semibold transition-all ${
+              className={`flex-1 sm:flex-none px-3 py-1.5 rounded-md text-[10px] font-semibold transition-all whitespace-nowrap ${
                 dateFilter === opt.key
                   ? "bg-white text-brand-text shadow-sm"
                   : "text-gray-400 hover:text-gray-600"
@@ -256,14 +258,9 @@ export default function HistoriquePage() {
             </button>
           ))}
         </div>
-
-        {/* Count */}
-        <span className="text-[10px] text-gray-400 font-mono ml-auto">
-          {t("historique.entries", { count: filtered.length })}
-        </span>
       </div>
 
-      {/* Table */}
+      {/* Table / Cards */}
       {loading ? (
         <div className="text-center py-16 text-sm text-gray-400">…</div>
       ) : pageItems.length === 0 ? (
@@ -272,86 +269,148 @@ export default function HistoriquePage() {
           <p className="text-sm text-gray-400">{t("historique.noResults")}</p>
         </div>
       ) : (
-        <div className="bg-white rounded-lg border border-black/[0.06] overflow-hidden">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="border-b border-gray-100 text-[10px] text-gray-400 uppercase tracking-wider">
-                <th className="text-left px-4 py-2.5 font-bold">Date</th>
-                <th className="text-left px-4 py-2.5 font-bold">Type</th>
-                <th className="text-left px-4 py-2.5 font-bold">Lot / Label</th>
-                <th className="text-left px-4 py-2.5 font-bold">VP</th>
-                <th className="text-left px-4 py-2.5 font-bold">Statut</th>
-                <th className="text-right px-4 py-2.5 font-bold"></th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {pageItems.map((entry) => {
-                const badge = entry.statut ? STATUS_BADGE[entry.statut] : undefined;
-                return (
-                  <tr
-                    key={entry.id}
-                    className="hover:bg-gray-50/50 transition-colors group cursor-pointer"
-                    onClick={() => openEntry(entry)}
-                  >
-                    <td className="px-4 py-3 font-mono text-gray-500 whitespace-nowrap">
-                      {new Date(entry.date).toLocaleString(
-                        locale === "en" ? "en-GB" : "fr-FR",
-                        { dateStyle: "short", timeStyle: "short" }
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${TYPE_DOT[entry.type] || "bg-gray-300"}`} />
-                        {t(`historique.${entry.type}`)}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 font-medium text-gray-800 max-w-[200px] truncate">
-                      {entry.lotIdentifier ? (
-                        <span className="font-mono text-gray-500">#{entry.lotIdentifier}</span>
-                      ) : (
-                        entry.label
-                      )}
-                    </td>
-                    <td className="px-4 py-3 font-mono text-gray-600">
-                      {entry.vp != null ? (
-                        <>
-                          {entry.vp.toFixed(2)}
-                          {entry.vpCible != null && (
-                            <span className="text-gray-400 ml-1">/ {entry.vpCible.toFixed(1)}</span>
-                          )}
-                        </>
-                      ) : (
-                        <span className="text-gray-300">—</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      {badge && entry.statut ? (
+        <>
+          {/* Mobile Card View */}
+          <div className="grid grid-cols-1 gap-3 md:hidden">
+            {pageItems.map((entry) => {
+              const badge = entry.statut ? STATUS_BADGE[entry.statut] : undefined;
+              return (
+                <div
+                  key={entry.id}
+                  onClick={() => openEntry(entry)}
+                  className="bg-white p-4 rounded-xl border border-black/[0.06] shadow-sm active:scale-[0.98] transition-all relative"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="text-[10px] font-mono text-gray-400">
+                      {new Date(entry.date).toLocaleString(locale === "en" ? "en-GB" : "fr-FR", { dateStyle: "short", timeStyle: "short" })}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {badge && entry.statut && (
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.bg} ${badge.text}`}>
                           {t(`home.statut.${entry.statut}`)}
                         </span>
-                      ) : (
-                        <span className="text-gray-300">—</span>
                       )}
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleDelete(entry.id); }}
-                          disabled={deletingId === entry.id}
-                          className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
-                          title={t("historique.delete")}
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                        <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-brand-primary transition-colors" />
-                      </div>
-                    </td>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleDelete(entry.id); }}
+                        disabled={deletingId === entry.id}
+                        className="p-1.5 rounded-lg bg-red-50 text-red-500"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <h3 className="font-bold text-gray-900 mb-1 truncate pr-8">
+                    {entry.lotIdentifier ? (
+                      <span className="font-mono text-gray-700">#{entry.lotIdentifier}</span>
+                    ) : (
+                      entry.label
+                    )}
+                  </h3>
+
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-50">
+                    <div className="flex items-center gap-3">
+                       <span className="inline-flex items-center gap-1.5 text-[11px] text-gray-500">
+                        <span className={`w-2 h-2 rounded-full shrink-0 ${TYPE_DOT[entry.type] || "bg-gray-300"}`} />
+                        {t(`historique.${entry.type}`)}
+                      </span>
+                      {entry.vp != null && (
+                        <span className="text-[11px] font-mono text-gray-600 font-bold bg-gray-50 px-2 py-0.5 rounded">
+                          {entry.vp.toFixed(2)} UP
+                        </span>
+                      )}
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-brand-primary" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Desktop Table View */}
+          <div className="hidden md:block bg-white rounded-lg border border-black/[0.06] overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-gray-100 text-[10px] text-gray-400 uppercase tracking-wider">
+                    <th className="text-left px-4 py-2.5 font-bold whitespace-nowrap">Date</th>
+                    <th className="text-left px-4 py-2.5 font-bold whitespace-nowrap">Type</th>
+                    <th className="text-left px-4 py-2.5 font-bold">Lot / Label</th>
+                    <th className="text-left px-4 py-2.5 font-bold">VP</th>
+                    <th className="text-left px-4 py-2.5 font-bold">Statut</th>
+                    <th className="text-right px-4 py-2.5 font-bold"></th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {pageItems.map((entry) => {
+                    const badge = entry.statut ? STATUS_BADGE[entry.statut] : undefined;
+                    return (
+                      <tr
+                        key={entry.id}
+                        className="hover:bg-gray-50/50 transition-colors group cursor-pointer"
+                        onClick={() => openEntry(entry)}
+                      >
+                        <td className="px-4 py-3 font-mono text-gray-500 whitespace-nowrap">
+                          {new Date(entry.date).toLocaleString(
+                            locale === "en" ? "en-GB" : "fr-FR",
+                            { dateStyle: "short", timeStyle: "short" }
+                          )}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${TYPE_DOT[entry.type] || "bg-gray-300"}`} />
+                            {t(`historique.${entry.type}`)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 font-medium text-gray-800 max-w-[200px] truncate">
+                          {entry.lotIdentifier ? (
+                            <span className="font-mono text-gray-500">#{entry.lotIdentifier}</span>
+                          ) : (
+                            entry.label
+                          )}
+                        </td>
+                        <td className="px-4 py-3 font-mono text-gray-600">
+                          {entry.vp != null ? (
+                            <>
+                              {entry.vp.toFixed(2)}
+                              {entry.vpCible != null && (
+                                <span className="text-gray-400 ml-1">/ {entry.vpCible.toFixed(1)}</span>
+                              )}
+                            </>
+                          ) : (
+                            <span className="text-gray-300">—</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3">
+                          {badge && entry.statut ? (
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.bg} ${badge.text}`}>
+                              {t(`home.statut.${entry.statut}`)}
+                            </span>
+                          ) : (
+                            <span className="text-gray-300">—</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <div className="flex items-center justify-end gap-2 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleDelete(entry.id); }}
+                              disabled={deletingId === entry.id}
+                              className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                              title={t("historique.delete")}
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                            <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-brand-primary transition-colors" />
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
 
       {/* Pagination */}

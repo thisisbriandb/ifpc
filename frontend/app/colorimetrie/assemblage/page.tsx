@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import {
   Upload, FileSpreadsheet, X, Palette, Loader2,
   AlertCircle, Sparkles, Download, ChevronDown, Check,
+  Info, Beaker, Zap, BarChart3, Binary
 } from "lucide-react";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -12,27 +13,22 @@ import {
 import { assemblageCouleur, saveAnalysis, AssemblageResult } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 
-// ── ΔE interpretation (CIEDE2000 thresholds) ───────────────────────────────
+// ── ΔE interpretation ──────────────────────────────────────────────────────
 
 function deltaQuality(de: number, t: (k: string) => string) {
-  if (de < 1)  return { label: t("colori.deltaExcellent"),  cls: "bg-brand-primary/8 text-brand-primary border-brand-primary/15" };
-  if (de < 3)  return { label: t("colori.deltaGood"),        cls: "bg-brand-primary/8 text-brand-primary border-brand-primary/15" };
-  if (de < 6)  return { label: t("colori.deltaAcceptable"),  cls: "bg-brand-accent/8 text-brand-accent border-brand-accent/15" };
+  if (de < 1)  return { label: t("colori.deltaExcellent"),  cls: "bg-brand-primary/10 text-brand-primary border-brand-primary/20" };
+  if (de < 3)  return { label: t("colori.deltaGood"),        cls: "bg-brand-primary/10 text-brand-primary border-brand-primary/20" };
+  if (de < 6)  return { label: t("colori.deltaAcceptable"),  cls: "bg-brand-accent/10 text-brand-accent border-brand-accent/20" };
   return       { label: t("colori.deltaPoor"),               cls: "bg-red-500/10 text-red-700 border-red-500/20" };
 }
 
-// ── Compact swatch (tiny pill beside ΔE) ───────────────────────────────────
+// ── Metadata Chip Component ────────────────────────────────────────────────
 
-function MiniSwatch({ label, lab, hex }: { label: string; lab: { L: number; a: number; b: number }; hex: string }) {
+function MetaChip({ icon: Icon, label }: { icon: any, label: string }) {
   return (
-    <div className="flex items-center gap-2.5 flex-1 min-w-0">
-      <div className="w-10 h-10 rounded-full border border-black/[0.08] shadow-sm shrink-0" style={{ backgroundColor: hex }} />
-      <div className="min-w-0">
-        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">{label}</p>
-        <p className="font-mono text-[11px] text-gray-500 tabular-nums leading-tight">
-          {lab.L.toFixed(1)} · {lab.a.toFixed(1)} · {lab.b.toFixed(1)}
-        </p>
-      </div>
+    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-black/[0.03] border border-black/[0.05] text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+      <Icon className="w-3 h-3" />
+      {label}
     </div>
   );
 }
@@ -42,7 +38,6 @@ function MiniSwatch({ label, lab, hex }: { label: string; lab: { L: number; a: n
 function downloadCsvTemplate() {
   const rows: string[] = ["wavelength,Cuve A,Cuve B,Cuve C"];
   for (let wl = 380; wl <= 780; wl += 10) {
-    // Synthetic realistic DO with gaussian absorption bumps
     const a = 0.30 + 0.20 * Math.exp(-Math.pow((wl - 440) / 50, 2));
     const b = 0.25 + 0.30 * Math.exp(-Math.pow((wl - 520) / 60, 2));
     const c = 0.20 + 0.35 * Math.exp(-Math.pow((wl - 650) / 70, 2));
@@ -70,7 +65,7 @@ export default function AssemblagePage() {
   const [targetL, setTargetL] = useState("85");
   const [targetA, setTargetA] = useState("4");
   const [targetB, setTargetB] = useState("35");
-  const [volume, setVolume] = useState("1000");
+  const [volume, setVolume] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -104,7 +99,6 @@ export default function AssemblagePage() {
       setResult(data);
       setShowSpectrum(false);
 
-      // Persist to history (fire-and-forget, silent failure)
       try {
         await saveAnalysis({
           type: "assemblage",
@@ -137,282 +131,254 @@ export default function AssemblagePage() {
 
   return (
     <div className="min-h-screen bg-brand-gray">
-      <div className="max-w-3xl mx-auto px-5 py-8 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5 py-6 sm:py-8 space-y-6 sm:space-y-8">
 
         {/* ── Header ── */}
-        <header className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-brand-accent/10 flex items-center justify-center shrink-0 mt-0.5">
-            <Palette className="w-5 h-5 text-brand-accent" />
+        <header className="flex items-start gap-3 sm:gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-accent/10 flex items-center justify-center shrink-0">
+            <Palette className="w-5 h-5 sm:w-6 sm:h-6 text-brand-accent" />
           </div>
-          <div className="flex-1">
-            <h1 className="text-xl font-bold text-brand-text font-clash">{t("colori.title")}</h1>
-            <p className="text-xs text-gray-400 mt-0.5">{t("colori.subtitle")}</p>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-brand-text font-clash tracking-tight">{t("colori.title")}</h1>
+            <p className="text-xs sm:text-sm text-gray-400 mt-0.5">{t("colori.subtitle")}</p>
           </div>
         </header>
 
-        {/* ── Configuration form ── */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden">
-          <div className="px-6 py-6 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
 
-            {/* STEP 1 — Upload */}
-            <section>
-              <div className="flex items-center justify-between gap-2 mb-2.5">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
-                  <p className="text-[11px] font-bold text-gray-600">{t("colori.stepSpectra")}</p>
+          {/* ══ NIVEAU 2 — INPUTS (Colonne Gauche) ══ */}
+          <aside className="lg:col-span-4 space-y-6 order-2 lg:order-1">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              
+              {/* CIELAB Manuel */}
+              <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+                  <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">{t("colori.stepTarget")}</p>
                 </div>
-                <button
-                  type="button"
-                  onClick={downloadCsvTemplate}
-                  className="flex items-center gap-1.5 text-[11px] text-gray-400 hover:text-brand-primary transition-colors"
-                >
-                  <Download className="w-3 h-3" />
-                  {t("colori.downloadTemplate")}
-                </button>
-              </div>
-
-              {!file ? (
-                <div
-                  onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-                  onDragLeave={() => setDragActive(false)}
-                  onDrop={handleDrop}
-                  onClick={() => inputRef.current?.click()}
-                  className={`border-2 border-dashed rounded-xl px-5 py-8 text-center cursor-pointer transition-colors ${
-                    dragActive
-                      ? "border-brand-accent bg-brand-accent/5"
-                      : "border-gray-200 hover:border-brand-accent/50 hover:bg-gray-50/50"
-                  }`}
-                >
-                  <Upload className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-                  <p className="text-sm font-semibold text-brand-text">{t("colori.uploadCta")}</p>
-                  <p className="text-[11px] text-gray-400 mt-0.5">{t("colori.dropHint")}</p>
-                  <p className="text-[11px] text-gray-400 mt-3 max-w-sm mx-auto leading-relaxed">
-                    {t("colori.uploadHint")}
-                  </p>
-                </div>
-              ) : (
-                <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-brand-accent/20 bg-brand-accent/5">
-                  <FileSpreadsheet className="w-5 h-5 text-brand-accent shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[10px] text-gray-400 uppercase tracking-wider">{t("colori.fileSelected")}</p>
-                    <p className="text-sm font-semibold text-brand-text truncate">{file.name}</p>
+                
+                <div className="space-y-4">
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { label: "L*", value: targetL, set: setTargetL, min: "0", max: "100" },
+                      { label: "a*", value: targetA, set: setTargetA },
+                      { label: "b*", value: targetB, set: setTargetB },
+                    ].map((f, i) => (
+                      <div key={i}>
+                        <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">{f.label}</p>
+                        <input
+                          type="number" step="0.1" min={f.min} max={f.max}
+                          value={f.value} onChange={(e) => f.set(e.target.value)}
+                          className="w-full px-3 py-2.5 bg-gray-50 border border-black/[0.04] rounded-xl text-sm font-mono text-brand-text outline-none focus:ring-2 focus:ring-brand-primary/10 focus:bg-white transition-all"
+                        />
+                      </div>
+                    ))}
                   </div>
-                  <button type="button" onClick={() => handleFile(null)}
-                    className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-white transition-colors">
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              )}
-              <input
-                ref={inputRef}
-                type="file"
-                accept=".csv,.xlsx,.xls,.tsv,.txt"
-                onChange={(e) => handleFile(e.target.files?.[0] || null)}
-                className="hidden"
-              />
-            </section>
-
-            {/* STEP 2 — Target Lab + Volume */}
-            <section>
-              <div className="flex items-center gap-2 mb-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
-                <p className="text-[11px] font-bold text-gray-600">{t("colori.stepTarget")}</p>
-              </div>
-              <div className="grid grid-cols-4 gap-3">
-                {[
-                  { label: t("colori.targetL"), value: targetL, set: setTargetL, step: "0.1", min: "0", max: "100", suffix: "" },
-                  { label: t("colori.targetA"), value: targetA, set: setTargetA, step: "0.1", suffix: "" },
-                  { label: t("colori.targetB"), value: targetB, set: setTargetB, step: "0.1", suffix: "" },
-                  { label: t("colori.volume"), value: volume, set: setVolume, step: "10", min: "1", suffix: t("colori.volumeUnit") },
-                ].map((f, i) => (
-                  <div key={i}>
-                    <p className="text-[10px] text-gray-400 mb-1 truncate">{f.label}</p>
+                  <div>
+                    <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">{t("colori.volume")}</p>
                     <div className="relative">
                       <input
-                        type="number"
-                        step={f.step}
-                        min={f.min}
-                        max={f.max}
-                        value={f.value}
-                        onChange={(e) => f.set(e.target.value)}
-                        className={`w-full px-3 py-2 border border-black/[0.06] rounded-lg text-sm font-mono text-brand-text outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/5 transition-colors ${
-                          f.suffix ? "pr-7" : ""
-                        }`}
+                        type="number" step="10" min="1"
+                        placeholder="Optionnel"
+                        value={volume} onChange={(e) => setVolume(e.target.value)}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-black/[0.04] rounded-xl text-sm font-mono text-brand-text outline-none focus:ring-2 focus:ring-brand-primary/10 focus:bg-white transition-all pr-12"
                       />
-                      {f.suffix && (
-                        <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 font-mono pointer-events-none">
-                          {f.suffix}
-                        </span>
-                      )}
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400 uppercase">{t("colori.volumeUnit")}</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            </section>
-
-            {error && (
-              <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl border border-red-200/60 bg-red-50 text-red-700 text-[12px] leading-relaxed">
-                <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
-                {error}
-              </div>
-            )}
-          </div>
-
-          <div className="px-6 py-3 bg-gray-50/60 border-t border-black/[0.04] flex justify-end">
-            <button
-              type="submit"
-              disabled={loading || !file}
-              className="flex items-center gap-2 px-5 py-2 bg-brand-primary text-white text-xs font-bold rounded-lg hover:bg-brand-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
-              {loading ? t("colori.computing") : t("colori.compute")}
-            </button>
-          </div>
-        </form>
-
-        {/* ── Results ── */}
-        {result && quality ? (
-          <>
-            {/* ══ BLOC 1 — HERO RECIPE (big numbers) ══ */}
-            <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden">
-              <div className="px-6 py-5 flex items-center justify-between gap-3 border-b border-black/[0.04]">
-                <div>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{t("colori.recipeTitle")}</p>
-                  <p className="text-[11px] text-gray-500 mt-0.5">
-                    {t("colori.for")} <span className="font-bold font-mono text-brand-text">{result.volume_total.toLocaleString()} {t("colori.volumeUnit")}</span>
-                  </p>
                 </div>
-                {savedFlash && (
-                  <span className="flex items-center gap-1 text-[10px] font-semibold text-brand-primary">
-                    <Check className="w-3 h-3" />
-                    {t("colori.saved")}
-                  </span>
+              </div>
+
+              {/* Import Fichier */}
+              <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm">
+                <div className="flex items-center justify-between gap-2 mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
+                    <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">{t("colori.stepSpectra")}</p>
+                  </div>
+                  <button type="button" onClick={downloadCsvTemplate} className="text-gray-400 hover:text-brand-primary transition-colors">
+                    <Download className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {!file ? (
+                  <div
+                    onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                    onDragLeave={() => setDragActive(false)}
+                    onDrop={handleDrop}
+                    onClick={() => inputRef.current?.click()}
+                    className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+                      dragActive ? "border-brand-accent bg-brand-accent/5" : "border-gray-100 hover:border-brand-accent/40 hover:bg-gray-50/50"
+                    }`}
+                  >
+                    <Upload className="w-6 h-6 text-gray-300 mx-auto mb-2" />
+                    <p className="text-xs font-bold text-brand-text">{t("colori.uploadCta")}</p>
+                    <p className="text-[10px] text-gray-400 mt-1">{t("colori.dropHint")}</p>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-brand-accent/5 border border-brand-accent/10">
+                    <FileSpreadsheet className="w-5 h-5 text-brand-accent shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold text-brand-text truncate">{file.name}</p>
+                      <p className="text-[9px] text-brand-accent/60 uppercase font-bold tracking-wider">{t("colori.fileSelected")}</p>
+                    </div>
+                    <button type="button" onClick={() => handleFile(null)} className="p-1 text-gray-400 hover:text-red-500 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                 )}
+                <input ref={inputRef} type="file" accept=".csv,.xlsx,.xls,.tsv,.txt" onChange={(e) => handleFile(e.target.files?.[0] || null)} className="hidden" />
               </div>
 
-              <div className="px-6 py-6 space-y-4">
-                {result.proportions.map((p, i) => {
-                  const cuve = result.cuves[i];
-                  return (
-                    <div key={i}>
-                      <div className="flex items-baseline justify-between gap-3 mb-1.5">
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <span
-                            className="w-4 h-4 rounded-full border border-black/[0.08] shrink-0"
-                            style={{ backgroundColor: cuve.hex }}
-                          />
-                          <span className="text-sm font-semibold text-brand-text truncate">{p.nom}</span>
-                        </div>
-                        <div className="flex items-baseline gap-3 shrink-0">
-                          <span className="text-2xl font-bold font-mono text-brand-text tabular-nums leading-none">
-                            {p.pct.toFixed(1)}
-                            <span className="text-sm text-gray-400 ml-0.5">%</span>
-                          </span>
-                          <span className="text-[13px] font-semibold font-mono text-gray-500 tabular-nums">
-                            {p.litres.toLocaleString()} {t("colori.volumeUnit")}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full rounded-full transition-all duration-500"
-                          style={{ width: `${p.pct}%`, backgroundColor: cuve.hex }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* ══ BLOC 2 — COMPACT COMPARATOR (target vs simulated + ΔE) ══ */}
-            <div className="bg-white rounded-2xl border border-black/[0.06] px-5 py-4 flex items-center gap-4">
-              <MiniSwatch label={t("colori.target")} lab={result.cible} hex={result.cible.hex} />
-              <div className="flex flex-col items-center gap-0.5 shrink-0 px-3 border-x border-black/[0.05]">
-                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest leading-none">ΔE</span>
-                <span className="text-xl font-bold font-mono text-brand-text tabular-nums leading-none my-0.5">
-                  {result.delta_e.toFixed(2)}
-                </span>
-                <span className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded border ${quality.cls}`}>
-                  {quality.label}
-                </span>
-              </div>
-              <MiniSwatch label={t("colori.simulated")} lab={result.obtenu} hex={result.obtenu.hex} />
-            </div>
-
-            {/* ══ BLOC 3 — COLLAPSIBLE SPECTRUM ══ */}
-            <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setShowSpectrum((v) => !v)}
-                className="w-full px-6 py-4 flex items-center justify-between gap-3 hover:bg-gray-50/60 transition-colors"
-              >
-                <div className="text-left">
-                  <p className="text-[11px] font-bold text-gray-600">{t("colori.spectrum")}</p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">{t("colori.deltaMethod")}</p>
-                </div>
-                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showSpectrum ? "rotate-180" : ""}`} />
-              </button>
-
-              {showSpectrum && (
-                <div className="px-6 pb-6">
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={chartData} margin={{ top: 5, right: 10, left: -15, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f3f3" />
-                        <XAxis
-                          dataKey="wl"
-                          tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
-                          axisLine={false}
-                          tickLine={false}
-                          tickFormatter={(v) => `${v}`}
-                          minTickGap={30}
-                        />
-                        <YAxis
-                          tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
-                          axisLine={false}
-                          tickLine={false}
-                        />
-                        <Tooltip
-                          contentStyle={{ fontSize: 11, borderRadius: 8, border: "1px solid rgba(0,0,0,0.06)" }}
-                          formatter={(v: any) => (typeof v === "number" ? v.toFixed(3) : v)}
-                          labelFormatter={(l) => `${l} nm`}
-                        />
-                        <Legend wrapperStyle={{ fontSize: 11 }} iconType="plainline" />
-                        {result.cuves.map((c, i) => (
-                          <Line
-                            key={i}
-                            type="monotone"
-                            dataKey={`cuve_${i}`}
-                            name={c.nom}
-                            stroke={c.hex}
-                            strokeWidth={1.5}
-                            strokeDasharray="4 2"
-                            dot={false}
-                          />
-                        ))}
-                        <Line
-                          type="monotone"
-                          dataKey="mix"
-                          name={t("colori.mixture")}
-                          stroke="#1a5f3f"
-                          strokeWidth={2.5}
-                          dot={false}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <p className="text-[10px] text-gray-400 text-center mt-2">{t("colori.wavelength")}</p>
+              {error && (
+                <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-50 text-red-700 text-[11px] font-medium leading-relaxed border border-red-100">
+                  <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                  {error}
                 </div>
               )}
+
+              <button
+                type="submit"
+                disabled={loading || !file}
+                className="w-full flex items-center justify-center gap-2 py-3.5 bg-brand-primary text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-primary/20 hover:bg-brand-primary/90 transition-all disabled:opacity-40 disabled:shadow-none"
+              >
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                {loading ? t("colori.computing") : t("colori.compute")}
+              </button>
+            </form>
+
+            {/* Metadata Chips */}
+            <div className="flex flex-wrap gap-2 pt-2">
+              <MetaChip icon={Info} label="CIE 1931 2°" />
+              <MetaChip icon={Zap} label="Illuminant D65" />
+              <MetaChip icon={Binary} label="10nm Step" />
+              <MetaChip icon={Beaker} label="Beer-Lambert" />
             </div>
-          </>
-        ) : !loading && (
-          <div className="bg-white rounded-2xl border border-dashed border-gray-200 px-6 py-10 text-center">
-            <Palette className="w-8 h-8 text-gray-200 mx-auto mb-3" />
-            <p className="text-sm text-gray-400">{t("colori.emptyState")}</p>
-          </div>
-        )}
+          </aside>
+
+          {/* ══ NIVEAUX 3 & 4 — RÉSULTATS & ANALYSE (Colonne Droite) ══ */}
+          <main className="lg:col-span-8 space-y-6 sm:space-y-8 order-1 lg:order-2">
+            {result && quality ? (
+              <>
+                {/* NIVEAU 3 — RESULTATS (VERDICT) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-stretch">
+                  {/* Comparaison Visuelle */}
+                  <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden flex flex-col shadow-sm">
+                    <div className="flex flex-1 min-h-[140px]">
+                      <div className="flex-1 flex flex-col items-center justify-center relative group" style={{ backgroundColor: result.cible.hex }}>
+                        <span className="text-[10px] font-bold text-white/90 uppercase tracking-widest drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity">Cible</span>
+                      </div>
+                      <div className="flex-1 flex flex-col items-center justify-center relative group" style={{ backgroundColor: result.obtenu.hex }}>
+                        <span className="text-[10px] font-bold text-white/90 uppercase tracking-widest drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity">Simulé</span>
+                      </div>
+                    </div>
+                    <div className="px-5 py-3 bg-gray-50 border-t border-black/[0.04] flex justify-between items-center">
+                       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{t("colori.target")} vs {t("colori.simulated")}</p>
+                       <div className="flex gap-2">
+                          <div className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: result.cible.hex }} />
+                          <div className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: result.obtenu.hex }} />
+                       </div>
+                    </div>
+                  </div>
+
+                  {/* Recette rapide + ΔE */}
+                  <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden shadow-sm relative">
+                    <div className="absolute top-0 right-0 p-4">
+                      {savedFlash && <Check className="w-4 h-4 text-brand-primary opacity-50" />}
+                    </div>
+                    <div className="px-5 py-3 border-b border-black/[0.04] bg-gray-50/50">
+                      <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">
+                        {t("colori.recipeTitle")}
+                        {result.volume_total > 0 && ` (${result.volume_total.toLocaleString()} ${t("colori.volumeUnit")})`}
+                      </p>
+                    </div>
+                    <div className="p-5 space-y-3">
+                      {result.proportions.map((p, i) => {
+                        const cuve = result.cuves[i];
+                        return (
+                          <div key={i} className="space-y-1.5">
+                            <div className="flex justify-between items-end">
+                              <div className="flex items-center gap-2 min-w-0">
+                                <div className="w-3 h-3 rounded-full shrink-0 shadow-inner" style={{ backgroundColor: cuve.hex }} />
+                                <span className="text-[11px] font-bold text-brand-text truncate">{p.nom}</span>
+                              </div>
+                              <span className="text-xs font-black font-mono text-brand-text">{p.pct.toFixed(1)}%</span>
+                            </div>
+                            <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-full rounded-full transition-all duration-700" style={{ width: `${p.pct}%`, backgroundColor: cuve.hex }} />
+                            </div>
+                            {result.volume_total > 0 && (
+                              <p className="text-[10px] font-bold text-gray-400 font-mono text-right">{p.litres.toLocaleString()} {t("colori.volumeUnit")}</p>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="px-5 py-3 border-t border-black/[0.04] bg-gray-50/50 flex items-center justify-between gap-3">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-2xl font-black font-mono text-brand-text tabular-nums leading-none">{result.delta_e.toFixed(2)}</span>
+                        <span className="text-[10px] font-bold text-gray-300">ΔE</span>
+                      </div>
+                      <div className={`px-3 py-1.5 rounded-full border text-[10px] font-black uppercase tracking-wider ${quality.cls}`}>
+                        {quality.label}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* NIVEAU 4 — ANALYSE DÉTAILLÉE */}
+                <div className="space-y-6">
+                  
+                  {/* Tableau de comparaison */}
+                
+
+                  {/* Graphe Spectral */}
+                  <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">{t("colori.spectrum")}</p>
+                        <p className="text-[10px] text-gray-400 mt-0.5">{t("colori.deltaMethod")}</p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2.5 h-0.5 bg-[#1a5f3f]" />
+                          <span className="text-[10px] font-bold text-gray-500 uppercase">{t("colori.mixture")}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="h-64 sm:h-72">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f3f3" />
+                          <XAxis dataKey="wl" tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace", fontWeight: 700 }} axisLine={false} tickLine={false} minTickGap={30} />
+                          <YAxis tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace", fontWeight: 700 }} axisLine={false} tickLine={false} />
+                          <Tooltip contentStyle={{ fontSize: 10, borderRadius: 12, border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }} />
+                          <Legend wrapperStyle={{ fontSize: 10, paddingTop: 20, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }} iconType="circle" />
+                          {result.cuves.map((c, i) => (
+                            <Line key={i} type="monotone" dataKey={`cuve_${i}`} name={c.nom} stroke={c.hex} strokeWidth={1.5} strokeDasharray="5 5" dot={false} opacity={0.4} />
+                          ))}
+                          <Line type="monotone" dataKey="mix" name={t("colori.mixture")} stroke="#1a5f3f" strokeWidth={3} dot={false} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                    <p className="text-[9px] font-bold text-gray-300 text-center mt-4 uppercase tracking-[0.2em]">{t("colori.wavelength")} (NM)</p>
+                  </div>
+                </div>
+              </>
+            ) : !loading && (
+              <div className="h-full flex flex-col items-center justify-center bg-white rounded-2xl sm:rounded-3xl border border-dashed border-gray-200 p-8 sm:p-12 text-center shadow-inner min-h-[300px]">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gray-50 flex items-center justify-center mb-4">
+                   <Palette className="w-6 h-6 sm:w-8 sm:h-8 text-gray-200" />
+                </div>
+                <p className="text-sm font-bold text-brand-text">{t("colori.emptyState")}</p>
+                <p className="text-xs text-gray-400 mt-1 max-w-[240px] leading-relaxed mx-auto">
+                   Configurez les paramètres {typeof window !== 'undefined' && window.innerWidth < 1024 ? 'ci-dessous' : 'à gauche'} pour lancer la simulation d'assemblage.
+                </p>
+              </div>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );

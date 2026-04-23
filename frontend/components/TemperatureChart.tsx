@@ -88,12 +88,12 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Prop
   return (
     <div className="h-full flex flex-col gap-2">
       {/* Toggle — pill switch */}
-      <div className="flex items-center gap-1 bg-gray-100/80 rounded-md p-0.5 w-fit">
+      <div className="flex items-center gap-1 bg-gray-100/80 rounded-md p-0.5 w-fit overflow-x-auto no-scrollbar max-w-full">
         {views.map((v) => (
           <button
             key={v.key}
             onClick={() => setView(v.key)}
-            className={`px-2.5 py-1 rounded text-[10px] font-semibold transition-all ${
+            className={`px-2.5 py-1 rounded text-[10px] font-semibold transition-all whitespace-nowrap ${
               view === v.key
                 ? "bg-white text-brand-text shadow-sm"
                 : "text-gray-400 hover:text-gray-600"
@@ -107,26 +107,26 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Prop
       {/* Chart */}
       <div className="flex-1 min-h-0">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={data} margin={{ top: 8, right: 8, left: -15, bottom: 0 }}>
+          <ComposedChart data={data} margin={{ top: 8, right: 8, left: -25, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f3f3" />
             <XAxis
               dataKey="temps"
-              tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
+              tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
               axisLine={false}
               tickLine={false}
               tickFormatter={(v) => `${v}′`}
-              minTickGap={30}
+              minTickGap={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 30}
             />
             {/* Left axis — temperature */}
             {showTemp && (
               <YAxis
                 yAxisId="temp"
-                tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
+                tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
                 axisLine={false}
                 tickLine={false}
                 domain={["auto", "auto"]}
                 tickFormatter={(v) => `${v}°`}
-                label={{ value: "°C", position: "insideTopLeft", offset: 10, style: { fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" } }}
+                label={{ value: "°C", position: "insideTopLeft", offset: 10, style: { fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" } }}
               />
             )}
             {/* Right axis — VP */}
@@ -134,10 +134,10 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Prop
               <YAxis
                 yAxisId="vp"
                 orientation={showTemp ? "right" : "left"}
-                tick={{ fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" }}
+                tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
                 axisLine={false}
                 tickLine={false}
-                label={{ value: "UP", position: showTemp ? "insideTopRight" : "insideTopLeft", offset: 10, style: { fontSize: 10, fill: "#9ca3af", fontFamily: "monospace" } }}
+                label={{ value: "UP", position: showTemp ? "insideTopRight" : "insideTopLeft", offset: 10, style: { fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" } }}
               />
             )}
             <Tooltip content={<CustomTooltip t={t} />} />
