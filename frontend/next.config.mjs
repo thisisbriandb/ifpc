@@ -18,8 +18,16 @@ const nextConfig = {
         destination: `${SPRING_URL}/api/config/:path*`,
       },
       {
+        source: '/api/history',
+        destination: `${SPRING_URL}/api/history`,
+      },
+      {
         source: '/api/history/:path*',
         destination: `${SPRING_URL}/api/history/:path*`,
+      },
+      {
+        source: '/api/cuves',
+        destination: `${SPRING_URL}/api/cuves`,
       },
       {
         source: '/api/cuves/:path*',
