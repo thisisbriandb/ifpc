@@ -308,6 +308,11 @@ export async function assemblageCouleurDb(
   return response.data;
 }
 
+export async function spectrumToLab(wavelengths: number[], doValues: number[]): Promise<{ L: number; a: number; b: number; hex: string }> {
+  const { data } = await api.post("/colorimetrie/spectrum-to-lab", { wavelengths, do_values: doValues });
+  return data;
+}
+
 // ── Module 4 : Gestion de cuves ─────────────────────────────────────────────
 
 export interface Cuve {
