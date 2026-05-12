@@ -122,9 +122,9 @@ PRODUITS: Dict[str, Dict] = {
 CLARIFICATIONS = ["trouble", "limpide"]
 
 PROCEDES = {
-    "flash": {"nom": "Pasteurisation flash", "description": "Haute température, courte durée"},
+    "flash": {"nom": "Flash-pasteurisation ", "description": "Haute température, courte durée"},
     "classique": {"nom": "Pasteurisation classique", "description": "Température modérée, durée moyenne"},
-    "tunnel": {"nom": "Tunnel / douchette", "description": "Pasteurisation en bouteille"},
+    "tunnel": {"nom": "Pasteurisation Tunnel", "description": "Pasteurisation en bouteille"},
 }
 
 TRANSLATIONS = {
@@ -136,9 +136,9 @@ TRANSLATIONS = {
         "cidre_extra_brut": {"fr": "Cidre extra-brut", "en": "Extra-dry cider"},
     },
     "procedes": {
-        "flash": {"fr": "Pasteurisation flash", "en": "Flash pasteurisation"},
+        "flash": {"fr": "Flash-pasteurisation", "en": "Flash pasteurisation"},
         "classique": {"fr": "Pasteurisation classique", "en": "Conventional pasteurisation"},
-        "tunnel": {"fr": "Tunnel / douchette", "en": "Tunnel / spray"},
+        "tunnel": {"fr": "Pasteurisation Tunnel", "en": "Tunnel / spray"},
     },
     "clarifications": {
         "trouble": {"fr": "Trouble", "en": "Turbid"},
