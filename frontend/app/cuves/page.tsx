@@ -1,13 +1,39 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Container, Plus, Search, Loader2, Edit2, Trash2,
-  AlertTriangle, CheckCircle2, FlaskConical, Droplets
+  AlertTriangle, CheckCircle2, FlaskConical, Droplets, Upload, FileSpreadsheet, X, BarChart3
 } from "lucide-react";
-import { getCuves, deleteCuve, createCuve, updateCuve, type Cuve } from "@/lib/api";
+import { getCuves, deleteCuve, createCuve, updateCuve, spectrumToLab, type Cuve } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
+
+// ── HEX → Lab* conversion ───────────────────────────────────────────────────
+function hexToLab(hex: string): { L: number; a: number; b: number } | null {
+  const m = hex.match(/^#?([0-9a-f]{6})$/i);
+  if (!m) return null;
+  // HEX → sRGB [0,1]
+  let r = parseInt(m[1].substring(0, 2), 16) / 255;
+  let g = parseInt(m[1].substring(2, 4), 16) / 255;
+  let b = parseInt(m[1].substring(4, 6), 16) / 255;
+  // Linearize (inverse sRGB companding)
+  r = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+  g = g > 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+  b = b > 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+  // Linear RGB → XYZ (D65)
+  let x = (r * 0.4124564 + g * 0.3575761 + b * 0.1804375) / 0.95047;
+  let y = (r * 0.2126729 + g * 0.7151522 + b * 0.0721750) / 1.00000;
+  let z = (r * 0.0193339 + g * 0.1191920 + b * 0.9503041) / 1.08883;
+  // XYZ → Lab
+  const f = (t: number) => t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116;
+  const fx = f(x), fy = f(y), fz = f(z);
+  return {
+    L: Math.round((116 * fy - 16) * 100) / 100,
+    a: Math.round((500 * (fx - fy)) * 100) / 100,
+    b: Math.round((200 * (fy - fz)) * 100) / 100,
+  };
+}
 
 export default function CuvesPage() {
   const { t } = useI18n();
@@ -23,6 +49,9 @@ export default function CuvesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCuve, setEditingCuve] = useState<Cuve | null>(null);
   const [formLoading, setFormLoading] = useState(false);
+  const spectrumInputRef = useRef<HTMLInputElement>(null);
+  const [spectrumFile, setSpectrumFile] = useState<File | null>(null);
+  const [spectrumPreview, setSpectrumPreview] = useState<{ wavelengths: number[]; do: number[] } | null>(null);
   const [formData, setFormData] = useState<Cuve>({
     nom: "",
     volumeMax: 0,
@@ -58,10 +87,52 @@ export default function CuvesPage() {
     }
   };
 
+  const [computingLab, setComputingLab] = useState(false);
+
+  const parseSpectrumCsv = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      const text = ev.target?.result as string;
+      if (!text) return;
+      const lines = text.trim().split(/\r?\n/);
+      const wavelengths: number[] = [];
+      const doValues: number[] = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(/[,;\t]/).map(s => s.trim());
+        const wl = parseFloat(cols[0]);
+        const od = parseFloat(cols[1]);
+        if (!isNaN(wl) && !isNaN(od)) {
+          wavelengths.push(wl);
+          doValues.push(od);
+        }
+      }
+      if (wavelengths.length > 0) {
+        setSpectrumPreview({ wavelengths, do: doValues });
+        setSpectrumFile(file);
+        // Auto-compute Lab* from spectrum
+        setComputingLab(true);
+        try {
+          const lab = await spectrumToLab(wavelengths, doValues);
+          setFormData(prev => ({ ...prev, colorL: lab.L, colorA: lab.a, colorB: lab.b, colorHex: lab.hex }));
+        } catch {
+          // silently ignore — user can still save without computed Lab*
+        } finally {
+          setComputingLab(false);
+        }
+      }
+    };
+    reader.readAsText(file);
+  };
+
   const openModal = (cuve: Cuve | null = null) => {
     if (cuve) {
       setEditingCuve(cuve);
       setFormData({ ...cuve });
+      if (cuve.spectrumJson) {
+        try { setSpectrumPreview(JSON.parse(cuve.spectrumJson)); } catch { setSpectrumPreview(null); }
+      } else {
+        setSpectrumPreview(null);
+      }
     } else {
       setEditingCuve(null);
       setFormData({
@@ -72,7 +143,9 @@ export default function CuvesPage() {
         statut: "Vide",
         lotIdentifier: ""
       });
+      setSpectrumPreview(null);
     }
+    setSpectrumFile(null);
     setIsModalOpen(true);
   };
 
@@ -80,11 +153,15 @@ export default function CuvesPage() {
     e.preventDefault();
     setFormLoading(true);
     try {
+      const payload = { ...formData };
+      if (spectrumPreview) {
+        payload.spectrumJson = JSON.stringify(spectrumPreview);
+      }
       if (editingCuve && editingCuve.id) {
-        const updated = await updateCuve(editingCuve.id, formData);
+        const updated = await updateCuve(editingCuve.id, payload);
         setCuves(prev => prev.map(c => c.id === editingCuve.id ? updated : c));
       } else {
-        const created = await createCuve(formData);
+        const created = await createCuve(payload);
         setCuves(prev => [...prev, created]);
       }
       setIsModalOpen(false);
@@ -326,6 +403,11 @@ export default function CuvesPage() {
                     <Droplets className="w-3 h-3" />
                     Données Colorimétriques (Optionnel)
                   </h4>
+                  {computingLab && (
+                    <div className="flex items-center gap-2 mb-2 text-[10px] text-brand-primary font-bold">
+                      <Loader2 className="w-3 h-3 animate-spin" /> Calcul Lab* depuis le spectre…
+                    </div>
+                  )}
                   <div className="grid grid-cols-4 gap-2">
                     {[
                       { label: "L*", field: "colorL" },
@@ -337,9 +419,10 @@ export default function CuvesPage() {
                         <input
                           type="number"
                           step="0.01"
+                          readOnly={!!spectrumPreview}
                           value={(formData as any)[f.field] || ""}
                           onChange={(e) => setFormData({ ...formData, [f.field]: parseFloat(e.target.value) || 0 })}
-                          className="w-full px-2 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-mono"
+                          className={`w-full px-2 py-1.5 border border-gray-200 rounded-lg text-xs font-mono ${spectrumPreview ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-gray-50'}`}
                         />
                       </div>
                     ))}
@@ -348,20 +431,77 @@ export default function CuvesPage() {
                       <div className="flex items-center gap-1.5">
                         <input
                           type="color"
+                          disabled={!!spectrumPreview}
                           value={formData.colorHex || "#ffffff"}
-                          onChange={(e) => setFormData({ ...formData, colorHex: e.target.value })}
-                          className="w-6 h-7 p-0 border-0 bg-transparent cursor-pointer"
+                          onChange={(e) => {
+                            const hex = e.target.value;
+                            const lab = hexToLab(hex);
+                            setFormData({ ...formData, colorHex: hex, ...(lab ? { colorL: lab.L, colorA: lab.a, colorB: lab.b } : {}) });
+                          }}
+                          className={`w-6 h-7 p-0 border-0 bg-transparent ${spectrumPreview ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                         />
                         <input
                           type="text"
+                          readOnly={!!spectrumPreview}
                           value={formData.colorHex || ""}
-                          onChange={(e) => setFormData({ ...formData, colorHex: e.target.value })}
-                          className="w-full px-1.5 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-[10px] font-mono"
+                          onChange={(e) => {
+                            const hex = e.target.value;
+                            const lab = hexToLab(hex);
+                            setFormData({ ...formData, colorHex: hex, ...(lab ? { colorL: lab.L, colorA: lab.a, colorB: lab.b } : {}) });
+                          }}
+                          className={`w-full px-1.5 py-1.5 border border-gray-200 rounded-lg text-[10px] font-mono ${spectrumPreview ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-gray-50'}`}
                           placeholder="#FFFFFF"
                         />
                       </div>
                     </div>
                   </div>
+                  {spectrumPreview && (
+                    <p className="text-[9px] text-gray-400 mt-1.5 italic">Valeurs calculées depuis le spectre d'absorption</p>
+                  )}
+                </div>
+
+                {/* Spectrum Upload */}
+                <div className="pt-4 border-t border-gray-100">
+                  <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <BarChart3 className="w-3 h-3" />
+                    Spectre d'absorption (Optionnel)
+                  </h4>
+                  {spectrumPreview ? (
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-brand-primary/5 border border-brand-primary/10">
+                      <FileSpreadsheet className="w-5 h-5 text-brand-primary shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-bold text-gray-700 truncate">
+                          {spectrumFile ? spectrumFile.name : 'Spectre existant'}
+                        </p>
+                        <p className="text-[10px] text-gray-400">
+                          {spectrumPreview.wavelengths.length} points · {spectrumPreview.wavelengths[0]}–{spectrumPreview.wavelengths[spectrumPreview.wavelengths.length - 1]} nm
+                        </p>
+                      </div>
+                      <button type="button" onClick={() => { setSpectrumFile(null); setSpectrumPreview(null); setFormData(prev => ({ ...prev, colorL: undefined, colorA: undefined, colorB: undefined, colorHex: undefined })); }} className="p-1 text-gray-400 hover:text-red-500 transition-colors">
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => spectrumInputRef.current?.click()}
+                      className="w-full flex items-center justify-center gap-2 p-3 border-2 border-dashed border-gray-200 rounded-xl text-xs font-bold text-gray-400 hover:border-brand-primary/40 hover:text-brand-primary/60 transition-all"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Importer un fichier CSV (wavelength, DO)
+                    </button>
+                  )}
+                  <input
+                    ref={spectrumInputRef}
+                    type="file"
+                    accept=".csv,.tsv,.txt"
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) parseSpectrumCsv(f);
+                      e.target.value = '';
+                    }}
+                    className="hidden"
+                  />
                 </div>
 
                 <div className="flex gap-3 mt-6">

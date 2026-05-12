@@ -81,7 +81,7 @@ export default function AssemblagePage() {
 
   useEffect(() => {
     if (useDb) {
-      getCuves().then(data => setDbCuves(data.filter(c => !!c.spectrumJson))).catch(() => {});
+      getCuves().then(data => setDbCuves(data)).catch(() => {});
     }
   }, [useDb]);
 
@@ -270,27 +270,33 @@ export default function AssemblagePage() {
                 {useDb ? (
                   <div className="space-y-3">
                     {dbCuves.length === 0 ? (
-                      <p className="text-xs text-gray-400 italic py-4 text-center">Aucune cuve avec spectre trouvée.</p>
+                      <p className="text-xs text-gray-400 italic py-4 text-center">Aucune cuve trouvée.</p>
                     ) : (
                       <div className="max-h-48 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
-                        {dbCuves.map(c => (
-                          <label key={c.id} className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors border border-transparent has-[:checked]:border-brand-accent/20 has-[:checked]:bg-brand-accent/5">
-                            <input
-                              type="checkbox"
-                              checked={selectedCuveIds.includes(c.id!)}
-                              onChange={(e) => {
-                                if (e.target.checked) setSelectedCuvesIds(prev => [...prev, c.id!]);
-                                else setSelectedCuvesIds(prev => prev.filter(id => id !== c.id));
-                              }}
-                              className="w-4 h-4 rounded accent-brand-accent"
-                            />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-xs font-bold text-gray-700 truncate">{c.nom}</p>
-                              <p className="text-[10px] text-gray-400 truncate">{c.lotIdentifier || c.typeProduit}</p>
-                            </div>
-                            {c.colorHex && <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: c.colorHex }} />}
-                          </label>
-                        ))}
+                        {dbCuves.map(c => {
+                          const hasSpectrum = !!c.spectrumJson;
+                          return (
+                            <label key={c.id} className={`flex items-center gap-3 p-2 rounded-xl transition-colors border border-transparent ${hasSpectrum ? 'hover:bg-gray-50 cursor-pointer has-[:checked]:border-brand-accent/20 has-[:checked]:bg-brand-accent/5' : 'opacity-50 cursor-not-allowed'}`}>
+                              <input
+                                type="checkbox"
+                                disabled={!hasSpectrum}
+                                checked={selectedCuveIds.includes(c.id!)}
+                                onChange={(e) => {
+                                  if (e.target.checked) setSelectedCuvesIds(prev => [...prev, c.id!]);
+                                  else setSelectedCuvesIds(prev => prev.filter(id => id !== c.id));
+                                }}
+                                className="w-4 h-4 rounded accent-brand-accent disabled:opacity-30"
+                              />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs font-bold text-gray-700 truncate">{c.nom}</p>
+                                <p className="text-[10px] text-gray-400 truncate">
+                                  {hasSpectrum ? (c.lotIdentifier || c.typeProduit) : 'Pas de spectre — importez via fichier'}
+                                </p>
+                              </div>
+                              {c.colorHex && <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: c.colorHex }} />}
+                            </label>
+                          );
+                        })}
                       </div>
                     )}
                   </div>

@@ -8,7 +8,7 @@ import { useAuthStore } from "@/lib/store";
 import {
   ArrowRight, Clock, ChevronDown,
   Thermometer, FlaskConical, BarChart3,
-  Pipette, ScanEye, Palette,
+  Pipette, Palette, Container,
   Shield, Users, Settings,
 } from "lucide-react";
 import { getHistory, type HistoryEntry } from "@/lib/api";
@@ -195,8 +195,8 @@ export default function Home() {
       ring: "ring-brand-accent/20",
       subColor: "bg-brand-accent/10 text-brand-accent hover:bg-brand-accent/20 border-brand-accent/20",
       subModules: [
-        { href: "#", label: t("home.modules.mesure"),  icon: Pipette },
-        { href: "#", label: t("home.modules.analyse"), icon: ScanEye },
+        { href: "/colorimetrie/assemblage", label: t("home.modules.assemblage"), icon: Pipette },
+        { href: "/cuves",                   label: t("home.modules.cuves"),      icon: Container },
       ],
     },
     {

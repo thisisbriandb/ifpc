@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { getProduits, getMicroorganismes, getProcedes } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 
@@ -77,6 +77,17 @@ export default function ProductSelector({
     fetchWithRetry(() => getProcedes(locale), setProcedes);
   }, [fetchWithRetry, locale]);
 
+  const currentProduct = useMemo(() => produits.find(p => p.id === productType), [produits, productType]);
+
+  const filteredMicros = useMemo(() => {
+    const assoc: { key: string }[] | undefined = currentProduct?.microorganismes_associes;
+    if (assoc && assoc.length > 0) {
+      const keys = assoc.map(a => a.key);
+      return micros.filter(m => keys.includes(m.id));
+    }
+    return micros;
+  }, [currentProduct, micros]);
+
   const selectCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white";
   const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
   const labelCls = "block text-xs font-semibold text-gray-500 mb-1";
@@ -85,7 +96,24 @@ export default function ProductSelector({
     <div className="space-y-2.5">
       <div>
         <label className={labelCls}>{t("productSelector.product")}</label>
-        <select value={productType} onChange={(e) => onProductChange(e.target.value)} className={selectCls}>
+        <select value={productType} onChange={(e) => {
+          const newProduct = e.target.value;
+          onProductChange(newProduct);
+          // Auto-select default microorganism for new product
+          const prod = produits.find(p => p.id === newProduct);
+          if (prod?.microorganisme_defaut) {
+            onMicroChange(prod.microorganisme_defaut);
+            const defaultMicro = micros.find(m => m.id === prod.microorganisme_defaut);
+            if (defaultMicro) {
+              onTRefChange?.(String(defaultMicro.t_ref));
+              onZChange?.(String(defaultMicro.z));
+            }
+          } else {
+            onMicroChange("");
+            onTRefChange?.("");
+            onZChange?.("");
+          }
+        }} className={selectCls}>
           {produits.map((p) => (
             <option key={p.id} value={p.id}>{p.nom}</option>
           ))}
@@ -123,10 +151,14 @@ export default function ProductSelector({
               }}
               className={selectCls}
             >
-              <option value="">{t("productSelector.autoByProduct")}</option>
-              {micros.map((m) => (
-                <option key={m.id} value={m.id}>{m.nom} — D={m.d_ref} min @ {m.t_ref}°C</option>
-              ))}
+              {filteredMicros.map((m) => {
+                const isDefault = m.id === currentProduct?.microorganisme_defaut;
+                return (
+                  <option key={m.id} value={m.id}>
+                    {m.nom} — D={m.d_ref} min @ {m.t_ref}°C{isDefault ? " ✓" : ""}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-2">

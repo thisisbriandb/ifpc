@@ -310,8 +310,8 @@
       "calculVP": "VP Calculation",
       "bareme": "Schedule",
       "colorimetrie": "Colorimetry",
-      "mesure": "Measurement",
-      "analyse": "Analysis",
+      "assemblage": "Blending",
+      "cuves": "Tanks",
       "admin": "Administration",
       "users": "Users",
       "config": "Config"

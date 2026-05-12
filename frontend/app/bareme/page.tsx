@@ -12,6 +12,7 @@ const MICROORGANISMES: Record<string, { nom: string; t_ref: number; z: number; d
   alicyclo_res:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 16.4, d_ref: 27.8, vp_cible: 139   },
   ecoli:              { nom: "Escherichia coli",                  t_ref: 62, z: 6.0,  d_ref: 1.5,  vp_cible: 7.5  },
   salmonella:         { nom: "Salmonella",                        t_ref: 62, z: 6.0,  d_ref: 0.5,  vp_cible: 2.5  },
+  listeria:           { nom: "Listeria monocytogenes",            t_ref: 62, z: 5.6,  d_ref: 0.4,  vp_cible: 2    },
   byssochlamys_fulva: { nom: "Byssochlamys fulva",                t_ref: 95, z: 7.1,  d_ref: 1.8,  vp_cible: 9    },
   saccharo_jus:       { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 22.5, vp_cible: 112.5 },
   saccharo_cidre_low: { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 0.4,  vp_cible: 2    },
@@ -19,11 +20,20 @@ const MICROORGANISMES: Record<string, { nom: string; t_ref: number; z: number; d
 };
 
 const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }> = {
-  jus_pomme:        { nom: "Jus de pomme",      micro: "alicyclo_res",   vp_cible: 139 },
-  cidre_doux:       { nom: "Cidre doux",         micro: "saccharo_cidre", vp_cible: 5.5 },
-  cidre_demi_sec:   { nom: "Cidre demi-sec",     micro: "saccharo_cidre", vp_cible: 5.5 },
-  cidre_brut:       { nom: "Cidre brut",         micro: "saccharo_cidre", vp_cible: 5.5 },
-  cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "saccharo_cidre", vp_cible: 5.5 },
+  jus_pomme:        { nom: "Jus de pomme",      micro: "byssochlamys_fulva", vp_cible: 9   },
+  cidre_doux:       { nom: "Cidre doux",         micro: "saccharo_cidre",     vp_cible: 5.5 },
+  cidre_demi_sec:   { nom: "Cidre demi-sec",     micro: "saccharo_cidre",     vp_cible: 5.5 },
+  cidre_brut:       { nom: "Cidre brut",         micro: "saccharo_cidre",     vp_cible: 5.5 },
+  cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "saccharo_cidre",     vp_cible: 5.5 },
+};
+
+// Association produit → microorganismes disponibles en mode expert
+const PRODUCT_MICROS: Record<string, string[]> = {
+  jus_pomme:        ["byssochlamys_fulva", "alicyclo_res", "saccharo_jus", "ecoli", "salmonella", "listeria"],
+  cidre_doux:       ["saccharo_cidre", "ecoli", "salmonella"],
+  cidre_demi_sec:   ["saccharo_cidre", "ecoli", "salmonella"],
+  cidre_brut:       ["saccharo_cidre", "ecoli", "salmonella"],
+  cidre_extra_brut: ["saccharo_cidre", "ecoli", "salmonella"],
 };
 
 const PRODUCT_LABELS: Record<string, { fr: string; en: string }> = {
@@ -116,16 +126,28 @@ export default function BaremePage() {
   const [pasteType, setPasteType] = useState<"flash" | "tunnel">("flash");
   const [tConsigne, setTConsigne] = useState("75");
   const [expertMode, setExpertMode] = useState(false);
-  const [microKey, setMicroKey] = useState("");
+  const [microKey, setMicroKey] = useState(PRODUITS["jus_pomme"].micro);
   const [customTref, setCustomTref] = useState("");
   const [customZ, setCustomZ] = useState("");
 
   const [isConfigOpen, setIsConfigOpen] = useState(true);
 
+  // Auto-select default micro when product changes
+  const handleProductChange = (newProduct: string) => {
+    setProductType(newProduct);
+    const p = PRODUITS[newProduct];
+    if (p) {
+      setMicroKey(p.micro);
+      setCustomTref("");
+      setCustomZ("");
+    }
+  };
+
   const computed = useMemo(() => {
     const produit = PRODUITS[productType];
     if (!produit) return null;
-    const micro = MICROORGANISMES[microKey || produit.micro];
+    const effectiveKey = microKey || produit.micro;
+    const micro = MICROORGANISMES[effectiveKey];
     if (!micro) return null;
     const tRef = customTref ? parseFloat(customTref) : micro.t_ref;
     const z    = customZ    ? parseFloat(customZ)    : micro.z;
@@ -230,7 +252,7 @@ export default function BaremePage() {
               <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
               <p className="text-[11px] font-bold text-gray-600">{t("bareme.stepProduct")}</p>
             </div>
-            <select value={productType} onChange={e => setProductType(e.target.value)}
+            <select value={productType} onChange={e => handleProductChange(e.target.value)}
               className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-primary transition-colors">
               {Object.entries(PRODUITS).map(([k]) => <option key={k} value={k}>{productLabel(k)}</option>)}
             </select>
@@ -274,10 +296,16 @@ export default function BaremePage() {
                   <p className="text-[10px] text-gray-400 mb-1">{t("bareme.microTarget")}</p>
                   <select value={microKey} onChange={e => setMicroKey(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg text-[11px] outline-none focus:border-brand-accent transition-colors">
-                    <option value="">{t("bareme.microDefault", { name: `${MICROORGANISMES[produit?.micro]?.nom} — D=${MICROORGANISMES[produit?.micro]?.d_ref} min` })}</option>
-                    {Object.entries(MICROORGANISMES).map(([k, v]) => (
-                      <option key={k} value={k}>{v.nom} — D={v.d_ref} min @ {v.t_ref}°C</option>
-                    ))}
+                    {(PRODUCT_MICROS[productType] || []).map((k) => {
+                      const v = MICROORGANISMES[k];
+                      if (!v) return null;
+                      const isDefault = k === PRODUITS[productType]?.micro;
+                      return (
+                        <option key={k} value={k}>
+                          {v.nom} — D={v.d_ref} min @ {v.t_ref}°C{isDefault ? " ✓" : ""}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-2">

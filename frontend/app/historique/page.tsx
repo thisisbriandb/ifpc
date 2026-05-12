@@ -64,10 +64,13 @@ function matchesDateFilter(dateStr: string, filter: DateFilter): boolean {
 export default function HistoriquePage() {
   const router = useRouter();
   const { t, locale } = useI18n();
-  const { user } = useAuthStore();
+  const { user, isLoading: authLoading, checkAuth } = useAuthStore();
 
   const [entries, setEntries] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Ensure auth is resolved before loading history
+  useEffect(() => { checkAuth(); }, [checkAuth]);
 
   // Filters
   const [search, setSearch] = useState("");
@@ -81,8 +84,9 @@ export default function HistoriquePage() {
   // Delete
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
-  // ── Load ──
+  // ── Load ── (wait for auth to resolve first)
   useEffect(() => {
+    if (authLoading) return; // don't load until auth is resolved
     let cancelled = false;
     async function load() {
       setLoading(true);
@@ -115,7 +119,7 @@ export default function HistoriquePage() {
     }
     load();
     return () => { cancelled = true; };
-  }, [user]);
+  }, [user, authLoading]);
 
   // ── Filter + search ──
   const filtered = useMemo(() => {
