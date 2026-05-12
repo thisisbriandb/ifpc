@@ -1,4 +1,4 @@
-# IFPC — Portail de Décision Cidricole
+# PADOC - Plateforme d'aide à la Décision pour la filière Cidricole
 
 Plateforme d'aide à la décision pour la filière cidricole française. L'outil accompagne les producteurs et techniciens dans la pasteurisation et l'analyse colorimétrique des productions (jus, cidres).
 
