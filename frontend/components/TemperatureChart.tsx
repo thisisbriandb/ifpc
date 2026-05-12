@@ -77,7 +77,7 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Prop
 
   const showTemp = view === "temp" || view === "both";
   const showVp = view === "vp" || view === "both";
-  const vpColor = STATUT_COLORS[statut || ""] || "#9ca3af";
+  const vpColor = "#dc2626"; // Always red for VP curve
 
   const views: { key: ChartView; label: string }[] = [
     { key: "temp", label: `${t("chart.temperature")} (°C)` },
