@@ -456,7 +456,7 @@ export default function CuvesPage() {
                     </div>
                   </div>
                   {spectrumPreview && (
-                    <p className="text-[9px] text-gray-400 mt-1.5 italic">Valeurs calculées depuis le spectre d'absorption</p>
+                    <p className="text-[9px] text-gray-400 mt-1.5 italic">Valeurs calculées depuis le spectre d&apos;absorption</p>
                   )}
                 </div>
 
@@ -464,7 +464,7 @@ export default function CuvesPage() {
                 <div className="pt-4 border-t border-gray-100">
                   <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                     <BarChart3 className="w-3 h-3" />
-                    Spectre d'absorption (Optionnel)
+                    Spectre d&apos;absorption (Optionnel)
                   </h4>
                   {spectrumPreview ? (
                     <div className="flex items-center gap-3 p-3 rounded-xl bg-brand-primary/5 border border-brand-primary/10">
