@@ -65,8 +65,23 @@ public class DeployInfoController {
     }
 
     @PostMapping("/cuves-create-probe")
-    public Map<String, Object> createCuveProbe(@RequestBody CreateCuveProbeRequest request) {
+    public Map<String, Object> createCuveProbe(@RequestBody(required = false) CreateCuveProbeRequest request) {
         Map<String, Object> result = baseInfo();
+
+        result.put("endpoint", "/api/deploy/cuves-create-probe");
+        result.put("method", "POST");
+        result.put("cuveCreated", false);
+
+        if (request == null) {
+            result.put("bodyReceived", false);
+            result.put("message", "Aucune cuve creee: envoyez un body JSON en POST.");
+            result.put("expectedBody", Map.of(
+                    "nom", "Probe cuve",
+                    "volumeMax", 1000,
+                    "statutPhysique", "PROPRE"
+            ));
+            return result;
+        }
 
         try {
             Cuve cuve = Cuve.builder()
@@ -82,7 +97,40 @@ public class DeployInfoController {
             result.put("volumeMax", saved.getVolumeMax());
             result.put("statutPhysique", saved.getStatutPhysique());
         } catch (Throwable error) {
-            result.put("cuveCreated", false);
+            result.put("errorClass", error.getClass().getName());
+            result.put("errorMessage", error.getMessage() == null ? "none" : error.getMessage());
+            Throwable cause = error.getCause();
+            if (cause != null) {
+                result.put("causeClass", cause.getClass().getName());
+                result.put("causeMessage", cause.getMessage() == null ? "none" : cause.getMessage());
+            }
+        }
+
+        return result;
+    }
+
+    @GetMapping("/cuves-create-probe")
+    public Map<String, Object> getCreateCuveProbeInfo(HttpServletRequest request) {
+        Map<String, Object> result = baseInfo();
+
+        result.put("endpoint", "/api/deploy/cuves-create-probe");
+        result.put("requestUri", request.getRequestURI());
+        result.put("servletPath", request.getServletPath());
+        result.put("method", request.getMethod());
+        result.put("cuveCreated", false);
+        result.put("message", "Diagnostic OK: cette URL est joignable en GET. La creation de cuve se fait uniquement en POST avec un body JSON.");
+        result.put("expectedPostBody", Map.of(
+                "nom", "Probe cuve",
+                "volumeMax", 1000,
+                "statutPhysique", "PROPRE"
+        ));
+
+        try {
+            List<Cuve> cuves = cuveRepository.findByDeletedFalseOrderByNomAsc();
+            result.put("databaseReadable", true);
+            result.put("cuvesCount", cuves.size());
+        } catch (Throwable error) {
+            result.put("databaseReadable", false);
             result.put("errorClass", error.getClass().getName());
             result.put("errorMessage", error.getMessage() == null ? "none" : error.getMessage());
             Throwable cause = error.getCause();
