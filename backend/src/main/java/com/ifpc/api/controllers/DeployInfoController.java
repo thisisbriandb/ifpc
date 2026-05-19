@@ -1,5 +1,6 @@
 package com.ifpc.api.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import com.ifpc.api.models.Cuve;
 import com.ifpc.api.repositories.CuveRepository;
 import com.ifpc.api.repositories.StockageRepository;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,38 +19,57 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DeployInfoController {
 
-    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-jwt-filter-v3";
+    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-db-probe-v4";
 
     private final CuveRepository cuveRepository;
     private final StockageRepository stockageRepository;
 
     @GetMapping("/info")
-    public Map<String, Object> getDeployInfo() {
-        return Map.of(
-                "marker", MARKER,
-                "checkedAt", Instant.now().toString(),
-                "railwayCommitSha", env("RAILWAY_GIT_COMMIT_SHA"),
-                "railwayDeploymentId", env("RAILWAY_DEPLOYMENT_ID"),
-                "railwayEnvironment", env("RAILWAY_ENVIRONMENT_NAME")
-        );
+    public Map<String, Object> getDeployInfo(HttpServletRequest request) {
+        Map<String, Object> info = baseInfo();
+        info.put("requestUri", request.getRequestURI());
+        info.put("servletPath", request.getServletPath());
+        info.put("method", request.getMethod());
+        return info;
     }
 
     @GetMapping("/cuves-probe")
     public Map<String, Object> getCuvesProbe() {
-        List<Cuve> cuves = cuveRepository.findByDeletedFalseOrderByNomAsc();
-        Long firstCuveId = cuves.isEmpty() ? null : cuves.get(0).getId();
-        int firstCuveActiveStockages = firstCuveId == null
-                ? 0
-                : stockageRepository.findByCuveIdAndDateFinIsNull(firstCuveId).size();
+        Map<String, Object> result = baseInfo();
 
-        return Map.of(
-                "marker", MARKER,
-                "checkedAt", Instant.now().toString(),
-                "cuvesReadable", true,
-                "cuvesCount", cuves.size(),
-                "firstCuveId", firstCuveId == null ? "none" : firstCuveId,
-                "firstCuveActiveStockages", firstCuveActiveStockages
-        );
+        try {
+            List<Cuve> cuves = cuveRepository.findByDeletedFalseOrderByNomAsc();
+            Long firstCuveId = cuves.isEmpty() ? null : cuves.get(0).getId();
+            int firstCuveActiveStockages = firstCuveId == null
+                    ? 0
+                    : stockageRepository.findByCuveIdAndDateFinIsNull(firstCuveId).size();
+
+            result.put("cuvesReadable", true);
+            result.put("cuvesCount", cuves.size());
+            result.put("firstCuveId", firstCuveId == null ? "none" : firstCuveId);
+            result.put("firstCuveActiveStockages", firstCuveActiveStockages);
+        } catch (Throwable error) {
+            result.put("cuvesReadable", false);
+            result.put("errorClass", error.getClass().getName());
+            result.put("errorMessage", error.getMessage() == null ? "none" : error.getMessage());
+            Throwable cause = error.getCause();
+            if (cause != null) {
+                result.put("causeClass", cause.getClass().getName());
+                result.put("causeMessage", cause.getMessage() == null ? "none" : cause.getMessage());
+            }
+        }
+
+        return result;
+    }
+
+    private Map<String, Object> baseInfo() {
+        Map<String, Object> info = new LinkedHashMap<>();
+        info.put("marker", MARKER);
+        info.put("checkedAt", Instant.now().toString());
+        info.put("railwayCommitSha", env("RAILWAY_GIT_COMMIT_SHA"));
+        info.put("railwayDeploymentId", env("RAILWAY_DEPLOYMENT_ID"));
+        info.put("railwayEnvironment", env("RAILWAY_ENVIRONMENT_NAME"));
+        return info;
     }
 
     private String env(String name) {

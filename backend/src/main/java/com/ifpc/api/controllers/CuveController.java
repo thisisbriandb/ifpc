@@ -22,9 +22,22 @@ public class CuveController {
     private final StockageRepository stockageRepository;
 
     @GetMapping
-    public List<Map<String, Object>> getAllCuves() {
-        List<Cuve> cuves = cuveRepository.findByDeletedFalseOrderByNomAsc();
-        return cuves.stream().map(this::cuveToDto).toList();
+    public ResponseEntity<?> getAllCuves() {
+        try {
+            List<Cuve> cuves = cuveRepository.findByDeletedFalseOrderByNomAsc();
+            return ResponseEntity.ok(cuves.stream().map(this::cuveToDto).toList());
+        } catch (Throwable error) {
+            Map<String, Object> body = new HashMap<>();
+            body.put("error", "Unable to load cuves");
+            body.put("errorClass", error.getClass().getName());
+            body.put("errorMessage", error.getMessage());
+            Throwable cause = error.getCause();
+            if (cause != null) {
+                body.put("causeClass", cause.getClass().getName());
+                body.put("causeMessage", cause.getMessage());
+            }
+            return ResponseEntity.internalServerError().body(body);
+        }
     }
 
     @GetMapping("/{id}")
