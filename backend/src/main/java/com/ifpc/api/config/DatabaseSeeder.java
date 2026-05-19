@@ -70,8 +70,22 @@ public class DatabaseSeeder {
     }
 
     private void repairCuvesSchema(JdbcTemplate jdbcTemplate) {
+        jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS updated_at timestamp(6)");
         jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS created_at timestamp(6)");
-        jdbcTemplate.execute("UPDATE cuves SET created_at = COALESCE(updated_at, now()) WHERE created_at IS NULL");
+        jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS deleted boolean");
+        jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS deleted_at timestamp(6)");
+        jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS statut_physique varchar(30)");
+
+        jdbcTemplate.execute("UPDATE cuves SET updated_at = now() WHERE updated_at IS NULL");
+        jdbcTemplate.execute("UPDATE cuves SET created_at = updated_at WHERE created_at IS NULL");
+        jdbcTemplate.execute("UPDATE cuves SET deleted = false WHERE deleted IS NULL");
+        jdbcTemplate.execute("UPDATE cuves SET statut_physique = 'PROPRE' WHERE statut_physique IS NULL");
+
+        jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN updated_at SET NOT NULL");
         jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN created_at SET NOT NULL");
+        jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN deleted SET DEFAULT false");
+        jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN deleted SET NOT NULL");
+        jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN statut_physique SET DEFAULT 'PROPRE'");
+        jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN statut_physique SET NOT NULL");
     }
 }
