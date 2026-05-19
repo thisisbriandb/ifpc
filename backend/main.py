@@ -6,6 +6,7 @@ import io
 import csv
 import re
 import logging
+import numpy as np
 import pandas as pd
 import pasto
 import colori
@@ -53,10 +54,13 @@ class BaremeRequest(BaseModel):
     clarification: str = "trouble"
     procede: str = "classique"
 
+class SpectrumData(BaseModel):
+    name: str
+    wavelengths: List[float]
+    do_values: List[float]
+
 class AssemblageDbRequest(BaseModel):
-    wavelengths: list
-    names: list
-    do_matrix_list: list
+    spectra: List[SpectrumData]
     target_L: float
     target_a: float
     target_b: float
@@ -303,10 +307,15 @@ async def colorimetrie_assemblage_db(
     Calcule les proportions optimales d'assemblage à partir de données de spectres déjà extraites (DB).
     """
     try:
+        spectra_data = [
+            {
+                "name": s.name,
+                "wavelengths": s.wavelengths,
+                "do": s.do_values
+            } for s in request.spectra
+        ]
         result = colori.assembler_donnees(
-            wavelengths=request.wavelengths,
-            names=request.names,
-            do_matrix_list=request.do_matrix_list,
+            spectra=spectra_data,
             target_L=request.target_L,
             target_a=request.target_a,
             target_b=request.target_b,
@@ -318,6 +327,34 @@ async def colorimetrie_assemblage_db(
     except Exception as e:
         logger.exception(f"Erreur assemblage-db: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur de calcul : {e}")
+
+
+class SpectrumToLabRequest(BaseModel):
+    wavelengths: List[float]
+    do_values: List[float]
+
+@app.post("/api/colorimetrie/spectrum-to-lab")
+async def spectrum_to_lab(request: SpectrumToLabRequest):
+    """Calcule L*a*b* et hex à partir d'un spectre d'absorption (wavelengths + DO)."""
+    try:
+        wl = np.array(request.wavelengths)
+        do = np.array(request.do_values)
+        if len(wl) != len(do) or len(wl) < 2:
+            raise ValueError("wavelengths et do_values doivent avoir la même taille (≥ 2).")
+        do_cie = np.interp(colori.CIE_WAVELENGTHS, wl, do, left=0.0, right=0.0)
+        L, a, b = colori.do_to_lab(do_cie)
+        hex_color = colori.lab_to_rgb_hex(L, a, b)
+        return {
+            "L": round(L, 2),
+            "a": round(a, 2),
+            "b": round(b, 2),
+            "hex": hex_color,
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(f"Erreur spectrum-to-lab: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # ── Utilitaires ──────────────────────────────────────────────────────────────

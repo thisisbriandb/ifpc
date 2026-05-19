@@ -76,6 +76,15 @@ MICROORGANISMES: Dict[str, Dict] = {
         "vp_cible_min": 5.5,
         "description": "Cidre réf. — D=1,1 min à 60°C (défaut cidre)",
     },
+    # Listeria monocytogenes
+    "listeria": {
+        "nom": "Listeria monocytogenes",
+        "t_ref": 62.0,
+        "z": 5.6,
+        "d_ref": 0.4,
+        "vp_cible_min": 2.0,
+        "description": "Pathogène — D=0,4 min à 62°C",
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -84,10 +93,18 @@ MICROORGANISMES: Dict[str, Dict] = {
 PRODUITS: Dict[str, Dict] = {
     "jus_pomme": {
         "nom": "Jus de pomme",
-        "microorganisme_defaut": "alicyclo_res",
-        "vp_cible_min": 139.0,
+        "microorganisme_defaut": "byssochlamys_fulva",
+        "vp_cible_min": 9.0,
         "ph_typique": 3.5,
         "description": "Jus de pomme pasteurisé",
+        "microorganismes_associes": [
+            {"key": "byssochlamys_fulva", "classique": True},
+            {"key": "alicyclo_res",       "classique": False},
+            {"key": "saccharo_jus",       "classique": False},
+            {"key": "ecoli",              "classique": False},
+            {"key": "salmonella",          "classique": False},
+            {"key": "listeria",            "classique": False},
+        ],
     },
     "cidre_doux": {
         "nom": "Cidre doux",
@@ -95,6 +112,11 @@ PRODUITS: Dict[str, Dict] = {
         "vp_cible_min": 5.5,
         "ph_typique": 3.6,
         "description": "Cidre doux (< 3% vol.)",
+        "microorganismes_associes": [
+            {"key": "saccharo_cidre", "classique": True},
+            {"key": "ecoli",          "classique": False},
+            {"key": "salmonella",      "classique": False},
+        ],
     },
     "cidre_demi_sec": {
         "nom": "Cidre demi-sec",
@@ -102,6 +124,11 @@ PRODUITS: Dict[str, Dict] = {
         "vp_cible_min": 5.5,
         "ph_typique": 3.5,
         "description": "Cidre demi-sec (3-4% vol.)",
+        "microorganismes_associes": [
+            {"key": "saccharo_cidre", "classique": True},
+            {"key": "ecoli",          "classique": False},
+            {"key": "salmonella",      "classique": False},
+        ],
     },
     "cidre_brut": {
         "nom": "Cidre brut",
@@ -109,6 +136,11 @@ PRODUITS: Dict[str, Dict] = {
         "vp_cible_min": 5.5,
         "ph_typique": 3.4,
         "description": "Cidre brut (4-5% vol.)",
+        "microorganismes_associes": [
+            {"key": "saccharo_cidre", "classique": True},
+            {"key": "ecoli",          "classique": False},
+            {"key": "salmonella",      "classique": False},
+        ],
     },
     "cidre_extra_brut": {
         "nom": "Cidre extra-brut",
@@ -116,6 +148,11 @@ PRODUITS: Dict[str, Dict] = {
         "vp_cible_min": 5.5,
         "ph_typique": 3.3,
         "description": "Cidre extra-brut (> 5% vol.)",
+        "microorganismes_associes": [
+            {"key": "saccharo_cidre", "classique": True},
+            {"key": "ecoli",          "classique": False},
+            {"key": "salmonella",      "classique": False},
+        ],
     },
 }
 

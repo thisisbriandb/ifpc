@@ -10,7 +10,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend, ResponsiveContainer,
 } from "recharts";
-import { assemblageCouleur, assemblageCouleurDb, saveAnalysis, getCuves, updateCuve, AssemblageResult, type Cuve } from "@/lib/api";
+import { assemblageCouleur, assemblageCouleurDb, saveAnalysis, getLots, updateLot, AssemblageResult, type Lot } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 
 // ── ΔE interpretation ──────────────────────────────────────────────────────
@@ -75,13 +75,13 @@ export default function AssemblagePage() {
 
   // DB selection state
   const [useDb, setUseDb] = useState(false);
-  const [dbCuves, setDbCuves] = useState<Cuve[]>([]);
-  const [selectedCuveIds, setSelectedCuvesIds] = useState<number[]>([]);
+  const [dbLots, setDbLots] = useState<Lot[]>([]);
+  const [selectedLotIds, setSelectedLotIds] = useState<number[]>([]);
   const [savingToDb, setSavingToDb] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (useDb) {
-      getCuves().then(data => setDbCuves(data)).catch(() => {});
+      getLots().then(data => setDbLots(data)).catch(() => {});
     }
   }, [useDb]);
 
@@ -97,7 +97,7 @@ export default function AssemblagePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!useDb && !file) { setError(t("colori.errorFileRequired")); return; }
-    if (useDb && selectedCuveIds.length === 0) { setError("Veuillez sélectionner au moins une cuve."); return; }
+    if (useDb && selectedLotIds.length === 0) { setError("Veuillez sélectionner au moins un lot."); return; }
     
     setError(null);
     setLoading(true);
@@ -112,13 +112,16 @@ export default function AssemblagePage() {
       
       let data;
       if (useDb) {
-        const selected = dbCuves.filter(c => selectedCuveIds.includes(c.id!));
-        // On suppose que tous les spectres ont les mêmes longueurs d'onde
-        const firstSpec = JSON.parse(selected[0].spectrumJson!);
+        const selected = dbLots.filter(l => selectedLotIds.includes(l.id!));
         data = await assemblageCouleurDb({
-          wavelengths: firstSpec.wavelengths,
-          names: selected.map(c => c.nom),
-          do_matrix_list: selected.map(c => JSON.parse(c.spectrumJson!).do),
+          spectra: selected.map(l => {
+            const spec = JSON.parse(l.spectrumJson!);
+            return {
+              name: l.identifiant,
+              wavelengths: spec.wavelengths,
+              do_values: spec.do
+            };
+          }),
           target_L: target.L,
           target_a: target.a,
           target_b: target.b,
@@ -151,9 +154,9 @@ export default function AssemblagePage() {
     }
   };
 
-  const saveCuveToDb = async (idx: number) => {
+  const saveLotToDb = async (idx: number) => {
     if (!result) return;
-    const c = result.cuves[idx];
+    const c = result.cuves[idx]; // the API response uses "cuves" for proportions
     const spec = {
       wavelengths: result.spectre.wavelengths,
       do: result.spectre.do_cuves[idx]
@@ -161,11 +164,11 @@ export default function AssemblagePage() {
     
     setSavingToDb(prev => ({ ...prev, [c.nom]: true }));
     try {
-      const all = await getCuves();
-      const existing = all.find(tank => tank.nom === c.nom);
+      const all = await getLots();
+      const existing = all.find(lot => lot.identifiant === c.nom);
       
       if (existing && existing.id) {
-        await updateCuve(existing.id, {
+        await updateLot(existing.id, {
           ...existing,
           colorL: c.L,
           colorA: c.a,
@@ -173,9 +176,9 @@ export default function AssemblagePage() {
           colorHex: c.hex,
           spectrumJson: JSON.stringify(spec)
         });
-        alert(`Cuve "${c.nom}" mise à jour.`);
+        alert(`Lot "${c.nom}" mis à jour.`);
       } else {
-        alert(`Aucune cuve nommée "${c.nom}" trouvée en base. Créez-la d'abord dans l'onglet Gestion de cuves.`);
+        alert(`Aucun lot nommé "${c.nom}" trouvé en base.`);
       }
     } catch (err) {
       alert("Erreur lors de la sauvegarde.");
@@ -269,31 +272,31 @@ export default function AssemblagePage() {
 
                 {useDb ? (
                   <div className="space-y-3">
-                    {dbCuves.length === 0 ? (
-                      <p className="text-xs text-gray-400 italic py-4 text-center">Aucune cuve trouvée.</p>
+                    {dbLots.length === 0 ? (
+                      <p className="text-xs text-gray-400 italic py-4 text-center">Aucun lot trouvé.</p>
                     ) : (
                       <div className="max-h-48 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
-                        {dbCuves.map(c => {
-                          const hasSpectrum = !!c.spectrumJson;
+                        {dbLots.map(l => {
+                          const hasSpectrum = !!l.spectrumJson;
                           return (
-                            <label key={c.id} className={`flex items-center gap-3 p-2 rounded-xl transition-colors border border-transparent ${hasSpectrum ? 'hover:bg-gray-50 cursor-pointer has-[:checked]:border-brand-accent/20 has-[:checked]:bg-brand-accent/5' : 'opacity-50 cursor-not-allowed'}`}>
+                            <label key={l.id} className={`flex items-center gap-3 p-2 rounded-xl transition-colors border border-transparent ${hasSpectrum ? 'hover:bg-gray-50 cursor-pointer has-[:checked]:border-brand-accent/20 has-[:checked]:bg-brand-accent/5' : 'opacity-50 cursor-not-allowed'}`}>
                               <input
                                 type="checkbox"
                                 disabled={!hasSpectrum}
-                                checked={selectedCuveIds.includes(c.id!)}
+                                checked={selectedLotIds.includes(l.id!)}
                                 onChange={(e) => {
-                                  if (e.target.checked) setSelectedCuvesIds(prev => [...prev, c.id!]);
-                                  else setSelectedCuvesIds(prev => prev.filter(id => id !== c.id));
+                                  if (e.target.checked) setSelectedLotIds(prev => [...prev, l.id!]);
+                                  else setSelectedLotIds(prev => prev.filter(id => id !== l.id));
                                 }}
                                 className="w-4 h-4 rounded accent-brand-accent disabled:opacity-30"
                               />
                               <div className="flex-1 min-w-0">
-                                <p className="text-xs font-bold text-gray-700 truncate">{c.nom}</p>
+                                <p className="text-xs font-bold text-gray-700 truncate">{l.identifiant}</p>
                                 <p className="text-[10px] text-gray-400 truncate">
-                                  {hasSpectrum ? (c.lotIdentifier || c.typeProduit) : 'Pas de spectre — importez via fichier'}
+                                  {hasSpectrum ? l.typeProduit : 'Pas de spectre — importez via fichier'}
                                 </p>
                               </div>
-                              {c.colorHex && <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: c.colorHex }} />}
+                              {l.colorHex && <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: l.colorHex }} />}
                             </label>
                           );
                         })}
@@ -347,7 +350,7 @@ export default function AssemblagePage() {
 
               <button
                 type="submit"
-                disabled={loading || (!useDb && !file) || (useDb && selectedCuveIds.length === 0)}
+                disabled={loading || (!useDb && !file) || (useDb && selectedLotIds.length === 0)}
                 className="w-full flex items-center justify-center gap-2 py-3.5 bg-brand-primary text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-primary/20 hover:bg-brand-primary/90 transition-all disabled:opacity-40 disabled:shadow-none"
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
@@ -414,9 +417,9 @@ export default function AssemblagePage() {
                                 {!useDb && (
                                   <button
                                     type="button"
-                                    onClick={() => saveCuveToDb(i)}
+                                    onClick={() => saveLotToDb(i)}
                                     disabled={savingToDb[p.nom]}
-                                    title="Mettre à jour la cuve en base"
+                                    title="Mettre à jour le lot en base"
                                     className="text-[9px] font-bold text-brand-primary hover:underline disabled:opacity-50"
                                   >
                                     {savingToDb[p.nom] ? "..." : "SAUVER DB"}
@@ -495,7 +498,8 @@ export default function AssemblagePage() {
                 <p className="text-sm font-bold text-brand-text">{t("colori.emptyState")}</p>
                 <p className="text-xs text-gray-400 mt-1 max-w-[240px] leading-relaxed mx-auto">
                    {"Configurez les paramètres "}
-                   {typeof window !== "undefined" && window.innerWidth < 1024 ? "ci-dessous" : "à gauche"}
+                   <span className="lg:hidden">ci-dessous</span>
+                   <span className="hidden lg:inline">à gauche</span>
                    {" pour lancer la simulation d'assemblage."}
                 </p>
               </div>

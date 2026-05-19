@@ -350,29 +350,35 @@ def find_best_blend(
 # ── API publique du module ──────────────────────────────────────────────────
 
 def assembler_donnees(
-    wavelengths: list,
-    names: list,
-    do_matrix_list: list,  # list of lists, shape (n_cuves, n_wavelengths)
+    spectra: list,  # list of dicts: {"name": str, "wavelengths": list, "do": list}
     target_L: float,
     target_a: float,
     target_b: float,
     volume_total: float = 1000.0,
 ) -> dict:
     """
-    Similaire à assembler(), mais accepte les listes de données déjà parsées (depuis DB).
-    do_matrix_list : [[do1, do2, ...], [do1, do2, ...], ...]
+    Similaire à assembler(), mais accepte des spectres déjà parsés.
+    Interpole chaque spectre sur la grille CIE pour pouvoir les assembler.
     """
-    wl = np.array(wavelengths, dtype=float)
-    # On attend do_matrix de forme (n_wavelengths, n_cuves)
-    do_matrix = np.array(do_matrix_list, dtype=float).T
+    if not spectra:
+        raise ValueError("Aucun spectre fourni.")
 
-    if len(wl) < 10:
-        raise ValueError("Spectre trop court : au moins 10 points sont nécessaires.")
+    n_cuves = len(spectra)
+    do_cie = np.zeros((len(CIE_WAVELENGTHS), n_cuves))
+    names = []
 
-    do_cie = resample_to_cie(wl, do_matrix)
-    n_cuves = do_cie.shape[1]
+    for i, spec in enumerate(spectra):
+        names.append(spec["name"])
+        wl_i = np.array(spec["wavelengths"], dtype=float)
+        do_i = np.array(spec["do"], dtype=float)
+        
+        if len(wl_i) < 2:
+            raise ValueError(f"Spectre trop court pour {spec['name']}.")
+            
+        # Interpolation sur la grille CIE
+        do_cie[:, i] = np.interp(CIE_WAVELENGTHS, wl_i, do_i, left=0.0, right=0.0)
 
-    # Lab* de chaque cuvée seule
+    # Lab* de chaque lot seul
     cuves_info = []
     for i in range(n_cuves):
         L, a, b = do_to_lab(do_cie[:, i])
@@ -387,12 +393,12 @@ def assembler_donnees(
     target_lab = (float(target_L), float(target_a), float(target_b))
     weights, lab_obtenu, de = find_best_blend(do_cie, target_lab)
 
-    # Spectre DO du mélange final
-    do_mix_user = do_matrix @ weights
+    # Spectre DO du mélange final (sur la grille CIE)
+    do_mix_cie = do_cie @ weights
     spectre = {
-        "wavelengths": wl.tolist(),
-        "do_mix": do_mix_user.tolist(),
-        "do_cuves": [do_matrix[:, i].tolist() for i in range(n_cuves)],
+        "wavelengths": CIE_WAVELENGTHS.tolist(),
+        "do_mix": do_mix_cie.tolist(),
+        "do_cuves": [do_cie[:, i].tolist() for i in range(n_cuves)],
     }
 
     volume_total = max(0.0, float(volume_total))

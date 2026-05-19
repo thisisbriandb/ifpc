@@ -238,7 +238,8 @@ export default function CuvesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCuves.map((cuve) => {
-              const remplissagePct = (cuve.volumeActuel / cuve.volumeMax) * 100;
+              const volumeActuel = cuve.volumeOccupe ?? cuve.volumeActuel ?? 0;
+              const remplissagePct = (volumeActuel / cuve.volumeMax) * 100;
               return (
                 <div key={cuve.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
                   <div className="p-5">
@@ -272,7 +273,7 @@ export default function CuvesPage() {
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       <div>
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Volume Actuel</p>
-                        <p className="text-sm font-bold text-gray-900">{cuve.volumeActuel.toLocaleString()} L</p>
+                        <p className="text-sm font-bold text-gray-900">{volumeActuel.toLocaleString()} L</p>
                       </div>
                       <div className="text-right">
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Capacité Max</p>
