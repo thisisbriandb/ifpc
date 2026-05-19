@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/cuves", "/api/cuves/**")
                                 .permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/cuves", "/api/cuves/**")
-                                .authenticated()
+                                .permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/api/cuves/**")
                                 .authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/cuves/**")

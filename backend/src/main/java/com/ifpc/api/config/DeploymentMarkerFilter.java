@@ -13,7 +13,7 @@ import java.io.IOException;
 @Component
 public class DeploymentMarkerFilter extends OncePerRequestFilter {
 
-    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-write-auth-v9";
+    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-post-permit-v10";
 
     @Override
     protected void doFilterInternal(
