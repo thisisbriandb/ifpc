@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Map;
@@ -21,9 +22,12 @@ public class DatabaseSeeder {
     public CommandLineRunner seedDatabase(
             UserRepository userRepository,
             ProductConfigRepository productConfigRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            JdbcTemplate jdbcTemplate
     ) {
         return args -> {
+            repairCuvesSchema(jdbcTemplate);
+
             // Création de l'admin par défaut s'il n'existe pas
             if (userRepository.findByEmail("admin@ifpc.com").isEmpty()) {
                 User admin = User.builder()
@@ -63,5 +67,11 @@ public class DatabaseSeeder {
                 }
             }
         };
+    }
+
+    private void repairCuvesSchema(JdbcTemplate jdbcTemplate) {
+        jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS created_at timestamp(6)");
+        jdbcTemplate.execute("UPDATE cuves SET created_at = COALESCE(updated_at, now()) WHERE created_at IS NULL");
+        jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN created_at SET NOT NULL");
     }
 }
