@@ -17,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DeployInfoController {
 
-    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-auth-v2";
+    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-jwt-filter-v3";
 
     private final CuveRepository cuveRepository;
     private final StockageRepository stockageRepository;
