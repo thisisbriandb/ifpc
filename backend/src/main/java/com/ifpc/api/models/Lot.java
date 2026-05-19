@@ -13,28 +13,34 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "cuves")
-public class Cuve {
+@Table(name = "lots")
+public class Lot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String nom;
+    @Column(nullable = false, unique = true, length = 100)
+    private String identifiant;
 
-    @Column(nullable = false)
-    private Double volumeMax;
-
-    @Column(nullable = false)
-    @Builder.Default
-    private String statutPhysique = "PROPRE"; // PROPRE, SALE, EN_NETTOYAGE, EN_MAINTENANCE
+    @Column(nullable = false, length = 100)
+    private String typeProduit;
 
     @Column(nullable = false)
     @Builder.Default
-    private Boolean deleted = false;
+    private Double volumeActuel = 0.0;
 
-    private LocalDateTime deletedAt;
+    private Double colorL;
+    private Double colorA;
+    private Double colorB;
+    private String colorHex;
+
+    @Column(columnDefinition = "TEXT")
+    private String spectrumJson;
+
+    @Column(nullable = false, length = 30)
+    @Builder.Default
+    private String statutLot = "EN_FERMENTATION"; // EN_FERMENTATION, PRET_A_ASSEMBLER, EMBOUTEILLE
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

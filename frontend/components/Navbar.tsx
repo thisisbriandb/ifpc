@@ -59,8 +59,7 @@ export default function Sidebar() {
       label: t("nav.gestionCuves"),
       icon: Container,
       children: [
-        { href: "/cuves", label: t("nav.suiviCuves") },
-        { href: "/cuves/assemblage", label: t("nav.assemblage") },
+        { href: "/cuves/chai", label: t("nav.assemblage") },
       ],
     },
   ];
@@ -123,13 +122,11 @@ export default function Sidebar() {
               href="/"
               onClick={closeMobile}
               title={collapsed ? t("nav.home") : undefined}
-              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${
-                collapsed && !mobileOpen ? "justify-center" : ""
-              } ${
-                pathname === "/"
+              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${collapsed && !mobileOpen ? "justify-center" : ""
+                } ${pathname === "/"
                   ? "text-brand-primary font-semibold bg-brand-primary/5"
                   : "text-gray-400 hover:text-gray-700 hover:bg-gray-50"
-              }`}
+                }`}
             >
               <Home className="w-[18px] h-[18px] shrink-0" />
               {(!collapsed || mobileOpen) && <span>{t("nav.home")}</span>}
@@ -150,11 +147,10 @@ export default function Sidebar() {
                     href={group.children[0].href}
                     onClick={closeMobile}
                     title={group.label}
-                    className={`flex items-center justify-center py-2 rounded-lg transition-colors ${
-                      hasActiveChild
-                        ? "text-brand-primary bg-brand-primary/5"
-                        : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
-                    }`}
+                    className={`flex items-center justify-center py-2 rounded-lg transition-colors ${hasActiveChild
+                      ? "text-brand-primary bg-brand-primary/5"
+                      : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
+                      }`}
                   >
                     <GroupIcon className="w-[18px] h-[18px]" />
                   </Link>
@@ -162,9 +158,8 @@ export default function Sidebar() {
                   <>
                     <button
                       onClick={() => toggleGroup(group.key)}
-                      className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[13px] font-semibold transition-colors ${
-                        hasActiveChild ? "text-brand-primary bg-brand-primary/5" : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
-                      }`}
+                      className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[13px] font-semibold transition-colors ${hasActiveChild ? "text-brand-primary bg-brand-primary/5" : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
+                        }`}
                     >
                       <span className="flex items-center gap-2.5">
                         <GroupIcon className="w-[18px] h-[18px]" />
@@ -182,11 +177,10 @@ export default function Sidebar() {
                               key={href}
                               href={href}
                               onClick={closeMobile}
-                              className={`block pl-3 pr-2 py-1.5 text-[12px] transition-colors rounded-r-md ${
-                                active
-                                  ? "text-brand-primary font-semibold border-l-2 border-brand-primary -ml-px bg-brand-primary/5"
-                                  : "text-gray-400 hover:text-gray-700 hover:bg-gray-50"
-                              }`}
+                              className={`block pl-3 pr-2 py-1.5 text-[12px] transition-colors rounded-r-md ${active
+                                ? "text-brand-primary font-semibold border-l-2 border-brand-primary -ml-px bg-brand-primary/5"
+                                : "text-gray-400 hover:text-gray-700 hover:bg-gray-50"
+                                }`}
                             >
                               {label}
                             </Link>
@@ -206,13 +200,11 @@ export default function Sidebar() {
               href="/historique"
               onClick={closeMobile}
               title={collapsed ? t("nav.historique") : undefined}
-              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${
-                collapsed && !mobileOpen ? "justify-center" : ""
-              } ${
-                pathname === "/historique"
+              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${collapsed && !mobileOpen ? "justify-center" : ""
+                } ${pathname === "/historique"
                   ? "text-brand-primary font-semibold bg-brand-primary/5"
                   : "text-gray-400 hover:text-gray-700 hover:bg-gray-50"
-              }`}
+                }`}
             >
               <Clock className="w-[18px] h-[18px] shrink-0" />
               {(!collapsed || mobileOpen) && <span>{t("nav.historique")}</span>}
@@ -226,13 +218,11 @@ export default function Sidebar() {
                 href="/admin"
                 onClick={closeMobile}
                 title={collapsed ? "Admin" : undefined}
-                className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${
-                  collapsed && !mobileOpen ? "justify-center" : ""
-                } ${
-                  pathname === "/admin"
+                className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${collapsed && !mobileOpen ? "justify-center" : ""
+                  } ${pathname === "/admin"
                     ? "text-red-500 font-semibold bg-red-50"
                     : "text-gray-400 hover:text-red-500 hover:bg-red-50/50"
-                }`}
+                  }`}
               >
                 <Shield className="w-[18px] h-[18px] shrink-0" />
                 {(!collapsed || mobileOpen) && <span>{t("nav.admin")}</span>}
@@ -275,11 +265,10 @@ export default function Sidebar() {
                 href="/login"
                 onClick={closeMobile}
                 title={collapsed ? t("nav.loginTitle") : undefined}
-                className={`flex items-center justify-center gap-2 w-full text-[12px] font-semibold py-2 rounded-lg transition-colors ${
-                  collapsed && !mobileOpen
-                    ? "text-gray-400 hover:text-brand-primary"
-                    : "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20"
-                }`}
+                className={`flex items-center justify-center gap-2 w-full text-[12px] font-semibold py-2 rounded-lg transition-colors ${collapsed && !mobileOpen
+                  ? "text-gray-400 hover:text-brand-primary"
+                  : "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20"
+                  }`}
               >
                 {collapsed && !mobileOpen ? <User className="w-4 h-4" /> : t("nav.login")}
               </Link>

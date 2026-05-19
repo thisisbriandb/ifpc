@@ -295,9 +295,7 @@ export async function assemblageCouleur(
 
 export async function assemblageCouleurDb(
   data: {
-    wavelengths: number[];
-    names: string[];
-    do_matrix_list: number[][];
+    spectra: { name: string; wavelengths: number[]; do_values: number[] }[];
     target_L: number;
     target_a: number;
     target_b: number;
@@ -313,13 +311,18 @@ export async function spectrumToLab(wavelengths: number[], doValues: number[]): 
   return data;
 }
 
-// ── Module 4 : Gestion de cuves ─────────────────────────────────────────────
+// ── Module 4 : Chai virtuel — Cuves / Lots / Stockages ─────────────────────
 
 export interface Cuve {
   id?: number;
   nom: string;
   volumeMax: number;
-  volumeActuel: number;
+  statutPhysique?: "PROPRE" | "SALE" | "EN_NETTOYAGE" | "EN_MAINTENANCE" | string;
+  volumeOccupe?: number;
+  volumeDisponible?: number;
+  stockages?: Stockage[];
+  // Transitional legacy fields kept while the cuves UI is migrated to Lot/Stockage.
+  volumeActuel?: number;
   typeProduit?: string;
   statut?: string;
   lotIdentifier?: string;
@@ -328,7 +331,59 @@ export interface Cuve {
   colorB?: number;
   colorHex?: string;
   spectrumJson?: string;
+  createdAt?: string;
   updatedAt?: string;
+}
+
+export interface Lot {
+  id?: number;
+  identifiant: string;
+  typeProduit: string;
+  volumeActuel: number;
+  colorL?: number;
+  colorA?: number;
+  colorB?: number;
+  colorHex?: string;
+  spectrumJson?: string;
+  statutLot?: "EN_FERMENTATION" | "PRET_A_ASSEMBLER" | "EMBOUTEILLE" | string;
+  cuveActuelle?: {
+    cuveId: number;
+    cuveNom: string;
+    volumeOccupe: number;
+  } | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Stockage {
+  id?: number;
+  cuveId: number;
+  cuveNom?: string;
+  lotId: number;
+  lotIdentifiant?: string;
+  lotTypeProduit?: string;
+  lotColorHex?: string;
+  volumeOccupe: number;
+  dateDebut?: string;
+  dateFin?: string | null;
+  actif?: boolean;
+}
+
+export interface Operation {
+  id: number;
+  type: string;
+  cuveSourceId?: number | null;
+  cuveSourceNom?: string | null;
+  cuveDestId?: number | null;
+  cuveDestNom?: string | null;
+  lotId?: number | null;
+  lotIdentifiant?: string | null;
+  lotResultatId?: number | null;
+  lotResultatIdentifiant?: string | null;
+  volume?: number | null;
+  description?: string | null;
+  userEmail?: string | null;
+  createdAt: string;
 }
 
 export async function getCuves(): Promise<Cuve[]> {
@@ -353,4 +408,107 @@ export async function updateCuve(id: number, cuve: Cuve): Promise<Cuve> {
 
 export async function deleteCuve(id: number): Promise<void> {
   await api.delete(`/cuves/${id}`);
+}
+
+export async function restoreCuve(id: number): Promise<Cuve> {
+  const { data } = await api.post(`/cuves/${id}/restore`);
+  return data;
+}
+
+export async function getLots(): Promise<Lot[]> {
+  const { data } = await api.get("/lots");
+  return data;
+}
+
+export async function getLot(id: number): Promise<Lot> {
+  const { data } = await api.get(`/lots/${id}`);
+  return data;
+}
+
+export async function createLot(lot: Lot): Promise<Lot> {
+  const { data } = await api.post("/lots", lot);
+  return data;
+}
+
+export async function updateLot(id: number, lot: Partial<Lot>): Promise<Lot> {
+  const { data } = await api.put(`/lots/${id}`, lot);
+  return data;
+}
+
+export async function deleteLot(id: number): Promise<void> {
+  await api.delete(`/lots/${id}`);
+}
+
+export async function getStockages(): Promise<Stockage[]> {
+  const { data } = await api.get("/stockages");
+  return data;
+}
+
+export async function createStockage(stockage: { cuveId: number; lotId: number; volumeOccupe: number }): Promise<Stockage> {
+  const { data } = await api.post("/stockages", stockage);
+  return data;
+}
+
+export async function terminerStockage(id: number): Promise<Stockage> {
+  const { data } = await api.post(`/stockages/${id}/terminer`);
+  return data;
+}
+
+export async function getOperations(): Promise<Operation[]> {
+  const { data } = await api.get("/operations");
+  return data;
+}
+
+export async function getOperationsByCuve(cuveId: number): Promise<Operation[]> {
+  const { data } = await api.get(`/operations/cuve/${cuveId}`);
+  return data;
+}
+
+export async function getOperationsByLot(lotId: number): Promise<Operation[]> {
+  const { data } = await api.get(`/operations/lot/${lotId}`);
+  return data;
+}
+
+// ── Operations métier ────────────────────────────────────────────────────────
+
+export async function opNettoyage(cuveId: number): Promise<Operation> {
+  const { data } = await api.post("/operations/nettoyage", { cuveId });
+  return data;
+}
+
+export async function opRemplissage(cuveId: number, lotId: number, volume?: number): Promise<Operation> {
+  const { data } = await api.post("/operations/remplissage", { cuveId, lotId, volume });
+  return data;
+}
+
+export async function opTransfert(cuveSourceId: number, cuveDestId: number, lotId: number, volume?: number): Promise<Operation> {
+  const { data } = await api.post("/operations/transfert", { cuveSourceId, cuveDestId, lotId, volume });
+  return data;
+}
+
+export async function opTransformation(params: {
+  lotId: number;
+  colorL?: number; colorA?: number; colorB?: number;
+  colorHex?: string; spectrumJson?: string; description?: string;
+}): Promise<Operation> {
+  const { data } = await api.post("/operations/transformation", params);
+  return data;
+}
+
+export interface AssemblageSource {
+  cuveId: number;
+  lotId: number;
+  volume: number;
+}
+
+export async function opAssemblage(params: {
+  sources: AssemblageSource[];
+  cuveDestId: number;
+  newLotIdentifiant: string;
+  typeProduit: string;
+  colorL?: number; colorA?: number; colorB?: number;
+  colorHex?: string; spectrumJson?: string;
+}): Promise<Operation> {
+  const { data } = await api.post("/operations/assemblage", params);
+  return data;
 }

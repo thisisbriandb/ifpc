@@ -34,6 +34,30 @@ const nextConfig = {
         destination: `${SPRING_URL}/api/cuves/:path*`,
       },
       {
+        source: '/api/lots',
+        destination: `${SPRING_URL}/api/lots`,
+      },
+      {
+        source: '/api/lots/:path*',
+        destination: `${SPRING_URL}/api/lots/:path*`,
+      },
+      {
+        source: '/api/stockages',
+        destination: `${SPRING_URL}/api/stockages`,
+      },
+      {
+        source: '/api/stockages/:path*',
+        destination: `${SPRING_URL}/api/stockages/:path*`,
+      },
+      {
+        source: '/api/operations',
+        destination: `${SPRING_URL}/api/operations`,
+      },
+      {
+        source: '/api/operations/:path*',
+        destination: `${SPRING_URL}/api/operations/:path*`,
+      },
+      {
         source: '/api/referentiels/:path*',
         destination: `${FASTAPI_URL}/api/referentiels/:path*`,
       },
