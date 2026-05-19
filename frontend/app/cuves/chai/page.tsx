@@ -30,7 +30,7 @@ type ModalView = null | "transfert" | "assemblage";
 
 export default function ChaiVirtuelPage() {
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { user, checkAuth } = useAuthStore();
   const [cuves, setCuves] = useState<Cuve[]>([]);
   const [lots, setLots] = useState<Lot[]>([]);
   const [loading, setLoading] = useState(true);
@@ -96,6 +96,7 @@ export default function ChaiVirtuelPage() {
   }, []);
 
   useEffect(() => { loadData(); }, [loadData]);
+  useEffect(() => { checkAuth(); }, [checkAuth]);
 
   // ── Drag Guidance Logic ────────────────────────────────────────────────────
 
@@ -336,7 +337,14 @@ export default function ChaiVirtuelPage() {
       setNewCuveNom(""); setNewCuveVolume(1000);
       setPanelView(null);
       await loadData();
-    } catch (err: any) { alert(err?.response?.data?.error || "Erreur"); }
+    } catch (err: any) {
+      if (err?.response?.status === 401 || err?.response?.status === 403) {
+        alert("Session expirée. Reconnectez-vous puis réessayez.");
+        await checkAuth();
+        return;
+      }
+      alert(err?.response?.data?.error || "Erreur");
+    }
   };
 
   // ── Spectrum file parsing ────────────────────────────────────────────────
@@ -399,7 +407,14 @@ export default function ChaiVirtuelPage() {
       setNewLotSpectrum(null); setNewLotColor(null); setSpectrumFileName("");
       setPanelView(null);
       await loadData();
-    } catch (err: any) { alert(err?.response?.data?.error || "Erreur"); }
+    } catch (err: any) {
+      if (err?.response?.status === 401 || err?.response?.status === 403) {
+        alert("Session expirée. Reconnectez-vous puis réessayez.");
+        await checkAuth();
+        return;
+      }
+      alert(err?.response?.data?.error || "Erreur");
+    }
   };
 
   // ── Transformation (re-upload spectrum for existing lot) ──────────────────
