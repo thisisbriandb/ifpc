@@ -6,6 +6,8 @@ import com.ifpc.api.repositories.CuveRepository;
 import com.ifpc.api.repositories.StockageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DeployInfoController {
 
-    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-post-permit-v10";
+    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-create-probe-v11";
 
     private final CuveRepository cuveRepository;
     private final StockageRepository stockageRepository;
@@ -62,6 +64,37 @@ public class DeployInfoController {
         return result;
     }
 
+    @PostMapping("/cuves-create-probe")
+    public Map<String, Object> createCuveProbe(@RequestBody CreateCuveProbeRequest request) {
+        Map<String, Object> result = baseInfo();
+
+        try {
+            Cuve cuve = Cuve.builder()
+                    .nom(request.nom())
+                    .volumeMax(request.volumeMax())
+                    .statutPhysique(request.statutPhysique() != null ? request.statutPhysique() : "PROPRE")
+                    .build();
+            Cuve saved = cuveRepository.save(cuve);
+
+            result.put("cuveCreated", true);
+            result.put("id", saved.getId());
+            result.put("nom", saved.getNom());
+            result.put("volumeMax", saved.getVolumeMax());
+            result.put("statutPhysique", saved.getStatutPhysique());
+        } catch (Throwable error) {
+            result.put("cuveCreated", false);
+            result.put("errorClass", error.getClass().getName());
+            result.put("errorMessage", error.getMessage() == null ? "none" : error.getMessage());
+            Throwable cause = error.getCause();
+            if (cause != null) {
+                result.put("causeClass", cause.getClass().getName());
+                result.put("causeMessage", cause.getMessage() == null ? "none" : cause.getMessage());
+            }
+        }
+
+        return result;
+    }
+
     private Map<String, Object> baseInfo() {
         Map<String, Object> info = new LinkedHashMap<>();
         info.put("marker", MARKER);
@@ -76,4 +109,6 @@ public class DeployInfoController {
         String value = System.getenv(name);
         return value == null || value.isBlank() ? "unknown" : value;
     }
+
+    public record CreateCuveProbeRequest(String nom, Double volumeMax, String statutPhysique) {}
 }

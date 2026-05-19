@@ -73,7 +73,8 @@ public class SecurityConfiguration {
                 "X-IFPC-Auth-Name",
                 "X-IFPC-Auth-Class",
                 "X-IFPC-Auth-Authenticated",
-                "X-IFPC-Auth-Authorities"
+                "X-IFPC-Auth-Authorities",
+                "X-IFPC-Cuve-Controller"
         ));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
