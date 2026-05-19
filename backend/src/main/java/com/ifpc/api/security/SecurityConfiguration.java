@@ -26,6 +26,7 @@ import java.util.Arrays;
 public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthDebugFilter authDebugFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
@@ -43,7 +44,8 @@ public class SecurityConfiguration {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(authDebugFilter, JwtAuthenticationFilter.class);
 
         return http.build();
     }
@@ -58,7 +60,14 @@ public class SecurityConfiguration {
                 "Authorization",
                 "X-IFPC-Backend-Marker",
                 "X-IFPC-Railway-Commit",
-                "X-IFPC-Railway-Deployment"
+                "X-IFPC-Railway-Deployment",
+                "X-IFPC-Request-Method",
+                "X-IFPC-Request-Path",
+                "X-IFPC-Auth-Present",
+                "X-IFPC-Auth-Name",
+                "X-IFPC-Auth-Class",
+                "X-IFPC-Auth-Authenticated",
+                "X-IFPC-Auth-Authorities"
         ));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
