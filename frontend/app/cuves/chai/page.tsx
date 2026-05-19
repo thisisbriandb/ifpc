@@ -844,7 +844,7 @@ export default function ChaiVirtuelPage() {
                   <input type="text" value={newCuveNom} onChange={(e) => setNewCuveNom(e.target.value)}
                     placeholder="ex: A → Cuve A"
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-200 outline-none" />
-                  <p className="text-[10px] text-gray-400 mt-1">Le système ajoutera automatiquement le préfixe "Cuve "</p>
+                  <p className="text-[10px] text-gray-400 mt-1">{"Le système ajoutera automatiquement le préfixe \"Cuve \""}</p>
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume max (L)</label>
