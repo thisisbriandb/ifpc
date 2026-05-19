@@ -18,6 +18,10 @@ const nextConfig = {
         destination: `${SPRING_URL}/api/config/:path*`,
       },
       {
+        source: '/api/deploy/:path*',
+        destination: `${SPRING_URL}/api/deploy/:path*`,
+      },
+      {
         source: '/api/history',
         destination: `${SPRING_URL}/api/history`,
       },
