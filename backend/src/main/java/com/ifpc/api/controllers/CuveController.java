@@ -4,6 +4,7 @@ import com.ifpc.api.models.Cuve;
 import com.ifpc.api.models.Stockage;
 import com.ifpc.api.repositories.CuveRepository;
 import com.ifpc.api.repositories.StockageRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,14 +50,28 @@ public class CuveController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> createCuve(@RequestBody CreateCuveRequest request) {
-        Cuve cuve = Cuve.builder()
-                .nom(request.nom())
-                .volumeMax(request.volumeMax())
-                .statutPhysique(request.statutPhysique() != null ? request.statutPhysique() : "PROPRE")
-                .build();
-        Cuve saved = cuveRepository.save(cuve);
-        return ResponseEntity.ok(cuveToDto(saved));
+    public ResponseEntity<?> createCuve(@RequestBody CreateCuveRequest request, HttpServletResponse response) {
+        response.setHeader("X-IFPC-Cuve-Controller", "create");
+        try {
+            Cuve cuve = Cuve.builder()
+                    .nom(request.nom())
+                    .volumeMax(request.volumeMax())
+                    .statutPhysique(request.statutPhysique() != null ? request.statutPhysique() : "PROPRE")
+                    .build();
+            Cuve saved = cuveRepository.save(cuve);
+            return ResponseEntity.ok(cuveToDto(saved));
+        } catch (Throwable error) {
+            Map<String, Object> body = new HashMap<>();
+            body.put("error", "Unable to create cuve");
+            body.put("errorClass", error.getClass().getName());
+            body.put("errorMessage", error.getMessage());
+            Throwable cause = error.getCause();
+            if (cause != null) {
+                body.put("causeClass", cause.getClass().getName());
+                body.put("causeMessage", cause.getMessage());
+            }
+            return ResponseEntity.internalServerError().body(body);
+        }
     }
 
     @PutMapping("/{id}")
