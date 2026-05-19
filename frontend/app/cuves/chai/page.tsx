@@ -34,7 +34,6 @@ export default function ChaiVirtuelPage() {
   const [cuves, setCuves] = useState<Cuve[]>([]);
   const [lots, setLots] = useState<Lot[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Drag state
   const [isDragging, setIsDragging] = useState(false);
@@ -76,7 +75,6 @@ export default function ChaiVirtuelPage() {
 
   const loadData = useCallback(async () => {
     setLoading(true);
-    setLoadError(null);
 
     const [cuvesResult, lotsResult] = await Promise.allSettled([getCuves(), getLots()]);
 
@@ -92,15 +90,6 @@ export default function ChaiVirtuelPage() {
     } else {
       console.error(lotsResult.reason);
       setLots([]);
-    }
-
-    const failedResources = [
-      cuvesResult.status === "rejected" ? "cuves" : null,
-      lotsResult.status === "rejected" ? "lots" : null,
-    ].filter(Boolean);
-
-    if (failedResources.length > 0) {
-      setLoadError(`Chargement impossible pour : ${failedResources.join(", ")}.`);
     }
 
     setLoading(false);
@@ -546,19 +535,6 @@ export default function ChaiVirtuelPage() {
             <div className="flex justify-center py-20"><Loader2 className="w-10 h-10 animate-spin text-gray-300" /></div>
           ) : (
             <div className="space-y-6">
-              {loadError && (
-                <div className="flex items-center justify-between gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 shrink-0" />
-                    <span>{loadError} Les données disponibles restent affichées.</span>
-                  </div>
-                  <button onClick={loadData}
-                    className="px-3 py-1.5 bg-white border border-amber-200 rounded-lg font-bold text-amber-700 hover:bg-amber-100 transition-colors">
-                    Réessayer
-                  </button>
-                </div>
-              )}
-
               {/* Instruction hint during drag */}
               {isDragging && (
                 <div className="flex items-center gap-2 px-4 py-2.5 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-700 font-medium animate-in fade-in duration-200">
