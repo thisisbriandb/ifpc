@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DeployInfoController {
 
-    private static final String MARKER = "ifpc-backend-2026-05-19-cuves-schema-repair-v6";
+    private static final String MARKER = "ifpc-backend-2026-05-19-auth-me-filter-v7";
 
     private final CuveRepository cuveRepository;
     private final StockageRepository stockageRepository;
