@@ -25,14 +25,15 @@ interface Props {
   tRef: number;
   vpCible: number;
   statut?: string;
+  procede?: string | null;
 }
 
-const CustomTooltip = ({ active, payload, label, t }: any) => {
+const CustomTooltip = ({ active, payload, label, t, timeUnit }: any) => {
   if (!active || !payload?.length) return null;
   const data = payload[0].payload;
   return (
     <div className="bg-white/95 backdrop-blur-sm px-3 py-2 rounded-md border border-black/[0.06] shadow-sm text-[11px]">
-      <p className="font-mono font-bold text-brand-text mb-1.5">{label} min</p>
+      <p className="font-mono font-bold text-brand-text mb-1.5">{label} {timeUnit}</p>
       {data.temperature !== undefined && (
         <div className="flex justify-between gap-6">
           <span className="text-gray-400">{t("chart.temperature")}</span>
@@ -70,10 +71,15 @@ const STATUT_COLORS: Record<string, string> = {
   insuffisant: "#dc2626",
 };
 
-export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Props) {
+export default function TemperatureChart({ courbe, tRef, vpCible, statut, procede }: Props) {
   const { t } = useI18n();
   const [view, setView] = useState<ChartView>("both");
   const data = buildData(courbe);
+  const isFlash = procede?.toLowerCase().includes("flash");
+  const timeUnit = isFlash ? "sec." : "min.";
+
+  // Extract all "temps" points to set as explicit ticks so every step is drawn on the axis
+  const tempsTicks = data.map(d => d.temps);
 
   const showTemp = view === "temp" || view === "both";
   const showVp = view === "vp" || view === "both";
@@ -105,17 +111,26 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Prop
       </div>
 
       {/* Chart */}
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 relative">
+        {/* Unit labels at the top of the chart container to prevent overlaps and cutting */}
+        <div className="absolute top-0 left-0 right-0 flex justify-between px-10 text-[10px] text-gray-400 font-semibold select-none z-10 pointer-events-none">
+          {showTemp && <span>Température (°C)</span>}
+          {showVp && <span>Valeur Pasteurisatrice (UP)</span>}
+        </div>
+
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={data} margin={{ top: 8, right: 8, left: -25, bottom: 0 }}>
+          <ComposedChart data={data} margin={{ top: 25, right: 15, left: 0, bottom: 15 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f3f3" />
             <XAxis
               dataKey="temps"
+              type="number"
+              domain={["dataMin", "dataMax"]}
+              ticks={tempsTicks}
               tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
               axisLine={false}
               tickLine={false}
-              tickFormatter={(v) => `${v}′`}
-              minTickGap={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 30}
+              tickFormatter={(v) => `${v}`}
+              label={{ value: `Durée (${timeUnit})`, position: "insideBottom", offset: -8, style: { fontSize: 9, fill: "#9ca3af", fontWeight: "bold" } }}
             />
             {/* Left axis — temperature */}
             {showTemp && (
@@ -124,9 +139,9 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Prop
                 tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
                 axisLine={false}
                 tickLine={false}
-                domain={["auto", "auto"]}
+                domain={[(min: number) => Math.floor(min - 5), (max: number) => Math.ceil(max + 5)]}
+                allowDecimals={false}
                 tickFormatter={(v) => `${v}°`}
-                label={{ value: "°C", position: "insideTopLeft", offset: 10, style: { fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" } }}
               />
             )}
             {/* Right axis — VP */}
@@ -134,13 +149,14 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut }: Prop
               <YAxis
                 yAxisId="vp"
                 orientation={showTemp ? "right" : "left"}
+                type="number"
+                domain={[0, "auto"]}
                 tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
                 axisLine={false}
                 tickLine={false}
-                label={{ value: "UP", position: showTemp ? "insideTopRight" : "insideTopLeft", offset: 10, style: { fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" } }}
               />
             )}
-            <Tooltip content={<CustomTooltip t={t} />} />
+            <Tooltip content={<CustomTooltip t={t} timeUnit={timeUnit} />} />
 
             {/* Reference lines */}
             {showTemp && (

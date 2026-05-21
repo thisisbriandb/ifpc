@@ -106,7 +106,7 @@ export default function LoginPage() {
           <div>
             <span className="font-bold text-xl text-white block">IFPC</span>
             <span className="text-xs text-white/60">
-              Institut Français de Production Cidricole
+              Institut Français de Productions Cidricoles
             </span>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function LoginPage() {
 
         <div className="relative z-10">
           <p className="text-sm text-white/40">
-            © IFPC — Institut Français des Productions Cidricoles
+            © IFPC — Institut Français de Productions Cidricoles
           </p>
         </div>
       </div>

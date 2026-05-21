@@ -231,19 +231,75 @@ def localize_clarification_name(clarification: Optional[str], locale: str) -> Op
     return translate("clarifications", clarification, locale, clarification)
 
 
-def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, locale: str) -> str:
+def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, locale: str, microorganisme: str = "") -> str:
     lang = normalize_locale(locale)
+    cible_int = int(round(vp_cible))
+
     if lang == "en":
-        if statut == "conforme":
-            return f"Pasteurisation compliant. PU = {vp_obtenue:.2f} (target >= {vp_cible:.1f})."
+        if statut in ("conforme", "vigilance"):
+            msg = (
+                f"Pasteurisation conditions are sufficient to reduce the risk "
+                f"related to {microorganisme}."
+            ) if microorganisme else (
+                f"Pasteurisation compliant. PU = {vp_obtenue:.2f} (target >= {cible_int} UP)."
+            )
+            if statut == "vigilance":
+                msg += " However, the safety margin is limited."
+            return msg
+        # insuffisant
+        msg = (
+            f"Pasteurisation conditions are insufficient to reduce the risk "
+            f"related to {microorganisme}.\n\n"
+            f"It is recommended to adjust the pasteurisation schedule."
+        ) if microorganisme else (
+            f"Pasteurisation insufficient. PU = {vp_obtenue:.2f} (target >= {cible_int} UP)."
+        )
+        return msg
+
+    # --- French ---
+    if statut in ("conforme", "vigilance"):
+        if microorganisme.lower().startswith("byssochlamys"):
+            msg = (
+                f"Les conditions de pasteurisation sont suffisantes pour "
+                f"réduire le risque lié aux moisissures ({microorganisme})."
+            )
+        elif microorganisme.lower().startswith("saccharomyces"):
+            msg = (
+                f"Les conditions de pasteurisation sont suffisantes pour "
+                f"réduire le risque lié à {microorganisme} et aux reprises de fermentation."
+            )
+        elif microorganisme:
+            msg = (
+                f"Les conditions de pasteurisation sont suffisantes pour "
+                f"réduire le risque lié à {microorganisme}."
+            )
+        else:
+            msg = f"Pasteurisation conforme. VP = {vp_obtenue:.2f} UP (cible ≥ {cible_int} UP)."
+
         if statut == "vigilance":
-            return f"Pasteurisation close to threshold. PU = {vp_obtenue:.2f} (target >= {vp_cible:.1f}). Safety margin is limited."
-        return f"Pasteurisation insufficient. PU = {vp_obtenue:.2f} (target >= {vp_cible:.1f})."
-    if statut == "conforme":
-        return f"Pasteurisation conforme. VP = {vp_obtenue:.2f} UP (cible >= {vp_cible:.1f} UP)."
-    if statut == "vigilance":
-        return f"Pasteurisation proche du seuil. VP = {vp_obtenue:.2f} UP (cible >= {vp_cible:.1f} UP). Marge insuffisante."
-    return f"Pasteurisation insuffisante. VP = {vp_obtenue:.2f} UP (cible >= {vp_cible:.1f} UP)."
+            msg += "\n\nAttention : la marge de sécurité est limitée."
+        return msg
+
+    # insuffisant
+    if microorganisme.lower().startswith("byssochlamys"):
+        return (
+            f"Les conditions de pasteurisation sont insuffisantes pour "
+            f"réduire le risque lié aux moisissures ({microorganisme}).\n\n"
+            f"Il est recommandé d'ajuster le barème de pasteurisation."
+        )
+    elif microorganisme.lower().startswith("saccharomyces"):
+        return (
+            f"Les conditions de pasteurisation sont insuffisantes pour "
+            f"réduire le risque lié à {microorganisme}.\n\n"
+            f"Il est recommandé d'ajuster le barème de pasteurisation."
+        )
+    elif microorganisme:
+        return (
+            f"Les conditions de pasteurisation sont insuffisantes pour "
+            f"réduire le risque lié à {microorganisme}.\n\n"
+            f"Il est recommandé d'ajuster le barème de pasteurisation."
+        )
+    return f"Pasteurisation insuffisante. VP = {vp_obtenue:.2f} UP (cible ≥ {cible_int} UP)."
 
 
 # ---------------------------------------------------------------------------
@@ -353,7 +409,8 @@ def evaluer_pasteurisation(
         statut = "vigilance"
     else:
         statut = "insuffisant"
-    message = build_diagnostic_message(statut, vp_obtenue, effective_vp_cible, lang)
+    micro_nom = micro["nom"] if micro else micro_key
+    message = build_diagnostic_message(statut, vp_obtenue, effective_vp_cible, lang, microorganisme=micro_nom)
 
     # --- Risque ---
     risque = evaluer_risque(

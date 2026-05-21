@@ -140,8 +140,8 @@ export function KPICards({ result }: Props) {
             )}
           </div>
 
-          <p className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0">
-            {result.risque.conseil || result.message}
+          <p className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0 whitespace-pre-line">
+            {result.message}
           </p>
 
           <p className="text-[10px] sm:text-[11px] font-mono text-gray-400 mt-2">
@@ -197,15 +197,11 @@ export function ParametersTable({ result }: Props) {
     <div className="bg-gray-50 rounded-lg border border-black/[0.06] overflow-hidden">
       <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-6 gap-x-4">
         {[
-          { label: t("resultDisplay.product"), value: result.parametres.produit },
-          { label: t("resultDisplay.lotIdentifier"), value: result.parametres.lot_identifier },
           { label: t("resultDisplay.microorganism"), value: result.parametres.microorganisme },
           { label: "Tref", value: `${result.parametres.t_ref} °C` },
           { label: "Z", value: `${result.parametres.z} °C` },
           { label: t("resultDisplay.clarification"), value: result.parametres.clarification },
           { label: t("resultDisplay.process"), value: result.parametres.procede },
-          { label: "pH", value: result.parametres.ph },
-          { label: t("resultDisplay.alcohol"), value: result.parametres.titre_alcool ? `${result.parametres.titre_alcool}%` : null },
         ].filter(i => i.value !== null && i.value !== undefined).map((item, idx) => (
           <div key={idx}>
             <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">{item.label}</p>
@@ -228,7 +224,7 @@ export default function ResultDisplay({ result }: Props) {
         <div className="w-full sm:w-1.5 h-1.5 sm:h-auto shrink-0" style={{ backgroundColor: result.risque.couleur }}></div>
         <div className="p-5 flex-1">
           <h4 className="font-bold text-brand-text mb-2">{t("resultDisplay.analysisTitle")}</h4>
-          <p className="text-sm text-gray-600 leading-relaxed mb-4">{result.message}</p>
+          <p className="text-sm text-gray-600 leading-relaxed mb-4 whitespace-pre-line">{result.message}</p>
 
           <div className="inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-gray-50 border border-gray-100 text-gray-700">
             <span className="uppercase text-[10px] tracking-wider text-gray-500">{t("resultDisplay.advice")}</span>

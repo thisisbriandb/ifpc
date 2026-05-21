@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { AlertTriangle, Info, ShieldCheck, ChevronDown } from "lucide-react";
+import { AlertTriangle, Info, ShieldCheck, ChevronDown, HelpCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
+import HelpModal from "@/components/HelpModal";
 
 // ── Données de référence ──────────────────────────────────────────────────
 
@@ -54,7 +55,7 @@ function getVerdict(holdMin: number, pasteType: string): Verdict {
     if (holdMin <= 2) return "difficult";
     return "impossible";
   }
-  // tunnel
+  // classique & tunnel
   if (holdMin <= 30) return "ok";
   if (holdMin <= 120) return "difficult";
   return "impossible";
@@ -86,7 +87,9 @@ function HoldTimeGauge({ holdSec, holdMin, verdict }: { holdSec: number; holdMin
   const circumference = 2 * Math.PI * r;
   const filled = circumference * ratio;
 
-  const display = holdSec < 60
+  const display = holdSec < 1
+    ? { value: "< 1", unit: "sec" }
+    : holdSec < 60
     ? { value: holdSec.toFixed(1), unit: "sec" }
     : holdMin < 60
     ? { value: holdMin.toFixed(1), unit: "min" }
@@ -123,7 +126,7 @@ export default function BaremePage() {
 
   const [productType, setProductType] = useState("jus_pomme");
   const [trouble, setTrouble] = useState(true);
-  const [pasteType, setPasteType] = useState<"flash" | "tunnel">("flash");
+  const [pasteType, setPasteType] = useState<"flash" | "classique" | "tunnel">("classique");
   const [tConsigne, setTConsigne] = useState("75");
   const [expertMode, setExpertMode] = useState(false);
   const [microKey, setMicroKey] = useState(PRODUITS["jus_pomme"].micro);
@@ -131,6 +134,7 @@ export default function BaremePage() {
   const [customZ, setCustomZ] = useState("");
 
   const [isConfigOpen, setIsConfigOpen] = useState(true);
+  const [showHelp, setShowHelp] = useState(false);
 
   // Auto-select default micro when product changes
   const handleProductChange = (newProduct: string) => {
@@ -188,7 +192,8 @@ export default function BaremePage() {
       temp: String(computed.tC),
       time: formatHold(computed),
       product: productLabel(productType),
-      process: pasteType === "flash" ? t("bareme.flash") : t("bareme.tunnel"),
+      process: pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel",
+      micro: computed.micro.nom,
     };
     if (verdict === "ok") return t("bareme.narrativeOk", p);
     if (verdict === "difficult") return t("bareme.narrativeDifficult", p);
@@ -203,6 +208,13 @@ export default function BaremePage() {
       <div className="flex-shrink-0 px-4 sm:px-5 py-3 bg-white border-b border-gray-100 flex items-center justify-between">
         <h1 className="font-bold text-gray-900 font-clash text-sm sm:text-base">{t("bareme.title")}</h1>
         <div className="flex items-center gap-4">
+          <button
+            onClick={() => setShowHelp(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-black/[0.06] rounded-lg text-xs font-semibold text-gray-400 hover:text-brand-primary hover:border-brand-primary/20 transition-colors"
+          >
+            <HelpCircle className="w-4 h-4" />
+            {t("controle.help")}
+          </button>
           {canExpert && (
             <label className="flex items-center gap-2 text-xs cursor-pointer select-none">
               <input type="checkbox" checked={expertMode} onChange={e => setExpertMode(e.target.checked)}
@@ -235,18 +247,7 @@ export default function BaremePage() {
             </div>
             <div className="flex-1 overflow-y-auto p-5 space-y-6">
 
-          {/* HERO — T° consigne — the most important input */}
-          <section>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{t("bareme.tempConsigne")}</p>
-            <div className="relative">
-              <input type="number" step="1" min="50" max="100" value={tConsigne}
-                onChange={e => setTConsigne(e.target.value)}
-                className="w-full px-4 py-3.5 border-2 border-brand-primary/30 rounded-xl text-2xl font-extrabold text-brand-text text-center outline-none focus:border-brand-primary transition-colors tabular-nums" />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">°C</span>
-            </div>
-          </section>
-
-          {/* Produit */}
+          {/* 1. Produit */}
           <section>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
@@ -256,7 +257,22 @@ export default function BaremePage() {
               className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-primary transition-colors">
               {Object.entries(PRODUITS).map(([k]) => <option key={k} value={k}>{productLabel(k)}</option>)}
             </select>
-            <div className="flex gap-1.5 mt-2.5">
+           
+          </section>
+
+          {/* 2. Procédé */}
+          <section>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
+              <p className="text-[11px] font-bold text-gray-600">{t("bareme.stepProcess")}</p>
+            </div>
+            <select value={pasteType} onChange={e => setPasteType(e.target.value as "flash" | "classique" | "tunnel")}
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-accent transition-colors">
+              <option value="flash">Flash-pasteurisation</option>
+              <option value="classique">Pasteurisation classique</option>
+              <option value="tunnel">Pasteurisation tunnel</option>
+            </select>
+             <div className="flex gap-1.5 mt-2.5">
               {[[t("bareme.turbid"), true], [t("bareme.clear"), false]].map(([label, val]) => (
                 <button key={String(val)} onClick={() => setTrouble(val as boolean)}
                   className={`flex-1 py-1.5 rounded-lg text-[11px] font-semibold transition-all ${
@@ -267,20 +283,14 @@ export default function BaremePage() {
             </div>
           </section>
 
-          {/* Procédé */}
+          {/* 3. Température consigne */}
           <section>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
-              <p className="text-[11px] font-bold text-gray-600">{t("bareme.stepProcess")}</p>
-            </div>
-            <div className="flex gap-1.5">
-              {[[t("bareme.flash"), "flash"], [t("bareme.tunnel"), "tunnel"]].map(([label, val]) => (
-                <button key={val as string} onClick={() => setPasteType(val as "flash" | "tunnel")}
-                  className={`flex-1 py-1.5 rounded-lg text-[11px] font-semibold transition-all ${
-                    pasteType === val ? "bg-brand-accent text-white shadow-sm" : "bg-gray-50 text-gray-400 hover:bg-gray-100"}`}>
-                  {label as string}
-                </button>
-              ))}
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{t("bareme.tempConsigne")}</p>
+            <div className="relative">
+              <input type="number" step="1" min="50" max="100" value={tConsigne}
+                onChange={e => setTConsigne(e.target.value)}
+                className="w-full px-4 py-3.5 border-2 border-brand-primary/30 rounded-xl text-2xl font-extrabold text-brand-text text-center outline-none focus:border-brand-primary transition-colors tabular-nums" />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">°C</span>
             </div>
           </section>
 
@@ -375,7 +385,7 @@ export default function BaremePage() {
                       </p>
 
                       <p className="text-[11px] text-gray-400 mt-2 italic">
-                        {t("bareme.narrativeContext", { micro: computed.micro.nom, vp: String(computed.vp) })}
+                        VP cible : {computed.vp} UP
                       </p>
                     </div>
                   </div>
@@ -385,7 +395,7 @@ export default function BaremePage() {
                 <div className="px-4 sm:px-6 py-2.5 bg-gray-50/80 border-t border-black/[0.04] flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] text-gray-400 text-center">
                   <span>{t("bareme.vpCible")} <strong className="text-gray-600">{computed.vp} {t("bareme.up")}</strong></span>
                   <span>{t("bareme.lethalRate")} <strong className="text-gray-600">{computed.L}</strong></span>
-                  <span className="hidden sm:inline">{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? t("bareme.flash") : t("bareme.tunnel")}</strong></span>
+                  <span className="hidden sm:inline">{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel"}</strong></span>
                   <span className="hidden sm:inline">{trouble ? t("bareme.turbid") : t("bareme.clear")}</span>
                 </div>
               </div>
@@ -443,6 +453,13 @@ export default function BaremePage() {
           )}
         </div>
       </div>
+      <HelpModal
+        helpKey="aide_bareme"
+        defaultContent={t("bareme.defaultHelp")}
+        title={t("bareme.helpTitle")}
+        open={showHelp}
+        onClose={() => setShowHelp(false)}
+      />
     </div>
   );
 }

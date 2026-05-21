@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useCallback, useEffect, Suspense } from "react";
-import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, LayoutDashboard, Settings2, Table as TableIcon, X, Activity, AlertTriangle, CheckCircle, Plus, Trash2, HelpCircle, LogOut, User as UserIcon, Shield, Pencil, Save, Eye } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, Settings2, Table as TableIcon, X, Activity, AlertTriangle, Plus, Trash2, HelpCircle } from "lucide-react";
 import ProductSelector from "@/components/ProductSelector";
 import { KPICards } from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
-import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById, getHelpText, updateHelpText } from "@/lib/api";
+import HelpModal from "@/components/HelpModal";
+import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
 import { useSearchParams } from "next/navigation";
 import AuthModal from "@/components/AuthModal";
@@ -97,11 +97,6 @@ function ControlePageInner() {
 
   const [vpCibleConfig, setVpCibleConfig] = useState<Record<string, number>>({});
   const [showHelp, setShowHelp] = useState(false);
-  const [helpContent, setHelpContent] = useState<string | null>(null);
-  const [helpEditing, setHelpEditing] = useState(false);
-  const [helpDraft, setHelpDraft] = useState("");
-  const [helpSaving, setHelpSaving] = useState(false);
-  const [helpPreview, setHelpPreview] = useState(false);
 
   const [file, setFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -163,30 +158,6 @@ function ControlePageInner() {
       })
       .catch(() => {});
   }, []);
-
-  // Fetch help text when modal opens
-  useEffect(() => {
-    if (!showHelp) return;
-    getHelpText("calcul_vp", locale)
-      .then((res) => {
-        if (res.content) setHelpContent(res.content);
-        else setHelpContent(defaultHelpText);
-      })
-      .catch(() => {});
-  }, [showHelp, locale, defaultHelpText]);
-
-  const handleHelpSave = async () => {
-    setHelpSaving(true);
-    try {
-      await updateHelpText("calcul_vp", helpDraft, locale);
-      setHelpContent(helpDraft);
-      setHelpEditing(false);
-    } catch {
-      // silently fail
-    } finally {
-      setHelpSaving(false);
-    }
-  };
 
   // Charger une analyse historique depuis localStorage ou ?history=ID
   useEffect(() => {
@@ -361,11 +332,10 @@ function ControlePageInner() {
             {/* Product Parameters */}
             <div className="px-4 pt-4 pb-3 space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold text-gray-500">{t("controle.productSection")}</h3>
                 {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
                   <button
                     onClick={() => setExpertMode(!expertMode)}
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded transition-colors ${expertMode ? "bg-brand-accent text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+                    className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded transition-colors bg-gray-100 text-gray-500 hover:bg-gray-200"
                   >
                     EXPERT
                   </button>
@@ -382,6 +352,16 @@ function ControlePageInner() {
                 titreAlcool={titreAlcool} onTitreAlcoolChange={setTitreAlcool}
               />
 
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">{t("controle.lotIdentifier")}</label>
+                <input
+                  type="text"
+                  value={lotIdentifier}
+                  onChange={(e) => setLotIdentifier(e.target.value)}
+                  className="w-full px-2.5 py-1.5 border border-black/[0.06] rounded-md focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white"
+                />
+              </div>
+
               <div className="flex gap-1.5">
                 {[[t("bareme.turbid"), "trouble"], [t("bareme.clear"), "limpide"]].map(([label, value]) => (
                   <button
@@ -394,16 +374,6 @@ function ControlePageInner() {
                     {label as string}
                   </button>
                 ))}
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">{t("controle.lotIdentifier")}</label>
-                <input
-                  type="text"
-                  value={lotIdentifier}
-                  onChange={(e) => setLotIdentifier(e.target.value)}
-                  className="w-full px-2.5 py-1.5 border border-black/[0.06] rounded-md focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white"
-                />
               </div>
             </div>
 
@@ -602,6 +572,7 @@ function ControlePageInner() {
                   tRef={result.parametres.t_ref}
                   vpCible={result.vp_cible}
                   statut={result.statut}
+                  procede={result.parametres.procede}
                 />
               </div>
             </div>
@@ -689,107 +660,13 @@ function ControlePageInner() {
       {isAuthModalOpen && <AuthModal onClose={() => setIsAuthModalOpen(false)} />}
 
       {/* HELP MODAL */}
-      {showHelp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-gray-900/30 backdrop-blur-sm" onClick={() => { setShowHelp(false); setHelpEditing(false); }} />
-          <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 max-w-lg w-full mx-4 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-              <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-brand-primary" />
-                {t("controle.helpTitle")}
-              </h3>
-              <div className="flex items-center gap-1">
-                {user?.role === "ADMIN" && !helpEditing && (
-                  <button
-                    onClick={() => { setHelpEditing(true); setHelpDraft(helpContent || defaultHelpText); }}
-                    title={t("controle.helpEdit")}
-                    className="p-1.5 text-gray-400 hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
-                  >
-                    <Pencil className="w-4 h-4" />
-                  </button>
-                )}
-                <button onClick={() => { setShowHelp(false); setHelpEditing(false); }} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {helpEditing ? (
-              <div className="p-6 space-y-3">
-                {/* Edit / Preview tabs */}
-                <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-lg w-fit">
-                  <button
-                    onClick={() => setHelpPreview(false)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-                      !helpPreview ? "bg-white text-gray-800 shadow-sm" : "text-gray-400 hover:text-gray-600"
-                    }`}
-                  >
-                    <Pencil className="w-3 h-3" />
-                    {t("controle.helpEditTab")}
-                  </button>
-                  <button
-                    onClick={() => setHelpPreview(true)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-                      helpPreview ? "bg-white text-gray-800 shadow-sm" : "text-gray-400 hover:text-gray-600"
-                    }`}
-                  >
-                    <Eye className="w-3 h-3" />
-                    {t("controle.helpPreviewTab")}
-                  </button>
-                </div>
-
-                {helpPreview ? (
-                  <div className="min-h-[200px] border border-gray-200 rounded-xl p-4 prose prose-sm prose-gray max-w-none overflow-y-auto max-h-72">
-                    <ReactMarkdown>{helpDraft}</ReactMarkdown>
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-xs text-gray-400">{t("controle.helpMarkdownHint")}</p>
-                    <textarea
-                      value={helpDraft}
-                      onChange={(e) => setHelpDraft(e.target.value)}
-                      rows={13}
-                      className="w-full border border-gray-200 rounded-xl p-3 text-sm text-gray-700 font-mono focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary resize-y"
-                    />
-                  </>
-                )}
-
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleHelpSave}
-                    disabled={helpSaving}
-                    className="flex items-center gap-1.5 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors disabled:opacity-50"
-                  >
-                    {helpSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                    {t("controle.helpSaved")}
-                  </button>
-                  <button
-                    onClick={() => { setHelpEditing(false); setHelpPreview(false); }}
-                    className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
-                  >
-                    {t("common.cancel")}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="p-6 prose prose-sm prose-gray max-w-none overflow-y-auto max-h-[60vh]">
-                <ReactMarkdown>{helpContent || defaultHelpText}</ReactMarkdown>
-              </div>
-            )}
-
-            {!helpEditing && (
-              <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/50">
-                <button
-                  onClick={() => setShowHelp(false)}
-                  className="w-full py-2.5 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-primary/90 transition-colors"
-                >
-                  {t("controle.helpDismiss")}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <HelpModal
+        helpKey="calcul_vp"
+        defaultContent={t("controle.defaultHelp")}
+        title={t("controle.helpTitle")}
+        open={showHelp}
+        onClose={() => setShowHelp(false)}
+      />
 
     </div>
   );
