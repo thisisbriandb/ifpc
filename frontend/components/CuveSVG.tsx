@@ -31,6 +31,8 @@ export default function CuveSVG({
 }: CuveSVGProps) {
   const fillPct = useMemo(() => Math.min(100, Math.max(0, (volumeOccupe / volumeMax) * 100)), [volumeOccupe, volumeMax]);
 
+  const safeId = useMemo(() => nom.replace(/[^a-zA-Z0-9-_]/g, ""), [nom]);
+
   const liquidColor = colorHex || "#d4a574";
   const isEmpty = fillPct === 0;
   const isPropre = statutPhysique === "PROPRE";
@@ -91,13 +93,13 @@ export default function CuveSVG({
       {!isEmpty && (
         <>
           <defs>
-            <linearGradient id={`liquid-${nom}`} x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id={`liquid-${safeId}`} x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor={liquidColor} stopOpacity="0.95" />
               <stop offset="100%" stopColor={liquidColor} stopOpacity="0.7" />
             </linearGradient>
           </defs>
           <rect x="19" y={liquidY} width="62" height={liquidHeight} rx="5" ry="5"
-            fill={`url(#liquid-${nom})`}>
+            fill={`url(#liquid-${safeId})`}>
             <animate attributeName="opacity" values="0.85;0.95;0.85" dur="5s" repeatCount="indefinite" />
           </rect>
           {/* Surface shimmer */}

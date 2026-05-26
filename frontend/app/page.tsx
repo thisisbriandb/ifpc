@@ -19,7 +19,7 @@ import { useI18n } from "@/lib/i18n";
 interface RecentActivity {
   id: string;
   date: string;
-  type: "controle" | "bareme";
+  type: "controle" | "bareme" | "assemblage";
   label: string;
   lotIdentifier?: string;
   produit?: string;

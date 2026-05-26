@@ -197,7 +197,7 @@ export async function collerDonnees(params: {
 
 export interface HistoryEntry {
   id: number;
-  type: "controle" | "bareme";
+  type: "controle" | "bareme" | "assemblage";
   label: string;
   lotIdentifier?: string;
   statut?: string;

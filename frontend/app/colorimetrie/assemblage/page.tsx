@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Upload, FileSpreadsheet, X, Palette, Loader2,
   AlertCircle, Sparkles, Download, ChevronDown, Check,
@@ -10,7 +11,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend, ResponsiveContainer,
 } from "recharts";
-import { assemblageCouleur, assemblageCouleurDb, saveAnalysis, getLots, updateLot, AssemblageResult, type Lot } from "@/lib/api";
+import { assemblageCouleur, assemblageCouleurDb, saveAnalysis, getAnalysisById, getLots, updateLot, AssemblageResult, type Lot } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 import LabColorPicker from "@/components/LabColorPicker";
 
@@ -58,7 +59,16 @@ function downloadCsvTemplate() {
 // ── Page ───────────────────────────────────────────────────────────────────
 
 export default function AssemblagePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-brand-gray flex items-center justify-center"><Loader2 className="w-6 h-6 animate-spin text-gray-400" /></div>}>
+      <AssemblageContent />
+    </Suspense>
+  );
+}
+
+function AssemblageContent() {
   const { t } = useI18n();
+  const searchParams = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [file, setFile] = useState<File | null>(null);
@@ -73,12 +83,42 @@ export default function AssemblagePage() {
   const [result, setResult] = useState<AssemblageResult | null>(null);
   const [showSpectrum, setShowSpectrum] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
 
   // DB selection state
   const [useDb, setUseDb] = useState(false);
   const [dbLots, setDbLots] = useState<Lot[]>([]);
   const [selectedLotIds, setSelectedLotIds] = useState<number[]>([]);
   const [savingToDb, setSavingToDb] = useState<Record<string, boolean>>({});
+
+  // ── Load from history if ?history=ID is present ──────────────────────────
+  useEffect(() => {
+    const historyId = searchParams.get("history");
+    if (!historyId || historyLoaded) return;
+    setHistoryLoaded(true);
+    setLoading(true);
+    getAnalysisById(parseInt(historyId, 10))
+      .then((detail) => {
+        if (detail.resultJson) {
+          const data: AssemblageResult = JSON.parse(detail.resultJson);
+          setResult(data);
+          // Restore target values from parametres
+          if (detail.parametres) {
+            try {
+              const params = JSON.parse(detail.parametres);
+              if (params.target) {
+                setTargetL(String(params.target.L ?? 85));
+                setTargetA(String(params.target.a ?? 4));
+                setTargetB(String(params.target.b ?? 35));
+              }
+              if (params.volume_total) setVolume(String(params.volume_total));
+            } catch {}
+          }
+        }
+      })
+      .catch(() => setError("Impossible de charger l'analyse depuis l'historique."))
+      .finally(() => setLoading(false));
+  }, [searchParams, historyLoaded]);
 
   useEffect(() => {
     if (useDb) {
