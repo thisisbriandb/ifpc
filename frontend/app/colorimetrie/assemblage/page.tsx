@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { assemblageCouleur, assemblageCouleurDb, saveAnalysis, getLots, updateLot, AssemblageResult, type Lot } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
+import LabColorPicker from "@/components/LabColorPicker";
 
 // ── ΔE interpretation ──────────────────────────────────────────────────────
 
@@ -218,7 +219,7 @@ export default function AssemblagePage() {
           <aside className="lg:col-span-4 space-y-6 order-2 lg:order-1">
             <form onSubmit={handleSubmit} className="space-y-6">
               
-              {/* CIELAB Manuel */}
+              {/* CIELAB Target */}
               <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
@@ -226,6 +227,17 @@ export default function AssemblagePage() {
                 </div>
                 
                 <div className="space-y-4">
+                  {/* Visual color picker */}
+                  <LabColorPicker
+                    L={parseFloat(targetL) || 0}
+                    a={parseFloat(targetA) || 0}
+                    b={parseFloat(targetB) || 0}
+                    onChangeL={(v) => setTargetL(String(v))}
+                    onChangeA={(v) => setTargetA(String(v))}
+                    onChangeB={(v) => setTargetB(String(v))}
+                  />
+
+                  {/* Manual L*a*b* inputs */}
                   <div className="grid grid-cols-3 gap-3">
                     {[
                       { label: "L*", value: targetL, set: setTargetL, min: "0", max: "100" },
@@ -242,6 +254,7 @@ export default function AssemblagePage() {
                       </div>
                     ))}
                   </div>
+
                   <div>
                     <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">{t("colori.volume")}</p>
                     <div className="relative">
