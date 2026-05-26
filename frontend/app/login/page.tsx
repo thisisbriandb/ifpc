@@ -101,30 +101,26 @@ export default function LoginPage() {
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
         <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20" />
 
-        <div className="relative z-10 flex items-center gap-3">
-          <Image src="/assets/logo.png" alt="IFPC" width={44} height={44} className="rounded-xl" />
-          <div>
-            <span className="font-bold text-xl text-white block">IFPC</span>
-            <span className="text-xs text-white/60">
-              Institut Français de Productions Cidricoles
-            </span>
-          </div>
+        {/* Large Logo */}
+        <div className="relative z-10 flex flex-col gap-6">
+          <Image src="/assets/logo.png" alt="IFPC" width={110} height={110} className="rounded-2xl shadow-xl shadow-black/10 border border-white/10" />
         </div>
 
-        <div className="relative z-10 space-y-6">
-          <h1 className="text-4xl font-extrabold text-white">
-            {t("login.heroTitle")}
+        <div className="relative z-10 space-y-6 my-auto">
+          <span className="text-white/60 text-xs font-black tracking-widest uppercase">IFPC presents</span>
+          <h1 className="text-5xl font-black text-white font-clash tracking-tight">
+            PADOC
           </h1>
-          <p className="text-white/70 text-lg max-w-sm">
-            {t("login.heroSubtitle")}
+          <h2 className="text-2xl font-bold text-white/90 leading-tight">
+            Plateforme d’Aide à la Décision pour<br />la filière Cidricole
+          </h2>
+          <p className="text-white/70 text-base max-w-sm font-medium">
+            Optimisez vos processus grâce à des outils avancés
           </p>
         </div>
 
-        <div className="relative z-10">
-          <p className="text-sm text-white/40">
-            © IFPC — Institut Français de Productions Cidricoles
-          </p>
-        </div>
+        {/* Empty container for spacing at the bottom instead of copyright */}
+        <div className="relative z-10" />
       </div>
 
       {/* RIGHT PANEL */}
