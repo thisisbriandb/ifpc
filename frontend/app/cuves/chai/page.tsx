@@ -492,8 +492,8 @@ export default function ChaiVirtuelPage() {
           lotIdentifiant={mainLot}
           dragState={dragState}
           isSelected={selectedCuve?.id === cuve.id && !!panelView}
-          width={100}
-          height={155}
+          width={130}
+          height={220}
         />
       </div>
     );
@@ -800,8 +800,8 @@ export default function ChaiVirtuelPage() {
                     volumeOccupe={0}
                     statutPhysique={selectedCuve.statutPhysique || "PROPRE"}
                     colorHex={null}
-                    width={120}
-                    height={180}
+                    width={140}
+                    height={240}
                   />
                 </div>
 
