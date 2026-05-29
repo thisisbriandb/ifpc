@@ -151,7 +151,7 @@ export default function LoginPage() {
 
           <div className="max-w-xl pb-2">
             <h1 className="text-2xl lg:text-2xl font-semibold tracking-tight leading-tight text-gray-950">
-              Plateforme d'Aide à la Décision pour la filière Cidricole
+              {"Plateforme d'Aide à la Décision pour la filière Cidricole"}
             </h1>
             <p className="mt-4 max-w-lg text-base leading-7 text-gray-600">
               Optimisez vos processus grâce à des outils avancés
