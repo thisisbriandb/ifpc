@@ -71,7 +71,7 @@ export default function Sidebar() {
       {/* Mobile Top Bar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-gray-100 flex items-center justify-between px-4 z-40">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/assets/logo.png" alt="IFPC" width={30} height={30} />
+          <Image src="/assets/log.svg" alt="IFPC" width={30} height={30} />
           <span className="font-bold text-brand-text">IFPC</span>
         </Link>
         <button
@@ -101,7 +101,7 @@ export default function Sidebar() {
         {/* Logo & Close Button (Mobile) */}
         <div className="flex items-center justify-between px-3 h-14 shrink-0 border-b border-gray-50">
           <Link href="/" onClick={closeMobile} className="flex items-center gap-2.5">
-            <Image src="/assets/logo.png" alt="IFPC" width={34} height={34} className="shrink-0" />
+            <Image src="/assets/log.svg" alt="IFPC" width={34} height={34} className="shrink-0" />
             {(!collapsed || mobileOpen) && (
               <div className="flex flex-col">
                 <span className="font-bold text-sm text-brand-text leading-none">IFPC</span>

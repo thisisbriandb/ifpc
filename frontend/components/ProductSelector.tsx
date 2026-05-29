@@ -171,16 +171,6 @@ export default function ProductSelector({
               <input type="number" step="0.1" value={zValue} onChange={(e) => onZChange?.(e.target.value)} placeholder="7.0" className={inputCls} />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className={labelCls}>pH</label>
-              <input type="number" step="0.1" value={ph} onChange={(e) => onPhChange?.(e.target.value)} placeholder="3.5" className={inputCls} />
-            </div>
-            <div>
-              <label className={labelCls}>{t("productSelector.alcohol")}</label>
-              <input type="number" step="0.1" value={titreAlcool} onChange={(e) => onTitreAlcoolChange?.(e.target.value)} placeholder="0.0" className={inputCls} />
-            </div>
-          </div>
         </div>
       )}
     </div>

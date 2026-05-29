@@ -33,9 +33,9 @@ interface RecentActivity {
 }
 
 const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
-  conforme:    { bg: "bg-brand-primary/10", text: "text-brand-primary" },
-  vigilance:   { bg: "bg-brand-accent/10",  text: "text-brand-accent"  },
-  insuffisant: { bg: "bg-red-50",            text: "text-red-700"       },
+  conforme: { bg: "bg-brand-primary/10", text: "text-brand-primary" },
+  vigilance: { bg: "bg-brand-accent/10", text: "text-brand-accent" },
+  insuffisant: { bg: "bg-red-50", text: "text-red-700" },
 };
 
 interface HistorySubMeta { type: string; dot: string; bar: string; }
@@ -48,8 +48,8 @@ const HISTORY_MODULES: HistoryParentMeta[] = [
     accent: "border-l-[3px] border-brand-primary",
     iconColor: "text-brand-primary",
     subModules: [
-      { type: "controle", dot: "bg-brand-primary",     bar: "bg-brand-primary/30"  },
-      { type: "bareme",   dot: "bg-brand-accent",      bar: "bg-brand-accent/30"   },
+      { type: "controle", dot: "bg-brand-primary", bar: "bg-brand-primary/30" },
+      { type: "bareme", dot: "bg-brand-accent", bar: "bg-brand-accent/30" },
     ],
   },
 ];
@@ -86,7 +86,7 @@ function ArcModule({ mod }: { mod: Module }) {
   const getArcPosition = (index: number, total: number) => {
     // Spread evenly across 180° arc (π), centered below
     const startAngle = Math.PI * 0.1;
-    const endAngle   = Math.PI * 0.9;
+    const endAngle = Math.PI * 0.9;
     const angle = total === 1
       ? Math.PI / 2
       : startAngle + (index / (total - 1)) * (endAngle - startAngle);
@@ -184,7 +184,7 @@ export default function Home() {
       subColor: "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 border-brand-primary/20",
       subModules: [
         { href: "/controle", label: t("home.modules.calculVP"), icon: FlaskConical },
-        { href: "/bareme",   label: t("home.modules.bareme"),   icon: BarChart3 },
+        { href: "/bareme", label: t("home.modules.bareme"), icon: BarChart3 },
       ],
     },
     {
@@ -196,7 +196,7 @@ export default function Home() {
       subColor: "bg-brand-accent/10 text-brand-accent hover:bg-brand-accent/20 border-brand-accent/20",
       subModules: [
         { href: "/colorimetrie/assemblage", label: t("home.modules.assemblage"), icon: Pipette },
-        { href: "/cuves",                   label: t("home.modules.cuves"),      icon: Container },
+        { href: "/cuves", label: t("home.modules.cuves"), icon: Container },
       ],
     },
     {
@@ -208,7 +208,7 @@ export default function Home() {
       subColor: "bg-gray-100 text-gray-600 hover:bg-gray-200 border-gray-200",
       adminOnly: true,
       subModules: [
-        { href: "/admin",  label: t("home.modules.users"),  icon: Users },
+        { href: "/admin", label: t("home.modules.users"), icon: Users },
         { href: "/expert", label: t("home.modules.config"), icon: Settings },
       ],
     },
@@ -235,7 +235,7 @@ export default function Home() {
             })));
             return;
           }
-        } catch {}
+        } catch { }
       }
       try {
         const stored = localStorage.getItem("ifpc_recent_activities");
@@ -295,7 +295,7 @@ export default function Home() {
     let parametres: any = null;
     try {
       parametres = activity.parametres ? JSON.parse(activity.parametres) : null;
-    } catch {}
+    } catch { }
 
     const produit = translateProduct(parametres?.produit || activity.produit);
     const procede = translateProcess(parametres?.procede || activity.procede);
@@ -305,12 +305,35 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-gray px-4 sm:px-8 py-6 sm:py-10">
-      <div className="max-w-4xl mx-auto space-y-10 sm:space-y-12">
+    <div className="min-h-screen bg-[#fafaf8] text-gray-950 px-4 sm:px-8 py-6 sm:py-10 relative overflow-hidden">
+      {/* Soft background gradient & blobs matching the login aesthetic */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 via-transparent to-brand-accent/5 pointer-events-none" />
+      <div className="absolute top-20 -left-20 h-72 w-72 rounded-full bg-brand-primary/5 blur-3xl animate-pulse pointer-events-none" style={{ animationDuration: "8s" }} />
+      <div className="absolute bottom-20 -right-20 h-96 w-96 rounded-full bg-brand-accent/5 blur-3xl animate-pulse pointer-events-none" style={{ animationDuration: "12s" }} />
+
+      {/* Grid pattern SVG */}
+      <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none">
+        <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-home" width="45" height="45" patternUnits="userSpaceOnUse">
+              <path d="M 45 0 L 0 0 0 45" fill="none" stroke="currentColor" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-home)" />
+        </svg>
+      </div>
+
+      {/* Abstract organic design curves */}
+      <svg className="absolute right-0 top-0 h-full w-1/3 opacity-[0.03] text-brand-primary pointer-events-none hidden md:block" viewBox="0 0 400 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M400 100 C 250 200, 150 400, 400 600" stroke="currentColor" strokeWidth="2" strokeDasharray="8 4" />
+        <path d="M400 150 C 280 280, 220 480, 400 650" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+
+      <div className="max-w-4xl mx-auto space-y-10 sm:space-y-12 relative z-10">
 
         {/* Welcome */}
         <header className="text-center">
-          <Image src="/assets/logo.png" alt="IFPC" width={64} height={64} className="mx-auto mb-4 w-12 h-12 sm:w-16 sm:h-16" />
+          <Image src="/assets/log.svg" alt="IFPC" width={280} height={280} className="mx-auto mb-4 w-12 h-12 sm:w-16 sm:h-16" />
           <h1 className="text-xl sm:text-2xl font-bold text-brand-text">
             {greeting()}{user ? `, ${user.firstName}` : ""}
           </h1>

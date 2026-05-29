@@ -25,6 +25,8 @@ public class AuthenticationService {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
+                .companyName(request.getCompanyName())
+                .companyRole(request.getCompanyRole())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.PENDING)

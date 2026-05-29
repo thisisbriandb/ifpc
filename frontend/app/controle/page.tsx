@@ -307,7 +307,7 @@ function ControlePageInner() {
   };
 
   return (
-    <div className="h-screen flex bg-brand-gray font-sans text-brand-text overflow-hidden">
+    <div className="h-screen flex bg-brand-gray font-sans text-brand-text overflow-hidden relative">
 
       {/* --- SIDEBAR GAUCHE (DRAWER MOBILE) --- */}
       {isSidebarOpen && (
@@ -507,16 +507,17 @@ function ControlePageInner() {
           </div>
         </div>
 
-        {/* Toggle Button (Desktop) */}
-        <button
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className={`hidden lg:flex absolute top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full items-center justify-center shadow-sm z-30 hover:bg-gray-50 transition-all duration-300 ease-in-out
-            ${isSidebarOpen ? "left-[284px] sm:left-[304px]" : "left-4"}
-          `}
-        >
-          {isSidebarOpen ? <ChevronLeft className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-500" />}
-        </button>
       </aside>
+
+      {/* Toggle Button (Desktop) */}
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className={`hidden lg:flex absolute top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full items-center justify-center shadow-sm z-50 hover:bg-gray-50 transition-all duration-300 ease-in-out
+          ${isSidebarOpen ? "left-[284px] sm:left-[304px]" : "left-4"}
+        `}
+      >
+        {isSidebarOpen ? <ChevronLeft className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-500" />}
+      </button>
 
       {/* --- MAIN CONTENT AREA (Dashboard) --- */}
       <main className="flex-1 overflow-y-auto relative bg-brand-gray">

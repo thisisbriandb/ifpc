@@ -17,6 +17,8 @@ interface UserData {
   id: number;
   firstName: string;
   lastName: string;
+  companyName?: string | null;
+  companyRole?: string | null;
   email: string;
   role: string;
   enabled: boolean;
@@ -242,6 +244,11 @@ export default function AdminPage() {
                       <div className="min-w-0">
                         <p className="font-semibold text-gray-900 truncate">{u.firstName} {u.lastName}</p>
                         <p className="text-sm text-gray-400 truncate">{u.email}</p>
+                        {(u.companyName || u.companyRole) && (
+                          <p className="mt-1 text-xs text-gray-500 truncate">
+                            {[u.companyName, u.companyRole].filter(Boolean).join(" · ")}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2 ml-12 sm:ml-0">
