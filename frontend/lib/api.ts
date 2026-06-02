@@ -165,12 +165,14 @@ export async function evaluerPasteurisation(params: EvaluateParams) {
 export async function uploadFile(file: File, params: Record<string, any>) {
   const formData = new FormData();
   formData.append("file", file);
+  const cleanParams: Record<string, any> = {};
   Object.entries(params).forEach(([key, value]) => {
     if (value !== null && value !== undefined && value !== "") {
-      formData.append(key, String(value));
+      cleanParams[key] = value;
     }
   });
   const { data } = await api.post("/pasteurisation/upload", formData, {
+    params: cleanParams,
     headers: { "Content-Type": "multipart/form-data" },
   });
   return data;
