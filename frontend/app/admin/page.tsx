@@ -7,11 +7,7 @@ import {
   getUsers, updateUserRole, getPendingUsers, approveUser, rejectUser,
   getAdminProductConfig, updateProductConfig,
 } from "@/lib/api";
-import {
-  Shield, ShieldCheck, ShieldAlert, Users, Loader2, Search,
-  CheckCircle, XCircle, Save, Settings2, UserCheck, Package,
-  Mail, Building2, BriefcaseBusiness, Clock3, BadgeCheck, CircleDashed, Eye,
-} from "lucide-react";
+import { Loader2, Search, X, Check, Activity, ShieldCheck } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 interface UserData {
@@ -26,23 +22,6 @@ interface UserData {
   lastLogin: string | null;
 }
 
-function makeFormatLastLogin(t: (k: string, p?: Record<string, string | number>) => string) {
-  return function formatLastLogin(iso: string | null): string {
-    if (!iso) return t("admin.never");
-    const d = new Date(iso);
-    const now = new Date();
-    const diffMs = now.getTime() - d.getTime();
-    const diffMin = Math.floor(diffMs / 60000);
-    const diffH = Math.floor(diffMin / 60);
-    const diffD = Math.floor(diffH / 24);
-    if (diffMin < 1) return t("admin.justNow");
-    if (diffMin < 60) return t("admin.minutesAgo", { n: diffMin });
-    if (diffH < 24) return t("admin.hoursAgo", { n: diffH });
-    if (diffD < 7) return t("admin.daysAgo", { n: diffD });
-    return d.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
-  };
-}
-
 interface ProductConfigData {
   id?: number;
   productType: string;
@@ -50,96 +29,87 @@ interface ProductConfigData {
   vpCible: number;
 }
 
-const ROLE_BADGES: Record<string, { badge: string; icon: any }> = {
-  ADMIN:   { badge: "bg-red-100 text-red-700",    icon: ShieldAlert },
-  EXPERT:  { badge: "bg-orange-100 text-orange-700", icon: ShieldCheck },
-  USER:    { badge: "bg-gray-100 text-gray-600",  icon: Users },
-  PENDING: { badge: "bg-yellow-100 text-yellow-700", icon: Loader2 },
-};
+type Tab = "pending" | "users" | "config";
 
-type Tab = "users" | "config" | "pending";
+function formatRelativeTime(iso: string | null, t: any): string {
+  if (!iso) return t("admin.never");
+  const d = new Date(iso);
+  const diffMin = Math.floor((new Date().getTime() - d.getTime()) / 60000);
+  if (diffMin < 1) return t("admin.justNow");
+  if (diffMin < 60) return t("admin.minutesAgo", { n: diffMin });
+  const diffH = Math.floor(diffMin / 60);
+  if (diffH < 24) return t("admin.hoursAgo", { n: diffH });
+  const diffD = Math.floor(diffH / 24);
+  if (diffD < 7) return t("admin.daysAgo", { n: diffD });
+  return d.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+}
 
 export default function AdminPage() {
   const router = useRouter();
   const { user, isLoading } = useAuthStore();
   const { t } = useI18n();
-  const formatLastLogin = makeFormatLastLogin(t);
   const [activeTab, setActiveTab] = useState<Tab>("pending");
 
-  // Users state
   const [users, setUsers] = useState<UserData[]>([]);
-  const [usersLoading, setUsersLoading] = useState(false);
-  const [search, setSearch] = useState("");
-  const [updatingId, setUpdatingId] = useState<number | null>(null);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-
-  // Pending state
   const [pendingUsers, setPendingUsers] = useState<UserData[]>([]);
-  const [pendingLoading, setPendingLoading] = useState(false);
-  const [processingId, setProcessingId] = useState<number | null>(null);
-
-  // Product config state
   const [configs, setConfigs] = useState<ProductConfigData[]>([]);
-  const [configsLoading, setConfigsLoading] = useState(false);
+  
+  const [isFetching, setIsFetching] = useState(true);
+  const [search, setSearch] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  
+  const [processingId, setProcessingId] = useState<number | null>(null);
   const [editedConfigs, setEditedConfigs] = useState<Record<string, number>>({});
-  const [savingConfig, setSavingConfig] = useState<string | null>(null);
 
   const isAdmin = user?.role === "ADMIN";
 
   useEffect(() => {
-    if (!isLoading && !isAdmin) {
-      router.push("/");
-    }
+    if (!isLoading && !isAdmin) router.push("/");
   }, [isLoading, isAdmin, router]);
 
   useEffect(() => {
     if (!isAdmin) return;
-    if (activeTab === "users") {
-      setUsersLoading(true);
-      getUsers()
-        .then((data: UserData[]) => {
-          const visibleUsers = data.filter(u => u.role !== "ADMIN");
-          setUsers(visibleUsers);
-          setSelectedUserId(prev => visibleUsers.some(u => u.id === prev) ? prev : null);
-        })
-        .catch(() => {})
-        .finally(() => setUsersLoading(false));
-    } else if (activeTab === "pending") {
-      setPendingLoading(true);
-      getPendingUsers()
-        .then(setPendingUsers)
-        .catch(() => {})
-        .finally(() => setPendingLoading(false));
-    } else if (activeTab === "config") {
-      setConfigsLoading(true);
-      getAdminProductConfig()
-        .then((data: ProductConfigData[]) => {
-          setConfigs(data);
-          const initial: Record<string, number> = {};
-          data.forEach((c: ProductConfigData) => { initial[c.productType] = c.vpCible; });
-          setEditedConfigs(initial);
-        })
-        .catch(() => {})
-        .finally(() => setConfigsLoading(false));
-    }
-  }, [isAdmin, activeTab]);
+    setIsFetching(true);
+    
+    Promise.all([
+      getUsers().catch(() => []),
+      getPendingUsers().catch(() => []),
+      getAdminProductConfig().catch(() => [])
+    ]).then(([uData, pData, cData]) => {
+      setUsers(uData.filter((u: UserData) => u.role !== "ADMIN"));
+      setPendingUsers(pData);
+      setConfigs(cData);
+      
+      const initialConfigs: Record<string, number> = {};
+      cData.forEach((c: ProductConfigData) => { initialConfigs[c.productType] = c.vpCible; });
+      setEditedConfigs(initialConfigs);
+    }).finally(() => setIsFetching(false));
+  }, [isAdmin]);
 
   const handleRoleChange = async (userId: number, newRole: string) => {
-    setUpdatingId(userId);
+    setProcessingId(userId);
     try {
       await updateUserRole(userId, newRole);
-      setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u).filter(u => u.role !== "ADMIN"));
-    } catch { alert(t("admin.updateError")); }
-    finally { setUpdatingId(null); }
+      setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
+    } catch { 
+      alert(t("admin.updateError")); 
+    } finally { 
+      setProcessingId(null); 
+    }
   };
 
   const handleApprove = async (userId: number) => {
     setProcessingId(userId);
     try {
       await approveUser(userId);
+      const approvedUser = pendingUsers.find(u => u.id === userId);
       setPendingUsers(prev => prev.filter(u => u.id !== userId));
-    } catch { alert(t("admin.approveError")); }
-    finally { setProcessingId(null); }
+      if (approvedUser) setUsers(prev => [approvedUser, ...prev]);
+    } catch { 
+      alert(t("admin.approveError")); 
+    } finally { 
+      setProcessingId(null); 
+    }
   };
 
   const handleReject = async (userId: number) => {
@@ -148,19 +118,25 @@ export default function AdminPage() {
     try {
       await rejectUser(userId);
       setPendingUsers(prev => prev.filter(u => u.id !== userId));
-    } catch { alert(t("admin.rejectError")); }
-    finally { setProcessingId(null); }
+    } catch { 
+      alert(t("admin.rejectError")); 
+    } finally { 
+      setProcessingId(null); 
+    }
   };
 
   const handleSaveConfig = async (productType: string) => {
-    setSavingConfig(productType);
+    setProcessingId(productType as any);
     try {
       const vpCible = editedConfigs[productType];
       const config = configs.find(c => c.productType === productType);
       await updateProductConfig(productType, vpCible, config?.productName);
       setConfigs(prev => prev.map(c => c.productType === productType ? { ...c, vpCible } : c));
-    } catch { alert(t("admin.saveError")); }
-    finally { setSavingConfig(null); }
+    } catch { 
+      alert(t("admin.saveError")); 
+    } finally { 
+      setProcessingId(null); 
+    }
   };
 
   const filteredUsers = users.filter(u =>
@@ -168,112 +144,108 @@ export default function AdminPage() {
     u.firstName.toLowerCase().includes(search.toLowerCase()) ||
     u.lastName.toLowerCase().includes(search.toLowerCase())
   );
-  const selectedUser = filteredUsers.find(u => u.id === selectedUserId) ?? null;
+  
+  const selectedUser = users.find(u => u.id === selectedUserId) ?? null;
 
-  if (isLoading) {
-    return <div className="h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-gray-300" /></div>;
+  if (isLoading || isFetching) {
+    return <div className="h-screen flex items-center justify-center bg-brand-gray"><Loader2 className="w-6 h-6 animate-spin text-gray-300" /></div>;
   }
-
   if (!isAdmin) return null;
 
-  const tabs: { id: Tab; label: string; icon: any; badge?: number }[] = [
-    { id: "pending", label: t("admin.tabRequests"), icon: UserCheck, badge: pendingUsers.length },
-    { id: "users", label: t("admin.tabUsers"), icon: Users },
-    { id: "config", label: t("admin.tabConfig"), icon: Package },
-  ];
-
   return (
-    <div className="min-h-screen bg-brand-gray p-4 sm:p-8">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center shrink-0">
-              <Shield className="w-5 h-5 text-red-600" />
+    <div className="min-h-screen bg-[#F8F9FA] text-gray-900 font-sans">
+      <div className="max-w-6xl mx-auto px-6 py-10 sm:py-16">
+        
+        {/* --- HEADER & KPIs --- */}
+        <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">{t("admin.title")}</h1>
+            <p className="text-sm text-gray-500 mt-1 font-medium">{t("admin.subtitle")}</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="bg-white border border-gray-200/60 rounded-xl px-4 py-3 shadow-sm flex flex-col min-w-[120px]">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Total Utilisateurs</span>
+              <span className="text-xl font-bold">{users.length}</span>
             </div>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900">{t("admin.title")}</h1>
-              <p className="text-xs sm:text-sm text-red-600 font-medium">{t("admin.subtitle")}</p>
+            <div className="bg-white border border-gray-200/60 rounded-xl px-4 py-3 shadow-sm flex flex-col min-w-[120px]">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Experts</span>
+              <span className="text-xl font-bold text-brand-primary">{users.filter(u => u.role === 'EXPERT').length}</span>
             </div>
+            {pendingUsers.length > 0 && (
+              <div className="bg-orange-50 border border-orange-100 rounded-xl px-4 py-3 shadow-sm flex flex-col min-w-[120px]">
+                <span className="text-[10px] font-bold text-orange-600/70 uppercase tracking-wider mb-1">En attente</span>
+                <span className="text-xl font-bold text-orange-600">{pendingUsers.length}</span>
+              </div>
+            )}
           </div>
         </header>
 
-        {/* Tabs */}
-        <div className="flex gap-1 p-1 bg-gray-100 rounded-xl mb-6 w-full sm:w-fit overflow-x-auto no-scrollbar">
-          {tabs.map(tab => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? "bg-white text-gray-900 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {tab.label}
-                {tab.badge !== undefined && tab.badge > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-bold rounded-full leading-none">
-                    {tab.badge}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+        {/* --- NAVIGATION TABS --- */}
+        <div className="flex gap-6 border-b border-gray-200 mb-8 overflow-x-auto no-scrollbar">
+          {[
+            { id: "pending", label: t("admin.tabRequests"), count: pendingUsers.length },
+            { id: "users", label: t("admin.tabUsers") },
+            { id: "config", label: t("admin.tabConfig") },
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as Tab)}
+              className={`pb-3 text-sm font-semibold transition-colors flex items-center gap-2 relative whitespace-nowrap ${
+                activeTab === tab.id ? "text-gray-900" : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              {tab.label}
+              {tab.count !== undefined && tab.count > 0 && (
+                <span className="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded-full leading-none">{tab.count}</span>
+              )}
+              {activeTab === tab.id && (
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gray-900 rounded-t-full" />
+              )}
+            </button>
+          ))}
         </div>
 
-        {/* ── Tab: Pending Users ──────────────────────────────── */}
+        {/* --- TAB CONTENT --- */}
+        
+        {/* PENDING USERS */}
         {activeTab === "pending" && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50">
-              <h3 className="font-bold text-gray-900 flex items-center gap-2 text-sm sm:text-base">
-                <UserCheck className="w-5 h-5 text-yellow-600" />
-                {t("admin.pendingTitle")}
-              </h3>
-            </div>
-            {pendingLoading ? (
-              <div className="p-12 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-gray-300" /></div>
-            ) : pendingUsers.length === 0 ? (
-              <div className="p-12 text-center text-gray-400">
-                <UserCheck className="w-10 h-10 mx-auto mb-3 text-gray-200" />
-                <p className="font-medium">{t("admin.noPending")}</p>
+          <div className="animate-in fade-in duration-300">
+            {pendingUsers.length === 0 ? (
+              <div className="py-20 text-center">
+                <ShieldCheck className="w-12 h-12 text-gray-200 mx-auto mb-4" />
+                <h3 className="text-sm font-medium text-gray-500">{t("admin.noPending")}</h3>
               </div>
             ) : (
-              <div className="divide-y divide-gray-50">
+              <div className="grid gap-3">
                 {pendingUsers.map(u => (
-                  <div key={u.id} className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-bold text-sm uppercase shrink-0">
+                  <div key={u.id} className="bg-white border border-gray-200/60 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0">
                         {u.firstName.charAt(0)}{u.lastName.charAt(0)}
                       </div>
-                      <div className="min-w-0">
-                        <p className="font-semibold text-gray-900 truncate">{u.firstName} {u.lastName}</p>
-                        <p className="text-sm text-gray-400 truncate">{u.email}</p>
-                        {(u.companyName || u.companyRole) && (
-                          <p className="mt-1 text-xs text-gray-500 truncate">
-                            {[u.companyName, u.companyRole].filter(Boolean).join(" · ")}
-                          </p>
-                        )}
+                      <div>
+                        <h4 className="font-semibold text-gray-900">{u.firstName} {u.lastName}</h4>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                          <span>{u.email}</span>
+                          {(u.companyName) && (
+                            <>
+                              <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                              <span>{u.companyName}</span>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 ml-12 sm:ml-0">
+                    <div className="flex items-center gap-2">
                       {processingId === u.id ? (
-                        <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+                        <Loader2 className="w-5 h-5 animate-spin text-gray-400 mr-4" />
                       ) : (
                         <>
-                          <button
-                            onClick={() => handleApprove(u.id)}
-                            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 bg-green-50 text-green-700 text-xs font-bold rounded-lg hover:bg-green-100 transition-colors"
-                          >
-                            <CheckCircle className="w-4 h-4" /> {t("admin.approve")}
+                          <button onClick={() => handleApprove(u.id)} className="px-4 py-2 text-xs font-semibold bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors">
+                            {t("admin.approve")}
                           </button>
-                          <button
-                            onClick={() => handleReject(u.id)}
-                            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 bg-red-50 text-red-600 text-xs font-bold rounded-lg hover:bg-red-100 transition-colors"
-                          >
-                            <XCircle className="w-4 h-4" /> {t("admin.reject")}
+                          <button onClick={() => handleReject(u.id)} className="px-4 py-2 text-xs font-semibold text-gray-500 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                            {t("admin.reject")}
                           </button>
                         </>
                       )}
@@ -285,259 +257,199 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* ── Tab: Users ──────────────────────────────────────── */}
+        {/* USERS LIST */}
         {activeTab === "users" && (
-          <>
-            <div className="relative mb-4 max-w-sm">
+          <div className="animate-in fade-in duration-300">
+            <div className="relative mb-6 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
                 placeholder={t("admin.searchPlaceholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-red-100 focus:border-red-300 outline-none transition-all"
+                className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200/80 rounded-xl text-sm outline-none focus:border-gray-400 transition-colors shadow-sm"
               />
             </div>
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-              {usersLoading ? (
-                <div className="p-12 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-gray-300" /></div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm">
-                    <thead className="bg-gray-50 border-b border-gray-100">
-                      <tr>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colUser")}</th>
-                        <th className="hidden md:table-cell px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colEmail")}</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colRole")}</th>
-                        <th className="hidden lg:table-cell px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">{t("admin.colLastLogin")}</th>
-                        <th className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">{t("admin.colEdit")}</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
-                      {filteredUsers.map(u => {
-                        const roleMeta = ROLE_BADGES[u.role] ?? ROLE_BADGES.USER;
-                        const roleLabel = t(`admin.roleLabels.${u.role}`) !== `admin.roleLabels.${u.role}` ? t(`admin.roleLabels.${u.role}`) : u.role;
-                        const RoleIcon = roleMeta.icon;
-                        return (
-                          <tr
-                            key={u.id}
-                            onClick={() => setSelectedUserId(u.id)}
-                            className={`cursor-pointer transition-colors ${
-                              selectedUserId === u.id ? "bg-red-50/50 hover:bg-red-50/70" : "hover:bg-gray-50/40"
-                            }`}
-                          >
-                            <td className="px-6 py-4">
-                              <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm uppercase shrink-0">
-                                  {u.firstName.charAt(0)}{u.lastName.charAt(0)}
-                                </div>
-                                <div className="flex flex-col">
-                                  <span className="font-semibold text-gray-900">{u.firstName} {u.lastName}</span>
-                                  <span className="md:hidden text-[11px] text-gray-400 truncate max-w-[120px]">{u.email}</span>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="hidden md:table-cell px-6 py-4 text-gray-400">{u.email}</td>
-                            <td className="px-6 py-4">
-                              <span className={`inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-md ${roleMeta.badge}`}>
-                                <RoleIcon className="w-3.5 h-3.5" />
-                                <span className="hidden sm:inline">{roleLabel}</span>
-                              </span>
-                            </td>
-                            <td className="hidden lg:table-cell px-6 py-4">
-                              <span
-                                title={u.lastLogin ? new Date(u.lastLogin).toLocaleString("fr-FR") : ""}
-                                className={`text-xs font-medium ${
-                                  u.lastLogin ? "text-gray-500" : "text-gray-300 italic"
-                                }`}
-                              >
-                                {formatLastLogin(u.lastLogin)}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <div className="flex items-center justify-end gap-2">
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setSelectedUserId(u.id);
-                                  }}
-                                  title={t("admin.viewDetails")}
-                                  className={`w-8 h-8 inline-flex items-center justify-center rounded-lg border transition-colors ${
-                                    selectedUserId === u.id
-                                      ? "border-red-200 bg-red-50 text-red-600"
-                                      : "border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300"
-                                  }`}
-                                >
-                                  <Eye className="w-4 h-4" />
-                                </button>
-                                {updatingId === u.id ? (
-                                  <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
-                                ) : (
-                                  <select
-                                    value={u.role}
-                                    onClick={(e) => e.stopPropagation()}
-                                    onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                                    className="bg-white border border-gray-200 text-gray-700 text-[10px] sm:text-xs font-bold rounded-lg px-2 sm:px-3 py-2 outline-none hover:border-gray-300 cursor-pointer transition-colors focus:ring-2 focus:ring-red-100"
-                                  >
-                                    <option value="USER">USER</option>
-                                    <option value="EXPERT">EXPERT</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                  </select>
-                                )}
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                      {filteredUsers.length === 0 && (
-                        <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400">{t("admin.noUsers")}</td></tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-            {selectedUser && (() => {
-              const roleMeta = ROLE_BADGES[selectedUser.role] ?? ROLE_BADGES.USER;
-              const RoleIcon = roleMeta.icon;
-              const roleLabel = t(`admin.roleLabels.${selectedUser.role}`) !== `admin.roleLabels.${selectedUser.role}`
-                ? t(`admin.roleLabels.${selectedUser.role}`)
-                : selectedUser.role;
-              const statusLabel = selectedUser.enabled ? t("admin.enabled") : t("admin.disabled");
-              const StatusIcon = selectedUser.enabled ? BadgeCheck : CircleDashed;
-              return (
-                <section className="mt-4 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                  <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm uppercase shrink-0">
-                        {selectedUser.firstName.charAt(0)}{selectedUser.lastName.charAt(0)}
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="font-bold text-gray-900 text-sm sm:text-base truncate">
-                          {selectedUser.firstName} {selectedUser.lastName}
-                        </h3>
-                        <p className="text-xs text-gray-400 truncate">{t("admin.userDetailsTitle")}</p>
-                      </div>
-                    </div>
-                    <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-md ${roleMeta.badge}`}>
-                      <RoleIcon className="w-3.5 h-3.5" />
-                      {roleLabel}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-100">
-                    <div className="bg-white px-5 py-4">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailEmail")}</p>
-                      <div className="flex items-center gap-2 text-sm text-gray-700 min-w-0">
-                        <Mail className="w-4 h-4 text-gray-400 shrink-0" />
-                        <span className="truncate">{selectedUser.email}</span>
-                      </div>
-                    </div>
-                    <div className="bg-white px-5 py-4">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailCompany")}</p>
-                      <div className="flex items-center gap-2 text-sm text-gray-700 min-w-0">
-                        <Building2 className="w-4 h-4 text-gray-400 shrink-0" />
-                        <span className="truncate">{selectedUser.companyName || t("admin.notProvided")}</span>
-                      </div>
-                    </div>
-                    <div className="bg-white px-5 py-4">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailCompanyRole")}</p>
-                      <div className="flex items-center gap-2 text-sm text-gray-700 min-w-0">
-                        <BriefcaseBusiness className="w-4 h-4 text-gray-400 shrink-0" />
-                        <span className="truncate">{selectedUser.companyRole || t("admin.notProvided")}</span>
-                      </div>
-                    </div>
-                    <div className="bg-white px-5 py-4">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailStatus")}</p>
-                      <div className="flex items-center gap-2 text-sm text-gray-700">
-                        <StatusIcon className={`w-4 h-4 shrink-0 ${selectedUser.enabled ? "text-green-500" : "text-gray-300"}`} />
-                        <span>{statusLabel}</span>
-                      </div>
-                    </div>
-                    <div className="bg-white px-5 py-4">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailLastLogin")}</p>
-                      <div className="flex items-center gap-2 text-sm text-gray-700">
-                        <Clock3 className="w-4 h-4 text-gray-400 shrink-0" />
-                        <span title={selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleString("fr-FR") : ""}>
-                          {formatLastLogin(selectedUser.lastLogin)}
+            
+            <div className="bg-white rounded-2xl border border-gray-200/60 shadow-sm overflow-hidden">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="px-6 py-4 font-semibold text-gray-500 text-xs">{t("admin.colUser")}</th>
+                    <th className="px-6 py-4 font-semibold text-gray-500 text-xs hidden md:table-cell">{t("admin.colEmail")}</th>
+                    <th className="px-6 py-4 font-semibold text-gray-500 text-xs">{t("admin.colRole")}</th>
+                    <th className="px-6 py-4 font-semibold text-gray-500 text-xs hidden sm:table-cell">{t("admin.colLastLogin")}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {filteredUsers.map(u => (
+                    <tr 
+                      key={u.id} 
+                      onClick={() => setSelectedUserId(u.id)}
+                      className="group hover:bg-gray-50/80 cursor-pointer transition-colors"
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-xs uppercase shrink-0 group-hover:bg-white transition-colors">
+                            {u.firstName.charAt(0)}{u.lastName.charAt(0)}
+                          </div>
+                          <span className="font-medium text-gray-900">{u.firstName} {u.lastName}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-gray-500 hidden md:table-cell">{u.email}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-block px-2 py-1 text-[10px] font-bold uppercase rounded-md tracking-wide ${
+                          u.role === 'EXPERT' ? 'bg-orange-50 text-orange-700' : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {u.role}
                         </span>
-                      </div>
-                    </div>
-                    <div className="bg-white px-5 py-4">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailId")}</p>
-                      <p className="text-sm font-mono text-gray-700">#{selectedUser.id}</p>
-                    </div>
-                  </div>
-                </section>
-              );
-            })()}
-          </>
+                      </td>
+                      <td className="px-6 py-4 text-gray-400 text-xs hidden sm:table-cell">
+                        {formatRelativeTime(u.lastLogin, t)}
+                      </td>
+                    </tr>
+                  ))}
+                  {filteredUsers.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="px-6 py-12 text-center text-gray-400">{t("admin.noUsers")}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         )}
 
-        {/* ── Tab: Product Config ─────────────────────────────── */}
+        {/* CONFIGURATION */}
         {activeTab === "config" && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50">
-              <h3 className="font-bold text-gray-900 flex items-center gap-2 text-sm sm:text-base">
-                <Settings2 className="w-5 h-5 text-brand-primary" />
-                {t("admin.configTitle")}
-              </h3>
-              <p className="text-xs text-gray-400 mt-1">
-                {t("admin.configSubtitle")}
-              </p>
-            </div>
-            {configsLoading ? (
-              <div className="p-12 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-gray-300" /></div>
-            ) : (
-              <div className="divide-y divide-gray-50">
-                {configs.map(config => {
-                  const edited = editedConfigs[config.productType];
-                  const changed = edited !== undefined && edited !== config.vpCible;
-                  return (
-                    <div key={config.productType} className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors gap-4">
-                      <div>
-                        <p className="font-semibold text-gray-900">{config.productName}</p>
-                        <p className="text-[10px] text-gray-400 font-mono">{config.productType}</p>
+          <div className="animate-in fade-in duration-300 max-w-2xl">
+            <div className="bg-white rounded-2xl border border-gray-200/60 shadow-sm divide-y divide-gray-50">
+              {configs.map(config => {
+                const edited = editedConfigs[config.productType];
+                const changed = edited !== undefined && edited !== config.vpCible;
+                const isSaving = processingId === config.productType as any;
+                
+                return (
+                  <div key={config.productType} className="px-6 py-5 flex items-center justify-between gap-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{config.productName}</h4>
+                      <p className="text-xs text-gray-400 mt-0.5 font-mono">{config.productType}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-2 py-1 border border-transparent focus-within:border-gray-300 focus-within:bg-white transition-colors">
+                        <span className="text-xs font-medium text-gray-400 pl-1">VP</span>
+                        <input
+                          type="number"
+                          step="0.5"
+                          value={edited ?? config.vpCible}
+                          onChange={(e) => setEditedConfigs(prev => ({ ...prev, [config.productType]: parseFloat(e.target.value) || 0 }))}
+                          className="w-14 bg-transparent text-sm font-semibold text-gray-900 text-right outline-none"
+                        />
                       </div>
-                      <div className="flex items-center justify-between sm:justify-end gap-3">
-                        <div className="flex items-center gap-1.5">
-                          <label className="text-[10px] text-gray-500 font-medium">{t("admin.vpCibleLabel")}</label>
-                          <input
-                            type="number"
-                            step="0.5"
-                            value={editedConfigs[config.productType] ?? config.vpCible}
-                            onChange={(e) => setEditedConfigs(prev => ({ ...prev, [config.productType]: parseFloat(e.target.value) || 0 }))}
-                            className="w-16 sm:w-20 px-2 py-1.5 border border-gray-200 rounded-lg text-xs sm:text-sm font-mono text-center focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none"
-                          />
-                        </div>
+                      {changed && (
                         <button
                           onClick={() => handleSaveConfig(config.productType)}
-                          disabled={!changed || savingConfig === config.productType}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] sm:text-xs font-bold rounded-lg transition-all ${
-                            changed
-                              ? "bg-brand-primary text-white hover:bg-brand-primary/90 shadow-sm"
-                              : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          }`}
+                          disabled={isSaving}
+                          className="w-8 h-8 rounded-lg bg-gray-900 text-white flex items-center justify-center hover:bg-gray-800 transition-colors"
                         >
-                          {savingConfig === config.productType ? (
-                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          ) : (
-                            <Save className="w-3.5 h-3.5" />
-                          )}
-                          <span className="hidden sm:inline">{t("admin.saveCta")}</span>
+                          {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                         </button>
-                      </div>
+                      )}
                     </div>
-                  );
-                })}
-                {configs.length === 0 && (
-                  <div className="p-12 text-center text-gray-400">{t("admin.noConfig")}</div>
-                )}
-              </div>
-            )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
+
+      {/* --- DRAWER (User Details) --- */}
+      {selectedUser && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <div className="absolute inset-0 bg-gray-900/20 backdrop-blur-sm transition-opacity animate-in fade-in" onClick={() => setSelectedUserId(null)} />
+          <div className="relative w-full max-w-sm bg-white h-full shadow-2xl flex flex-col border-l border-gray-200 animate-in slide-in-from-right duration-300">
+            
+            {/* Drawer Header */}
+            <div className="px-6 py-6 border-b border-gray-100 flex items-start justify-between">
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-bold text-lg uppercase shrink-0 mt-1">
+                  {selectedUser.firstName.charAt(0)}{selectedUser.lastName.charAt(0)}
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">{selectedUser.firstName} {selectedUser.lastName}</h2>
+                  <p className="text-sm text-gray-500">{selectedUser.email}</p>
+                </div>
+              </div>
+              <button onClick={() => setSelectedUserId(null)} className="p-2 text-gray-400 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 rounded-full transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            
+            {/* Drawer Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+              
+              {/* Informations */}
+              <section>
+                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-4">Informations</h3>
+                <dl className="space-y-4">
+                  <div>
+                    <dt className="text-xs text-gray-500 mb-1">Entreprise</dt>
+                    <dd className="text-sm font-medium text-gray-900">{selectedUser.companyName || "—"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs text-gray-500 mb-1">Fonction</dt>
+                    <dd className="text-sm font-medium text-gray-900">{selectedUser.companyRole || "—"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs text-gray-500 mb-1">Statut du compte</dt>
+                    <dd className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
+                      <div className={`w-2 h-2 rounded-full ${selectedUser.enabled ? 'bg-green-500' : 'bg-gray-300'}`} />
+                      {selectedUser.enabled ? t("admin.enabled") : t("admin.disabled")}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs text-gray-500 mb-1">Dernière connexion</dt>
+                    <dd className="text-sm font-medium text-gray-900">
+                      {selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleString("fr-FR") : "Jamais"}
+                    </dd>
+                  </div>
+                </dl>
+              </section>
+
+              <hr className="border-gray-100" />
+
+              {/* Rôle & Accès */}
+              <section>
+                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-4">Rôle & Accès</h3>
+                <div className="bg-gray-50 rounded-xl p-4 border border-gray-100/60">
+                  <label className="block text-xs font-medium text-gray-500 mb-2">Modifier le rôle</label>
+                  <div className="relative">
+                    <select
+                      value={selectedUser.role}
+                      onChange={(e) => handleRoleChange(selectedUser.id, e.target.value)}
+                      disabled={processingId === selectedUser.id}
+                      className="w-full bg-white border border-gray-200 text-sm font-semibold rounded-lg px-3 py-2.5 outline-none focus:border-gray-400 transition-colors appearance-none"
+                    >
+                      <option value="USER">Utilisateur (Standard)</option>
+                      <option value="EXPERT">Expert</option>
+                      <option value="ADMIN">Administrateur</option>
+                    </select>
+                    {processingId === selectedUser.id && (
+                      <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-gray-400" />
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-400 mt-3 leading-relaxed">
+                    Le rôle expert permet de modifier les températures de référence, les valeurs Z, et de piloter précisément les barèmes.
+                  </p>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
