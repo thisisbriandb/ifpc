@@ -10,6 +10,7 @@ import {
 import {
   Shield, ShieldCheck, ShieldAlert, Users, Loader2, Search,
   CheckCircle, XCircle, Save, Settings2, UserCheck, Package,
+  Mail, Building2, BriefcaseBusiness, Clock3, BadgeCheck, CircleDashed, Eye,
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
@@ -70,6 +71,7 @@ export default function AdminPage() {
   const [usersLoading, setUsersLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [updatingId, setUpdatingId] = useState<number | null>(null);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
   // Pending state
   const [pendingUsers, setPendingUsers] = useState<UserData[]>([]);
@@ -95,7 +97,11 @@ export default function AdminPage() {
     if (activeTab === "users") {
       setUsersLoading(true);
       getUsers()
-        .then((data: UserData[]) => setUsers(data.filter(u => u.role !== "ADMIN")))
+        .then((data: UserData[]) => {
+          const visibleUsers = data.filter(u => u.role !== "ADMIN");
+          setUsers(visibleUsers);
+          setSelectedUserId(prev => visibleUsers.some(u => u.id === prev) ? prev : null);
+        })
         .catch(() => {})
         .finally(() => setUsersLoading(false));
     } else if (activeTab === "pending") {
@@ -162,6 +168,7 @@ export default function AdminPage() {
     u.firstName.toLowerCase().includes(search.toLowerCase()) ||
     u.lastName.toLowerCase().includes(search.toLowerCase())
   );
+  const selectedUser = filteredUsers.find(u => u.id === selectedUserId) ?? null;
 
   if (isLoading) {
     return <div className="h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-gray-300" /></div>;
@@ -312,7 +319,13 @@ export default function AdminPage() {
                         const roleLabel = t(`admin.roleLabels.${u.role}`) !== `admin.roleLabels.${u.role}` ? t(`admin.roleLabels.${u.role}`) : u.role;
                         const RoleIcon = roleMeta.icon;
                         return (
-                          <tr key={u.id} className="hover:bg-gray-50/40 transition-colors">
+                          <tr
+                            key={u.id}
+                            onClick={() => setSelectedUserId(u.id)}
+                            className={`cursor-pointer transition-colors ${
+                              selectedUserId === u.id ? "bg-red-50/50 hover:bg-red-50/70" : "hover:bg-gray-50/40"
+                            }`}
+                          >
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-3">
                                 <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm uppercase shrink-0">
@@ -342,19 +355,37 @@ export default function AdminPage() {
                               </span>
                             </td>
                             <td className="px-6 py-4 text-right">
-                              {updatingId === u.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin text-gray-400 ml-auto" />
-                              ) : (
-                                <select
-                                  value={u.role}
-                                  onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                                  className="bg-white border border-gray-200 text-gray-700 text-[10px] sm:text-xs font-bold rounded-lg px-2 sm:px-3 py-2 ml-auto block outline-none hover:border-gray-300 cursor-pointer transition-colors focus:ring-2 focus:ring-red-100"
+                              <div className="flex items-center justify-end gap-2">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedUserId(u.id);
+                                  }}
+                                  title={t("admin.viewDetails")}
+                                  className={`w-8 h-8 inline-flex items-center justify-center rounded-lg border transition-colors ${
+                                    selectedUserId === u.id
+                                      ? "border-red-200 bg-red-50 text-red-600"
+                                      : "border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300"
+                                  }`}
                                 >
-                                  <option value="USER">USER</option>
-                                  <option value="EXPERT">EXPERT</option>
-                                  <option value="ADMIN">ADMIN</option>
-                                </select>
-                              )}
+                                  <Eye className="w-4 h-4" />
+                                </button>
+                                {updatingId === u.id ? (
+                                  <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+                                ) : (
+                                  <select
+                                    value={u.role}
+                                    onClick={(e) => e.stopPropagation()}
+                                    onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                                    className="bg-white border border-gray-200 text-gray-700 text-[10px] sm:text-xs font-bold rounded-lg px-2 sm:px-3 py-2 outline-none hover:border-gray-300 cursor-pointer transition-colors focus:ring-2 focus:ring-red-100"
+                                  >
+                                    <option value="USER">USER</option>
+                                    <option value="EXPERT">EXPERT</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                  </select>
+                                )}
+                              </div>
                             </td>
                           </tr>
                         );
@@ -367,6 +398,79 @@ export default function AdminPage() {
                 </div>
               )}
             </div>
+            {selectedUser && (() => {
+              const roleMeta = ROLE_BADGES[selectedUser.role] ?? ROLE_BADGES.USER;
+              const RoleIcon = roleMeta.icon;
+              const roleLabel = t(`admin.roleLabels.${selectedUser.role}`) !== `admin.roleLabels.${selectedUser.role}`
+                ? t(`admin.roleLabels.${selectedUser.role}`)
+                : selectedUser.role;
+              const statusLabel = selectedUser.enabled ? t("admin.enabled") : t("admin.disabled");
+              const StatusIcon = selectedUser.enabled ? BadgeCheck : CircleDashed;
+              return (
+                <section className="mt-4 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                  <div className="px-5 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm uppercase shrink-0">
+                        {selectedUser.firstName.charAt(0)}{selectedUser.lastName.charAt(0)}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-gray-900 text-sm sm:text-base truncate">
+                          {selectedUser.firstName} {selectedUser.lastName}
+                        </h3>
+                        <p className="text-xs text-gray-400 truncate">{t("admin.userDetailsTitle")}</p>
+                      </div>
+                    </div>
+                    <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-md ${roleMeta.badge}`}>
+                      <RoleIcon className="w-3.5 h-3.5" />
+                      {roleLabel}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-100">
+                    <div className="bg-white px-5 py-4">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailEmail")}</p>
+                      <div className="flex items-center gap-2 text-sm text-gray-700 min-w-0">
+                        <Mail className="w-4 h-4 text-gray-400 shrink-0" />
+                        <span className="truncate">{selectedUser.email}</span>
+                      </div>
+                    </div>
+                    <div className="bg-white px-5 py-4">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailCompany")}</p>
+                      <div className="flex items-center gap-2 text-sm text-gray-700 min-w-0">
+                        <Building2 className="w-4 h-4 text-gray-400 shrink-0" />
+                        <span className="truncate">{selectedUser.companyName || t("admin.notProvided")}</span>
+                      </div>
+                    </div>
+                    <div className="bg-white px-5 py-4">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailCompanyRole")}</p>
+                      <div className="flex items-center gap-2 text-sm text-gray-700 min-w-0">
+                        <BriefcaseBusiness className="w-4 h-4 text-gray-400 shrink-0" />
+                        <span className="truncate">{selectedUser.companyRole || t("admin.notProvided")}</span>
+                      </div>
+                    </div>
+                    <div className="bg-white px-5 py-4">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailStatus")}</p>
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <StatusIcon className={`w-4 h-4 shrink-0 ${selectedUser.enabled ? "text-green-500" : "text-gray-300"}`} />
+                        <span>{statusLabel}</span>
+                      </div>
+                    </div>
+                    <div className="bg-white px-5 py-4">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailLastLogin")}</p>
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <Clock3 className="w-4 h-4 text-gray-400 shrink-0" />
+                        <span title={selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleString("fr-FR") : ""}>
+                          {formatLastLogin(selectedUser.lastLogin)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="bg-white px-5 py-4">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">{t("admin.detailId")}</p>
+                      <p className="text-sm font-mono text-gray-700">#{selectedUser.id}</p>
+                    </div>
+                  </div>
+                </section>
+              );
+            })()}
           </>
         )}
 
