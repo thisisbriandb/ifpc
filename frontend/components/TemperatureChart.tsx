@@ -109,6 +109,27 @@ function buildTimeScale(data: ReturnType<typeof buildData>) {
   return { domain: [min, max] as [number, number], ticks };
 }
 
+function buildVpScale(data: ReturnType<typeof buildData>, vpCible: number) {
+  const values = data.map((d) => d.vp_cumulee);
+  if (Number.isFinite(vpCible)) values.push(vpCible);
+
+  const rawMax = Math.max(0, values.length ? Math.max(...values) : 0);
+  let step = 1;
+  if (rawMax > 200) step = 50;
+  else if (rawMax > 100) step = 25;
+  else if (rawMax > 50) step = 10;
+  else if (rawMax > 20) step = 5;
+  else if (rawMax > 10) step = 2;
+
+  const max = Math.max(step, Math.ceil(rawMax / step) * step);
+  const ticks: number[] = [];
+  for (let tick = 0; tick <= max; tick += step) {
+    ticks.push(tick);
+  }
+
+  return { domain: [0, max] as [number, number], ticks };
+}
+
 type ChartView = "temp" | "vp" | "both";
 
 const STATUT_COLORS: Record<string, string> = {
@@ -125,6 +146,7 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
   const timeUnit = isFlash ? "sec." : "min.";
   const temperatureScale = buildTemperatureScale(data, tRef);
   const timeScale = buildTimeScale(data);
+  const vpScale = buildVpScale(data, vpCible);
 
   const showTemp = view === "temp" || view === "both";
   const showVp = view === "vp" || view === "both";
@@ -165,7 +187,7 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
 
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 25, right: 15, left: 0, bottom: 15 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f3f3" />
+            <CartesianGrid strokeDasharray="3 3" vertical horizontal stroke="#eeeeee" />
             <XAxis
               dataKey="temps"
               type="number"
@@ -173,7 +195,9 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
               ticks={timeScale.ticks}
               tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
               axisLine={false}
-              tickLine={false}
+              tickLine={{ stroke: "#d1d5db" }}
+              interval={0}
+              minTickGap={0}
               tickFormatter={(v) => `${v}`}
               label={{ value: `Durée (${timeUnit})`, position: "insideBottom", offset: -8, style: { fontSize: 9, fill: "#9ca3af", fontWeight: "bold" } }}
             />
@@ -183,9 +207,10 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
                 yAxisId="temp"
                 tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
                 axisLine={false}
-                tickLine={false}
+                tickLine={{ stroke: "#d1d5db" }}
                 domain={temperatureScale.domain}
                 ticks={temperatureScale.ticks}
+                interval={0}
                 allowDecimals={false}
                 tickFormatter={(v) => `${v}°`}
               />
@@ -196,10 +221,12 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
                 yAxisId="vp"
                 orientation={showTemp ? "right" : "left"}
                 type="number"
-                domain={[0, "auto"]}
+                domain={vpScale.domain}
+                ticks={vpScale.ticks}
                 tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
                 axisLine={false}
-                tickLine={false}
+                tickLine={{ stroke: "#d1d5db" }}
+                interval={0}
               />
             )}
             <Tooltip content={<CustomTooltip t={t} timeUnit={timeUnit} />} />

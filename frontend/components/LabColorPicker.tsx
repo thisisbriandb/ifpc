@@ -36,15 +36,6 @@ function labToHex(L: number, a: number, b: number): string {
   return `#${[r, g, bl].map(c => c.toString(16).padStart(2, "0")).join("")}`;
 }
 
-function isInGamut(L: number, a: number, b: number): boolean {
-  const [X, Y, Z] = labToXyz(L, a, b);
-  let r =  3.2406 * X - 1.5372 * Y - 0.4986 * Z;
-  let g = -0.9689 * X + 1.8758 * Y + 0.0415 * Z;
-  let bl = 0.0557 * X - 0.2040 * Y + 1.0570 * Z;
-  const gamma = (c: number) => (c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055);
-  return [gamma(r), gamma(g), gamma(bl)].every(c => c >= -0.01 && c <= 1.01);
-}
-
 // ── Props ──────────────────────────────────────────────────────────────────
 
 interface LabColorPickerProps {
@@ -92,15 +83,9 @@ export default function LabColorPicker({ L, a, b, onChangeA, onChangeB }: LabCol
         const aVal = (dx / RADIUS) * AB_RANGE;
         const bVal = -(dy / RADIUS) * AB_RANGE; // y flipped: top = +b
 
-        const inGamut = isInGamut(L, aVal, bVal);
-        if (inGamut) {
-          const [X, Y, Z] = labToXyz(L, aVal, bVal);
-          const [r, g, bl] = xyzToSrgb(X, Y, Z);
-          data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
-        } else {
-          const shade = 232 - Math.round((dist / RADIUS) * 18);
-          data[idx] = shade; data[idx + 1] = shade; data[idx + 2] = shade; data[idx + 3] = 120;
-        }
+        const [X, Y, Z] = labToXyz(L, aVal, bVal);
+        const [r, g, bl] = xyzToSrgb(X, Y, Z);
+        data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
       }
     }
     ctx.putImageData(imageData, 0, 0);
@@ -108,6 +93,13 @@ export default function LabColorPicker({ L, a, b, onChangeA, onChangeB }: LabCol
     // Draw grid, axis lines, and Lab direction labels.
     ctx.strokeStyle = "rgba(0,0,0,0.08)";
     ctx.lineWidth = 1;
+    for (let value = -100; value <= 100; value += 10) {
+      const x = RADIUS + (value / AB_RANGE) * RADIUS;
+      const y = RADIUS - (value / AB_RANGE) * RADIUS;
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, SIZE); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(SIZE, y); ctx.stroke();
+    }
+    ctx.strokeStyle = "rgba(0,0,0,0.18)";
     [0.25, 0.5, 0.75, 1].forEach((ratio) => {
       ctx.beginPath();
       ctx.arc(RADIUS, RADIUS, RADIUS * ratio, 0, Math.PI * 2);
