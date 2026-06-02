@@ -52,7 +52,7 @@ export function logout() {
 
 // ── Profile ─────────────────────────────────────────────────────────────────
 
-export async function updateProfile(data: { firstName?: string; lastName?: string }) {
+export async function updateProfile(data: { firstName?: string; lastName?: string; companyName?: string; companyRole?: string }) {
   const response = await api.put("/auth/profile", data);
   return response.data;
 }

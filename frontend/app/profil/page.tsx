@@ -33,6 +33,8 @@ export default function ProfilPage() {
   // Profile form
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyRole, setCompanyRole] = useState("");
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileMsg, setProfileMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -49,6 +51,8 @@ export default function ProfilPage() {
     if (user) {
       setFirstName(user.firstName);
       setLastName(user.lastName);
+      setCompanyName(user.companyName || "");
+      setCompanyRole(user.companyRole || "");
     }
   }, [user]);
 
@@ -57,7 +61,7 @@ export default function ProfilPage() {
     setProfileSaving(true);
     setProfileMsg(null);
     try {
-      const updated = await updateProfile({ firstName, lastName });
+      const updated = await updateProfile({ firstName, lastName, companyName, companyRole });
       setUser(updated);
       setProfileMsg({ type: "success", text: t("profile.profileUpdated") });
     } catch (err: any) {
@@ -156,6 +160,16 @@ export default function ProfilPage() {
               <div>
                 <label className="text-[11px] font-semibold text-gray-500 mb-1.5 block">{t("profile.lastName")}</label>
                 <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} required
+                  className={inputCls} />
+              </div>
+              <div>
+                <label className="text-[11px] font-semibold text-gray-500 mb-1.5 block">Entreprise</label>
+                <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)}
+                  className={inputCls} />
+              </div>
+              <div>
+                <label className="text-[11px] font-semibold text-gray-500 mb-1.5 block">Fonction</label>
+                <input type="text" value={companyRole} onChange={e => setCompanyRole(e.target.value)}
                   className={inputCls} />
               </div>
             </div>
