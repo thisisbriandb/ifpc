@@ -58,16 +58,16 @@ interface LabColorPickerProps {
 
 // ── Component ──────────────────────────────────────────────────────────────
 
-export default function LabColorPicker({ L, a, b, onChangeA, onChangeB, onChangeL }: LabColorPickerProps) {
+const SIZE = 240;
+const RADIUS = SIZE / 2;
+const AB_RANGE = 128;
+
+export default function LabColorPicker({ L, a, b, onChangeA, onChangeB }: LabColorPickerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
 
-  const SIZE = 220;
-  const RADIUS = SIZE / 2;
-  const AB_RANGE = 60; // range: -60..+60
-
-  // Draw the a*b* disc
+  // Draw the full a*b* Lab disc for the selected L* slice.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -92,34 +92,39 @@ export default function LabColorPicker({ L, a, b, onChangeA, onChangeB, onChange
         const aVal = (dx / RADIUS) * AB_RANGE;
         const bVal = -(dy / RADIUS) * AB_RANGE; // y flipped: top = +b
 
-        if (isInGamut(L, aVal, bVal)) {
+        const inGamut = isInGamut(L, aVal, bVal);
+        if (inGamut) {
           const [X, Y, Z] = labToXyz(L, aVal, bVal);
           const [r, g, bl] = xyzToSrgb(X, Y, Z);
           data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
         } else {
-          // Out of gamut: faint gray
-          data[idx] = 230; data[idx + 1] = 230; data[idx + 2] = 230; data[idx + 3] = 80;
+          const shade = 232 - Math.round((dist / RADIUS) * 18);
+          data[idx] = shade; data[idx + 1] = shade; data[idx + 2] = shade; data[idx + 3] = 120;
         }
       }
     }
     ctx.putImageData(imageData, 0, 0);
 
-    // Draw axis lines
+    // Draw grid, axis lines, and Lab direction labels.
     ctx.strokeStyle = "rgba(0,0,0,0.08)";
     ctx.lineWidth = 1;
+    [0.25, 0.5, 0.75, 1].forEach((ratio) => {
+      ctx.beginPath();
+      ctx.arc(RADIUS, RADIUS, RADIUS * ratio, 0, Math.PI * 2);
+      ctx.stroke();
+    });
     ctx.beginPath(); ctx.moveTo(0, RADIUS); ctx.lineTo(SIZE, RADIUS); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(RADIUS, 0); ctx.lineTo(RADIUS, SIZE); ctx.stroke();
 
-    // Axis labels
-    ctx.font = "bold 9px system-ui";
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
+    ctx.font = "bold 10px system-ui";
+    ctx.fillStyle = "rgba(17,24,39,0.5)";
     ctx.textAlign = "center";
-    ctx.fillText("+b* (jaune)", RADIUS, 11);
-    ctx.fillText("−b* (bleu)", RADIUS, SIZE - 4);
+    ctx.fillText("+b*", RADIUS, 13);
+    ctx.fillText("−b*", RADIUS, SIZE - 6);
     ctx.textAlign = "left";
-    ctx.fillText("+a* (rouge)", SIZE - 52, RADIUS - 5);
+    ctx.fillText("+a*", SIZE - 25, RADIUS - 6);
     ctx.textAlign = "right";
-    ctx.fillText("−a* (vert)", 52, RADIUS - 5);
+    ctx.fillText("−a*", 25, RADIUS - 6);
   }, [L]);
 
   // Convert mouse position to a*, b*
@@ -152,20 +157,28 @@ export default function LabColorPicker({ L, a, b, onChangeA, onChangeB, onChange
   const handlePointerUp = () => setDragging(false);
 
   // Position of cursor on disc
-  const cursorX = RADIUS + (a / AB_RANGE) * RADIUS;
-  const cursorY = RADIUS - (b / AB_RANGE) * RADIUS;
+  const cursorX = Math.max(0, Math.min(SIZE, RADIUS + (a / AB_RANGE) * RADIUS));
+  const cursorY = Math.max(0, Math.min(SIZE, RADIUS - (b / AB_RANGE) * RADIUS));
   const currentHex = labToHex(L, a, b);
 
   return (
     <div className="space-y-3">
       {/* a*b* disc */}
       <div className="flex flex-col items-center">
-        <div ref={containerRef} className="relative" style={{ width: SIZE, height: SIZE }}>
+        <div className="w-full flex items-center justify-between mb-2">
+          <p className="text-[10px] font-bold text-gray-400 uppercase">Cercle Lab a*/b*</p>
+          <span className="text-[10px] font-mono font-bold text-gray-400">L* {L.toFixed(0)}</span>
+        </div>
+        <div
+          ref={containerRef}
+          className="relative max-w-full rounded-full shadow-inner border border-black/[0.06] bg-gray-50"
+          style={{ width: SIZE, height: SIZE }}
+        >
           <canvas
             ref={canvasRef}
             width={SIZE}
             height={SIZE}
-            className="rounded-full cursor-crosshair"
+            className="rounded-full cursor-crosshair block"
             style={{ width: SIZE, height: SIZE }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
@@ -187,26 +200,6 @@ export default function LabColorPicker({ L, a, b, onChangeA, onChangeB, onChange
               <circle cx="10" cy="10" r="2" fill="white" stroke="rgba(0,0,0,0.4)" strokeWidth="0.5" />
             </svg>
           </div>
-        </div>
-      </div>
-
-      {/* L* slider */}
-      <div className="space-y-1">
-        <div className="flex items-center justify-between">
-          <p className="text-[10px] font-bold text-gray-400 uppercase">L* (luminosité)</p>
-          <span className="text-[11px] font-mono font-bold text-gray-600">{L.toFixed(0)}</span>
-        </div>
-        <div className="relative">
-          <input
-            type="range"
-            min="0" max="100" step="1"
-            value={L}
-            onChange={(e) => onChangeL(parseFloat(e.target.value))}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer"
-            style={{
-              background: `linear-gradient(to right, ${labToHex(0, a, b)}, ${labToHex(50, a, b)}, ${labToHex(100, a, b)})`,
-            }}
-          />
         </div>
       </div>
 

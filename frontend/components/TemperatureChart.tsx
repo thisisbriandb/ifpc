@@ -63,6 +63,52 @@ function buildData(courbe: CourbeData) {
   return out;
 }
 
+function buildTemperatureScale(data: ReturnType<typeof buildData>, tRef: number) {
+  const values = data.map((d) => d.temperature);
+  if (Number.isFinite(tRef)) values.push(tRef);
+
+  const rawMin = values.length ? Math.min(...values) : 0;
+  const rawMax = values.length ? Math.max(...values) : 100;
+  let min = Math.floor(rawMin / 20) * 20;
+  let max = Math.ceil(rawMax / 20) * 20;
+
+  if (min === max) {
+    min -= 20;
+    max += 20;
+  }
+
+  const ticks: number[] = [];
+  for (let tick = min; tick <= max; tick += 20) {
+    ticks.push(tick);
+  }
+
+  return { domain: [min, max] as [number, number], ticks };
+}
+
+function buildTimeScale(data: ReturnType<typeof buildData>) {
+  const values = data.map((d) => d.temps);
+  const rawMin = values.length ? Math.min(...values) : 0;
+  const rawMax = values.length ? Math.max(...values) : 0;
+  const min = Math.floor(rawMin);
+  const max = Math.ceil(rawMax);
+  const range = max - min;
+
+  let step = 1;
+  if (range > 180) step = 30;
+  else if (range > 90) step = 15;
+  else if (range > 45) step = 10;
+  else if (range > 25) step = 5;
+
+  const ticks: number[] = [];
+  for (let tick = min; tick <= max; tick += step) {
+    ticks.push(tick);
+  }
+
+  if (!ticks.includes(max)) ticks.push(max);
+
+  return { domain: [min, max] as [number, number], ticks };
+}
+
 type ChartView = "temp" | "vp" | "both";
 
 const STATUT_COLORS: Record<string, string> = {
@@ -77,9 +123,8 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
   const data = buildData(courbe);
   const isFlash = procede?.toLowerCase().includes("flash");
   const timeUnit = isFlash ? "sec." : "min.";
-
-  // Extract all "temps" points to set as explicit ticks so every step is drawn on the axis
-  const tempsTicks = data.map(d => d.temps);
+  const temperatureScale = buildTemperatureScale(data, tRef);
+  const timeScale = buildTimeScale(data);
 
   const showTemp = view === "temp" || view === "both";
   const showVp = view === "vp" || view === "both";
@@ -124,8 +169,8 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
             <XAxis
               dataKey="temps"
               type="number"
-              domain={["dataMin", "dataMax"]}
-              ticks={tempsTicks}
+              domain={timeScale.domain}
+              ticks={timeScale.ticks}
               tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
               axisLine={false}
               tickLine={false}
@@ -139,7 +184,8 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
                 tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
                 axisLine={false}
                 tickLine={false}
-                domain={[(min: number) => Math.floor(min - 5), (max: number) => Math.ceil(max + 5)]}
+                domain={temperatureScale.domain}
+                ticks={temperatureScale.ticks}
                 allowDecimals={false}
                 tickFormatter={(v) => `${v}°`}
               />
