@@ -40,32 +40,11 @@ interface Props {
 }
 
 function computeInsights(result: ResultData) {
-  const ratio = result.vp_cible > 0 ? result.vp / result.vp_cible : 0;
   const k = result.parametres.d_ref && result.parametres.d_ref > 0
     ? result.vp / result.parametres.d_ref
     : null;
 
-  let multiplierText: string;
-  if (ratio >= 1) {
-    multiplierText = ratio >= 10
-      ? `×${Math.round(ratio)}`
-      : `×${ratio.toFixed(1)}`;
-  } else {
-    multiplierText = `${(ratio * 100).toFixed(1)}%`;
-  }
-
-  let vpReachedAtMin: number | null = null;
-  const courbe = result.courbe;
-  if (courbe?.vp_cumulee && courbe.temps) {
-    for (let i = 0; i < courbe.vp_cumulee.length; i++) {
-      if (courbe.vp_cumulee[i] >= result.vp_cible) {
-        vpReachedAtMin = courbe.temps[i];
-        break;
-      }
-    }
-  }
-
-  return { ratio, k, multiplierText, vpReachedAtMin };
+  return { k };
 }
 
 const RING_COLORS: Record<string, { stroke: string; text: string; bg: string; badge: string }> = {
@@ -115,7 +94,7 @@ export function KPICards({ result }: Props) {
     ? Math.max(...result.courbe.temps)
     : 0;
 
-  const { ratio, k, multiplierText, vpReachedAtMin } = computeInsights(result);
+  const { k } = computeInsights(result);
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -142,12 +121,6 @@ export function KPICards({ result }: Props) {
 
           <p className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0 whitespace-pre-line">
             {result.message}
-          </p>
-
-          <p className="text-[10px] sm:text-[11px] font-mono text-gray-400 mt-2">
-            {vpReachedAtMin !== null
-              ? t("resultDisplay.targetReachedAt", { n: vpReachedAtMin.toFixed(0) })
-              : t("resultDisplay.targetNeverReached")}
           </p>
         </div>
       </div>

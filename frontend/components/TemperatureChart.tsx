@@ -7,7 +7,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  ReferenceLine,
   Line,
   ComposedChart,
 } from "recharts";
@@ -114,13 +113,16 @@ function buildVpScale(data: ReturnType<typeof buildData>, vpCible: number) {
   if (Number.isFinite(vpCible)) values.push(vpCible);
 
   const rawMax = Math.max(0, values.length ? Math.max(...values) : 0);
-  let step = 1;
-  if (rawMax > 200) step = 50;
-  else if (rawMax > 100) step = 25;
-  else if (rawMax > 50) step = 10;
-  else if (rawMax > 20) step = 5;
-  else if (rawMax > 10) step = 2;
-
+  const targetTickCount = 6;
+  const roughStep = rawMax / targetTickCount || 1;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
+  const normalized = roughStep / magnitude;
+  const niceStep =
+    normalized <= 1 ? 1 :
+    normalized <= 2 ? 2 :
+    normalized <= 5 ? 5 :
+    10;
+  const step = niceStep * magnitude;
   const max = Math.max(step, Math.ceil(rawMax / step) * step);
   const ticks: number[] = [];
   for (let tick = 0; tick <= max; tick += step) {
@@ -230,26 +232,6 @@ export default function TemperatureChart({ courbe, tRef, vpCible, statut, proced
               />
             )}
             <Tooltip content={<CustomTooltip t={t} timeUnit={timeUnit} />} />
-
-            {/* Reference lines */}
-            {showTemp && (
-              <ReferenceLine
-                yAxisId="temp"
-                y={tRef}
-                stroke="var(--color-accent)"
-                strokeDasharray="4 4"
-                strokeWidth={1}
-              />
-            )}
-            {showVp && (
-              <ReferenceLine
-                yAxisId="vp"
-                y={vpCible}
-                stroke={vpColor}
-                strokeDasharray="4 4"
-                strokeWidth={1.5}
-              />
-            )}
 
             {/* Temperature line */}
             {showTemp && (

@@ -344,6 +344,7 @@ function ControlePageInner() {
               <ProductSelector
                 productType={productType} onProductChange={setProductType}
                 microorganisme={microorganisme} onMicroChange={setMicroorganisme}
+                lotIdentifier={lotIdentifier} onLotIdentifierChange={setLotIdentifier}
                 procede={procede} onProcedeChange={setProcede}
                 expertMode={expertMode}
                 tRef={tRef} onTRefChange={setTRef}
@@ -351,16 +352,6 @@ function ControlePageInner() {
                 ph={ph} onPhChange={setPh}
                 titreAlcool={titreAlcool} onTitreAlcoolChange={setTitreAlcool}
               />
-
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">{t("controle.lotIdentifier")}</label>
-                <input
-                  type="text"
-                  value={lotIdentifier}
-                  onChange={(e) => setLotIdentifier(e.target.value)}
-                  className="w-full px-2.5 py-1.5 border border-black/[0.06] rounded-md focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white"
-                />
-              </div>
 
               <div className="flex gap-1.5">
                 {[[t("bareme.turbid"), "trouble"], [t("bareme.clear"), "limpide"]].map(([label, value]) => (

@@ -24,6 +24,8 @@ interface Props {
   onProductChange: (v: string) => void;
   microorganisme: string;
   onMicroChange: (v: string) => void;
+  lotIdentifier?: string;
+  onLotIdentifierChange?: (v: string) => void;
   procede: string;
   onProcedeChange: (v: string) => void;
   expertMode?: boolean;
@@ -40,6 +42,7 @@ interface Props {
 export default function ProductSelector({
   productType, onProductChange,
   microorganisme, onMicroChange,
+  lotIdentifier, onLotIdentifierChange,
   procede, onProcedeChange,
   expertMode = false,
   tRef, onTRefChange,
@@ -119,6 +122,18 @@ export default function ProductSelector({
           ))}
         </select>
       </div>
+
+      {onLotIdentifierChange && (
+        <div>
+          <label className={labelCls}>{t("controle.lotIdentifier")}</label>
+          <input
+            type="text"
+            value={lotIdentifier ?? ""}
+            onChange={(e) => onLotIdentifierChange(e.target.value)}
+            className="w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white"
+          />
+        </div>
+      )}
 
       {/* Row 2: Procédé */}
       <div>
