@@ -289,7 +289,6 @@
     "targetReachedAt": "Objectif atteint à {n} min",
     "targetNeverReached": "Objectif non atteint",
     "kFactor": "k (VP/D)",
-    "insufficientBaremeHint": "La pasteurisation est insuffisante : risque de reprise de fermentation. Vous pouvez ajuster le barème avec l'outil d'aide au choix.",
     "openBaremeTool": "Voir l'outil aide au choix du barème"
   },
   "chart": {

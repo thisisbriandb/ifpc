@@ -85,6 +85,37 @@ const RING_COLORS: Record<string, { stroke: string; text: string; bg: string; ba
   insuffisant: { stroke: "#dc2626",              text: "text-red-700",       bg: "bg-red-50",          badge: "bg-red-500/10 text-red-700 border-red-500/20" },
 };
 
+function ResultMessage({ result, showBaremeLink = false }: { result: ResultData; showBaremeLink?: boolean }) {
+  const { t } = useI18n();
+  const paragraphs = result.message.split("\n\n");
+
+  return (
+    <>
+      {paragraphs.map((paragraph, index) => {
+        const isLast = index === paragraphs.length - 1;
+
+        return (
+          <p key={index} className={index > 0 ? "mt-2" : undefined}>
+            {paragraph}
+            {showBaremeLink && isLast && (
+              <>
+                {" "}
+                <Link
+                  href={buildBaremeHref(result)}
+                  className="inline-flex items-center gap-1 text-brand-primary font-semibold hover:underline"
+                >
+                  {t("resultDisplay.openBaremeTool")}
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </>
+            )}
+          </p>
+        );
+      })}
+    </>
+  );
+}
+
 function VPGauge({ vp, vpCible, statut }: { vp: number; vpCible: number; statut: string }) {
   const cfg = RING_COLORS[statut] || RING_COLORS.insuffisant;
   const ratio = vpCible > 0 ? Math.min(vp / vpCible, 1) : 0;
@@ -152,24 +183,9 @@ export function KPICards({ result }: Props) {
             )}
           </div>
 
-          <p className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0 whitespace-pre-line">
-            {result.message}
-          </p>
-
-          {isInsufficient && (
-            <div className="mt-3 max-w-md mx-auto sm:mx-0 rounded-lg border border-red-200/60 bg-red-50/70 px-3 py-2.5 text-left">
-              <p className="text-xs text-red-700 leading-relaxed">
-                {t("resultDisplay.insufficientBaremeHint")}
-              </p>
-              <Link
-                href={buildBaremeHref(result)}
-                className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-red-700 hover:text-red-800"
-              >
-                {t("resultDisplay.openBaremeTool")}
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          )}
+          <div className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0">
+            <ResultMessage result={result} showBaremeLink={isInsufficient} />
+          </div>
         </div>
       </div>
 
@@ -245,7 +261,9 @@ export default function ResultDisplay({ result }: Props) {
         <div className="w-full sm:w-1.5 h-1.5 sm:h-auto shrink-0" style={{ backgroundColor: result.risque.couleur }}></div>
         <div className="p-5 flex-1">
           <h4 className="font-bold text-brand-text mb-2">{t("resultDisplay.analysisTitle")}</h4>
-          <p className="text-sm text-gray-600 leading-relaxed mb-4 whitespace-pre-line">{result.message}</p>
+          <div className="text-sm text-gray-600 leading-relaxed mb-4">
+            <ResultMessage result={result} showBaremeLink={result.statut === "insuffisant"} />
+          </div>
 
           <div className="inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-gray-50 border border-gray-100 text-gray-700">
             <span className="uppercase text-[10px] tracking-wider text-gray-500">{t("resultDisplay.advice")}</span>

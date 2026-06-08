@@ -289,7 +289,6 @@
     "targetReachedAt": "Target reached at {n} min",
     "targetNeverReached": "Target not reached",
     "kFactor": "k (PV/D)",
-    "insufficientBaremeHint": "Pasteurisation is insufficient: risk of fermentation restart. You can adjust the schedule with the selection helper.",
     "openBaremeTool": "Open the schedule selection tool"
   },
   "chart": {

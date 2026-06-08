@@ -284,19 +284,19 @@ def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, lo
     if microorganisme.lower().startswith("byssochlamys"):
         return (
             f"Les conditions de pasteurisation sont insuffisantes pour "
-            f"réduire le risque lié aux moisissures ({microorganisme}).\n\n"
+            f"réduire le risque lié aux moisissures ({microorganisme}) et prévenir une reprise de fermentation.\n\n"
             f"Il est recommandé d'ajuster le barème de pasteurisation."
         )
     elif microorganisme.lower().startswith("saccharomyces"):
         return (
             f"Les conditions de pasteurisation sont insuffisantes pour "
-            f"réduire le risque lié à {microorganisme}.\n\n"
+            f"réduire le risque lié à {microorganisme} et prévenir une reprise de fermentation.\n\n"
             f"Il est recommandé d'ajuster le barème de pasteurisation."
         )
     elif microorganisme:
         return (
             f"Les conditions de pasteurisation sont insuffisantes pour "
-            f"réduire le risque lié à {microorganisme}.\n\n"
+            f"réduire le risque lié à {microorganisme} et prévenir une reprise de fermentation.\n\n"
             f"Il est recommandé d'ajuster le barème de pasteurisation."
         )
     return f"Pasteurisation insuffisante. VP = {vp_obtenue:.2f} UP (cible ≥ {cible_int} UP)."
