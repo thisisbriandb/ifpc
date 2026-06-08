@@ -1,6 +1,8 @@
 "use client";
 
 // Icons removed from status display — minimalist dot + badge approach
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 interface RisqueData {
@@ -47,6 +49,36 @@ function computeInsights(result: ResultData) {
   return { k };
 }
 
+function buildBaremeHref(result: ResultData) {
+  const params = new URLSearchParams();
+  const { produit, clarification, procede, microorganisme, t_ref, z, ph, titre_alcool } = result.parametres;
+  const productKeyByLabel: Record<string, string> = {
+    jus_pomme: "jus_pomme",
+    "jus de pomme": "jus_pomme",
+    cidre_doux: "cidre_doux",
+    "cidre doux": "cidre_doux",
+    cidre_demi_sec: "cidre_demi_sec",
+    "cidre demi-sec": "cidre_demi_sec",
+    cidre_brut: "cidre_brut",
+    "cidre brut": "cidre_brut",
+    cidre_extra_brut: "cidre_extra_brut",
+    "cidre extra-brut": "cidre_extra_brut",
+  };
+  const productKey = produit ? productKeyByLabel[produit.toLowerCase()] : null;
+
+  if (productKey) params.set("product_type", productKey);
+  if (clarification) params.set("clarification", clarification);
+  if (procede) params.set("procede", procede);
+  if (microorganisme) params.set("microorganisme", microorganisme);
+  if (Number.isFinite(t_ref)) params.set("t_ref", String(t_ref));
+  if (Number.isFinite(z)) params.set("z", String(z));
+  if (typeof ph === "number" && Number.isFinite(ph)) params.set("ph", String(ph));
+  if (typeof titre_alcool === "number" && Number.isFinite(titre_alcool)) params.set("titre_alcool", String(titre_alcool));
+
+  const query = params.toString();
+  return query ? `/bareme?${query}` : "/bareme";
+}
+
 const RING_COLORS: Record<string, { stroke: string; text: string; bg: string; badge: string }> = {
   conforme:    { stroke: "var(--color-primary)", text: "text-brand-primary", bg: "bg-brand-primary/5", badge: "bg-brand-primary/8 text-brand-primary border-brand-primary/15" },
   vigilance:   { stroke: "var(--color-accent)",  text: "text-brand-accent",  bg: "bg-brand-accent/5",  badge: "bg-brand-accent/8 text-brand-accent border-brand-accent/15" },
@@ -88,6 +120,7 @@ function VPGauge({ vp, vpCible, statut }: { vp: number; vpCible: number; statut:
 export function KPICards({ result }: Props) {
   const { t } = useI18n();
   const cfg = RING_COLORS[result.statut] || RING_COLORS.insuffisant;
+  const isInsufficient = result.statut === "insuffisant";
 
   const maxTemp = Math.max(...(result.courbe?.temperatures || [0]));
   const duree = result.courbe?.temps && result.courbe.temps.length > 0
@@ -122,6 +155,21 @@ export function KPICards({ result }: Props) {
           <p className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0 whitespace-pre-line">
             {result.message}
           </p>
+
+          {isInsufficient && (
+            <div className="mt-3 max-w-md mx-auto sm:mx-0 rounded-lg border border-red-200/60 bg-red-50/70 px-3 py-2.5 text-left">
+              <p className="text-xs text-red-700 leading-relaxed">
+                {t("resultDisplay.insufficientBaremeHint")}
+              </p>
+              <Link
+                href={buildBaremeHref(result)}
+                className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-red-700 hover:text-red-800"
+              >
+                {t("resultDisplay.openBaremeTool")}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 

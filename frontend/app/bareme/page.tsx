@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { Suspense, useState, useMemo } from "react";
 import { AlertTriangle, Info, ShieldCheck, ChevronDown, HelpCircle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
 import HelpModal from "@/components/HelpModal";
@@ -73,6 +74,26 @@ const VERDICT_LABEL: Record<Verdict, string> = {
   impossible: "verdictImpossible",
 };
 
+type SearchParamReader = Pick<URLSearchParams, "get">;
+
+function getInitialProductType(searchParams: SearchParamReader) {
+  const productType = searchParams.get("product_type");
+  return productType && PRODUITS[productType] ? productType : "jus_pomme";
+}
+
+function getInitialPasteType(searchParams: SearchParamReader): "flash" | "classique" | "tunnel" {
+  const raw = searchParams.get("procede")?.toLowerCase();
+  if (raw === "flash" || raw?.includes("flash")) return "flash";
+  if (raw === "tunnel" || raw?.includes("tunnel")) return "tunnel";
+  return "classique";
+}
+
+function getInitialTrouble(searchParams: SearchParamReader) {
+  const raw = searchParams.get("clarification")?.toLowerCase();
+  if (raw === "limpide" || raw === "clear") return false;
+  return true;
+}
+
 // ── Circular gauge ────────────────────────────────────────────────────────
 
 function HoldTimeGauge({ holdSec, holdMin, verdict }: { holdSec: number; holdMin: number; verdict: Verdict }) {
@@ -120,18 +141,34 @@ function HoldTimeGauge({ holdSec, holdMin, verdict }: { holdSec: number; holdMin
 // ── Page ──────────────────────────────────────────────────────────────────
 
 export default function BaremePage() {
+  return (
+    <Suspense>
+      <BaremePageInner />
+    </Suspense>
+  );
+}
+
+function BaremePageInner() {
+  const searchParams = useSearchParams();
   const { t, locale } = useI18n();
   const { user } = useAuthStore();
   const canExpert = user?.role === "ADMIN" || user?.role === "EXPERT";
 
-  const [productType, setProductType] = useState("jus_pomme");
-  const [trouble, setTrouble] = useState(true);
-  const [pasteType, setPasteType] = useState<"flash" | "classique" | "tunnel">("classique");
+  const initialProductType = getInitialProductType(searchParams);
+  const initialMicroKey = searchParams.get("microorganisme");
+
+  const [productType, setProductType] = useState(initialProductType);
+  const [trouble, setTrouble] = useState(getInitialTrouble(searchParams));
+  const [pasteType, setPasteType] = useState<"flash" | "classique" | "tunnel">(getInitialPasteType(searchParams));
   const [tConsigne, setTConsigne] = useState("75");
-  const [expertMode, setExpertMode] = useState(false);
-  const [microKey, setMicroKey] = useState(PRODUITS["jus_pomme"].micro);
-  const [customTref, setCustomTref] = useState("");
-  const [customZ, setCustomZ] = useState("");
+  const [expertMode, setExpertMode] = useState(Boolean(searchParams.get("t_ref") || searchParams.get("z") || initialMicroKey));
+  const [microKey, setMicroKey] = useState(
+    initialMicroKey && MICROORGANISMES[initialMicroKey]
+      ? initialMicroKey
+      : PRODUITS[initialProductType].micro
+  );
+  const [customTref, setCustomTref] = useState(searchParams.get("t_ref") || "");
+  const [customZ, setCustomZ] = useState(searchParams.get("z") || "");
 
   const [isConfigOpen, setIsConfigOpen] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
