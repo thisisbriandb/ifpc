@@ -440,6 +440,7 @@ def assembler(
     target_a: float,
     target_b: float,
     volume_total: float = 1000.0,
+    dilution_factor: float = 1.0,
 ) -> dict:
     """
     Entrée principale du module. Lit le fichier, calcule les Lab* de chaque cuvée,
@@ -448,6 +449,9 @@ def assembler(
     volume_total : volume final souhaité en litres (pour la répartition pratique).
     """
     wl, names, do_matrix = parse_spectra_file(file_content, filename)
+    dilution_factor = max(1.0, float(dilution_factor or 1.0))
+    raw_do_matrix = do_matrix.copy()
+    do_matrix = do_matrix / dilution_factor
 
     if len(wl) < 10:
         raise ValueError("Spectre trop court : au moins 10 points sont nécessaires.")
@@ -476,6 +480,8 @@ def assembler(
         "wavelengths": wl.tolist(),
         "do_mix": do_mix_user.tolist(),
         "do_cuves": [do_matrix[:, i].tolist() for i in range(n_cuves)],
+        "raw_do_cuves": [raw_do_matrix[:, i].tolist() for i in range(n_cuves)] if dilution_factor > 1.0 else None,
+        "dilution_factor": dilution_factor,
     }
 
     volume_total = max(0.0, float(volume_total))

@@ -271,6 +271,7 @@ async def colorimetrie_assemblage(
     target_a: float = 0.0,
     target_b: float = 0.0,
     volume_total: float = 1000.0,
+    dilution_factor: float = 1.0,
     user: Optional[dict] = Depends(get_optional_user),
 ):
     """
@@ -290,6 +291,7 @@ async def colorimetrie_assemblage(
             target_a=target_a,
             target_b=target_b,
             volume_total=volume_total,
+            dilution_factor=dilution_factor,
         )
         return result
     except ValueError as e:

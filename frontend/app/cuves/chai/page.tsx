@@ -27,6 +27,12 @@ interface DragPayload {
 
 type PanelView = null | "lot-detail" | "cuve-status" | "create-cuve" | "create-lot";
 type ModalView = null | "transfert" | "assemblage";
+type SpectrumJson = {
+  wavelengths: number[];
+  do: number[];
+  rawDo?: number[];
+  dilutionFactor?: number;
+};
 
 export default function ChaiVirtuelPage() {
   const router = useRouter();
@@ -68,10 +74,12 @@ export default function ChaiVirtuelPage() {
   const [newLotId, setNewLotId] = useState("");
   const [newLotType, setNewLotType] = useState("");
   const [newLotVolume, setNewLotVolume] = useState<number>(0);
-  const [newLotSpectrum, setNewLotSpectrum] = useState<{ wavelengths: number[]; do: number[] } | null>(null);
+  const [newLotSpectrum, setNewLotSpectrum] = useState<SpectrumJson | null>(null);
   const [newLotColor, setNewLotColor] = useState<{ L: number; a: number; b: number; hex: string } | null>(null);
   const [spectrumLoading, setSpectrumLoading] = useState(false);
   const [spectrumFileName, setSpectrumFileName] = useState("");
+  const [newLotDilutionFactor, setNewLotDilutionFactor] = useState("1");
+  const [transformationDilutionFactor, setTransformationDilutionFactor] = useState("1");
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -287,6 +295,11 @@ export default function ChaiVirtuelPage() {
 
     setModalLoading(true);
     try {
+      const mixedSpectrum = buildMixedSpectrum(assemblageSrcA, assemblageSrcB);
+      const mixedColor = mixedSpectrum
+        ? await spectrumToLab(mixedSpectrum.wavelengths, mixedSpectrum.do)
+        : null;
+
       await opAssemblage({
         sources: [
           { cuveId: assemblageSrcA.cuve.id!, lotId: assemblageSrcA.lot.id!, volume: assemblageSrcA.volume },
@@ -295,10 +308,11 @@ export default function ChaiVirtuelPage() {
         cuveDestId: assemblageDestCuveId,
         newLotIdentifiant: assemblageNewLotId,
         typeProduit,
-        colorL: assemblageSrcA.lot.colorL,
-        colorA: assemblageSrcA.lot.colorA,
-        colorB: assemblageSrcA.lot.colorB,
-        colorHex: assemblageSrcA.lot.colorHex,
+        colorL: mixedColor?.L ?? assemblageSrcA.lot.colorL,
+        colorA: mixedColor?.a ?? assemblageSrcA.lot.colorA,
+        colorB: mixedColor?.b ?? assemblageSrcA.lot.colorB,
+        colorHex: mixedColor?.hex ?? assemblageSrcA.lot.colorHex,
+        spectrumJson: mixedSpectrum ? JSON.stringify(mixedSpectrum) : undefined,
       });
       await loadData();
       setModalView(null);
@@ -349,6 +363,55 @@ export default function ChaiVirtuelPage() {
 
   // ── Spectrum file parsing ────────────────────────────────────────────────
 
+  const parseDilutionFactor = (value: string) => {
+    const factor = parseFloat(value.replace(",", "."));
+    return Number.isFinite(factor) && factor > 0 ? factor : 1;
+  };
+
+  const interpolateSpectrum = (sourceWl: number[], sourceDo: number[], targetWl: number[]) => {
+    return targetWl.map((wl) => {
+      if (sourceWl.length === 0 || sourceDo.length === 0) return 0;
+      if (wl <= sourceWl[0]) return sourceDo[0] || 0;
+      if (wl >= sourceWl[sourceWl.length - 1]) return sourceDo[sourceDo.length - 1] || 0;
+
+      const rightIndex = sourceWl.findIndex(v => v >= wl);
+      if (rightIndex <= 0) return sourceDo[0] || 0;
+
+      const leftIndex = rightIndex - 1;
+      const span = sourceWl[rightIndex] - sourceWl[leftIndex];
+      if (span === 0) return sourceDo[leftIndex] || 0;
+
+      const ratio = (wl - sourceWl[leftIndex]) / span;
+      return (sourceDo[leftIndex] || 0) + ratio * ((sourceDo[rightIndex] || 0) - (sourceDo[leftIndex] || 0));
+    });
+  };
+
+  const buildMixedSpectrum = (sourceA: typeof assemblageSrcA, sourceB: typeof assemblageSrcB): SpectrumJson | null => {
+    if (!sourceA?.lot.spectrumJson || !sourceB?.lot.spectrumJson) return null;
+
+    try {
+      const specA: SpectrumJson = JSON.parse(sourceA.lot.spectrumJson);
+      const specB: SpectrumJson = JSON.parse(sourceB.lot.spectrumJson);
+      if (!specA.wavelengths?.length || !specA.do?.length || !specB.wavelengths?.length || !specB.do?.length) return null;
+
+      const totalVolume = sourceA.volume + sourceB.volume;
+      if (totalVolume <= 0) return null;
+
+      const weightA = sourceA.volume / totalVolume;
+      const weightB = sourceB.volume / totalVolume;
+      const doB = interpolateSpectrum(specB.wavelengths, specB.do, specA.wavelengths);
+      const mixedDo = specA.do.map((value, index) => value * weightA + (doB[index] || 0) * weightB);
+
+      return {
+        wavelengths: specA.wavelengths,
+        do: mixedDo,
+        dilutionFactor: 1,
+      };
+    } catch {
+      return null;
+    }
+  };
+
   const handleSpectrumUpload = async (file: File) => {
     setSpectrumLoading(true);
     setSpectrumFileName(file.name);
@@ -376,9 +439,12 @@ export default function ChaiVirtuelPage() {
         return;
       }
 
-      // Call backend to compute L*a*b* + hex
-      const color = await spectrumToLab(wavelengths, doValues);
-      setNewLotSpectrum({ wavelengths, do: doValues });
+      const dilutionFactor = parseDilutionFactor(newLotDilutionFactor);
+      const correctedDoValues = doValues.map(v => v / dilutionFactor);
+
+      // Call backend to compute L*a*b* + hex from the corrected product spectrum.
+      const color = await spectrumToLab(wavelengths, correctedDoValues);
+      setNewLotSpectrum({ wavelengths, do: correctedDoValues, rawDo: doValues, dilutionFactor });
       setNewLotColor(color);
     } catch (err: any) {
       alert(err?.response?.data?.detail || "Erreur lors du traitement du spectre");
@@ -405,6 +471,7 @@ export default function ChaiVirtuelPage() {
       });
       setNewLotId(""); setNewLotType(""); setNewLotVolume(0);
       setNewLotSpectrum(null); setNewLotColor(null); setSpectrumFileName("");
+      setNewLotDilutionFactor("1");
       setPanelView(null);
       await loadData();
     } catch (err: any) {
@@ -419,7 +486,7 @@ export default function ChaiVirtuelPage() {
 
   // ── Transformation (re-upload spectrum for existing lot) ──────────────────
 
-  const handleTransformation = async (lot: Lot, file: File) => {
+  const handleTransformation = async (lot: Lot, file: File, dilutionInput = "1") => {
     try {
       const text = await file.text();
       const lines = text.trim().split("\n").filter(l => l.trim());
@@ -435,13 +502,17 @@ export default function ChaiVirtuelPage() {
       }
       if (wavelengths.length < 2) { alert("Fichier spectre invalide"); return; }
 
-      const color = await spectrumToLab(wavelengths, doValues);
+      const dilutionFactor = parseDilutionFactor(dilutionInput);
+      const correctedDoValues = doValues.map(v => v / dilutionFactor);
+      const color = await spectrumToLab(wavelengths, correctedDoValues);
       await opTransformation({
         lotId: lot.id!,
         colorL: color.L, colorA: color.a, colorB: color.b,
         colorHex: color.hex,
-        spectrumJson: JSON.stringify({ wavelengths, do: doValues }),
-        description: "Transformation — mise à jour du spectre",
+        spectrumJson: JSON.stringify({ wavelengths, do: correctedDoValues, rawDo: doValues, dilutionFactor }),
+        description: dilutionFactor > 1
+          ? `Transformation — mise à jour du spectre corrigé dilution x${dilutionFactor}`
+          : "Transformation — mise à jour du spectre",
       });
       await loadData();
       setPanelView(null);
@@ -758,6 +829,17 @@ export default function ChaiVirtuelPage() {
                         } catch { return <p className="text-[9px] text-gray-400">Données disponibles</p>; }
                       })()}
                     </div>
+                    {(() => {
+                      try {
+                        const data = JSON.parse(selectedLot.spectrumJson!);
+                        const factor = Number(data.dilutionFactor || 1);
+                        return factor > 1 ? (
+                          <p className="text-[9px] text-indigo-600 font-bold mt-2">
+                            Spectre corrigé après dilution x{factor}
+                          </p>
+                        ) : null;
+                      } catch { return null; }
+                    })()}
                   </div>
                 )}
 
@@ -773,17 +855,33 @@ export default function ChaiVirtuelPage() {
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Opérations</p>
 
                     {/* Transformation: re-upload spectrum */}
+                    <div>
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1">
+                        Facteur de dilution du nouveau spectre
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          min="1"
+                          step="0.1"
+                          value={transformationDilutionFactor}
+                          onChange={(e) => setTransformationDilutionFactor(e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono outline-none focus:ring-2 focus:ring-amber-100"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400">x</span>
+                      </div>
+                    </div>
                     <label className="flex items-center gap-3 px-4 py-3 bg-amber-50 border border-amber-200 text-amber-700 font-bold rounded-xl text-sm hover:bg-amber-100 cursor-pointer transition-all">
                       <Palette className="w-4 h-4" />
                       <span>Transformation (nouveau spectre)</span>
                       <input type="file" accept=".csv,.txt,.tsv" className="hidden"
                         onChange={(e) => {
                           const f = e.target.files?.[0];
-                          if (f && selectedLot) handleTransformation(selectedLot, f);
+                          if (f && selectedLot) handleTransformation(selectedLot, f, transformationDilutionFactor);
                         }} />
                     </label>
                     <p className="text-[9px] text-gray-400 px-1">
-                      Ex: centrifugation, filtration — la couleur du lot sera recalculée à partir du nouveau spectre.
+                      Ex: centrifugation, filtration, dilution de mesure — la couleur du lot sera recalculée à partir du spectre corrigé.
                     </p>
                   </div>
                 )}
@@ -934,6 +1032,31 @@ export default function ChaiVirtuelPage() {
                         if (f) handleSpectrumUpload(f);
                       }} />
                   </label>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                    Facteur de dilution du spectre
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      min="1"
+                      step="0.1"
+                      value={newLotDilutionFactor}
+                      onChange={(e) => {
+                        setNewLotDilutionFactor(e.target.value);
+                        setNewLotSpectrum(null);
+                        setNewLotColor(null);
+                        setSpectrumFileName("");
+                      }}
+                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-200 outline-none pr-10"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400">x</span>
+                  </div>
+                  <p className="text-[10px] text-gray-400 mt-1">
+                    Indiquez le facteur avant l&apos;import. Si le produit est dilué x2, la DO utilisée sera divisée par 2.
+                  </p>
                 </div>
 
                 {/* Color preview from spectrum */}

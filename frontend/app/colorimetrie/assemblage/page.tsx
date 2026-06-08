@@ -77,6 +77,7 @@ function AssemblageContent() {
   const [targetA, setTargetA] = useState("4");
   const [targetB, setTargetB] = useState("35");
   const [volume, setVolume] = useState("");
+  const [fileDilutionFactor, setFileDilutionFactor] = useState("1");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,6 +90,7 @@ function AssemblageContent() {
   const [useDb, setUseDb] = useState(false);
   const [dbLots, setDbLots] = useState<Lot[]>([]);
   const [selectedLotIds, setSelectedLotIds] = useState<number[]>([]);
+  const [dbDilutionFactors, setDbDilutionFactors] = useState<Record<number, string>>({});
   const [savingToDb, setSavingToDb] = useState<Record<string, boolean>>({});
 
   // ── Load from history if ?history=ID is present ──────────────────────────
@@ -112,6 +114,7 @@ function AssemblageContent() {
                 setTargetB(String(params.target.b ?? 35));
               }
               if (params.volume_total) setVolume(String(params.volume_total));
+              if (params.file_dilution_factor) setFileDilutionFactor(String(params.file_dilution_factor));
             } catch {}
           }
         }
@@ -127,6 +130,21 @@ function AssemblageContent() {
   }, [useDb]);
 
   const handleFile = (f: File | null) => { setFile(f); setError(null); };
+
+  const parseDilutionFactor = (value: string) => {
+    const factor = parseFloat(value.replace(",", "."));
+    return Number.isFinite(factor) && factor > 0 ? factor : 1;
+  };
+
+  const getStoredDilutionFactor = (lot: Lot) => {
+    try {
+      const spec = JSON.parse(lot.spectrumJson || "{}");
+      const factor = Number(spec.dilutionFactor || 1);
+      return Number.isFinite(factor) && factor > 0 ? String(factor) : "1";
+    } catch {
+      return "1";
+    }
+  };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -150,6 +168,7 @@ function AssemblageContent() {
         b: parseFloat(targetB) || 0,
       };
       const vol = Math.max(0, parseFloat(volume) || 0);
+      const fileDilution = parseDilutionFactor(fileDilutionFactor);
       
       let data;
       if (useDb) {
@@ -157,10 +176,12 @@ function AssemblageContent() {
         data = await assemblageCouleurDb({
           spectra: selected.map(l => {
             const spec = JSON.parse(l.spectrumJson!);
+            const dilutionFactor = parseDilutionFactor(dbDilutionFactors[l.id!] || getStoredDilutionFactor(l));
+            const baseDo = Array.isArray(spec.rawDo) ? spec.rawDo : spec.do;
             return {
               name: l.identifiant,
               wavelengths: spec.wavelengths,
-              do_values: spec.do
+              do_values: baseDo.map((v: number) => v / dilutionFactor)
             };
           }),
           target_L: target.L,
@@ -169,7 +190,7 @@ function AssemblageContent() {
           volume_total: vol,
         });
       } else {
-        data = await assemblageCouleur(file!, target, vol);
+        data = await assemblageCouleur(file!, target, vol, fileDilution);
       }
       
       setResult(data);
@@ -181,7 +202,13 @@ function AssemblageContent() {
           label: `Assemblage L*${target.L} a*${target.a} b*${target.b}`,
           statut: data.delta_e < 3 ? "REUSSI" : data.delta_e < 6 ? "ACCEPTABLE" : "ECART",
           vp: data.delta_e,
-          parametres: JSON.stringify({ target, volume_total: vol, file: file?.name }),
+          parametres: JSON.stringify({
+            target,
+            volume_total: vol,
+            file: file?.name,
+            file_dilution_factor: fileDilution,
+            dilution_factors: dbDilutionFactors,
+          }),
           resultJson: JSON.stringify(data),
         });
         setSavedFlash(true);
@@ -331,26 +358,57 @@ function AssemblageContent() {
                       <div className="max-h-48 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
                         {dbLots.map(l => {
                           const hasSpectrum = !!l.spectrumJson;
+                          const isSelected = selectedLotIds.includes(l.id!);
                           return (
-                            <label key={l.id} className={`flex items-center gap-3 p-2 rounded-xl transition-colors border border-transparent ${hasSpectrum ? 'hover:bg-gray-50 cursor-pointer has-[:checked]:border-brand-accent/20 has-[:checked]:bg-brand-accent/5' : 'opacity-50 cursor-not-allowed'}`}>
-                              <input
-                                type="checkbox"
-                                disabled={!hasSpectrum}
-                                checked={selectedLotIds.includes(l.id!)}
-                                onChange={(e) => {
-                                  if (e.target.checked) setSelectedLotIds(prev => [...prev, l.id!]);
-                                  else setSelectedLotIds(prev => prev.filter(id => id !== l.id));
-                                }}
-                                className="w-4 h-4 rounded accent-brand-accent disabled:opacity-30"
-                              />
-                              <div className="flex-1 min-w-0">
-                                <p className="text-xs font-bold text-gray-700 truncate">{l.identifiant}</p>
-                                <p className="text-[10px] text-gray-400 truncate">
-                                  {hasSpectrum ? l.typeProduit : 'Pas de spectre — importez via fichier'}
-                                </p>
-                              </div>
-                              {l.colorHex && <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: l.colorHex }} />}
-                            </label>
+                            <div key={l.id} className={`p-2 rounded-xl transition-colors border border-transparent ${hasSpectrum ? 'hover:bg-gray-50 has-[:checked]:border-brand-accent/20 has-[:checked]:bg-brand-accent/5' : 'opacity-50'}`}>
+                              <label className={hasSpectrum ? "flex items-center gap-3 cursor-pointer" : "flex items-center gap-3 cursor-not-allowed"}>
+                                <input
+                                  type="checkbox"
+                                  disabled={!hasSpectrum}
+                                  checked={isSelected}
+                                  onChange={(e) => {
+                                    if (e.target.checked) {
+                                      setSelectedLotIds(prev => [...prev, l.id!]);
+                                      setDbDilutionFactors(prev => ({ ...prev, [l.id!]: prev[l.id!] || getStoredDilutionFactor(l) }));
+                                    } else {
+                                      setSelectedLotIds(prev => prev.filter(id => id !== l.id));
+                                      setDbDilutionFactors(prev => {
+                                        const next = { ...prev };
+                                        delete next[l.id!];
+                                        return next;
+                                      });
+                                    }
+                                  }}
+                                  className="w-4 h-4 rounded accent-brand-accent disabled:opacity-30"
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-xs font-bold text-gray-700 truncate">{l.identifiant}</p>
+                                  <p className="text-[10px] text-gray-400 truncate">
+                                    {hasSpectrum ? l.typeProduit : 'Pas de spectre — importez via fichier'}
+                                  </p>
+                                </div>
+                                {l.colorHex && <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: l.colorHex }} />}
+                              </label>
+
+                              {hasSpectrum && isSelected && (
+                                <div className="mt-2 grid grid-cols-[1fr_76px] items-center gap-2 pl-7">
+                                  <p className="text-[10px] text-gray-400 leading-snug">
+                                    Facteur de dilution du spectre
+                                  </p>
+                                  <div className="relative">
+                                    <input
+                                      type="number"
+                                      min="1"
+                                      step="0.1"
+                                      value={dbDilutionFactors[l.id!] || getStoredDilutionFactor(l)}
+                                      onChange={(e) => setDbDilutionFactors(prev => ({ ...prev, [l.id!]: e.target.value }))}
+                                      className="w-full px-2 py-1.5 pr-5 bg-white border border-gray-200 rounded-lg text-[11px] font-mono outline-none focus:border-brand-accent"
+                                    />
+                                    <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-gray-400">x</span>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           );
                         })}
                       </div>
@@ -388,6 +446,23 @@ function AssemblageContent() {
                       <button type="button" onClick={downloadCsvTemplate} className="flex items-center gap-1 text-[10px] font-bold text-gray-400 hover:text-brand-primary transition-colors">
                         <Download className="w-3 h-3" /> {t("colori.downloadTemplate")}
                       </button>
+                    </div>
+                    <div className="mt-4">
+                      <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">Facteur de dilution des spectres</p>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          min="1"
+                          step="0.1"
+                          value={fileDilutionFactor}
+                          onChange={(e) => setFileDilutionFactor(e.target.value)}
+                          className="w-full px-3 py-2.5 bg-gray-50 border border-black/[0.04] rounded-xl text-sm font-mono text-brand-text outline-none focus:ring-2 focus:ring-brand-primary/10 focus:bg-white transition-all pr-10"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400">x</span>
+                      </div>
+                      <p className="text-[10px] text-gray-400 mt-1">
+                        Pour un fichier importé, ce facteur est appliqué à toutes les colonnes DO. Exemple : dilution x2 = DO divisée par 2.
+                      </p>
                     </div>
                   </>
                 )}
