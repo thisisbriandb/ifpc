@@ -344,6 +344,7 @@ export interface Lot {
   identifiant: string;
   typeProduit: string;
   volumeActuel: number;
+  volumeRestant?: number;
   colorL?: number;
   colorA?: number;
   colorB?: number;

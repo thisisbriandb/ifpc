@@ -60,6 +60,8 @@ export default function ChaiVirtuelPage() {
   const [modalLoading, setModalLoading] = useState(false);
   const [transferVolume, setTransferVolume] = useState<number>(0);
   const [targetCuve, setTargetCuve] = useState<Cuve | null>(null);
+  const [manualTransferDestId, setManualTransferDestId] = useState<number | null>(null);
+  const [manualTransferVolume, setManualTransferVolume] = useState<number>(0);
 
   // Assemblage modal state
   const [assemblageSrcA, setAssemblageSrcA] = useState<{ cuve: Cuve; lot: Lot; volume: number } | null>(null);
@@ -182,7 +184,7 @@ export default function ChaiVirtuelPage() {
       lotIdentifiant: lot.identifiant,
       cuveSourceId: -1,
       cuveSourceNom: "Stock",
-      volumeOccupe: lot.volumeActuel,
+      volumeOccupe: lot.volumeRestant !== undefined ? lot.volumeRestant : lot.volumeActuel,
       colorHex: lot.colorHex,
       isUnassigned: true,
     };
@@ -219,19 +221,24 @@ export default function ChaiVirtuelPage() {
       const payload: DragPayload = JSON.parse(e.dataTransfer.getData("application/json"));
       if (!payload.isUnassigned && payload.cuveSourceId === destCuve.id) return;
 
-      // UNASSIGNED LOT → REMPLISSAGE
+      // UNASSIGNED LOT → REMPLISSAGE (opens Transfer/Remplissage modal)
       if (payload.isUnassigned) {
         const isPropre = destCuve.statutPhysique === "PROPRE";
         const destHasContent = (destCuve.stockages?.length || 0) > 0;
         if (!isPropre || destHasContent) return;
-        await handleRemplissage(destCuve.id!, payload.lotId, payload.volumeOccupe);
-        setShowLotsPopup(false);
+
+        setDragPayload(payload);
+        setTargetCuve(destCuve);
+        const maxVol = Math.min(payload.volumeOccupe, destCuve.volumeMax);
+        setTransferVolume(maxVol);
+        setModalView("transfert");
         return;
       }
 
       const destHasContent = (destCuve.stockages?.length || 0) > 0;
+      const isSameLot = destHasContent && destCuve.stockages?.[0]?.lotId === payload.lotId;
 
-      if (destHasContent) {
+      if (destHasContent && !isSameLot) {
         // DROP ON FULL CUVE → ASSEMBLAGE
         const sourceCuve = cuves.find(c => c.id === payload.cuveSourceId);
         if (!sourceCuve) return;
@@ -251,10 +258,11 @@ export default function ChaiVirtuelPage() {
         setAssemblageError(null);
         setModalView("assemblage");
       } else {
-        // DROP ON EMPTY CUVE → TRANSFERT
+        // DROP ON EMPTY CUVE OR SAME LOT → TRANSFERT
         setDragPayload(payload);
         setTargetCuve(destCuve);
-        setTransferVolume(payload.volumeOccupe);
+        const maxVol = Math.min(payload.volumeOccupe, destCuve.volumeMax - (destCuve.volumeOccupe || 0));
+        setTransferVolume(maxVol);
         setModalView("transfert");
       }
     } catch { /* invalid */ }
@@ -266,13 +274,38 @@ export default function ChaiVirtuelPage() {
     if (!dragPayload || !targetCuve) return;
     setModalLoading(true);
     try {
-      await opTransfert(dragPayload.cuveSourceId, targetCuve.id!, dragPayload.lotId, transferVolume);
+      if (dragPayload.isUnassigned) {
+        await opRemplissage(targetCuve.id!, dragPayload.lotId, transferVolume);
+      } else {
+        await opTransfert(dragPayload.cuveSourceId, targetCuve.id!, dragPayload.lotId, transferVolume);
+      }
       await loadData();
       setModalView(null);
       setPanelView(null);
+      setShowLotsPopup(false);
     } catch (err: any) {
       alert(err?.response?.data?.error || "Erreur lors du transfert");
     } finally { setModalLoading(false); }
+  };
+
+  const handleManualTransfert = async () => {
+    if (!selectedCuve || !selectedLot || !manualTransferDestId) return;
+    const destCuve = cuves.find(c => c.id === manualTransferDestId);
+    if (!destCuve) return;
+    setModalLoading(true);
+    try {
+      await opTransfert(selectedCuve.id!, destCuve.id!, selectedLot.id!, manualTransferVolume);
+      await loadData();
+      setManualTransferDestId(null);
+      setManualTransferVolume(0);
+      setPanelView(null);
+      setSelectedCuve(null);
+      setSelectedLot(null);
+    } catch (err: any) {
+      alert(err?.response?.data?.error || "Erreur lors du transfert");
+    } finally {
+      setModalLoading(false);
+    }
   };
 
   const handleAssemblage = async () => {
@@ -734,7 +767,7 @@ export default function ChaiVirtuelPage() {
                 )}
                 <div className="min-w-0 flex-1">
                   <p className="text-[11px] font-mono font-bold text-gray-700 truncate">{lot.identifiant}</p>
-                  <p className="text-[9px] text-gray-400">{lot.volumeActuel?.toLocaleString()} L · {lot.typeProduit}</p>
+                  <p className="text-[9px] text-gray-400">{(lot.volumeRestant !== undefined ? lot.volumeRestant : lot.volumeActuel)?.toLocaleString()} L · {lot.typeProduit}</p>
                 </div>
                 <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-indigo-400 shrink-0 transition-colors" />
               </div>
@@ -794,6 +827,9 @@ export default function ChaiVirtuelPage() {
                     <div className="p-3 bg-gray-50 rounded-xl">
                       <p className="text-[9px] text-gray-400 uppercase font-bold mb-0.5">Volume</p>
                       <p className="text-xs font-bold text-gray-700">{selectedLot.volumeActuel?.toLocaleString()} L</p>
+                      {selectedLot.volumeRestant !== undefined && selectedLot.volumeRestant > 0.1 && selectedLot.volumeRestant < selectedLot.volumeActuel - 0.1 && (
+                        <p className="text-[9px] text-gray-400 mt-1">dont {selectedLot.volumeRestant.toLocaleString()} L en stock</p>
+                      )}
                     </div>
                     <div className="p-3 bg-gray-50 rounded-xl">
                       <p className="text-[9px] text-gray-400 uppercase font-bold mb-0.5">Statut</p>
@@ -883,6 +919,108 @@ export default function ChaiVirtuelPage() {
                     <p className="text-[9px] text-gray-400 px-1">
                       Ex: centrifugation, filtration, dilution de mesure (pour retrouver la DO réelle en multipliant les valeurs) — la couleur du lot sera recalculée à partir du spectre corrigé.
                     </p>
+
+                    {/* Manual Transfer section */}
+                    {selectedCuve && (
+                      <div className="pt-4 border-t border-gray-100 space-y-3">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
+                          <ArrowRight className="w-3 h-3 text-blue-500" /> Transférer une quantité
+                        </p>
+                        
+                        <div>
+                          <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1">
+                            Cuve de destination
+                          </label>
+                          <select
+                            value={manualTransferDestId || ""}
+                            onChange={(e) => {
+                              const destId = parseInt(e.target.value);
+                              if (!destId) {
+                                setManualTransferDestId(null);
+                                setManualTransferVolume(0);
+                                return;
+                              }
+                              const destCuve = cuves.find(c => c.id === destId);
+                              if (destCuve && selectedCuve) {
+                                const sourceVol = selectedCuve.stockages?.[0]?.volumeOccupe || 0;
+                                const destRemaining = destCuve.volumeMax - (destCuve.volumeOccupe || 0);
+                                const maxVol = Math.min(sourceVol, destRemaining);
+                                setManualTransferDestId(destId);
+                                setManualTransferVolume(maxVol);
+                              }
+                            }}
+                            className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-100"
+                          >
+                            <option value="">Sélectionner une cuve...</option>
+                            {cuves
+                              .filter(c => 
+                                c.id !== selectedCuve.id && 
+                                c.statutPhysique === "PROPRE" && 
+                                ((c.stockages?.length || 0) === 0 || c.stockages?.[0]?.lotId === selectedLot.id)
+                              )
+                              .map(c => {
+                                const destRemaining = c.volumeMax - (c.volumeOccupe || 0);
+                                return (
+                                  <option key={c.id} value={c.id}>
+                                    {c.nom} (Disponible: {destRemaining.toLocaleString()} L)
+                                  </option>
+                                );
+                              })}
+                          </select>
+                        </div>
+
+                        {manualTransferDestId && (() => {
+                          const destCuve = cuves.find(c => c.id === manualTransferDestId);
+                          if (!destCuve) return null;
+                          const sourceVol = selectedCuve.stockages?.[0]?.volumeOccupe || 0;
+                          const destRemaining = destCuve.volumeMax - (destCuve.volumeOccupe || 0);
+                          const maxVol = Math.min(sourceVol, destRemaining);
+
+                          return (
+                            <div className="space-y-3 p-3 bg-blue-50/30 rounded-xl border border-blue-100/50">
+                              <div>
+                                <div className="flex justify-between text-[10px] text-gray-500 font-bold mb-1">
+                                  <span>Volume à transférer (L)</span>
+                                  <span>max: {maxVol.toLocaleString()} L</span>
+                                </div>
+                                <input
+                                  type="range"
+                                  min={1}
+                                  max={maxVol}
+                                  value={manualTransferVolume}
+                                  onChange={(e) => setManualTransferVolume(parseFloat(e.target.value) || 1)}
+                                  className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-blue-500"
+                                />
+                              </div>
+
+                              <div className="flex gap-2">
+                                <input
+                                  type="number"
+                                  min={1}
+                                  max={maxVol}
+                                  value={manualTransferVolume}
+                                  onChange={(e) => setManualTransferVolume(Math.min(maxVol, Math.max(1, parseFloat(e.target.value) || 1)))}
+                                  className="w-24 px-2 py-1 bg-white border border-gray-200 rounded-lg text-xs font-mono text-center outline-none focus:ring-2 focus:ring-blue-100"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={handleManualTransfert}
+                                  disabled={modalLoading || manualTransferVolume <= 0}
+                                  className="flex-1 py-1 px-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5"
+                                >
+                                  {modalLoading ? (
+                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                  ) : (
+                                    <ArrowRight className="w-3.5 h-3.5" />
+                                  )}
+                                  Transférer
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -938,18 +1076,35 @@ export default function ChaiVirtuelPage() {
                             if (!lotId) return;
                             const lot = unassignedLots.find(l => l.id === lotId);
                             if (lot && selectedCuve.id) {
-                              handleRemplissage(selectedCuve.id, lotId, lot.volumeActuel);
+                              const lotVol = lot.volumeRestant !== undefined ? lot.volumeRestant : lot.volumeActuel;
+                              const payload: DragPayload = {
+                                lotId: lot.id!,
+                                lotIdentifiant: lot.identifiant,
+                                cuveSourceId: -1,
+                                cuveSourceNom: "Stock",
+                                volumeOccupe: lotVol,
+                                colorHex: lot.colorHex,
+                                isUnassigned: true,
+                              };
+                              setDragPayload(payload);
+                              setTargetCuve(selectedCuve);
+                              const maxVol = Math.min(lotVol, selectedCuve.volumeMax);
+                              setTransferVolume(maxVol);
+                              setModalView("transfert");
                             }
                           }}
                           className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-200 outline-none"
                           defaultValue=""
                         >
                           <option value="" disabled>Affecter un lot...</option>
-                          {unassignedLots.map(l => (
-                            <option key={l.id} value={l.id}>
-                              {l.identifiant} ({l.volumeActuel}L)
-                            </option>
-                          ))}
+                          {unassignedLots.map(l => {
+                            const lotVol = l.volumeRestant !== undefined ? l.volumeRestant : l.volumeActuel;
+                            return (
+                              <option key={l.id} value={l.id}>
+                                {l.identifiant} ({lotVol.toLocaleString()}L)
+                              </option>
+                            );
+                          })}
                         </select>
                       </div>
                     )}
@@ -1090,55 +1245,62 @@ export default function ChaiVirtuelPage() {
       {/* ── Transfer Modal (overlay) ─────────────────────────────────────── */}
       {modalView === "transfert" && dragPayload && targetCuve && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/50 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <header className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
-              <h2 className="font-bold text-gray-900 flex items-center gap-2">
-                <ArrowRight className="w-5 h-5 text-blue-500" /> Transfert
-              </h2>
-              <p className="text-xs text-gray-500 mt-1">
-                <span className="font-mono font-bold">{dragPayload.lotIdentifiant}</span> : {dragPayload.cuveSourceNom} → {targetCuve.nom}
-              </p>
-            </header>
-            <div className="p-6 space-y-4">
-              {/* Visual preview */}
-              <div className="flex items-center justify-center gap-4 py-3">
-                <div className="text-center">
-                  <div className="w-10 h-10 rounded-full mx-auto mb-1 border-2 border-red-200"
-                    style={{ backgroundColor: dragPayload.colorHex || "#d4a574" }} />
-                  <p className="text-[9px] text-gray-400">{dragPayload.cuveSourceNom}</p>
-                </div>
-                <ArrowRight className="w-5 h-5 text-gray-300" />
-                <div className="text-center">
-                  <div className="w-10 h-10 rounded-full mx-auto mb-1 border-2 border-dashed border-green-300 bg-green-50" />
-                  <p className="text-[9px] text-gray-400">{targetCuve.nom}</p>
-                </div>
-              </div>
+          {(() => {
+            const maxVol = Math.min(dragPayload.volumeOccupe, targetCuve.volumeMax - (targetCuve.volumeOccupe || 0));
+            const isUnassigned = !!dragPayload.isUnassigned;
 
-              <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume à transférer (L)</label>
-                <input type="range" min={1} max={dragPayload.volumeOccupe} value={transferVolume}
-                  onChange={(e) => setTransferVolume(parseFloat(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-blue-500" />
-                <div className="flex justify-between mt-2">
-                  <input type="number" value={transferVolume} max={dragPayload.volumeOccupe}
-                    onChange={(e) => setTransferVolume(Math.min(dragPayload.volumeOccupe, parseFloat(e.target.value) || 0))}
-                    className="w-24 px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-mono text-center focus:ring-2 focus:ring-blue-200 outline-none" />
-                  <span className="text-[10px] text-gray-400 self-center">/ {dragPayload.volumeOccupe} L max</span>
+            return (
+              <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                <header className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
+                  <h2 className="font-bold text-gray-900 flex items-center gap-2">
+                    <ArrowRight className="w-5 h-5 text-blue-500" /> {isUnassigned ? "Affecter le lot" : "Transfert"}
+                  </h2>
+                  <p className="text-xs text-gray-500 mt-1">
+                    <span className="font-mono font-bold">{dragPayload.lotIdentifiant}</span> : {dragPayload.cuveSourceNom} → {targetCuve.nom}
+                  </p>
+                </header>
+                <div className="p-6 space-y-4">
+                  {/* Visual preview */}
+                  <div className="flex items-center justify-center gap-4 py-3">
+                    <div className="text-center">
+                      <div className="w-10 h-10 rounded-full mx-auto mb-1 border-2 border-red-200"
+                        style={{ backgroundColor: dragPayload.colorHex || "#d4a574" }} />
+                      <p className="text-[9px] text-gray-400">{dragPayload.cuveSourceNom}</p>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-gray-300" />
+                    <div className="text-center">
+                      <div className="w-10 h-10 rounded-full mx-auto mb-1 border-2 border-dashed border-green-300 bg-green-50" />
+                      <p className="text-[9px] text-gray-400">{targetCuve.nom}</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume à transférer (L)</label>
+                    <input type="range" min={1} max={maxVol} value={transferVolume}
+                      onChange={(e) => setTransferVolume(parseFloat(e.target.value) || 1)}
+                      className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-blue-500" />
+                    <div className="flex justify-between mt-2">
+                      <input type="number" value={transferVolume} max={maxVol}
+                        onChange={(e) => setTransferVolume(Math.min(maxVol, Math.max(1, parseFloat(e.target.value) || 1)))}
+                        className="w-24 px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-mono text-center focus:ring-2 focus:ring-blue-200 outline-none" />
+                      <span className="text-[10px] text-gray-400 self-center">/ {maxVol.toLocaleString()} L max</span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-2">
+                    <button type="button" onClick={() => setModalView(null)}
+                      className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-500 font-bold rounded-xl hover:bg-gray-50 transition-all">
+                      Annuler
+                    </button>
+                    <button onClick={handleTransfert} disabled={modalLoading || transferVolume <= 0}
+                      className="flex-1 px-4 py-2.5 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 disabled:opacity-50 shadow-lg shadow-blue-500/20 transition-all">
+                      {modalLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : (isUnassigned ? "Affecter" : "Transférer")}
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              <div className="flex gap-3 pt-2">
-                <button type="button" onClick={() => setModalView(null)}
-                  className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-500 font-bold rounded-xl hover:bg-gray-50 transition-all">
-                  Annuler
-                </button>
-                <button onClick={handleTransfert} disabled={modalLoading || transferVolume <= 0}
-                  className="flex-1 px-4 py-2.5 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 disabled:opacity-50 shadow-lg shadow-blue-500/20 transition-all">
-                  {modalLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Transférer"}
-                </button>
-              </div>
-            </div>
-          </div>
+            );
+          })()}
         </div>
       )}
 

@@ -146,11 +146,14 @@ public class LotController {
 
         // Include current location (active stockage)
         List<Stockage> stockages = stockageRepository.findByLotIdAndDateFinIsNull(lot.getId());
-        dto.put("cuveActuelle", stockages.isEmpty() ? null : Map.of(
+        double volumeOccupe = stockages.stream().mapToDouble(Stockage::getVolumeOccupe).sum();
+        double volumeRestant = Math.max(0.0, lot.getVolumeActuel() - volumeOccupe);
+        dto.put("volumeRestant", volumeRestant);
+        dto.put("cuveActuelle", volumeRestant > 0.1 ? null : (stockages.isEmpty() ? null : Map.of(
                 "cuveId", stockages.get(0).getCuve().getId(),
                 "cuveNom", stockages.get(0).getCuve().getNom(),
                 "volumeOccupe", stockages.get(0).getVolumeOccupe()
-        ));
+        )));
 
         return dto;
     }

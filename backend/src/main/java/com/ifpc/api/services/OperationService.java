@@ -62,12 +62,17 @@ public class OperationService {
         double volumeOccupe = existing.stream().mapToDouble(Stockage::getVolumeOccupe).sum();
         double volumeDisponible = cuve.getVolumeMax() - volumeOccupe;
 
-        double volumeToUse = volume != null ? volume : lot.getVolumeActuel();
+        // Calculate remaining volume in stock
+        List<Stockage> lotStockages = stockageRepository.findByLotIdAndDateFinIsNull(lotId);
+        double volumeInCuves = lotStockages.stream().mapToDouble(Stockage::getVolumeOccupe).sum();
+        double volumeRestantEnStock = Math.max(0.0, lot.getVolumeActuel() - volumeInCuves);
+
+        double volumeToUse = volume != null ? volume : volumeRestantEnStock;
         if (volumeToUse > volumeDisponible) {
             throw new IllegalStateException("Volume insuffisant dans la cuve (disponible: " + volumeDisponible + " L)");
         }
-        if (volumeToUse > lot.getVolumeActuel()) {
-            throw new IllegalStateException("Le lot ne contient que " + lot.getVolumeActuel() + " L");
+        if (volumeToUse > volumeRestantEnStock) {
+            throw new IllegalStateException("Le volume restant en stock pour ce lot n'est que de " + volumeRestantEnStock + " L");
         }
 
         // Create stockage

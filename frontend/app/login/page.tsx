@@ -142,10 +142,10 @@ export default function LoginPage() {
             <Image
               src="/assets/log.svg"
               alt="IFPC"
-              width={240}
-              height={240}
+              width={360}
+              height={360}
               priority
-              className="relative z-10 h-40 w-40 lg:h-52 lg:w-52 object-contain"
+              className="relative z-10 h-56 w-56 lg:h-72 lg:w-72 object-contain"
             />
           </div>
 
@@ -174,10 +174,10 @@ export default function LoginPage() {
                 <Image
                   src="/assets/log.svg"
                   alt="IFPC"
-                  width={124}
-                  height={124}
+                  width={180}
+                  height={180}
                   priority
-                  className="mx-auto mb-6 h-24 w-24 object-contain md:hidden"
+                  className="mx-auto mb-6 h-36 w-36 object-contain md:hidden"
                 />
                 <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-primary">
                   PADOC
