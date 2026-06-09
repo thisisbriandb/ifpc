@@ -8,6 +8,7 @@ import {
 import { getCuves, deleteCuve, createCuve, updateCuve, spectrumToLab, type Cuve } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
+import CuveSVG from "@/components/CuveSVG";
 
 // ── HEX → Lab* conversion ───────────────────────────────────────────────────
 function hexToLab(hex: string): { L: number; a: number; b: number } | null {
@@ -239,67 +240,63 @@ export default function CuvesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCuves.map((cuve) => {
               const volumeActuel = cuve.volumeOccupe ?? cuve.volumeActuel ?? 0;
-              const remplissagePct = (volumeActuel / cuve.volumeMax) * 100;
               return (
-                <div key={cuve.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
-                  <div className="p-5">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex items-center gap-3 min-w-0">
-                        {cuve.colorHex && (
-                          <div 
-                            className="w-4 h-10 rounded-full border border-black/5 shrink-0 shadow-inner" 
-                            style={{ backgroundColor: cuve.colorHex }}
-                            title={`L:${cuve.colorL} a:${cuve.colorA} b:${cuve.colorB}`}
-                          />
-                        )}
+                <div key={cuve.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group p-5 flex gap-4 items-center">
+                  <div className="shrink-0 flex items-center justify-center bg-gray-50/50 p-2 rounded-xl border border-gray-100">
+                    <CuveSVG
+                      nom={cuve.nom}
+                      volumeMax={cuve.volumeMax}
+                      volumeOccupe={volumeActuel}
+                      colorHex={cuve.colorHex || cuve.stockages?.[0]?.lotColorHex}
+                      statutPhysique={cuve.statutPhysique || (cuve.statut === "En nettoyage" ? "EN_NETTOYAGE" : "PROPRE")}
+                      lotIdentifiant={cuve.lotIdentifier || cuve.stockages?.[0]?.lotIdentifiant}
+                      width={100}
+                      height={170}
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0 h-full flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start gap-2 mb-2">
                         <div className="min-w-0">
-                          <h3 className="font-bold text-gray-900 text-lg truncate">{cuve.nom}</h3>
+                          <h3 className="font-bold text-gray-900 text-base truncate">{cuve.nom}</h3>
                           <p className="text-xs text-gray-400 font-mono truncate">{cuve.typeProduit || "Produit non défini"}</p>
                         </div>
+                        <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border shrink-0 ${getStatutColor(cuve.statut)}`}>
+                          {cuve.statut}
+                        </span>
                       </div>
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${getStatutColor(cuve.statut)}`}>
-                        {cuve.statut}
-                      </span>
-                    </div>
 
-                    {/* Tank Visualization */}
-                    <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden mb-6">
-                      <div 
-                        className={`absolute inset-y-0 left-0 transition-all duration-1000 ${remplissagePct > 90 ? 'bg-red-400' : 'bg-brand-primary'}`}
-                        style={{ width: `${remplissagePct}%` }}
-                      />
-                    </div>
+                      <div className="space-y-1 mb-3">
+                        <div className="flex justify-between text-[10px] text-gray-400 font-mono">
+                          <span>VOL ACTUEL:</span>
+                          <span className="font-bold text-gray-700">{volumeActuel.toLocaleString()} L</span>
+                        </div>
+                        <div className="flex justify-between text-[10px] text-gray-400 font-mono">
+                          <span>CAPACITÉ:</span>
+                          <span className="font-bold text-gray-700">{cuve.volumeMax.toLocaleString()} L</span>
+                        </div>
+                      </div>
 
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      <div>
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Volume Actuel</p>
-                        <p className="text-sm font-bold text-gray-900">{volumeActuel.toLocaleString()} L</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Capacité Max</p>
-                        <p className="text-sm font-bold text-gray-900">{cuve.volumeMax.toLocaleString()} L</p>
-                      </div>
+                      {cuve.lotIdentifier && (
+                        <div className="flex items-center gap-1.5 p-2 bg-gray-50 rounded-lg border border-gray-100 mb-3">
+                          <FlaskConical className="w-3.5 h-3.5 text-brand-primary" />
+                          <span className="text-[10px] font-mono text-gray-500 truncate">Lot: <strong className="text-gray-700">{cuve.lotIdentifier}</strong></span>
+                        </div>
+                      )}
                     </div>
-
-                    {cuve.lotIdentifier && (
-                      <div className="flex items-center gap-2 p-2.5 bg-gray-50 rounded-xl mb-4 border border-gray-100">
-                        <FlaskConical className="w-4 h-4 text-brand-primary" />
-                        <span className="text-xs font-mono text-gray-500">Lot: <strong className="text-gray-700">{cuve.lotIdentifier}</strong></span>
-                      </div>
-                    )}
 
                     {canEdit && (
-                      <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-50">
+                      <div className="flex items-center justify-end gap-1.5 pt-3 border-t border-gray-50 mt-auto">
                         <button
                           onClick={() => openModal(cuve)}
-                          className="p-2 text-gray-400 hover:text-brand-primary hover:bg-brand-primary/5 rounded-lg transition-colors"
+                          className="p-1.5 text-gray-400 hover:text-brand-primary hover:bg-brand-primary/5 rounded-lg transition-colors"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         {isAdmin && (
                           <button
                             onClick={() => cuve.id && handleDelete(cuve.id)}
-                            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>

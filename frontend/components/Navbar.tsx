@@ -60,6 +60,7 @@ export default function Sidebar() {
       icon: Container,
       children: [
         { href: "/cuves/chai", label: t("nav.chaiVirtuel") },
+        { href: "/cuves", label: t("nav.suiviCuves") },
         { href: "/cuves/corbeille", label: t("nav.corbeille") },
       ],
     },
