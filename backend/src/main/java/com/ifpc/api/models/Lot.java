@@ -43,6 +43,12 @@ public class Lot {
     private String statutLot = "EN_FERMENTATION"; // EN_FERMENTATION, PRET_A_ASSEMBLER, EMBOUTEILLE
 
     @Column(nullable = false)
+    @Builder.Default
+    private Boolean deleted = false;
+
+    private LocalDateTime deletedAt;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)

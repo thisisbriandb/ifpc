@@ -2,11 +2,15 @@ package com.ifpc.api.controllers;
 
 import com.ifpc.api.models.Cuve;
 import com.ifpc.api.models.Stockage;
+import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.CuveRepository;
 import com.ifpc.api.repositories.StockageRepository;
+import com.ifpc.api.services.OperationService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -21,6 +25,20 @@ public class CuveController {
 
     private final CuveRepository cuveRepository;
     private final StockageRepository stockageRepository;
+    private final OperationService operationService;
+
+    @GetMapping("/deleted")
+    public ResponseEntity<?> getDeletedCuves() {
+        try {
+            List<Cuve> cuves = cuveRepository.findByDeletedTrueOrderByDeletedAtDesc();
+            return ResponseEntity.ok(cuves.stream().map(this::cuveToDto).toList());
+        } catch (Throwable error) {
+            Map<String, Object> body = new HashMap<>();
+            body.put("error", "Unable to load deleted cuves");
+            body.put("errorMessage", error.getMessage());
+            return ResponseEntity.internalServerError().body(body);
+        }
+    }
 
     @GetMapping
     public ResponseEntity<?> getAllCuves() {
@@ -95,6 +113,11 @@ public class CuveController {
                     cuve.setDeleted(true);
                     cuve.setDeletedAt(LocalDateTime.now());
                     cuveRepository.save(cuve);
+                    try {
+                        operationService.logCuveDeletion(cuve.getId(), getCurrentUserEmail());
+                    } catch (Exception e) {
+                        // ignore or log
+                    }
                     return ResponseEntity.ok().<Void>build();
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -107,9 +130,23 @@ public class CuveController {
                 .map(cuve -> {
                     cuve.setDeleted(false);
                     cuve.setDeletedAt(null);
-                    return ResponseEntity.ok(cuveToDto(cuveRepository.save(cuve)));
+                    Cuve saved = cuveRepository.save(cuve);
+                    try {
+                        operationService.logCuveRestoration(saved.getId(), getCurrentUserEmail());
+                    } catch (Exception e) {
+                        // ignore or log
+                    }
+                    return ResponseEntity.ok(cuveToDto(saved));
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    private String getCurrentUserEmail() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
+            return user.getEmail();
+        }
+        return null;
     }
 
     // ── DTO mapping ─────────────────────────────────────────────────────────

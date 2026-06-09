@@ -295,4 +295,56 @@ public class OperationService {
 
     // ── DTO for assemblage source ────────────────────────────────────────────
     public record AssemblageSource(Long cuveId, Long lotId, Double volume) {}
+
+    @Transactional
+    public Operation logCuveDeletion(Long cuveId, String userEmail) {
+        Cuve cuve = cuveRepository.findById(cuveId)
+                .orElseThrow(() -> new IllegalArgumentException("Cuve introuvable"));
+        Operation op = Operation.builder()
+                .type("SUPPRESSION_CUVE")
+                .cuveSource(cuve)
+                .description("Suppression de la cuve " + cuve.getNom())
+                .userEmail(userEmail)
+                .build();
+        return operationRepository.save(op);
+    }
+
+    @Transactional
+    public Operation logCuveRestoration(Long cuveId, String userEmail) {
+        Cuve cuve = cuveRepository.findById(cuveId)
+                .orElseThrow(() -> new IllegalArgumentException("Cuve introuvable"));
+        Operation op = Operation.builder()
+                .type("RESTAURATION_CUVE")
+                .cuveSource(cuve)
+                .description("Restauration de la cuve " + cuve.getNom())
+                .userEmail(userEmail)
+                .build();
+        return operationRepository.save(op);
+    }
+
+    @Transactional
+    public Operation logLotDeletion(Long lotId, String userEmail) {
+        Lot lot = lotRepository.findById(lotId)
+                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+        Operation op = Operation.builder()
+                .type("SUPPRESSION_LOT")
+                .lot(lot)
+                .description("Suppression du lot " + lot.getIdentifiant())
+                .userEmail(userEmail)
+                .build();
+        return operationRepository.save(op);
+    }
+
+    @Transactional
+    public Operation logLotRestoration(Long lotId, String userEmail) {
+        Lot lot = lotRepository.findById(lotId)
+                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+        Operation op = Operation.builder()
+                .type("RESTAURATION_LOT")
+                .lot(lot)
+                .description("Restauration du lot " + lot.getIdentifiant())
+                .userEmail(userEmail)
+                .build();
+        return operationRepository.save(op);
+    }
 }

@@ -2,11 +2,17 @@ package com.ifpc.api.controllers;
 
 import com.ifpc.api.models.Lot;
 import com.ifpc.api.models.Stockage;
+import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.LotRepository;
 import com.ifpc.api.repositories.StockageRepository;
+import com.ifpc.api.services.OperationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,16 +25,24 @@ public class LotController {
 
     private final LotRepository lotRepository;
     private final StockageRepository stockageRepository;
+    private final OperationService operationService;
 
     @GetMapping
     public List<Map<String, Object>> getAllLots() {
-        return lotRepository.findAllByOrderByCreatedAtDesc()
+        return lotRepository.findByDeletedFalseOrderByCreatedAtDesc()
+                .stream().map(this::lotToDto).toList();
+    }
+
+    @GetMapping("/deleted")
+    public List<Map<String, Object>> getDeletedLots() {
+        return lotRepository.findByDeletedTrueOrderByDeletedAtDesc()
                 .stream().map(this::lotToDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getLotById(@PathVariable Long id) {
         return lotRepository.findById(id)
+                .filter(l -> !l.getDeleted())
                 .map(l -> ResponseEntity.ok(lotToDto(l)))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -53,6 +67,7 @@ public class LotController {
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateLot(@PathVariable Long id, @RequestBody UpdateLotRequest request) {
         return lotRepository.findById(id)
+                .filter(l -> !l.getDeleted())
                 .map(lot -> {
                     if (request.identifiant() != null) lot.setIdentifiant(request.identifiant());
                     if (request.typeProduit() != null) lot.setTypeProduit(request.typeProduit());
@@ -71,11 +86,45 @@ public class LotController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLot(@PathVariable Long id) {
         return lotRepository.findById(id)
+                .filter(l -> !l.getDeleted())
                 .map(lot -> {
-                    lotRepository.delete(lot);
+                    lot.setDeleted(true);
+                    lot.setDeletedAt(LocalDateTime.now());
+                    lotRepository.save(lot);
+                    try {
+                        operationService.logLotDeletion(lot.getId(), getCurrentUserEmail());
+                    } catch (Exception e) {
+                        // ignore or log
+                    }
                     return ResponseEntity.ok().<Void>build();
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{id}/restore")
+    public ResponseEntity<Map<String, Object>> restoreLot(@PathVariable Long id) {
+        return lotRepository.findById(id)
+                .filter(Lot::getDeleted)
+                .map(lot -> {
+                    lot.setDeleted(false);
+                    lot.setDeletedAt(null);
+                    Lot saved = lotRepository.save(lot);
+                    try {
+                        operationService.logLotRestoration(saved.getId(), getCurrentUserEmail());
+                    } catch (Exception e) {
+                        // ignore or log
+                    }
+                    return ResponseEntity.ok(lotToDto(saved));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    private String getCurrentUserEmail() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
+            return user.getEmail();
+        }
+        return null;
     }
 
     // ── DTO mapping ─────────────────────────────────────────────────────────

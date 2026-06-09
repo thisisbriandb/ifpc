@@ -27,6 +27,7 @@ public class DatabaseSeeder {
     ) {
         return args -> {
             repairCuvesSchema(jdbcTemplate);
+            repairLotsSchema(jdbcTemplate);
 
             // Création de l'admin par défaut s'il n'existe pas
             if (userRepository.findByEmail("admin@ifpc.com").isEmpty()) {
@@ -104,5 +105,13 @@ public class DatabaseSeeder {
         jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN deleted SET NOT NULL");
         jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN statut_physique SET DEFAULT 'PROPRE'");
         jdbcTemplate.execute("ALTER TABLE cuves ALTER COLUMN statut_physique SET NOT NULL");
+    }
+
+    private void repairLotsSchema(JdbcTemplate jdbcTemplate) {
+        jdbcTemplate.execute("ALTER TABLE lots ADD COLUMN IF NOT EXISTS deleted boolean");
+        jdbcTemplate.execute("ALTER TABLE lots ADD COLUMN IF NOT EXISTS deleted_at timestamp(6)");
+        jdbcTemplate.execute("UPDATE lots SET deleted = false WHERE deleted IS NULL");
+        jdbcTemplate.execute("ALTER TABLE lots ALTER COLUMN deleted SET DEFAULT false");
+        jdbcTemplate.execute("ALTER TABLE lots ALTER COLUMN deleted SET NOT NULL");
     }
 }

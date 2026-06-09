@@ -443,6 +443,21 @@ export async function deleteLot(id: number): Promise<void> {
   await api.delete(`/lots/${id}`);
 }
 
+export async function getDeletedCuves(): Promise<Cuve[]> {
+  const { data } = await api.get("/cuves/deleted");
+  return data;
+}
+
+export async function getDeletedLots(): Promise<Lot[]> {
+  const { data } = await api.get("/lots/deleted");
+  return data;
+}
+
+export async function restoreLot(id: number): Promise<Lot> {
+  const { data } = await api.post(`/lots/${id}/restore`);
+  return data;
+}
+
 export async function getStockages(): Promise<Stockage[]> {
   const { data } = await api.get("/stockages");
   return data;

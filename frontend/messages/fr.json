@@ -29,7 +29,8 @@
     "logout": "Déconnexion",
     "login": "Se connecter",
     "loginTitle": "Connexion",
-    "historique": "Historique"
+    "historique": "Historique",
+    "corbeille": "Corbeille"
   },
   "login": {
     "welcomeBack": "Bienvenue",

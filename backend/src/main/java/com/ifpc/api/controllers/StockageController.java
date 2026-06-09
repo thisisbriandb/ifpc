@@ -51,7 +51,9 @@ public class StockageController {
                 .orElse(null);
         if (cuve == null) return ResponseEntity.badRequest().body(Map.of("error", "Cuve introuvable"));
 
-        Lot lot = lotRepository.findById(request.lotId()).orElse(null);
+        Lot lot = lotRepository.findById(request.lotId())
+                .filter(l -> !l.getDeleted())
+                .orElse(null);
         if (lot == null) return ResponseEntity.badRequest().body(Map.of("error", "Lot introuvable"));
 
         // Check available volume

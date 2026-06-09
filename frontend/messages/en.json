@@ -29,7 +29,8 @@
     "logout": "Sign Out",
     "login": "Sign In",
     "loginTitle": "Sign In",
-    "historique": "History"
+    "historique": "History",
+    "corbeille": "Recycle Bin"
   },
   "login": {
     "welcomeBack": "Welcome back",

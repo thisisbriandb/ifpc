@@ -12,5 +12,8 @@ public interface LotRepository extends JpaRepository<Lot, Long> {
     List<Lot> findByStatutLotOrderByCreatedAtDesc(String statutLot);
     List<Lot> findByTypeProduitOrderByCreatedAtDesc(String typeProduit);
     Optional<Lot> findByIdentifiant(String identifiant);
+    Optional<Lot> findByIdentifiantAndDeletedFalse(String identifiant);
     List<Lot> findAllByOrderByCreatedAtDesc();
+    List<Lot> findByDeletedFalseOrderByCreatedAtDesc();
+    List<Lot> findByDeletedTrueOrderByDeletedAtDesc();
 }
