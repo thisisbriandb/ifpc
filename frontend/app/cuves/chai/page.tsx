@@ -440,7 +440,7 @@ export default function ChaiVirtuelPage() {
       }
 
       const dilutionFactor = parseDilutionFactor(newLotDilutionFactor);
-      const correctedDoValues = doValues.map(v => v / dilutionFactor);
+      const correctedDoValues = doValues.map(v => v * dilutionFactor);
 
       // Call backend to compute L*a*b* + hex from the corrected product spectrum.
       const color = await spectrumToLab(wavelengths, correctedDoValues);
@@ -503,7 +503,7 @@ export default function ChaiVirtuelPage() {
       if (wavelengths.length < 2) { alert("Fichier spectre invalide"); return; }
 
       const dilutionFactor = parseDilutionFactor(dilutionInput);
-      const correctedDoValues = doValues.map(v => v / dilutionFactor);
+      const correctedDoValues = doValues.map(v => v * dilutionFactor);
       const color = await spectrumToLab(wavelengths, correctedDoValues);
       await opTransformation({
         lotId: lot.id!,
@@ -881,7 +881,7 @@ export default function ChaiVirtuelPage() {
                         }} />
                     </label>
                     <p className="text-[9px] text-gray-400 px-1">
-                      Ex: centrifugation, filtration, dilution de mesure — la couleur du lot sera recalculée à partir du spectre corrigé.
+                      Ex: centrifugation, filtration, dilution de mesure (pour retrouver la DO réelle en multipliant les valeurs) — la couleur du lot sera recalculée à partir du spectre corrigé.
                     </p>
                   </div>
                 )}
@@ -1055,7 +1055,7 @@ export default function ChaiVirtuelPage() {
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400">x</span>
                   </div>
                   <p className="text-[10px] text-gray-400 mt-1">
-                    Indiquez le facteur avant l&apos;import. Si le produit est dilué x2, la DO utilisée sera divisée par 2.
+                    Indiquez le facteur avant l&apos;import. Si la mesure a été faite sur un échantillon dilué x2, la DO réelle sera multipliée par 2.
                   </p>
                 </div>
 

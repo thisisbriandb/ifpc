@@ -20,19 +20,25 @@ export default function HelpModal({ helpKey, defaultContent, title, open, onClos
   const { user } = useAuthStore();
 
   const [helpContent, setHelpContent] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState("");
   const [saving, setSaving] = useState(false);
   const [preview, setPreview] = useState(false);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setHelpContent(null);
+      return;
+    }
+    setLoading(true);
     getHelpText(helpKey, locale)
       .then((res) => {
         if (res.content) setHelpContent(res.content);
         else setHelpContent(defaultContent);
       })
-      .catch(() => setHelpContent(defaultContent));
+      .catch(() => setHelpContent(defaultContent))
+      .finally(() => setLoading(false));
   }, [open, helpKey, locale, defaultContent]);
 
   const handleSave = async () => {
@@ -66,7 +72,7 @@ export default function HelpModal({ helpKey, defaultContent, title, open, onClos
             {title || t("controle.helpTitle")}
           </h3>
           <div className="flex items-center gap-1">
-            {user?.role === "ADMIN" && !editing && (
+            {user?.role === "ADMIN" && !editing && !loading && (
               <button
                 onClick={() => { setEditing(true); setDraft(helpContent || defaultContent); }}
                 title={t("controle.helpEdit")}
@@ -136,6 +142,10 @@ export default function HelpModal({ helpKey, defaultContent, title, open, onClos
                 {t("common.cancel")}
               </button>
             </div>
+          </div>
+        ) : loading ? (
+          <div className="p-6 flex items-center justify-center min-h-[150px]">
+            <Loader2 className="w-6 h-6 animate-spin text-brand-primary" />
           </div>
         ) : (
           <div className="p-6 prose prose-sm prose-gray max-w-none overflow-y-auto max-h-[60vh]">

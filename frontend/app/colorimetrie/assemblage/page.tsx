@@ -181,7 +181,7 @@ function AssemblageContent() {
             return {
               name: l.identifiant,
               wavelengths: spec.wavelengths,
-              do_values: baseDo.map((v: number) => v / dilutionFactor)
+              do_values: baseDo.map((v: number) => v * dilutionFactor)
             };
           }),
           target_L: target.L,
@@ -461,7 +461,7 @@ function AssemblageContent() {
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400">x</span>
                       </div>
                       <p className="text-[10px] text-gray-400 mt-1">
-                        Pour un fichier importé, ce facteur est appliqué à toutes les colonnes DO. Exemple : dilution x2 = DO divisée par 2.
+                        Pour un fichier importé, ce facteur permet de retrouver la DO réelle. Exemple : dilution x2 = DO mesurée multipliée par 2.
                       </p>
                     </div>
                   </>

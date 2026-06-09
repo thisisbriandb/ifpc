@@ -451,7 +451,7 @@ def assembler(
     wl, names, do_matrix = parse_spectra_file(file_content, filename)
     dilution_factor = max(1.0, float(dilution_factor or 1.0))
     raw_do_matrix = do_matrix.copy()
-    do_matrix = do_matrix / dilution_factor
+    do_matrix = do_matrix * dilution_factor
 
     if len(wl) < 10:
         raise ValueError("Spectre trop court : au moins 10 points sont nécessaires.")
