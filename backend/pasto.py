@@ -231,7 +231,7 @@ def localize_clarification_name(clarification: Optional[str], locale: str) -> Op
     return translate("clarifications", clarification, locale, clarification)
 
 
-def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, locale: str, microorganisme: str = "") -> str:
+def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, locale: str, microorganisme: str = "", product_type: str = "") -> str:
     lang = normalize_locale(locale)
     cible_int = int(round(vp_cible))
 
@@ -264,10 +264,16 @@ def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, lo
                 f"réduire le risque lié aux moisissures ({microorganisme})."
             )
         elif microorganisme.lower().startswith("saccharomyces"):
-            msg = (
-                f"Les conditions de pasteurisation sont suffisantes pour "
-                f"réduire le risque lié à {microorganisme} et aux reprises de fermentation."
-            )
+            if product_type == "jus_pomme":
+                msg = (
+                    "Les conditions de pasteurisation sont suffisantes pour "
+                    "réduire le risque lié à Saccharomyces cerevisiae."
+                )
+            else:
+                msg = (
+                    f"Les conditions de pasteurisation sont suffisantes pour "
+                    f"réduire le risque lié à {microorganisme} et aux reprises de fermentation."
+                )
         elif microorganisme:
             msg = (
                 f"Les conditions de pasteurisation sont suffisantes pour "
@@ -288,11 +294,18 @@ def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, lo
             f"Il est recommandé d'ajuster le barème de pasteurisation."
         )
     elif microorganisme.lower().startswith("saccharomyces"):
-        return (
-            f"Les conditions de pasteurisation sont insuffisantes pour "
-            f"réduire le risque lié à {microorganisme} et prévenir une reprise de fermentation.\n\n"
-            f"Il est recommandé d'ajuster le barème de pasteurisation."
-        )
+        if product_type == "jus_pomme":
+            return (
+                "Les conditions de pasteurisation sont insuffisantes pour "
+                "réduire le risque lié à Saccharomyces cerevisiae.\n\n"
+                "Il est recommandé d'ajuster le barème de pasteurisation."
+            )
+        else:
+            return (
+                f"Les conditions de pasteurisation sont insuffisantes pour "
+                f"réduire le risque lié à {microorganisme} et prévenir une reprise de fermentation.\n\n"
+                f"Il est recommandé d'ajuster le barème de pasteurisation."
+            )
     elif microorganisme:
         return (
             f"Les conditions de pasteurisation sont insuffisantes pour "
@@ -410,7 +423,7 @@ def evaluer_pasteurisation(
     else:
         statut = "insuffisant"
     micro_nom = micro["nom"] if micro else micro_key
-    message = build_diagnostic_message(statut, vp_obtenue, effective_vp_cible, lang, microorganisme=micro_nom)
+    message = build_diagnostic_message(statut, vp_obtenue, effective_vp_cible, lang, microorganisme=micro_nom, product_type=product_type)
 
     # --- Risque ---
     risque = evaluer_risque(
