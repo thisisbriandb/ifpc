@@ -42,6 +42,12 @@ public class Cuve {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(name = "plan_x")
+    private Double planX;
+
+    @Column(name = "plan_y")
+    private Double planY;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

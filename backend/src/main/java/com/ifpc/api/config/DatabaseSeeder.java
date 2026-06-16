@@ -77,6 +77,8 @@ public class DatabaseSeeder {
         jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS deleted boolean");
         jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS deleted_at timestamp(6)");
         jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS statut_physique varchar(30)");
+        jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS plan_x double precision");
+        jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS plan_y double precision");
 
         jdbcTemplate.execute("""
                 DO $$

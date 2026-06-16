@@ -92,6 +92,34 @@ public class CuveController {
         }
     }
 
+    @PutMapping("/layout")
+    public ResponseEntity<?> updateCuvesLayout(@RequestBody List<UpdateCuveLayoutRequest> request) {
+        List<Long> ids = request.stream().map(UpdateCuveLayoutRequest::id).toList();
+        List<Cuve> cuves = cuveRepository.findAllById(ids).stream()
+                .filter(c -> !c.getDeleted())
+                .toList();
+
+        if (cuves.size() != ids.size()) {
+            Map<String, Object> body = new HashMap<>();
+            body.put("error", "Unable to update cuve layout");
+            body.put("errorMessage", "One or more cuves were not found");
+            return ResponseEntity.status(404).body(body);
+        }
+
+        Map<Long, UpdateCuveLayoutRequest> requestsById = new HashMap<>();
+        request.forEach(item -> requestsById.put(item.id(), item));
+        cuves.forEach(cuve -> {
+            UpdateCuveLayoutRequest item = requestsById.get(cuve.getId());
+            cuve.setPlanX(item.planX());
+            cuve.setPlanY(item.planY());
+        });
+
+        List<Map<String, Object>> saved = cuveRepository.saveAll(cuves).stream()
+                .map(this::cuveToDto)
+                .toList();
+        return ResponseEntity.ok(saved);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateCuve(@PathVariable Long id, @RequestBody UpdateCuveRequest request) {
         return cuveRepository.findById(id)
@@ -159,6 +187,8 @@ public class CuveController {
         dto.put("statutPhysique", cuve.getStatutPhysique());
         dto.put("createdAt", cuve.getCreatedAt() != null ? cuve.getCreatedAt().toString() : null);
         dto.put("updatedAt", cuve.getUpdatedAt() != null ? cuve.getUpdatedAt().toString() : null);
+        dto.put("planX", cuve.getPlanX());
+        dto.put("planY", cuve.getPlanY());
 
         // Include active stockages (lots currently in this cuve)
         List<Stockage> stockages = stockageRepository.findByCuveIdAndDateFinIsNull(cuve.getId());
@@ -184,4 +214,5 @@ public class CuveController {
 
     public record CreateCuveRequest(String nom, Double volumeMax, String statutPhysique) {}
     public record UpdateCuveRequest(String nom, Double volumeMax, String statutPhysique) {}
+    public record UpdateCuveLayoutRequest(Long id, Double planX, Double planY) {}
 }
