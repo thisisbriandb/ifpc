@@ -198,7 +198,6 @@ export default function ChaiVirtuelPage() {
 
   const handleDragEnd = () => {
     setIsDragging(false);
-    setDragPayload(null);
     setDragOverCuveId(null);
     // didDragRef stays true — will be consumed by next onClick
   };
@@ -224,12 +223,10 @@ export default function ChaiVirtuelPage() {
 
       // UNASSIGNED LOT → REMPLISSAGE (opens Transfer/Remplissage modal)
       if (payload.isUnassigned) {
-        const isPropre = destCuve.statutPhysique === "PROPRE";
         const destHasContent = (destCuve.stockages?.length || 0) > 0;
         const isSameLot = destHasContent && destCuve.stockages?.[0]?.lotId === payload.lotId;
 
-        // Can only drop on a clean empty cuve OR a cuve containing the same lot
-        if (!isPropre && !destHasContent) return;
+        // Can only drop on an empty cuve OR a cuve containing the same lot
         if (destHasContent && !isSameLot) return;
 
         setDragPayload(payload);
