@@ -48,6 +48,8 @@ public class Lot {
 
     private LocalDateTime deletedAt;
 
+    private Long userId;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

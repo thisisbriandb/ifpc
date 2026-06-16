@@ -29,19 +29,19 @@ public class LotController {
 
     @GetMapping
     public List<Map<String, Object>> getAllLots() {
-        return lotRepository.findByDeletedFalseOrderByCreatedAtDesc()
+        return lotRepository.findByUserIdAndDeletedFalseOrderByCreatedAtDesc(getCurrentUserId())
                 .stream().map(this::lotToDto).toList();
     }
 
     @GetMapping("/deleted")
     public List<Map<String, Object>> getDeletedLots() {
-        return lotRepository.findByDeletedTrueOrderByDeletedAtDesc()
+        return lotRepository.findByUserIdAndDeletedTrueOrderByDeletedAtDesc(getCurrentUserId())
                 .stream().map(this::lotToDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getLotById(@PathVariable Long id) {
-        return lotRepository.findById(id)
+        return lotRepository.findByIdAndUserId(id, getCurrentUserId())
                 .filter(l -> !l.getDeleted())
                 .map(l -> ResponseEntity.ok(lotToDto(l)))
                 .orElse(ResponseEntity.notFound().build());
@@ -59,6 +59,7 @@ public class LotController {
                 .colorHex(request.colorHex())
                 .spectrumJson(request.spectrumJson())
                 .statutLot(request.statutLot() != null ? request.statutLot() : "EN_FERMENTATION")
+                .userId(getCurrentUserId())
                 .build();
         Lot saved = lotRepository.save(lot);
         return ResponseEntity.ok(lotToDto(saved));
@@ -66,7 +67,7 @@ public class LotController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateLot(@PathVariable Long id, @RequestBody UpdateLotRequest request) {
-        return lotRepository.findById(id)
+        return lotRepository.findByIdAndUserId(id, getCurrentUserId())
                 .filter(l -> !l.getDeleted())
                 .map(lot -> {
                     if (request.identifiant() != null) lot.setIdentifiant(request.identifiant());
@@ -85,7 +86,7 @@ public class LotController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLot(@PathVariable Long id) {
-        return lotRepository.findById(id)
+        return lotRepository.findByIdAndUserId(id, getCurrentUserId())
                 .filter(l -> !l.getDeleted())
                 .map(lot -> {
                     lot.setDeleted(true);
@@ -103,7 +104,7 @@ public class LotController {
 
     @PostMapping("/{id}/restore")
     public ResponseEntity<Map<String, Object>> restoreLot(@PathVariable Long id) {
-        return lotRepository.findById(id)
+        return lotRepository.findByIdAndUserId(id, getCurrentUserId())
                 .filter(Lot::getDeleted)
                 .map(lot -> {
                     lot.setDeleted(false);
@@ -117,6 +118,14 @@ public class LotController {
                     return ResponseEntity.ok(lotToDto(saved));
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    private Long getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
+            return user.getId();
+        }
+        return null;
     }
 
     private String getCurrentUserEmail() {
@@ -134,6 +143,7 @@ public class LotController {
         dto.put("id", lot.getId());
         dto.put("identifiant", lot.getIdentifiant());
         dto.put("typeProduit", lot.getTypeProduit());
+        dto.put("userId", lot.getUserId());
         dto.put("volumeActuel", lot.getVolumeActuel());
         dto.put("colorL", lot.getColorL());
         dto.put("colorA", lot.getColorA());

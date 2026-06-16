@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import {
   getCuves, getLots, createCuve, createLot, opNettoyage, opRemplissage, opTransfert, opTransformation, opAssemblage, spectrumToLab,
-  type Cuve, type Lot
+  updateCuvesLayout, type Cuve, type Lot
 } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
 import CuveSVG, { type CuveDragState } from "@/components/CuveSVG";
@@ -83,6 +83,13 @@ export default function ChaiVirtuelPage() {
   const [newLotDilutionFactor, setNewLotDilutionFactor] = useState("1");
   const [transformationDilutionFactor, setTransformationDilutionFactor] = useState("1");
 
+  // Layout Plan states
+  const [viewMode, setViewMode] = useState<"status" | "plan">("status");
+  const [isLayoutEditing, setIsLayoutEditing] = useState(false);
+  const [localLayouts, setLocalLayouts] = useState<{ [key: number]: { x: number; y: number } }>({});
+  const [activeDragCuveId, setActiveDragCuveId] = useState<number | null>(null);
+  const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
   const loadData = useCallback(async () => {
     setLoading(true);
 
@@ -107,6 +114,125 @@ export default function ChaiVirtuelPage() {
 
   useEffect(() => { loadData(); }, [loadData]);
   useEffect(() => { checkAuth(); }, [checkAuth]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("ifpc_chai_view_mode");
+      if (saved === "status" || saved === "plan") {
+        setViewMode(saved as any);
+      }
+    }
+  }, []);
+
+  const handleSetViewMode = (mode: "status" | "plan") => {
+    setViewMode(mode);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("ifpc_chai_view_mode", mode);
+    }
+  };
+
+  const computeDefaultGrid = useCallback((cuvesList: Cuve[]): { [key: number]: { x: number; y: number } } => {
+    const sorted = [...cuvesList].sort((a, b) => (a.nom || "").localeCompare(b.nom || ""));
+    const layouts: { [key: number]: { x: number; y: number } } = {};
+    sorted.forEach((c, index) => {
+      if (c.id) {
+        const col = index % 7;
+        const row = Math.floor(index / 7);
+        layouts[c.id] = {
+          x: 40 + col * 220,
+          y: 40 + row * 280
+        };
+      }
+    });
+    return layouts;
+  }, []);
+
+  const getCuveCoords = useCallback((cuve: Cuve): { x: number; y: number } => {
+    if (isLayoutEditing && cuve.id && localLayouts[cuve.id]) {
+      return localLayouts[cuve.id];
+    }
+    if (cuve.planX != null && cuve.planY != null) {
+      return { x: cuve.planX, y: cuve.planY };
+    }
+    const defaultGrid = computeDefaultGrid(cuves);
+    return defaultGrid[cuve.id!] || { x: 40, y: 40 };
+  }, [isLayoutEditing, localLayouts, cuves, computeDefaultGrid]);
+
+  const startCuveDrag = (e: React.PointerEvent, cuve: Cuve) => {
+    if (!isLayoutEditing || !cuve.id) return;
+    e.preventDefault();
+    const target = e.currentTarget as HTMLElement;
+    target.setPointerCapture(e.pointerId);
+
+    const coords = getCuveCoords(cuve);
+    const canvas = document.getElementById("virtual-cellar-canvas");
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const cursorX = e.clientX - rect.left;
+    const cursorY = e.clientY - rect.top;
+
+    setActiveDragCuveId(cuve.id);
+    setDragOffset({
+      x: cursorX - coords.x,
+      y: cursorY - coords.y
+    });
+  };
+
+  const handleCuvePointerMove = (e: React.PointerEvent, cuve: Cuve) => {
+    if (!isLayoutEditing || activeDragCuveId !== cuve.id) return;
+    e.preventDefault();
+    const canvas = document.getElementById("virtual-cellar-canvas");
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const cursorX = e.clientX - rect.left;
+    const cursorY = e.clientY - rect.top;
+
+    let newX = cursorX - dragOffset.x;
+    let newY = cursorY - dragOffset.y;
+
+    newX = Math.round(newX / 10) * 10;
+    newY = Math.round(newY / 10) * 10;
+
+    newX = Math.max(0, Math.min(1600 - 130, newX));
+    newY = Math.max(0, Math.min(900 - 220, newY));
+
+    setLocalLayouts(prev => ({
+      ...prev,
+      [cuve.id!]: { x: newX, y: newY }
+    }));
+  };
+
+  const handleCuvePointerUp = (e: React.PointerEvent, cuve: Cuve) => {
+    if (activeDragCuveId === cuve.id) {
+      const target = e.currentTarget as HTMLElement;
+      target.releasePointerCapture(e.pointerId);
+      setActiveDragCuveId(null);
+    }
+  };
+
+  const handleSaveLayout = async () => {
+    setModalLoading(true);
+    try {
+      const items = cuves.map(c => {
+        if (!c.id) return null;
+        const coords = localLayouts[c.id] || getCuveCoords(c);
+        return {
+          id: c.id,
+          planX: coords.x,
+          planY: coords.y
+        };
+      }).filter(Boolean) as { id: number; planX: number; planY: number }[];
+
+      await updateCuvesLayout(items);
+      setIsLayoutEditing(false);
+      setLocalLayouts({});
+      await loadData();
+    } catch (err) {
+      alert("Erreur lors de la sauvegarde du plan");
+    } finally {
+      setModalLoading(false);
+    }
+  };
 
   // ── Drag Guidance Logic ────────────────────────────────────────────────────
 
@@ -634,13 +760,35 @@ export default function ChaiVirtuelPage() {
                   </button>
                 </>
               )}
+              {/* View Mode Toggle */}
+              <div className="flex items-center bg-gray-100 p-1 rounded-xl shrink-0 border border-gray-200/40 mr-1 shadow-inner">
+                <button
+                  onClick={() => handleSetViewMode("status")}
+                  disabled={isLayoutEditing}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 ${isLayoutEditing ? "opacity-50 cursor-not-allowed" : ""} ${viewMode === "status" ? "bg-white text-indigo-600 shadow-sm" : "text-gray-400 hover:text-gray-600"}`}
+                  title="Vue par Statuts"
+                >
+                  Vue Statuts
+                </button>
+                <button
+                  onClick={() => handleSetViewMode("plan")}
+                  disabled={isLayoutEditing}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 ${isLayoutEditing ? "opacity-50 cursor-not-allowed" : ""} ${viewMode === "plan" ? "bg-white text-indigo-600 shadow-sm" : "text-gray-400 hover:text-gray-600"}`}
+                  title="Vue Plan de Cuverie"
+                >
+                  Vue Plan
+                </button>
+              </div>
+
               <button onClick={loadData}
-                className="p-2 text-gray-400 hover:text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm">
+                disabled={isLayoutEditing}
+                className={`p-2 text-gray-400 hover:text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm ${isLayoutEditing ? "opacity-50 cursor-not-allowed" : ""}`}>
                 <RefreshCw className="w-4 h-4" />
               </button>
               {unassignedLots.length > 0 && (
                 <button onClick={() => setShowLotsPopup(v => !v)}
-                  className={`flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg transition-all shadow-sm ${
+                  disabled={isLayoutEditing}
+                  className={`flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg transition-all shadow-sm ${isLayoutEditing ? "opacity-50 cursor-not-allowed" : ""} ${
                     showLotsPopup
                       ? "bg-indigo-100 text-indigo-700 border border-indigo-200"
                       : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
@@ -651,6 +799,65 @@ export default function ChaiVirtuelPage() {
               )}
             </div>
           </header>
+
+          {/* Aménager controls */}
+          {viewMode === "plan" && !loading && (
+            <div className="mb-6 flex flex-col sm:flex-row items-center justify-between bg-white p-4 rounded-2xl border border-gray-100 shadow-sm gap-4">
+              <div>
+                <h3 className="text-sm font-bold text-gray-900">Disposition Plan de Cuverie</h3>
+                <p className="text-xs text-gray-400">Représentation spatiale et organisation de votre chai</p>
+              </div>
+              {!!user && (
+                <div className="flex items-center gap-2">
+                  {!isLayoutEditing ? (
+                    <button
+                      onClick={() => {
+                        const layouts: { [key: number]: { x: number; y: number } } = {};
+                        cuves.forEach(c => {
+                          if (c.id) {
+                            layouts[c.id] = getCuveCoords(c);
+                          }
+                        });
+                        setLocalLayouts(layouts);
+                        setIsLayoutEditing(true);
+                      }}
+                      className="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs rounded-xl border border-indigo-200/50 shadow-sm transition-all"
+                    >
+                      🛠️ Aménager le plan
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        onClick={handleSaveLayout}
+                        disabled={modalLoading}
+                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                      >
+                        {modalLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Enregistrer"}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setLocalLayouts({});
+                          setIsLayoutEditing(false);
+                        }}
+                        className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs rounded-xl transition-all"
+                      >
+                        Annuler
+                      </button>
+                      <button
+                        onClick={() => {
+                          const grid = computeDefaultGrid(cuves);
+                          setLocalLayouts(grid);
+                        }}
+                        className="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold text-xs rounded-xl border border-amber-200/50 transition-all"
+                      >
+                        Réinitialiser placement
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {loading ? (
             <div className="flex justify-center py-20"><Loader2 className="w-10 h-10 animate-spin text-gray-300" /></div>
@@ -665,63 +872,158 @@ export default function ChaiVirtuelPage() {
               )}
 
               {/* ── Zone : Cuves en activité ───────────────────────────────── */}
-              {activeCuves.length > 0 && (
-                <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                  <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-                      <Grape className="w-4 h-4 text-amber-600" />
-                    </div>
-                    <div>
-                      <h2 className="text-sm font-bold text-gray-900">Cuves en activité</h2>
-                      <p className="text-[10px] text-gray-400">{activeCuves.length} cuve{activeCuves.length > 1 ? "s" : ""} contenant un lot</p>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                      {activeCuves.map(renderCuveCard)}
-                    </div>
-                  </div>
-                </section>
-              )}
+              {viewMode === "status" ? (
+                <>
+                  {/* ── Zone : Cuves en activité ───────────────────────────────── */}
+                  {activeCuves.length > 0 && (
+                    <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                      <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                          <Grape className="w-4 h-4 text-amber-600" />
+                        </div>
+                        <div>
+                          <h2 className="text-sm font-bold text-gray-900">Cuves en activité</h2>
+                          <p className="text-[10px] text-gray-400">{activeCuves.length} cuve{activeCuves.length > 1 ? "s" : ""} contenant un lot</p>
+                        </div>
+                      </div>
+                      <div className="p-5">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                          {activeCuves.map(renderCuveCard)}
+                        </div>
+                      </div>
+                    </section>
+                  )}
 
-              {/* ── Zone : Cuves disponibles ───────────────────────────────── */}
-              {availableCuves.length > 0 && (
-                <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                  <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
-                      <Archive className="w-4 h-4 text-green-600" />
-                    </div>
-                    <div>
-                      <h2 className="text-sm font-bold text-gray-900">Cuves disponibles</h2>
-                      <p className="text-[10px] text-gray-400">{availableCuves.length} cuve{availableCuves.length > 1 ? "s" : ""} propre{availableCuves.length > 1 ? "s" : ""} et vide{availableCuves.length > 1 ? "s" : ""}</p>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                      {availableCuves.map(renderCuveCard)}
-                    </div>
-                  </div>
-                </section>
-              )}
+                  {/* ── Zone : Cuves disponibles ───────────────────────────────── */}
+                  {availableCuves.length > 0 && (
+                    <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                      <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                          <Archive className="w-4 h-4 text-green-600" />
+                        </div>
+                        <div>
+                          <h2 className="text-sm font-bold text-gray-900">Cuves disponibles</h2>
+                          <p className="text-[10px] text-gray-400">{availableCuves.length} cuve{availableCuves.length > 1 ? "s" : ""} propre{availableCuves.length > 1 ? "s" : ""} et vide{availableCuves.length > 1 ? "s" : ""}</p>
+                        </div>
+                      </div>
+                      <div className="p-5">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                          {availableCuves.map(renderCuveCard)}
+                        </div>
+                      </div>
+                    </section>
+                  )}
 
-              {/* ── Zone : Cuves en maintenance ────────────────────────────── */}
-              {maintenanceCuves.length > 0 && (
-                <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                  <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
-                      <Wrench className="w-4 h-4 text-red-500" />
+                  {/* ── Zone : Cuves en maintenance ────────────────────────────── */}
+                  {maintenanceCuves.length > 0 && (
+                    <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                      <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
+                          <Wrench className="w-4 h-4 text-red-500" />
+                        </div>
+                        <div>
+                          <h2 className="text-sm font-bold text-gray-900">Cuves en maintenance</h2>
+                          <p className="text-[10px] text-gray-400">{maintenanceCuves.length} cuve{maintenanceCuves.length > 1 ? "s" : ""} à nettoyer ou en réparation</p>
+                        </div>
+                      </div>
+                      <div className="p-5">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                          {maintenanceCuves.map(renderCuveCard)}
+                        </div>
+                      </div>
+                    </section>
+                  )}
+                </>
+              ) : (
+                <div className="overflow-auto bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+                  {isLayoutEditing && (
+                    <div className="mb-4 flex items-center gap-2 px-4 py-2.5 bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold rounded-xl text-xs animate-pulse">
+                      <span>🛠️ Mode Aménagement actif : Glissez-déposez les cuves pour les positionner sur le plan (snapping de 10px).</span>
                     </div>
-                    <div>
-                      <h2 className="text-sm font-bold text-gray-900">Cuves en maintenance</h2>
-                      <p className="text-[10px] text-gray-400">{maintenanceCuves.length} cuve{maintenanceCuves.length > 1 ? "s" : ""} à nettoyer ou en réparation</p>
-                    </div>
+                  )}
+                  <div
+                    id="virtual-cellar-canvas"
+                    className={`relative rounded-xl overflow-hidden transition-all border ${
+                      isLayoutEditing
+                        ? "border-indigo-400 ring-4 ring-indigo-500/10 shadow-lg"
+                        : "border-gray-200 shadow-inner"
+                    }`}
+                    style={{
+                      width: "1600px",
+                      height: "900px",
+                      backgroundColor: "#f8fafc",
+                      backgroundImage: "linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px)",
+                      backgroundSize: "20px 20px"
+                    }}
+                  >
+                    {cuves.map((cuve) => {
+                      const coords = getCuveCoords(cuve);
+                      const volumeOccupe = cuve.volumeOccupe || 0;
+                      const hasContent = (cuve.stockages?.length || 0) > 0;
+                      const mainColor = cuve.stockages?.[0]?.lotColorHex || null;
+                      const mainLot = cuve.stockages?.[0]?.lotIdentifiant || null;
+                      const dragState = getCuveDragState(cuve);
+
+                      const pointerHandlers = isLayoutEditing ? {
+                        onPointerDown: (e: React.PointerEvent) => startCuveDrag(e, cuve),
+                        onPointerMove: (e: React.PointerEvent) => handleCuvePointerMove(e, cuve),
+                        onPointerUp: (e: React.PointerEvent) => handleCuvePointerUp(e, cuve),
+                      } : {};
+
+                      return (
+                        <div
+                          key={cuve.id}
+                          className={`absolute flex flex-col items-center p-3 rounded-xl select-none transition-all ${
+                            isLayoutEditing
+                              ? activeDragCuveId === cuve.id
+                                ? "cursor-grabbing z-50 ring-2 ring-indigo-500 bg-indigo-50/50 shadow-lg scale-105"
+                                : "cursor-grab hover:bg-indigo-50/25 hover:scale-[1.02] hover:shadow-md"
+                              : hasContent && user
+                                ? "cursor-grab active:cursor-grabbing hover:bg-white/80 hover:shadow-sm"
+                                : "cursor-pointer hover:bg-white/80 hover:shadow-sm"
+                          } ${
+                            selectedCuve?.id === cuve.id && panelView
+                              ? "bg-white ring-2 ring-indigo-300 shadow-md"
+                              : ""
+                          }`}
+                          style={{
+                            left: `${coords.x}px`,
+                            top: `${coords.y}px`,
+                            width: "150px",
+                            height: "250px",
+                            touchAction: "none"
+                          }}
+                          {...pointerHandlers}
+                          onClick={isLayoutEditing ? undefined : () => handleCuveClick(cuve)}
+                          draggable={!isLayoutEditing && !!user && hasContent}
+                          onDragStart={isLayoutEditing ? undefined : (e) => handleDragStart(e, cuve)}
+                          onDragEnd={isLayoutEditing ? undefined : handleDragEnd}
+                          onDragOver={isLayoutEditing ? undefined : (e) => handleDragOver(e, cuve.id!)}
+                          onDragLeave={isLayoutEditing ? undefined : handleDragLeave}
+                          onDrop={isLayoutEditing ? undefined : (e) => handleDrop(e, cuve)}
+                        >
+                          <CuveSVG
+                            nom={cuve.nom}
+                            volumeMax={cuve.volumeMax}
+                            volumeOccupe={volumeOccupe}
+                            colorHex={mainColor}
+                            statutPhysique={cuve.statutPhysique || "PROPRE"}
+                            lotIdentifiant={mainLot}
+                            dragState={dragState}
+                            isSelected={selectedCuve?.id === cuve.id && !!panelView}
+                            width={110}
+                            height={195}
+                          />
+                          {isLayoutEditing && (
+                            <div className="absolute top-2 right-2 bg-indigo-500 text-white rounded-full p-1 shadow-sm">
+                              <GripVertical className="w-3 h-3" />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="p-5">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                      {maintenanceCuves.map(renderCuveCard)}
-                    </div>
-                  </div>
-                </section>
+                </div>
               )}
 
 

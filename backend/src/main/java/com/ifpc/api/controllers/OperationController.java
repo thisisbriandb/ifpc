@@ -24,25 +24,25 @@ public class OperationController {
 
     @GetMapping
     public List<Map<String, Object>> getRecentOperations() {
-        return operationRepository.findTop50ByOrderByCreatedAtDesc()
+        return operationRepository.findTop50ByUserIdOrderByCreatedAtDesc(getCurrentUserId())
                 .stream().map(this::operationToDto).toList();
     }
 
     @GetMapping("/cuve/{cuveId}")
     public List<Map<String, Object>> getOperationsByCuve(@PathVariable Long cuveId) {
-        return operationRepository.findByCuveSourceIdOrCuveDestIdOrderByCreatedAtDesc(cuveId, cuveId)
+        return operationRepository.findByUserIdAndCuveIdOrderByCreatedAtDesc(getCurrentUserId(), cuveId)
                 .stream().map(this::operationToDto).toList();
     }
 
     @GetMapping("/lot/{lotId}")
     public List<Map<String, Object>> getOperationsByLot(@PathVariable Long lotId) {
-        return operationRepository.findByLotIdOrderByCreatedAtDesc(lotId)
+        return operationRepository.findByLotIdAndUserIdOrderByCreatedAtDesc(lotId, getCurrentUserId())
                 .stream().map(this::operationToDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getOperationById(@PathVariable Long id) {
-        return operationRepository.findById(id)
+        return operationRepository.findByIdAndUserId(id, getCurrentUserId())
                 .map(o -> ResponseEntity.ok(operationToDto(o)))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -106,7 +106,13 @@ public class OperationController {
         }
     }
 
-    // ── Helpers ──────────────────────────────────────────────────────────────
+    private Long getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
+            return user.getId();
+        }
+        return null;
+    }
 
     private String getCurrentUserEmail() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -146,6 +152,7 @@ public class OperationController {
         dto.put("volume", op.getVolume());
         dto.put("description", op.getDescription());
         dto.put("userEmail", op.getUserEmail());
+        dto.put("userId", op.getUserId());
         dto.put("createdAt", op.getCreatedAt() != null ? op.getCreatedAt().toString() : null);
         return dto;
     }

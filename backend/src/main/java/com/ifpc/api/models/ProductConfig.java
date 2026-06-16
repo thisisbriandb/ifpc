@@ -29,6 +29,8 @@ public class ProductConfig {
     @Column(nullable = false)
     private Double vpCible;
 
+    private Long userId;
+
     @Column
     private LocalDateTime updatedAt;
 

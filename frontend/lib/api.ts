@@ -337,6 +337,8 @@ export interface Cuve {
   spectrumJson?: string;
   createdAt?: string;
   updatedAt?: string;
+  planX?: number | null;
+  planY?: number | null;
 }
 
 export interface Lot {
@@ -417,6 +419,11 @@ export async function deleteCuve(id: number): Promise<void> {
 
 export async function restoreCuve(id: number): Promise<Cuve> {
   const { data } = await api.post(`/cuves/${id}/restore`);
+  return data;
+}
+
+export async function updateCuvesLayout(items: { id: number; planX: number | null; planY: number | null }[]): Promise<any> {
+  const { data } = await api.put("/cuves/layout", items);
   return data;
 }
 

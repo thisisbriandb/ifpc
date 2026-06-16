@@ -55,6 +55,8 @@ public class AnalysisHistory {
     // Utilisateur ayant lancé l'analyse (null si anonyme)
     private String userEmail;
 
+    private Long userId;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

@@ -36,6 +36,12 @@ public class Cuve {
 
     private LocalDateTime deletedAt;
 
+    private Integer planX;
+
+    private Integer planY;
+
+    private Long userId;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
