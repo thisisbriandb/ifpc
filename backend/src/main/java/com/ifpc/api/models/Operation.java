@@ -46,8 +46,6 @@ public class Operation {
 
     private String userEmail;
 
-    private Long userId;
-
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

@@ -17,14 +17,6 @@ public class OperationService {
     private final LotRepository lotRepository;
     private final StockageRepository stockageRepository;
     private final OperationRepository operationRepository;
-    private final UserRepository userRepository;
-
-    private Long getUserIdByEmail(String email) {
-        if (email == null) return null;
-        return userRepository.findByEmail(email)
-                .map(User::getId)
-                .orElse(null);
-    }
 
     // ── NETTOYAGE ────────────────────────────────────────────────────────────
     // La cuve passe de SALE → PROPRE
@@ -46,7 +38,6 @@ public class OperationService {
                 .cuveDest(cuve)
                 .description("Nettoyage de la cuve " + cuve.getNom())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -99,7 +90,6 @@ public class OperationService {
                 .volume(volumeToUse)
                 .description("Remplissage de " + cuve.getNom() + " avec " + volumeToUse + "L de " + lot.getIdentifiant())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -175,7 +165,6 @@ public class OperationService {
                 .volume(volumeToTransfer)
                 .description("Transfert de " + volumeToTransfer + "L de " + lot.getIdentifiant() + " : " + cuveSource.getNom() + " → " + cuveDest.getNom())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -205,7 +194,6 @@ public class OperationService {
                 .lot(lot)
                 .description(description != null ? description : "Transformation du lot " + lot.getIdentifiant())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -288,7 +276,6 @@ public class OperationService {
                 .colorHex(colorHex)
                 .spectrumJson(spectrumJson)
                 .statutLot("PRET_A_ASSEMBLER")
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         Lot savedLot = lotRepository.save(newLot);
 
@@ -307,7 +294,6 @@ public class OperationService {
                 .volume(totalVolume)
                 .description("Assemblage de " + sources.size() + " lots → " + newLotIdentifiant + " (" + totalVolume + " L)")
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -324,7 +310,6 @@ public class OperationService {
                 .cuveSource(cuve)
                 .description("Suppression de la cuve " + cuve.getNom())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -338,7 +323,6 @@ public class OperationService {
                 .cuveSource(cuve)
                 .description("Restauration de la cuve " + cuve.getNom())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -352,7 +336,6 @@ public class OperationService {
                 .lot(lot)
                 .description("Suppression du lot " + lot.getIdentifiant())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }
@@ -366,7 +349,6 @@ public class OperationService {
                 .lot(lot)
                 .description("Restauration du lot " + lot.getIdentifiant())
                 .userEmail(userEmail)
-                .userId(getUserIdByEmail(userEmail))
                 .build();
         return operationRepository.save(op);
     }

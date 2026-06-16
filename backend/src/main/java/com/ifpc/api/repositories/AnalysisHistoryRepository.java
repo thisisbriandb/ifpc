@@ -12,8 +12,4 @@ public interface AnalysisHistoryRepository extends JpaRepository<AnalysisHistory
     List<AnalysisHistory> findByUserEmailOrderByCreatedAtDesc(String userEmail);
 
     List<AnalysisHistory> findTop50ByUserEmailOrderByCreatedAtDesc(String userEmail);
-
-    List<AnalysisHistory> findByUserIdOrderByCreatedAtDesc(Long userId);
-
-    List<AnalysisHistory> findTop50ByUserIdOrderByCreatedAtDesc(Long userId);
 }

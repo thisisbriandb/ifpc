@@ -10,8 +10,6 @@ import com.ifpc.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -92,7 +90,7 @@ public class AdminController {
     @GetMapping("/api/admin/product-config")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ProductConfig>> getProductConfigs() {
-        return ResponseEntity.ok(productConfigRepository.findByUserId(getCurrentUserId()));
+        return ResponseEntity.ok(productConfigRepository.findAll());
     }
 
     @PutMapping("/api/admin/product-config/{productType}")
@@ -101,13 +99,11 @@ public class AdminController {
             @PathVariable String productType,
             @RequestBody ProductConfigUpdateRequest request
     ) {
-        Long userId = getCurrentUserId();
-        ProductConfig config = productConfigRepository.findByProductTypeAndUserId(productType, userId)
+        ProductConfig config = productConfigRepository.findByProductType(productType)
                 .orElse(ProductConfig.builder()
                         .productType(productType)
                         .productName(request.productName() != null ? request.productName() : productType)
                         .vpCible(request.vpCible())
-                        .userId(userId)
                         .build());
         config.setVpCible(request.vpCible());
         if (request.productName() != null) {
@@ -121,28 +117,10 @@ public class AdminController {
 
     @GetMapping("/api/config/products")
     public ResponseEntity<List<ProductConfigDto>> getPublicProductConfig() {
-        Long userId = getCurrentUserId();
-        List<ProductConfig> list;
-        if (userId != null) {
-            list = productConfigRepository.findByUserId(userId);
-            if (list.isEmpty()) {
-                list = productConfigRepository.findByUserId(null);
-            }
-        } else {
-            list = productConfigRepository.findByUserId(null);
-        }
-        List<ProductConfigDto> configs = list.stream()
+        List<ProductConfigDto> configs = productConfigRepository.findAll().stream()
                 .map(c -> new ProductConfigDto(c.getProductType(), c.getProductName(), c.getVpCible()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(configs);
-    }
-
-    private Long getCurrentUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
-            return user.getId();
-        }
-        return null;
     }
 
     // ── Help text (admin write, public read) ─────────────────────────────

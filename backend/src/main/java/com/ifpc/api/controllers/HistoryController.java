@@ -22,7 +22,6 @@ public class HistoryController {
     @PostMapping
     public ResponseEntity<AnalysisHistory> saveAnalysis(@RequestBody SaveAnalysisRequest request) {
         String email = getCurrentUserEmail();
-        Long userId = getCurrentUserId();
 
         AnalysisHistory history = AnalysisHistory.builder()
                 .type(request.type())
@@ -35,7 +34,6 @@ public class HistoryController {
                 .courbe(request.courbe())
                 .resultJson(request.resultJson())
                 .userEmail(email)
-                .userId(userId)
                 .build();
 
         return ResponseEntity.ok(historyRepository.save(history));
@@ -44,11 +42,11 @@ public class HistoryController {
     // ── Lister les analyses récentes ──────────────────────────────────────
     @GetMapping
     public ResponseEntity<List<HistoryDto>> getRecentHistory() {
-        Long userId = getCurrentUserId();
+        String email = getCurrentUserEmail();
 
         List<AnalysisHistory> analyses;
-        if (userId != null) {
-            analyses = historyRepository.findTop50ByUserIdOrderByCreatedAtDesc(userId);
+        if (email != null) {
+            analyses = historyRepository.findTop50ByUserEmailOrderByCreatedAtDesc(email);
         } else {
             analyses = List.of();
         }
@@ -57,7 +55,7 @@ public class HistoryController {
                 .map(a -> new HistoryDto(
                         a.getId(), a.getType(), a.getLabel(), a.getLotIdentifier(), a.getStatut(),
                         a.getVp(), a.getVpCible(), a.getParametres(), a.getCreatedAt().toString(),
-                        a.getUserEmail(), a.getUserId()
+                        a.getUserEmail()
                 ))
                 .toList();
 
@@ -67,9 +65,7 @@ public class HistoryController {
     // ── Récupérer une analyse par ID ─────────────────────────────────────
     @GetMapping("/{id}")
     public ResponseEntity<AnalysisHistory> getAnalysis(@PathVariable Long id) {
-        Long userId = getCurrentUserId();
         return historyRepository.findById(id)
-                .filter(a -> a.getUserId() != null && a.getUserId().equals(userId))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -77,9 +73,9 @@ public class HistoryController {
     // ── Supprimer une analyse ────────────────────────────────────────────
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAnalysis(@PathVariable Long id) {
-        Long userId = getCurrentUserId();
+        String email = getCurrentUserEmail();
         return historyRepository.findById(id)
-                .filter(a -> a.getUserId() != null && a.getUserId().equals(userId))
+                .filter(a -> a.getUserEmail() != null && a.getUserEmail().equals(email))
                 .map(a -> {
                     historyRepository.delete(a);
                     return ResponseEntity.ok().<Void>build();
@@ -88,14 +84,6 @@ public class HistoryController {
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────
-
-    private Long getCurrentUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
-            return user.getId();
-        }
-        return null;
-    }
 
     private String getCurrentUserEmail() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -115,6 +103,6 @@ public class HistoryController {
 
     public record HistoryDto(
             Long id, String type, String label, String lotIdentifier, String statut,
-            Double vp, Double vpCible, String parametres, String date, String userEmail, Long userId
+            Double vp, Double vpCible, String parametres, String date, String userEmail
     ) {}
 }

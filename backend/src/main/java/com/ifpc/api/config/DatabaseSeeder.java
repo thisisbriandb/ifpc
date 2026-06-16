@@ -46,21 +46,6 @@ public class DatabaseSeeder {
                 System.out.println("=================================");
             }
 
-            User adminUser = userRepository.findByEmail("admin@ifpc.com").orElse(null);
-            if (adminUser != null) {
-                jdbcTemplate.execute("ALTER TABLE cuves ADD COLUMN IF NOT EXISTS user_id bigint");
-                jdbcTemplate.execute("ALTER TABLE lots ADD COLUMN IF NOT EXISTS user_id bigint");
-                jdbcTemplate.execute("ALTER TABLE operations ADD COLUMN IF NOT EXISTS user_id bigint");
-                jdbcTemplate.execute("ALTER TABLE analysis_history ADD COLUMN IF NOT EXISTS user_id bigint");
-                jdbcTemplate.execute("ALTER TABLE product_config ADD COLUMN IF NOT EXISTS user_id bigint");
-
-                jdbcTemplate.update("UPDATE cuves SET user_id = ? WHERE user_id IS NULL", adminUser.getId());
-                jdbcTemplate.update("UPDATE lots SET user_id = ? WHERE user_id IS NULL", adminUser.getId());
-                jdbcTemplate.update("UPDATE operations SET user_id = ? WHERE user_id IS NULL", adminUser.getId());
-                jdbcTemplate.update("UPDATE analysis_history SET user_id = ? WHERE user_id IS NULL", adminUser.getId());
-                jdbcTemplate.update("UPDATE product_config SET user_id = ? WHERE user_id IS NULL", adminUser.getId());
-            }
-
             // Seed product configs with default VP cible values (from pasto.py)
             Map<String, Object[]> defaults = Map.of(
                     "jus_pomme",       new Object[]{"Jus de pomme", 15.0},

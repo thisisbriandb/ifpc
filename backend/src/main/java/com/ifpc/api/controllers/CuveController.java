@@ -30,7 +30,7 @@ public class CuveController {
     @GetMapping("/deleted")
     public ResponseEntity<?> getDeletedCuves() {
         try {
-            List<Cuve> cuves = cuveRepository.findByUserIdAndDeletedTrueOrderByDeletedAtDesc(getCurrentUserId());
+            List<Cuve> cuves = cuveRepository.findByDeletedTrueOrderByDeletedAtDesc();
             return ResponseEntity.ok(cuves.stream().map(this::cuveToDto).toList());
         } catch (Throwable error) {
             Map<String, Object> body = new HashMap<>();
@@ -43,7 +43,7 @@ public class CuveController {
     @GetMapping
     public ResponseEntity<?> getAllCuves() {
         try {
-            List<Cuve> cuves = cuveRepository.findByUserIdAndDeletedFalseOrderByNomAsc(getCurrentUserId());
+            List<Cuve> cuves = cuveRepository.findByDeletedFalseOrderByNomAsc();
             return ResponseEntity.ok(cuves.stream().map(this::cuveToDto).toList());
         } catch (Throwable error) {
             Map<String, Object> body = new HashMap<>();
@@ -61,7 +61,7 @@ public class CuveController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getCuveById(@PathVariable Long id) {
-        return cuveRepository.findByIdAndUserId(id, getCurrentUserId())
+        return cuveRepository.findById(id)
                 .filter(c -> !c.getDeleted())
                 .map(c -> ResponseEntity.ok(cuveToDto(c)))
                 .orElse(ResponseEntity.notFound().build());
@@ -75,7 +75,6 @@ public class CuveController {
                     .nom(request.nom())
                     .volumeMax(request.volumeMax())
                     .statutPhysique(request.statutPhysique() != null ? request.statutPhysique() : "PROPRE")
-                    .userId(getCurrentUserId())
                     .build();
             Cuve saved = cuveRepository.save(cuve);
             return ResponseEntity.ok(cuveToDto(saved));
@@ -95,45 +94,20 @@ public class CuveController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateCuve(@PathVariable Long id, @RequestBody UpdateCuveRequest request) {
-        return cuveRepository.findByIdAndUserId(id, getCurrentUserId())
+        return cuveRepository.findById(id)
                 .filter(c -> !c.getDeleted())
                 .map(cuve -> {
                     if (request.nom() != null) cuve.setNom(request.nom());
                     if (request.volumeMax() != null) cuve.setVolumeMax(request.volumeMax());
                     if (request.statutPhysique() != null) cuve.setStatutPhysique(request.statutPhysique());
-                    if (request.planX() != null) cuve.setPlanX(request.planX());
-                    if (request.planY() != null) cuve.setPlanY(request.planY());
                     return ResponseEntity.ok(cuveToDto(cuveRepository.save(cuve)));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/layout")
-    public ResponseEntity<?> updateCuvesLayout(@RequestBody List<LayoutItemRequest> request) {
-        try {
-            Long userId = getCurrentUserId();
-            for (LayoutItemRequest item : request) {
-                if (item.id() != null) {
-                    cuveRepository.findByIdAndUserId(item.id(), userId)
-                            .ifPresent(cuve -> {
-                                cuve.setPlanX(item.planX());
-                                cuve.setPlanY(item.planY());
-                                cuveRepository.save(cuve);
-                            });
-                }
-            }
-            return ResponseEntity.ok(Map.of("status", "success"));
-        } catch (Throwable error) {
-            return ResponseEntity.internalServerError().body(Map.of(
-                    "error", "Unable to update layout",
-                    "errorMessage", error.getMessage()
-            ));
-        }
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCuve(@PathVariable Long id) {
-        return cuveRepository.findByIdAndUserId(id, getCurrentUserId())
+        return cuveRepository.findById(id)
                 .filter(c -> !c.getDeleted())
                 .map(cuve -> {
                     cuve.setDeleted(true);
@@ -151,7 +125,7 @@ public class CuveController {
 
     @PostMapping("/{id}/restore")
     public ResponseEntity<Map<String, Object>> restoreCuve(@PathVariable Long id) {
-        return cuveRepository.findByIdAndUserId(id, getCurrentUserId())
+        return cuveRepository.findById(id)
                 .filter(Cuve::getDeleted)
                 .map(cuve -> {
                     cuve.setDeleted(false);
@@ -165,14 +139,6 @@ public class CuveController {
                     return ResponseEntity.ok(cuveToDto(saved));
                 })
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    private Long getCurrentUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
-            return user.getId();
-        }
-        return null;
     }
 
     private String getCurrentUserEmail() {
@@ -191,9 +157,6 @@ public class CuveController {
         dto.put("nom", cuve.getNom());
         dto.put("volumeMax", cuve.getVolumeMax());
         dto.put("statutPhysique", cuve.getStatutPhysique());
-        dto.put("planX", cuve.getPlanX());
-        dto.put("planY", cuve.getPlanY());
-        dto.put("userId", cuve.getUserId());
         dto.put("createdAt", cuve.getCreatedAt() != null ? cuve.getCreatedAt().toString() : null);
         dto.put("updatedAt", cuve.getUpdatedAt() != null ? cuve.getUpdatedAt().toString() : null);
 
@@ -219,7 +182,6 @@ public class CuveController {
 
     // ── Request records ─────────────────────────────────────────────────────
 
-    public record CreateCuveRequest(String nom, Double volumeMax, String statutPhysique, Integer planX, Integer planY) {}
-    public record UpdateCuveRequest(String nom, Double volumeMax, String statutPhysique, Integer planX, Integer planY) {}
-    public record LayoutItemRequest(Long id, Integer planX, Integer planY) {}
+    public record CreateCuveRequest(String nom, Double volumeMax, String statutPhysique) {}
+    public record UpdateCuveRequest(String nom, Double volumeMax, String statutPhysique) {}
 }
