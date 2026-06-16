@@ -53,7 +53,7 @@ const SIZE = 240;
 const RADIUS = SIZE / 2;
 const AB_RANGE = 128;
 
-export default function LabColorPicker({ L, a, b, onChangeA, onChangeB }: LabColorPickerProps) {
+export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChangeB }: LabColorPickerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -193,6 +193,23 @@ export default function LabColorPicker({ L, a, b, onChangeA, onChangeB }: LabCol
             </svg>
           </div>
         </div>
+      </div>
+
+      {/* Lightness Slider */}
+      <div className="space-y-1.5 px-1">
+        <div className="flex justify-between items-center">
+          <label className="text-[10px] font-bold text-gray-400 uppercase">Lumière (L*)</label>
+          <span className="text-[10px] font-mono font-bold text-gray-700">{L.toFixed(1)}</span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="0.5"
+          value={L}
+          onChange={(e) => onChangeL(parseFloat(e.target.value))}
+          className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-primary focus:outline-none"
+        />
       </div>
 
       {/* Color preview + values */}

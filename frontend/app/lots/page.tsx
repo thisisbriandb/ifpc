@@ -3,7 +3,8 @@
 import { useEffect, useState, useRef } from "react";
 import {
   FlaskConical, Plus, Search, Loader2, Edit2, Trash2,
-  Upload, FileSpreadsheet, X, BarChart3, Droplets
+  Upload, FileSpreadsheet, X, BarChart3, Droplets,
+  Apple, Sparkles, Waves
 } from "lucide-react";
 import {
   getLots, deleteLot, createLot, updateLot, spectrumToLab,
@@ -206,54 +207,123 @@ export default function LotsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredLots.map((lot) => (
-              <div key={lot.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
-                <div className="p-5">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-3 min-w-0">
+            {filteredLots.map((lot) => {
+              const hasSpectrum = !!lot.spectrumJson;
+              
+              // Determine product icon and theme
+              let ProductIcon = Droplets;
+              let productTheme = "bg-gray-50 text-gray-600 border-gray-200/60";
+              const typeLower = lot.typeProduit?.toLowerCase() || "";
+              if (typeLower.includes("jus")) {
+                ProductIcon = Apple;
+                productTheme = "bg-red-50 text-red-700 border-red-100/80";
+              } else if (typeLower.includes("cidre")) {
+                ProductIcon = Sparkles;
+                productTheme = "bg-amber-50 text-amber-700 border-amber-100/80";
+              } else if (typeLower.includes("moût") || typeLower.includes("mout")) {
+                ProductIcon = FlaskConical;
+                productTheme = "bg-indigo-50 text-indigo-700 border-indigo-100/80";
+              }
+
+              // Card style with matching left-border and dynamic soft colored glow
+              const cardStyle = {
+                borderLeft: lot.colorHex ? `5px solid ${lot.colorHex}` : '5px solid #e5e7eb',
+              };
+
+              return (
+                <div 
+                  key={lot.id} 
+                  style={cardStyle}
+                  className="bg-white rounded-2xl border border-gray-100/80 shadow-sm overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between"
+                >
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      {/* Top Row: Identifiant & Status */}
+                      <div className="flex justify-between items-start mb-4 gap-2">
+                        <div className="min-w-0">
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold border ${productTheme} mb-2.5`}>
+                            <ProductIcon className="w-3.5 h-3.5" />
+                            {lot.typeProduit || "Type non défini"}
+                          </span>
+                          <h3 className="font-bold text-gray-900 text-lg truncate font-mono tracking-tight group-hover:text-brand-accent transition-colors">
+                            {lot.identifiant}
+                          </h3>
+                        </div>
+                        <span className={`px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border shrink-0 ${getStatutStyle(lot.statutLot)}`}>
+                          {getStatutLabel(lot.statutLot)}
+                        </span>
+                      </div>
+
+                      {/* Lab* Coordinates & Color block */}
                       {lot.colorHex && (
-                        <div className="w-4 h-10 rounded-full border border-black/5 shrink-0 shadow-inner"
-                          style={{ backgroundColor: lot.colorHex }}
-                          title={`L:${lot.colorL} a:${lot.colorA} b:${lot.colorB}`} />
+                        <div className="flex items-center gap-3.5 p-3 mb-4 rounded-xl bg-gray-50/50 border border-black/[0.03]">
+                          <div 
+                            className="w-8 h-8 rounded-lg border border-black/10 shrink-0 shadow-inner transition-transform group-hover:scale-105"
+                            style={{ 
+                              backgroundColor: lot.colorHex,
+                              boxShadow: `0 0 12px ${lot.colorHex}30`
+                            }} 
+                          />
+                          <div className="min-w-0">
+                            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none">Couleur CIELAB</p>
+                            <p className="text-[11px] font-mono text-gray-600 mt-1">
+                              L*={lot.colorL?.toFixed(1)} a*={lot.colorA?.toFixed(1)} b*={lot.colorB?.toFixed(1)}
+                            </p>
+                          </div>
+                          {hasSpectrum && (
+                            <span className="ml-auto inline-flex items-center gap-1 text-[9px] font-bold text-brand-accent bg-brand-accent/5 px-2 py-0.5 rounded-md border border-brand-accent/10">
+                              <BarChart3 className="w-2.5 h-2.5" />
+                              Spectre
+                            </span>
+                          )}
+                        </div>
                       )}
-                      <div className="min-w-0">
-                        <h3 className="font-bold text-gray-900 text-lg truncate font-mono">{lot.identifiant}</h3>
-                        <p className="text-xs text-gray-400 truncate">{lot.typeProduit || "Type non défini"}</p>
+
+                      {/* Main Metrics: Volume & Location */}
+                      <div className="grid grid-cols-2 gap-4 py-3 border-t border-b border-gray-100/80 my-4 text-xs">
+                        <div>
+                          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Volume</p>
+                          <div className="flex items-center gap-1.5">
+                            <Waves className="w-4 h-4 text-gray-400" />
+                            <span className="font-bold text-gray-900">{lot.volumeActuel.toLocaleString()} L</span>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 text-right">Stockage</p>
+                          {lot.cuveActuelle ? (
+                            <p className="font-bold text-brand-primary text-right truncate">
+                              Cuve {lot.cuveActuelle.cuveNom}
+                            </p>
+                          ) : (
+                            <p className="text-gray-400 text-right italic">Non cuvé</p>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${getStatutStyle(lot.statutLot)}`}>
-                      {getStatutLabel(lot.statutLot)}
-                    </span>
-                  </div>
 
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Volume</p>
-                      <p className="text-sm font-bold text-gray-900">{lot.volumeActuel.toLocaleString()} L</p>
-                    </div>
-                    {lot.cuveActuelle && (
-                      <div className="text-right">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Cuve</p>
-                        <p className="text-sm font-bold text-brand-primary">{lot.cuveActuelle.cuveNom}</p>
+                    {/* Footer buttons */}
+                    {canEdit && (
+                      <div className="flex items-center justify-end gap-1.5 pt-2">
+                        <button 
+                          onClick={() => openModal(lot)}
+                          className="p-2 text-gray-400 hover:text-brand-accent hover:bg-brand-accent/5 rounded-lg transition-all"
+                          title="Modifier le lot"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button 
+                          onClick={() => lot.id && handleDelete(lot.id)}
+                          className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                          title="Supprimer le lot"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </div>
                     )}
                   </div>
-
-                  {canEdit && (
-                    <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-50">
-                      <button onClick={() => openModal(lot)}
-                        className="p-2 text-gray-400 hover:text-brand-accent hover:bg-brand-accent/5 rounded-lg transition-colors">
-                        <Edit2 className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => lot.id && handleDelete(lot.id)}
-                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 

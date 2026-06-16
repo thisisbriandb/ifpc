@@ -76,7 +76,6 @@ function AssemblageContent() {
   const [targetL, setTargetL] = useState("85");
   const [targetA, setTargetA] = useState("4");
   const [targetB, setTargetB] = useState("35");
-  const [volume, setVolume] = useState("");
   const [fileDilutionFactor, setFileDilutionFactor] = useState("1");
 
   const [loading, setLoading] = useState(false);
@@ -113,7 +112,6 @@ function AssemblageContent() {
                 setTargetA(String(params.target.a ?? 4));
                 setTargetB(String(params.target.b ?? 35));
               }
-              if (params.volume_total) setVolume(String(params.volume_total));
               if (params.file_dilution_factor) setFileDilutionFactor(String(params.file_dilution_factor));
             } catch {}
           }
@@ -167,7 +165,6 @@ function AssemblageContent() {
         a: parseFloat(targetA) || 0,
         b: parseFloat(targetB) || 0,
       };
-      const vol = Math.max(0, parseFloat(volume) || 0);
       const fileDilution = parseDilutionFactor(fileDilutionFactor);
       
       let data;
@@ -187,10 +184,9 @@ function AssemblageContent() {
           target_L: target.L,
           target_a: target.a,
           target_b: target.b,
-          volume_total: vol,
         });
       } else {
-        data = await assemblageCouleur(file!, target, vol, fileDilution);
+        data = await assemblageCouleur(file!, target, 0, fileDilution);
       }
       
       setResult(data);
@@ -204,7 +200,6 @@ function AssemblageContent() {
           vp: data.delta_e,
           parametres: JSON.stringify({
             target,
-            volume_total: vol,
             file: file?.name,
             file_dilution_factor: fileDilution,
             dilution_factors: dbDilutionFactors,
@@ -422,19 +417,6 @@ function AssemblageContent() {
               />
             </div>
           ))}
-        </div>
-
-        <div>
-          <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">{t("colori.volume")}</p>
-          <div className="relative">
-            <input
-              type="number" step="10" min="1"
-              placeholder="Optionnel"
-              value={volume} onChange={(e) => setVolume(e.target.value)}
-              className="w-full px-3 py-2.5 bg-gray-50 border border-black/[0.04] rounded-xl text-sm font-mono text-brand-text outline-none focus:ring-2 focus:ring-brand-primary/10 focus:bg-white transition-all pr-12"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400 uppercase">{t("colori.volumeUnit")}</span>
-          </div>
         </div>
       </div>
     </div>

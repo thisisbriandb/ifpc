@@ -121,8 +121,9 @@ export default function ChaiVirtuelPage() {
     const volumeDisponible = cuve.volumeMax - (cuve.volumeOccupe || 0);
 
     if (dragPayload.isUnassigned) {
-      // Unassigned lots can only go into empty, clean cuves
-      const canAccept = isPropre && !hasContent && volumeDisponible > 0;
+      // Unassigned lots can go into empty, clean cuves OR cuves already holding the same lot
+      const isSameLot = hasContent && cuve.stockages?.[0]?.lotId === dragPayload.lotId;
+      const canAccept = ((isPropre && !hasContent) || isSameLot) && volumeDisponible > 0;
       return canAccept ? "valid-target" : "invalid-target";
     }
 
@@ -174,7 +175,7 @@ export default function ChaiVirtuelPage() {
     setDragPayload(payload);
     setIsDragging(true);
     didDragRef.current = true;
-    e.dataTransfer.setData("application/json", JSON.stringify(payload));
+    e.dataTransfer.setData("text/plain", JSON.stringify(payload));
     e.dataTransfer.effectAllowed = "move";
   };
 
@@ -191,7 +192,7 @@ export default function ChaiVirtuelPage() {
     setDragPayload(payload);
     setIsDragging(true);
     didDragRef.current = true;
-    e.dataTransfer.setData("application/json", JSON.stringify(payload));
+    e.dataTransfer.setData("text/plain", JSON.stringify(payload));
     e.dataTransfer.effectAllowed = "move";
   };
 
@@ -218,18 +219,22 @@ export default function ChaiVirtuelPage() {
     setIsDragging(false);
 
     try {
-      const payload: DragPayload = JSON.parse(e.dataTransfer.getData("application/json"));
+      const payload: DragPayload = JSON.parse(e.dataTransfer.getData("text/plain"));
       if (!payload.isUnassigned && payload.cuveSourceId === destCuve.id) return;
 
       // UNASSIGNED LOT → REMPLISSAGE (opens Transfer/Remplissage modal)
       if (payload.isUnassigned) {
         const isPropre = destCuve.statutPhysique === "PROPRE";
         const destHasContent = (destCuve.stockages?.length || 0) > 0;
-        if (!isPropre || destHasContent) return;
+        const isSameLot = destHasContent && destCuve.stockages?.[0]?.lotId === payload.lotId;
+
+        // Can only drop on a clean empty cuve OR a cuve containing the same lot
+        if (!isPropre && !destHasContent) return;
+        if (destHasContent && !isSameLot) return;
 
         setDragPayload(payload);
         setTargetCuve(destCuve);
-        const maxVol = Math.min(payload.volumeOccupe, destCuve.volumeMax);
+        const maxVol = Math.min(payload.volumeOccupe, destCuve.volumeMax - (destCuve.volumeOccupe || 0));
         setTransferVolume(maxVol);
         setModalView("transfert");
         return;
@@ -753,7 +758,7 @@ export default function ChaiVirtuelPage() {
             {unassignedLots.map((lot) => (
               <div
                 key={lot.id}
-                draggable
+                draggable={!!user}
                 onDragStart={(e) => handleLotDragStart(e, lot)}
                 onDragEnd={handleDragEnd}
                 onClick={() => { setSelectedLot(lot); setSelectedCuve(null); setPanelView("lot-detail"); }}
@@ -1305,100 +1310,178 @@ export default function ChaiVirtuelPage() {
       )}
 
       {/* ── Assemblage Modal (overlay) ─────────────────────────────────────── */}
-      {modalView === "assemblage" && assemblageSrcA && assemblageSrcB && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/50 backdrop-blur-sm p-4">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <header className="px-6 py-4 bg-gradient-to-r from-purple-50 to-indigo-50 border-b border-purple-100">
-              <h2 className="font-bold text-gray-900 flex items-center gap-2">
-                <Blend className="w-5 h-5 text-purple-500" /> Créer un assemblage
-              </h2>
-              <p className="text-xs text-gray-500 mt-1">
-                Mélange de <span className="font-mono font-bold">{assemblageSrcA.lot.identifiant}</span> ({assemblageSrcA.volume.toLocaleString()} L) + <span className="font-mono font-bold">{assemblageSrcB.lot.identifiant}</span> ({assemblageSrcB.volume.toLocaleString()} L)
-              </p>
-            </header>
-            <div className="p-6 space-y-4">
-              {/* Source lots preview */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-                  <p className="text-[9px] text-gray-400 uppercase font-bold mb-1">Source A</p>
-                  <p className="text-xs font-mono font-bold text-gray-700">{assemblageSrcA.lot.identifiant}</p>
-                  <p className="text-[10px] text-gray-500">{assemblageSrcA.cuve.nom} · {assemblageSrcA.volume.toLocaleString()} L</p>
-                  {assemblageSrcA.lot.colorHex && (
-                    <div className="mt-2 w-full h-3 rounded-full" style={{ backgroundColor: assemblageSrcA.lot.colorHex }} />
-                  )}
-                </div>
-                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-                  <p className="text-[9px] text-gray-400 uppercase font-bold mb-1">Source B</p>
-                  <p className="text-xs font-mono font-bold text-gray-700">{assemblageSrcB.lot.identifiant}</p>
-                  <p className="text-[10px] text-gray-500">{assemblageSrcB.cuve.nom} · {assemblageSrcB.volume.toLocaleString()} L</p>
-                  {assemblageSrcB.lot.colorHex && (
-                    <div className="mt-2 w-full h-3 rounded-full" style={{ backgroundColor: assemblageSrcB.lot.colorHex }} />
-                  )}
-                </div>
-              </div>
+      {modalView === "assemblage" && assemblageSrcA && assemblageSrcB && (() => {
+        const maxVolA = assemblageSrcA.cuve.stockages?.[0]?.volumeOccupe || assemblageSrcA.volume;
+        const maxVolB = assemblageSrcB.cuve.stockages?.[0]?.volumeOccupe || assemblageSrcB.volume;
 
-              {/* Destination cuve selection */}
-              <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
-                  Cuve de réception <span className="text-red-400">*</span>
-                </label>
-                <select
-                  value={assemblageDestCuveId || ""}
-                  onChange={(e) => setAssemblageDestCuveId(parseInt(e.target.value))}
-                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-200 outline-none"
-                >
-                  <option value="">Sélectionner une cuve vide et propre...</option>
-                  {cuves
-                    .filter(c => c.statutPhysique === "PROPRE" && (c.stockages?.length || 0) === 0)
-                    .map(c => (
-                      <option key={c.id} value={c.id}>
-                        {c.nom} (capacité: {c.volumeMax.toLocaleString()} L)
-                      </option>
-                    ))}
-                </select>
-                {assemblageDestCuveId && (
-                  <p className="text-[10px] text-gray-400 mt-1">
-                    Volume total: {(assemblageSrcA.volume + assemblageSrcB.volume).toLocaleString()} L
-                  </p>
+        return (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/50 backdrop-blur-sm p-4">
+            <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+              <header className="px-6 py-4 bg-gradient-to-r from-purple-50 to-indigo-50 border-b border-purple-100">
+                <h2 className="font-bold text-gray-900 flex items-center gap-2">
+                  <Blend className="w-5 h-5 text-purple-500" /> Créer un assemblage
+                </h2>
+                <p className="text-xs text-gray-500 mt-1">
+                  Mélange de <span className="font-mono font-bold">{assemblageSrcA.lot.identifiant}</span> ({assemblageSrcA.volume.toLocaleString()} L) + <span className="font-mono font-bold">{assemblageSrcB.lot.identifiant}</span> ({assemblageSrcB.volume.toLocaleString()} L)
+                </p>
+              </header>
+              <div className="p-6 space-y-4">
+                {/* Source lots preview */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex flex-col justify-between">
+                    <div>
+                      <p className="text-[9px] text-gray-400 uppercase font-bold mb-1">Source A ({assemblageSrcA.cuve.nom})</p>
+                      <p className="text-xs font-mono font-bold text-gray-700 truncate">{assemblageSrcA.lot.identifiant}</p>
+                    </div>
+                    {assemblageSrcA.lot.colorHex && (
+                      <div className="mt-2 w-full h-3 rounded-full" style={{ backgroundColor: assemblageSrcA.lot.colorHex }} />
+                    )}
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex flex-col justify-between">
+                    <div>
+                      <p className="text-[9px] text-gray-400 uppercase font-bold mb-1">Source B ({assemblageSrcB.cuve.nom})</p>
+                      <p className="text-xs font-mono font-bold text-gray-700 truncate">{assemblageSrcB.lot.identifiant}</p>
+                    </div>
+                    {assemblageSrcB.lot.colorHex && (
+                      <div className="mt-2 w-full h-3 rounded-full" style={{ backgroundColor: assemblageSrcB.lot.colorHex }} />
+                    )}
+                  </div>
+                </div>
+
+                {/* Volumes à prélever */}
+                <div className="space-y-4 p-4 bg-purple-50/30 rounded-xl border border-purple-100/50">
+                  <p className="text-[10px] font-bold text-purple-700 uppercase tracking-widest">Sélection des volumes à prélever</p>
+                  
+                  {/* Source A Volume Selector */}
+                  <div>
+                    <div className="flex justify-between text-[10px] text-gray-500 font-bold mb-1">
+                      <span>Volume Source A</span>
+                      <span>max: {maxVolA.toLocaleString()} L</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={1}
+                      max={maxVolA}
+                      value={assemblageSrcA.volume}
+                      onChange={(e) => setAssemblageSrcA({
+                        ...assemblageSrcA,
+                        volume: parseFloat(e.target.value) || 1
+                      })}
+                      className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-500"
+                    />
+                    <div className="flex justify-between mt-1">
+                      <input
+                        type="number"
+                        min={1}
+                        max={maxVolA}
+                        value={assemblageSrcA.volume}
+                        onChange={(e) => setAssemblageSrcA({
+                          ...assemblageSrcA,
+                          volume: Math.min(maxVolA, Math.max(1, parseFloat(e.target.value) || 1))
+                        })}
+                        className="w-24 px-2 py-1 bg-white border border-gray-200 rounded-lg text-xs font-mono text-center outline-none focus:ring-2 focus:ring-purple-100"
+                      />
+                      <span className="text-[10px] text-gray-400 self-center">Litre(s)</span>
+                    </div>
+                  </div>
+
+                  {/* Source B Volume Selector */}
+                  <div className="pt-3 border-t border-purple-100/40">
+                    <div className="flex justify-between text-[10px] text-gray-500 font-bold mb-1">
+                      <span>Volume Source B</span>
+                      <span>max: {maxVolB.toLocaleString()} L</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={1}
+                      max={maxVolB}
+                      value={assemblageSrcB.volume}
+                      onChange={(e) => setAssemblageSrcB({
+                        ...assemblageSrcB,
+                        volume: parseFloat(e.target.value) || 1
+                      })}
+                      className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer accent-purple-500"
+                    />
+                    <div className="flex justify-between mt-1">
+                      <input
+                        type="number"
+                        min={1}
+                        max={maxVolB}
+                        value={assemblageSrcB.volume}
+                        onChange={(e) => setAssemblageSrcB({
+                          ...assemblageSrcB,
+                          volume: Math.min(maxVolB, Math.max(1, parseFloat(e.target.value) || 1))
+                        })}
+                        className="w-24 px-2 py-1 bg-white border border-gray-200 rounded-lg text-xs font-mono text-center outline-none focus:ring-2 focus:ring-purple-100"
+                      />
+                      <span className="text-[10px] text-gray-400 self-center">Litre(s)</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Destination cuve selection */}
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                    Cuve de réception <span className="text-red-400">*</span>
+                  </label>
+                  <select
+                    value={assemblageDestCuveId || ""}
+                    onChange={(e) => setAssemblageDestCuveId(parseInt(e.target.value))}
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-200 outline-none"
+                  >
+                    <option value="">Sélectionner une cuve vide et propre...</option>
+                    {cuves
+                      .filter(c => c.statutPhysique === "PROPRE" && (c.stockages?.length || 0) === 0)
+                      .map(c => (
+                        <option key={c.id} value={c.id}>
+                          {c.nom} (capacité: {c.volumeMax.toLocaleString()} L)
+                        </option>
+                      ))}
+                  </select>
+                  {assemblageDestCuveId && (
+                    <p className="text-[10px] text-gray-400 mt-1">
+                      Volume total de l&apos;assemblage : {(assemblageSrcA.volume + assemblageSrcB.volume).toLocaleString()} L
+                    </p>
+                  )}
+                </div>
+
+                {/* New lot identifier */}
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                    Identifiant du nouveau lot <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={assemblageNewLotId}
+                    onChange={(e) => setAssemblageNewLotId(e.target.value)}
+                    placeholder="ex: ASM-2026-POM-01"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-purple-200 outline-none"
+                  />
+                </div>
+
+                {/* Error message */}
+                {assemblageError && (
+                  <div className="flex items-start gap-2 px-3 py-2 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg">
+                    <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                    <span>{assemblageError}</span>
+                  </div>
                 )}
-              </div>
 
-              {/* New lot identifier */}
-              <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
-                  Identifiant du nouveau lot <span className="text-red-400">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={assemblageNewLotId}
-                  onChange={(e) => setAssemblageNewLotId(e.target.value)}
-                  placeholder="ex: ASM-2026-POM-01"
-                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-purple-200 outline-none"
-                />
-              </div>
-
-              {/* Error message */}
-              {assemblageError && (
-                <div className="flex items-start gap-2 px-3 py-2 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg">
-                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                  <span>{assemblageError}</span>
+                <div className="flex gap-3 pt-2">
+                  <button type="button" onClick={() => setModalView(null)}
+                    className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-500 font-bold rounded-xl hover:bg-gray-50 transition-all">
+                    Annuler
+                  </button>
+                  <button onClick={handleAssemblage} disabled={modalLoading || !assemblageDestCuveId || !assemblageNewLotId}
+                    className="flex-1 px-4 py-2.5 bg-purple-500 text-white font-bold rounded-xl hover:bg-purple-600 disabled:opacity-50 shadow-lg shadow-purple-500/20 transition-all">
+                    {modalLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Assembler"}
+                  </button>
                 </div>
-              )}
-
-              <div className="flex gap-3 pt-2">
-                <button type="button" onClick={() => setModalView(null)}
-                  className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-500 font-bold rounded-xl hover:bg-gray-50 transition-all">
-                  Annuler
-                </button>
-                <button onClick={handleAssemblage} disabled={modalLoading || !assemblageDestCuveId || !assemblageNewLotId}
-                  className="flex-1 px-4 py-2.5 bg-purple-500 text-white font-bold rounded-xl hover:bg-purple-600 disabled:opacity-50 shadow-lg shadow-purple-500/20 transition-all">
-                  {modalLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Assembler"}
-                </button>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }

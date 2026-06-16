@@ -34,6 +34,7 @@ export default function LoginPage() {
   const [pendingMessage, setPendingMessage] = useState<string | null>(null);
   const [forgotMessage, setForgotMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [form, setForm] = useState<FormData>({
     firstName: "",
@@ -43,6 +44,13 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+
+  const passwordChecks = {
+    length: form.password.length >= 8,
+    uppercase: /[A-Z]/.test(form.password),
+    number: /[0-9]/.test(form.password),
+    special: /[^A-Za-z0-9]/.test(form.password),
+  };
 
   // Redirect si déjà connecté
   useEffect(() => {
@@ -65,6 +73,20 @@ export default function LoginPage() {
     setError(null);
     setPendingMessage(null);
     setForgotMessage(null);
+
+    if (!isLogin) {
+      const isValidPassword = passwordChecks.length && passwordChecks.uppercase && passwordChecks.number && passwordChecks.special;
+      if (!isValidPassword) {
+        setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.");
+        setLoading(false);
+        return;
+      }
+      if (form.password !== confirmPassword) {
+        setError("Les mots de passe ne correspondent pas.");
+        setLoading(false);
+        return;
+      }
+    }
 
     try {
       let response;
@@ -294,6 +316,66 @@ export default function LoginPage() {
                   </span>
                 </label>
 
+                {!isLogin && form.password.length > 0 && (
+                  <div className="space-y-1.5 p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs">
+                    <p className="font-bold text-gray-500 uppercase tracking-wider text-[9px] mb-1">Critères du mot de passe :</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="flex items-center gap-1.5">
+                        <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] font-bold ${passwordChecks.length ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"}`}>
+                          {passwordChecks.length ? "✓" : "○"}
+                        </span>
+                        <span className={passwordChecks.length ? "text-green-700" : "text-gray-500"}>8+ caractères</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] font-bold ${passwordChecks.uppercase ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"}`}>
+                          {passwordChecks.uppercase ? "✓" : "○"}
+                        </span>
+                        <span className={passwordChecks.uppercase ? "text-green-700" : "text-gray-500"}>Une majuscule</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] font-bold ${passwordChecks.number ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"}`}>
+                          {passwordChecks.number ? "✓" : "○"}
+                        </span>
+                        <span className={passwordChecks.number ? "text-green-700" : "text-gray-500"}>Un chiffre</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] font-bold ${passwordChecks.special ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"}`}>
+                          {passwordChecks.special ? "✓" : "○"}
+                        </span>
+                        <span className={passwordChecks.special ? "text-green-700" : "text-gray-500"}>Caractère spécial</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {!isLogin && (
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-semibold text-gray-600">
+                      Confirmer le mot de passe
+                    </span>
+                    <span className="relative block">
+                      <input
+                        required
+                        disabled={loading}
+                        type={showPassword ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className={`w-full h-11 px-4 bg-white border rounded-xl text-sm text-gray-900 placeholder-gray-400 outline-none transition-all focus:ring-4 ${
+                          confirmPassword.length > 0
+                            ? form.password === confirmPassword
+                              ? "border-green-300 focus:border-green-500 focus:ring-green-100"
+                              : "border-red-300 focus:border-red-500 focus:ring-red-100"
+                            : "border-gray-200 focus:border-brand-primary focus:ring-brand-primary/10"
+                        }`}
+                      />
+                    </span>
+                    {confirmPassword.length > 0 && form.password !== confirmPassword && (
+                      <span className="text-[10px] text-red-500 mt-1 block">Les mots de passe ne correspondent pas.</span>
+                    )}
+                  </label>
+                )}
+
                 {isLogin && (
                   <div className="-mt-2 flex justify-end">
                     <button
@@ -357,6 +439,8 @@ export default function LoginPage() {
                 setError(null);
                 setPendingMessage(null);
                 setForgotMessage(null);
+                setConfirmPassword("");
+                setForm((prev) => ({ ...prev, password: "" }));
               }}
               className="font-semibold text-brand-primary transition-all hover:underline"
             >

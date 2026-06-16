@@ -61,6 +61,7 @@ export default function Sidebar() {
       children: [
         { href: "/cuves/chai", label: t("nav.chaiVirtuel") },
         { href: "/cuves", label: t("nav.suiviCuves") },
+        { href: "/lots", label: t("nav.lots") },
         { href: "/cuves/corbeille", label: t("nav.corbeille") },
       ],
     },
