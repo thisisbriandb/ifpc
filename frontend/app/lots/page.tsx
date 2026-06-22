@@ -195,11 +195,17 @@ export default function LotsPage() {
         }
       } else {
         const text = await file.text();
+        let sep = ",";
+        if (text.includes("\t")) {
+          sep = "\t";
+        } else if (text.includes(";")) {
+          sep = ";";
+        }
         const lines = text.trim().split(/\r?\n/);
         for (let i = 0; i < lines.length; i++) {
           const line = lines[i].trim();
           if (!line) continue;
-          const cols = line.split(/[,;\t]/).map(s => s.trim());
+          const cols = line.split(sep).map(s => s.trim());
           if (cols.length < 2) continue;
           const wl = parseFloat(cols[0].replace(",", "."));
           const od = parseFloat(cols[1].replace(",", "."));

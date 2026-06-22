@@ -602,10 +602,16 @@ export default function ChaiVirtuelPage() {
         }
       } else {
         const text = await file.text();
+        let sep = ",";
+        if (text.includes("\t")) {
+          sep = "\t";
+        } else if (text.includes(";")) {
+          sep = ";";
+        }
         const lines = text.trim().split("\n").filter(l => l.trim());
 
         for (const line of lines) {
-          const parts = line.replace(/"/g, "").split(/[,;\t]+/).map(s => s.trim());
+          const parts = line.replace(/"/g, "").split(sep).map(s => s.trim());
           if (parts.length >= 2) {
             const wl = parseFloat(parts[0].replace(",", "."));
             const dov = parseFloat(parts[1].replace(",", "."));
@@ -704,10 +710,16 @@ export default function ChaiVirtuelPage() {
         }
       } else {
         const text = await file.text();
+        let sep = ",";
+        if (text.includes("\t")) {
+          sep = "\t";
+        } else if (text.includes(";")) {
+          sep = ";";
+        }
         const lines = text.trim().split("\n").filter(l => l.trim());
 
         for (const line of lines) {
-          const parts = line.replace(/"/g, "").split(/[,;\t]+/).map(s => s.trim());
+          const parts = line.replace(/"/g, "").split(sep).map(s => s.trim());
           if (parts.length >= 2) {
             const wl = parseFloat(parts[0].replace(",", "."));
             const dov = parseFloat(parts[1].replace(",", "."));
