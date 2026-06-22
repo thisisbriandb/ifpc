@@ -577,7 +577,8 @@ export default function ChaiVirtuelPage() {
     setSpectrumLoading(true);
     setSpectrumFileName(file.name);
     try {
-      const isExcel = file.name.endsWith(".xlsx") || file.name.endsWith(".xls");
+      const fileNameLower = file.name.toLowerCase();
+      const isExcel = fileNameLower.endsWith(".xlsx") || fileNameLower.endsWith(".xls");
       let wavelengths: number[] = [];
       let doValues: number[] = [];
 
@@ -622,15 +623,22 @@ export default function ChaiVirtuelPage() {
         return;
       }
 
+      // Sort by wavelength ascending to ensure correct interpolation on the backend
+      const paired = wavelengths.map((wl, idx) => ({ wl, od: doValues[idx] }));
+      paired.sort((a, b) => a.wl - b.wl);
+      const sortedWavelengths = paired.map(p => p.wl);
+      const sortedDoValues = paired.map(p => p.od);
+
       const dilutionFactor = parseDilutionFactor(newLotDilutionFactor);
-      const correctedDoValues = doValues.map(v => v * dilutionFactor);
+      const correctedDoValues = sortedDoValues.map(v => v * dilutionFactor);
 
       // Call backend to compute L*a*b* + hex from the corrected product spectrum.
-      const color = await spectrumToLab(wavelengths, correctedDoValues);
-      setNewLotSpectrum({ wavelengths, do: correctedDoValues, rawDo: doValues, dilutionFactor });
+      const color = await spectrumToLab(sortedWavelengths, correctedDoValues);
+      setNewLotSpectrum({ wavelengths: sortedWavelengths, do: correctedDoValues, rawDo: sortedDoValues, dilutionFactor });
       setNewLotColor(color);
     } catch (err: any) {
-      alert(err?.response?.data?.detail || "Erreur lors du traitement du spectre");
+      console.error("Erreur lors du traitement du spectre:", err);
+      alert(err?.response?.data?.detail || err?.message || "Erreur lors du traitement du spectre");
       setNewLotSpectrum(null);
       setNewLotColor(null);
     } finally {
@@ -671,7 +679,8 @@ export default function ChaiVirtuelPage() {
 
   const handleTransformation = async (lot: Lot, file: File, dilutionInput = "1") => {
     try {
-      const isExcel = file.name.endsWith(".xlsx") || file.name.endsWith(".xls");
+      const fileNameLower = file.name.toLowerCase();
+      const isExcel = fileNameLower.endsWith(".xlsx") || fileNameLower.endsWith(".xls");
       let wavelengths: number[] = [];
       let doValues: number[] = [];
 
@@ -712,21 +721,30 @@ export default function ChaiVirtuelPage() {
 
       if (wavelengths.length < 2) { alert("Fichier spectre invalide"); return; }
 
+      // Sort by wavelength ascending to ensure correct interpolation on the backend
+      const paired = wavelengths.map((wl, idx) => ({ wl, od: doValues[idx] }));
+      paired.sort((a, b) => a.wl - b.wl);
+      const sortedWavelengths = paired.map(p => p.wl);
+      const sortedDoValues = paired.map(p => p.od);
+
       const dilutionFactor = parseDilutionFactor(dilutionInput);
-      const correctedDoValues = doValues.map(v => v * dilutionFactor);
-      const color = await spectrumToLab(wavelengths, correctedDoValues);
+      const correctedDoValues = sortedDoValues.map(v => v * dilutionFactor);
+      const color = await spectrumToLab(sortedWavelengths, correctedDoValues);
       await opTransformation({
         lotId: lot.id!,
         colorL: color.L, colorA: color.a, colorB: color.b,
         colorHex: color.hex,
-        spectrumJson: JSON.stringify({ wavelengths, do: correctedDoValues, rawDo: doValues, dilutionFactor }),
+        spectrumJson: JSON.stringify({ wavelengths: sortedWavelengths, do: correctedDoValues, rawDo: sortedDoValues, dilutionFactor }),
         description: dilutionFactor > 1
           ? `Transformation — mise à jour du spectre corrigé dilution x${dilutionFactor}`
           : "Transformation — mise à jour du spectre",
       });
       await loadData();
       setPanelView(null);
-    } catch (err: any) { alert(err?.response?.data?.detail || "Erreur transformation"); }
+    } catch (err: any) {
+      console.error("Erreur lors de la transformation:", err);
+      alert(err?.response?.data?.detail || err?.message || "Erreur transformation");
+    }
   };
 
   // ── Unassigned lots ────────────────────────────────────────────────────────

@@ -170,7 +170,8 @@ export default function LotsPage() {
   const parseSpectrumFile = async (file: File) => {
     setComputingLab(true);
     try {
-      const isExcel = file.name.endsWith(".xlsx") || file.name.endsWith(".xls");
+      const fileNameLower = file.name.toLowerCase();
+      const isExcel = fileNameLower.endsWith(".xlsx") || fileNameLower.endsWith(".xls");
       let wavelengths: number[] = [];
       let doValues: number[] = [];
 
@@ -210,12 +211,21 @@ export default function LotsPage() {
       }
 
       if (wavelengths.length > 0) {
-        setSpectrumPreview({ wavelengths, do: doValues });
+        // Sort by wavelength ascending to ensure correct interpolation on the backend
+        const paired = wavelengths.map((wl, idx) => ({ wl, od: doValues[idx] }));
+        paired.sort((a, b) => a.wl - b.wl);
+        const sortedWavelengths = paired.map(p => p.wl);
+        const sortedDoValues = paired.map(p => p.od);
+
+        setSpectrumPreview({ wavelengths: sortedWavelengths, do: sortedDoValues });
         setSpectrumFile(file);
         try {
-          const lab = await spectrumToLab(wavelengths, doValues);
+          const lab = await spectrumToLab(sortedWavelengths, sortedDoValues);
           setFormData(prev => ({ ...prev, colorL: lab.L, colorA: lab.a, colorB: lab.b, colorHex: lab.hex }));
-        } catch { /* silent */ }
+        } catch (err) {
+          console.error("Erreur de calcul Lab* depuis le spectre:", err);
+          alert("Erreur lors du calcul des coordonnées colorimétriques Lab* depuis le spectre. Veuillez vérifier les données du fichier.");
+        }
       } else {
         alert("Aucune donnée valide trouvée dans le fichier (colonne 1: longueur d'onde, colonne 2: DO)");
       }
