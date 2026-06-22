@@ -167,31 +167,64 @@ export default function LotsPage() {
     }
   };
 
-  const parseSpectrumCsv = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const text = ev.target?.result as string;
-      if (!text) return;
-      const lines = text.trim().split(/\r?\n/);
-      const wavelengths: number[] = [];
-      const doValues: number[] = [];
-      for (let i = 1; i < lines.length; i++) {
-        const cols = lines[i].split(/[,;\t]/).map(s => s.trim());
-        const wl = parseFloat(cols[0]);
-        const od = parseFloat(cols[1]);
-        if (!isNaN(wl) && !isNaN(od)) { wavelengths.push(wl); doValues.push(od); }
+  const parseSpectrumFile = async (file: File) => {
+    setComputingLab(true);
+    try {
+      const isExcel = file.name.endsWith(".xlsx") || file.name.endsWith(".xls");
+      let wavelengths: number[] = [];
+      let doValues: number[] = [];
+
+      if (isExcel) {
+        const data = await file.arrayBuffer();
+        const XLSX = await import("xlsx");
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const rows = XLSX.utils.sheet_to_json<any[]>(sheet, { header: 1 });
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || row.length < 2) continue;
+          const wl = parseFloat(String(row[0]).replace(",", "."));
+          const od = parseFloat(String(row[1]).replace(",", "."));
+          if (!isNaN(wl) && !isNaN(od)) {
+            wavelengths.push(wl);
+            doValues.push(od);
+          }
+        }
+      } else {
+        const text = await file.text();
+        const lines = text.trim().split(/\r?\n/);
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          const cols = line.split(/[,;\t]/).map(s => s.trim());
+          if (cols.length < 2) continue;
+          const wl = parseFloat(cols[0].replace(",", "."));
+          const od = parseFloat(cols[1].replace(",", "."));
+          if (!isNaN(wl) && !isNaN(od)) {
+            wavelengths.push(wl);
+            doValues.push(od);
+          }
+        }
       }
+
       if (wavelengths.length > 0) {
         setSpectrumPreview({ wavelengths, do: doValues });
         setSpectrumFile(file);
-        setComputingLab(true);
         try {
           const lab = await spectrumToLab(wavelengths, doValues);
           setFormData(prev => ({ ...prev, colorL: lab.L, colorA: lab.a, colorB: lab.b, colorHex: lab.hex }));
-        } catch { /* silent */ } finally { setComputingLab(false); }
+        } catch { /* silent */ }
+      } else {
+        alert("Aucune donnée valide trouvée dans le fichier (colonne 1: longueur d'onde, colonne 2: DO)");
       }
-    };
-    reader.readAsText(file);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la lecture du fichier de spectre");
+    } finally {
+      setComputingLab(false);
+    }
   };
 
   const openModal = (lot: Lot | null = null) => {
@@ -794,11 +827,11 @@ export default function LotsPage() {
                   ) : (
                     <button type="button" onClick={() => spectrumInputRef.current?.click()}
                       className="w-full flex items-center justify-center gap-2 p-3 border-2 border-dashed border-gray-200 rounded-xl text-xs font-bold text-gray-400 hover:border-brand-primary/40 hover:text-brand-primary/60 transition-all">
-                      <Upload className="w-4 h-4" /> Importer un fichier CSV (wavelength, DO)
+                    <Upload className="w-4 h-4" /> Importer un fichier CSV ou Excel (wavelength, DO)
                     </button>
                   )}
-                  <input ref={spectrumInputRef} type="file" accept=".csv,.tsv,.txt"
-                    onChange={(e) => { const f = e.target.files?.[0]; if (f) parseSpectrumCsv(f); e.target.value = ''; }}
+                  <input ref={spectrumInputRef} type="file" accept=".csv,.tsv,.txt,.xlsx,.xls"
+                    onChange={(e) => { const f = e.target.files?.[0]; if (f) parseSpectrumFile(f); e.target.value = ''; }}
                     className="hidden" />
                 </div>
 

@@ -577,19 +577,41 @@ export default function ChaiVirtuelPage() {
     setSpectrumLoading(true);
     setSpectrumFileName(file.name);
     try {
-      const text = await file.text();
-      const lines = text.trim().split("\n").filter(l => l.trim());
-      const wavelengths: number[] = [];
-      const doValues: number[] = [];
+      const isExcel = file.name.endsWith(".xlsx") || file.name.endsWith(".xls");
+      let wavelengths: number[] = [];
+      let doValues: number[] = [];
 
-      for (const line of lines) {
-        const parts = line.replace(/"/g, "").split(/[,;\t]+/).map(s => s.trim());
-        if (parts.length >= 2) {
-          const wl = parseFloat(parts[0].replace(",", "."));
-          const dov = parseFloat(parts[1].replace(",", "."));
-          if (!isNaN(wl) && !isNaN(dov)) {
+      if (isExcel) {
+        const data = await file.arrayBuffer();
+        const XLSX = await import("xlsx");
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const rows = XLSX.utils.sheet_to_json<any[]>(sheet, { header: 1 });
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || row.length < 2) continue;
+          const wl = parseFloat(String(row[0]).replace(",", "."));
+          const od = parseFloat(String(row[1]).replace(",", "."));
+          if (!isNaN(wl) && !isNaN(od)) {
             wavelengths.push(wl);
-            doValues.push(dov);
+            doValues.push(od);
+          }
+        }
+      } else {
+        const text = await file.text();
+        const lines = text.trim().split("\n").filter(l => l.trim());
+
+        for (const line of lines) {
+          const parts = line.replace(/"/g, "").split(/[,;\t]+/).map(s => s.trim());
+          if (parts.length >= 2) {
+            const wl = parseFloat(parts[0].replace(",", "."));
+            const dov = parseFloat(parts[1].replace(",", "."));
+            if (!isNaN(wl) && !isNaN(dov)) {
+              wavelengths.push(wl);
+              doValues.push(dov);
+            }
           }
         }
       }
@@ -649,18 +671,45 @@ export default function ChaiVirtuelPage() {
 
   const handleTransformation = async (lot: Lot, file: File, dilutionInput = "1") => {
     try {
-      const text = await file.text();
-      const lines = text.trim().split("\n").filter(l => l.trim());
-      const wavelengths: number[] = [];
-      const doValues: number[] = [];
-      for (const line of lines) {
-        const parts = line.replace(/"/g, "").split(/[,;\t]+/).map(s => s.trim());
-        if (parts.length >= 2) {
-          const wl = parseFloat(parts[0].replace(",", "."));
-          const dov = parseFloat(parts[1].replace(",", "."));
-          if (!isNaN(wl) && !isNaN(dov)) { wavelengths.push(wl); doValues.push(dov); }
+      const isExcel = file.name.endsWith(".xlsx") || file.name.endsWith(".xls");
+      let wavelengths: number[] = [];
+      let doValues: number[] = [];
+
+      if (isExcel) {
+        const data = await file.arrayBuffer();
+        const XLSX = await import("xlsx");
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const rows = XLSX.utils.sheet_to_json<any[]>(sheet, { header: 1 });
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || row.length < 2) continue;
+          const wl = parseFloat(String(row[0]).replace(",", "."));
+          const od = parseFloat(String(row[1]).replace(",", "."));
+          if (!isNaN(wl) && !isNaN(od)) {
+            wavelengths.push(wl);
+            doValues.push(od);
+          }
+        }
+      } else {
+        const text = await file.text();
+        const lines = text.trim().split("\n").filter(l => l.trim());
+
+        for (const line of lines) {
+          const parts = line.replace(/"/g, "").split(/[,;\t]+/).map(s => s.trim());
+          if (parts.length >= 2) {
+            const wl = parseFloat(parts[0].replace(",", "."));
+            const dov = parseFloat(parts[1].replace(",", "."));
+            if (!isNaN(wl) && !isNaN(dov)) {
+              wavelengths.push(wl);
+              doValues.push(dov);
+            }
+          }
         }
       }
+
       if (wavelengths.length < 2) { alert("Fichier spectre invalide"); return; }
 
       const dilutionFactor = parseDilutionFactor(dilutionInput);
@@ -1214,7 +1263,7 @@ export default function ChaiVirtuelPage() {
                     <label className="flex items-center gap-3 px-4 py-3 bg-amber-50 border border-amber-200 text-amber-700 font-bold rounded-xl text-sm hover:bg-amber-100 cursor-pointer transition-all">
                       <Palette className="w-4 h-4" />
                       <span>Transformation (nouveau spectre)</span>
-                      <input type="file" accept=".csv,.txt,.tsv" className="hidden"
+                      <input type="file" accept=".csv,.txt,.tsv,.xlsx,.xls" className="hidden"
                         onChange={(e) => {
                           const f = e.target.files?.[0];
                           if (f && selectedLot) handleTransformation(selectedLot, f, transformationDilutionFactor);
@@ -1482,10 +1531,10 @@ export default function ChaiVirtuelPage() {
                       ) : spectrumFileName ? (
                         <p className="text-xs font-mono text-gray-700 truncate">{spectrumFileName}</p>
                       ) : (
-                        <p className="text-xs text-gray-400">CSV : longueur d&apos;onde (nm) ; DO</p>
+                        <p className="text-xs text-gray-400">CSV ou Excel : longueur d&apos;onde (nm) ; DO</p>
                       )}
                     </div>
-                    <input type="file" accept=".csv,.txt,.tsv" className="hidden"
+                    <input type="file" accept=".csv,.txt,.tsv,.xlsx,.xls" className="hidden"
                       onChange={(e) => {
                         const f = e.target.files?.[0];
                         if (f) handleSpectrumUpload(f);
