@@ -158,7 +158,7 @@ export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChange
       {/* a*b* disc */}
       <div className="flex flex-col items-center">
         <div className="w-full flex items-center justify-between mb-2">
-          <p className="text-[10px] font-bold text-gray-400 uppercase">Cercle Lab a*/b*</p>
+          <p className="text-[10px] font-bold text-gray-400 uppercase">Cercle Lab <span className="normal-case">a*/b*</span></p>
           <span className="text-[10px] font-mono font-bold text-gray-400">L* {L.toFixed(0)}</span>
         </div>
         <div

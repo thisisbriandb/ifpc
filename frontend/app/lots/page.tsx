@@ -788,7 +788,7 @@ export default function LotsPage() {
                   <div className="grid grid-cols-4 gap-2">
                     {[{ label: "L*", field: "colorL" }, { label: "a*", field: "colorA" }, { label: "b*", field: "colorB" }].map((f) => (
                       <div key={f.field}>
-                        <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1">{f.label}</label>
+                        <label className="block text-[10px] font-bold text-gray-500 mb-1">{f.label}</label>
                         <input type="number" step="0.01" readOnly={!!spectrumPreview}
                           value={(formData as any)[f.field] || ""}
                           onChange={(e) => setFormData({ ...formData, [f.field]: parseFloat(e.target.value) || 0 })}

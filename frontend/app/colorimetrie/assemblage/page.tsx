@@ -409,7 +409,7 @@ function AssemblageContent() {
             { label: "b*", value: targetB, set: setTargetB },
           ].map((f, i) => (
             <div key={i}>
-              <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">{f.label}</p>
+              <p className="text-[10px] font-bold text-gray-400 mb-1.5 ml-1">{f.label}</p>
               <input
                 type="number" step="0.1" min={f.min} max={f.max}
                 value={f.value} onChange={(e) => f.set(e.target.value)}
