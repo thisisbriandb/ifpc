@@ -74,6 +74,10 @@ const VERDICT_LABEL: Record<Verdict, string> = {
   impossible: "verdictImpossible",
 };
 
+function formatHours(hours: number) {
+  return hours > 1000 ? hours.toExponential(2) : hours.toFixed(1);
+}
+
 type SearchParamReader = Pick<URLSearchParams, "get">;
 
 function getInitialProductType(searchParams: SearchParamReader) {
@@ -114,7 +118,7 @@ function HoldTimeGauge({ holdSec, holdMin, verdict }: { holdSec: number; holdMin
     ? { value: holdSec.toFixed(1), unit: "sec" }
     : holdMin < 60
     ? { value: holdMin.toFixed(1), unit: "min" }
-    : { value: (holdMin / 60).toFixed(1), unit: "h" };
+    : { value: formatHours(holdMin / 60), unit: "h" };
 
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
@@ -223,7 +227,7 @@ function BaremePageInner() {
     if (!c) return "";
     if (c.holdSec < 60) return `${c.holdSec.toFixed(1)} ${t("bareme.sec")}`;
     if (c.holdMin < 60) return `${c.holdMin.toFixed(1)} ${t("bareme.min")}`;
-    return `${(c.holdMin / 60).toFixed(1)} h`;
+    return `${formatHours(c.holdMin / 60)} h`;
   };
 
   // Build narrative

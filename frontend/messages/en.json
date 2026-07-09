@@ -226,6 +226,7 @@
     "saved": "Analysis saved to history"
   },
   "controle": {
+    "title": "Pasteurisation Value Calculation",
     "titleReady": "Ready to analyse your batch",
     "subtitleReady": "Use the configuration panel on the left to define your parameters and import your temperature readings.",
     "openConfig": "Open configuration",

@@ -307,7 +307,32 @@ function ControlePageInner() {
   };
 
   return (
-    <div className="h-screen flex bg-brand-gray font-sans text-brand-text overflow-hidden relative">
+    <div className="h-screen flex flex-col bg-brand-gray font-sans text-brand-text overflow-hidden relative">
+      {/* Header */}
+      <div className="flex-shrink-0 px-4 sm:px-5 py-3 bg-white border-b border-gray-100 flex items-center justify-between">
+        <h1 className="font-bold text-gray-900 font-clash text-sm sm:text-base">{t("controle.title")}</h1>
+        <div className="flex items-center gap-4">
+          {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
+            <button
+              onClick={() => setExpertMode(!expertMode)}
+              className={`text-xs font-semibold transition-colors ${
+                expertMode ? "text-brand-accent" : "text-gray-400 hover:text-brand-accent"
+              }`}
+            >
+              {t("bareme.expertMode")}
+            </button>
+          )}
+          <button
+            onClick={() => setShowHelp(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-black/[0.06] rounded-lg text-xs font-semibold text-gray-400 hover:text-brand-primary hover:border-brand-primary/20 transition-colors"
+          >
+            <HelpCircle className="w-4 h-4" />
+            {t("controle.help")}
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden relative">
 
       {/* --- SIDEBAR GAUCHE (DRAWER MOBILE) --- */}
       {isSidebarOpen && (
@@ -330,17 +355,7 @@ function ControlePageInner() {
           </div>
           <div className="flex-1 overflow-y-auto">
             {/* Product Parameters */}
-            <div className="px-4 pt-4 pb-3 space-y-3">
-              <div className="flex items-center justify-between">
-                {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
-                  <button
-                    onClick={() => setExpertMode(!expertMode)}
-                    className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded transition-colors bg-gray-100 text-gray-500 hover:bg-gray-200"
-                  >
-                    EXPERT
-                  </button>
-                )}
-              </div>
+              <div className="px-4 pt-4 pb-3 space-y-3">
               <ProductSelector
                 productType={productType} onProductChange={setProductType}
                 microorganisme={microorganisme} onMicroChange={setMicroorganisme}
@@ -521,15 +536,6 @@ function ControlePageInner() {
             <Settings2 className="w-6 h-6" />
           </button>
         )}
-        {/* Help button */}
-        <button
-          onClick={() => setShowHelp(true)}
-          className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 bg-white border border-black/[0.06] rounded-lg text-xs font-semibold text-gray-400 hover:text-brand-primary hover:border-brand-primary/20 transition-colors"
-        >
-          <HelpCircle className="w-4 h-4" />
-          {t("controle.help")}
-        </button>
-
         {result ? (
           <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-in fade-in duration-500">
 
@@ -647,6 +653,8 @@ function ControlePageInner() {
           </div>
         </div>
       )}
+
+      </div>
 
       {/* MODAL D'AUTHENTIFICATION */}
       {isAuthModalOpen && <AuthModal onClose={() => setIsAuthModalOpen(false)} />}

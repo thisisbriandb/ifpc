@@ -226,6 +226,7 @@
     "saved": "Analyse enregistrée dans l'historique"
   },
   "controle": {
+    "title": "Calcul de la Valeur Pasteurisatrice",
     "titleReady": "Prêt à analyser votre lot",
     "subtitleReady": "Utilisez le panneau de configuration à gauche pour définir vos paramètres et importer vos relevés de température.",
     "openConfig": "Ouvrir la configuration",
