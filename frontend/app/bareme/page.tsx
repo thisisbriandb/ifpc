@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState, useMemo } from "react";
-import { AlertTriangle, Info, ShieldCheck, ChevronDown, HelpCircle } from "lucide-react";
+import { AlertTriangle, Info, ShieldCheck, HelpCircle, ChevronLeft, ChevronRight, Settings2, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
@@ -214,6 +214,9 @@ function BaremePageInner() {
 
   const produit = PRODUITS[productType];
   const productLabel = (key: string) => PRODUCT_LABELS[key]?.[locale] || PRODUITS[key]?.nom || key;
+  const selectCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white";
+  const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
+  const labelCls = "block text-xs font-semibold text-gray-500 mb-1";
 
   // Format hold time for narrative
   const formatHold = (c: typeof computed) => {
@@ -252,138 +255,142 @@ function BaremePageInner() {
             <HelpCircle className="w-4 h-4" />
             {t("controle.help")}
           </button>
-          {canExpert && (
-            <label className="flex items-center gap-2 text-xs cursor-pointer select-none">
-              <input type="checkbox" checked={expertMode} onChange={e => setExpertMode(e.target.checked)}
-                className="w-3.5 h-3.5 rounded accent-brand-accent" />
-              <span className="hidden sm:inline font-semibold text-brand-accent">{t("bareme.expertMode")}</span>
-              <span className="sm:hidden font-semibold text-brand-accent">EXPERT</span>
-            </label>
-          )}
         </div>
       </div>
 
       <div className="flex-1 flex overflow-hidden relative">
         {/* Backdrop for mobile */}
         {isConfigOpen && (
-          <div className="lg:hidden absolute inset-0 bg-gray-900/20 backdrop-blur-sm z-30"
+          <div className="lg:hidden fixed inset-0 bg-gray-900/20 backdrop-blur-sm z-30 transition-opacity"
             onClick={() => setIsConfigOpen(false)} />
         )}
 
         {/* ── Left — Configuration (Drawer on mobile) ── */}
-        <div className={`
-          fixed lg:static inset-y-0 left-0 z-40 w-72 sm:w-80 flex-shrink-0 border-r border-gray-100 bg-white transition-transform duration-300 ease-in-out
-          ${isConfigOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-        `}>
-          <div className="flex flex-col h-full overflow-hidden">
-            <div className="lg:hidden flex items-center justify-between p-4 border-b border-gray-50">
-              <span className="font-bold text-brand-text">Paramètres</span>
-              <button onClick={() => setIsConfigOpen(false)} className="p-1 text-gray-400">
-                <ChevronDown className="w-6 h-6 rotate-90" />
+        <aside
+          className={`fixed lg:static inset-y-0 left-0 z-40 bg-white border-r border-black/[0.06] transition-all duration-300 ease-in-out flex flex-col overflow-hidden shadow-2xl lg:shadow-none
+            ${isConfigOpen ? "w-[300px] sm:w-[320px] translate-x-0" : "w-0 -translate-x-full lg:translate-x-0 lg:border-r-0"}
+          `}
+        >
+          <div className={`${isConfigOpen ? "opacity-100" : "opacity-0 lg:opacity-100"} transition-opacity duration-200 flex flex-col h-full overflow-hidden w-[300px] sm:w-[320px]`}>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04] lg:hidden">
+              <h2 className="font-bold text-brand-text">Configuration</h2>
+              <button onClick={() => setIsConfigOpen(false)} className="p-1.5 text-gray-400">
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-5 space-y-6">
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-4 pt-4 pb-3 space-y-3">
+                <div className="flex items-center justify-between">
+                  {canExpert && (
+                    <button
+                      onClick={() => setExpertMode(!expertMode)}
+                      className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded transition-colors bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    >
+                      EXPERT
+                    </button>
+                  )}
+                </div>
 
-          {/* 1. Produit */}
-          <section>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
-              <p className="text-[11px] font-bold text-gray-600">{t("bareme.stepProduct")}</p>
-            </div>
-            <select value={productType} onChange={e => handleProductChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-primary transition-colors">
-              {Object.entries(PRODUITS).map(([k]) => <option key={k} value={k}>{productLabel(k)}</option>)}
-            </select>
-           
-          </section>
-
-          {/* 2. Procédé */}
-          <section>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
-              <p className="text-[11px] font-bold text-gray-600">{t("bareme.stepProcess")}</p>
-            </div>
-            <select value={pasteType} onChange={e => setPasteType(e.target.value as "flash" | "classique" | "tunnel")}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-accent transition-colors">
-              <option value="flash">Flash-pasteurisation</option>
-              <option value="classique">Pasteurisation classique</option>
-              <option value="tunnel">Pasteurisation tunnel</option>
-            </select>
-             <div className="flex gap-1.5 mt-2.5">
-              {[[t("bareme.turbid"), true], [t("bareme.clear"), false]].map(([label, val]) => (
-                <button key={String(val)} onClick={() => setTrouble(val as boolean)}
-                  className={`flex-1 py-1.5 rounded-lg text-[11px] font-semibold transition-all ${
-                    trouble === val ? "bg-brand-primary text-white shadow-sm" : "bg-gray-50 text-gray-400 hover:bg-gray-100"}`}>
-                  {label as string}
-                </button>
-              ))}
-            </div>
-          </section>
-
-          {/* 3. Température consigne */}
-          <section>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{t("bareme.tempConsigne")}</p>
-            <div className="relative">
-              <input type="number" step="1" min="50" max="100" value={tConsigne}
-                onChange={e => setTConsigne(e.target.value)}
-                className="w-full px-4 py-3.5 border-2 border-brand-primary/30 rounded-xl text-2xl font-extrabold text-brand-text text-center outline-none focus:border-brand-primary transition-colors tabular-nums" />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">°C</span>
-            </div>
-          </section>
-
-          {/* Expert params — only if expert/admin + toggle on */}
-          {canExpert && expertMode && (
-            <section className="border-t border-gray-100 pt-4">
-              <div className="flex items-center gap-2 mb-2.5">
-                <ChevronDown className="w-3.5 h-3.5 text-brand-accent" />
-                <p className="text-[10px] font-bold text-brand-accent uppercase tracking-widest">{t("bareme.expertParams")}</p>
-              </div>
-              <div className="space-y-2.5">
-                <div>
-                  <p className="text-[10px] text-gray-400 mb-1">{t("bareme.microTarget")}</p>
-                  <select value={microKey} onChange={e => setMicroKey(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-[11px] outline-none focus:border-brand-accent transition-colors">
-                    {(PRODUCT_MICROS[productType] || []).map((k) => {
-                      const v = MICROORGANISMES[k];
-                      if (!v) return null;
-                      const isDefault = k === PRODUITS[productType]?.micro;
-                      return (
-                        <option key={k} value={k}>
-                          {v.nom} — D={v.d_ref} min @ {v.t_ref}°C{isDefault ? " ✓" : ""}
-                        </option>
-                      );
-                    })}
+                {/* 1. Produit */}
+                <section>
+                  <label className={labelCls}>{t("productSelector.product")}</label>
+                  <select value={productType} onChange={e => handleProductChange(e.target.value)} className={selectCls}>
+                    {Object.entries(PRODUITS).map(([k]) => <option key={k} value={k}>{productLabel(k)}</option>)}
                   </select>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <p className="text-[10px] text-gray-400 mb-1">{t("bareme.tref")}</p>
-                    <input type="number" step="0.1" placeholder="60" value={customTref}
-                      onChange={e => setCustomTref(e.target.value)}
-                      className="w-full px-2.5 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-accent transition-colors" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-400 mb-1">{t("bareme.z")}</p>
-                    <input type="number" step="0.1" placeholder="7" value={customZ}
-                      onChange={e => setCustomZ(e.target.value)}
-                      className="w-full px-2.5 py-1.5 border border-gray-200 rounded-lg text-sm outline-none focus:border-brand-accent transition-colors" />
-                  </div>
+                </section>
+
+                {/* 2. Procédé */}
+                <section>
+                  <label className={labelCls}>{t("productSelector.process")}</label>
+                  <select value={pasteType} onChange={e => setPasteType(e.target.value as "flash" | "classique" | "tunnel")} className={selectCls}>
+                    <option value="flash">Flash-pasteurisation</option>
+                    <option value="classique">Pasteurisation classique</option>
+                    <option value="tunnel">Pasteurisation tunnel</option>
+                  </select>
+                </section>
+
+                <div className="flex gap-1.5">
+                  {[[t("bareme.turbid"), true], [t("bareme.clear"), false]].map(([label, val]) => (
+                    <button key={String(val)} onClick={() => setTrouble(val as boolean)}
+                      className={`flex-1 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                        trouble === val ? "bg-brand-primary text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                      }`}>
+                      {label as string}
+                    </button>
+                  ))}
                 </div>
               </div>
-            </section>
-          )}
-        </div>
-            {/* View Result Button (Mobile only) */}
+
+              <div className="mx-4 my-1 border-t border-black/[0.04]" />
+
+              <div className="px-4 py-3 space-y-3">
+                {/* 3. Température consigne */}
+                <section>
+                  <label className={labelCls}>{t("bareme.tempConsigne")}</label>
+                  <div className="relative">
+                    <input type="number" step="1" min="50" max="100" value={tConsigne}
+                      onChange={e => setTConsigne(e.target.value)}
+                      className={`${inputCls} pr-9 text-center font-bold tabular-nums`} />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">°C</span>
+                  </div>
+                </section>
+
+                {/* Expert params — only if expert/admin + toggle on */}
+                {canExpert && expertMode && (
+                  <section className="pt-1.5 border-t border-gray-100 space-y-2.5">
+                    <div>
+                      <label className={labelCls}>{t("bareme.microTarget")}</label>
+                      <select value={microKey} onChange={e => setMicroKey(e.target.value)} className={selectCls}>
+                        {(PRODUCT_MICROS[productType] || []).map((k) => {
+                          const v = MICROORGANISMES[k];
+                          if (!v) return null;
+                          const isDefault = k === PRODUITS[productType]?.micro;
+                          return (
+                            <option key={k} value={k}>
+                              {v.nom} — D={v.d_ref} min @ {v.t_ref}°C{isDefault ? " ✓" : ""}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className={labelCls}>{t("bareme.tref")}</label>
+                        <input type="number" step="0.1" placeholder="60" value={customTref}
+                          onChange={e => setCustomTref(e.target.value)}
+                          className={inputCls} />
+                      </div>
+                      <div>
+                        <label className={labelCls}>{t("bareme.z")}</label>
+                        <input type="number" step="0.1" placeholder="7" value={customZ}
+                          onChange={e => setCustomZ(e.target.value)}
+                          className={inputCls} />
+                      </div>
+                    </div>
+                  </section>
+                )}
+              </div>
+            </div>
             <div className="lg:hidden p-4 bg-gray-50 border-t border-gray-100">
               <button
                 onClick={() => setIsConfigOpen(false)}
-                className="w-full py-3 bg-brand-primary text-white font-bold rounded-xl shadow-lg shadow-brand-primary/20"
+                className="w-full py-2.5 text-sm flex items-center justify-center gap-2 rounded-lg font-bold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors"
               >
                 Voir le résultat
               </button>
             </div>
           </div>
-        </div>
+        </aside>
+
+        {/* Toggle Button (Desktop) */}
+        <button
+          onClick={() => setIsConfigOpen(!isConfigOpen)}
+          className={`hidden lg:flex absolute top-8 w-8 h-8 bg-white border border-black/[0.06] rounded-full items-center justify-center shadow-sm z-50 hover:bg-gray-50 transition-all duration-300 ease-in-out
+            ${isConfigOpen ? "left-[284px] sm:left-[304px]" : "left-4"}
+          `}
+        >
+          {isConfigOpen ? <ChevronLeft className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-500" />}
+        </button>
 
         {/* ── Right — Verdict ── */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-5">
@@ -391,9 +398,9 @@ function BaremePageInner() {
           {!isConfigOpen && (
             <button
               onClick={() => setIsConfigOpen(true)}
-              className="lg:hidden fixed bottom-6 right-6 z-30 w-12 h-12 bg-brand-accent text-white rounded-full shadow-lg flex items-center justify-center animate-in zoom-in duration-300"
+              className="lg:hidden fixed bottom-6 right-6 z-30 w-12 h-12 bg-brand-primary text-white rounded-full shadow-lg flex items-center justify-center animate-in zoom-in duration-300"
             >
-              <Info className="w-6 h-6" />
+              <Settings2 className="w-6 h-6" />
             </button>
           )}
           {computed && verdict && vcfg ? (
