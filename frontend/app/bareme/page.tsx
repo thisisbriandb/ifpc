@@ -1,11 +1,12 @@
 "use client";
 
-import { Suspense, useState, useMemo } from "react";
+import { Suspense, useState, useMemo, useEffect } from "react";
 import { AlertTriangle, Info, ShieldCheck, HelpCircle, ChevronLeft, ChevronRight, Settings2, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
 import HelpModal from "@/components/HelpModal";
+import { getProductConfig } from "@/lib/api";
 
 // ── Données de référence ──────────────────────────────────────────────────
 
@@ -176,6 +177,17 @@ function BaremePageInner() {
 
   const [isConfigOpen, setIsConfigOpen] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
+  const [vpCibleConfig, setVpCibleConfig] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    getProductConfig()
+      .then((data: { productType: string; vpCible: number }[]) => {
+        const map: Record<string, number> = {};
+        data.forEach(c => { map[c.productType] = c.vpCible; });
+        setVpCibleConfig(map);
+      })
+      .catch(() => {});
+  }, []);
 
   // Auto-select default micro when product changes
   const handleProductChange = (newProduct: string) => {
@@ -197,14 +209,20 @@ function BaremePageInner() {
     const tRef = customTref ? parseFloat(customTref) : micro.t_ref;
     const z    = customZ    ? parseFloat(customZ)    : micro.z;
     if (!tRef || !z) return null;
-    let vp = micro.vp_cible;
+    
+    const isDefaultMicro = effectiveKey === produit.micro;
+    const adminVp = vpCibleConfig[productType];
+    let vp = (adminVp !== undefined && (!expertMode || isDefaultMicro))
+      ? adminVp
+      : micro.vp_cible;
+
     if (trouble) vp *= 1.2;
     const tC = parseFloat(tConsigne);
     if (!tC) return null;
     const L = Math.pow(10, (tC - tRef) / z);
     const holdMin = vp / L;
     return { micro, tRef, z, vp: +vp.toFixed(2), tC, L: +L.toFixed(4), holdMin, holdSec: holdMin * 60 };
-  }, [productType, trouble, tConsigne, microKey, customTref, customZ]);
+  }, [productType, trouble, tConsigne, microKey, customTref, customZ, expertMode, vpCibleConfig]);
 
   const verdict: Verdict | null = computed ? getVerdict(computed.holdMin, pasteType) : null;
 

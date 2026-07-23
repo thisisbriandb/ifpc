@@ -14,6 +14,7 @@ import {
 import { assemblageCouleur, assemblageCouleurDb, saveAnalysis, getAnalysisById, getLots, updateLot, AssemblageResult, type Lot } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 import LabColorPicker from "@/components/LabColorPicker";
+import * as XLSX from "xlsx";
 
 // ── ΔE interpretation ──────────────────────────────────────────────────────
 
@@ -163,6 +164,57 @@ function AssemblageContent() {
           }
         };
         reader.readAsText(f.slice(0, 1000));
+      } else if (f.name.endsWith(".xlsx") || f.name.endsWith(".xls")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const data = new Uint8Array(e.target?.result as ArrayBuffer);
+            const workbook = XLSX.read(data, { type: "array" });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            
+            const rows = XLSX.utils.sheet_to_json<any[]>(worksheet, { header: 1 });
+            const cleanRows = rows.filter(row => Array.isArray(row) && row.some(cell => cell !== null && cell !== undefined && cell !== ""));
+            
+            if (cleanRows.length > 0) {
+              const firstRow = cleanRows[0];
+              const firstValIndex = firstRow.findIndex(cell => cell !== null && cell !== undefined && cell !== "");
+              if (firstValIndex !== -1) {
+                const candidateHeaders = firstRow.slice(firstValIndex).map(cell => String(cell || "").trim());
+                const isHeader = candidateHeaders.some(h => h && isNaN(Number(h)));
+                
+                if (isHeader && candidateHeaders.length >= 2) {
+                  const names = candidateHeaders.slice(1).filter(Boolean);
+                  setFileHeaders(names);
+                  const initialFactors: Record<string, string> = {};
+                  names.forEach(name => {
+                    initialFactors[name] = "1";
+                  });
+                  setFileDilutionFactors(initialFactors);
+                } else if (cleanRows.length > 1) {
+                  const secondRow = cleanRows[1];
+                  const secondValIndex = secondRow.findIndex(cell => cell !== null && cell !== undefined && cell !== "");
+                  if (secondValIndex !== -1) {
+                    const candidateHeaders = secondRow.slice(secondValIndex).map(cell => String(cell || "").trim());
+                    const isHeader = candidateHeaders.some(h => h && isNaN(Number(h)));
+                    if (isHeader && candidateHeaders.length >= 2) {
+                      const names = candidateHeaders.slice(1).filter(Boolean);
+                      setFileHeaders(names);
+                      const initialFactors: Record<string, string> = {};
+                      names.forEach(name => {
+                        initialFactors[name] = "1";
+                      });
+                      setFileDilutionFactors(initialFactors);
+                    }
+                  }
+                }
+              }
+            }
+          } catch (err) {
+            console.error("Error reading Excel headers:", err);
+          }
+        };
+        reader.readAsArrayBuffer(f);
       }
     }
   };

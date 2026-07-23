@@ -168,6 +168,25 @@ def parse_spectra_file(content: bytes, filename: str) -> Tuple[np.ndarray, List[
         else:
             raise ValueError("Impossible de lire le CSV : vérifiez le séparateur.")
 
+    # Nettoyer les colonnes et lignes entièrement vides
+    df = df.dropna(how="all", axis=1)
+    df = df.dropna(how="all", axis=0)
+
+    if df.empty:
+        raise ValueError("Le fichier ne contient aucune donnée.")
+
+    # Promouvoir la première ligne comme en-tête si elle contient du texte
+    first_row = df.iloc[0].values
+    is_header = False
+    for v in first_row:
+        if isinstance(v, str) and not v.strip().replace(".", "", 1).isdigit():
+            is_header = True
+            break
+
+    if is_header:
+        df.columns = [str(x).strip() for x in first_row]
+        df = df.iloc[1:]
+
     if df.shape[1] < 2:
         raise ValueError("Le fichier doit contenir au moins 2 colonnes : longueur d'onde + au moins une cuvée.")
 
