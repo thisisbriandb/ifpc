@@ -272,6 +272,7 @@ async def colorimetrie_assemblage(
     target_b: float = 0.0,
     volume_total: float = 1000.0,
     dilution_factor: float = 1.0,
+    dilution_factors_json: Optional[str] = None,
     user: Optional[dict] = Depends(get_optional_user),
 ):
     """
@@ -284,6 +285,15 @@ async def colorimetrie_assemblage(
     try:
         content = await file.read()
         filename = file.filename or "spectres.csv"
+
+        import json
+        dil_dict = None
+        if dilution_factors_json:
+            try:
+                dil_dict = json.loads(dilution_factors_json)
+            except Exception:
+                pass
+
         result = colori.assembler(
             file_content=content,
             filename=filename,
@@ -292,6 +302,7 @@ async def colorimetrie_assemblage(
             target_b=target_b,
             volume_total=volume_total,
             dilution_factor=dilution_factor,
+            dilution_factors=dil_dict,
         )
         return result
     except ValueError as e:

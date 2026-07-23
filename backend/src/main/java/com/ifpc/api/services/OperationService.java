@@ -69,10 +69,10 @@ public class OperationService {
 
         double volumeToUse = volume != null ? volume : volumeRestantEnStock;
         if (volumeToUse > volumeDisponible) {
-            throw new IllegalStateException("Volume insuffisant dans la cuve (disponible: " + volumeDisponible + " L)");
+            throw new IllegalStateException("Volume insuffisant dans la cuve (disponible: " + volumeDisponible + " hl)");
         }
         if (volumeToUse > volumeRestantEnStock) {
-            throw new IllegalStateException("Le volume restant en stock pour ce lot n'est que de " + volumeRestantEnStock + " L");
+            throw new IllegalStateException("Le volume restant en stock pour ce lot n'est que de " + volumeRestantEnStock + " hl");
         }
 
         // Create stockage
@@ -88,7 +88,7 @@ public class OperationService {
                 .cuveDest(cuve)
                 .lot(lot)
                 .volume(volumeToUse)
-                .description("Remplissage de " + cuve.getNom() + " avec " + volumeToUse + "L de " + lot.getIdentifiant())
+                .description("Remplissage de " + cuve.getNom() + " avec " + volumeToUse + " hl de " + lot.getIdentifiant())
                 .userEmail(userEmail)
                 .build();
         return operationRepository.save(op);
@@ -131,7 +131,7 @@ public class OperationService {
         double destOccupe = destStockages.stream().mapToDouble(Stockage::getVolumeOccupe).sum();
         double destDisponible = cuveDest.getVolumeMax() - destOccupe;
         if (volumeToTransfer > destDisponible) {
-            throw new IllegalStateException("Volume insuffisant dans la cuve destination (disponible: " + destDisponible + " L)");
+            throw new IllegalStateException("Volume insuffisant dans la cuve destination (disponible: " + destDisponible + " hl)");
         }
 
         // Close source stockage (or reduce volume)
@@ -163,7 +163,7 @@ public class OperationService {
                 .cuveDest(cuveDest)
                 .lot(lot)
                 .volume(volumeToTransfer)
-                .description("Transfert de " + volumeToTransfer + "L de " + lot.getIdentifiant() + " : " + cuveSource.getNom() + " → " + cuveDest.getNom())
+                .description("Transfert de " + volumeToTransfer + " hl de " + lot.getIdentifiant() + " : " + cuveSource.getNom() + " → " + cuveDest.getNom())
                 .userEmail(userEmail)
                 .build();
         return operationRepository.save(op);
@@ -292,7 +292,7 @@ public class OperationService {
                 .cuveDest(cuveDest)
                 .lotResultat(savedLot)
                 .volume(totalVolume)
-                .description("Assemblage de " + sources.size() + " lots → " + newLotIdentifiant + " (" + totalVolume + " L)")
+                .description("Assemblage de " + sources.size() + " lots → " + newLotIdentifiant + " (" + totalVolume + " hl)")
                 .userEmail(userEmail)
                 .build();
         return operationRepository.save(op);

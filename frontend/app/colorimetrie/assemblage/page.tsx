@@ -77,6 +77,8 @@ function AssemblageContent() {
   const [targetA, setTargetA] = useState("4");
   const [targetB, setTargetB] = useState("35");
   const [fileDilutionFactor, setFileDilutionFactor] = useState("1");
+  const [fileHeaders, setFileHeaders] = useState<string[]>([]);
+  const [fileDilutionFactors, setFileDilutionFactors] = useState<Record<string, string>>({});
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -113,6 +115,10 @@ function AssemblageContent() {
                 setTargetB(String(params.target.b ?? 35));
               }
               if (params.file_dilution_factor) setFileDilutionFactor(String(params.file_dilution_factor));
+              if (params.file_dilution_factors) {
+                setFileDilutionFactors(params.file_dilution_factors);
+                setFileHeaders(Object.keys(params.file_dilution_factors));
+              }
             } catch {}
           }
         }
@@ -127,7 +133,39 @@ function AssemblageContent() {
     }
   }, [useDb]);
 
-  const handleFile = (f: File | null) => { setFile(f); setError(null); };
+  const handleFile = (f: File | null) => {
+    setFile(f);
+    setError(null);
+    setFileHeaders([]);
+    setFileDilutionFactors({});
+    
+    if (f) {
+      if (f.name.endsWith(".csv") || f.name.endsWith(".txt") || f.name.endsWith(".tsv")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const text = e.target?.result as string;
+          if (text) {
+            const firstLine = text.split("\n")[0] || "";
+            let sep = ",";
+            if (firstLine.includes("\t")) sep = "\t";
+            else if (firstLine.includes(";")) sep = ";";
+            
+            const cols = firstLine.split(sep).map(c => c.trim().replace(/^["']|["']$/g, ""));
+            if (cols.length >= 2) {
+              const names = cols.slice(1).filter(Boolean);
+              setFileHeaders(names);
+              const initialFactors: Record<string, string> = {};
+              names.forEach(name => {
+                initialFactors[name] = "1";
+              });
+              setFileDilutionFactors(initialFactors);
+            }
+          }
+        };
+        reader.readAsText(f.slice(0, 1000));
+      }
+    }
+  };
 
   const parseDilutionFactor = (value: string) => {
     const factor = parseFloat(value.replace(",", "."));
@@ -186,7 +224,18 @@ function AssemblageContent() {
           target_b: target.b,
         });
       } else {
-        data = await assemblageCouleur(file!, target, 0, fileDilution);
+        const individualFactors: Record<string, number> = {};
+        Object.entries(fileDilutionFactors).forEach(([name, val]) => {
+          individualFactors[name] = parseDilutionFactor(val);
+        });
+        const hasIndividualFactors = Object.keys(individualFactors).length > 0;
+        data = await assemblageCouleur(
+          file!,
+          target,
+          0,
+          fileDilution,
+          hasIndividualFactors ? JSON.stringify(individualFactors) : undefined
+        );
       }
       
       setResult(data);
@@ -202,6 +251,7 @@ function AssemblageContent() {
             target,
             file: file?.name,
             file_dilution_factor: fileDilution,
+            file_dilution_factors: fileDilutionFactors,
             dilution_factors: dbDilutionFactors,
           }),
           resultJson: JSON.stringify(data),
@@ -360,23 +410,50 @@ function AssemblageContent() {
               <Download className="w-3 h-3" /> {t("colori.downloadTemplate")}
             </button>
           </div>
-          <div className="mt-4">
-            <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">Facteur de dilution des spectres</p>
-            <div className="relative">
-              <input
-                type="number"
-                min="1"
-                step="0.1"
-                value={fileDilutionFactor}
-                onChange={(e) => setFileDilutionFactor(e.target.value)}
-                className="w-full px-3 py-2.5 bg-gray-50 border border-black/[0.04] rounded-xl text-sm font-mono text-brand-text outline-none focus:ring-2 focus:ring-brand-primary/10 focus:bg-white transition-all pr-10"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400">x</span>
+          {fileHeaders.length > 0 ? (
+            <div className="mt-4 space-y-3">
+              <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">Facteurs de dilution par cuve</p>
+              <div className="space-y-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
+                {fileHeaders.map(name => (
+                  <div key={name} className="flex items-center justify-between gap-3 p-2 bg-gray-50 rounded-xl border border-black/[0.02] hover:bg-black/[0.01] transition-colors">
+                    <span className="text-xs font-bold text-gray-700 truncate">{name}</span>
+                    <div className="relative w-24 shrink-0">
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        value={fileDilutionFactors[name] || "1"}
+                        onChange={(e) => setFileDilutionFactors(prev => ({ ...prev, [name]: e.target.value }))}
+                        className="w-full px-2.5 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-mono outline-none focus:border-brand-accent pr-5"
+                      />
+                      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-gray-400">x</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[10px] text-gray-400 mt-1">
+                Ajustez le facteur de dilution individuellement pour chaque cuve détectée dans le fichier.
+              </p>
             </div>
-            <p className="text-[10px] text-gray-400 mt-1">
-              Pour un fichier importé, ce facteur permet de retrouver la DO réelle. Exemple : dilution x2 = DO mesurée multipliée par 2.
-            </p>
-          </div>
+          ) : (
+            <div className="mt-4">
+              <p className="text-[10px] font-bold text-gray-400 mb-1.5 uppercase ml-1">Facteur de dilution des spectres</p>
+              <div className="relative">
+                <input
+                  type="number"
+                  min="1"
+                  step="0.1"
+                  value={fileDilutionFactor}
+                  onChange={(e) => setFileDilutionFactor(e.target.value)}
+                  className="w-full px-3 py-2.5 bg-gray-50 border border-black/[0.04] rounded-xl text-sm font-mono text-brand-text outline-none focus:ring-2 focus:ring-brand-primary/10 focus:bg-white transition-all pr-10"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-400">x</span>
+              </div>
+              <p className="text-[10px] text-gray-400 mt-1">
+                Pour un fichier importé, ce facteur s&apos;applique à tous les spectres. Exemple : dilution x2 = DO mesurée multipliée par 2.
+              </p>
+            </div>
+          )}
         </>
       )}
       <input ref={inputRef} type="file" accept=".csv,.xlsx,.xls,.tsv,.txt" onChange={(e) => handleFile(e.target.files?.[0] || null)} className="hidden" />

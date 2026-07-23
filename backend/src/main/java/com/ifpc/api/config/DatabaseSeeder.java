@@ -94,7 +94,7 @@ public class DatabaseSeeder {
                     END IF;
                 END $$;
                 """);
-        jdbcTemplate.execute("UPDATE cuves SET volume_max = COALESCE(volume_max, 1000) WHERE volume_max IS NULL");
+        jdbcTemplate.execute("UPDATE cuves SET volume_max = COALESCE(volume_max, 20000) WHERE volume_max IS NULL");
         jdbcTemplate.execute("UPDATE cuves SET updated_at = now() WHERE updated_at IS NULL");
         jdbcTemplate.execute("UPDATE cuves SET created_at = updated_at WHERE created_at IS NULL");
         jdbcTemplate.execute("UPDATE cuves SET deleted = false WHERE deleted IS NULL");

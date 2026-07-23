@@ -284,7 +284,7 @@ export default function CorbeillePage() {
                       >
                         <div className="min-w-0">
                           <p className="font-bold text-gray-900 truncate">{cuve.nom}</p>
-                          <p className="text-xs text-gray-500 mt-0.5">Capacité: {cuve.volumeMax.toLocaleString()} L</p>
+                          <p className="text-xs text-gray-500 mt-0.5">Capacité: {cuve.volumeMax.toLocaleString()} hl</p>
                           {cuve.statutPhysique && (
                             <span className={`inline-block text-[9px] font-bold px-1.5 py-0.5 rounded border mt-1.5 ${
                               cuve.statutPhysique === "PROPRE" ? "bg-green-50 text-green-600 border-green-100" : "bg-red-50 text-red-500 border-red-100"
@@ -342,7 +342,7 @@ export default function CorbeillePage() {
                           <div className="min-w-0">
                             <p className="font-bold text-gray-900 truncate font-mono">{lot.identifiant}</p>
                             <p className="text-xs text-gray-500 mt-0.5">{lot.typeProduit || "Type non défini"}</p>
-                            <p className="text-xs text-indigo-600 font-bold mt-1">{lot.volumeActuel.toLocaleString()} L</p>
+                            <p className="text-xs text-indigo-600 font-bold mt-1">{lot.volumeActuel.toLocaleString()} hl</p>
                           </div>
                         </div>
                         {isAdmin && (
@@ -537,7 +537,7 @@ export default function CorbeillePage() {
                             <span className="font-medium text-gray-700 font-mono">{selectedOperation.lotIdentifiant}</span>
                           </div>
                           {selectedOperation.volume && (
-                            <span className="font-bold text-indigo-600">{selectedOperation.volume.toLocaleString()} L</span>
+                            <span className="font-bold text-indigo-600">{selectedOperation.volume.toLocaleString()} hl</span>
                           )}
                         </div>
                       )}
@@ -553,7 +553,7 @@ export default function CorbeillePage() {
                             </div>
                           </div>
                           {selectedOperation.volume && (
-                            <span className="font-bold text-indigo-700">{selectedOperation.volume.toLocaleString()} L</span>
+                            <span className="font-bold text-indigo-700">{selectedOperation.volume.toLocaleString()} hl</span>
                           )}
                         </div>
                       )}

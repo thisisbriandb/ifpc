@@ -280,7 +280,8 @@ export async function assemblageCouleur(
   file: File,
   target: { L: number; a: number; b: number },
   volume_total: number = 1000,
-  dilution_factor: number = 1
+  dilution_factor: number = 1,
+  dilution_factors_json?: string
 ): Promise<AssemblageResult> {
   const formData = new FormData();
   formData.append("file", file);
@@ -291,6 +292,7 @@ export async function assemblageCouleur(
       target_b: target.b,
       volume_total,
       dilution_factor,
+      dilution_factors_json,
     },
     headers: { "Content-Type": "multipart/form-data" },
   });

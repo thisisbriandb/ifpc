@@ -251,7 +251,19 @@ function BaremePageInner() {
       {/* Header */}
       <div className="flex-shrink-0 px-4 sm:px-5 py-3 bg-white border-b border-gray-100 flex items-center justify-between">
         <h1 className="font-bold text-gray-900 font-clash text-sm sm:text-base">{t("bareme.title")}</h1>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          {canExpert && (
+            <button
+              onClick={() => setExpertMode(!expertMode)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                expertMode
+                  ? "bg-brand-primary text-white shadow-sm"
+                  : "bg-white border border-black/[0.06] text-gray-400 hover:text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              EXPERT
+            </button>
+          )}
           <button
             onClick={() => setShowHelp(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-black/[0.06] rounded-lg text-xs font-semibold text-gray-400 hover:text-brand-primary hover:border-brand-primary/20 transition-colors"
@@ -284,16 +296,6 @@ function BaremePageInner() {
             </div>
             <div className="flex-1 overflow-y-auto">
               <div className="px-4 pt-4 pb-3 space-y-3">
-                <div className="flex items-center justify-between">
-                  {canExpert && (
-                    <button
-                      onClick={() => setExpertMode(!expertMode)}
-                      className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded transition-colors bg-gray-100 text-gray-500 hover:bg-gray-200"
-                    >
-                      EXPERT
-                    </button>
-                  )}
-                </div>
 
                 {/* 1. Produit */}
                 <section>

@@ -77,7 +77,7 @@ public class DeployInfoController {
             result.put("message", "Aucune cuve creee: envoyez un body JSON en POST.");
             result.put("expectedBody", Map.of(
                     "nom", "Probe cuve",
-                    "volumeMax", 1000,
+                    "volumeMax", 20000,
                     "statutPhysique", "PROPRE"
             ));
             return result;
@@ -121,7 +121,7 @@ public class DeployInfoController {
         result.put("message", "Diagnostic OK: cette URL est joignable en GET. La creation de cuve se fait uniquement en POST avec un body JSON.");
         result.put("expectedPostBody", Map.of(
                 "nom", "Probe cuve",
-                "volumeMax", 1000,
+                "volumeMax", 20000,
                 "statutPhysique", "PROPRE"
         ));
 

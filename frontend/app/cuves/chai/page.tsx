@@ -72,7 +72,7 @@ export default function ChaiVirtuelPage() {
 
   // Create forms
   const [newCuveNom, setNewCuveNom] = useState("");
-  const [newCuveVolume, setNewCuveVolume] = useState<number>(1000);
+  const [newCuveVolume, setNewCuveVolume] = useState<number>(20000);
   const [newLotId, setNewLotId] = useState("");
   const [newLotType, setNewLotType] = useState("");
   const [newLotVolume, setNewLotVolume] = useState<number>(0);
@@ -509,7 +509,7 @@ export default function ChaiVirtuelPage() {
       const nom = newCuveNom.startsWith("Cuve ") ? newCuveNom : `Cuve ${newCuveNom}`;
 
       await createCuve({ nom, volumeMax: newCuveVolume, statutPhysique: "PROPRE" });
-      setNewCuveNom(""); setNewCuveVolume(1000);
+      setNewCuveNom(""); setNewCuveVolume(20000);
       setPanelView(null);
       await loadData();
     } catch (err: any) {
@@ -1150,7 +1150,7 @@ export default function ChaiVirtuelPage() {
                 )}
                 <div className="min-w-0 flex-1">
                   <p className="text-[11px] font-mono font-bold text-gray-700 truncate">{lot.identifiant}</p>
-                  <p className="text-[9px] text-gray-400">{(lot.volumeRestant !== undefined ? lot.volumeRestant : lot.volumeActuel)?.toLocaleString()} L · {lot.typeProduit}</p>
+                  <p className="text-[9px] text-gray-400">{(lot.volumeRestant !== undefined ? lot.volumeRestant : lot.volumeActuel)?.toLocaleString()} hl · {lot.typeProduit}</p>
                 </div>
                 <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-indigo-400 shrink-0 transition-colors" />
               </div>
@@ -1209,9 +1209,9 @@ export default function ChaiVirtuelPage() {
                     </div>
                     <div className="p-3 bg-gray-50 rounded-xl">
                       <p className="text-[9px] text-gray-400 uppercase font-bold mb-0.5">Volume</p>
-                      <p className="text-xs font-bold text-gray-700">{selectedLot.volumeActuel?.toLocaleString()} L</p>
+                      <p className="text-xs font-bold text-gray-700">{selectedLot.volumeActuel?.toLocaleString()} hl</p>
                       {selectedLot.volumeRestant !== undefined && selectedLot.volumeRestant > 0.1 && selectedLot.volumeRestant < selectedLot.volumeActuel - 0.1 && (
-                        <p className="text-[9px] text-gray-400 mt-1">dont {selectedLot.volumeRestant.toLocaleString()} L en stock</p>
+                        <p className="text-[9px] text-gray-400 mt-1">dont {selectedLot.volumeRestant.toLocaleString()} hl en stock</p>
                       )}
                     </div>
                     <div className="p-3 bg-gray-50 rounded-xl">
@@ -1345,7 +1345,7 @@ export default function ChaiVirtuelPage() {
                                 const destRemaining = c.volumeMax - (c.volumeOccupe || 0);
                                 return (
                                   <option key={c.id} value={c.id}>
-                                    {c.nom} (Disponible: {destRemaining.toLocaleString()} L)
+                                    {c.nom} (Disponible: {destRemaining.toLocaleString()} hl)
                                   </option>
                                 );
                               })}
@@ -1363,8 +1363,8 @@ export default function ChaiVirtuelPage() {
                             <div className="space-y-3 p-3 bg-blue-50/30 rounded-xl border border-blue-100/50">
                               <div>
                                 <div className="flex justify-between text-[10px] text-gray-500 font-bold mb-1">
-                                  <span>Volume à transférer (L)</span>
-                                  <span>max: {maxVol.toLocaleString()} L</span>
+                                  <span>Volume à transférer (hl)</span>
+                                  <span>max: {maxVol.toLocaleString()} hl</span>
                                 </div>
                                 <input
                                   type="range"
@@ -1427,7 +1427,7 @@ export default function ChaiVirtuelPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-3 bg-gray-50 rounded-xl">
                     <p className="text-[9px] text-gray-400 uppercase font-bold mb-0.5">Capacité</p>
-                    <p className="text-sm font-bold text-gray-700">{selectedCuve.volumeMax?.toLocaleString()} L</p>
+                    <p className="text-sm font-bold text-gray-700">{selectedCuve.volumeMax?.toLocaleString()} hl</p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-xl">
                     <p className="text-[9px] text-gray-400 uppercase font-bold mb-0.5">Statut</p>
@@ -1484,7 +1484,7 @@ export default function ChaiVirtuelPage() {
                             const lotVol = l.volumeRestant !== undefined ? l.volumeRestant : l.volumeActuel;
                             return (
                               <option key={l.id} value={l.id}>
-                                {l.identifiant} ({lotVol.toLocaleString()}L)
+                                {l.identifiant} ({lotVol.toLocaleString()} hl)
                               </option>
                             );
                           })}
@@ -1507,8 +1507,8 @@ export default function ChaiVirtuelPage() {
                   <p className="text-[10px] text-gray-400 mt-1">{"Le système ajoutera automatiquement le préfixe \"Cuve \""}</p>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume max (L)</label>
-                  <input type="number" value={newCuveVolume} onChange={(e) => setNewCuveVolume(parseFloat(e.target.value) || 0)}
+                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume max (hl)</label>
+                  <input type="number" max={20000} value={newCuveVolume} onChange={(e) => setNewCuveVolume(Math.min(20000, parseFloat(e.target.value) || 0))}
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-200 outline-none" />
                 </div>
                 <button onClick={handleCreateCuve} disabled={!newCuveNom}
@@ -1538,7 +1538,7 @@ export default function ChaiVirtuelPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume (L)</label>
+                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume (hl)</label>
                   <input type="number" value={newLotVolume} onChange={(e) => setNewLotVolume(parseFloat(e.target.value) || 0)}
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-200 outline-none" />
                 </div>
@@ -1658,7 +1658,7 @@ export default function ChaiVirtuelPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume à transférer (L)</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume à transférer (hl)</label>
                     <input type="range" min={1} max={maxVol} value={transferVolume}
                       onChange={(e) => setTransferVolume(parseFloat(e.target.value) || 1)}
                       className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-blue-500" />
@@ -1666,7 +1666,7 @@ export default function ChaiVirtuelPage() {
                       <input type="number" value={transferVolume} max={maxVol}
                         onChange={(e) => setTransferVolume(Math.min(maxVol, Math.max(1, parseFloat(e.target.value) || 1)))}
                         className="w-24 px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-mono text-center focus:ring-2 focus:ring-blue-200 outline-none" />
-                      <span className="text-[10px] text-gray-400 self-center">/ {maxVol.toLocaleString()} L max</span>
+                      <span className="text-[10px] text-gray-400 self-center">/ {maxVol.toLocaleString()} hl max</span>
                     </div>
                   </div>
 
@@ -1700,7 +1700,7 @@ export default function ChaiVirtuelPage() {
                   <Blend className="w-5 h-5 text-purple-500" /> Créer un assemblage
                 </h2>
                 <p className="text-xs text-gray-500 mt-1">
-                  Mélange de <span className="font-mono font-bold">{assemblageSrcA.lot.identifiant}</span> ({assemblageSrcA.volume.toLocaleString()} L) + <span className="font-mono font-bold">{assemblageSrcB.lot.identifiant}</span> ({assemblageSrcB.volume.toLocaleString()} L)
+                  Mélange de <span className="font-mono font-bold">{assemblageSrcA.lot.identifiant}</span> ({assemblageSrcA.volume.toLocaleString()} hl) + <span className="font-mono font-bold">{assemblageSrcB.lot.identifiant}</span> ({assemblageSrcB.volume.toLocaleString()} hl)
                 </p>
               </header>
               <div className="p-6 space-y-4">
@@ -1734,7 +1734,7 @@ export default function ChaiVirtuelPage() {
                   <div>
                     <div className="flex justify-between text-[10px] text-gray-500 font-bold mb-1">
                       <span>Volume Source A</span>
-                      <span>max: {maxVolA.toLocaleString()} L</span>
+                      <span>max: {maxVolA.toLocaleString()} hl</span>
                     </div>
                     <input
                       type="range"
@@ -1759,7 +1759,7 @@ export default function ChaiVirtuelPage() {
                         })}
                         className="w-24 px-2 py-1 bg-white border border-gray-200 rounded-lg text-xs font-mono text-center outline-none focus:ring-2 focus:ring-purple-100"
                       />
-                      <span className="text-[10px] text-gray-400 self-center">Litre(s)</span>
+                      <span className="text-[10px] text-gray-400 self-center">hl</span>
                     </div>
                   </div>
 
@@ -1767,7 +1767,7 @@ export default function ChaiVirtuelPage() {
                   <div className="pt-3 border-t border-purple-100/40">
                     <div className="flex justify-between text-[10px] text-gray-500 font-bold mb-1">
                       <span>Volume Source B</span>
-                      <span>max: {maxVolB.toLocaleString()} L</span>
+                      <span>max: {maxVolB.toLocaleString()} hl</span>
                     </div>
                     <input
                       type="range"
@@ -1792,7 +1792,7 @@ export default function ChaiVirtuelPage() {
                         })}
                         className="w-24 px-2 py-1 bg-white border border-gray-200 rounded-lg text-xs font-mono text-center outline-none focus:ring-2 focus:ring-purple-100"
                       />
-                      <span className="text-[10px] text-gray-400 self-center">Litre(s)</span>
+                      <span className="text-[10px] text-gray-400 self-center">hl</span>
                     </div>
                   </div>
                 </div>
@@ -1812,13 +1812,13 @@ export default function ChaiVirtuelPage() {
                       .filter(c => c.statutPhysique === "PROPRE" && (c.stockages?.length || 0) === 0)
                       .map(c => (
                         <option key={c.id} value={c.id}>
-                          {c.nom} (capacité: {c.volumeMax.toLocaleString()} L)
+                          {c.nom} (capacité: {c.volumeMax.toLocaleString()} hl)
                         </option>
                       ))}
                   </select>
                   {assemblageDestCuveId && (
                     <p className="text-[10px] text-gray-400 mt-1">
-                      Volume total de l&apos;assemblage : {(assemblageSrcA.volume + assemblageSrcB.volume).toLocaleString()} L
+                      Volume total de l&apos;assemblage : {(assemblageSrcA.volume + assemblageSrcB.volume).toLocaleString()} hl
                     </p>
                   )}
                 </div>

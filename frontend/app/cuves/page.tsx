@@ -86,7 +86,7 @@ export default function CuvesPage() {
       setEditingCuve(null);
       setFormData({
         nom: "",
-        volumeMax: 1000,
+        volumeMax: 20000,
         volumeActuel: 0,
         typeProduit: "",
         statut: "Vide",
@@ -101,6 +101,9 @@ export default function CuvesPage() {
     setFormLoading(true);
     try {
       const payload = { ...formData };
+      if (payload.nom && !payload.nom.startsWith("Cuve ")) {
+        payload.nom = `Cuve ${payload.nom}`;
+      }
       if (editingCuve && editingCuve.id) {
         const updated = await updateCuve(editingCuve.id, payload);
         setCuves(prev => prev.map(c => c.id === editingCuve.id ? updated : c));
@@ -212,11 +215,11 @@ export default function CuvesPage() {
                       <div className="space-y-1 mb-3">
                         <div className="flex justify-between text-[10px] text-gray-400 font-mono">
                           <span>VOL ACTUEL:</span>
-                          <span className="font-bold text-gray-700">{volumeActuel.toLocaleString()} L</span>
+                          <span className="font-bold text-gray-700">{volumeActuel.toLocaleString()} hl</span>
                         </div>
                         <div className="flex justify-between text-[10px] text-gray-400 font-mono">
                           <span>CAPACITÉ:</span>
-                          <span className="font-bold text-gray-700">{cuve.volumeMax.toLocaleString()} L</span>
+                          <span className="font-bold text-gray-700">{cuve.volumeMax.toLocaleString()} hl</span>
                         </div>
                       </div>
 
@@ -280,12 +283,13 @@ export default function CuvesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume Max (L)</label>
+                  <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume Max (hl)</label>
                   <input
                     required
                     type="number"
+                    max={20000}
                     value={formData.volumeMax}
-                    onChange={(e) => setFormData({ ...formData, volumeMax: parseFloat(e.target.value) || 0 })}
+                    onChange={(e) => setFormData({ ...formData, volumeMax: Math.min(20000, parseFloat(e.target.value) || 0) })}
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-primary/20 outline-none transition-all"
                   />
                 </div>
@@ -300,7 +304,7 @@ export default function CuvesPage() {
                       </div>
                       <div>
                         <span className="font-semibold text-gray-400">Volume :</span>{" "}
-                        <span className="font-bold text-gray-700">{(editingCuve.volumeOccupe ?? editingCuve.volumeActuel ?? 0).toLocaleString()} L</span>
+                        <span className="font-bold text-gray-700">{(editingCuve.volumeOccupe ?? editingCuve.volumeActuel ?? 0).toLocaleString()} hl</span>
                       </div>
                       {editingCuve.lotIdentifier && (
                         <div>
@@ -374,7 +378,7 @@ export default function CuvesPage() {
                       Attention : Cuve occupée
                     </p>
                     <p>
-                      Cette cuve contient actuellement le lot <strong className="font-mono">{deletingCuve.lotIdentifier || "sans identifiant"}</strong> avec un volume de <strong>{((deletingCuve.volumeOccupe ?? deletingCuve.volumeActuel ?? 0)).toLocaleString()} L</strong>.
+                      Cette cuve contient actuellement le lot <strong className="font-mono">{deletingCuve.lotIdentifier || "sans identifiant"}</strong> avec un volume de <strong>{((deletingCuve.volumeOccupe ?? deletingCuve.volumeActuel ?? 0)).toLocaleString()} hl</strong>.
                     </p>
                     <p className="italic text-amber-700">
                       En supprimant cette cuve, le lot associé sera libéré de cette cuve et sera replacé dans votre stock global (non affecté).

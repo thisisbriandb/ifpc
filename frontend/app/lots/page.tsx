@@ -361,7 +361,7 @@ export default function LotsPage() {
           <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm transition-all duration-200 flex items-center justify-between group">
             <div>
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Volume total</p>
-              <p className="text-3xl font-black text-gray-950 mt-1">{overallTotalVolume.toLocaleString()} L</p>
+              <p className="text-3xl font-black text-gray-950 mt-1">{overallTotalVolume.toLocaleString()} hl</p>
               <p className="text-[10px] text-gray-500 font-medium mt-1">Volume liquide total</p>
             </div>
             <div className="w-10 h-10 rounded-lg bg-gray-50 text-gray-500 border border-gray-200 flex items-center justify-center shrink-0">
@@ -551,7 +551,7 @@ export default function LotsPage() {
 
                       {/* Volume */}
                       <td className="py-3.5 px-5 text-right font-bold text-gray-900 tabular-nums">
-                        {lot.volumeActuel.toLocaleString()} L
+                        {lot.volumeActuel.toLocaleString()} hl
                       </td>
 
                       {/* Tank Storage */}
@@ -662,7 +662,7 @@ export default function LotsPage() {
                     <div className="grid grid-cols-2 gap-2 py-2 border-t border-b border-gray-100 text-xs">
                       <div>
                         <span className="text-[9px] font-bold text-gray-400 uppercase block tracking-wider">Volume</span>
-                        <span className="font-black text-gray-950 text-[13px]">{lot.volumeActuel.toLocaleString()} L</span>
+                        <span className="font-black text-gray-950 text-[13px]">{lot.volumeActuel.toLocaleString()} hl</span>
                       </div>
                       <div>
                         <span className="text-[9px] font-bold text-gray-400 uppercase block tracking-wider text-right">Stockage</span>
@@ -759,7 +759,7 @@ export default function LotsPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume (L)</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Volume (hl)</label>
                     <input required type="number" value={formData.volumeActuel || 0}
                       onChange={(e) => setFormData({ ...formData, volumeActuel: parseFloat(e.target.value) || 0 })}
                       className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary outline-none" />

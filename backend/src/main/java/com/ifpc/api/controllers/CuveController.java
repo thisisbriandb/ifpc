@@ -71,8 +71,12 @@ public class CuveController {
     public ResponseEntity<?> createCuve(@RequestBody CreateCuveRequest request, HttpServletResponse response) {
         response.setHeader("X-IFPC-Cuve-Controller", "create");
         try {
+            String finalNom = request.nom();
+            if (finalNom != null && !finalNom.startsWith("Cuve ")) {
+                finalNom = "Cuve " + finalNom;
+            }
             Cuve cuve = Cuve.builder()
-                    .nom(request.nom())
+                    .nom(finalNom)
                     .volumeMax(request.volumeMax())
                     .statutPhysique(request.statutPhysique() != null ? request.statutPhysique() : "PROPRE")
                     .build();
@@ -125,7 +129,13 @@ public class CuveController {
         return cuveRepository.findById(id)
                 .filter(c -> !c.getDeleted())
                 .map(cuve -> {
-                    if (request.nom() != null) cuve.setNom(request.nom());
+                    if (request.nom() != null) {
+                        String finalNom = request.nom();
+                        if (!finalNom.startsWith("Cuve ")) {
+                            finalNom = "Cuve " + finalNom;
+                        }
+                        cuve.setNom(finalNom);
+                    }
                     if (request.volumeMax() != null) cuve.setVolumeMax(request.volumeMax());
                     if (request.statutPhysique() != null) cuve.setStatutPhysique(request.statutPhysique());
                     return ResponseEntity.ok(cuveToDto(cuveRepository.save(cuve)));

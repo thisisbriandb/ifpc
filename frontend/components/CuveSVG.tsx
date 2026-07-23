@@ -166,7 +166,7 @@ export default function CuveSVG({
             {Math.round(fillPct)}%
           </div>
           <div className="text-[8px] text-white/90 font-bold font-mono leading-none mt-0.5">
-            {volumeOccupe.toLocaleString()}L
+            {volumeOccupe.toLocaleString()} hl
           </div>
         </div>
       )}
