@@ -37,7 +37,7 @@ public class EmailService {
         String subject = "[IFPC] Nouvelle demande de création de compte : " 
                 + safeString(user.getFirstName()) + " " + safeString(user.getLastName());
 
-        String htmlContent = """
+        String template = """
             <!DOCTYPE html>
             <html>
             <head>
@@ -67,23 +67,23 @@ public class EmailService {
                   <table class="info-table">
                     <tr>
                       <td class="label">Prénom</td>
-                      <td>%s</td>
+                      <td>{{FIRST_NAME}}</td>
                     </tr>
                     <tr>
                       <td class="label">Nom</td>
-                      <td>%s</td>
+                      <td>{{LAST_NAME}}</td>
                     </tr>
                     <tr>
                       <td class="label">Email</td>
-                      <td><a href="mailto:%s">%s</a></td>
+                      <td><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></td>
                     </tr>
                     <tr>
                       <td class="label">Entreprise</td>
-                      <td>%s</td>
+                      <td>{{COMPANY_NAME}}</td>
                     </tr>
                     <tr>
                       <td class="label">Poste / Rôle</td>
-                      <td>%s</td>
+                      <td>{{COMPANY_ROLE}}</td>
                     </tr>
                     <tr>
                       <td class="label">Statut actuel</td>
@@ -100,14 +100,14 @@ public class EmailService {
               </div>
             </body>
             </html>
-            """.formatted(
-                escapeHtml(safeString(user.getFirstName())),
-                escapeHtml(safeString(user.getLastName())),
-                escapeHtml(safeString(user.getEmail())),
-                escapeHtml(safeString(user.getEmail())),
-                escapeHtml(safeString(user.getCompanyName())),
-                escapeHtml(safeString(user.getCompanyRole()))
-            );
+            """;
+
+        String htmlContent = template
+                .replace("{{FIRST_NAME}}", escapeHtml(safeString(user.getFirstName())))
+                .replace("{{LAST_NAME}}", escapeHtml(safeString(user.getLastName())))
+                .replace("{{EMAIL}}", escapeHtml(safeString(user.getEmail())))
+                .replace("{{COMPANY_NAME}}", escapeHtml(safeString(user.getCompanyName())))
+                .replace("{{COMPANY_ROLE}}", escapeHtml(safeString(user.getCompanyRole())));
 
         sendEmail(adminEmail, subject, htmlContent);
     }
@@ -124,7 +124,7 @@ public class EmailService {
 
         String subject = "[IFPC] Votre compte a été confirmé";
 
-        String htmlContent = """
+        String template = """
             <!DOCTYPE html>
             <html>
             <head>
@@ -145,7 +145,7 @@ public class EmailService {
                   <h1>IFPC — Compte Confirmé</h1>
                 </div>
                 <div class="content">
-                  <p>Bonjour %s,</p>
+                  <p>Bonjour {{FIRST_NAME}},</p>
                   <p>Bonne nouvelle ! Votre demande de création de compte sur la plateforme IFPC a été approuvée par le service informatique.</p>
                   <p>Vous pouvez dès à présent vous connecter avec vos identifiants pour accéder aux services de la plateforme.</p>
                   <p style="text-align: center;">
@@ -161,9 +161,10 @@ public class EmailService {
               </div>
             </body>
             </html>
-            """.formatted(
-                escapeHtml(safeString(user.getFirstName()))
-            );
+            """;
+
+        String htmlContent = template
+                .replace("{{FIRST_NAME}}", escapeHtml(safeString(user.getFirstName())));
 
         sendEmail(user.getEmail(), subject, htmlContent);
     }
