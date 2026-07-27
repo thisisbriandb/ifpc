@@ -4,6 +4,7 @@ import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.UserRepository;
 import com.ifpc.api.security.JwtService;
+import com.ifpc.api.services.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailService emailService;
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
@@ -33,6 +35,9 @@ public class AuthenticationService {
                 .enabled(false)
                 .build();
         repository.save(user);
+
+        emailService.sendNewRegistrationNotification(user);
+
         return AuthenticationResponse.builder()
                 .token(null)
                 .message("Inscription enregistrée. Votre compte est en attente de validation par un administrateur.")

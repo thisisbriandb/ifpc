@@ -7,6 +7,7 @@ import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.HelpTextRepository;
 import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
+import com.ifpc.api.services.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +25,7 @@ public class AdminController {
     private final UserRepository userRepository;
     private final ProductConfigRepository productConfigRepository;
     private final HelpTextRepository helpTextRepository;
+    private final EmailService emailService;
 
     // ── Admin-only endpoints ─────────────────────────────────────────────
 
@@ -43,12 +45,18 @@ public class AdminController {
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
 
         try {
+            Role oldRole = user.getRole();
             Role newRole = Role.valueOf(request.role().toUpperCase());
             user.setRole(newRole);
             if (newRole != Role.PENDING) {
                 user.setEnabled(true);
             }
             userRepository.save(user);
+
+            if (oldRole == Role.PENDING && newRole != Role.PENDING) {
+                emailService.sendAccountApprovedNotification(user);
+            }
+
             return ResponseEntity.ok("Le rôle de " + user.getEmail() + " a été mis à jour vers " + newRole);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Rôle invalide. Utilisez PENDING, USER, EXPERT ou ADMIN.");
@@ -73,6 +81,9 @@ public class AdminController {
         user.setRole(Role.USER);
         user.setEnabled(true);
         userRepository.save(user);
+
+        emailService.sendAccountApprovedNotification(user);
+
         return ResponseEntity.ok("Utilisateur " + user.getEmail() + " approuvé.");
     }
 
