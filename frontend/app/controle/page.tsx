@@ -159,6 +159,36 @@ function ControlePageInner() {
       .catch(() => {});
   }, []);
 
+  const restoreFormState = useCallback((parsed: any) => {
+    if (!parsed?.parametres) return;
+    const p = parsed.parametres;
+    if (p.product_type) setProductType(p.product_type);
+    else if (p.produit) {
+      const productKeyByLabel: Record<string, string> = {
+        jus_pomme: "jus_pomme",
+        "jus de pomme": "jus_pomme",
+        cidre_doux: "cidre_doux",
+        "cidre doux": "cidre_doux",
+        cidre_demi_sec: "cidre_demi_sec",
+        "cidre demi-sec": "cidre_demi_sec",
+        cidre_brut: "cidre_brut",
+        "cidre brut": "cidre_brut",
+        cidre_extra_brut: "cidre_extra_brut",
+        "cidre extra-brut": "cidre_extra_brut",
+      };
+      const key = productKeyByLabel[p.produit.toLowerCase()];
+      if (key) setProductType(key);
+    }
+    if (p.microorganisme) setMicroorganisme(p.microorganisme);
+    if (p.clarification) setClarification(p.clarification);
+    if (p.procede) setProcede(p.procede);
+    if (p.lot_identifier) setLotIdentifier(p.lot_identifier);
+    if (p.t_ref !== undefined && p.t_ref !== null) setTRef(String(p.t_ref));
+    if (p.z !== undefined && p.z !== null) setZValue(String(p.z));
+    if (p.ph !== undefined && p.ph !== null) setPh(String(p.ph));
+    if (p.titre_alcool !== undefined && p.titre_alcool !== null) setTitreAlcool(String(p.titre_alcool));
+  }, []);
+
   // Charger une analyse historique depuis localStorage ou ?history=ID
   useEffect(() => {
     // 1) Check localStorage restore (set by dashboard click)
@@ -168,6 +198,7 @@ function ControlePageInner() {
         localStorage.removeItem("ifpc_restore_result");
         const parsed = JSON.parse(restore);
         setResult(parsed);
+        restoreFormState(parsed);
         return;
       }
     } catch {}
@@ -183,6 +214,7 @@ function ControlePageInner() {
         if (detail.resultJson) {
           const parsed = JSON.parse(detail.resultJson);
           setResult(parsed);
+          restoreFormState(parsed);
         }
       } catch {
         // 3) Last resort: try to find in localStorage activities
@@ -192,14 +224,16 @@ function ControlePageInner() {
             const activities = JSON.parse(stored);
             const match = activities.find((a: any) => a.id === historyId);
             if (!cancelled && match?.resultJson) {
-              setResult(JSON.parse(match.resultJson));
+              const parsed = JSON.parse(match.resultJson);
+              setResult(parsed);
+              restoreFormState(parsed);
             }
           }
         } catch {}
       }
     })();
     return () => { cancelled = true; };
-  }, [searchParams]);
+  }, [searchParams, restoreFormState]);
 
   // --- LOGIQUE (inchangée) ---
   const buildParams = useCallback(() => {
@@ -539,21 +573,31 @@ function ControlePageInner() {
         {result ? (
           <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-in fade-in duration-500">
 
-            {/* ── Header — product + lot ── */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-3">
-              <div className="flex items-baseline gap-2 min-w-0">
-                <h1 className="text-sm font-bold text-brand-text uppercase tracking-wide truncate">{result.parametres.produit}</h1>
-                {result.parametres.lot_identifier && (
-                  <span className="text-xs font-mono text-gray-400">#{result.parametres.lot_identifier}</span>
-                )}
-              </div>
+            {/* ── Header — product + lot + back button ── */}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-black/[0.06]">
               <button
-                onClick={() => setIsRawDataDrawerOpen(true)}
-                className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 border border-black/[0.06] rounded-md text-[10px] font-medium text-gray-400 hover:text-brand-text hover:border-black/[0.12] transition-colors bg-white sm:bg-transparent"
+                onClick={() => setIsSidebarOpen(true)}
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-brand-primary/20 rounded-xl text-xs font-bold text-brand-primary shadow-sm hover:bg-brand-primary/5 transition-all"
               >
-                <TableIcon className="w-3 h-3" />
-                {t("controle.rawData")}
+                <Settings2 className="w-4 h-4" />
+                {t("controle.backToConfig")}
               </button>
+
+              <div className="flex items-center gap-3">
+                <div className="flex items-baseline gap-2 min-w-0">
+                  <h1 className="text-sm font-bold text-brand-text uppercase tracking-wide truncate">{result.parametres.produit}</h1>
+                  {result.parametres.lot_identifier && (
+                    <span className="text-xs font-mono text-gray-400">#{result.parametres.lot_identifier}</span>
+                  )}
+                </div>
+                <button
+                  onClick={() => setIsRawDataDrawerOpen(true)}
+                  className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 border border-black/[0.06] rounded-xl text-[11px] font-medium text-gray-500 hover:text-brand-text hover:border-black/[0.12] transition-colors bg-white"
+                >
+                  <TableIcon className="w-3.5 h-3.5" />
+                  {t("controle.rawData")}
+                </button>
+              </div>
             </div>
 
             {/* ── Decision block: verdict + metrics (tight) ── */}
@@ -614,7 +658,7 @@ function ControlePageInner() {
                   {t("controle.rawDataTitle")}
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">
-                  {t("controle.rawDataSubtitle", { n: result.courbe.temps.length })}
+                  {t("controle.rawDataSubtitle", { lot: result.parametres.lot_identifier || t("admin.notProvided") })}
                 </p>
               </div>
               <button

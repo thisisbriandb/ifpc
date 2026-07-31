@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
 import HelpModal from "@/components/HelpModal";
-import { getProductConfig } from "@/lib/api";
+import { getProductConfig, getAnalysisById } from "@/lib/api";
 
 // ── Données de référence ──────────────────────────────────────────────────
 
@@ -101,7 +101,7 @@ function getInitialTrouble(searchParams: SearchParamReader) {
 
 // ── Circular gauge ────────────────────────────────────────────────────────
 
-function HoldTimeGauge({ holdSec, holdMin, verdict }: { holdSec: number; holdMin: number; verdict: Verdict }) {
+function HoldTimeGauge({ holdSec, holdMin, pasteType, verdict }: { holdSec: number; holdMin: number; pasteType: "flash" | "classique" | "tunnel"; verdict: Verdict }) {
   const cfg = VERDICT_CONFIG[verdict];
   // Fill ratio: proportion of a "reasonable" range
   const maxRef = verdict === "ok" ? holdMin * 2 : (holdMin < 60 ? 60 : holdMin * 1.2);
@@ -113,13 +113,13 @@ function HoldTimeGauge({ holdSec, holdMin, verdict }: { holdSec: number; holdMin
   const circumference = 2 * Math.PI * r;
   const filled = circumference * ratio;
 
-  const display = holdSec < 1
-    ? { value: "< 1", unit: "sec" }
-    : holdSec < 60
-    ? { value: holdSec.toFixed(1), unit: "sec" }
-    : holdMin < 60
-    ? { value: holdMin.toFixed(1), unit: "min" }
-    : { value: formatHours(holdMin / 60), unit: "h" };
+  const display = pasteType === "flash"
+    ? (holdSec < 1
+        ? { value: "< 1", unit: "sec" }
+        : { value: holdSec < 10 ? holdSec.toFixed(1) : Math.round(holdSec).toString(), unit: "sec" })
+    : (holdMin < 0.1
+        ? { value: "< 0.1", unit: "min" }
+        : { value: holdMin < 10 ? holdMin.toFixed(1) : Math.round(holdMin).toString(), unit: "min" });
 
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
@@ -189,6 +189,29 @@ function BaremePageInner() {
       .catch(() => {});
   }, []);
 
+  // Fetch history entry if history query param is present
+  useEffect(() => {
+    const historyId = searchParams.get("history");
+    if (!historyId) return;
+    getAnalysisById(parseInt(historyId, 10))
+      .then((detail) => {
+        if (detail.parametres) {
+          try {
+            const p = typeof detail.parametres === "string" ? JSON.parse(detail.parametres) : detail.parametres;
+            if (p.product_type) setProductType(p.product_type);
+            if (p.clarification) setTrouble(p.clarification === "trouble" || p.clarification === true);
+            if (p.procede) setPasteType(p.procede);
+            if (p.microorganisme && MICROORGANISMES[p.microorganisme]) setMicroKey(p.microorganisme);
+            if (p.t_ref) setCustomTref(String(p.t_ref));
+            if (p.z) setCustomZ(String(p.z));
+            if (p.t_consigne) setTConsigne(String(p.t_consigne));
+            if (p.t_ref || p.z || p.microorganisme) setExpertMode(true);
+          } catch {}
+        }
+      })
+      .catch(() => {});
+  }, [searchParams]);
+
   // Auto-select default micro when product changes
   const handleProductChange = (newProduct: string) => {
     setProductType(newProduct);
@@ -243,9 +266,13 @@ function BaremePageInner() {
   // Format hold time for narrative
   const formatHold = (c: typeof computed) => {
     if (!c) return "";
-    if (c.holdSec < 60) return `${c.holdSec.toFixed(1)} ${t("bareme.sec")}`;
-    if (c.holdMin < 60) return `${c.holdMin.toFixed(1)} ${t("bareme.min")}`;
-    return `${formatHours(c.holdMin / 60)} h`;
+    if (pasteType === "flash") {
+      const val = c.holdSec < 10 ? c.holdSec.toFixed(1) : Math.round(c.holdSec).toString();
+      return `${val} ${t("bareme.sec")}`;
+    } else {
+      const val = c.holdMin < 10 ? c.holdMin.toFixed(1) : Math.round(c.holdMin).toString();
+      return `${val} ${t("bareme.min")}`;
+    }
   };
 
   // Build narrative
@@ -400,7 +427,7 @@ function BaremePageInner() {
                 onClick={() => setIsConfigOpen(false)}
                 className="w-full py-2.5 text-sm flex items-center justify-center gap-2 rounded-lg font-bold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors"
               >
-                Voir le résultat
+                {t("bareme.viewVerdict")}
               </button>
             </div>
           </div>
@@ -430,12 +457,23 @@ function BaremePageInner() {
           {computed && verdict && vcfg ? (
             <div className="max-w-xl mx-auto space-y-4">
 
+              {/* ── Top Bar — Mobile & Desktop Back/Edit Config ── */}
+              <div className="flex items-center justify-between gap-3 mb-2 pb-2 border-b border-black/[0.06]">
+                <button
+                  onClick={() => setIsConfigOpen(true)}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-brand-primary/20 rounded-xl text-xs font-bold text-brand-primary shadow-sm hover:bg-brand-primary/5 transition-all"
+                >
+                  <Settings2 className="w-4 h-4" />
+                  {t("bareme.backToConfig")}
+                </button>
+              </div>
+
               {/* ── Primary: Gauge + Narrative ── */}
               <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden">
                 <div className="px-4 py-6 sm:px-6">
                   <div className="flex flex-col sm:flex-row items-center gap-6">
                     {/* Circular gauge */}
-                    <HoldTimeGauge holdSec={computed.holdSec} holdMin={computed.holdMin} verdict={verdict} />
+                    <HoldTimeGauge holdSec={computed.holdSec} holdMin={computed.holdMin} pasteType={pasteType} verdict={verdict} />
 
                     {/* Right: verdict + narrative */}
                     <div className="flex-1 min-w-0 text-center sm:text-left">

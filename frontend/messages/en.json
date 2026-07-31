@@ -171,6 +171,8 @@
     "holdTimeLabel": "Required hold time",
     "atTemp": "at {temp}°C",
     "helpTitle": "Help — Choosing the schedule",
+    "backToConfig": "Edit configuration",
+    "viewVerdict": "View result",
     "defaultHelp": "## How to use this tool\n\n**The schedule selection tool** helps you determine the required hold time to pasteurize your product at a given temperature.\n\n### Steps\n\n1. **Select your product** (apple juice, cider, etc.) and specify if it is turbid or clear.\n2. **Choose the process**: Flash pasteurisation, Classic pasteurisation or Tunnel pasteurisation.\n3. **Enter the target temperature** in °C.\n\nThe system automatically calculates the required hold time to reach the target PU based on the reference microorganism.\n\n### Expert mode\n\nExpert mode allows you to:\n- Change the target microorganism\n- Manually adjust Tref and Z\n\n### Interpretation\n\n- **Feasible**: the hold time is compatible with the chosen process.\n- **Demanding**: the time is long, consider increasing the temperature.\n- **Unfeasible**: the time is too long, significantly increase the temperature."
   },
   "productSelector": {
@@ -230,6 +232,7 @@
     "titleReady": "Ready to analyse your batch",
     "subtitleReady": "Use the configuration panel on the left to define your parameters and import your temperature readings.",
     "openConfig": "Open configuration",
+    "backToConfig": "Edit configuration",
     "help": "Help",
     "helpTitle": "Help — VP calculation",
     "helpEdit": "Edit",
@@ -259,7 +262,7 @@
     "rawData": "View raw data",
     "thermalKinetics": "Thermal Kinetics & PU Evolution",
     "rawDataTitle": "Raw Batch Data",
-    "rawDataSubtitle": "Extract from {n} measurement points",
+    "rawDataSubtitle": "Batch No.: {lot}",
     "rawDataVp": "Cumulative PU",
     "inputPlaceholder": "Time\tTemperature\n0\t20\n1\t45\n2\t68...",
     "manualDataLabel": "Manual entry",

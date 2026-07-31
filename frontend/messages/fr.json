@@ -262,7 +262,7 @@
     "rawData": "Voir les données brutes",
     "thermalKinetics": "Cinétique Thermique & Évolution des UP",
     "rawDataTitle": "Données Brutes du Lot",
-    "rawDataSubtitle": "Extraction des {n} points de mesure",
+    "rawDataSubtitle": "N° de lot : {lot}",
     "rawDataVp": "VP Cumulée",
     "inputPlaceholder": "Temps\tTempérature\n0\t20\n1\t45\n2\t68...",
     "manualDataLabel": "Saisie manuelle",

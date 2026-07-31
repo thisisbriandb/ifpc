@@ -428,14 +428,20 @@ def evaluer_pasteurisation(
     result_vp = calculer_vp_bigelow(temperatures, temps, effective_t_ref, effective_z)
     vp_obtenue = result_vp["vp"]
 
-    # --- Diagnostic ---
-    ratio = vp_obtenue / effective_vp_cible if effective_vp_cible > 0 else 0
-    if ratio >= 1.0:
+    # --- Diagnostic basé sur k_calc ---
+    d_ref = micro.get("d_ref") if micro else None
+    if d_ref and d_ref > 0:
+        k_calc = round(vp_obtenue / d_ref, 2)
+    else:
+        k_calc = round(vp_obtenue / (effective_vp_cible / 5.0), 2) if effective_vp_cible > 0 else 0.0
+
+    if k_calc > 15.0:
         statut = "conforme"
-    elif ratio >= 0.8:
+    elif k_calc >= 12.0:
         statut = "vigilance"
     else:
         statut = "insuffisant"
+
     micro_nom = micro["nom"] if micro else micro_key
     message = build_diagnostic_message(statut, vp_obtenue, effective_vp_cible, lang, microorganisme=micro_nom, product_type=product_type)
 
@@ -448,6 +454,7 @@ def evaluer_pasteurisation(
     return {
         "vp": vp_obtenue,
         "vp_cible": effective_vp_cible,
+        "k_calc": k_calc,
         "statut": statut,
         "message": message,
         "risque": risque,
