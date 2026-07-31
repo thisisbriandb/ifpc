@@ -300,7 +300,7 @@ function BaremePageInner() {
           {canExpert && (
             <button
               onClick={() => setExpertMode(!expertMode)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              className={`hidden lg:block px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 expertMode
                   ? "bg-brand-primary text-white shadow-sm"
                   : "bg-white border border-black/[0.06] text-gray-400 hover:text-gray-600 hover:bg-gray-50"
@@ -335,9 +335,23 @@ function BaremePageInner() {
           <div className={`${isConfigOpen ? "opacity-100" : "opacity-0 lg:opacity-100"} transition-opacity duration-200 flex flex-col h-full overflow-hidden w-[300px] sm:w-[320px]`}>
             <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04] lg:hidden">
               <h2 className="font-bold text-brand-text">Configuration</h2>
-              <button onClick={() => setIsConfigOpen(false)} className="p-1.5 text-gray-400">
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                {canExpert && (
+                  <button
+                    onClick={() => setExpertMode(!expertMode)}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                      expertMode
+                        ? "bg-brand-primary text-white shadow-sm"
+                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    }`}
+                  >
+                    EXPERT
+                  </button>
+                )}
+                <button onClick={() => setIsConfigOpen(false)} className="p-1.5 text-gray-400">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
             <div className="flex-1 overflow-y-auto">
               <div className="px-4 pt-4 pb-3 space-y-3">
@@ -456,17 +470,6 @@ function BaremePageInner() {
           )}
           {computed && verdict && vcfg ? (
             <div className="max-w-xl mx-auto space-y-4">
-
-              {/* ── Top Bar — Mobile & Desktop Back/Edit Config ── */}
-              <div className="flex items-center justify-between gap-3 mb-2 pb-2 border-b border-black/[0.06]">
-                <button
-                  onClick={() => setIsConfigOpen(true)}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-brand-primary/20 rounded-xl text-xs font-bold text-brand-primary shadow-sm hover:bg-brand-primary/5 transition-all"
-                >
-                  <Settings2 className="w-4 h-4" />
-                  {t("bareme.backToConfig")}
-                </button>
-              </div>
 
               {/* ── Primary: Gauge + Narrative ── */}
               <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden">

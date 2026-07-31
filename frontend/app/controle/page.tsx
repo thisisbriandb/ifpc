@@ -349,7 +349,7 @@ function ControlePageInner() {
           {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
             <button
               onClick={() => setExpertMode(!expertMode)}
-              className={`text-xs font-semibold transition-colors ${
+              className={`hidden lg:block text-xs font-semibold transition-colors ${
                 expertMode ? "text-brand-accent" : "text-gray-400 hover:text-brand-accent"
               }`}
             >
@@ -383,9 +383,23 @@ function ControlePageInner() {
         <div className={`${isSidebarOpen ? "opacity-100" : "opacity-0 lg:opacity-100"} transition-opacity duration-200 flex flex-col h-full overflow-hidden w-[300px] sm:w-[320px]`}>
           <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04] lg:hidden">
             <h2 className="font-bold text-brand-text">Configuration</h2>
-            <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 text-gray-400">
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
+                <button
+                  onClick={() => setExpertMode(!expertMode)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                    expertMode
+                      ? "bg-brand-primary text-white shadow-sm"
+                      : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                  }`}
+                >
+                  {t("bareme.expertMode")}
+                </button>
+              )}
+              <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 text-gray-400">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
           <div className="flex-1 overflow-y-auto">
             {/* Product Parameters */}
@@ -573,16 +587,8 @@ function ControlePageInner() {
         {result ? (
           <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-in fade-in duration-500">
 
-            {/* ── Header — product + lot + back button ── */}
+            {/* ── Header — product + lot ── */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-black/[0.06]">
-              <button
-                onClick={() => setIsSidebarOpen(true)}
-                className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-brand-primary/20 rounded-xl text-xs font-bold text-brand-primary shadow-sm hover:bg-brand-primary/5 transition-all"
-              >
-                <Settings2 className="w-4 h-4" />
-                {t("controle.backToConfig")}
-              </button>
-
               <div className="flex items-center gap-3">
                 <div className="flex items-baseline gap-2 min-w-0">
                   <h1 className="text-sm font-bold text-brand-text uppercase tracking-wide truncate">{result.parametres.produit}</h1>
