@@ -169,6 +169,73 @@ public class EmailService {
         sendEmail(user.getEmail(), subject, htmlContent);
     }
 
+    /**
+     * Envoie un email avec un lien de réinitialisation de mot de passe à l'utilisateur.
+     */
+    @Async
+    public void sendPasswordResetNotification(User user, String resetToken, String appBaseUrl) {
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
+            log.warn("Impossible d'envoyer le mail de réinitialisation : adresse email manquante.");
+            return;
+        }
+
+        String baseUrl = (appBaseUrl != null && !appBaseUrl.isBlank()) ? appBaseUrl.replaceAll("/+$", "") : "https://ifpc.eu";
+        String resetUrl = baseUrl + "/reset-password?token=" + resetToken;
+
+        String subject = "[IFPC] Réinitialisation de votre mot de passe";
+
+        String template = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="utf-8">
+              <style>
+                body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; background-color: #f4f6f8; margin: 0; padding: 20px; }
+                .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+                .header { background-color: #1e293b; color: #ffffff; padding: 20px; text-align: center; }
+                .header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+                .content { padding: 24px; }
+                .footer { background-color: #f8fafc; text-align: center; padding: 16px; font-size: 13px; color: #64748b; border-top: 1px solid #e2e8f0; }
+                .button { display: inline-block; padding: 12px 24px; background-color: #166534; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 16px; margin-bottom: 16px; }
+                .warning { background-color: #fffbeb; border: 1px solid #fef3c7; padding: 12px; border-radius: 6px; font-size: 13px; color: #92400e; margin-top: 16px; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1>IFPC — Réinitialisation de mot de passe</h1>
+                </div>
+                <div class="content">
+                  <p>Bonjour {{FIRST_NAME}},</p>
+                  <p>Vous avez demandé la réinitialisation de votre mot de passe pour votre compte sur la plateforme IFPC.</p>
+                  <p>Veuillez cliquer sur le bouton ci-dessous pour choisir un nouveau mot de passe :</p>
+                  <p style="text-align: center;">
+                    <a href="{{RESET_URL}}" class="button">Réinitialiser mon mot de passe</a>
+                  </p>
+                  <div class="warning">
+                    Ce lien est valide pendant 1 heure. Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail en toute sécurité.
+                  </div>
+                  <p style="margin-top: 20px; font-size: 13px; color: #64748b;">
+                    Si le bouton ne fonctionne pas, copiez et collez l'adresse suivante dans votre navigateur :<br>
+                    <a href="{{RESET_URL}}" style="color: #2563eb; word-break: break-all;">{{RESET_URL}}</a>
+                  </p>
+                </div>
+                <div class="footer">
+                  IFPC — Institut Français des Produits Cidricoles<br>
+                  <a href="mailto:service-informatique@ifpc.eu" style="color: #64748b;">service-informatique@ifpc.eu</a>
+                </div>
+              </div>
+            </body>
+            </html>
+            """;
+
+        String htmlContent = template
+                .replace("{{FIRST_NAME}}", escapeHtml(safeString(user.getFirstName())))
+                .replace("{{RESET_URL}}", resetUrl);
+
+        sendEmail(user.getEmail(), subject, htmlContent);
+    }
+
     private void sendEmail(String toEmail, String subject, String htmlContent) {
         String effectiveApiKey = (apiKey != null && !apiKey.isBlank()) ? apiKey : System.getenv("RESEND_API_KEY");
 

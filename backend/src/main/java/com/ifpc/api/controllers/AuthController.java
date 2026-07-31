@@ -70,9 +70,44 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("Mot de passe modifié avec succès."));
     }
     
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(
+            @RequestBody ForgotPasswordRequest request,
+            @RequestHeader(value = "Origin", required = false) String origin,
+            @RequestHeader(value = "Referer", required = false) String referer) {
+        String appBaseUrl = origin;
+        if ((appBaseUrl == null || appBaseUrl.isBlank()) && referer != null && !referer.isBlank()) {
+            try {
+                java.net.URI uri = new java.net.URI(referer);
+                appBaseUrl = uri.getScheme() + "://" + uri.getAuthority();
+            } catch (Exception ignored) {}
+        }
+        return ResponseEntity.ok(service.forgotPassword(request.email(), appBaseUrl));
+    }
+
+    @GetMapping("/verify-reset-token")
+    public ResponseEntity<?> verifyResetToken(@RequestParam("token") String token) {
+        boolean valid = service.verifyResetToken(token);
+        if (!valid) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Jeton invalide ou expiré."));
+        }
+        return ResponseEntity.ok(new MessageResponse("Jeton valide."));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordApiRequest request) {
+        try {
+            return ResponseEntity.ok(service.resetPassword(request.token(), request.newPassword()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        }
+    }
+
     public record UserDto(String firstName, String lastName, String email, String role) {}
     public record ProfileUpdateRequest(String firstName, String lastName) {}
     public record PasswordChangeRequest(String currentPassword, String newPassword) {}
+    public record ForgotPasswordRequest(String email) {}
+    public record ResetPasswordApiRequest(String token, String newPassword) {}
     public record ErrorResponse(String error) {}
     public record MessageResponse(String message) {}
 }

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 // Pages accessibles sans être connecté
-const PUBLIC_PATHS = ['/', '/login']
+const PUBLIC_PATHS = ['/', '/login', '/reset-password']
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value

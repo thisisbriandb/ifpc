@@ -46,6 +46,9 @@ public class User implements UserDetails {
 
     private LocalDateTime lastLogin;
 
+    private String resetPasswordToken;
+    private LocalDateTime resetPasswordTokenExpiry;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));

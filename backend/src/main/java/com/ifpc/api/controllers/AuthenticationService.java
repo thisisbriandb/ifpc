@@ -72,4 +72,50 @@ public class AuthenticationService {
                 .pending(false)
                 .build();
     }
+
+    public MessageResponse forgotPassword(String email, String appBaseUrl) {
+        if (email != null && !email.isBlank()) {
+            repository.findByEmail(email.trim()).ifPresent(user -> {
+                String token = java.util.UUID.randomUUID().toString();
+                user.setResetPasswordToken(token);
+                user.setResetPasswordTokenExpiry(LocalDateTime.now().plusHours(1));
+                repository.save(user);
+
+                emailService.sendPasswordResetNotification(user, token, appBaseUrl);
+            });
+        }
+        return new MessageResponse("Si un compte avec cette adresse e-mail existe, un lien de réinitialisation y a été envoyé.");
+    }
+
+    public boolean verifyResetToken(String token) {
+        if (token == null || token.isBlank()) return false;
+        return repository.findByResetPasswordToken(token)
+                .map(user -> user.getResetPasswordTokenExpiry() != null && user.getResetPasswordTokenExpiry().isAfter(LocalDateTime.now()))
+                .orElse(false);
+    }
+
+    public MessageResponse resetPassword(String token, String newPassword) {
+        if (token == null || token.isBlank()) {
+            throw new RuntimeException("Jeton de réinitialisation manquant.");
+        }
+        var user = repository.findByResetPasswordToken(token)
+                .orElseThrow(() -> new RuntimeException("Jeton invalide ou introuvable."));
+
+        if (user.getResetPasswordTokenExpiry() == null || user.getResetPasswordTokenExpiry().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Le lien de réinitialisation a expiré. Veuillez refaire une demande.");
+        }
+
+        if (newPassword == null || newPassword.length() < 6) {
+            throw new RuntimeException("Le nouveau mot de passe doit contenir au moins 6 caractères.");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetPasswordToken(null);
+        user.setResetPasswordTokenExpiry(null);
+        repository.save(user);
+
+        return new MessageResponse("Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.");
+    }
+
+    public record MessageResponse(String message) {}
 }

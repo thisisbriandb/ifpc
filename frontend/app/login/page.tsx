@@ -9,7 +9,7 @@ import {
   EyeOff,
   Loader2,
 } from "lucide-react";
-import { login, register } from "@/lib/api";
+import { login, register, forgotPassword } from "@/lib/api";
 import { useAuthStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,6 +29,7 @@ export default function LoginPage() {
   const { t } = useI18n();
 
   const [isLogin, setIsLogin] = useState(true);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pendingMessage, setPendingMessage] = useState<string | null>(null);
@@ -73,6 +74,23 @@ export default function LoginPage() {
     setError(null);
     setPendingMessage(null);
     setForgotMessage(null);
+
+    if (isForgotPassword) {
+      if (!form.email || !form.email.includes("@")) {
+        setError("Veuillez saisir une adresse e-mail valide.");
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await forgotPassword(form.email);
+        setForgotMessage(res.message || "Si un compte existe avec cet e-mail, un lien de réinitialisation vous a été envoyé.");
+      } catch (err: any) {
+        setError(err.response?.data?.message || "Une erreur est survenue lors de l'envoi de la demande.");
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
 
     if (!isLogin) {
       const isValidPassword = passwordChecks.length && passwordChecks.uppercase && passwordChecks.number && passwordChecks.special;
@@ -186,7 +204,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md rounded-2xl border border-gray-200/70 bg-white/80 backdrop-blur p-8 shadow-sm">
           <AnimatePresence mode="wait">
             <motion.div
-              key={isLogin ? "login" : "register"}
+              key={isForgotPassword ? "forgot" : isLogin ? "login" : "register"}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
@@ -205,18 +223,24 @@ export default function LoginPage() {
                   PADOC
                 </p>
                 <h2 className="text-2xl font-semibold tracking-tight text-gray-950">
-                  {isLogin ? t("login.welcomeBack") : t("login.createAccount")}
+                  {isForgotPassword
+                    ? "Mot de passe oublié"
+                    : isLogin
+                    ? t("login.welcomeBack")
+                    : t("login.createAccount")}
                 </h2>
 
                 <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  {isLogin
+                  {isForgotPassword
+                    ? "Entrez votre adresse e-mail ci-dessous pour recevoir un lien de réinitialisation."
+                    : isLogin
                     ? "Connectez-vous pour accéder à votre tableau de bord."
                     : t("login.registerSubtitle")}
                 </p>
               </header>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                {!isLogin && (
+                {!isForgotPassword && !isLogin && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {(["firstName", "lastName"] as const).map((field) => (
                       <label key={field} className="block">
@@ -240,7 +264,7 @@ export default function LoginPage() {
                   </div>
                 )}
 
-                {!isLogin && (
+                {!isForgotPassword && !isLogin && (
                   <>
                     <label className="block">
                       <span className="mb-1.5 block text-xs font-semibold text-gray-600">
@@ -287,36 +311,38 @@ export default function LoginPage() {
                   />
                 </label>
 
-                <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold text-gray-600">
-                    {t("login.password")}
-                  </span>
-                  <span className="relative block">
-                    <input
-                      required
-                      disabled={loading}
-                      type={showPassword ? "text" : "password"}
-                      value={form.password}
-                      onChange={update("password")}
-                      placeholder="••••••••"
-                      className="w-full h-11 pl-4 pr-11 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 transition-colors hover:text-gray-600"
-                      aria-label={
-                        showPassword
-                          ? "Masquer le mot de passe"
-                          : "Afficher le mot de passe"
-                      }
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </span>
-                </label>
+                {!isForgotPassword && (
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-semibold text-gray-600">
+                      {t("login.password")}
+                    </span>
+                    <span className="relative block">
+                      <input
+                        required
+                        disabled={loading}
+                        type={showPassword ? "text" : "password"}
+                        value={form.password}
+                        onChange={update("password")}
+                        placeholder="••••••••"
+                        className="w-full h-11 pl-4 pr-11 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((v) => !v)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 transition-colors hover:text-gray-600"
+                        aria-label={
+                          showPassword
+                            ? "Masquer le mot de passe"
+                            : "Afficher le mot de passe"
+                        }
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </span>
+                  </label>
+                )}
 
-                {!isLogin && form.password.length > 0 && (
+                {!isForgotPassword && !isLogin && form.password.length > 0 && (
                   <div className="space-y-1.5 p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs">
                     <p className="font-bold text-gray-500 uppercase tracking-wider text-[9px] mb-1">Critères du mot de passe :</p>
                     <div className="grid grid-cols-2 gap-2">
@@ -348,7 +374,7 @@ export default function LoginPage() {
                   </div>
                 )}
 
-                {!isLogin && (
+                {!isForgotPassword && !isLogin && (
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-gray-600">
                       Confirmer le mot de passe
@@ -376,16 +402,15 @@ export default function LoginPage() {
                   </label>
                 )}
 
-                {isLogin && (
+                {isLogin && !isForgotPassword && (
                   <div className="-mt-2 flex justify-end">
                     <button
                       type="button"
                       onClick={() => {
                         setError(null);
                         setPendingMessage(null);
-                        setForgotMessage(
-                          "Contactez un administrateur pour réinitialiser votre mot de passe."
-                        );
+                        setForgotMessage(null);
+                        setIsForgotPassword(true);
                       }}
                       className="text-xs font-semibold text-brand-primary transition-colors hover:text-brand-primary/80 hover:underline"
                     >
@@ -399,7 +424,10 @@ export default function LoginPage() {
                 )}
 
                 {forgotMessage && (
-                  <div className="rounded-xl border border-brand-primary/20 bg-brand-primary/5 p-3.5 text-xs font-medium text-brand-primary">
+                  <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm font-medium text-green-800 flex items-start gap-3">
+                    <svg className="w-5 h-5 text-green-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                     {forgotMessage}
                   </div>
                 )}
@@ -422,7 +450,11 @@ export default function LoginPage() {
                     <Loader2 className="w-5 h-5 animate-spin" />
                   ) : (
                     <>
-                      {isLogin ? t("login.signIn") : t("login.register")}
+                      {isForgotPassword
+                        ? "Envoyer le lien"
+                        : isLogin
+                        ? t("login.signIn")
+                        : t("login.register")}
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -432,20 +464,37 @@ export default function LoginPage() {
           </AnimatePresence>
 
           <p className="mt-8 text-center text-sm text-gray-400">
-            {isLogin ? t("login.noAccount") : t("login.hasAccount")}{" "}
-            <button
-              onClick={() => {
-                setIsLogin((v) => !v);
-                setError(null);
-                setPendingMessage(null);
-                setForgotMessage(null);
-                setConfirmPassword("");
-                setForm((prev) => ({ ...prev, password: "" }));
-              }}
-              className="font-semibold text-brand-primary transition-all hover:underline"
-            >
-              {isLogin ? t("login.signUp") : t("login.connect")}
-            </button>
+            {isForgotPassword ? (
+              <button
+                onClick={() => {
+                  setIsForgotPassword(false);
+                  setError(null);
+                  setForgotMessage(null);
+                  setPendingMessage(null);
+                }}
+                className="font-semibold text-brand-primary transition-all hover:underline"
+              >
+                ← Retour à la connexion
+              </button>
+            ) : (
+              <>
+                {isLogin ? t("login.noAccount") : t("login.hasAccount")}{" "}
+                <button
+                  onClick={() => {
+                    setIsLogin((v) => !v);
+                    setIsForgotPassword(false);
+                    setError(null);
+                    setPendingMessage(null);
+                    setForgotMessage(null);
+                    setConfirmPassword("");
+                    setForm((prev) => ({ ...prev, password: "" }));
+                  }}
+                  className="font-semibold text-brand-primary transition-all hover:underline"
+                >
+                  {isLogin ? t("login.signUp") : t("login.connect")}
+                </button>
+              </>
+            )}
           </p>
         </div>
       </main>
