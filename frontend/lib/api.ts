@@ -104,6 +104,11 @@ export async function rejectUser(userId: number) {
   return response.data;
 }
 
+export async function deleteUser(userId: number) {
+  const response = await api.delete(`/admin/users/${userId}`);
+  return response.data;
+}
+
 // ── Product Config (Admin) ──────────────────────────────────────────────────
 
 export async function getProductConfig() {

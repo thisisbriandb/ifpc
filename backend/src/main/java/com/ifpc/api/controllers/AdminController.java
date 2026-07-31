@@ -96,6 +96,20 @@ public class AdminController {
         return ResponseEntity.ok("Utilisateur " + user.getEmail() + " rejeté et supprimé.");
     }
 
+    @DeleteMapping("/api/admin/users/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId, org.springframework.security.core.Authentication authentication) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
+        if (authentication != null && authentication.getName().equalsIgnoreCase(user.getEmail())) {
+            return ResponseEntity.badRequest().body("Vous ne pouvez pas supprimer votre propre compte d'administrateur.");
+        }
+
+        userRepository.delete(user);
+        return ResponseEntity.ok("Utilisateur " + user.getEmail() + " supprimé avec succès.");
+    }
+
     // ── Product config (admin CRUD) ──────────────────────────────────────
 
     @GetMapping("/api/admin/product-config")

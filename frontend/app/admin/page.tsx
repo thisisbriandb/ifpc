@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store";
 import {
-  getUsers, updateUserRole, getPendingUsers, approveUser, rejectUser,
+  getUsers, updateUserRole, getPendingUsers, approveUser, rejectUser, deleteUser,
   getAdminProductConfig, updateProductConfig,
 } from "@/lib/api";
-import { Loader2, Search, X, Check, Activity, ShieldCheck } from "lucide-react";
+import { Loader2, Search, X, Check, Activity, ShieldCheck, Trash2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 interface UserData {
@@ -120,6 +120,20 @@ export default function AdminPage() {
       setPendingUsers(prev => prev.filter(u => u.id !== userId));
     } catch { 
       alert(t("admin.rejectError")); 
+    } finally { 
+      setProcessingId(null); 
+    }
+  };
+
+  const handleDeleteUser = async (userId: number, name: string) => {
+    if (!confirm(t("admin.confirmDeleteUser", { name }))) return;
+    setProcessingId(userId);
+    try {
+      await deleteUser(userId);
+      setUsers(prev => prev.filter(u => u.id !== userId));
+      if (selectedUserId === userId) setSelectedUserId(null);
+    } catch { 
+      alert(t("admin.deleteError")); 
     } finally { 
       setProcessingId(null); 
     }
@@ -279,6 +293,7 @@ export default function AdminPage() {
                     <th className="px-6 py-4 font-semibold text-gray-500 text-xs hidden md:table-cell">{t("admin.colEmail")}</th>
                     <th className="px-6 py-4 font-semibold text-gray-500 text-xs">{t("admin.colRole")}</th>
                     <th className="px-6 py-4 font-semibold text-gray-500 text-xs hidden sm:table-cell">{t("admin.colLastLogin")}</th>
+                    <th className="px-6 py-4 font-semibold text-gray-500 text-xs text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
@@ -306,6 +321,15 @@ export default function AdminPage() {
                       </td>
                       <td className="px-6 py-4 text-gray-400 text-xs hidden sm:table-cell">
                         {formatRelativeTime(u.lastLogin, t)}
+                      </td>
+                      <td className="px-6 py-4 text-right" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          onClick={() => handleDeleteUser(u.id, `${u.firstName} ${u.lastName}`)}
+                          className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          title={t("admin.deleteUser")}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -443,6 +467,26 @@ export default function AdminPage() {
                     Le rôle expert permet de modifier les températures de référence, les valeurs Z, et de piloter précisément les barèmes.
                   </p>
                 </div>
+              </section>
+
+              <hr className="border-gray-100" />
+
+              {/* Danger Zone */}
+              <section className="pt-2">
+                <button
+                  onClick={() => handleDeleteUser(selectedUser.id, `${selectedUser.firstName} ${selectedUser.lastName}`)}
+                  disabled={processingId === selectedUser.id}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 text-xs font-bold rounded-xl transition-colors disabled:opacity-50"
+                >
+                  {processingId === selectedUser.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      <Trash2 className="w-4 h-4" />
+                      {t("admin.deleteUser")}
+                    </>
+                  )}
+                </button>
               </section>
 
             </div>
