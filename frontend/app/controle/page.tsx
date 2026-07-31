@@ -682,19 +682,25 @@ function ControlePageInner() {
                   <table className="w-full text-left text-sm">
                     <thead className="sticky top-0 bg-gray-50 border-b border-gray-200 shadow-sm z-10">
                       <tr>
-                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.time")} (min)</th>
+                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">
+                          {t("controle.time")} ({procede === "flash" || result.parametres.procede?.toLowerCase().includes("flash") ? "sec" : "min"})
+                        </th>
                         <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.temp")} (°C)</th>
                         <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.rawDataVp")}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
-                      {result.courbe.temps.map((t, idx) => (
-                        <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-5 py-2.5 font-mono text-gray-600">{t.toFixed(2)}</td>
-                          <td className="px-5 py-2.5 font-mono font-medium text-gray-900">{result.courbe.temperatures[idx].toFixed(1)}</td>
-                          <td className="px-5 py-2.5 font-mono text-brand-primary/80 font-medium">{result.courbe.vp_cumulee[idx].toFixed(3)}</td>
-                        </tr>
-                      ))}
+                      {result.courbe.temps.map((tVal, idx) => {
+                        const isFlash = procede === "flash" || result.parametres.procede?.toLowerCase().includes("flash");
+                        const timeDisplay = isFlash ? (tVal * 60).toFixed(1) : tVal.toFixed(2);
+                        return (
+                          <tr key={idx} className="hover:bg-gray-50 transition-colors">
+                            <td className="px-5 py-2.5 font-mono text-gray-600">{timeDisplay}</td>
+                            <td className="px-5 py-2.5 font-mono font-medium text-gray-900">{result.courbe.temperatures[idx].toFixed(1)}</td>
+                            <td className="px-5 py-2.5 font-mono text-brand-primary/80 font-medium">{result.courbe.vp_cumulee[idx].toFixed(3)}</td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
