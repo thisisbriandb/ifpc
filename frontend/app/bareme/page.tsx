@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState, useMemo, useEffect } from "react";
-import { AlertTriangle, Info, ShieldCheck, HelpCircle, ChevronLeft, ChevronRight, Settings2, X } from "lucide-react";
+import { AlertTriangle, Info, ShieldCheck, HelpCircle, ChevronLeft, ChevronRight, Settings2, X, RotateCcw } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
@@ -257,15 +257,17 @@ function BaremePageInner() {
     return a;
   }, [computed, pasteType, t]);
 
-  const produit = PRODUITS[productType];
-  const productLabel = (key: string) => PRODUCT_LABELS[key]?.[locale] || PRODUITS[key]?.nom || key;
+  const productLabel = (key: string) => {
+    const l = PRODUCT_LABELS[key];
+    return l ? (l[locale as "fr" | "en"] || l.fr) : PRODUITS[key]?.nom || key;
+  };
+
   const selectCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-primary focus:border-brand-primary outline-none text-xs bg-white";
   const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
   const labelCls = "block text-xs font-semibold text-gray-500 mb-1";
 
   // Format hold time for narrative
-  const formatHold = (c: typeof computed) => {
-    if (!c) return "";
+  const formatHold = (c: { holdMin: number; holdSec: number }) => {
     if (pasteType === "flash") {
       const val = c.holdSec < 10 ? c.holdSec.toFixed(1) : Math.round(c.holdSec).toString();
       return `${val} ${t("bareme.sec")}`;
@@ -333,13 +335,21 @@ function BaremePageInner() {
           `}
         >
           <div className={`${isConfigOpen ? "opacity-100" : "opacity-0 lg:opacity-100"} transition-opacity duration-200 flex flex-col h-full overflow-hidden w-[300px] sm:w-[320px]`}>
-            <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04] lg:hidden">
-              <h2 className="font-bold text-brand-text">Configuration</h2>
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04]">
+              <h2 className="font-bold text-xs uppercase tracking-wider text-gray-500">Configuration</h2>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={handleReset}
+                  title={t("common.reset")}
+                  className="flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-brand-primary transition-colors px-2 py-1 rounded-md hover:bg-gray-100"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>{t("common.reset")}</span>
+                </button>
                 {canExpert && (
                   <button
                     onClick={() => setExpertMode(!expertMode)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                    className={`lg:hidden px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                       expertMode
                         ? "bg-brand-primary text-white shadow-sm"
                         : "bg-gray-100 text-gray-500 hover:bg-gray-200"
@@ -348,7 +358,7 @@ function BaremePageInner() {
                     EXPERT
                   </button>
                 )}
-                <button onClick={() => setIsConfigOpen(false)} className="p-1.5 text-gray-400">
+                <button onClick={() => setIsConfigOpen(false)} className="p-1 text-gray-400 lg:hidden">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -491,10 +501,6 @@ function BaremePageInner() {
 
                       <p className="text-[13px] text-gray-600 leading-relaxed">
                         {narrative}
-                      </p>
-
-                      <p className="text-[11px] text-gray-400 mt-2 italic">
-                        VP cible : {computed.vp} UP
                       </p>
                     </div>
                   </div>

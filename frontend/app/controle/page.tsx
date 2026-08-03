@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, Suspense } from "react";
-import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, Settings2, Table as TableIcon, X, Activity, AlertTriangle, Plus, Trash2, HelpCircle } from "lucide-react";
+import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, Settings2, Table as TableIcon, X, Activity, AlertTriangle, Plus, Trash2, HelpCircle, RotateCcw } from "lucide-react";
 import ProductSelector from "@/components/ProductSelector";
 import { KPICards } from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
@@ -254,6 +254,31 @@ function ControlePageInner() {
     return params;
   }, [productType, microorganisme, clarification, procede, tRef, zValue, ph, titreAlcool, vpCibleConfig]);
 
+  const handleReset = useCallback(() => {
+    setProductType("jus_pomme");
+    setMicroorganisme("");
+    setClarification("trouble");
+    setProcede("classique");
+    setTRef("");
+    setZValue("");
+    setPh("");
+    setTitreAlcool("");
+    setExpertMode(false);
+    setMode("manual");
+    const defaultRows = [
+      {temps: "0", temp: "20"}, {temps: "1", temp: "35"}, {temps: "2", temp: "50"},
+      {temps: "3", temp: "60"}, {temps: "4", temp: "68"}, {temps: "5", temp: "72"},
+      {temps: "6", temp: "72"}, {temps: "7", temp: "72"}, {temps: "8", temp: "65"},
+      {temps: "9", temp: "50"}, {temps: "10", temp: "30"},
+    ];
+    setManualRows(defaultRows);
+    syncManualData(defaultRows);
+    setPasteText("");
+    setFile(null);
+    setResult(null);
+    setError(null);
+  }, [syncManualData]);
+
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
@@ -381,13 +406,21 @@ function ControlePageInner() {
         `}
       >
         <div className={`${isSidebarOpen ? "opacity-100" : "opacity-0 lg:opacity-100"} transition-opacity duration-200 flex flex-col h-full overflow-hidden w-[300px] sm:w-[320px]`}>
-          <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04] lg:hidden">
-            <h2 className="font-bold text-brand-text">Configuration</h2>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04]">
+            <h2 className="font-bold text-xs uppercase tracking-wider text-gray-500">Configuration</h2>
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={handleReset}
+                title={t("common.reset")}
+                className="flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-brand-primary transition-colors px-2 py-1 rounded-md hover:bg-gray-100"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>{t("common.reset")}</span>
+              </button>
               {user && (user.role === 'EXPERT' || user.role === 'ADMIN') && (
                 <button
                   onClick={() => setExpertMode(!expertMode)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`lg:hidden px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     expertMode
                       ? "bg-brand-primary text-white shadow-sm"
                       : "bg-gray-100 text-gray-500 hover:bg-gray-200"
@@ -396,7 +429,7 @@ function ControlePageInner() {
                   {t("bareme.expertMode")}
                 </button>
               )}
-              <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 text-gray-400">
+              <button onClick={() => setIsSidebarOpen(false)} className="p-1 text-gray-400 lg:hidden">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -692,7 +725,7 @@ function ControlePageInner() {
                     <tbody className="divide-y divide-gray-100 bg-white">
                       {result.courbe.temps.map((tVal, idx) => {
                         const isFlash = procede === "flash" || result.parametres.procede?.toLowerCase().includes("flash");
-                        const timeDisplay = isFlash ? (tVal * 60).toFixed(1) : tVal.toFixed(2);
+                        const timeDisplay = isFlash ? tVal.toFixed(1) : tVal.toFixed(2);
                         return (
                           <tr key={idx} className="hover:bg-gray-50 transition-colors">
                             <td className="px-5 py-2.5 font-mono text-gray-600">{timeDisplay}</td>
