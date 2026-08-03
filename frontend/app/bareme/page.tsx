@@ -11,23 +11,23 @@ import { getProductConfig, getAnalysisById } from "@/lib/api";
 // ── Données de référence ──────────────────────────────────────────────────
 
 const MICROORGANISMES: Record<string, { nom: string; t_ref: number; z: number; d_ref: number; vp_cible: number }> = {
-  alicyclo_std:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 10.9, d_ref: 20.8, vp_cible: 104   },
-  alicyclo_res:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 16.4, d_ref: 27.8, vp_cible: 139   },
-  ecoli:              { nom: "Escherichia coli",                  t_ref: 62, z: 6.0,  d_ref: 1.5,  vp_cible: 7.5  },
-  salmonella:         { nom: "Salmonella",                        t_ref: 62, z: 6.0,  d_ref: 0.5,  vp_cible: 2.5  },
-  listeria:           { nom: "Listeria monocytogenes",            t_ref: 62, z: 5.6,  d_ref: 0.4,  vp_cible: 2    },
-  byssochlamys_fulva: { nom: "Byssochlamys fulva",                t_ref: 95, z: 7.1,  d_ref: 1.8,  vp_cible: 9    },
-  saccharo_jus:       { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 22.5, vp_cible: 112.5 },
-  saccharo_cidre_low: { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 0.4,  vp_cible: 2    },
-  saccharo_cidre:     { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 1.1,  vp_cible: 5.5  },
+  alicyclo_std:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 16.4, d_ref: 27.8,  vp_cible: 417.0 },
+  alicyclo_res:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 16.4, d_ref: 27.8,  vp_cible: 417.0 },
+  ecoli:              { nom: "Escherichia coli",                  t_ref: 62, z: 6.0,  d_ref: 1.5,  vp_cible: 22.5  },
+  salmonella:         { nom: "Salmonella",                        t_ref: 62, z: 6.0,  d_ref: 0.49, vp_cible: 7.35  },
+  listeria:           { nom: "Listeria monocytogenes",            t_ref: 62, z: 5.6,  d_ref: 0.43, vp_cible: 6.45  },
+  byssochlamys_fulva: { nom: "Byssochlamys fulva",                t_ref: 95, z: 7.1,  d_ref: 1.81, vp_cible: 27.15 },
+  saccharo_jus:       { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 22.5, vp_cible: 337.5 },
+  saccharo_cidre_low: { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 0.4,  vp_cible: 6.0   },
+  saccharo_cidre:     { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 1.1,  vp_cible: 16.5  },
 };
 
 const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }> = {
-  jus_pomme:        { nom: "Jus de pomme",      micro: "byssochlamys_fulva", vp_cible: 9   },
-  cidre_doux:       { nom: "Cidre doux",         micro: "saccharo_cidre",     vp_cible: 5.5 },
-  cidre_demi_sec:   { nom: "Cidre demi-sec",     micro: "saccharo_cidre",     vp_cible: 5.5 },
-  cidre_brut:       { nom: "Cidre brut",         micro: "saccharo_cidre",     vp_cible: 5.5 },
-  cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "saccharo_cidre",     vp_cible: 5.5 },
+  jus_pomme:        { nom: "Jus de pomme",      micro: "saccharo_jus",       vp_cible: 337.5 },
+  cidre_doux:       { nom: "Cidre doux",         micro: "saccharo_cidre",     vp_cible: 16.5  },
+  cidre_demi_sec:   { nom: "Cidre demi-sec",     micro: "saccharo_cidre",     vp_cible: 16.5  },
+  cidre_brut:       { nom: "Cidre brut",         micro: "saccharo_cidre_low", vp_cible: 6.0   },
+  cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "saccharo_cidre_low", vp_cible: 6.0   },
 };
 
 // Association produit → microorganismes disponibles en mode expert

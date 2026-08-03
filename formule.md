@@ -1,6 +1,6 @@
 # Documentation Scientifique — Calculs de Pasteurisation & Paramétrage IFPC
 
-Document de référence récapitulant les formules mathématiques, les modèles scientifiques et les règles de paramétrage appliqués sur la plateforme IFPC.
+Document de référence récapitulant les formules mathématiques, les modèles scientifiques et les règles de paramétrage appliqués sur la plateforme PADOC (mis à jour selon le référentiel du 30/07/2026).
 
 ---
 
@@ -55,7 +55,7 @@ $$\text{VP}_{\text{cible (trouble)}} = \text{VP}_{\text{cible (limpide)}} \times
 
 ## 4. Critère de Conformité Microbiologique ($k_{\text{calc}}$)
 
-La conformité globale d'un barème de pasteurisation s'appuie sur le **nombre de réductions décimales calculé ($k_{\text{calc}}$)** de la population microbienne :
+La conformité globale d'un barème de pasteurisation s'appuie sur le **facteur de réduction logarithmique calculé ($k_{\text{calc}}$)** de la population microbienne :
 
 $$k_{\text{calc}} = \frac{\text{VP}}{D_{\text{ref}}}$$
 
@@ -63,22 +63,42 @@ Où :
 * **$\text{VP}$** : Valeur Pasteurisatrice totale cumulée obtenue (en **UP**).
 * **$D_{\text{ref}}$** : Temps de réduction décimale du micro-organisme cible à la température $T_{\text{ref}}$ (en **minutes**).
 
-### Règle de Décision de Conformité :
+### Règle de Décision de Conformité (Seuil de 15-Log) :
 
-$$\text{Statut} = \begin{cases} \mathbf{Conforme} & \text{si } k_{\text{calc}} > 15 \\ \mathbf{Insuffisant} & \text{si } k_{\text{calc}} \le 15 \end{cases}$$
+$$\text{Statut} = \begin{cases} \mathbf{Conforme} & \text{si } k_{\text{calc}} \ge 15.0 \\ \mathbf{Insuffisant} & \text{si } k_{\text{calc}} < 15.0 \end{cases}$$
 
-* **$k_{\text{calc}} > 15$** : Le traitement thermique assure une réduction d'au moins 15 log ($10^{15}$) de la population microbienne ciblée, validant la conformité sanitaire et la stabilité du produit.
-* **$k_{\text{calc}} \le 15$** : Les conditions de pasteurisation sont considérées comme insuffisantes pour garantir la destruction complète.
+### Fondement Microbiologique du $k_{\text{calc}} \ge 15.0$ :
+Conforme pour un micro-organisme de référence donné, dans l'hypothèse d'une population initiale de $10^6 \text{ ufc/mL}$ avant pasteurisation et la présence de moins de 1 micro-organisme pour $1\,000\,000$ bouteilles après traitement thermique, ce qui équivaut à une réduction logarithmique de 15 ($10^{15}$).
+
+Ce facteur correspond à la réduction logarithmique de la population microbienne. Par exemple, si ce facteur est de 6, cela équivaut à une division de la population par $10^6$, soit une division par $1\,000\,000$.
 
 ---
 
-## 5. Référentiel des Micro-organismes & Produits IFPC
+## 5. Référentiel Officiel des Micro-organismes & Produits IFPC (Mis à jour le 30/07/2026)
 
-| Produit | Micro-organisme de référence | $T_{\text{ref}}$ (°C) | $z$ (°C) | $D_{\text{ref}}$ (min) | VP Cible Limpide (UP) | VP Cible Trouble (+20%) |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Jus de pomme** | *Byssochlamys fulva* | 95.0 | 7.1 | 1.8 | **9.0 UP** | **10.8 UP** |
-| **Cidres** (*doux, demi-sec, brut, extra-brut*) | *Saccharomyces cerevisiae* | 60.0 | 4.0 | 1.1 | **5.5 UP** | **6.6 UP** |
-| **Pathogènes** (*E. coli*) | *Escherichia coli* | 62.0 | 6.0 | 1.5 | **7.5 UP** | **9.0 UP** |
-| **Pathogènes** (*Salmonella*) | *Salmonella* | 62.0 | 6.0 | 0.5 | **2.5 UP** | **3.0 UP** |
-| **Pathogènes** (*Listeria*) | *Listeria monocytogenes* | 62.0 | 5.6 | 0.4 | **2.0 UP** | **2.4 UP** |
-| **Thermo-résistant** (*Alicyclobacillus*) | *Alicyclobacillus acidoterrestris* | 95.0 | 16.4 | 27.8 | **139.0 UP** | **166.8 UP** |
+### 5.1. Tableau des Paramètres Scientifiques
+
+#### Pour Jus de pomme :
+| Micro-organisme | $T_{\text{ref}}$ (°C) | $D_{\text{ref}}$ (min) à $T_{\text{ref}}$ | $z$ (°C) | Mode Classique | Mode Expert | VP Cible 15-log Limpide (UP) | VP Cible 15-log Trouble (+20%) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ***Byssochlamys fulva*** | 95.0 | 1.81 | 7.1 | **OUI** | OUI | **27.15 UP** | **32.58 UP** |
+| ***Alicyclobacillus acidoterrestris*** | 95.0 | 27.80 | 16.4 | **OUI** | OUI | **417.00 UP** | **500.40 UP** |
+| ***Saccharomyces cerevisiae*** | 60.0 | 22.50 | 4.0 | **OUI** | OUI | **337.50 UP** | **405.00 UP** |
+| ***Escherichia coli*** | 62.0 | 1.50 | 6.0 | **OUI** | OUI | **22.50 UP** | **27.00 UP** |
+| ***Salmonella*** | 62.0 | 0.49 | 6.0 | Non | OUI | **7.35 UP** | **8.82 UP** |
+| ***Listeria monocytogenes*** | 62.0 | 0.43 | 5.6 | Non | OUI | **6.45 UP** | **7.74 UP** |
+
+#### Pour les Cidres :
+| Type de produit | Micro-organisme de référence | $T_{\text{ref}}$ (°C) | $D_{\text{ref}}$ (min) à $T_{\text{ref}}$ | $z$ (°C) | Mode Classique | Mode Expert | VP Cible 15-log Limpide (UP) | VP Cible 15-log Trouble (+20%) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Cidre doux & Demi-sec** | *Saccharomyces cerevisiae* | 60.0 | 1.10 | 4.0 | **OUI** | OUI | **16.50 UP** | **19.80 UP** |
+| **Cidre brut & Extra-brut** | *Saccharomyces cerevisiae* | 60.0 | 0.40 | 4.0 | **OUI** | OUI | **6.00 UP** | **7.20 UP** |
+| **Cidre (tout type)** | *Escherichia coli* | 62.0 | 1.50 | 6.0 | Non | OUI | **22.50 UP** | **27.00 UP** |
+| **Cidre (tout type)** | *Salmonella* | 62.0 | 0.49 | 6.0 | Non | OUI | **7.35 UP** | **8.82 UP** |
+
+---
+
+## 6. Diagnostic et Évaluation Multi-Microorganismes
+
+* **Mode Multi-Microorganismes (Jus de Pomme)** : Les 4 micro-organismes du Mode Classique (*Byssochlamys fulva*, *Alicyclobacillus acidoterrestris*, *Saccharomyces cerevisiae*, *Escherichia coli*) sont évalués en parallèle. Le produit est diagnostiqué globalement conforme uniquement si la condition $k_{\text{calc}} \ge 15.0$ est validée pour l'ensemble des cibles.
+* **Mode Mono-Microorganisme (Cidres)** : L'évaluation porte sur *Saccharomyces cerevisiae*, avec un seuil spécifique selon la teneur en sucres résiduels (doux/demi-sec vs brut/extra-brut).

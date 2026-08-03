@@ -124,9 +124,10 @@ export function MicroEvaluationCard({
           <div className="font-bold text-gray-900 italic text-xs mt-0.5">{evalItem.nom}</div>
         </div>
 
-        {/* Reference parameters */}
-        <div className="text-[10px] text-gray-400 font-mono mt-1">
-          Tref : {evalItem.t_ref}°C ; Z : {evalItem.z}°C ; D : {evalItem.d_ref} min.
+        {/* Reference parameters & VP */}
+        <div className="text-[10px] text-gray-500 font-mono mt-2 pt-2 border-t border-dashed border-gray-100 flex flex-wrap items-center justify-between gap-1">
+          <span>Tref : {evalItem.t_ref}°C ; Z : {evalItem.z}°C ; D : {evalItem.d_ref} min.</span>
+          <span className="font-bold text-brand-primary">VP : {evalItem.vp >= 100 ? evalItem.vp.toFixed(0) : evalItem.vp.toFixed(2)} UP</span>
         </div>
       </div>
 
@@ -210,8 +211,9 @@ export default function ResultDisplay({ result }: Props) {
           </p>
 
           <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div className="text-[10px] font-mono text-gray-400">
-              Tref : {result.parametres.t_ref}°C ; Z : {result.parametres.z}°C ; D : {result.parametres.d_ref || "--"} min.
+            <div className="text-[10px] font-mono text-gray-500 flex flex-wrap items-center gap-3">
+              <span>Tref : {result.parametres.t_ref}°C ; Z : {result.parametres.z}°C ; D : {result.parametres.d_ref || "--"} min.</span>
+              <span className="font-bold text-brand-primary border-l border-gray-200 pl-2.5">VP : {result.vp >= 100 ? result.vp.toFixed(0) : result.vp.toFixed(2)} UP</span>
             </div>
 
             <div className="flex items-center gap-1.5">
