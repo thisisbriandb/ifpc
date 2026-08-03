@@ -385,6 +385,31 @@ def calculer_vp_bigelow(
     }
 
 
+def get_specific_diagnostic_message(micro_key: str, statut: str, lang: str = "fr") -> str:
+    is_ok = (statut == "conforme")
+    key_lower = micro_key.lower()
+    if lang == "en":
+        if "saccharo" in key_lower:
+            return "Pasteurisation conditions are sufficient to reduce risk of re-fermentation and in-bottle overpressure." if is_ok else "Pasteurisation conditions are not sufficient to reduce risk of re-fermentation and in-bottle overpressure."
+        elif "ecoli" in key_lower:
+            return "Pasteurisation conditions are sufficient to reduce sanitary risk associated with Escherichia coli." if is_ok else "Pasteurisation conditions are not sufficient to reduce sanitary risk associated with Escherichia coli."
+        elif "byssochlamys" in key_lower:
+            return "Pasteurisation conditions are sufficient to reduce organoleptic and sanitary risks associated with moulds." if is_ok else "Pasteurisation conditions are not sufficient to reduce organoleptic and sanitary risks associated with moulds."
+        elif "alicyclo" in key_lower:
+            return "Pasteurisation conditions are sufficient to reduce organoleptic risk associated with thermotolerant acidophilic bacteria." if is_ok else "Pasteurisation conditions are not sufficient to reduce organoleptic risk associated with thermotolerant acidophilic bacteria."
+        return "Pasteurisation conditions are compliant." if is_ok else "Pasteurisation conditions are insufficient."
+
+    if "saccharo" in key_lower:
+        return "Les conditions de pasteurisation sont suffisantes pour réduire le risque lié aux reprises de fermentation et aux surpressions en bouteille." if is_ok else "Les conditions de pasteurisation ne sont pas suffisantes pour réduire le risque lié aux reprises de fermentation et aux surpressions en bouteille."
+    elif "ecoli" in key_lower:
+        return "Les conditions de pasteurisation sont suffisantes pour réduire le risque sanitaire lié à Escherichia coli." if is_ok else "Les conditions de pasteurisation ne sont pas suffisantes pour réduire le risque sanitaire lié à Escherichia coli."
+    elif "byssochlamys" in key_lower:
+        return "Les conditions de pasteurisation sont suffisantes pour réduire les risques organoleptique et sanitaire liés aux moisissures." if is_ok else "Les conditions de pasteurisation ne sont pas suffisantes pour réduire les risques organoleptique et sanitaire liés aux moisissures."
+    elif "alicyclo" in key_lower:
+        return "Les conditions de pasteurisation sont suffisantes pour réduire le risque organoleptique lié aux bactéries acidophiles thermotolérantes." if is_ok else "Les conditions de pasteurisation ne sont pas suffisantes pour réduire le risque organoleptique lié aux bactéries acidophiles thermotolérantes."
+    return "Les conditions de pasteurisation sont suffisantes." if is_ok else "Les conditions de pasteurisation ne sont pas suffisantes."
+
+
 # ---------------------------------------------------------------------------
 # Évaluation complète
 # ---------------------------------------------------------------------------
@@ -413,7 +438,38 @@ def evaluer_pasteurisation(
     if produit is None:
         raise ValueError(f"Type de produit inconnu : {product_type}")
 
-    # Déterminer microorganisme et paramètres
+    lang = normalize_locale(locale)
+    is_flash = procede is not None and "flash" in str(procede).lower()
+    temps_calcul = [t / 60.0 for t in temps] if is_flash else temps
+
+    # --- Évaluation multi-microorganismes pour Jus de pomme ---
+    evaluations_multimicro = []
+    if product_type == "jus_pomme":
+        multimicro_keys = ["saccharo_jus", "ecoli", "byssochlamys_fulva", "alicyclo_std"]
+        for key in multimicro_keys:
+            m = MICROORGANISMES[key]
+            res_m = calculer_vp_bigelow(temperatures, temps_calcul, m["t_ref"], m["z"])
+            vp_m = res_m["vp"]
+            k_m = round(vp_m / m["d_ref"], 1) if m.get("d_ref") else 0.0
+            stat_m = "conforme" if k_m >= 15.0 else "insuffisant"
+            msg_m = get_specific_diagnostic_message(key, stat_m, lang)
+            evaluations_multimicro.append({
+                "key": key,
+                "nom": m["nom"],
+                "t_ref": m["t_ref"],
+                "z": m["z"],
+                "d_ref": m["d_ref"],
+                "vp": vp_m,
+                "k_calc": k_m,
+                "statut": stat_m,
+                "message": msg_m,
+                "courbe": {
+                    "temps": temps,
+                    "vp_cumulee": res_m["vp_cumulee"]
+                }
+            })
+
+    # Microorganisme principal / sélectionné
     micro_key = microorganisme or produit["microorganisme_defaut"]
     micro = MICROORGANISMES.get(micro_key)
 
@@ -423,27 +479,19 @@ def evaluer_pasteurisation(
         micro["vp_cible_min"] if micro else produit["vp_cible_min"]
     )
 
-    # --- Calcul VP ---
-    lang = normalize_locale(locale)
-    result_vp = calculer_vp_bigelow(temperatures, temps, effective_t_ref, effective_z)
+    result_vp = calculer_vp_bigelow(temperatures, temps_calcul, effective_t_ref, effective_z)
     vp_obtenue = result_vp["vp"]
+    result_vp["temps"] = temps
 
-    # --- Diagnostic basé sur k_calc ---
+    # --- Diagnostic basé sur k_calc >= 15.0 ---
     d_ref = micro.get("d_ref") if micro else None
     if d_ref and d_ref > 0:
-        k_calc = round(vp_obtenue / d_ref, 2)
+        k_calc = round(vp_obtenue / d_ref, 1)
     else:
-        k_calc = round(vp_obtenue / (effective_vp_cible / 5.0), 2) if effective_vp_cible > 0 else 0.0
+        k_calc = round(vp_obtenue / (effective_vp_cible / 5.0), 1) if effective_vp_cible > 0 else 0.0
 
-    if k_calc > 15.0:
-        statut = "conforme"
-    elif k_calc >= 12.0:
-        statut = "vigilance"
-    else:
-        statut = "insuffisant"
-
-    micro_nom = micro["nom"] if micro else micro_key
-    message = build_diagnostic_message(statut, vp_obtenue, effective_vp_cible, lang, microorganisme=micro_nom, product_type=product_type)
+    statut = "conforme" if k_calc >= 15.0 else "insuffisant"
+    message = get_specific_diagnostic_message(micro_key, statut, lang)
 
     # --- Risque ---
     risque = evaluer_risque(
@@ -451,7 +499,7 @@ def evaluer_pasteurisation(
         ph=ph, titre_alcool=titre_alcool, locale=lang,
     )
 
-    return {
+    out = {
         "vp": vp_obtenue,
         "vp_cible": effective_vp_cible,
         "k_calc": k_calc,
@@ -463,7 +511,9 @@ def evaluer_pasteurisation(
             "z": effective_z,
             "d_ref": micro["d_ref"] if micro else None,
             "microorganisme": micro["nom"] if micro else micro_key,
+            "microorganisme_key": micro_key,
             "produit": localize_product_name(product_type, lang),
+            "product_type": product_type,
             "clarification": localize_clarification_name(clarification, lang),
             "procede": localize_procede_name(procede, lang),
             "ph": ph,
@@ -476,6 +526,11 @@ def evaluer_pasteurisation(
             "vp_cumulee": result_vp["vp_cumulee"],
         },
     }
+
+    if evaluations_multimicro:
+        out["evaluations_multimicro"] = evaluations_multimicro
+
+    return out
 
 
 def _build_conseil(
