@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useMemo, useEffect } from "react";
+import { Suspense, useState, useMemo, useEffect, useCallback } from "react";
 import { AlertTriangle, Info, ShieldCheck, HelpCircle, ChevronLeft, ChevronRight, Settings2, X, RotateCcw } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
@@ -246,6 +246,17 @@ function BaremePageInner() {
     const holdMin = vp / L;
     return { micro, tRef, z, vp: +vp.toFixed(2), tC, L: +L.toFixed(4), holdMin, holdSec: holdMin * 60 };
   }, [productType, trouble, tConsigne, microKey, customTref, customZ, expertMode, vpCibleConfig]);
+
+  const handleReset = useCallback(() => {
+    setProductType("jus_pomme");
+    setPasteType("classique");
+    setTrouble(true);
+    setTConsigne("75");
+    setMicroKey("");
+    setCustomTref("");
+    setCustomZ("");
+    setExpertMode(false);
+  }, []);
 
   const verdict: Verdict | null = computed ? getVerdict(computed.holdMin, pasteType) : null;
 

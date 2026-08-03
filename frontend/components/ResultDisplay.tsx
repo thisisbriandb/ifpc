@@ -1,9 +1,21 @@
 "use client";
 
-// Icons removed from status display — minimalist dot + badge approach
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Info, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+
+interface EvaluationMicro {
+  key: string;
+  nom: string;
+  t_ref: number;
+  z: number;
+  d_ref: number;
+  vp: number;
+  k_calc: number;
+  statut: string;
+  message: string;
+}
 
 interface RisqueData {
   niveau: string;
@@ -15,15 +27,19 @@ interface RisqueData {
 interface ResultData {
   vp: number;
   vp_cible: number;
+  k_calc?: number;
   statut: string;
   message: string;
+  evaluations_multimicro?: EvaluationMicro[];
   risque: RisqueData;
   parametres: {
     t_ref: number;
     z: number;
     d_ref?: number;
     microorganisme: string;
+    microorganisme_key?: string;
     produit: string;
+    product_type?: string;
     lot_identifier?: string;
     clarification: string | null;
     procede: string | null;
@@ -41,236 +57,178 @@ interface Props {
   result: ResultData;
 }
 
-function computeInsights(result: ResultData) {
-  const k = result.parametres.d_ref && result.parametres.d_ref > 0
-    ? result.vp / result.parametres.d_ref
-    : null;
-
-  return { k };
-}
-
-function buildBaremeHref(result: ResultData) {
-  const params = new URLSearchParams();
-  const { produit, clarification, procede, microorganisme, t_ref, z, ph, titre_alcool } = result.parametres;
-  const productKeyByLabel: Record<string, string> = {
-    jus_pomme: "jus_pomme",
-    "jus de pomme": "jus_pomme",
-    cidre_doux: "cidre_doux",
-    "cidre doux": "cidre_doux",
-    cidre_demi_sec: "cidre_demi_sec",
-    "cidre demi-sec": "cidre_demi_sec",
-    cidre_brut: "cidre_brut",
-    "cidre brut": "cidre_brut",
-    cidre_extra_brut: "cidre_extra_brut",
-    "cidre extra-brut": "cidre_extra_brut",
-  };
-  const productKey = produit ? productKeyByLabel[produit.toLowerCase()] : null;
-
-  if (productKey) params.set("product_type", productKey);
-  if (clarification) params.set("clarification", clarification);
-  if (procede) params.set("procede", procede);
-  if (microorganisme) params.set("microorganisme", microorganisme);
-  if (Number.isFinite(t_ref)) params.set("t_ref", String(t_ref));
-  if (Number.isFinite(z)) params.set("z", String(z));
-  if (typeof ph === "number" && Number.isFinite(ph)) params.set("ph", String(ph));
-  if (typeof titre_alcool === "number" && Number.isFinite(titre_alcool)) params.set("titre_alcool", String(titre_alcool));
-
-  const query = params.toString();
-  return query ? `/bareme?${query}` : "/bareme";
-}
-
-const RING_COLORS: Record<string, { stroke: string; text: string; bg: string; badge: string }> = {
-  conforme:    { stroke: "var(--color-primary)", text: "text-brand-primary", bg: "bg-brand-primary/5", badge: "bg-brand-primary/8 text-brand-primary border-brand-primary/15" },
-  vigilance:   { stroke: "var(--color-accent)",  text: "text-brand-accent",  bg: "bg-brand-accent/5",  badge: "bg-brand-accent/8 text-brand-accent border-brand-accent/15" },
-  insuffisant: { stroke: "#dc2626",              text: "text-red-700",       bg: "bg-red-50",          badge: "bg-red-500/10 text-red-700 border-red-500/20" },
+const BADGE_STYLES: Record<string, string> = {
+  conforme: "bg-emerald-500/10 text-emerald-700 border-emerald-500/20 font-bold",
+  insuffisant: "bg-red-500/10 text-red-700 border-red-500/20 font-bold",
 };
 
-function ResultMessage({ result, showBaremeLink = false }: { result: ResultData; showBaremeLink?: boolean }) {
-  const { t } = useI18n();
-  const paragraphs = result.message.split("\n\n");
+export function ReductionFactorHelpModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  if (!isOpen) return null;
 
   return (
-    <>
-      {paragraphs.map((paragraph, index) => {
-        const isLast = index === paragraphs.length - 1;
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-black/[0.08] relative space-y-4">
+        <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+          <div className="flex items-center gap-2 text-brand-primary font-bold">
+            <Info className="w-5 h-5" />
+            <span>Facteur de réduction (k)</span>
+          </div>
+          <button onClick={onClose} className="p-1 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-        return (
-          <p key={index} className={index > 0 ? "mt-2" : undefined}>
-            {paragraph}
-            {showBaremeLink && isLast && (
-              <>
-                {" "}
-                <Link
-                  href={buildBaremeHref(result)}
-                  className="inline-flex items-center gap-1 text-brand-primary font-semibold hover:underline"
-                >
-                  {t("resultDisplay.openBaremeTool")}
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </>
-            )}
+        <div className="text-xs text-gray-600 leading-relaxed space-y-3">
+          <p>
+            <strong>Conforme pour un microorganisme de référence donné</strong>, dans l&apos;hypothèse d&apos;une population initiale de 10<sup>6</sup> ufc/mL avant pasteurisation et la présence de moins de 1 microorganisme pour 1 000 000 bouteilles après traitement thermique ce qui équivaut à une réduction logarithmique de 15.
           </p>
-        );
-      })}
-    </>
-  );
-}
+          <p className="bg-gray-50 p-3 rounded-xl border border-gray-100 italic text-gray-500">
+            Ce facteur correspond à la réduction logarithmique de la population microbienne. Par exemple, si ce facteur est de 6, cela équivaut à une division de la population par 10<sup>6</sup>, soit une division par 1 000 000.
+          </p>
+        </div>
 
-function VPGauge({ vp, vpCible, statut }: { vp: number; vpCible: number; statut: string }) {
-  const cfg = RING_COLORS[statut] || RING_COLORS.insuffisant;
-  const ratio = vpCible > 0 ? Math.min(vp / vpCible, 1) : 0;
-
-  const size = 110;
-  const strokeW = 6;
-  const r = (size - strokeW) / 2;
-  const circumference = 2 * Math.PI * r;
-  const filled = circumference * ratio;
-
-  return (
-    <div className="relative shrink-0" style={{ width: size, height: size }}>
-      <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#f3f4f6" strokeWidth={strokeW} />
-        <circle
-          cx={size / 2} cy={size / 2} r={r} fill="none"
-          stroke={cfg.stroke} strokeWidth={strokeW}
-          strokeDasharray={`${filled} ${circumference - filled}`}
-          strokeLinecap="round"
-          className="transition-all duration-700 ease-out"
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className={`text-xl font-bold font-mono tracking-tight leading-none ${cfg.text}`}>
-          {vp >= 100 ? vp.toFixed(0) : vp.toFixed(2)}
-        </span>
-        <span className="text-[9px] text-gray-400 uppercase tracking-wider mt-0.5">UP</span>
+        <div className="pt-2 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-brand-primary text-white font-semibold text-xs rounded-xl shadow-sm hover:opacity-90 transition-opacity"
+          >
+            Fermer
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-export function KPICards({ result }: Props) {
-  const { t } = useI18n();
-  const cfg = RING_COLORS[result.statut] || RING_COLORS.insuffisant;
-  const isInsufficient = result.statut === "insuffisant";
-
-  const maxTemp = Math.max(...(result.courbe?.temperatures || [0]));
-  const duree = result.courbe?.temps && result.courbe.temps.length > 0
-    ? Math.max(...result.courbe.temps)
-    : 0;
-
-  const { k } = computeInsights(result);
+export function MicroEvaluationCard({
+  evalItem,
+  onOpenHelp,
+}: {
+  evalItem: EvaluationMicro;
+  onOpenHelp: () => void;
+}) {
+  const isConforme = evalItem.statut === "conforme";
+  const badgeCls = BADGE_STYLES[evalItem.statut] || BADGE_STYLES.insuffisant;
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* ── VERDICT — circle + text side by side ── */}
-      <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8">
-        {/* Circular gauge */}
-        <VPGauge vp={result.vp} vpCible={result.vp_cible} statut={result.statut} />
+    <div className="bg-white rounded-2xl border border-black/[0.06] p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-md transition-shadow">
+      <div>
+        {/* Diagnostic message */}
+        <p className="text-xs text-gray-700 font-medium leading-relaxed mb-3">
+          {evalItem.message}
+        </p>
 
-        {/* Right: statut, conseil, k */}
-        <div className="flex-1 min-w-0 text-center sm:text-left">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-            <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded border ${cfg.badge}`}>
-              {result.statut}
-            </span>
-            <span className="text-xs font-mono text-gray-400">
-              / {result.vp_cible.toFixed(1)} UP
-            </span>
-            {k !== null && (
-              <span className="text-xs font-mono text-gray-400 border-l border-gray-200 pl-2.5 hidden sm:inline">
-                k = {k.toFixed(1)}
-              </span>
-            )}
-          </div>
+        {/* Micro-organisme de référence */}
+        <div className="text-[11px] text-gray-500 mb-1">
+          Microorganisme de référence :
+          <div className="font-bold text-gray-900 italic text-xs mt-0.5">{evalItem.nom}</div>
+        </div>
 
-          <div className="text-[13px] sm:text-sm text-gray-600 leading-relaxed mt-2 sm:mt-3 max-w-md mx-auto sm:mx-0">
-            <ResultMessage result={result} showBaremeLink={isInsufficient} />
-          </div>
+        {/* Reference parameters */}
+        <div className="text-[10px] text-gray-400 font-mono mt-1">
+          Tref : {evalItem.t_ref}°C ; Z : {evalItem.z}°C ; D : {evalItem.d_ref} min.
         </div>
       </div>
 
-      {/* ── METRICS — compact strip ── */}
-      <div className="grid grid-cols-2 sm:flex sm:items-center gap-0 rounded-xl border border-black/[0.06] bg-white overflow-hidden divide-x divide-y sm:divide-y-0 divide-black/[0.06]">
-        <div className="px-4 py-2.5 sm:flex-1">
-          <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("resultDisplay.maxTemperature")}</p>
-          <div className="flex items-baseline gap-0.5">
-            <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{maxTemp.toFixed(1)}</span>
-            <span className="text-[10px] text-gray-400">°C</span>
-          </div>
+      {/* Status & Reduction factor strip */}
+      <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+        <div>
+          <span className={`text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md border ${badgeCls}`}>
+            {isConforme ? "CONFORME" : "INSUFFISANT"}
+          </span>
         </div>
-        {duree > 0 && (
-          <div className="px-4 py-2.5 sm:flex-1">
-            <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("resultDisplay.cycleDuration")}</p>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{duree.toFixed(0)}</span>
-              <span className="text-[10px] text-gray-400">min</span>
-            </div>
-          </div>
-        )}
-        <div className="px-4 py-2.5 sm:flex-1 border-t-0 sm:border-t-0">
-          <p className="text-[9px] text-gray-400 uppercase tracking-wider">Tref</p>
-          <div className="flex items-baseline gap-0.5">
-            <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.t_ref}</span>
-            <span className="text-[10px] text-gray-400">°C</span>
-          </div>
-        </div>
-        {k !== null && result.parametres.d_ref && (
-          <div className="px-4 py-2.5 sm:flex-1">
-            <p className="text-[9px] text-gray-400 uppercase tracking-wider">D (Tref)</p>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{result.parametres.d_ref}</span>
-              <span className="text-[10px] text-gray-400">min</span>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
-export function ParametersTable({ result }: Props) {
-  const { t } = useI18n();
-  return (
-    <div className="bg-gray-50 rounded-lg border border-black/[0.06] overflow-hidden">
-      <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-6 gap-x-4">
-        {[
-          { label: t("resultDisplay.microorganism"), value: result.parametres.microorganisme },
-          { label: "Tref", value: `${result.parametres.t_ref} °C` },
-          { label: "Z", value: `${result.parametres.z} °C` },
-          { label: t("resultDisplay.clarification"), value: result.parametres.clarification },
-          { label: t("resultDisplay.process"), value: result.parametres.procede },
-        ].filter(i => i.value !== null && i.value !== undefined).map((item, idx) => (
-          <div key={idx}>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">{item.label}</p>
-            <p className="text-sm font-medium text-gray-900 capitalize">{item.value}</p>
-          </div>
-        ))}
+        <div className="text-right flex items-center gap-1.5">
+          <div className="text-[10px] text-gray-400 font-semibold uppercase">Facteur de réduction :</div>
+          <div className="text-sm font-bold font-mono text-gray-900">{evalItem.k_calc.toFixed(1)}</div>
+          <button
+            onClick={onOpenHelp}
+            className="text-gray-400 hover:text-brand-primary p-0.5 transition-colors"
+            title="Explication du facteur de réduction"
+          >
+            <Info className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
 export default function ResultDisplay({ result }: Props) {
-  const { t } = useI18n();
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const evaluations = result.evaluations_multimicro;
+
   return (
     <div className="space-y-6">
-      <KPICards result={result} />
+      <ReductionFactorHelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
 
-      {/* Bloc Analyse redessiné sans icône, avec une bordure gauche d'indication */}
-      <div className="bg-white rounded-lg border border-black/[0.06] overflow-hidden flex flex-col sm:flex-row">
-        <div className="w-full sm:w-1.5 h-1.5 sm:h-auto shrink-0" style={{ backgroundColor: result.risque.couleur }}></div>
-        <div className="p-5 flex-1">
-          <h4 className="font-bold text-brand-text mb-2">{t("resultDisplay.analysisTitle")}</h4>
-          <div className="text-sm text-gray-600 leading-relaxed mb-4">
-            <ResultMessage result={result} showBaremeLink={result.statut === "insuffisant"} />
+      {evaluations && evaluations.length > 0 ? (
+        /* Multi-microorganism grid for Jus de Pomme */
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-brand-text uppercase tracking-wider">
+              Analyse de conformité par microorganisme
+            </h3>
+            <button
+              onClick={() => setIsHelpOpen(true)}
+              className="flex items-center gap-1 text-xs font-semibold text-brand-primary hover:underline"
+            >
+              <Info className="w-3.5 h-3.5" />
+              <span>Qu&apos;est-ce que le facteur de réduction ?</span>
+            </button>
           </div>
 
-          <div className="inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-gray-50 border border-gray-100 text-gray-700">
-            <span className="uppercase text-[10px] tracking-wider text-gray-500">{t("resultDisplay.advice")}</span>
-            {result.risque.conseil}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {evaluations.map((evalItem) => (
+              <MicroEvaluationCard
+                key={evalItem.key}
+                evalItem={evalItem}
+                onOpenHelp={() => setIsHelpOpen(true)}
+              />
+            ))}
           </div>
         </div>
-      </div>
+      ) : (
+        /* Single microorganism display (Cidre / Expert mode) */
+        <div className="bg-white rounded-2xl border border-black/[0.06] p-6 space-y-4 shadow-sm">
+          <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+            <div>
+              <span className="text-[10px] text-gray-400 uppercase tracking-wider">Microorganisme de référence</span>
+              <h4 className="text-sm font-bold text-gray-900 italic">{result.parametres.microorganisme}</h4>
+            </div>
+            <span
+              className={`text-[10px] uppercase tracking-wider px-3 py-1 rounded-md border ${
+                BADGE_STYLES[result.statut] || BADGE_STYLES.insuffisant
+              }`}
+            >
+              {result.statut === "conforme" ? "CONFORME" : "INSUFFISANT"}
+            </span>
+          </div>
+
+          <p className="text-xs text-gray-700 leading-relaxed font-medium">
+            {result.message}
+          </p>
+
+          <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div className="text-[10px] font-mono text-gray-400">
+              Tref : {result.parametres.t_ref}°C ; Z : {result.parametres.z}°C ; D : {result.parametres.d_ref || "--"} min.
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] text-gray-400 font-semibold uppercase">Facteur de réduction :</span>
+              <span className="text-sm font-bold font-mono text-gray-900">
+                {(result.k_calc !== undefined && result.k_calc !== null) ? result.k_calc.toFixed(1) : (result.vp / (result.parametres.d_ref || 1)).toFixed(1)}
+              </span>
+              <button
+                onClick={() => setIsHelpOpen(true)}
+                className="text-gray-400 hover:text-brand-primary p-0.5 transition-colors"
+              >
+                <Info className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

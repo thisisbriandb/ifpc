@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, Suspense } from "react";
 import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, Settings2, Table as TableIcon, X, Activity, AlertTriangle, Plus, Trash2, HelpCircle, RotateCcw } from "lucide-react";
 import ProductSelector from "@/components/ProductSelector";
-import { KPICards } from "@/components/ResultDisplay";
+import ResultDisplay from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
 import HelpModal from "@/components/HelpModal";
 import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById } from "@/lib/api";
@@ -24,8 +24,10 @@ interface RisqueData {
 interface PasteurisationResult {
   vp: number;
   vp_cible: number;
+  k_calc?: number;
   statut: string;
   message: string;
+  evaluations_multimicro?: any[];
   risque: RisqueData;
   parametres: {
     t_ref: number;
@@ -639,8 +641,8 @@ function ControlePageInner() {
               </div>
             </div>
 
-            {/* ── Decision block: verdict + metrics (tight) ── */}
-            <KPICards result={result} />
+            {/* ── Decision block: verdict + metrics ── */}
+            <ResultDisplay result={result} />
 
             {/* ── Explanation: chart (separated) ── */}
             <div className="mt-6 sm:mt-8 bg-white rounded-lg border border-black/[0.06] overflow-hidden">
@@ -650,6 +652,7 @@ function ControlePageInner() {
               <div className="px-2 sm:px-5 py-4 h-[300px] sm:h-[360px]">
                 <TemperatureChart
                   courbe={result.courbe}
+                  evaluations={result.evaluations_multimicro}
                   tRef={result.parametres.t_ref}
                   vpCible={result.vp_cible}
                   statut={result.statut}
