@@ -164,7 +164,7 @@
     "alertAlcohol": "Alcool {n}% vol. — protection partielle, la VP cible peut être abaissée en mode expert.",
     "verdictOk": "Réalisable",
     "verdictDifficult": "Exigeant",
-    "verdictImpossible": "Irréalisable",
+    "verdictImpossible": "Inadapté",
     "narrativeOk": "À {temp}°C, le temps nécessaire pour réduire le risque lié aux moisissures ({micro}) est satisfaisant.",
     "narrativeDifficult": "À {temp}°C, le temps nécessaire pour réduire le risque lié aux moisissures ({micro}) est trop long. Il est recommandé d'augmenter la température.",
     "narrativeImpossible": "À {temp}°C, le temps nécessaire pour réduire le risque lié aux moisissures ({micro}) n’est pas adapté. Il est recommandé d'augmenter significativement la température.",
@@ -177,7 +177,7 @@
     "helpTitle": "Aide — Choix du barème",
     "backToConfig": "Modifier la configuration",
     "viewVerdict": "Voir le résultat",
-    "defaultHelp": "## Comment utiliser cet outil\n\n**L'aide au choix du barème** vous permet de déterminer le temps de maintien nécessaire pour pasteuriser votre produit à une température donnée.\n\n### Étapes\n\n1. **Sélectionnez votre produit** (jus de pomme, cidre, etc.) et précisez s'il est trouble ou limpide.\n2. **Choisissez le procédé** : Flash-pasteurisation, Pasteurisation classique ou Pasteurisation tunnel.\n3. **Entrez la température de consigne** en °C.\n\nLe système calcule automatiquement le temps de maintien nécessaire pour atteindre la VP cible en fonction du micro-organisme de référence.\n\n### Mode expert\n\nLe mode expert permet de :\n- Changer le micro-organisme cible\n- Ajuster manuellement Tref et Z\n\n### Interprétation\n\n- **Réalisable** : le temps de maintien est compatible avec le procédé choisi.\n- **Exigeant** : le temps est long, envisagez d'augmenter la température.\n- **Irréalisable** : le temps est trop long, augmentez significativement la température."
+    "defaultHelp": "## Comment utiliser cet outil\n\n**L'aide au choix du barème** vous permet de déterminer le temps de maintien nécessaire pour pasteuriser votre produit à une température donnée.\n\n### Étapes\n\n1. **Sélectionnez votre produit** (jus de pomme, cidre, etc.) et précisez s'il est trouble ou limpide.\n2. **Choisissez le procédé** : Flash-pasteurisation, Pasteurisation classique ou Pasteurisation tunnel.\n3. **Entrez la température de consigne** en °C.\n\nLe système calcule automatiquement le temps de maintien nécessaire pour atteindre la VP cible en fonction du micro-organisme de référence.\n\n### Mode expert\n\nLe mode expert permet de :\n- Changer le micro-organisme cible\n- Ajuster manuellement Tref et Z\n\n### Interprétation\n\n- **Réalisable** : le temps de maintien est compatible avec le procédé choisi.\n- **Exigeant** : le temps est long, envisagez d'augmenter la température.\n- **Inadapté** : le temps est trop long, augmentez significativement la température."
   },
   "productSelector": {
     "product": "Produit",

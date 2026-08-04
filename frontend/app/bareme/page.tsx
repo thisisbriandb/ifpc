@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState, useMemo, useEffect, useCallback } from "react";
-import { AlertTriangle, Info, ShieldCheck, HelpCircle, ChevronLeft, ChevronRight, Settings2, X, RotateCcw } from "lucide-react";
+import { AlertTriangle, Info, ShieldCheck, HelpCircle, ChevronLeft, ChevronRight, Settings2, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
@@ -372,6 +372,11 @@ function BaremePageInner() {
       process: pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel",
       micro: microName,
     };
+    if (computed.isMulti) {
+      if (verdict === "ok") return `À ${p.temp}°C, le temps de maintien recommandé pour assainir le Jus de pomme (4 microorganismes de référence) est de ${p.time}, déterminé par le facteur limitant (${p.micro}).`;
+      if (verdict === "difficult") return `À ${p.temp}°C, le temps de maintien nécessaire pour le Jus de pomme est exigeant (${p.time}), le facteur limitant étant ${p.micro}.`;
+      return `À ${p.temp}°C, le temps de maintien global pour le Jus de pomme est inadapté avec le procédé ${p.process} (${p.time}), en raison des exigences du facteur limitant (${p.micro}).`;
+    }
     if (verdict === "ok") return t("bareme.narrativeOk", p);
     if (verdict === "difficult") return t("bareme.narrativeDifficult", p);
     return t("bareme.narrativeImpossible", p);
@@ -424,14 +429,6 @@ function BaremePageInner() {
             <div className="flex items-center justify-between px-4 py-3 border-b border-black/[0.04]">
               <h2 className="font-bold text-xs uppercase tracking-wider text-gray-500">Configuration</h2>
               <div className="flex items-center gap-1.5">
-                <button
-                  onClick={handleReset}
-                  title={t("common.reset")}
-                  className="flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-brand-primary transition-colors px-2 py-1 rounded-md hover:bg-gray-100"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>{t("common.reset")}</span>
-                </button>
                 {canExpert && (
                   <button
                     onClick={() => setExpertMode(!expertMode)}
@@ -567,45 +564,41 @@ function BaremePageInner() {
           {computed && verdict && vcfg ? (
             <div className="max-w-3xl mx-auto space-y-4">
 
-              {/* ── Primary: Gauge + Narrative ── */}
-              <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden shadow-sm">
-                <div className="px-4 py-6 sm:px-6">
-                  <div className="flex flex-col sm:flex-row items-center gap-6">
-                    {/* Circular gauge */}
-                    <HoldTimeGauge holdSec={computed.holdSec} holdMin={computed.holdMin} pasteType={pasteType} verdict={verdict} />
+              {/* ── Primary: Gauge + Narrative (Cidre / Expert Mode) ── */}
+              {!computed.isMulti && (
+                <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden shadow-sm">
+                  <div className="px-4 py-6 sm:px-6">
+                    <div className="flex flex-col sm:flex-row items-center gap-6">
+                      {/* Circular gauge */}
+                      <HoldTimeGauge holdSec={computed.holdSec} holdMin={computed.holdMin} pasteType={pasteType} verdict={verdict} />
 
-                    {/* Right: verdict + narrative */}
-                    <div className="flex-1 min-w-0 text-center sm:text-left">
-                      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 mb-2">
-                        <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded border ${vcfg.badge}`}>
-                          {t(`bareme.${VERDICT_LABEL[verdict]}`)}
-                        </span>
-                        <span className="text-xs font-mono text-gray-400">
-                          {t("bareme.atTemp", { temp: String(computed.tC) })}
-                        </span>
-                      </div>
-
-                      <p className="text-[13px] text-gray-600 leading-relaxed">
-                        {narrative}
-                      </p>
-
-                      {computed.isMulti && computed.limiting && (
-                        <div className="mt-3 p-2.5 bg-brand-primary/5 border border-brand-primary/15 rounded-xl text-xs text-brand-primary font-medium">
-                          <strong>Facteur limitant à {computed.tC}°C :</strong> <span className="italic">{computed.limiting.nom}</span> (nécessite {formatHold(computed.limiting)})
+                      {/* Right: verdict + narrative */}
+                      <div className="flex-1 min-w-0 text-center sm:text-left">
+                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 mb-2">
+                          <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded border ${vcfg.badge}`}>
+                            {t(`bareme.${VERDICT_LABEL[verdict]}`)}
+                          </span>
+                          <span className="text-xs font-mono text-gray-400">
+                            {t("bareme.atTemp", { temp: String(computed.tC) })}
+                          </span>
                         </div>
-                      )}
+
+                        <p className="text-[13px] text-gray-600 leading-relaxed">
+                          {narrative}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Context strip */}
-                <div className="px-4 sm:px-6 py-2.5 bg-gray-50/80 border-t border-black/[0.04] flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] text-gray-400 text-center">
-                  <span>{t("bareme.vpCible")} <strong className="text-gray-600">{computed.vp} {t("bareme.up")}</strong></span>
-                  <span>{t("bareme.lethalRate")} <strong className="text-gray-600">{computed.L}</strong></span>
-                  <span className="hidden sm:inline">{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel"}</strong></span>
-                  <span className="hidden sm:inline">{trouble ? t("bareme.turbid") : t("bareme.clear")}</span>
+                  {/* Context strip */}
+                  <div className="px-4 sm:px-6 py-2.5 bg-gray-50/80 border-t border-black/[0.04] flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] text-gray-400 text-center">
+                    <span>{t("bareme.vpCible")} <strong className="text-gray-600">{computed.vp} {t("bareme.up")}</strong></span>
+                    <span>{t("bareme.lethalRate")} <strong className="text-gray-600">{computed.L}</strong></span>
+                    <span className="hidden sm:inline">{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel"}</strong></span>
+                    <span className="hidden sm:inline">{trouble ? t("bareme.turbid") : t("bareme.clear")}</span>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* ── Alerts — integrated, not afterthought ── */}
               {alertes.length > 0 && (
@@ -638,6 +631,14 @@ function BaremePageInner() {
                     {computed.evaluations.map((item) => {
                       const vcfgItem = VERDICT_CONFIG[item.verdict];
                       const isLimiting = item.key === computed.limiting?.key;
+                      const timeStr = formatHold(item);
+                      const procName = pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel";
+                      
+                      const cardMessage = item.verdict === "ok"
+                        ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est parfaitement réalisable en ${procName}.`
+                        : item.verdict === "difficult"
+                        ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est exigeant en ${procName}. Envisagez d'augmenter la température.`
+                        : `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est inadapté en ${procName}. Il est recommandé d'augmenter la température.`;
 
                       return (
                         <div
@@ -668,12 +669,19 @@ function BaremePageInner() {
                             </span>
                           </div>
 
-                          {/* Body — Temps de maintien requis */}
-                          <div className="flex items-baseline justify-between py-1">
-                            <span className="text-xs text-gray-500 font-medium">Temps de maintien requis :</span>
-                            <span className="text-base sm:text-lg font-bold font-mono text-gray-900">
-                              {formatHold(item)}
-                            </span>
+                          {/* Body — Temps de maintien + Interprétation propre */}
+                          <div className="space-y-2 flex-1">
+                            <div className="flex items-baseline justify-between">
+                              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+                                Temps de maintien requis
+                              </span>
+                              <span className="text-base sm:text-lg font-bold font-mono text-gray-900">
+                                {timeStr}
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                              {cardMessage}
+                            </p>
                           </div>
 
                           {/* Footer — Paramètres & VP Cible */}
