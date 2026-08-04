@@ -604,7 +604,6 @@ function BaremePageInner() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {evalList.map((item) => {
                         const vcfgItem = VERDICT_CONFIG[item.verdict];
-                        const isLimiting = computed.isMulti && item.key === computed.limiting?.key;
                         const timeStr = formatHold(item);
                         const procName = pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel";
                         
@@ -617,23 +616,14 @@ function BaremePageInner() {
                         return (
                           <div
                             key={item.key}
-                            className={`bg-white rounded-2xl border p-5 flex flex-col justify-between space-y-4 shadow-sm transition-all ${
-                              isLimiting ? "border-brand-primary/40 ring-2 ring-brand-primary/10" : "border-black/[0.06]"
-                            }`}
+                            className="bg-white rounded-2xl border border-black/[0.06] p-5 flex flex-col justify-between space-y-4 shadow-sm transition-all"
                           >
                             {/* Header */}
                             <div className="flex items-center justify-between border-b border-gray-100 pb-3 gap-2">
                               <div>
-                                <div className="flex items-center gap-1.5">
-                                  <span className="text-[10px] text-gray-400 uppercase tracking-wider block">
-                                    Microorganisme de référence
-                                  </span>
-                                  {isLimiting && (
-                                    <span className="text-[9px] font-bold uppercase tracking-wider bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded">
-                                      Limitant
-                                    </span>
-                                  )}
-                                </div>
+                                <span className="text-[10px] text-gray-400 uppercase tracking-wider block">
+                                  Microorganisme de référence
+                                </span>
                                 <h4 className="text-xs sm:text-sm font-bold text-gray-900 italic leading-snug">
                                   {item.nom}
                                 </h4>
