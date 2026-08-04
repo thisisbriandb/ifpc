@@ -47,18 +47,26 @@ interface LabColorPickerProps {
   onChangeB: (v: number) => void;
 }
 
-// ── Component ──────────────────────────────────────────────────────────────
-
 const SIZE = 240;
 const RADIUS = SIZE / 2;
 const AB_RANGE = 128;
+
+// Presets de couleurs typiques de cidres
+const CIDER_PRESETS = [
+  { name: "Paille", L: 92, a: -1.5, b: 22 },
+  { name: "Jaune Or", L: 85, a: 4.0, b: 35 },
+  { name: "Ambré", L: 75, a: 12.0, b: 50 },
+  { name: "Cuivré", L: 65, a: 18.0, b: 58 },
+  { name: "Roux", L: 55, a: 22.0, b: 62 },
+];
 
 export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChangeB }: LabColorPickerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
+  const [pickerMode, setPickerMode] = useState<"cidre" | "full">("cidre");
 
-  // Draw the full a*b* Lab disc for the selected L* slice.
+  // Redraw canvas based on mode and L* value
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -68,72 +76,127 @@ export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChange
     const imageData = ctx.createImageData(SIZE, SIZE);
     const data = imageData.data;
 
-    for (let py = 0; py < SIZE; py++) {
-      for (let px = 0; px < SIZE; px++) {
-        const dx = px - RADIUS;
-        const dy = py - RADIUS;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+    if (pickerMode === "cidre") {
+      // Espace des cidres : a* in [-5, 30], b* in [0, 80]
+      for (let py = 0; py < SIZE; py++) {
+        const v = py / SIZE;
+        const bVal = 80 - v * 80;
 
-        const idx = (py * SIZE + px) * 4;
-        if (dist > RADIUS) {
-          data[idx] = 245; data[idx + 1] = 245; data[idx + 2] = 245; data[idx + 3] = 0;
-          continue;
+        for (let px = 0; px < SIZE; px++) {
+          const u = px / SIZE;
+          const aVal = -5 + u * 35;
+
+          const [X, Y, Z] = labToXyz(L, aVal, bVal);
+          const [r, g, bl] = xyzToSrgb(X, Y, Z);
+
+          const idx = (py * SIZE + px) * 4;
+          data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
         }
-
-        const aVal = (dx / RADIUS) * AB_RANGE;
-        const bVal = -(dy / RADIUS) * AB_RANGE; // y flipped: top = +b
-
-        const [X, Y, Z] = labToXyz(L, aVal, bVal);
-        const [r, g, bl] = xyzToSrgb(X, Y, Z);
-        data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
       }
-    }
-    ctx.putImageData(imageData, 0, 0);
+      ctx.putImageData(imageData, 0, 0);
 
-    // Draw grid, axis lines, and Lab direction labels.
-    ctx.strokeStyle = "rgba(0,0,0,0.08)";
-    ctx.lineWidth = 1;
-    for (let value = -100; value <= 100; value += 10) {
-      const x = RADIUS + (value / AB_RANGE) * RADIUS;
-      const y = RADIUS - (value / AB_RANGE) * RADIUS;
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, SIZE); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(SIZE, y); ctx.stroke();
-    }
-    ctx.strokeStyle = "rgba(0,0,0,0.18)";
-    [0.25, 0.5, 0.75, 1].forEach((ratio) => {
-      ctx.beginPath();
-      ctx.arc(RADIUS, RADIUS, RADIUS * ratio, 0, Math.PI * 2);
-      ctx.stroke();
-    });
-    ctx.beginPath(); ctx.moveTo(0, RADIUS); ctx.lineTo(SIZE, RADIUS); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(RADIUS, 0); ctx.lineTo(RADIUS, SIZE); ctx.stroke();
+      // Grille pour l'espace des cidres
+      ctx.strokeStyle = "rgba(0,0,0,0.12)";
+      ctx.lineWidth = 1;
 
-    ctx.font = "bold 10px system-ui";
-    ctx.fillStyle = "rgba(17,24,39,0.5)";
-    ctx.textAlign = "center";
-    ctx.fillText("+b*", RADIUS, 13);
-    ctx.fillText("−b*", RADIUS, SIZE - 6);
-    ctx.textAlign = "left";
-    ctx.fillText("+a*", SIZE - 25, RADIUS - 6);
-    ctx.textAlign = "right";
-    ctx.fillText("−a*", 25, RADIUS - 6);
-  }, [L]);
+      // Lignes verticales pour a* (-5, 5, 15, 25)
+      [-5, 5, 15, 25].forEach((aTick) => {
+        const x = ((aTick - (-5)) / 35) * SIZE;
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, SIZE); ctx.stroke();
+      });
+
+      // Lignes horizontales pour b* (20, 40, 60)
+      [20, 40, 60].forEach((bTick) => {
+        const y = ((80 - bTick) / 80) * SIZE;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(SIZE, y); ctx.stroke();
+      });
+
+      ctx.font = "bold 9px system-ui";
+      ctx.fillStyle = "rgba(17,24,39,0.6)";
+      ctx.textAlign = "center";
+      ctx.fillText("+b* = 80", RADIUS, 12);
+      ctx.fillText("b* = 0", RADIUS, SIZE - 5);
+      ctx.textAlign = "left";
+      ctx.fillText("a* = 30", SIZE - 38, RADIUS);
+      ctx.fillText("a* = -5", 5, RADIUS);
+
+    } else {
+      // Espace complet CIELAB : disque a*, b* in [-128, +128]
+      for (let py = 0; py < SIZE; py++) {
+        for (let px = 0; px < SIZE; px++) {
+          const dx = px - RADIUS;
+          const dy = py - RADIUS;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          const idx = (py * SIZE + px) * 4;
+          if (dist > RADIUS) {
+            data[idx] = 245; data[idx + 1] = 245; data[idx + 2] = 245; data[idx + 3] = 0;
+            continue;
+          }
+
+          const aVal = (dx / RADIUS) * AB_RANGE;
+          const bVal = -(dy / RADIUS) * AB_RANGE;
+
+          const [X, Y, Z] = labToXyz(L, aVal, bVal);
+          const [r, g, bl] = xyzToSrgb(X, Y, Z);
+          data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+
+      // Grille et cercles pour l'espace complet
+      ctx.strokeStyle = "rgba(0,0,0,0.08)";
+      ctx.lineWidth = 1;
+      for (let value = -100; value <= 100; value += 10) {
+        const x = RADIUS + (value / AB_RANGE) * RADIUS;
+        const y = RADIUS - (value / AB_RANGE) * RADIUS;
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, SIZE); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(SIZE, y); ctx.stroke();
+      }
+      ctx.strokeStyle = "rgba(0,0,0,0.18)";
+      [0.25, 0.5, 0.75, 1].forEach((ratio) => {
+        ctx.beginPath();
+        ctx.arc(RADIUS, RADIUS, RADIUS * ratio, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+      ctx.beginPath(); ctx.moveTo(0, RADIUS); ctx.lineTo(SIZE, RADIUS); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(RADIUS, 0); ctx.lineTo(RADIUS, SIZE); ctx.stroke();
+
+      ctx.font = "bold 10px system-ui";
+      ctx.fillStyle = "rgba(17,24,39,0.5)";
+      ctx.textAlign = "center";
+      ctx.fillText("+b*", RADIUS, 13);
+      ctx.fillText("−b*", RADIUS, SIZE - 6);
+      ctx.textAlign = "left";
+      ctx.fillText("+a*", SIZE - 25, RADIUS - 6);
+      ctx.textAlign = "right";
+      ctx.fillText("−a*", 25, RADIUS - 6);
+    }
+  }, [L, pickerMode]);
 
   // Convert mouse position to a*, b*
   const posToAb = useCallback((clientX: number, clientY: number) => {
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const px = clientX - rect.left;
-    const py = clientY - rect.top;
-    const dx = px - RADIUS;
-    const dy = py - RADIUS;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist > RADIUS) return; // outside disc
-    const aVal = Math.round(((dx / RADIUS) * AB_RANGE) * 10) / 10;
-    const bVal = Math.round((-(dy / RADIUS) * AB_RANGE) * 10) / 10;
-    onChangeA(aVal);
-    onChangeB(bVal);
-  }, [onChangeA, onChangeB]);
+    const px = Math.max(0, Math.min(SIZE, clientX - rect.left));
+    const py = Math.max(0, Math.min(SIZE, clientY - rect.top));
+
+    if (pickerMode === "cidre") {
+      const aVal = Math.round((-5 + (px / SIZE) * 35) * 10) / 10;
+      const bVal = Math.round((80 - (py / SIZE) * 80) * 10) / 10;
+      onChangeA(aVal);
+      onChangeB(bVal);
+    } else {
+      const dx = px - RADIUS;
+      const dy = py - RADIUS;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > RADIUS) return;
+      const aVal = Math.round(((dx / RADIUS) * AB_RANGE) * 10) / 10;
+      const bVal = Math.round((-(dy / RADIUS) * AB_RANGE) * 10) / 10;
+      onChangeA(aVal);
+      onChangeB(bVal);
+    }
+  }, [pickerMode, onChangeA, onChangeB]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     setDragging(true);
@@ -148,29 +211,91 @@ export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChange
 
   const handlePointerUp = () => setDragging(false);
 
-  // Position of cursor on disc
-  const cursorX = Math.max(0, Math.min(SIZE, RADIUS + (a / AB_RANGE) * RADIUS));
-  const cursorY = Math.max(0, Math.min(SIZE, RADIUS - (b / AB_RANGE) * RADIUS));
+  // Position of cursor on disc / rect
+  let cursorX: number;
+  let cursorY: number;
+
+  if (pickerMode === "cidre") {
+    cursorX = Math.max(0, Math.min(SIZE, ((a - (-5)) / 35) * SIZE));
+    cursorY = Math.max(0, Math.min(SIZE, ((80 - b) / 80) * SIZE));
+  } else {
+    cursorX = Math.max(0, Math.min(SIZE, RADIUS + (a / AB_RANGE) * RADIUS));
+    cursorY = Math.max(0, Math.min(SIZE, RADIUS - (b / AB_RANGE) * RADIUS));
+  }
+
   const currentHex = labToHex(L, a, b);
 
   return (
     <div className="space-y-3">
-      {/* a*b* disc */}
-      <div className="flex flex-col items-center">
-        <div className="w-full flex items-center justify-between mb-2">
-          <p className="text-[10px] font-bold text-gray-400 uppercase">Cercle Lab <span className="normal-case">a*/b*</span></p>
-          <span className="text-[10px] font-mono font-bold text-gray-400">L* {L.toFixed(0)}</span>
+      {/* Mode Switch Header */}
+      <div className="flex items-center justify-between">
+        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+          Modèle de couleur
+        </p>
+        <div className="flex bg-gray-100 p-0.5 rounded-lg border border-black/[0.04]">
+          <button
+            type="button"
+            onClick={() => setPickerMode("cidre")}
+            className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all ${
+              pickerMode === "cidre"
+                ? "bg-white text-brand-primary shadow-sm"
+                : "text-gray-400 hover:text-gray-600"
+            }`}
+          >
+            Espace Cidres
+          </button>
+          <button
+            type="button"
+            onClick={() => setPickerMode("full")}
+            className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all ${
+              pickerMode === "full"
+                ? "bg-white text-brand-primary shadow-sm"
+                : "text-gray-400 hover:text-gray-600"
+            }`}
+          >
+            Espace complet
+          </button>
         </div>
+      </div>
+
+      {/* Preset Chips (Espace Cidres) */}
+      {pickerMode === "cidre" && (
+        <div className="flex flex-wrap gap-1.5 justify-center py-1">
+          {CIDER_PRESETS.map((preset) => {
+            const hex = labToHex(preset.L, preset.a, preset.b);
+            return (
+              <button
+                key={preset.name}
+                type="button"
+                onClick={() => {
+                  onChangeL(preset.L);
+                  onChangeA(preset.a);
+                  onChangeB(preset.b);
+                }}
+                className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 hover:bg-gray-100 border border-black/[0.05] rounded-lg transition-all text-[10px] font-medium text-gray-700"
+              >
+                <div className="w-2.5 h-2.5 rounded-full border border-black/10" style={{ backgroundColor: hex }} />
+                <span>{preset.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Canvas */}
+      <div className="flex flex-col items-center">
         <div
           ref={containerRef}
-          className="relative max-w-full rounded-full shadow-inner border border-black/[0.06] bg-gray-50"
+          className={`relative max-w-full shadow-inner border border-black/[0.06] bg-gray-50 overflow-hidden ${
+            pickerMode === "cidre" ? "rounded-2xl" : "rounded-full"
+          }`}
           style={{ width: SIZE, height: SIZE }}
         >
           <canvas
             ref={canvasRef}
             width={SIZE}
             height={SIZE}
-            className="rounded-full cursor-crosshair block"
+            className={`cursor-crosshair block ${pickerMode === "cidre" ? "rounded-2xl" : "rounded-full"}`}
             style={{ width: SIZE, height: SIZE }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}

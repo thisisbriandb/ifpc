@@ -112,36 +112,38 @@ export function MicroEvaluationCard({
 
   return (
     <div className="bg-white rounded-2xl border border-black/[0.06] p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-md transition-shadow">
-      <div>
-        {/* Diagnostic message */}
-        <p className="text-xs text-gray-700 font-medium leading-relaxed mb-3">
-          {evalItem.message}
-        </p>
-
-        {/* Micro-organisme de référence */}
-        <div className="text-[11px] text-gray-500 mb-1">
-          Microorganisme de référence :
-          <div className="font-bold text-gray-900 italic text-xs mt-0.5">{evalItem.nom}</div>
+      {/* Header — Micro-organisme de référence & Badge de statut */}
+      <div className="flex items-center justify-between border-b border-gray-100 pb-3 gap-2">
+        <div>
+          <span className="text-[10px] text-gray-400 uppercase tracking-wider block">
+            Microorganisme de référence
+          </span>
+          <h4 className="text-xs sm:text-sm font-bold text-gray-900 italic leading-snug">
+            {evalItem.nom}
+          </h4>
         </div>
-
-        {/* Reference parameters & VP */}
-        <div className="text-[10px] text-gray-500 font-mono mt-2 pt-2 border-t border-dashed border-gray-100 flex flex-wrap items-center justify-between gap-1">
-          <span>Tref : {evalItem.t_ref}°C ; Z : {evalItem.z}°C ; D : {evalItem.d_ref} min.</span>
-          <span className="font-bold text-brand-primary">VP : {evalItem.vp >= 100 ? evalItem.vp.toFixed(0) : evalItem.vp.toFixed(2)} UP</span>
-        </div>
+        <span className={`text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md border shrink-0 ${badgeCls}`}>
+          {isConforme ? "CONFORME" : "INSUFFISANT"}
+        </span>
       </div>
 
-      {/* Status & Reduction factor strip */}
-      <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-        <div>
-          <span className={`text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md border ${badgeCls}`}>
-            {isConforme ? "CONFORME" : "INSUFFISANT"}
+      {/* Body — Message de diagnostic */}
+      <p className="text-xs text-gray-700 leading-relaxed font-medium flex-1">
+        {evalItem.message}
+      </p>
+
+      {/* Footer — Paramètres, VP & Facteur de réduction */}
+      <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div className="text-[10px] font-mono text-gray-500 flex flex-wrap items-center gap-2">
+          <span>Tref : {evalItem.t_ref}°C ; Z : {evalItem.z}°C ; D : {evalItem.d_ref} min.</span>
+          <span className="font-bold text-brand-primary border-l border-gray-200 pl-2">
+            VP : {evalItem.vp >= 100 ? evalItem.vp.toFixed(0) : evalItem.vp.toFixed(2)} UP
           </span>
         </div>
 
-        <div className="text-right flex items-center gap-1.5">
-          <div className="text-[10px] text-gray-400 font-semibold uppercase">Facteur de réduction :</div>
-          <div className="text-sm font-bold font-mono text-gray-900">{evalItem.k_calc.toFixed(1)}</div>
+        <div className="flex items-center gap-1.5 ml-auto">
+          <span className="text-[10px] text-gray-400 font-semibold uppercase">Facteur de réduction :</span>
+          <span className="text-sm font-bold font-mono text-gray-900">{evalItem.k_calc.toFixed(1)}</span>
           <button
             onClick={onOpenHelp}
             className="text-gray-400 hover:text-brand-primary p-0.5 transition-colors"
