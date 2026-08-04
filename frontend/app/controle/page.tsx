@@ -722,7 +722,6 @@ function ControlePageInner() {
                           {t("controle.time")} ({procede === "flash" || result.parametres.procede?.toLowerCase().includes("flash") ? "sec" : "min"})
                         </th>
                         <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.temp")} (°C)</th>
-                        <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.rawDataVp")}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
@@ -733,7 +732,6 @@ function ControlePageInner() {
                           <tr key={idx} className="hover:bg-gray-50 transition-colors">
                             <td className="px-5 py-2.5 font-mono text-gray-600">{timeDisplay}</td>
                             <td className="px-5 py-2.5 font-mono font-medium text-gray-900">{result.courbe.temperatures[idx].toFixed(1)}</td>
-                            <td className="px-5 py-2.5 font-mono text-brand-primary/80 font-medium">{result.courbe.vp_cumulee[idx].toFixed(3)}</td>
                           </tr>
                         );
                       })}

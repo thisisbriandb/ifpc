@@ -132,13 +132,10 @@ export function MicroEvaluationCard({
         {evalItem.message}
       </p>
 
-      {/* Footer — Paramètres, VP & Facteur de réduction */}
+      {/* Footer — Paramètres & Facteur de réduction */}
       <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="text-[10px] font-mono text-gray-500 flex flex-wrap items-center gap-2">
           <span>Tref : {evalItem.t_ref}°C ; Z : {evalItem.z}°C ; D : {evalItem.d_ref} min.</span>
-          <span className="font-bold text-brand-primary border-l border-gray-200 pl-2">
-            VP : {evalItem.vp >= 100 ? evalItem.vp.toFixed(0) : evalItem.vp.toFixed(2)} UP
-          </span>
         </div>
 
         <div className="flex items-center gap-1.5 ml-auto">
@@ -161,78 +158,48 @@ export default function ResultDisplay({ result }: Props) {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const evaluations = result.evaluations_multimicro;
 
+  const singleEval: EvaluationMicro = {
+    key: result.parametres.microorganisme_key || "single",
+    nom: result.parametres.microorganisme,
+    t_ref: result.parametres.t_ref,
+    z: result.parametres.z,
+    d_ref: result.parametres.d_ref || 1.0,
+    vp: result.vp,
+    k_calc: result.k_calc !== undefined && result.k_calc !== null ? result.k_calc : result.vp / (result.parametres.d_ref || 1),
+    statut: result.statut,
+    message: result.message,
+  };
+
+  const evalList = (evaluations && evaluations.length > 0) ? evaluations : [singleEval];
+
   return (
     <div className="space-y-6">
       <ReductionFactorHelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
 
-      {evaluations && evaluations.length > 0 ? (
-        /* Multi-microorganism grid for Jus de Pomme */
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-brand-text uppercase tracking-wider">
-              Analyse de conformité par microorganisme
-            </h3>
-            <button
-              onClick={() => setIsHelpOpen(true)}
-              className="flex items-center gap-1 text-xs font-semibold text-brand-primary hover:underline"
-            >
-              <Info className="w-3.5 h-3.5" />
-              <span>Qu&apos;est-ce que le facteur de réduction ?</span>
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {evaluations.map((evalItem) => (
-              <MicroEvaluationCard
-                key={evalItem.key}
-                evalItem={evalItem}
-                onOpenHelp={() => setIsHelpOpen(true)}
-              />
-            ))}
-          </div>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-brand-text uppercase tracking-wider">
+            Analyse de conformité par microorganisme
+          </h3>
+          <button
+            onClick={() => setIsHelpOpen(true)}
+            className="flex items-center gap-1 text-xs font-semibold text-brand-primary hover:underline"
+          >
+            <Info className="w-3.5 h-3.5" />
+            <span>Qu&apos;est-ce que le facteur de réduction ?</span>
+          </button>
         </div>
-      ) : (
-        /* Single microorganism display (Cidre / Expert mode) */
-        <div className="bg-white rounded-2xl border border-black/[0.06] p-6 space-y-4 shadow-sm">
-          <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-            <div>
-              <span className="text-[10px] text-gray-400 uppercase tracking-wider">Microorganisme de référence</span>
-              <h4 className="text-sm font-bold text-gray-900 italic">{result.parametres.microorganisme}</h4>
-            </div>
-            <span
-              className={`text-[10px] uppercase tracking-wider px-3 py-1 rounded-md border ${
-                BADGE_STYLES[result.statut] || BADGE_STYLES.insuffisant
-              }`}
-            >
-              {result.statut === "conforme" ? "CONFORME" : "INSUFFISANT"}
-            </span>
-          </div>
 
-          <p className="text-xs text-gray-700 leading-relaxed font-medium">
-            {result.message}
-          </p>
-
-          <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div className="text-[10px] font-mono text-gray-500 flex flex-wrap items-center gap-3">
-              <span>Tref : {result.parametres.t_ref}°C ; Z : {result.parametres.z}°C ; D : {result.parametres.d_ref || "--"} min.</span>
-              <span className="font-bold text-brand-primary border-l border-gray-200 pl-2.5">VP : {result.vp >= 100 ? result.vp.toFixed(0) : result.vp.toFixed(2)} UP</span>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] text-gray-400 font-semibold uppercase">Facteur de réduction :</span>
-              <span className="text-sm font-bold font-mono text-gray-900">
-                {(result.k_calc !== undefined && result.k_calc !== null) ? result.k_calc.toFixed(1) : (result.vp / (result.parametres.d_ref || 1)).toFixed(1)}
-              </span>
-              <button
-                onClick={() => setIsHelpOpen(true)}
-                className="text-gray-400 hover:text-brand-primary p-0.5 transition-colors"
-              >
-                <Info className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {evalList.map((evalItem) => (
+            <MicroEvaluationCard
+              key={evalItem.key}
+              evalItem={evalItem}
+              onOpenHelp={() => setIsHelpOpen(true)}
+            />
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }

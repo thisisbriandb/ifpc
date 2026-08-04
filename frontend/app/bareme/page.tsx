@@ -248,9 +248,8 @@ function BaremePageInner() {
       const multimicroKeys = ["saccharo_jus", "ecoli", "byssochlamys_fulva", "alicyclo_std"];
       const evaluations: MicroBaremeEval[] = multimicroKeys.map((key) => {
         const m = MICROORGANISMES[key];
-        const adminVp = vpCibleConfig[productType];
-        let vp = (adminVp !== undefined && key === produit.micro) ? adminVp : m.vp_cible;
-        if (trouble) vp *= 1.2;
+        let vp = m.vp_cible; // Standard 15-log reduction: VP = 15 * D_ref
+        if (trouble) vp *= 1.2; // +20% for turbid products
         const L = Math.pow(10, (tC - m.t_ref) / m.z);
         const holdMin = vp / L;
         const holdSec = holdMin * 60;
@@ -299,13 +298,8 @@ function BaremePageInner() {
     const z    = customZ    ? parseFloat(customZ)    : micro.z;
     if (!tRef || !z) return null;
 
-    const isDefaultMicro = effectiveKey === produit.micro;
-    const adminVp = vpCibleConfig[productType];
-    let vp = (adminVp !== undefined && (!expertMode || isDefaultMicro))
-      ? adminVp
-      : micro.vp_cible;
-
-    if (trouble) vp *= 1.2;
+    let vp = micro.vp_cible; // Standard 15-log reduction: VP = 15 * D_ref
+    if (trouble) vp *= 1.2; // +20% for turbid products
     const L = Math.pow(10, (tC - tRef) / z);
     const holdMin = vp / L;
     return {
@@ -564,43 +558,7 @@ function BaremePageInner() {
           {computed && verdict && vcfg ? (
             <div className="max-w-3xl mx-auto space-y-4">
 
-              {/* ── Primary: Gauge + Narrative (Cidre / Expert Mode) ── */}
-              {!computed.isMulti && (
-                <div className="bg-white rounded-2xl border border-black/[0.06] overflow-hidden shadow-sm">
-                  <div className="px-4 py-6 sm:px-6">
-                    <div className="flex flex-col sm:flex-row items-center gap-6">
-                      {/* Circular gauge */}
-                      <HoldTimeGauge holdSec={computed.holdSec} holdMin={computed.holdMin} pasteType={pasteType} verdict={verdict} />
-
-                      {/* Right: verdict + narrative */}
-                      <div className="flex-1 min-w-0 text-center sm:text-left">
-                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 mb-2">
-                          <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded border ${vcfg.badge}`}>
-                            {t(`bareme.${VERDICT_LABEL[verdict]}`)}
-                          </span>
-                          <span className="text-xs font-mono text-gray-400">
-                            {t("bareme.atTemp", { temp: String(computed.tC) })}
-                          </span>
-                        </div>
-
-                        <p className="text-[13px] text-gray-600 leading-relaxed">
-                          {narrative}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Context strip */}
-                  <div className="px-4 sm:px-6 py-2.5 bg-gray-50/80 border-t border-black/[0.04] flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] text-gray-400 text-center">
-                    <span>{t("bareme.vpCible")} <strong className="text-gray-600">{computed.vp} {t("bareme.up")}</strong></span>
-                    <span>{t("bareme.lethalRate")} <strong className="text-gray-600">{computed.L}</strong></span>
-                    <span className="hidden sm:inline">{t("bareme.process")} <strong className="text-gray-600">{pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel"}</strong></span>
-                    <span className="hidden sm:inline">{trouble ? t("bareme.turbid") : t("bareme.clear")}</span>
-                  </div>
-                </div>
-              )}
-
-              {/* ── Alerts — integrated, not afterthought ── */}
+              {/* ── Alerts ── */}
               {alertes.length > 0 && (
                 <div className="space-y-2">
                   {alertes.map((a, i) => {
@@ -620,110 +578,99 @@ function BaremePageInner() {
                 </div>
               )}
 
-              {/* ── Multi-microorganism Grid for Jus de Pomme ── */}
-              {computed.isMulti && computed.evaluations && (
-                <div className="space-y-3 pt-2">
-                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
-                    Temps de maintien requis par microorganisme
-                  </h3>
+              {/* ── Microorganism Evaluation Grid (Unified structure for Jus de Pomme and Cidre) ── */}
+              {(() => {
+                const evalList: MicroBaremeEval[] = computed.isMulti && computed.evaluations
+                  ? computed.evaluations
+                  : [{
+                      key: microKey || PRODUITS[productType]?.micro || "single",
+                      nom: computed.micro.nom,
+                      t_ref: computed.tRef,
+                      z: computed.z,
+                      d_ref: computed.micro.d_ref,
+                      vp_cible: computed.vp,
+                      L: computed.L,
+                      holdMin: computed.holdMin,
+                      holdSec: computed.holdSec,
+                      verdict: verdict,
+                    }];
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {computed.evaluations.map((item) => {
-                      const vcfgItem = VERDICT_CONFIG[item.verdict];
-                      const isLimiting = item.key === computed.limiting?.key;
-                      const timeStr = formatHold(item);
-                      const procName = pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel";
-                      
-                      const cardMessage = item.verdict === "ok"
-                        ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est parfaitement réalisable en ${procName}.`
-                        : item.verdict === "difficult"
-                        ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est exigeant en ${procName}. Envisagez d'augmenter la température.`
-                        : `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est inadapté en ${procName}. Il est recommandé d'augmenter la température.`;
+                return (
+                  <div className="space-y-3 pt-2">
+                    <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Temps de maintien requis par microorganisme
+                    </h3>
 
-                      return (
-                        <div
-                          key={item.key}
-                          className={`bg-white rounded-2xl border p-5 flex flex-col justify-between space-y-4 shadow-sm transition-all ${
-                            isLimiting ? "border-brand-primary/40 ring-2 ring-brand-primary/10" : "border-black/[0.06]"
-                          }`}
-                        >
-                          {/* Header */}
-                          <div className="flex items-center justify-between border-b border-gray-100 pb-3 gap-2">
-                            <div>
-                              <div className="flex items-center gap-1.5">
-                                <span className="text-[10px] text-gray-400 uppercase tracking-wider block">
-                                  Microorganisme de référence
-                                </span>
-                                {isLimiting && (
-                                  <span className="text-[9px] font-bold uppercase tracking-wider bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded">
-                                    Limitant
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {evalList.map((item) => {
+                        const vcfgItem = VERDICT_CONFIG[item.verdict];
+                        const isLimiting = computed.isMulti && item.key === computed.limiting?.key;
+                        const timeStr = formatHold(item);
+                        const procName = pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel";
+                        
+                        const cardMessage = item.verdict === "ok"
+                          ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est parfaitement réalisable en ${procName}.`
+                          : item.verdict === "difficult"
+                          ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est exigeant en ${procName}. Envisagez d'augmenter la température.`
+                          : `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est inadapté en ${procName}. Il est recommandé d'augmenter la température.`;
+
+                        return (
+                          <div
+                            key={item.key}
+                            className={`bg-white rounded-2xl border p-5 flex flex-col justify-between space-y-4 shadow-sm transition-all ${
+                              isLimiting ? "border-brand-primary/40 ring-2 ring-brand-primary/10" : "border-black/[0.06]"
+                            }`}
+                          >
+                            {/* Header */}
+                            <div className="flex items-center justify-between border-b border-gray-100 pb-3 gap-2">
+                              <div>
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-[10px] text-gray-400 uppercase tracking-wider block">
+                                    Microorganisme de référence
                                   </span>
-                                )}
+                                  {isLimiting && (
+                                    <span className="text-[9px] font-bold uppercase tracking-wider bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded">
+                                      Limitant
+                                    </span>
+                                  )}
+                                </div>
+                                <h4 className="text-xs sm:text-sm font-bold text-gray-900 italic leading-snug">
+                                  {item.nom}
+                                </h4>
                               </div>
-                              <h4 className="text-xs sm:text-sm font-bold text-gray-900 italic leading-snug">
-                                {item.nom}
-                              </h4>
-                            </div>
-                            <span className={`text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md border shrink-0 ${vcfgItem.badge}`}>
-                              {t(`bareme.${VERDICT_LABEL[item.verdict]}`)}
-                            </span>
-                          </div>
-
-                          {/* Body — Temps de maintien + Interprétation propre */}
-                          <div className="space-y-2 flex-1">
-                            <div className="flex items-baseline justify-between">
-                              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
-                                Temps de maintien requis
-                              </span>
-                              <span className="text-base sm:text-lg font-bold font-mono text-gray-900">
-                                {timeStr}
+                              <span className={`text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md border shrink-0 ${vcfgItem.badge}`}>
+                                {t(`bareme.${VERDICT_LABEL[item.verdict]}`)}
                               </span>
                             </div>
-                            <p className="text-xs text-gray-700 leading-relaxed font-medium">
-                              {cardMessage}
-                            </p>
-                          </div>
 
-                          {/* Footer — Paramètres & VP Cible */}
-                          <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 text-xs">
-                            <div className="text-[10px] font-mono text-gray-500 flex flex-wrap items-center gap-2">
-                              <span>Tref : {item.t_ref}°C ; Z : {item.z}°C ; D : {item.d_ref} min.</span>
-                              <span className="font-bold text-brand-primary border-l border-gray-200 pl-2">
-                                VP cible : {item.vp_cible} UP
-                              </span>
+                            {/* Body — Temps de maintien + Interprétation propre */}
+                            <div className="space-y-2 flex-1">
+                              <div className="flex items-baseline justify-between">
+                                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+                                  Temps de maintien requis
+                                </span>
+                                <span className="text-base sm:text-lg font-bold font-mono text-gray-900">
+                                  {timeStr}
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                                {cardMessage}
+                              </p>
+                            </div>
+
+                            {/* Footer — Paramètres de référence */}
+                            <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+                              <div className="text-[10px] font-mono text-gray-500 flex flex-wrap items-center gap-2">
+                                <span>Tref : {item.t_ref}°C ; Z : {item.z}°C ; D : {item.d_ref} min.</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
-
-              {/* ── Technical params — single micro (Cidre / Expert) ── */}
-              {!computed.isMulti && (
-                <div className="grid grid-cols-2 sm:flex sm:items-center gap-0 rounded-lg border border-black/[0.06] bg-white overflow-hidden divide-x divide-y sm:divide-y-0 divide-black/[0.06]">
-                  <div className="px-4 py-2.5 col-span-2 sm:flex-1">
-                    <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("bareme.micro")}</p>
-                    <p className="text-xs font-semibold text-brand-text truncate italic">{computed.micro.nom}</p>
-                  </div>
-                  <div className="px-4 py-2.5 sm:flex-1">
-                    <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("bareme.tref")}</p>
-                    <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{computed.tRef}</span>
-                    <span className="text-[10px] text-gray-400 ml-0.5">°C</span>
-                  </div>
-                  <div className="px-4 py-2.5 sm:flex-1">
-                    <p className="text-[9px] text-gray-400 uppercase tracking-wider">{t("bareme.z")}</p>
-                    <span className="text-base sm:text-lg font-bold font-mono text-brand-text tracking-tight">{computed.z}</span>
-                    <span className="text-[10px] text-gray-400 ml-0.5">°C</span>
-                  </div>
-                  <div className="hidden sm:block px-4 py-2.5 sm:flex-1">
-                    <p className="text-[9px] text-gray-400 uppercase tracking-wider">D (Tref)</p>
-                    <span className="text-lg font-bold font-mono text-brand-text tracking-tight">{computed.micro.d_ref}</span>
-                    <span className="text-[10px] text-gray-400 ml-0.5">min</span>
-                  </div>
-                </div>
-              )}
+                );
+              })()}
             </div>
           ) : (
             <div className="h-full flex items-center justify-center">
