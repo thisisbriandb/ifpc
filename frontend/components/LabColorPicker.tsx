@@ -47,153 +47,246 @@ interface LabColorPickerProps {
   onChangeB: (v: number) => void;
 }
 
-// Dimensions du demi-cercle chromatique
 const WIDTH = 240;
-const HEIGHT = 145;
-const ORIGIN_X = 120;
-const ORIGIN_Y = 132;
-const RADIUS = 115;
-const MAX_CHROMA = 85;
+const RADIUS = 114;
 
-// Presets de couleurs typiques de cidres
-const CIDER_PRESETS = [
-  { name: "Paille", L: 92, a: -1.5, b: 22 },
-  { name: "Jaune Or", L: 85, a: 4.0, b: 35 },
-  { name: "Ambré", L: 75, a: 12.0, b: 50 },
-  { name: "Cuivré", L: 65, a: 18.0, b: 58 },
-  { name: "Roux", L: 55, a: 22.0, b: 62 },
-];
+// Paramètres Espace Cidre (demi-cercle b* >= 0)
+const CIDRE_HEIGHT = 145;
+const CIDRE_ORIGIN_X = 120;
+const CIDRE_ORIGIN_Y = 132;
+const CIDRE_MAX_CHROMA = 85;
+
+// Paramètres Espace Complet (disque 360°)
+const FULL_HEIGHT = 240;
+const FULL_ORIGIN_X = 120;
+const FULL_ORIGIN_Y = 120;
+const FULL_AB_RANGE = 128;
 
 export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChangeB }: LabColorPickerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
+  const [pickerMode, setPickerMode] = useState<"cidre" | "full">("cidre");
 
-  // Redraw canvas based on L* value
+  const canvasHeight = pickerMode === "cidre" ? CIDRE_HEIGHT : FULL_HEIGHT;
+
+  // Redraw canvas based on mode and L* value
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const imageData = ctx.createImageData(WIDTH, HEIGHT);
+    ctx.clearRect(0, 0, WIDTH, canvasHeight);
+
+    const imageData = ctx.createImageData(WIDTH, canvasHeight);
     const data = imageData.data;
 
-    // Rendu en demi-cercle (portion de l'espace cidre b* >= 0)
-    for (let py = 0; py < HEIGHT; py++) {
-      const dy = ORIGIN_Y - py; // dy > 0 vers le haut (+b*)
+    if (pickerMode === "cidre") {
+      // ── Rendu Espace Cidre : Demi-cercle (b* >= 0) ──
+      for (let py = 0; py < CIDRE_HEIGHT; py++) {
+        const dy = CIDRE_ORIGIN_Y - py;
 
-      for (let px = 0; px < WIDTH; px++) {
-        const dx = px - ORIGIN_X;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const idx = (py * WIDTH + px) * 4;
+        for (let px = 0; px < WIDTH; px++) {
+          const dx = px - CIDRE_ORIGIN_X;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const idx = (py * WIDTH + px) * 4;
 
-        if (dy < 0 || dist > RADIUS) {
-          // Hors du demi-cercle : transparent
-          data[idx] = 0;
-          data[idx + 1] = 0;
-          data[idx + 2] = 0;
-          data[idx + 3] = 0;
-          continue;
+          if (dy < 0 || dist > RADIUS) {
+            data[idx] = 0; data[idx + 1] = 0; data[idx + 2] = 0; data[idx + 3] = 0;
+            continue;
+          }
+
+          const aVal = (dx / RADIUS) * CIDRE_MAX_CHROMA;
+          const bVal = (dy / RADIUS) * CIDRE_MAX_CHROMA;
+
+          const [X, Y, Z] = labToXyz(L, aVal, bVal);
+          const [r, g, bl] = xyzToSrgb(X, Y, Z);
+
+          data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
         }
-
-        const aVal = (dx / RADIUS) * MAX_CHROMA;
-        const bVal = (dy / RADIUS) * MAX_CHROMA;
-
-        const [X, Y, Z] = labToXyz(L, aVal, bVal);
-        const [r, g, bl] = xyzToSrgb(X, Y, Z);
-
-        data[idx] = r;
-        data[idx + 1] = g;
-        data[idx + 2] = bl;
-        data[idx + 3] = 255;
       }
+      ctx.putImageData(imageData, 0, 0);
+
+      // Repères chromatiques cidre
+      ctx.save();
+
+      // Bordure demi-cercle
+      ctx.strokeStyle = "rgba(0,0,0,0.18)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(CIDRE_ORIGIN_X, CIDRE_ORIGIN_Y, RADIUS, Math.PI, 0, false);
+      ctx.lineTo(CIDRE_ORIGIN_X - RADIUS, CIDRE_ORIGIN_Y);
+      ctx.stroke();
+
+      // Arcs de saturation (b* = 20, 40, 60, 80)
+      ctx.strokeStyle = "rgba(0,0,0,0.08)";
+      ctx.lineWidth = 1;
+      [20, 40, 60, 80].forEach((bTick) => {
+        const r = (bTick / CIDRE_MAX_CHROMA) * RADIUS;
+        ctx.beginPath();
+        ctx.arc(CIDRE_ORIGIN_X, CIDRE_ORIGIN_Y, r, Math.PI, 0, false);
+        ctx.stroke();
+      });
+
+      // Axe vertical (+b*)
+      ctx.strokeStyle = "rgba(0,0,0,0.18)";
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(CIDRE_ORIGIN_X, CIDRE_ORIGIN_Y);
+      ctx.lineTo(CIDRE_ORIGIN_X, CIDRE_ORIGIN_Y - RADIUS);
+      ctx.stroke();
+
+      // Rayons angulaires caractéristiques pour cidres (45°, 60°, 120°)
+      [Math.PI / 4, Math.PI / 3, (2 * Math.PI) / 3].forEach((ang) => {
+        ctx.beginPath();
+        ctx.moveTo(CIDRE_ORIGIN_X, CIDRE_ORIGIN_Y);
+        ctx.lineTo(CIDRE_ORIGIN_X + Math.cos(ang) * RADIUS, CIDRE_ORIGIN_Y - Math.sin(ang) * RADIUS);
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+
+      // Annotations
+      ctx.font = "bold 9px system-ui, -apple-system, sans-serif";
+      ctx.fillStyle = "rgba(17,24,39,0.7)";
+      ctx.textAlign = "center";
+      ctx.fillText("+b* = 80", CIDRE_ORIGIN_X, 12);
+
+      ctx.font = "8px system-ui, -apple-system, sans-serif";
+      ctx.fillStyle = "rgba(17,24,39,0.5)";
+      ctx.textAlign = "left";
+      ctx.fillText("−a*", 10, CIDRE_ORIGIN_Y - 4);
+      ctx.textAlign = "right";
+      ctx.fillText("+a*", WIDTH - 10, CIDRE_ORIGIN_Y - 4);
+      ctx.textAlign = "center";
+      ctx.fillText("b* = 0", CIDRE_ORIGIN_X, CIDRE_ORIGIN_Y + 10);
+
+      ctx.restore();
+
+    } else {
+      // ── Rendu Espace Complet : Disque 360° (a*, b* in [-128, +128]) ──
+      for (let py = 0; py < FULL_HEIGHT; py++) {
+        const dy = FULL_ORIGIN_Y - py;
+
+        for (let px = 0; px < WIDTH; px++) {
+          const dx = px - FULL_ORIGIN_X;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const idx = (py * WIDTH + px) * 4;
+
+          if (dist > RADIUS) {
+            data[idx] = 0; data[idx + 1] = 0; data[idx + 2] = 0; data[idx + 3] = 0;
+            continue;
+          }
+
+          const aVal = (dx / RADIUS) * FULL_AB_RANGE;
+          const bVal = (dy / RADIUS) * FULL_AB_RANGE;
+
+          const [X, Y, Z] = labToXyz(L, aVal, bVal);
+          const [r, g, bl] = xyzToSrgb(X, Y, Z);
+
+          data[idx] = r; data[idx + 1] = g; data[idx + 2] = bl; data[idx + 3] = 255;
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+
+      // Repères Espace Complet
+      ctx.save();
+
+      // Cercles concentriques
+      ctx.strokeStyle = "rgba(0,0,0,0.1)";
+      ctx.lineWidth = 1;
+      [0.33, 0.66, 1].forEach((ratio) => {
+        ctx.beginPath();
+        ctx.arc(FULL_ORIGIN_X, FULL_ORIGIN_Y, RADIUS * ratio, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      // Axes principaux (+b*, -b*, +a*, -a*)
+      ctx.strokeStyle = "rgba(0,0,0,0.18)";
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(FULL_ORIGIN_X, 0);
+      ctx.lineTo(FULL_ORIGIN_X, FULL_HEIGHT);
+      ctx.moveTo(0, FULL_ORIGIN_Y);
+      ctx.lineTo(WIDTH, FULL_ORIGIN_Y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Mise en valeur de la zone des cidres sur le disque complet
+      const ciderR = (CIDRE_MAX_CHROMA / FULL_AB_RANGE) * RADIUS;
+      ctx.strokeStyle = "rgba(0,0,0,0.4)";
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.arc(FULL_ORIGIN_X, FULL_ORIGIN_Y, ciderR, Math.PI, 0, false);
+      ctx.lineTo(FULL_ORIGIN_X + ciderR, FULL_ORIGIN_Y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Annotations
+      ctx.font = "bold 9px system-ui, -apple-system, sans-serif";
+      ctx.fillStyle = "rgba(17,24,39,0.7)";
+      ctx.textAlign = "center";
+      ctx.fillText("+b*", FULL_ORIGIN_X, 12);
+      ctx.fillText("−b*", FULL_ORIGIN_X, FULL_HEIGHT - 4);
+      ctx.textAlign = "right";
+      ctx.fillText("+a*", WIDTH - 6, FULL_ORIGIN_Y - 4);
+      ctx.textAlign = "left";
+      ctx.fillText("−a*", 6, FULL_ORIGIN_Y - 4);
+
+      // Label zone cidre
+      ctx.font = "bold 8px system-ui, -apple-system, sans-serif";
+      ctx.fillStyle = "rgba(0,0,0,0.7)";
+      ctx.textAlign = "center";
+      ctx.fillText("Zone Cidres", FULL_ORIGIN_X, FULL_ORIGIN_Y - ciderR / 2);
+
+      ctx.restore();
     }
-    ctx.putImageData(imageData, 0, 0);
-
-    // ── Tracés des repères chromatiques ──
-    ctx.save();
-
-    // Bordure du demi-cercle
-    ctx.strokeStyle = "rgba(0,0,0,0.15)";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.arc(ORIGIN_X, ORIGIN_Y, RADIUS, Math.PI, 0, false);
-    ctx.lineTo(ORIGIN_X - RADIUS, ORIGIN_Y);
-    ctx.stroke();
-
-    // Arcs concentriques de saturation (b* = 20, 40, 60, 80)
-    ctx.strokeStyle = "rgba(0,0,0,0.08)";
-    ctx.lineWidth = 1;
-    [20, 40, 60, 80].forEach((bTick) => {
-      const r = (bTick / MAX_CHROMA) * RADIUS;
-      ctx.beginPath();
-      ctx.arc(ORIGIN_X, ORIGIN_Y, r, Math.PI, 0, false);
-      ctx.stroke();
-    });
-
-    // Axe vertical (+b*, jaune / ambre)
-    ctx.strokeStyle = "rgba(0,0,0,0.16)";
-    ctx.setLineDash([3, 3]);
-    ctx.beginPath();
-    ctx.moveTo(ORIGIN_X, ORIGIN_Y);
-    ctx.lineTo(ORIGIN_X, ORIGIN_Y - RADIUS);
-    ctx.stroke();
-
-    // Rayons angulaires caractéristiques pour les cidres
-    const angles = [Math.PI / 4, Math.PI / 3, (2 * Math.PI) / 3]; // 45°, 60°, 120°
-    angles.forEach((ang) => {
-      ctx.beginPath();
-      ctx.moveTo(ORIGIN_X, ORIGIN_Y);
-      ctx.lineTo(ORIGIN_X + Math.cos(ang) * RADIUS, ORIGIN_Y - Math.sin(ang) * RADIUS);
-      ctx.stroke();
-    });
-    ctx.setLineDash([]);
-
-    // Textes / Annotations
-    ctx.font = "bold 9px system-ui, -apple-system, sans-serif";
-    ctx.fillStyle = "rgba(17,24,39,0.65)";
-    ctx.textAlign = "center";
-    ctx.fillText("+b* = 80", ORIGIN_X, 12);
-
-    ctx.font = "8px system-ui, -apple-system, sans-serif";
-    ctx.fillStyle = "rgba(17,24,39,0.45)";
-    ctx.textAlign = "left";
-    ctx.fillText("−a*", 10, ORIGIN_Y - 4);
-    ctx.textAlign = "right";
-    ctx.fillText("+a*", WIDTH - 10, ORIGIN_Y - 4);
-    ctx.textAlign = "center";
-    ctx.fillText("b* = 0", ORIGIN_X, ORIGIN_Y + 10);
-
-    ctx.restore();
-  }, [L]);
+  }, [L, pickerMode, canvasHeight]);
 
   // Convert mouse position to a*, b*
   const posToAb = useCallback((clientX: number, clientY: number) => {
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
     const px = Math.max(0, Math.min(WIDTH, clientX - rect.left));
-    const py = Math.max(0, Math.min(HEIGHT, clientY - rect.top));
+    const py = Math.max(0, Math.min(canvasHeight, clientY - rect.top));
 
-    const dx = px - ORIGIN_X;
-    let dy = ORIGIN_Y - py;
-    if (dy < 0) dy = 0; // clamp b* >= 0
+    if (pickerMode === "cidre") {
+      const dx = px - CIDRE_ORIGIN_X;
+      let dy = CIDRE_ORIGIN_Y - py;
+      if (dy < 0) dy = 0; // clamp b* >= 0
 
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    let finalDx = dx;
-    let finalDy = dy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      let finalDx = dx;
+      let finalDy = dy;
+      if (dist > RADIUS) {
+        finalDx = (dx / dist) * RADIUS;
+        finalDy = (dy / dist) * RADIUS;
+      }
 
-    if (dist > RADIUS) {
-      finalDx = (dx / dist) * RADIUS;
-      finalDy = (dy / dist) * RADIUS;
+      const aVal = Math.round(((finalDx / RADIUS) * CIDRE_MAX_CHROMA) * 10) / 10;
+      const bVal = Math.round(((finalDy / RADIUS) * CIDRE_MAX_CHROMA) * 10) / 10;
+
+      onChangeA(Math.max(-45, Math.min(50, aVal)));
+      onChangeB(Math.max(0, Math.min(CIDRE_MAX_CHROMA, bVal)));
+    } else {
+      const dx = px - FULL_ORIGIN_X;
+      const dy = FULL_ORIGIN_Y - py;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      let finalDx = dx;
+      let finalDy = dy;
+      if (dist > RADIUS) {
+        finalDx = (dx / dist) * RADIUS;
+        finalDy = (dy / dist) * RADIUS;
+      }
+
+      const aVal = Math.round(((finalDx / RADIUS) * FULL_AB_RANGE) * 10) / 10;
+      const bVal = Math.round(((finalDy / RADIUS) * FULL_AB_RANGE) * 10) / 10;
+
+      onChangeA(Math.max(-FULL_AB_RANGE, Math.min(FULL_AB_RANGE, aVal)));
+      onChangeB(Math.max(-FULL_AB_RANGE, Math.min(FULL_AB_RANGE, bVal)));
     }
-
-    const aVal = Math.round(((finalDx / RADIUS) * MAX_CHROMA) * 10) / 10;
-    const bVal = Math.round(((finalDy / RADIUS) * MAX_CHROMA) * 10) / 10;
-
-    onChangeA(Math.max(-45, Math.min(50, aVal)));
-    onChangeB(Math.max(0, Math.min(MAX_CHROMA, bVal)));
-  }, [onChangeA, onChangeB]);
+  }, [pickerMode, canvasHeight, onChangeA, onChangeB]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     setDragging(true);
@@ -208,61 +301,91 @@ export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChange
 
   const handlePointerUp = () => setDragging(false);
 
-  // Position of cursor on semi-circle
-  const clampedB = Math.max(0, Math.min(MAX_CHROMA, b));
-  const clampedA = Math.max(-MAX_CHROMA, Math.min(MAX_CHROMA, a));
+  // Position of cursor
+  let cursorX: number;
+  let cursorY: number;
 
-  let cursorX = ORIGIN_X + (clampedA / MAX_CHROMA) * RADIUS;
-  let cursorY = ORIGIN_Y - (clampedB / MAX_CHROMA) * RADIUS;
+  if (pickerMode === "cidre") {
+    const clampedB = Math.max(0, Math.min(CIDRE_MAX_CHROMA, b));
+    const clampedA = Math.max(-CIDRE_MAX_CHROMA, Math.min(CIDRE_MAX_CHROMA, a));
 
-  // Clamp cursor inside radius
-  const cdx = cursorX - ORIGIN_X;
-  const cdy = ORIGIN_Y - cursorY;
-  const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
-  if (cdist > RADIUS) {
-    cursorX = ORIGIN_X + (cdx / cdist) * RADIUS;
-    cursorY = ORIGIN_Y - (cdy / cdist) * RADIUS;
+    cursorX = CIDRE_ORIGIN_X + (clampedA / CIDRE_MAX_CHROMA) * RADIUS;
+    cursorY = CIDRE_ORIGIN_Y - (clampedB / CIDRE_MAX_CHROMA) * RADIUS;
+
+    const cdx = cursorX - CIDRE_ORIGIN_X;
+    const cdy = CIDRE_ORIGIN_Y - cursorY;
+    const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+    if (cdist > RADIUS) {
+      cursorX = CIDRE_ORIGIN_X + (cdx / cdist) * RADIUS;
+      cursorY = CIDRE_ORIGIN_Y - (cdy / cdist) * RADIUS;
+    }
+  } else {
+    const clampedB = Math.max(-FULL_AB_RANGE, Math.min(FULL_AB_RANGE, b));
+    const clampedA = Math.max(-FULL_AB_RANGE, Math.min(FULL_AB_RANGE, a));
+
+    cursorX = FULL_ORIGIN_X + (clampedA / FULL_AB_RANGE) * RADIUS;
+    cursorY = FULL_ORIGIN_Y - (clampedB / FULL_AB_RANGE) * RADIUS;
+
+    const cdx = cursorX - FULL_ORIGIN_X;
+    const cdy = FULL_ORIGIN_Y - cursorY;
+    const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+    if (cdist > RADIUS) {
+      cursorX = FULL_ORIGIN_X + (cdx / cdist) * RADIUS;
+      cursorY = FULL_ORIGIN_Y - (cdy / cdist) * RADIUS;
+    }
   }
 
   const currentHex = labToHex(L, a, b);
 
   return (
     <div className="space-y-3">
-      {/* Preset Chips */}
-      <div className="flex flex-wrap gap-1.5 justify-center py-0.5">
-        {CIDER_PRESETS.map((preset) => {
-          const hex = labToHex(preset.L, preset.a, preset.b);
-          return (
-            <button
-              key={preset.name}
-              type="button"
-              onClick={() => {
-                onChangeL(preset.L);
-                onChangeA(preset.a);
-                onChangeB(preset.b);
-              }}
-              className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 hover:bg-gray-100 border border-black/[0.05] rounded-lg transition-all text-[10px] font-medium text-gray-700 hover:border-black/10 active:scale-95"
-            >
-              <div className="w-2.5 h-2.5 rounded-full border border-black/10 shadow-sm" style={{ backgroundColor: hex }} />
-              <span>{preset.name}</span>
-            </button>
-          );
-        })}
+      {/* Mode Switcher Toggle (sans libellé "Modèle de couleur") */}
+      <div className="flex justify-center">
+        <div className="flex bg-gray-100 p-0.5 rounded-xl border border-black/[0.04] w-full max-w-[240px]">
+          <button
+            type="button"
+            onClick={() => setPickerMode("cidre")}
+            className={`flex-1 py-1 text-[11px] font-bold rounded-lg transition-all ${
+              pickerMode === "cidre"
+                ? "bg-white text-brand-primary shadow-sm"
+                : "text-gray-400 hover:text-gray-700"
+            }`}
+          >
+            Espace cidre
+          </button>
+          <button
+            type="button"
+            onClick={() => setPickerMode("full")}
+            className={`flex-1 py-1 text-[11px] font-bold rounded-lg transition-all ${
+              pickerMode === "full"
+                ? "bg-white text-brand-primary shadow-sm"
+                : "text-gray-400 hover:text-gray-700"
+            }`}
+          >
+            Espace complet
+          </button>
+        </div>
       </div>
 
-      {/* Demi-cercle Canvas */}
+      {/* Canvas chromatique avec transition fluide */}
       <div className="flex flex-col items-center">
         <div
           ref={containerRef}
-          className="relative max-w-full shadow-inner border border-black/[0.06] bg-gray-50 overflow-hidden rounded-t-full rounded-b-xl"
-          style={{ width: WIDTH, height: HEIGHT }}
+          className={`relative max-w-full shadow-inner border border-black/[0.06] bg-gray-50 overflow-hidden transition-all duration-300 ease-out ${
+            pickerMode === "cidre"
+              ? "rounded-t-full rounded-b-xl"
+              : "rounded-full"
+          }`}
+          style={{ width: WIDTH, height: canvasHeight }}
         >
           <canvas
             ref={canvasRef}
             width={WIDTH}
-            height={HEIGHT}
-            className="cursor-crosshair block rounded-t-full rounded-b-xl"
-            style={{ width: WIDTH, height: HEIGHT }}
+            height={canvasHeight}
+            className={`cursor-crosshair block transition-all duration-300 ease-out ${
+              pickerMode === "cidre" ? "rounded-t-full rounded-b-xl" : "rounded-full"
+            }`}
+            style={{ width: WIDTH, height: canvasHeight }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
