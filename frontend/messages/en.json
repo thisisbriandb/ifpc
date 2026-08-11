@@ -164,10 +164,10 @@
     "alertAlcohol": "Alcohol {n}% vol. — partial protection, VP target can be lowered in expert mode.",
     "verdictOk": "Feasible",
     "verdictDifficult": "Demanding",
-    "verdictImpossible": "Unfeasible",
+    "verdictImpossible": "Equipment change required",
     "narrativeOk": "At {temp}°C, the time required to reduce the risk related to moulds ({micro}) appears satisfactory.",
     "narrativeDifficult": "At {temp}°C, the time required to reduce the risk related to moulds ({micro}) is too long. It is recommended to increase the temperature.",
-    "narrativeImpossible": "At {temp}°C, the time required to reduce the risk related to moulds ({micro}) is unfeasible. It is recommended to significantly increase the temperature.",
+    "narrativeImpossible": "At {temp}°C, the time required to reduce the risk related to moulds ({micro}) is feasible but requires an equipment change (or temperature increase).",
     "narrativeContext": "Target: destroy {micro} (VP = {vp} PU).",
     "stepProduct": "Your product",
     "stepProcess": "Your process",
@@ -177,7 +177,7 @@
     "helpTitle": "Help — Choosing the schedule",
     "backToConfig": "Edit configuration",
     "viewVerdict": "View result",
-    "defaultHelp": "## How to use this tool\n\n**The schedule selection tool** helps you determine the required hold time to pasteurize your product at a given temperature.\n\n### Steps\n\n1. **Select your product** (apple juice, cider, etc.) and specify if it is turbid or clear.\n2. **Choose the process**: Flash pasteurisation, Classic pasteurisation or Tunnel pasteurisation.\n3. **Enter the target temperature** in °C.\n\nThe system automatically calculates the required hold time to reach the target PU based on the reference microorganism.\n\n### Expert mode\n\nExpert mode allows you to:\n- Change the target microorganism\n- Manually adjust Tref and Z\n\n### Interpretation\n\n- **Feasible**: the hold time is compatible with the chosen process.\n- **Demanding**: the time is long, consider increasing the temperature.\n- **Unfeasible**: the time is too long, significantly increase the temperature."
+    "defaultHelp": "## How to use this tool\n\n**The schedule selection tool** helps you determine the required hold time to pasteurize your product at a given temperature.\n\n### Steps\n\n1. **Select your product** (apple juice, cider, etc.) and specify if it is turbid or clear.\n2. **Choose the process**: Flash pasteurisation, Classic pasteurisation or Tunnel pasteurisation.\n3. **Enter the target temperature** in °C.\n\nThe system automatically calculates the required hold time to reach the target PU based on the reference microorganism.\n\n### Expert mode\n\nExpert mode allows you to:\n- Change the target microorganism\n- Manually adjust Tref and Z\n\n### Interpretation\n\n- **Feasible**: the hold time is compatible with the chosen process.\n- **Demanding**: the time is long, consider increasing the temperature.\n- **Equipment change required**: the hold time is too long for current equipment, consider adapted equipment (tunnel / autoclave) or significantly increase the temperature."
   },
   "productSelector": {
     "product": "Product",

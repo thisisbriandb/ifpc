@@ -102,6 +102,7 @@ function getInitialTrouble(searchParams: SearchParamReader) {
 // ── Circular gauge ────────────────────────────────────────────────────────
 
 function HoldTimeGauge({ holdSec, holdMin, pasteType, verdict }: { holdSec: number; holdMin: number; pasteType: "flash" | "classique" | "tunnel"; verdict: Verdict }) {
+  const { t } = useI18n();
   const cfg = VERDICT_CONFIG[verdict];
   // Fill ratio: proportion of a "reasonable" range
   const maxRef = verdict === "ok" ? holdMin * 2 : (holdMin < 60 ? 60 : holdMin * 1.2);
@@ -114,12 +115,14 @@ function HoldTimeGauge({ holdSec, holdMin, pasteType, verdict }: { holdSec: numb
   const filled = circumference * ratio;
 
   const display = pasteType === "flash"
-    ? (holdSec < 1
-        ? { value: "< 1", unit: "sec" }
-        : { value: holdSec < 10 ? holdSec.toFixed(1) : Math.round(holdSec).toString(), unit: "sec" })
+    ? (holdSec <= 1
+        ? { value: "1", unit: t("bareme.sec") }
+        : holdSec >= 60
+        ? { value: holdMin < 10 ? holdMin.toFixed(1) : Math.round(holdMin).toString(), unit: t("bareme.min") }
+        : { value: holdSec < 10 ? holdSec.toFixed(1) : Math.round(holdSec).toString(), unit: t("bareme.sec") })
     : (holdMin < 0.1
-        ? { value: "< 0.1", unit: "min" }
-        : { value: holdMin < 10 ? holdMin.toFixed(1) : Math.round(holdMin).toString(), unit: "min" });
+        ? { value: "< 0.1", unit: t("bareme.min") }
+        : { value: holdMin < 10 ? holdMin.toFixed(1) : Math.round(holdMin).toString(), unit: t("bareme.min") });
 
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
@@ -345,9 +348,16 @@ function BaremePageInner() {
   const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
   const labelCls = "block text-xs font-semibold text-gray-500 mb-1";
 
-  // Format hold time for narrative
+  // Format hold time for narrative and cards
   const formatHold = (c: { holdMin: number; holdSec: number }) => {
     if (pasteType === "flash") {
+      if (c.holdSec <= 1) {
+        return `1 ${t("bareme.sec")}`;
+      }
+      if (c.holdSec >= 60) {
+        const val = c.holdMin < 10 ? c.holdMin.toFixed(1) : Math.round(c.holdMin).toString();
+        return `${val} ${t("bareme.min")}`;
+      }
       const val = c.holdSec < 10 ? c.holdSec.toFixed(1) : Math.round(c.holdSec).toString();
       return `${val} ${t("bareme.sec")}`;
     } else {
@@ -369,7 +379,7 @@ function BaremePageInner() {
     if (computed.isMulti) {
       if (verdict === "ok") return `À ${p.temp}°C, le temps de maintien recommandé pour assainir le Jus de pomme (4 microorganismes de référence) est de ${p.time}, déterminé par le facteur limitant (${p.micro}).`;
       if (verdict === "difficult") return `À ${p.temp}°C, le temps de maintien nécessaire pour le Jus de pomme est exigeant (${p.time}), le facteur limitant étant ${p.micro}.`;
-      return `À ${p.temp}°C, le temps de maintien global pour le Jus de pomme est inadapté avec le procédé ${p.process} (${p.time}), en raison des exigences du facteur limitant (${p.micro}).`;
+      return `À ${p.temp}°C, le temps de maintien global pour le Jus de pomme (${p.time}) est réalisable mais nécessite un changement de matériel avec le procédé ${p.process}, en raison des exigences du facteur limitant (${p.micro}).`;
     }
     if (verdict === "ok") return t("bareme.narrativeOk", p);
     if (verdict === "difficult") return t("bareme.narrativeDifficult", p);
@@ -611,7 +621,7 @@ function BaremePageInner() {
                           ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est parfaitement réalisable en ${procName}.`
                           : item.verdict === "difficult"
                           ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est exigeant en ${procName}. Envisagez d'augmenter la température.`
-                          : `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est inadapté en ${procName}. Il est recommandé d'augmenter la température.`;
+                          : `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est réalisable mais nécessite un changement de matériel en ${procName} (ou une augmentation de la température).`;
 
                         return (
                           <div
