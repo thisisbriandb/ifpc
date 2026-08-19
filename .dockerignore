@@ -1,0 +1,20 @@
+# Contexte racine (utilisé par backend/Dockerfile.fastapi)
+.git
+.gitignore
+.agents
+.codex
+docs
+scripts
+*.md
+*.docx
+frontend
+backend/target
+backend/src
+backend/.mvn
+backend/mvnw
+backend/mvnw.cmd
+backend/pom.xml
+**/__pycache__
+**/*.pyc
+**/venv
+**/.venv

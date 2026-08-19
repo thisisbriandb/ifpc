@@ -1,0 +1,10 @@
+# Contexte backend/ (utilisé par Dockerfile.spring)
+target
+HELP.md
+README.md
+*.py
+requirements.txt
+**/__pycache__
+**/*.pyc
+venv
+.venv

@@ -1,0 +1,16 @@
+# ── Configuration locale ─────────────────────────────────────────────────────
+.env
+.env.local
+
+# ── Python ───────────────────────────────────────────────────────────────────
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# ── Système ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Rapport de stage : documents de travail, hors périmètre du code ──────────
+rapport\ /

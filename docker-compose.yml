@@ -1,0 +1,110 @@
+# PADOC — Orchestration locale complète (4 services)
+#
+#   docker compose up --build       démarrage
+#   docker compose down             arrêt (les données PostgreSQL sont conservées)
+#   docker compose down -v          arrêt + suppression du volume de données
+#
+# Frontend : http://localhost:3000   Core API : http://localhost:8080
+# Calc Engine : http://localhost:8000/docs
+
+name: padoc
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: padoc-db
+    environment:
+      POSTGRES_DB: ${PGDATABASE:-ifpc}
+      POSTGRES_USER: ${PGUSER:-ifpc}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-ifpc}
+    ports:
+      - "${PGPORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER:-ifpc} -d ${PGDATABASE:-ifpc}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  api:
+    build:
+      # Dockerfile.spring attend le répertoire backend/ comme contexte
+      context: ./backend
+      dockerfile: Dockerfile.spring
+    container_name: padoc-api
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: ${PGDATABASE:-ifpc}
+      PGUSER: ${PGUSER:-ifpc}
+      PGPASSWORD: ${PGPASSWORD:-ifpc}
+      PORT: 8080
+      JWT_SECRET: ${JWT_SECRET:?définir JWT_SECRET dans .env (openssl rand -base64 48)}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-service-informatique@ifpc.eu}
+      RESEND_ADMIN_EMAIL: ${RESEND_ADMIN_EMAIL:-service-informatique@ifpc.eu}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8080/api/deploy/info || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    restart: unless-stopped
+
+  calc:
+    build:
+      # Dockerfile.fastapi attend la racine du dépôt comme contexte
+      context: .
+      dockerfile: backend/Dockerfile.fastapi
+    container_name: padoc-calc
+    environment:
+      # Doit être identique à celui du service api : les jetons sont émis par
+      # Spring Boot et vérifiés ici (backend/auth.py).
+      JWT_SECRET: ${JWT_SECRET:?définir JWT_SECRET dans .env (openssl rand -base64 48)}
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import urllib.request,sys;
+          sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status == 200 else 1)"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Résolus par le DNS interne de Compose (noms de services), et figés
+        # dans le build Next.js : modifier ces valeurs impose un rebuild.
+        SPRING_URL: http://api:8080
+        FASTAPI_URL: http://calc:8000
+    container_name: padoc-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_started
+      calc:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3000 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
+    restart: unless-stopped
+
+volumes:
+  pgdata:

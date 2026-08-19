@@ -1,0 +1,11 @@
+# Contexte frontend/ (utilisé par Dockerfile)
+node_modules
+.next
+out
+build
+.git
+.vercel
+npm-debug.log*
+*.tsbuildinfo
+README.md
+.env*.local
