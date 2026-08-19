@@ -3,6 +3,10 @@ const SPRING_URL = process.env.SPRING_URL || 'http://localhost:8080';
 const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
 
 const nextConfig = {
+  // Sortie autonome : embarque un serveur Node minimal + les seules dépendances
+  // réellement utilisées, pour une image Docker sans node_modules complet.
+  output: 'standalone',
+
   async rewrites() {
     return [
       {
