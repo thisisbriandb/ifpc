@@ -5,12 +5,19 @@ import base64
 import os
 from typing import Optional
 
-# La même clé secrète que dans Spring Boot JwtService
-# Spring Boot utilise Decoders.BASE64.decode() pour obtenir les bytes de la clé
-# JWT_SECRET doit porter la même valeur que sur le service Spring Boot, sinon la
-# vérification des jetons échoue ici (403 sur les fonctions EXPERT / ADMIN).
-_DEV_SECRET_KEY_B64 = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
-_SECRET_KEY_B64 = os.environ.get("JWT_SECRET") or _DEV_SECRET_KEY_B64
+# La même clé secrète que dans Spring Boot JwtService : Spring utilise
+# Decoders.BASE64.decode() pour obtenir les bytes de la clé. JWT_SECRET doit
+# porter la même valeur ici et sur le service Spring Boot, sinon la
+# vérification des jetons échoue (403 sur les fonctions EXPERT / ADMIN).
+#
+# Aucune valeur de repli : une clé écrite dans le dépôt est une clé publique,
+# avec laquelle n'importe qui peut forger un jeton d'administrateur.
+_SECRET_KEY_B64 = os.environ.get("JWT_SECRET")
+if not _SECRET_KEY_B64:
+    raise RuntimeError(
+        "JWT_SECRET n'est pas défini. Générer une clé propre à cet environnement "
+        "(openssl rand -base64 48) et la partager avec le Core API Spring Boot."
+    )
 SECRET_KEY = base64.b64decode(_SECRET_KEY_B64)
 ALGORITHM = "HS256"
 

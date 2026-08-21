@@ -7,6 +7,7 @@ import com.ifpc.api.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +35,7 @@ class DatabaseSeederTest {
         DatabaseSeeder seeder = new DatabaseSeeder();
 
         when(userRepository.findByEmail("admin@ifpc.com")).thenReturn(Optional.empty());
-        when(passwordEncoder.encode("admin")).thenReturn("encodedAdmin");
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedAdmin");
         when(productConfigRepository.findByProductType(anyString())).thenReturn(Optional.empty());
 
         CommandLineRunner runner = seeder.seedDatabase(
@@ -42,6 +46,12 @@ class DatabaseSeederTest {
         );
 
         runner.run();
+
+        // Le mot de passe initial est tiré au hasard : aucun secret en dur
+        ArgumentCaptor<String> motDePasse = ArgumentCaptor.forClass(String.class);
+        verify(passwordEncoder).encode(motDePasse.capture());
+        assertNotEquals("admin", motDePasse.getValue());
+        assertTrue(motDePasse.getValue().length() >= 24);
 
         verify(userRepository).save(any(User.class));
         verify(productConfigRepository, atLeast(1)).save(any(ProductConfig.class));
