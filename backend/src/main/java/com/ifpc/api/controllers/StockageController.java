@@ -6,6 +6,7 @@ import com.ifpc.api.models.Stockage;
 import com.ifpc.api.repositories.CuveRepository;
 import com.ifpc.api.repositories.LotRepository;
 import com.ifpc.api.repositories.StockageRepository;
+import com.ifpc.api.security.Tenant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Les stockages suivent le cloisonnement de la cuve et du lot qu'ils relient :
+ * les deux doivent appartenir au locataire courant.
+ */
 @RestController
 @RequestMapping("/api/stockages")
 @RequiredArgsConstructor
@@ -26,32 +31,32 @@ public class StockageController {
 
     @GetMapping
     public List<Map<String, Object>> getActiveStockages() {
-        return stockageRepository.findAll().stream()
-                .filter(s -> s.getDateFin() == null)
-                .map(this::stockageToDto)
-                .toList();
+        return stockageRepository.findByCuve_OwnerEmailAndDateFinIsNull(Tenant.requireCurrentEmail())
+                .stream().map(this::stockageToDto).toList();
     }
 
     @GetMapping("/cuve/{cuveId}")
     public List<Map<String, Object>> getStockagesByCuve(@PathVariable Long cuveId) {
-        return stockageRepository.findByCuveIdOrderByDateDebutDesc(cuveId)
+        return stockageRepository.findByCuve_IdAndCuve_OwnerEmailOrderByDateDebutDesc(cuveId, Tenant.requireCurrentEmail())
                 .stream().map(this::stockageToDto).toList();
     }
 
     @GetMapping("/lot/{lotId}")
     public List<Map<String, Object>> getStockagesByLot(@PathVariable Long lotId) {
-        return stockageRepository.findByLotIdOrderByDateDebutDesc(lotId)
+        return stockageRepository.findByLot_IdAndLot_OwnerEmailOrderByDateDebutDesc(lotId, Tenant.requireCurrentEmail())
                 .stream().map(this::stockageToDto).toList();
     }
 
     @PostMapping
     public ResponseEntity<?> createStockage(@RequestBody CreateStockageRequest request) {
-        Cuve cuve = cuveRepository.findById(request.cuveId())
+        String owner = Tenant.requireCurrentEmail();
+
+        Cuve cuve = cuveRepository.findByIdAndOwnerEmail(request.cuveId(), owner)
                 .filter(c -> !c.getDeleted())
                 .orElse(null);
         if (cuve == null) return ResponseEntity.badRequest().body(Map.of("error", "Cuve introuvable"));
 
-        Lot lot = lotRepository.findById(request.lotId())
+        Lot lot = lotRepository.findByIdAndOwnerEmail(request.lotId(), owner)
                 .filter(l -> !l.getDeleted())
                 .orElse(null);
         if (lot == null) return ResponseEntity.badRequest().body(Map.of("error", "Lot introuvable"));
@@ -78,7 +83,7 @@ public class StockageController {
 
     @PostMapping("/{id}/terminer")
     public ResponseEntity<Map<String, Object>> terminerStockage(@PathVariable Long id) {
-        return stockageRepository.findById(id)
+        return stockageRepository.findByIdAndCuve_OwnerEmail(id, Tenant.requireCurrentEmail())
                 .filter(s -> s.getDateFin() == null)
                 .map(s -> {
                     s.setDateFin(LocalDateTime.now());

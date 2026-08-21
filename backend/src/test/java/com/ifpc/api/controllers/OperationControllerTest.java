@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,8 +36,17 @@ class OperationControllerTest {
 
     @InjectMocks private OperationController operationController;
 
+    private static final String TENANT = "op@ifpc.eu";
+
     @BeforeEach
     void setUp() {
+        User user = User.builder().email(TENANT).role(Role.USER).build();
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
+    }
+
+    @org.junit.jupiter.api.AfterEach
+    void tearDown() {
         SecurityContextHolder.clearContext();
     }
 
@@ -61,10 +71,10 @@ class OperationControllerTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        when(operationRepository.findTop50ByOrderByCreatedAtDesc()).thenReturn(List.of(op));
-        when(operationRepository.findByCuveSourceIdOrCuveDestIdOrderByCreatedAtDesc(1L, 1L)).thenReturn(List.of(op));
-        when(operationRepository.findByLotIdOrderByCreatedAtDesc(10L)).thenReturn(List.of(op));
-        when(operationRepository.findById(100L)).thenReturn(Optional.of(op));
+        when(operationRepository.findTop50ByUserEmailOrderByCreatedAtDesc(TENANT)).thenReturn(List.of(op));
+        when(operationRepository.findByUserEmailAndCuve(TENANT, 1L)).thenReturn(List.of(op));
+        when(operationRepository.findByUserEmailAndLotIdOrderByCreatedAtDesc(TENANT, 10L)).thenReturn(List.of(op));
+        when(operationRepository.findByIdAndUserEmail(100L, TENANT)).thenReturn(Optional.of(op));
 
         List<Map<String, Object>> recent = operationController.getRecentOperations();
         assertEquals(1, recent.size());
@@ -85,19 +95,32 @@ class OperationControllerTest {
     }
 
     @Test
-    @DisplayName("getOperationById returns 404 when not found")
+    @DisplayName("getOperationById returns 404 when not found or logged by another tenant")
     void testGetOperationByIdNotFound() {
-        when(operationRepository.findById(999L)).thenReturn(Optional.empty());
+        when(operationRepository.findByIdAndUserEmail(999L, TENANT)).thenReturn(Optional.empty());
         ResponseEntity<Map<String, Object>> response = operationController.getOperationById(999L);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
+    @DisplayName("an anonymous request cannot read or trigger operations")
+    void testAnonymousIsRejected() {
+        SecurityContextHolder.clearContext();
+
+        ResponseStatusException read = assertThrows(ResponseStatusException.class,
+                () -> operationController.getRecentOperations());
+        assertEquals(HttpStatus.UNAUTHORIZED, read.getStatusCode());
+
+        ResponseStatusException write = assertThrows(ResponseStatusException.class,
+                () -> operationController.nettoyage(new OperationController.NettoyageRequest(1L)));
+        assertEquals(HttpStatus.UNAUTHORIZED, write.getStatusCode());
+
+        verifyNoInteractions(operationRepository, operationService);
+    }
+
+    @Test
     @DisplayName("nettoyage operation endpoint success and error handling")
     void testNettoyage() {
-        User user = User.builder().email("op@ifpc.eu").role(Role.USER).build();
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-
         Operation op = Operation.builder().id(1L).type("NETTOYAGE").userEmail("op@ifpc.eu").build();
         when(operationService.nettoyage(1L, "op@ifpc.eu")).thenReturn(op);
 
@@ -112,9 +135,6 @@ class OperationControllerTest {
     @Test
     @DisplayName("remplissage operation endpoint error handling")
     void testRemplissageError() {
-        User user = User.builder().email("op@ifpc.eu").role(Role.USER).build();
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-
         when(operationService.remplissage(1L, 10L, 500.0, "op@ifpc.eu")).thenThrow(new RuntimeException("Volume overflow"));
 
         ResponseEntity<?> response = operationController.remplissage(new OperationController.RemplissageRequest(1L, 10L, 500.0));
@@ -124,9 +144,6 @@ class OperationControllerTest {
     @Test
     @DisplayName("transfert operation endpoint error handling")
     void testTransfertError() {
-        User user = User.builder().email("op@ifpc.eu").role(Role.USER).build();
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-
         when(operationService.transfert(1L, 2L, 10L, 500.0, "op@ifpc.eu")).thenThrow(new RuntimeException("Invalid dest cuve"));
 
         ResponseEntity<?> response = operationController.transfert(new OperationController.TransfertRequest(1L, 2L, 10L, 500.0));
@@ -136,9 +153,6 @@ class OperationControllerTest {
     @Test
     @DisplayName("transformation operation endpoint error handling")
     void testTransformationError() {
-        User user = User.builder().email("op@ifpc.eu").role(Role.USER).build();
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-
         when(operationService.transformation(10L, 50.0, 10.0, 20.0, "#FFF", "{}", "Desc", "op@ifpc.eu")).thenThrow(new RuntimeException("Lot not found"));
 
         ResponseEntity<?> response = operationController.transformation(new OperationController.TransformationRequest(10L, 50.0, 10.0, 20.0, "#FFF", "{}", "Desc"));
@@ -148,9 +162,6 @@ class OperationControllerTest {
     @Test
     @DisplayName("assemblage operation endpoint error handling")
     void testAssemblageError() {
-        User user = User.builder().email("op@ifpc.eu").role(Role.USER).build();
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-
         when(operationService.assemblage(anyList(), eq(3L), eq("LOT-ASS"), eq("Cidre"), eq(50.0), eq(10.0), eq(20.0), eq("#FFF"), eq("{}"), eq("op@ifpc.eu"))).thenThrow(new RuntimeException("Source lot missing"));
 
         OperationController.AssemblageRequest req = new OperationController.AssemblageRequest(

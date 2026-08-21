@@ -118,6 +118,50 @@ async rewrites() {
 
 ---
 
+## Cloisonnement des données (multi-tenant)
+
+Chaque utilisateur dispose de son propre jeu de données : ses lots, ses cuves,
+ses stockages, ses opérations et son historique d'analyses. Un utilisateur X
+n'atteint jamais les données d'un utilisateur Y.
+
+**Règles appliquées par le Core API (Spring) :**
+
+* la clé de locataire est l'adresse e-mail de l'utilisateur, portée par la
+  colonne `owner_email` des tables `lots` et `cuves` (et par `user_email` pour
+  `operations` et `analysis_history`) ;
+* toutes les routes métier exigent un jeton — seules `/api/auth/**`,
+  `/api/config/**` et `/api/deploy/**` restent publiques ;
+* une ressource appartenant à un autre locataire répond **404**, jamais 403 :
+  son existence même n'est pas révélée ;
+* l'identifiant de lot est unique **par propriétaire** et non plus globalement
+  (index `ux_lots_owner_identifiant`), deux exploitations peuvent donc nommer
+  un lot de la même façon.
+
+Le point d'entrée unique est `com.ifpc.api.security.Tenant`. Pour cloisonner
+par exploitation plutôt que par personne, seule sa méthode `currentEmail()` est
+à modifier.
+
+**Reprise des données antérieures** — au démarrage, `DatabaseSeeder` rattache
+les lignes sans propriétaire : d'abord via le journal des opérations (auteur de
+la première opération citant le lot ou la cuve), puis via les stockages. Le
+reliquat non attribuable revient au compte défini par
+`PADOC_LEGACY_OWNER_EMAIL` (par défaut `admin@ifpc.com`). L'opération est
+idempotente : elle peut être rejouée sans risque.
+
+> **À vérifier après la première mise en production.** Avant le cloisonnement,
+> les cuves et les lots étaient communs à tous les comptes : si plusieurs
+> personnes d'une même exploitation les alimentaient, la reprise les répartira
+> entre elles selon qui a agi en premier. Pour tout rassembler sur un seul
+> compte, exécuter après le premier démarrage :
+>
+> ```sql
+> UPDATE lots       SET owner_email = 'exploitant@exemple.fr';
+> UPDATE cuves      SET owner_email = 'exploitant@exemple.fr';
+> UPDATE operations SET user_email  = 'exploitant@exemple.fr';
+> ```
+
+---
+
 ## Licence
 
 Propriétaire — Institut Français des Productions Cidricoles (IFPC)

@@ -26,14 +26,17 @@ class OperationServiceTest {
 
     @InjectMocks private OperationService operationService;
 
+    /** Locataire propriétaire des cuves et lots de ces scénarios. */
+    private static final String TENANT = "user@test.com";
+
     // ── Fixtures ────────────────────────────────────────────────────────────
 
     private Cuve buildCuve(Long id, String nom, String statut, Double volumeMax) {
-        return Cuve.builder().id(id).nom(nom).statutPhysique(statut).volumeMax(volumeMax).deleted(false).build();
+        return Cuve.builder().id(id).nom(nom).ownerEmail(TENANT).statutPhysique(statut).volumeMax(volumeMax).deleted(false).build();
     }
 
     private Lot buildLot(Long id, String identifiant, Double volumeActuel) {
-        return Lot.builder().id(id).identifiant(identifiant).typeProduit("jus_pomme").volumeActuel(volumeActuel).deleted(false).build();
+        return Lot.builder().id(id).identifiant(identifiant).ownerEmail(TENANT).typeProduit("jus_pomme").volumeActuel(volumeActuel).deleted(false).build();
     }
 
     private Stockage buildStockage(Long id, Cuve cuve, Lot lot, Double volumeOccupe) {
@@ -54,7 +57,7 @@ class OperationServiceTest {
             when(operationRepository.save(any(Operation.class)))
                     .thenAnswer(inv -> { Operation op = inv.getArgument(0); op.setId(10L); return op; });
 
-            Operation result = operationService.nettoyage(1L, "user@test.com");
+            Operation result = operationService.nettoyage(1L, TENANT);
 
             assertEquals("PROPRE", cuve.getStatutPhysique());
             assertEquals("NETTOYAGE", result.getType());
@@ -68,7 +71,7 @@ class OperationServiceTest {
             when(cuveRepository.findById(2L)).thenReturn(Optional.of(cuve));
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.nettoyage(2L, "user@test.com");
+            Operation result = operationService.nettoyage(2L, TENANT);
             assertEquals("PROPRE", cuve.getStatutPhysique());
             assertEquals("NETTOYAGE", result.getType());
         }
@@ -79,14 +82,14 @@ class OperationServiceTest {
             Cuve cuve = buildCuve(1L, "C1", "PROPRE", 100.0);
             when(cuveRepository.findById(1L)).thenReturn(Optional.of(cuve));
 
-            assertThrows(IllegalStateException.class, () -> operationService.nettoyage(1L, "u@t.com"));
+            assertThrows(IllegalStateException.class, () -> operationService.nettoyage(1L, TENANT));
         }
 
         @Test
         @DisplayName("should throw when cuve not found")
         void failNotFound() {
             when(cuveRepository.findById(999L)).thenReturn(Optional.empty());
-            assertThrows(IllegalArgumentException.class, () -> operationService.nettoyage(999L, "u@t.com"));
+            assertThrows(IllegalArgumentException.class, () -> operationService.nettoyage(999L, TENANT));
         }
 
         @Test
@@ -94,7 +97,7 @@ class OperationServiceTest {
         void failDeleted() {
             Cuve cuve = Cuve.builder().id(1L).nom("C1").statutPhysique("SALE").volumeMax(100.0).deleted(true).build();
             when(cuveRepository.findById(1L)).thenReturn(Optional.of(cuve));
-            assertThrows(IllegalArgumentException.class, () -> operationService.nettoyage(1L, "u@t.com"));
+            assertThrows(IllegalArgumentException.class, () -> operationService.nettoyage(1L, TENANT));
         }
     }
 
@@ -116,7 +119,7 @@ class OperationServiceTest {
             when(stockageRepository.findByLotIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.remplissage(1L, 1L, 30.0, "user@test.com");
+            Operation result = operationService.remplissage(1L, 1L, 30.0, TENANT);
 
             assertEquals("REMPLISSAGE", result.getType());
             assertEquals(30.0, result.getVolume());
@@ -135,7 +138,7 @@ class OperationServiceTest {
             when(stockageRepository.findByLotIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.remplissage(1L, 1L, null, "user@test.com");
+            Operation result = operationService.remplissage(1L, 1L, null, TENANT);
 
             assertEquals(50.0, result.getVolume());
         }
@@ -146,7 +149,7 @@ class OperationServiceTest {
             Cuve cuve = buildCuve(1L, "C1", "SALE", 100.0);
             when(cuveRepository.findById(1L)).thenReturn(Optional.of(cuve));
 
-            assertThrows(IllegalStateException.class, () -> operationService.remplissage(1L, 1L, 10.0, "u@t.com"));
+            assertThrows(IllegalStateException.class, () -> operationService.remplissage(1L, 1L, 10.0, TENANT));
         }
 
         @Test
@@ -160,7 +163,7 @@ class OperationServiceTest {
             when(stockageRepository.findByCuveIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
             when(stockageRepository.findByLotIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
 
-            assertThrows(IllegalStateException.class, () -> operationService.remplissage(1L, 1L, 30.0, "u@t.com"));
+            assertThrows(IllegalStateException.class, () -> operationService.remplissage(1L, 1L, 30.0, TENANT));
         }
 
         @Test
@@ -174,7 +177,7 @@ class OperationServiceTest {
             when(stockageRepository.findByCuveIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
             when(stockageRepository.findByLotIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
 
-            assertThrows(IllegalStateException.class, () -> operationService.remplissage(1L, 1L, 30.0, "u@t.com"));
+            assertThrows(IllegalStateException.class, () -> operationService.remplissage(1L, 1L, 30.0, TENANT));
         }
     }
 
@@ -201,7 +204,7 @@ class OperationServiceTest {
             when(stockageRepository.findByCuveIdAndDateFinIsNull(2L)).thenReturn(Collections.emptyList());
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.transfert(1L, 2L, 1L, null, "user@test.com");
+            Operation result = operationService.transfert(1L, 2L, 1L, null, TENANT);
 
             assertEquals("TRANSFERT", result.getType());
             assertEquals(50.0, result.getVolume());
@@ -223,7 +226,7 @@ class OperationServiceTest {
             when(stockageRepository.findByCuveIdAndDateFinIsNull(2L)).thenReturn(Collections.emptyList());
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.transfert(1L, 2L, 1L, 30.0, "user@test.com");
+            Operation result = operationService.transfert(1L, 2L, 1L, 30.0, TENANT);
 
             assertEquals(30.0, result.getVolume());
             assertEquals(50.0, srcStockage.getVolumeOccupe()); // 80 - 30
@@ -240,7 +243,7 @@ class OperationServiceTest {
             when(cuveRepository.findById(2L)).thenReturn(Optional.of(dst));
 
             assertThrows(IllegalStateException.class, () ->
-                    operationService.transfert(1L, 2L, 1L, 10.0, "u@t.com"));
+                    operationService.transfert(1L, 2L, 1L, 10.0, TENANT));
         }
 
         @Test
@@ -256,7 +259,7 @@ class OperationServiceTest {
             when(stockageRepository.findByCuveIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
 
             assertThrows(IllegalStateException.class, () ->
-                    operationService.transfert(1L, 2L, 1L, 10.0, "u@t.com"));
+                    operationService.transfert(1L, 2L, 1L, 10.0, TENANT));
         }
 
         @Test
@@ -273,7 +276,7 @@ class OperationServiceTest {
             when(stockageRepository.findByCuveIdAndDateFinIsNull(1L)).thenReturn(List.of(srcStockage));
 
             assertThrows(IllegalStateException.class, () ->
-                    operationService.transfert(1L, 2L, 1L, 30.0, "u@t.com"));
+                    operationService.transfert(1L, 2L, 1L, 30.0, TENANT));
         }
     }
 
@@ -295,7 +298,7 @@ class OperationServiceTest {
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
             Operation result = operationService.transformation(
-                    1L, 65.0, -2.0, 30.0, "#FF8800", "{\"test\":true}", "Filtration", "user@test.com"
+                    1L, 65.0, -2.0, 30.0, "#FF8800", "{\"test\":true}", "Filtration", TENANT
             );
 
             assertEquals("TRANSFORMATION", result.getType());
@@ -315,7 +318,7 @@ class OperationServiceTest {
             when(stockageRepository.findByLotIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            operationService.transformation(1L, null, null, null, null, null, null, "user@test.com");
+            operationService.transformation(1L, null, null, null, null, null, null, TENANT);
 
             assertEquals(60.0, lot.getColorL()); // unchanged
         }
@@ -329,7 +332,7 @@ class OperationServiceTest {
             when(stockageRepository.findByLotIdAndDateFinIsNull(1L)).thenReturn(Collections.emptyList());
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.transformation(1L, null, null, null, null, null, null, "user@test.com");
+            Operation result = operationService.transformation(1L, null, null, null, null, null, null, TENANT);
 
             assertTrue(result.getDescription().contains("LOT-001"));
         }
@@ -365,7 +368,7 @@ class OperationServiceTest {
 
             OperationService.AssemblageSource src = new OperationService.AssemblageSource(1L, 10L, 50.0);
             Operation op = operationService.assemblage(
-                    List.of(src), 3L, "LOT-MIX", "Cidre", 40.0, 10.0, 20.0, "#AABBCC", "{}", "user@test.com"
+                    List.of(src), 3L, "LOT-MIX", "Cidre", 40.0, 10.0, 20.0, "#AABBCC", "{}", TENANT
             );
 
             assertEquals("ASSEMBLAGE", op.getType());
@@ -383,7 +386,7 @@ class OperationServiceTest {
 
             OperationService.AssemblageSource src = new OperationService.AssemblageSource(1L, 10L, 50.0);
             assertThrows(IllegalStateException.class, () ->
-                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, "user@test.com"));
+                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, TENANT));
         }
 
         @Test
@@ -400,7 +403,7 @@ class OperationServiceTest {
 
             OperationService.AssemblageSource src = new OperationService.AssemblageSource(1L, 10L, 50.0);
             assertThrows(IllegalStateException.class, () ->
-                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, "user@test.com"));
+                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, TENANT));
         }
 
         @Test
@@ -417,7 +420,7 @@ class OperationServiceTest {
 
             OperationService.AssemblageSource src = new OperationService.AssemblageSource(1L, 10L, 50.0);
             assertThrows(IllegalStateException.class, () ->
-                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, "user@test.com"));
+                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, TENANT));
         }
 
         @Test
@@ -436,7 +439,7 @@ class OperationServiceTest {
 
             OperationService.AssemblageSource src = new OperationService.AssemblageSource(1L, 10L, 50.0);
             assertThrows(IllegalStateException.class, () ->
-                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, "user@test.com"));
+                    operationService.assemblage(List.of(src), 3L, "LOT-MIX", "Cidre", null, null, null, null, null, TENANT));
         }
     }
 
@@ -453,7 +456,7 @@ class OperationServiceTest {
             when(cuveRepository.findById(1L)).thenReturn(Optional.of(cuve));
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.logCuveDeletion(1L, "admin@test.com");
+            Operation result = operationService.logCuveDeletion(1L, TENANT);
             assertEquals("SUPPRESSION_CUVE", result.getType());
         }
 
@@ -464,7 +467,7 @@ class OperationServiceTest {
             when(cuveRepository.findById(1L)).thenReturn(Optional.of(cuve));
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.logCuveRestoration(1L, "admin@test.com");
+            Operation result = operationService.logCuveRestoration(1L, TENANT);
             assertEquals("RESTAURATION_CUVE", result.getType());
         }
 
@@ -475,7 +478,7 @@ class OperationServiceTest {
             when(lotRepository.findById(1L)).thenReturn(Optional.of(lot));
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.logLotDeletion(1L, "admin@test.com");
+            Operation result = operationService.logLotDeletion(1L, TENANT);
             assertEquals("SUPPRESSION_LOT", result.getType());
         }
 
@@ -486,7 +489,7 @@ class OperationServiceTest {
             when(lotRepository.findById(1L)).thenReturn(Optional.of(lot));
             when(operationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-            Operation result = operationService.logLotRestoration(1L, "admin@test.com");
+            Operation result = operationService.logLotRestoration(1L, TENANT);
             assertEquals("RESTAURATION_LOT", result.getType());
         }
 
@@ -494,16 +497,16 @@ class OperationServiceTest {
         @DisplayName("logCuveDeletion and restoration should throw when cuve not found")
         void logCuveNotFound() {
             when(cuveRepository.findById(999L)).thenReturn(Optional.empty());
-            assertThrows(IllegalArgumentException.class, () -> operationService.logCuveDeletion(999L, "u@t.com"));
-            assertThrows(IllegalArgumentException.class, () -> operationService.logCuveRestoration(999L, "u@t.com"));
+            assertThrows(IllegalArgumentException.class, () -> operationService.logCuveDeletion(999L, TENANT));
+            assertThrows(IllegalArgumentException.class, () -> operationService.logCuveRestoration(999L, TENANT));
         }
 
         @Test
         @DisplayName("logLotDeletion and restoration should throw when lot not found")
         void logLotNotFound() {
             when(lotRepository.findById(999L)).thenReturn(Optional.empty());
-            assertThrows(IllegalArgumentException.class, () -> operationService.logLotDeletion(999L, "u@t.com"));
-            assertThrows(IllegalArgumentException.class, () -> operationService.logLotRestoration(999L, "u@t.com"));
+            assertThrows(IllegalArgumentException.class, () -> operationService.logLotDeletion(999L, TENANT));
+            assertThrows(IllegalArgumentException.class, () -> operationService.logLotRestoration(999L, TENANT));
         }
     }
 }

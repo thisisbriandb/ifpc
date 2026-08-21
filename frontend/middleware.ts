@@ -22,13 +22,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Pour toutes les autres pages (protégées) : rediriger si pas de token
-  // TEMPORARY BYPASS FOR TESTING
-  // if (!token) {
-  //   const loginUrl = new URL('/login', request.url)
-  //   loginUrl.searchParams.set('redirect', pathname)
-  //   return NextResponse.redirect(loginUrl)
-  // }
+  // Pour toutes les autres pages (protégées) : rediriger si pas de token.
+  // Les données métier appartiennent à un utilisateur : sans jeton, l'API
+  // répond 401 et la page n'aurait rien à afficher.
+  if (!token) {
+    const loginUrl = new URL('/login', request.url)
+    loginUrl.searchParams.set('redirect', pathname)
+    return NextResponse.redirect(loginUrl)
+  }
 
   return NextResponse.next()
 }

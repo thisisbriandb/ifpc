@@ -2,6 +2,7 @@ package com.ifpc.api.services;
 
 import com.ifpc.api.models.*;
 import com.ifpc.api.repositories.*;
+import com.ifpc.api.security.Tenant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Toutes les opérations sont menées dans le périmètre d'un seul locataire :
+ * le paramètre {@code userEmail} est à la fois l'auteur de l'opération et le
+ * propriétaire attendu des cuves et lots manipulés. Une ressource appartenant
+ * à un autre utilisateur est traitée comme inexistante.
+ */
 @Service
 @RequiredArgsConstructor
 public class OperationService {
@@ -22,9 +29,7 @@ public class OperationService {
     // La cuve passe de SALE → PROPRE
     @Transactional
     public Operation nettoyage(Long cuveId, String userEmail) {
-        Cuve cuve = cuveRepository.findById(cuveId)
-                .filter(c -> !c.getDeleted())
-                .orElseThrow(() -> new IllegalArgumentException("Cuve introuvable"));
+        Cuve cuve = requireCuve(cuveId, userEmail, "Cuve introuvable");
 
         if (!"SALE".equals(cuve.getStatutPhysique()) && !"EN_NETTOYAGE".equals(cuve.getStatutPhysique())) {
             throw new IllegalStateException("La cuve doit être SALE ou EN_NETTOYAGE pour être nettoyée");
@@ -46,16 +51,13 @@ public class OperationService {
     // On affecte un lot à une cuve (la cuve doit être PROPRE et avoir du volume disponible)
     @Transactional
     public Operation remplissage(Long cuveId, Long lotId, Double volume, String userEmail) {
-        Cuve cuve = cuveRepository.findById(cuveId)
-                .filter(c -> !c.getDeleted())
-                .orElseThrow(() -> new IllegalArgumentException("Cuve introuvable"));
+        Cuve cuve = requireCuve(cuveId, userEmail, "Cuve introuvable");
 
         if (!"PROPRE".equals(cuve.getStatutPhysique())) {
             throw new IllegalStateException("La cuve doit être PROPRE pour recevoir un lot");
         }
 
-        Lot lot = lotRepository.findById(lotId)
-                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+        Lot lot = requireLot(lotId, userEmail, "Lot introuvable");
 
         // Check available volume in cuve
         List<Stockage> existing = stockageRepository.findByCuveIdAndDateFinIsNull(cuveId);
@@ -99,20 +101,15 @@ public class OperationService {
     // Cuve A → SALE, Cuve B reçoit le lot
     @Transactional
     public Operation transfert(Long cuveSourceId, Long cuveDestId, Long lotId, Double volume, String userEmail) {
-        Cuve cuveSource = cuveRepository.findById(cuveSourceId)
-                .filter(c -> !c.getDeleted())
-                .orElseThrow(() -> new IllegalArgumentException("Cuve source introuvable"));
+        Cuve cuveSource = requireCuve(cuveSourceId, userEmail, "Cuve source introuvable");
 
-        Cuve cuveDest = cuveRepository.findById(cuveDestId)
-                .filter(c -> !c.getDeleted())
-                .orElseThrow(() -> new IllegalArgumentException("Cuve destination introuvable"));
+        Cuve cuveDest = requireCuve(cuveDestId, userEmail, "Cuve destination introuvable");
 
         if (!"PROPRE".equals(cuveDest.getStatutPhysique())) {
             throw new IllegalStateException("La cuve destination doit être PROPRE");
         }
 
-        Lot lot = lotRepository.findById(lotId)
-                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+        Lot lot = requireLot(lotId, userEmail, "Lot introuvable");
 
         // Find active stockage for this lot in source cuve
         List<Stockage> sourceStockages = stockageRepository.findByCuveIdAndDateFinIsNull(cuveSourceId);
@@ -174,8 +171,7 @@ public class OperationService {
     @Transactional
     public Operation transformation(Long lotId, Double newColorL, Double newColorA, Double newColorB,
                                      String newColorHex, String newSpectrumJson, String description, String userEmail) {
-        Lot lot = lotRepository.findById(lotId)
-                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+        Lot lot = requireLot(lotId, userEmail, "Lot introuvable");
 
         if (newColorL != null) lot.setColorL(newColorL);
         if (newColorA != null) lot.setColorA(newColorA);
@@ -206,9 +202,7 @@ public class OperationService {
                                  Double colorL, Double colorA, Double colorB, String colorHex,
                                  String spectrumJson, String userEmail) {
 
-        Cuve cuveDest = cuveRepository.findById(cuveDestId)
-                .filter(c -> !c.getDeleted())
-                .orElseThrow(() -> new IllegalArgumentException("Cuve destination introuvable"));
+        Cuve cuveDest = requireCuve(cuveDestId, userEmail, "Cuve destination introuvable");
 
         if (!"PROPRE".equals(cuveDest.getStatutPhysique())) {
             // If dest cuve already has content, it's OK for assemblage (mixing into existing)
@@ -222,8 +216,7 @@ public class OperationService {
 
         // Withdraw volumes from source cuves
         for (AssemblageSource src : sources) {
-            Lot srcLot = lotRepository.findById(src.lotId())
-                    .orElseThrow(() -> new IllegalArgumentException("Lot source introuvable: " + src.lotId()));
+            Lot srcLot = requireLot(src.lotId(), userEmail, "Lot source introuvable: " + src.lotId());
 
             List<Stockage> srcStockages = stockageRepository.findByLotIdAndDateFinIsNull(src.lotId());
             Stockage srcStockage = srcStockages.stream()
@@ -268,6 +261,7 @@ public class OperationService {
         // Create new lot (result of assemblage)
         Lot newLot = Lot.builder()
                 .identifiant(newLotIdentifiant)
+                .ownerEmail(userEmail)
                 .typeProduit(typeProduit)
                 .volumeActuel(totalVolume)
                 .colorL(colorL)
@@ -298,13 +292,42 @@ public class OperationService {
         return operationRepository.save(op);
     }
 
+    // ── Cloisonnement multi-locataire ────────────────────────────────────────
+    // Une cuve ou un lot d'un autre utilisateur est indiscernable d'une
+    // ressource inexistante : même exception, même message.
+
+    private Cuve requireCuve(Long cuveId, String ownerEmail, String message) {
+        return cuveRepository.findById(cuveId)
+                .filter(c -> !c.getDeleted() && Tenant.owns(c.getOwnerEmail(), ownerEmail))
+                .orElseThrow(() -> new IllegalArgumentException(message));
+    }
+
+    private Lot requireLot(Long lotId, String ownerEmail, String message) {
+        return lotRepository.findById(lotId)
+                .filter(l -> Tenant.owns(l.getOwnerEmail(), ownerEmail))
+                .orElseThrow(() -> new IllegalArgumentException(message));
+    }
+
+    // Variantes pour la journalisation : la cuve/le lot vient d'être supprimé
+    // ou restauré, le drapeau « deleted » n'est donc pas discriminant.
+    private Cuve requireOwnedCuve(Long cuveId, String ownerEmail) {
+        return cuveRepository.findById(cuveId)
+                .filter(c -> Tenant.owns(c.getOwnerEmail(), ownerEmail))
+                .orElseThrow(() -> new IllegalArgumentException("Cuve introuvable"));
+    }
+
+    private Lot requireOwnedLot(Long lotId, String ownerEmail) {
+        return lotRepository.findById(lotId)
+                .filter(l -> Tenant.owns(l.getOwnerEmail(), ownerEmail))
+                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+    }
+
     // ── DTO for assemblage source ────────────────────────────────────────────
     public record AssemblageSource(Long cuveId, Long lotId, Double volume) {}
 
     @Transactional
     public Operation logCuveDeletion(Long cuveId, String userEmail) {
-        Cuve cuve = cuveRepository.findById(cuveId)
-                .orElseThrow(() -> new IllegalArgumentException("Cuve introuvable"));
+        Cuve cuve = requireOwnedCuve(cuveId, userEmail);
         Operation op = Operation.builder()
                 .type("SUPPRESSION_CUVE")
                 .cuveSource(cuve)
@@ -316,8 +339,7 @@ public class OperationService {
 
     @Transactional
     public Operation logCuveRestoration(Long cuveId, String userEmail) {
-        Cuve cuve = cuveRepository.findById(cuveId)
-                .orElseThrow(() -> new IllegalArgumentException("Cuve introuvable"));
+        Cuve cuve = requireOwnedCuve(cuveId, userEmail);
         Operation op = Operation.builder()
                 .type("RESTAURATION_CUVE")
                 .cuveSource(cuve)
@@ -329,8 +351,7 @@ public class OperationService {
 
     @Transactional
     public Operation logLotDeletion(Long lotId, String userEmail) {
-        Lot lot = lotRepository.findById(lotId)
-                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+        Lot lot = requireOwnedLot(lotId, userEmail);
         Operation op = Operation.builder()
                 .type("SUPPRESSION_LOT")
                 .lot(lot)
@@ -342,8 +363,7 @@ public class OperationService {
 
     @Transactional
     public Operation logLotRestoration(Long lotId, String userEmail) {
-        Lot lot = lotRepository.findById(lotId)
-                .orElseThrow(() -> new IllegalArgumentException("Lot introuvable"));
+        Lot lot = requireOwnedLot(lotId, userEmail);
         Operation op = Operation.builder()
                 .type("RESTAURATION_LOT")
                 .lot(lot)

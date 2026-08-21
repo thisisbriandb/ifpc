@@ -42,6 +42,8 @@ services:
       PGPASSWORD: ${PGPASSWORD:-ifpc}
       PORT: 8080
       JWT_SECRET: ${JWT_SECRET:?définir JWT_SECRET dans .env (openssl rand -base64 48)}
+      # Héritier des données antérieures au cloisonnement multi-tenant
+      PADOC_LEGACY_OWNER_EMAIL: ${PADOC_LEGACY_OWNER_EMAIL:-admin@ifpc.com}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-service-informatique@ifpc.eu}
       RESEND_ADMIN_EMAIL: ${RESEND_ADMIN_EMAIL:-service-informatique@ifpc.eu}

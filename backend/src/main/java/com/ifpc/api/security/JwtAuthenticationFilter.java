@@ -5,7 +5,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,12 +25,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
+        // Seules les routes réellement publiques échappent à l'authentification.
+        // Les cuves y figuraient tant qu'elles étaient partagées : désormais
+        // elles appartiennent à un locataire et doivent porter un principal,
+        // sans quoi le contrôleur ne saurait pas à qui répondre.
         String path = request.getServletPath();
-        boolean isGet = HttpMethod.GET.matches(request.getMethod());
 
         return path.startsWith("/api/config/")
-                || path.startsWith("/api/deploy/")
-                || (isGet && (path.equals("/api/cuves") || path.startsWith("/api/cuves/")));
+                || path.startsWith("/api/deploy/");
     }
 
     @Override

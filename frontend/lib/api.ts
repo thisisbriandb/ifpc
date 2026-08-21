@@ -14,6 +14,26 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Jeton expiré ou révoqué : on efface la session et on renvoie vers la page de
+// connexion. Sans cela, chaque page afficherait un écran vide sur des 401.
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error?.response?.status;
+    const url: string = error?.config?.url ?? "";
+    const isAuthCall = url.startsWith("/auth/");
+
+    if (status === 401 && !isAuthCall && typeof window !== "undefined") {
+      clearToken();
+      if (window.location.pathname !== "/login") {
+        const redirect = encodeURIComponent(window.location.pathname);
+        window.location.href = `/login?redirect=${redirect}`;
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 function saveToken(token: string) {
   if (typeof window === "undefined") return;
   localStorage.setItem("token", token);

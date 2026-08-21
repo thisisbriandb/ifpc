@@ -7,13 +7,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Toutes les lectures métier sont cloisonnées par propriétaire (owner_email) :
+ * un utilisateur ne voit que ses propres lots.
+ */
 @Repository
 public interface LotRepository extends JpaRepository<Lot, Long> {
-    List<Lot> findByStatutLotOrderByCreatedAtDesc(String statutLot);
-    List<Lot> findByTypeProduitOrderByCreatedAtDesc(String typeProduit);
-    Optional<Lot> findByIdentifiant(String identifiant);
-    Optional<Lot> findByIdentifiantAndDeletedFalse(String identifiant);
-    List<Lot> findAllByOrderByCreatedAtDesc();
-    List<Lot> findByDeletedFalseOrderByCreatedAtDesc();
-    List<Lot> findByDeletedTrueOrderByDeletedAtDesc();
+    List<Lot> findByOwnerEmailAndDeletedFalseOrderByCreatedAtDesc(String ownerEmail);
+    List<Lot> findByOwnerEmailAndDeletedTrueOrderByDeletedAtDesc(String ownerEmail);
+    Optional<Lot> findByIdAndOwnerEmail(Long id, String ownerEmail);
+    Optional<Lot> findByOwnerEmailAndIdentifiantAndDeletedFalse(String ownerEmail, String identifiant);
 }
