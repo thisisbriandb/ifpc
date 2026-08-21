@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -23,8 +22,25 @@ type FormData = {
   password: string;
 };
 
+// Après connexion, le cookie de session vient de changer : c'est le middleware
+// qui doit trancher où l'utilisateur a le droit d'aller. Or le routeur client
+// de Next garde en cache le résultat des navigations précédentes — dont le
+// rebond « /controle → /login » subi avant authentification — et le rejouerait
+// sans redemander quoi que ce soit au serveur, laissant l'utilisateur bloqué
+// sur le formulaire alors qu'il est authentifié.
+// Une navigation complète repart du serveur et vide ce cache.
+function allerVersApresConnexion() {
+  const params = new URLSearchParams(window.location.search);
+  const demande = params.get("redirect");
+  // On n'accepte qu'un chemin interne : jamais une URL fournie de l'extérieur.
+  const destination =
+    demande && demande.startsWith("/") && !demande.startsWith("//")
+      ? demande
+      : "/controle";
+  window.location.assign(destination);
+}
+
 export default function LoginPage() {
-  const router = useRouter();
   const { user, checkAuth } = useAuthStore();
   const { t } = useI18n();
 
@@ -55,8 +71,8 @@ export default function LoginPage() {
 
   // Redirect si déjà connecté
   useEffect(() => {
-    if (user) router.replace("/controle");
-  }, [user, router]);
+    if (user) allerVersApresConnexion();
+  }, [user]);
 
   const update = useCallback(
     (field: keyof FormData) =>
@@ -124,7 +140,8 @@ export default function LoginPage() {
       }
 
       await checkAuth();
-      router.replace("/controle");
+      allerVersApresConnexion();
+      return; // la navigation complète prend la main, inutile de rendre à nouveau
     } catch (err: unknown) {
       const message =
         (err as any)?.response?.data?.message ||

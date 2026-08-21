@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   FlaskConical, BarChart3, Home, LogOut, Shield, User,
@@ -21,7 +21,6 @@ interface NavGroup {
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const router = useRouter();
   const { user, isLoading, checkAuth, logout } = useAuthStore();
   const { collapsed, setCollapsed, mobileOpen, setMobileOpen } = useSidebar();
   const { t } = useI18n();
@@ -29,7 +28,10 @@ export default function Sidebar() {
 
   useEffect(() => { checkAuth(); }, [checkAuth]);
 
-  const handleLogout = () => { logout(); router.push("/login"); };
+  // Navigation complète, symétrique de la connexion : le cookie de session
+  // vient d'être effacé, et le cache du routeur client garde encore les pages
+  // rendues pendant la session. Repartir du serveur le vide.
+  const handleLogout = () => { logout(); window.location.assign("/login"); };
 
   const toggleGroup = (key: string) =>
     setOpenGroups((prev) => ({ ...prev, [key]: !prev[key] }));
