@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,7 +62,7 @@ class HistoryControllerTest {
     }
 
     @Test
-    @DisplayName("getRecentHistory returns history list for authenticated user and empty for anonymous")
+    @DisplayName("getRecentHistory returns history list for authenticated user and rejects anonymous")
     void testGetRecentHistory() {
         User user = User.builder().email("tech@ifpc.eu").role(Role.USER).build();
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
@@ -78,17 +79,21 @@ class HistoryControllerTest {
         assertEquals(1, response.getBody().size());
 
         SecurityContextHolder.clearContext();
-        ResponseEntity<List<HistoryController.HistoryDto>> anonResp = historyController.getRecentHistory();
-        assertEquals(HttpStatus.OK, anonResp.getStatusCode());
-        assertEquals(0, anonResp.getBody().size());
+        ResponseStatusException error = assertThrows(ResponseStatusException.class,
+                () -> historyController.getRecentHistory());
+        assertEquals(HttpStatus.UNAUTHORIZED, error.getStatusCode());
     }
 
     @Test
-    @DisplayName("getAnalysis by ID returns item or 404")
+    @DisplayName("getAnalysis by ID returns the tenant's own item, 404 for anyone else's")
     void testGetAnalysis() {
-        AnalysisHistory ah = AnalysisHistory.builder().id(1L).build();
-        when(historyRepository.findById(1L)).thenReturn(Optional.of(ah));
-        when(historyRepository.findById(2L)).thenReturn(Optional.empty());
+        User user = User.builder().email("tech@ifpc.eu").role(Role.USER).build();
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
+
+        AnalysisHistory ah = AnalysisHistory.builder().id(1L).userEmail("tech@ifpc.eu").build();
+        when(historyRepository.findByIdAndUserEmail(1L, "tech@ifpc.eu")).thenReturn(Optional.of(ah));
+        // L'analyse 2 appartient à un autre utilisateur : le dépôt ne la rend pas
+        when(historyRepository.findByIdAndUserEmail(2L, "tech@ifpc.eu")).thenReturn(Optional.empty());
 
         ResponseEntity<AnalysisHistory> resp1 = historyController.getAnalysis(1L);
         assertEquals(HttpStatus.OK, resp1.getStatusCode());
@@ -104,10 +109,10 @@ class HistoryControllerTest {
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
 
         AnalysisHistory own = AnalysisHistory.builder().id(1L).userEmail("tech@ifpc.eu").build();
-        AnalysisHistory other = AnalysisHistory.builder().id(2L).userEmail("other@ifpc.eu").build();
 
-        when(historyRepository.findById(1L)).thenReturn(Optional.of(own));
-        when(historyRepository.findById(2L)).thenReturn(Optional.of(other));
+        when(historyRepository.findByIdAndUserEmail(1L, "tech@ifpc.eu")).thenReturn(Optional.of(own));
+        // L'analyse 2 appartient à other@ifpc.eu : invisible pour ce locataire
+        when(historyRepository.findByIdAndUserEmail(2L, "tech@ifpc.eu")).thenReturn(Optional.empty());
 
         ResponseEntity<Void> resp1 = historyController.deleteAnalysis(1L);
         assertEquals(HttpStatus.OK, resp1.getStatusCode());

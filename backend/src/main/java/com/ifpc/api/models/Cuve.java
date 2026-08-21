@@ -23,6 +23,10 @@ public class Cuve {
     @Column(nullable = false)
     private String nom;
 
+    // Locataire propriétaire de la cuve (adresse e-mail de l'utilisateur).
+    @Column(name = "owner_email", length = 255)
+    private String ownerEmail;
+
     @Column(nullable = false)
     private Double volumeMax;
 

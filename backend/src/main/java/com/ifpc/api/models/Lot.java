@@ -20,8 +20,14 @@ public class Lot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 100)
+    // Unicité gérée par index composite (owner_email, identifiant) : deux
+    // exploitations différentes peuvent nommer un lot de la même façon.
+    @Column(nullable = false, length = 100)
     private String identifiant;
+
+    // Locataire propriétaire du lot (adresse e-mail de l'utilisateur).
+    @Column(name = "owner_email", length = 255)
+    private String ownerEmail;
 
     @Column(nullable = false, length = 100)
     private String typeProduit;

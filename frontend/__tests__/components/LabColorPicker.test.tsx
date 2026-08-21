@@ -15,6 +15,8 @@ describe('LabColorPicker Component', () => {
       moveTo: jest.fn(),
       stroke: jest.fn(),
       fillText: jest.fn(),
+      strokeText: jest.fn(),
+      strokeRect: jest.fn(),
       setLineDash: jest.fn(),
     }));
   });
@@ -43,6 +45,23 @@ describe('LabColorPicker Component', () => {
     fireEvent.click(fullBtn);
 
     expect(fullBtn).toHaveClass('bg-white');
+  });
+
+  test('cider space canvas is a rectangle (taller than the a*/b* half-disc was)', () => {
+    const { container } = render(<LabColorPicker {...defaultProps} />);
+
+    const canvas = container.querySelector('canvas') as HTMLCanvasElement;
+    expect(canvas).toHaveAttribute('width', '240');
+    expect(canvas).toHaveAttribute('height', '200');
+    // Rectangle : plus de découpe circulaire sur l'espace cidre
+    expect(canvas.className).toContain('rounded-xl');
+    expect(canvas.className).not.toContain('rounded-full');
+  });
+
+  test('flags a target that falls outside the cider rectangle', () => {
+    render(<LabColorPicker {...defaultProps} a={70} b={20} />);
+
+    expect(screen.getByText(/hors de l'espace cidre/i)).toBeInTheDocument();
   });
 
   test('triggers onChangeL when lightness slider is moved', () => {

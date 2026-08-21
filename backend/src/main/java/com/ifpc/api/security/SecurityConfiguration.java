@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,16 +34,12 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(req ->
+                        // Seuls l'authentification, la configuration produit et le
+                        // marqueur de déploiement sont publics. Toutes les données
+                        // métier (cuves, lots, stockages, opérations, historique)
+                        // appartiennent à un locataire : elles exigent un jeton.
                         req.requestMatchers("/api/auth/**", "/api/config/**", "/api/deploy/**")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/cuves", "/api/cuves/**")
-                                .permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/cuves", "/api/cuves/**")
-                                .permitAll()
-                                .requestMatchers(HttpMethod.PUT, "/api/cuves/**")
-                                .authenticated()
-                                .requestMatchers(HttpMethod.DELETE, "/api/cuves/**")
-                                .authenticated()
                                 .anyRequest()
                                 .authenticated()
                 )

@@ -1,19 +1,21 @@
 package com.ifpc.api.controllers;
 
 import com.ifpc.api.models.Operation;
-import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.OperationRepository;
+import com.ifpc.api.security.Tenant;
 import com.ifpc.api.services.OperationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Journal des opérations, cloisonné par locataire : on ne voit que les
+ * opérations menées sur son propre chai.
+ */
 @RestController
 @RequestMapping("/api/operations")
 @RequiredArgsConstructor
@@ -24,25 +26,25 @@ public class OperationController {
 
     @GetMapping
     public List<Map<String, Object>> getRecentOperations() {
-        return operationRepository.findTop50ByOrderByCreatedAtDesc()
+        return operationRepository.findTop50ByUserEmailOrderByCreatedAtDesc(Tenant.requireCurrentEmail())
                 .stream().map(this::operationToDto).toList();
     }
 
     @GetMapping("/cuve/{cuveId}")
     public List<Map<String, Object>> getOperationsByCuve(@PathVariable Long cuveId) {
-        return operationRepository.findByCuveSourceIdOrCuveDestIdOrderByCreatedAtDesc(cuveId, cuveId)
+        return operationRepository.findByUserEmailAndCuve(Tenant.requireCurrentEmail(), cuveId)
                 .stream().map(this::operationToDto).toList();
     }
 
     @GetMapping("/lot/{lotId}")
     public List<Map<String, Object>> getOperationsByLot(@PathVariable Long lotId) {
-        return operationRepository.findByLotIdOrderByCreatedAtDesc(lotId)
+        return operationRepository.findByUserEmailAndLotIdOrderByCreatedAtDesc(Tenant.requireCurrentEmail(), lotId)
                 .stream().map(this::operationToDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getOperationById(@PathVariable Long id) {
-        return operationRepository.findById(id)
+        return operationRepository.findByIdAndUserEmail(id, Tenant.requireCurrentEmail())
                 .map(o -> ResponseEntity.ok(operationToDto(o)))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -51,8 +53,9 @@ public class OperationController {
 
     @PostMapping("/nettoyage")
     public ResponseEntity<?> nettoyage(@RequestBody NettoyageRequest req) {
+        String owner = Tenant.requireCurrentEmail();
         try {
-            Operation op = operationService.nettoyage(req.cuveId(), getCurrentUserEmail());
+            Operation op = operationService.nettoyage(req.cuveId(), owner);
             return ResponseEntity.ok(operationToDto(op));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -61,8 +64,9 @@ public class OperationController {
 
     @PostMapping("/remplissage")
     public ResponseEntity<?> remplissage(@RequestBody RemplissageRequest req) {
+        String owner = Tenant.requireCurrentEmail();
         try {
-            Operation op = operationService.remplissage(req.cuveId(), req.lotId(), req.volume(), getCurrentUserEmail());
+            Operation op = operationService.remplissage(req.cuveId(), req.lotId(), req.volume(), owner);
             return ResponseEntity.ok(operationToDto(op));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -71,8 +75,9 @@ public class OperationController {
 
     @PostMapping("/transfert")
     public ResponseEntity<?> transfert(@RequestBody TransfertRequest req) {
+        String owner = Tenant.requireCurrentEmail();
         try {
-            Operation op = operationService.transfert(req.cuveSourceId(), req.cuveDestId(), req.lotId(), req.volume(), getCurrentUserEmail());
+            Operation op = operationService.transfert(req.cuveSourceId(), req.cuveDestId(), req.lotId(), req.volume(), owner);
             return ResponseEntity.ok(operationToDto(op));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -81,9 +86,10 @@ public class OperationController {
 
     @PostMapping("/transformation")
     public ResponseEntity<?> transformation(@RequestBody TransformationRequest req) {
+        String owner = Tenant.requireCurrentEmail();
         try {
             Operation op = operationService.transformation(req.lotId(), req.colorL(), req.colorA(), req.colorB(),
-                    req.colorHex(), req.spectrumJson(), req.description(), getCurrentUserEmail());
+                    req.colorHex(), req.spectrumJson(), req.description(), owner);
             return ResponseEntity.ok(operationToDto(op));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -92,6 +98,7 @@ public class OperationController {
 
     @PostMapping("/assemblage")
     public ResponseEntity<?> assemblage(@RequestBody AssemblageRequest req) {
+        String owner = Tenant.requireCurrentEmail();
         try {
             List<OperationService.AssemblageSource> sources = req.sources().stream()
                     .map(s -> new OperationService.AssemblageSource(s.cuveId(), s.lotId(), s.volume()))
@@ -99,21 +106,11 @@ public class OperationController {
             Operation op = operationService.assemblage(sources, req.cuveDestId(),
                     req.newLotIdentifiant(), req.typeProduit(),
                     req.colorL(), req.colorA(), req.colorB(), req.colorHex(),
-                    req.spectrumJson(), getCurrentUserEmail());
+                    req.spectrumJson(), owner);
             return ResponseEntity.ok(operationToDto(op));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
-    }
-
-    // ── Helpers ──────────────────────────────────────────────────────────────
-
-    private String getCurrentUserEmail() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User user) {
-            return user.getEmail();
-        }
-        return null;
     }
 
     // ── Request DTOs ────────────────────────────────────────────────────────

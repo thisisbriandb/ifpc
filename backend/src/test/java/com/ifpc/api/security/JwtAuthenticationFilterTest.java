@@ -39,21 +39,20 @@ class JwtAuthenticationFilterTest {
     }
 
     @Test
-    @DisplayName("shouldNotFilter returns true for public paths")
+    @DisplayName("shouldNotFilter returns true for public paths only")
     void testShouldNotFilter() {
         when(request.getServletPath()).thenReturn("/api/config/products");
-        when(request.getMethod()).thenReturn("GET");
         assertTrue(filter.shouldNotFilter(request));
 
         when(request.getServletPath()).thenReturn("/api/deploy/info");
         assertTrue(filter.shouldNotFilter(request));
 
+        // Les données d'un locataire doivent toujours être authentifiées, y
+        // compris en lecture : sinon le contrôleur ne sait pas à qui répondre.
         when(request.getServletPath()).thenReturn("/api/cuves");
-        when(request.getMethod()).thenReturn("GET");
-        assertTrue(filter.shouldNotFilter(request));
+        assertFalse(filter.shouldNotFilter(request));
 
-        when(request.getServletPath()).thenReturn("/api/cuves");
-        when(request.getMethod()).thenReturn("POST");
+        when(request.getServletPath()).thenReturn("/api/lots");
         assertFalse(filter.shouldNotFilter(request));
     }
 
