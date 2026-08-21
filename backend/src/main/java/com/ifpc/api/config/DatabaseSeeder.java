@@ -30,21 +30,31 @@ public class DatabaseSeeder {
             repairLotsSchema(jdbcTemplate);
             repairTenantSchema(jdbcTemplate);
 
-            // Création de l'admin par défaut s'il n'existe pas
-            if (userRepository.findByEmail("admin@ifpc.com").isEmpty()) {
+            // Création de l'admin par défaut s'il n'existe pas.
+            // Le mot de passe n'est JAMAIS écrit dans le dépôt : il vient de
+            // PADOC_ADMIN_PASSWORD, ou il est tiré au hasard et affiché une
+            // seule fois dans le journal de démarrage.
+            if (userRepository.findByEmail(adminEmail()).isEmpty()) {
+                String motDePasse = motDePasseAdminInitial();
                 User admin = User.builder()
                         .firstName("Super")
                         .lastName("Admin")
-                        .email("admin@ifpc.com")
-                        .password(passwordEncoder.encode("admin"))
+                        .email(adminEmail())
+                        .password(passwordEncoder.encode(motDePasse))
                         .role(Role.ADMIN)
                         .enabled(true)
                         .build();
                 userRepository.save(admin);
-                System.out.println("====== COMPTE ADMIN GÉNÉRÉ ======");
-                System.out.println("Email: admin@ifpc.com");
-                System.out.println("Mot de passe: admin");
-                System.out.println("=================================");
+
+                System.out.println("====== COMPTE ADMIN CRÉÉ ======");
+                System.out.println("Email : " + adminEmail());
+                if (System.getenv("PADOC_ADMIN_PASSWORD") != null) {
+                    System.out.println("Mot de passe : celui fourni via PADOC_ADMIN_PASSWORD");
+                } else {
+                    System.out.println("Mot de passe (affiché une seule fois) : " + motDePasse);
+                    System.out.println("Le noter maintenant, puis le changer à la première connexion.");
+                }
+                System.out.println("===============================");
             }
 
             // Seed product configs with default VP cible values (from pasto.py)
@@ -186,10 +196,31 @@ public class DatabaseSeeder {
                 """);
     }
 
+    /** Adresse du compte administrateur initial. */
+    private String adminEmail() {
+        String configured = System.getenv("PADOC_ADMIN_EMAIL");
+        return configured != null && !configured.isBlank() ? configured.trim() : "admin@ifpc.com";
+    }
+
+    /**
+     * Mot de passe du compte administrateur initial : celui de
+     * PADOC_ADMIN_PASSWORD s'il est fourni, sinon une valeur aléatoire.
+     * Aucun mot de passe en clair ne doit vivre dans le code source.
+     */
+    private String motDePasseAdminInitial() {
+        String configured = System.getenv("PADOC_ADMIN_PASSWORD");
+        if (configured != null && !configured.isBlank()) {
+            return configured;
+        }
+        byte[] aleatoire = new byte[24];
+        new java.security.SecureRandom().nextBytes(aleatoire);
+        return java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(aleatoire);
+    }
+
     /** Compte qui hérite des données antérieures au cloisonnement. */
     private String legacyOwnerEmail() {
         String configured = System.getenv("PADOC_LEGACY_OWNER_EMAIL");
-        return configured != null && !configured.isBlank() ? configured.trim() : "admin@ifpc.com";
+        return configured != null && !configured.isBlank() ? configured.trim() : adminEmail();
     }
 
     private void repairCuvesSchema(JdbcTemplate jdbcTemplate) {

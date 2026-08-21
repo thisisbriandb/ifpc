@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,23 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    @Value("${jwt.secret:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}")
+    // Aucune valeur de repli : une clé de signature écrite dans le dépôt est
+    // une clé publique, avec laquelle n'importe qui peut forger un jeton
+    // d'administrateur. Sans JWT_SECRET, l'application refuse de démarrer.
+    @Value("${jwt.secret:}")
     private String secretKey;
 
     @Value("${jwt.expiration:86400000}")
     private long jwtExpiration;
+
+    @PostConstruct
+    void verifierSecret() {
+        if (secretKey == null || secretKey.isBlank()) {
+            throw new IllegalStateException(
+                    "JWT_SECRET n'est pas défini. Générer une clé propre à cet environnement "
+                            + "(openssl rand -base64 48) et la partager avec le Calc Engine FastAPI.");
+        }
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

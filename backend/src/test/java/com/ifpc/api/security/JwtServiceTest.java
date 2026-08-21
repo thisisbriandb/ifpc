@@ -14,6 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class JwtServiceTest {
 
+    // Clé HS256 valable uniquement pour ces tests — jamais celle d'un
+    // environnement réel, qui ne doit exister que dans JWT_SECRET.
+    private static final String TEST_SECRET_B64 =
+            java.util.Base64.getEncoder().encodeToString("jwt-service-unit-test-signing-key".getBytes());
+
+
     private JwtService jwtService;
 
     @BeforeEach
@@ -21,7 +27,7 @@ class JwtServiceTest {
         jwtService = new JwtService();
         // Use the default secret key (same as in application)
         ReflectionTestUtils.setField(jwtService, "secretKey",
-                "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970");
+                TEST_SECRET_B64);
         ReflectionTestUtils.setField(jwtService, "jwtExpiration", 86400000L); // 24h
     }
 
@@ -111,7 +117,7 @@ class JwtServiceTest {
         void expiredToken() {
             JwtService shortLived = new JwtService();
             ReflectionTestUtils.setField(shortLived, "secretKey",
-                    "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970");
+                    TEST_SECRET_B64);
             ReflectionTestUtils.setField(shortLived, "jwtExpiration", -1000L); // already expired
 
             User user = buildUser("expired@ifpc.eu", Role.USER);

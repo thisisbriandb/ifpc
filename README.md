@@ -118,6 +118,29 @@ async rewrites() {
 
 ---
 
+## Secrets et compte administrateur
+
+Aucun secret ne doit vivre dans le dépôt. Deux règles sont désormais imposées
+par le code lui-même :
+
+* **`JWT_SECRET` est obligatoire.** Le Core API (`JwtService`) et le Calc
+  Engine (`backend/auth.py`) refusent de démarrer si la variable est absente.
+  Il n'existe plus de clé de repli : une clé écrite dans le dépôt est une clé
+  publique, avec laquelle n'importe qui peut forger un jeton d'administrateur.
+  Générer la valeur avec `openssl rand -base64 48`, et **la même** des deux
+  côtés.
+* **Le mot de passe administrateur initial n'est plus en dur.** Au premier
+  démarrage, et uniquement si le compte n'existe pas déjà, le seeder utilise
+  `PADOC_ADMIN_PASSWORD` s'il est fourni, sinon tire une valeur aléatoire
+  affichée **une seule fois** dans le journal de démarrage.
+
+> ⚠️ **Sur une base déjà en service, le compte administrateur existant n'est
+> pas modifié** : le seeder ne crée le compte que s'il est absent. Un
+> déploiement antérieur avec le mot de passe `admin` reste donc vulnérable
+> jusqu'à ce que ce mot de passe soit changé à la main, via l'application.
+
+---
+
 ## Cloisonnement des données (multi-tenant)
 
 Chaque utilisateur dispose de son propre jeu de données : ses lots, ses cuves,
