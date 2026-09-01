@@ -41,7 +41,8 @@ interface ResultData {
     produit: string;
     product_type?: string;
     lot_identifier?: string;
-    clarification: string | null;
+    unite_temps?: string | null;
+    unite_temps_nom?: string | null;
     procede: string | null;
     ph?: number;
     titre_alcool?: number;

@@ -133,8 +133,6 @@
     "expertMode": "Mode expert",
     "product": "Produit",
     "clarity": "Clarté",
-    "turbid": "Trouble",
-    "clear": "Limpide",
     "physicoChem": "Physico-chimie",
     "ph": "pH",
     "alcohol": "Alcool %",
@@ -277,7 +275,11 @@
       "manualData": "Veuillez saisir des données",
       "unknown": "Erreur inconnue"
     },
-    "defaultHelp": "Qu'est-ce que la VP ?\nLa Valeur Pasteurisatrice (VP) quantifie l'effet létal d'un traitement thermique sur les microorganismes cibles. Elle s'exprime en UP (Unités de Pasteurisation) et est calculée par la méthode de Bigelow.\n\nComment utiliser cet outil ?\n1. Importez vos données : fichier Excel/CSV, collé ou saisie manuelle\n2. Choisissez le produit et les paramètres de pasteurisation\n3. Lancez l'analyse pour obtenir la VP et le diagnostic\n\nInterprétation des résultats\n• Conforme : la Valeur Pasteurisatrice atteint ou dépasse la cible\n• Vigilance : la Valeur Pasteurisatrice est proche de la cible\n• Insuffisant : la Valeur Pasteurisatrice est en dessous de la cible\n\nMode Expert : Réservé aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoométrique."
+    "defaultHelp": "Qu'est-ce que la VP ?\nLa Valeur Pasteurisatrice (VP) quantifie l'effet létal d'un traitement thermique sur les microorganismes cibles. Elle s'exprime en UP (Unités de Pasteurisation) et est calculée par la méthode de Bigelow.\n\nComment utiliser cet outil ?\n1. Importez vos données : fichier Excel/CSV, collé ou saisie manuelle\n2. Choisissez le produit et les paramètres de pasteurisation\n3. Lancez l'analyse pour obtenir la VP et le diagnostic\n\nInterprétation des résultats\n• Conforme : la Valeur Pasteurisatrice atteint ou dépasse la cible\n• Vigilance : la Valeur Pasteurisatrice est proche de la cible\n• Insuffisant : la Valeur Pasteurisatrice est en dessous de la cible\n\nMode Expert : Réservé aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoométrique.",
+    "unitLabel": "Unité de la colonne temps",
+    "unitMinute": "Minute",
+    "unitSecond": "Seconde",
+    "unitRequired": "Choisissez l'unité de la colonne temps avant de lancer l'analyse."
   },
   "resultDisplay": {
     "lotVerdict": "Verdict du lot",

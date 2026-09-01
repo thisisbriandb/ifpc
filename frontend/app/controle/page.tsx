@@ -6,7 +6,8 @@ import ProductSelector from "@/components/ProductSelector";
 import ResultDisplay from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
 import HelpModal from "@/components/HelpModal";
-import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById } from "@/lib/api";
+import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById, type UniteTemps } from "@/lib/api";
+import { uniteDuProcede, procedeAccorde } from "@/lib/pasteurisation";
 import { useAuthStore } from "@/lib/store";
 import { useSearchParams } from "next/navigation";
 import AuthModal from "@/components/AuthModal";
@@ -36,7 +37,8 @@ interface PasteurisationResult {
     microorganisme: string;
     produit: string;
     lot_identifier?: string;
-    clarification: string | null;
+    unite_temps?: string | null;
+    unite_temps_nom?: string | null;
     procede: string | null;
     ph?: number;
     titre_alcool?: number;
@@ -90,7 +92,8 @@ function ControlePageInner() {
     return `LOT-${dateTag}-${String(seq).padStart(3, "0")}`;
   });
   const [microorganisme, setMicroorganisme] = useState("");
-  const [clarification, setClarification] = useState("trouble");
+  // Aucune valeur par défaut : le choix de l'unité est obligatoire.
+  const [uniteTemps, setUniteTemps] = useState<UniteTemps | "">("");
   const [procede, setProcede] = useState("classique");
   const [tRef, setTRef] = useState("");
   const [zValue, setZValue] = useState("");
@@ -182,8 +185,13 @@ function ControlePageInner() {
       if (key) setProductType(key);
     }
     if (p.microorganisme) setMicroorganisme(p.microorganisme);
-    if (p.clarification) setClarification(p.clarification);
     if (p.procede) setProcede(p.procede);
+    if (p.unite_temps === "minute" || p.unite_temps === "seconde") {
+      setUniteTemps(p.unite_temps);
+    } else if (p.procede) {
+      // Analyses antérieures au choix explicite : l'unité s'y déduisait du procédé.
+      setUniteTemps(String(p.procede).toLowerCase().includes("flash") ? "seconde" : "minute");
+    }
     if (p.lot_identifier) setLotIdentifier(p.lot_identifier);
     if (p.t_ref !== undefined && p.t_ref !== null) setTRef(String(p.t_ref));
     if (p.z !== undefined && p.z !== null) setZValue(String(p.z));
@@ -237,11 +245,23 @@ function ControlePageInner() {
     return () => { cancelled = true; };
   }, [searchParams, restoreFormState]);
 
+  // Choisir un procédé fixe l'unité correspondante…
+  const choisirProcede = useCallback((valeur: string) => {
+    setProcede(valeur);
+    setUniteTemps(uniteDuProcede(valeur));
+  }, []);
+
+  // …et choisir une unité ramène le procédé vers une valeur compatible.
+  const choisirUnite = useCallback((valeur: UniteTemps) => {
+    setUniteTemps(valeur);
+    setProcede((actuel) => procedeAccorde(actuel, valeur));
+  }, []);
+
   // --- LOGIQUE (inchangée) ---
-  const buildParams = useCallback(() => {
-    const params: Record<string, string | number | null> = {
+  const buildParams = useCallback((unite: UniteTemps) => {
+    const params: Record<string, string | number | null> & { unite_temps: UniteTemps } = {
       product_type: productType,
-      clarification,
+      unite_temps: unite,
       procede,
     };
     if (microorganisme) params.microorganisme = microorganisme;
@@ -254,12 +274,12 @@ function ControlePageInner() {
       params.vp_cible = vpCibleConfig[productType];
     }
     return params;
-  }, [productType, microorganisme, clarification, procede, tRef, zValue, ph, titreAlcool, vpCibleConfig]);
+  }, [productType, microorganisme, procede, tRef, zValue, ph, titreAlcool, vpCibleConfig]);
 
   const handleReset = useCallback(() => {
     setProductType("jus_pomme");
     setMicroorganisme("");
-    setClarification("trouble");
+    setUniteTemps("");
     setProcede("classique");
     setTRef("");
     setZValue("");
@@ -282,11 +302,15 @@ function ControlePageInner() {
   }, [syncManualData]);
 
   const handleSubmit = async () => {
+    if (!uniteTemps) {
+      setError(t("controle.unitRequired"));
+      return;
+    }
     setLoading(true);
     setError(null);
     setResult(null);
     try {
-      const params = buildParams();
+      const params = buildParams(uniteTemps);
       params.locale = locale;
       let res;
       if (mode === "upload") {
@@ -443,7 +467,7 @@ function ControlePageInner() {
                 productType={productType} onProductChange={setProductType}
                 microorganisme={microorganisme} onMicroChange={setMicroorganisme}
                 lotIdentifier={lotIdentifier} onLotIdentifierChange={setLotIdentifier}
-                procede={procede} onProcedeChange={setProcede}
+                procede={procede} onProcedeChange={choisirProcede}
                 expertMode={expertMode}
                 tRef={tRef} onTRefChange={setTRef}
                 zValue={zValue} onZChange={setZValue}
@@ -451,18 +475,34 @@ function ControlePageInner() {
                 titreAlcool={titreAlcool} onTitreAlcoolChange={setTitreAlcool}
               />
 
-              <div className="flex gap-1.5">
-                {[[t("bareme.turbid"), "trouble"], [t("bareme.clear"), "limpide"]].map(([label, value]) => (
-                  <button
-                    key={value as string}
-                    onClick={() => setClarification(value as string)}
-                    className={`flex-1 py-1.5 rounded-md text-xs font-semibold transition-colors ${
-                      clarification === value ? "bg-brand-primary text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                    }`}
-                  >
-                    {label as string}
-                  </button>
-                ))}
+              {/* Unité de la colonne temps : choix obligatoire, lié au procédé */}
+              <div className="space-y-1">
+                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+                  {t("controle.unitLabel")}
+                </p>
+                <div className={`flex gap-1.5 rounded-lg ${uniteTemps ? "" : "ring-1 ring-amber-400/70"}`}>
+                  {([["minute", t("controle.unitMinute")], ["seconde", t("controle.unitSecond")]] as const).map(
+                    ([value, label]) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => choisirUnite(value)}
+                        className={`flex-1 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                          uniteTemps === value
+                            ? "bg-brand-primary text-white"
+                            : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    )
+                  )}
+                </div>
+                {!uniteTemps && (
+                  <p className="text-[10px] text-amber-600 font-medium leading-snug">
+                    {t("controle.unitRequired")}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -575,7 +615,7 @@ function ControlePageInner() {
 
               <button
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={loading || !uniteTemps}
                 className="w-full mt-3 py-2.5 text-sm flex items-center justify-center gap-2 rounded-lg font-bold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors disabled:opacity-60"
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Activity className="w-4 h-4" />}
@@ -719,15 +759,15 @@ function ControlePageInner() {
                     <thead className="sticky top-0 bg-gray-50 border-b border-gray-200 shadow-sm z-10">
                       <tr>
                         <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">
-                          {t("controle.time")} ({procede === "flash" || result.parametres.procede?.toLowerCase().includes("flash") ? "sec" : "min"})
+                          {t("controle.time")} ({(result.parametres.unite_temps ?? uniteTemps) === "seconde" ? "sec" : "min"})
                         </th>
                         <th className="px-5 py-3 font-bold text-gray-500 uppercase tracking-wider text-xs">{t("controle.temp")} (°C)</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
                       {result.courbe.temps.map((tVal, idx) => {
-                        const isFlash = procede === "flash" || result.parametres.procede?.toLowerCase().includes("flash");
-                        const timeDisplay = isFlash ? tVal.toFixed(1) : tVal.toFixed(2);
+                        const enSecondes = (result.parametres.unite_temps ?? uniteTemps) === "seconde";
+                        const timeDisplay = enSecondes ? tVal.toFixed(1) : tVal.toFixed(2);
                         return (
                           <tr key={idx} className="hover:bg-gray-50 transition-colors">
                             <td className="px-5 py-2.5 font-mono text-gray-600">{timeDisplay}</td>

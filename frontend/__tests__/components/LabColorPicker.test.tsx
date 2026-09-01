@@ -52,14 +52,14 @@ describe('LabColorPicker Component', () => {
 
     const canvas = container.querySelector('canvas') as HTMLCanvasElement;
     expect(canvas).toHaveAttribute('width', '240');
-    expect(canvas).toHaveAttribute('height', '200');
+    expect(canvas).toHaveAttribute('height', '240');
     // Rectangle : plus de découpe circulaire sur l'espace cidre
     expect(canvas.className).toContain('rounded-xl');
     expect(canvas.className).not.toContain('rounded-full');
   });
 
   test('flags a target that falls outside the cider rectangle', () => {
-    render(<LabColorPicker {...defaultProps} a={70} b={20} />);
+    render(<LabColorPicker {...defaultProps} a={100} b={20} />);
 
     expect(screen.getByText(/hors de l'espace cidre/i)).toBeInTheDocument();
   });

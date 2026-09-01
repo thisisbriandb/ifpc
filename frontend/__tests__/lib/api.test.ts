@@ -111,10 +111,10 @@ describe('API functions in lib/api.ts', () => {
   test('evaluerPasteurisation & proposerBareme', async () => {
     (mockedAxios.post as jest.Mock).mockResolvedValue({ data: { conforme: true } });
 
-    const res = await api.evaluerPasteurisation({ temperatures: [60, 70], temps: [0, 10], product_type: 'jus_pomme' });
+    const res = await api.evaluerPasteurisation({ temperatures: [60, 70], temps: [0, 10], product_type: 'jus_pomme', unite_temps: 'minute' });
     expect(res).toEqual({ conforme: true });
 
-    const baremeRes = await api.proposerBareme({ product_type: 'jus_pomme', clarification: 'brut', procede: 'flash' });
+    const baremeRes = await api.proposerBareme({ product_type: 'jus_pomme', procede: 'flash' });
     expect(baremeRes).toEqual({ conforme: true });
   });
 });

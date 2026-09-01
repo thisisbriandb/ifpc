@@ -20,7 +20,7 @@ describe('ResultDisplay Component', () => {
       d_ref: 1.0,
       microorganisme: 'Lactobacillus plantarum',
       produit: 'Jus de pomme',
-      clarification: 'brut',
+      unite_temps: 'seconde',
       procede: 'flash',
     },
     evaluations_multimicro: [

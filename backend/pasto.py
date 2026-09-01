@@ -156,7 +156,10 @@ PRODUITS: Dict[str, Dict] = {
     },
 }
 
-CLARIFICATIONS = ["trouble", "limpide"]
+# Unité dans laquelle l'utilisateur a relevé la colonne « temps ». Le calcul de
+# Bigelow travaille en minutes : c'est la seule donnée qui, mal renseignée,
+# fausse la VP d'un facteur 60. Le choix est donc explicite et obligatoire.
+UNITES_TEMPS = ["minute", "seconde"]
 
 PROCEDES = {
     "flash": {"nom": "Flash-pasteurisation ", "description": "Haute température, courte durée"},
@@ -177,9 +180,9 @@ TRANSLATIONS = {
         "classique": {"fr": "Pasteurisation classique", "en": "Conventional pasteurisation"},
         "tunnel": {"fr": "Pasteurisation Tunnel", "en": "Tunnel / spray"},
     },
-    "clarifications": {
-        "trouble": {"fr": "Trouble", "en": "Turbid"},
-        "limpide": {"fr": "Limpide", "en": "Clear"},
+    "unites_temps": {
+        "minute": {"fr": "Minute", "en": "Minute"},
+        "seconde": {"fr": "Seconde", "en": "Second"},
     },
     "risk_levels": {
         "faible": {"fr": "faible", "en": "low"},
@@ -225,10 +228,10 @@ def localize_procede_name(procede: Optional[str], locale: str) -> Optional[str]:
     return translate("procedes", procede, locale, fallback)
 
 
-def localize_clarification_name(clarification: Optional[str], locale: str) -> Optional[str]:
-    if clarification is None:
+def localize_unite_temps_name(unite: Optional[str], locale: str) -> Optional[str]:
+    if unite is None:
         return None
-    return translate("clarifications", clarification, locale, clarification)
+    return translate("unites_temps", unite, locale, unite)
 
 
 def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, locale: str, microorganisme: str = "", product_type: str = "") -> str:
@@ -410,6 +413,23 @@ def get_specific_diagnostic_message(micro_key: str, statut: str, lang: str = "fr
     return "Les conditions de pasteurisation sont suffisantes." if is_ok else "Les conditions de pasteurisation ne sont pas suffisantes."
 
 
+def convertir_temps_en_minutes(temps: List[float], unite_temps: str) -> List[float]:
+    """
+    Ramène la colonne « temps » en minutes, unité de travail du modèle de Bigelow.
+
+    L'unité vient d'un choix explicite de l'utilisateur et non du procédé :
+    un relevé de flash-pasteurisation peut légitimement être noté en minutes
+    s'il couvre la montée en température.
+    """
+    if unite_temps not in UNITES_TEMPS:
+        raise ValueError(
+            f"Unité de temps inconnue : {unite_temps}. Valeurs acceptées : {', '.join(UNITES_TEMPS)}"
+        )
+    if unite_temps == "seconde":
+        return [t / 60.0 for t in temps]
+    return list(temps)
+
+
 # ---------------------------------------------------------------------------
 # Évaluation complète
 # ---------------------------------------------------------------------------
@@ -422,7 +442,7 @@ def evaluer_pasteurisation(
     z: Optional[float] = None,
     vp_cible: Optional[float] = None,
     microorganisme: Optional[str] = None,
-    clarification: Optional[str] = None,
+    unite_temps: str = "minute",
     procede: Optional[str] = None,
     ph: Optional[float] = None,
     titre_alcool: Optional[float] = None,
@@ -439,8 +459,9 @@ def evaluer_pasteurisation(
         raise ValueError(f"Type de produit inconnu : {product_type}")
 
     lang = normalize_locale(locale)
-    is_flash = procede is not None and "flash" in str(procede).lower()
-    temps_calcul = [t / 60.0 for t in temps] if is_flash else temps
+    # L'unité est déclarée par l'utilisateur ; le procédé n'intervient plus dans
+    # la conversion, il reste une information de contexte.
+    temps_calcul = convertir_temps_en_minutes(temps, unite_temps)
 
     # --- Évaluation multi-microorganismes pour Jus de pomme ---
     evaluations_multimicro = []
@@ -514,7 +535,8 @@ def evaluer_pasteurisation(
             "microorganisme_key": micro_key,
             "produit": localize_product_name(product_type, lang),
             "product_type": product_type,
-            "clarification": localize_clarification_name(clarification, lang),
+            "unite_temps": unite_temps,
+            "unite_temps_nom": localize_unite_temps_name(unite_temps, lang),
             "procede": localize_procede_name(procede, lang),
             "ph": ph,
             "titre_alcool": titre_alcool,
@@ -648,7 +670,6 @@ def proposer_bareme(
     product_type: str,
     locale: str = "fr",
     microorganisme: Optional[str] = None,
-    clarification: str = "trouble",
     procede: str = "classique",
 ) -> Dict:
     """Propose un barème adapté au produit et au microorganisme."""
@@ -663,11 +684,9 @@ def proposer_bareme(
 
     t_ref = micro["t_ref"]
     z = micro["z"]
+    # La VP cible du microorganisme s'applique telle quelle : la majoration de
+    # 20 % qui distinguait autrefois les produits troubles a été retirée.
     vp_cible = micro["vp_cible_min"]
-
-    # Ajustement selon clarification
-    if clarification == "trouble":
-        vp_cible *= 1.2  # marge de sécurité pour produit trouble
 
     # Propositions de barèmes (température → durée nécessaire en minutes)
     baremes = []
@@ -690,7 +709,6 @@ def proposer_bareme(
         "t_ref": t_ref,
         "z": z,
         "vp_cible": round(vp_cible, 2),
-        "clarification": localize_clarification_name(clarification, lang),
         "procede": localize_procede_name(procede, lang),
         "baremes": baremes,
     }
@@ -713,6 +731,6 @@ def get_procedes(locale: str = "fr") -> List[Dict]:
     return [{"id": k, **v, "nom": localize_procede_name(k, lang)} for k, v in PROCEDES.items()]
 
 
-def get_clarifications(locale: str = "fr") -> List[Dict]:
+def get_unites_temps(locale: str = "fr") -> List[Dict]:
     lang = normalize_locale(locale)
-    return [{"id": key, "nom": localize_clarification_name(key, lang)} for key in CLARIFICATIONS]
+    return [{"id": key, "nom": localize_unite_temps_name(key, lang)} for key in UNITES_TEMPS]
