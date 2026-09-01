@@ -18,33 +18,40 @@ const MICROORGANISMES: Record<string, { nom: string; t_ref: number; z: number; d
   listeria:           { nom: "Listeria monocytogenes",            t_ref: 62, z: 5.6,  d_ref: 0.43, vp_cible: 6.45  },
   byssochlamys_fulva: { nom: "Byssochlamys fulva",                t_ref: 95, z: 7.1,  d_ref: 1.81, vp_cible: 27.15 },
   saccharo_jus:       { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 22.5, vp_cible: 337.5 },
-  saccharo_cidre_low: { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 0.4,  vp_cible: 6.0   },
-  saccharo_cidre:     { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 1.1,  vp_cible: 16.5  },
+  saccharo_cidre_low: { nom: "Saccharomyces cerevisiae 2",        t_ref: 60, z: 4.0,  d_ref: 0.4,  vp_cible: 6.0   },
+  saccharo_cidre:     { nom: "Saccharomyces cerevisiae 1",        t_ref: 60, z: 4.0,  d_ref: 1.1,  vp_cible: 16.5  },
 };
 
+// Trois types de produit : doux/demi-sec et brut/extra-brut partagent leur
+// microorganisme de référence et leur VP cible, ils ne font plus qu'une entrée.
 const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }> = {
-  jus_pomme:        { nom: "Jus de pomme",      micro: "saccharo_jus",       vp_cible: 337.5 },
-  cidre_doux:       { nom: "Cidre doux",         micro: "saccharo_cidre",     vp_cible: 16.5  },
-  cidre_demi_sec:   { nom: "Cidre demi-sec",     micro: "saccharo_cidre",     vp_cible: 16.5  },
-  cidre_brut:       { nom: "Cidre brut",         micro: "saccharo_cidre_low", vp_cible: 6.0   },
-  cidre_extra_brut: { nom: "Cidre extra-brut",   micro: "saccharo_cidre_low", vp_cible: 6.0   },
+  jus_pomme:  { nom: "Jus de pomme",             micro: "byssochlamys_fulva", vp_cible: 27.15 },
+  cidre_doux: { nom: "Cidre doux et demi-sec",   micro: "saccharo_cidre",     vp_cible: 16.5  },
+  cidre_brut: { nom: "Cidre brut et extra-brut", micro: "saccharo_cidre_low", vp_cible: 6.0   },
 };
+
+// Types supprimés par le regroupement, encore portés par des analyses enregistrées
+const ALIAS_PRODUITS: Record<string, string> = {
+  cidre_demi_sec: "cidre_doux",
+  cidre_extra_brut: "cidre_brut",
+};
+const normaliserProduit = (t: string) => ALIAS_PRODUITS[t] ?? t;
 
 // Association produit → microorganismes disponibles en mode expert
 const PRODUCT_MICROS: Record<string, string[]> = {
-  jus_pomme:        ["byssochlamys_fulva", "alicyclo_res", "saccharo_jus", "ecoli", "salmonella", "listeria"],
-  cidre_doux:       ["saccharo_cidre", "ecoli", "salmonella"],
-  cidre_demi_sec:   ["saccharo_cidre", "ecoli", "salmonella"],
-  cidre_brut:       ["saccharo_cidre", "ecoli", "salmonella"],
-  cidre_extra_brut: ["saccharo_cidre", "ecoli", "salmonella"],
+  jus_pomme:  ["byssochlamys_fulva", "alicyclo_res", "saccharo_jus", "ecoli", "salmonella", "listeria"],
+  cidre_doux: ["saccharo_cidre", "ecoli", "salmonella"],
+  // Brut et extra-brut ont pour référence Sacch. cer. 2, pas la souche du doux
+  cidre_brut: ["saccharo_cidre_low", "ecoli", "salmonella"],
 };
 
+// Les clés héritées restent traduites : d'anciennes analyses les portent encore.
 const PRODUCT_LABELS: Record<string, { fr: string; en: string }> = {
   jus_pomme: { fr: "Jus de pomme", en: "Apple juice" },
-  cidre_doux: { fr: "Cidre doux", en: "Sweet cider" },
-  cidre_demi_sec: { fr: "Cidre demi-sec", en: "Semi-dry cider" },
-  cidre_brut: { fr: "Cidre brut", en: "Dry cider" },
-  cidre_extra_brut: { fr: "Cidre extra-brut", en: "Extra-dry cider" },
+  cidre_doux: { fr: "Cidre doux et demi-sec", en: "Sweet and semi-dry cider" },
+  cidre_brut: { fr: "Cidre brut et extra-brut", en: "Dry and extra-dry cider" },
+  cidre_demi_sec: { fr: "Cidre doux et demi-sec", en: "Sweet and semi-dry cider" },
+  cidre_extra_brut: { fr: "Cidre brut et extra-brut", en: "Dry and extra-dry cider" },
 };
 
 // ── Verdict logic ─────────────────────────────────────────────────────────
@@ -82,8 +89,8 @@ function formatHours(hours: number) {
 type SearchParamReader = Pick<URLSearchParams, "get">;
 
 function getInitialProductType(searchParams: SearchParamReader) {
-  const productType = searchParams.get("product_type");
-  return productType && PRODUITS[productType] ? productType : "jus_pomme";
+  const productType = normaliserProduit(searchParams.get("product_type") ?? "");
+  return PRODUITS[productType] ? productType : "jus_pomme";
 }
 
 function getInitialPasteType(searchParams: SearchParamReader): "flash" | "classique" | "tunnel" {
@@ -207,7 +214,7 @@ function BaremePageInner() {
         if (detail.parametres) {
           try {
             const p = typeof detail.parametres === "string" ? JSON.parse(detail.parametres) : detail.parametres;
-            if (p.product_type) setProductType(p.product_type);
+            if (p.product_type) setProductType(normaliserProduit(p.product_type));
             if (p.procede) setPasteType(p.procede);
             if (p.microorganisme && MICROORGANISMES[p.microorganisme]) setMicroKey(p.microorganisme);
             if (p.t_ref) setCustomTref(String(p.t_ref));

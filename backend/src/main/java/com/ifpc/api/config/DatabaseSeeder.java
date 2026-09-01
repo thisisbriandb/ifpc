@@ -57,14 +57,15 @@ public class DatabaseSeeder {
                 System.out.println("===============================");
             }
 
-            // Seed product configs with default VP cible values (from pasto.py)
+            // Trois types de produit, alignés sur le référentiel de pasto.py :
+            // doux/demi-sec et brut/extra-brut partagent leur microorganisme de
+            // référence et ne forment donc plus qu'une entrée.
+            // Les valeurs de VP cible sont celles déjà en service et restent
+            // modifiables depuis le panneau d'administration.
             Map<String, Object[]> defaults = Map.of(
-                    "jus_pomme",       new Object[]{"Jus de pomme", 15.0},
-                    "cidre_doux",      new Object[]{"Cidre doux", 10.0},
-                    "cidre_demi_sec",  new Object[]{"Cidre demi-sec", 8.0},
-                    "cidre_brut",      new Object[]{"Cidre brut", 5.0},
-                    "cidre_extra_brut", new Object[]{"Cidre extra-brut", 5.0},
-                    "jus_poire",       new Object[]{"Jus de poire", 15.0}
+                    "jus_pomme",  new Object[]{"Jus de pomme", 15.0},
+                    "cidre_doux", new Object[]{"Cidre doux et demi-sec", 10.0},
+                    "cidre_brut", new Object[]{"Cidre brut et extra-brut", 5.0}
             );
 
             for (var entry : defaults.entrySet()) {

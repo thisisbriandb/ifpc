@@ -259,10 +259,11 @@ export default function Home() {
 
   const productLabels: Record<string, { fr: string; en: string }> = {
     jus_pomme: { fr: "Jus de pomme", en: "Apple juice" },
-    cidre_doux: { fr: "Cidre doux", en: "Sweet cider" },
-    cidre_demi_sec: { fr: "Cidre demi-sec", en: "Semi-dry cider" },
-    cidre_brut: { fr: "Cidre brut", en: "Dry cider" },
-    cidre_extra_brut: { fr: "Cidre extra-brut", en: "Extra-dry cider" },
+    cidre_doux: { fr: "Cidre doux et demi-sec", en: "Sweet and semi-dry cider" },
+    cidre_brut: { fr: "Cidre brut et extra-brut", en: "Dry and extra-dry cider" },
+    // Clés héritées du regroupement, encore portées par d'anciennes analyses
+    cidre_demi_sec: { fr: "Cidre doux et demi-sec", en: "Sweet and semi-dry cider" },
+    cidre_extra_brut: { fr: "Cidre brut et extra-brut", en: "Dry and extra-dry cider" },
   };
 
   const processLabels: Record<string, { fr: string; en: string }> = {
