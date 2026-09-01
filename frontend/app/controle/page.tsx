@@ -174,12 +174,14 @@ function ControlePageInner() {
         "jus de pomme": "jus_pomme",
         cidre_doux: "cidre_doux",
         "cidre doux": "cidre_doux",
-        cidre_demi_sec: "cidre_demi_sec",
-        "cidre demi-sec": "cidre_demi_sec",
+        cidre_demi_sec: "cidre_doux",
+        "cidre demi-sec": "cidre_doux",
+        "cidre doux et demi-sec": "cidre_doux",
         cidre_brut: "cidre_brut",
         "cidre brut": "cidre_brut",
-        cidre_extra_brut: "cidre_extra_brut",
-        "cidre extra-brut": "cidre_extra_brut",
+        cidre_extra_brut: "cidre_brut",
+        "cidre extra-brut": "cidre_brut",
+        "cidre brut et extra-brut": "cidre_brut",
       };
       const key = productKeyByLabel[p.produit.toLowerCase()];
       if (key) setProductType(key);

@@ -7,10 +7,8 @@ import { useI18n } from "@/lib/i18n";
 // Fallback data mirroring backend pasto.py definitions
 const FALLBACK_PRODUITS = [
   { id: "jus_pomme", nom: "Jus de pomme" },
-  { id: "cidre_doux", nom: "Cidre doux" },
-  { id: "cidre_demi_sec", nom: "Cidre demi-sec" },
-  { id: "cidre_brut", nom: "Cidre brut" },
-  { id: "cidre_extra_brut", nom: "Cidre extra-brut" },
+  { id: "cidre_doux", nom: "Cidre doux et demi-sec" },
+  { id: "cidre_brut", nom: "Cidre brut et extra-brut" },
 ];
 
 const FALLBACK_PROCEDES = [

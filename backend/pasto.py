@@ -69,7 +69,7 @@ MICROORGANISMES: Dict[str, Dict] = {
     },
     # Saccharomyces cerevisiae — cidre doux & demi-sec
     "saccharo_cidre": {
-        "nom": "Saccharomyces cerevisiae",
+        "nom": "Saccharomyces cerevisiae 1",
         "t_ref": 60.0,
         "z": 4.0,
         "d_ref": 1.10,
@@ -78,7 +78,7 @@ MICROORGANISMES: Dict[str, Dict] = {
     },
     # Saccharomyces cerevisiae — cidre brut & extra-brut
     "saccharo_cidre_low": {
-        "nom": "Saccharomyces cerevisiae",
+        "nom": "Saccharomyces cerevisiae 2",
         "t_ref": 60.0,
         "z": 4.0,
         "d_ref": 0.40,
@@ -93,8 +93,8 @@ MICROORGANISMES: Dict[str, Dict] = {
 PRODUITS: Dict[str, Dict] = {
     "jus_pomme": {
         "nom": "Jus de pomme",
-        "microorganisme_defaut": "saccharo_jus",
-        "vp_cible_min": 337.5,
+        "microorganisme_defaut": "byssochlamys_fulva",
+        "vp_cible_min": 27.15,
         "ph_typique": 3.5,
         "description": "Jus de pomme pasteurisé",
         "microorganismes_associes": [
@@ -106,24 +106,14 @@ PRODUITS: Dict[str, Dict] = {
             {"key": "listeria",            "classique": False},
         ],
     },
+    # Doux et demi-sec partagent le même microorganisme de référence et la même
+    # VP cible : ils ne formaient qu'un seul cas, ils ne font plus qu'une entrée.
     "cidre_doux": {
-        "nom": "Cidre doux",
+        "nom": "Cidre doux et demi-sec",
         "microorganisme_defaut": "saccharo_cidre",
         "vp_cible_min": 16.5,
         "ph_typique": 3.6,
-        "description": "Cidre doux (< 3% vol.)",
-        "microorganismes_associes": [
-            {"key": "saccharo_cidre", "classique": True},
-            {"key": "ecoli",          "classique": False},
-            {"key": "salmonella",      "classique": False},
-        ],
-    },
-    "cidre_demi_sec": {
-        "nom": "Cidre demi-sec",
-        "microorganisme_defaut": "saccharo_cidre",
-        "vp_cible_min": 16.5,
-        "ph_typique": 3.5,
-        "description": "Cidre demi-sec (3-4% vol.)",
+        "description": "Cidre doux et demi-sec (< 4% vol.)",
         "microorganismes_associes": [
             {"key": "saccharo_cidre", "classique": True},
             {"key": "ecoli",          "classique": False},
@@ -131,23 +121,11 @@ PRODUITS: Dict[str, Dict] = {
         ],
     },
     "cidre_brut": {
-        "nom": "Cidre brut",
+        "nom": "Cidre brut et extra-brut",
         "microorganisme_defaut": "saccharo_cidre_low",
         "vp_cible_min": 6.0,
         "ph_typique": 3.4,
-        "description": "Cidre brut (4-5% vol.)",
-        "microorganismes_associes": [
-            {"key": "saccharo_cidre_low", "classique": True},
-            {"key": "ecoli",              "classique": False},
-            {"key": "salmonella",          "classique": False},
-        ],
-    },
-    "cidre_extra_brut": {
-        "nom": "Cidre extra-brut",
-        "microorganisme_defaut": "saccharo_cidre_low",
-        "vp_cible_min": 6.0,
-        "ph_typique": 3.3,
-        "description": "Cidre extra-brut (> 5% vol.)",
+        "description": "Cidre brut et extra-brut (> 4% vol.)",
         "microorganismes_associes": [
             {"key": "saccharo_cidre_low", "classique": True},
             {"key": "ecoli",              "classique": False},
@@ -155,6 +133,19 @@ PRODUITS: Dict[str, Dict] = {
         ],
     },
 }
+
+# Les types supprimés par le regroupement restent acceptés en entrée : des lots,
+# des configurations produit et des analyses enregistrées les portent encore.
+ALIAS_PRODUITS: Dict[str, str] = {
+    "cidre_demi_sec": "cidre_doux",
+    "cidre_extra_brut": "cidre_brut",
+}
+
+
+def normaliser_product_type(product_type: str) -> str:
+    """Ramène un type de produit hérité vers l'entrée qui l'a absorbé."""
+    return ALIAS_PRODUITS.get(product_type, product_type)
+
 
 # Unité dans laquelle l'utilisateur a relevé la colonne « temps ». Le calcul de
 # Bigelow travaille en minutes : c'est la seule donnée qui, mal renseignée,
@@ -170,10 +161,8 @@ PROCEDES = {
 TRANSLATIONS = {
     "products": {
         "jus_pomme": {"fr": "Jus de pomme", "en": "Apple juice"},
-        "cidre_doux": {"fr": "Cidre doux", "en": "Sweet cider"},
-        "cidre_demi_sec": {"fr": "Cidre demi-sec", "en": "Semi-dry cider"},
-        "cidre_brut": {"fr": "Cidre brut", "en": "Dry cider"},
-        "cidre_extra_brut": {"fr": "Cidre extra-brut", "en": "Extra-dry cider"},
+        "cidre_doux": {"fr": "Cidre doux et demi-sec", "en": "Sweet and semi-dry cider"},
+        "cidre_brut": {"fr": "Cidre brut et extra-brut", "en": "Dry and extra-dry cider"},
     },
     "procedes": {
         "flash": {"fr": "Flash-pasteurisation", "en": "Flash pasteurisation"},
@@ -217,7 +206,7 @@ def translate(group: str, key: str, locale: str, fallback: Optional[str] = None)
 
 
 def localize_product_name(product_type: str, locale: str) -> str:
-    fallback = PRODUITS.get(product_type, {}).get("nom", product_type)
+    fallback = PRODUITS.get(normaliser_product_type(product_type), {}).get("nom", product_type)
     return translate("products", product_type, locale, fallback)
 
 
@@ -454,6 +443,7 @@ def evaluer_pasteurisation(
     Mode expert   : microorganisme (ou Tref/Z manuels) override les valeurs.
     """
     # --- Résolution des paramètres ---
+    product_type = normaliser_product_type(product_type)
     produit = PRODUITS.get(product_type)
     if produit is None:
         raise ValueError(f"Type de produit inconnu : {product_type}")
@@ -627,7 +617,7 @@ def evaluer_risque(
         score += 3
 
     # Produits à sucre résiduel → risque refermentation
-    if product_type in ("cidre_doux", "cidre_demi_sec", "jus_pomme", "jus_poire"):
+    if normaliser_product_type(product_type) in ("cidre_doux", "jus_pomme"):
         score += 1
 
     # pH élevé → plus de risque
@@ -673,6 +663,7 @@ def proposer_bareme(
     procede: str = "classique",
 ) -> Dict:
     """Propose un barème adapté au produit et au microorganisme."""
+    product_type = normaliser_product_type(product_type)
     produit = PRODUITS.get(product_type)
     if produit is None:
         raise ValueError(f"Type de produit inconnu : {product_type}")
