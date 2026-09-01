@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File, Depends
+from fastapi import FastAPI, HTTPException, UploadFile, File, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
@@ -41,7 +41,9 @@ class EvaluateRequest(BaseModel):
     t_ref: Optional[float] = None
     z: Optional[float] = None
     vp_cible: Optional[float] = None
-    clarification: Optional[str] = None
+    # Obligatoire : une erreur d'unité fausse la VP d'un facteur 60, aucun
+    # défaut implicite ne doit pouvoir s'appliquer en silence.
+    unite_temps: str
     procede: Optional[str] = None
     ph: Optional[float] = None
     titre_alcool: Optional[float] = None
@@ -51,7 +53,6 @@ class BaremeRequest(BaseModel):
     product_type: str = "jus_pomme"
     locale: str = "fr"
     microorganisme: Optional[str] = None
-    clarification: str = "trouble"
     procede: str = "classique"
 
 class SpectrumData(BaseModel):
@@ -75,7 +76,7 @@ class PasteDataRequest(BaseModel):
     t_ref: Optional[float] = None
     z: Optional[float] = None
     vp_cible: Optional[float] = None
-    clarification: Optional[str] = None
+    unite_temps: str
     procede: Optional[str] = None
     ph: Optional[float] = None
     titre_alcool: Optional[float] = None
@@ -98,9 +99,9 @@ async def get_procedes(locale: str = "fr"):
     return pasto.get_procedes(locale)
 
 
-@app.get("/api/referentiels/clarifications")
-async def get_clarifications(locale: str = "fr"):
-    return pasto.get_clarifications(locale)
+@app.get("/api/referentiels/unites-temps")
+async def get_unites_temps(locale: str = "fr"):
+    return pasto.get_unites_temps(locale)
 
 
 # ── Module 1 : Contrôle de pasteurisation ────────────────────────────────────
@@ -122,7 +123,7 @@ async def evaluer_pasteurisation(
             z=request.z,
             vp_cible=request.vp_cible,
             microorganisme=request.microorganisme,
-            clarification=request.clarification,
+            unite_temps=request.unite_temps,
             procede=request.procede,
             ph=request.ph,
             titre_alcool=request.titre_alcool,
@@ -141,7 +142,7 @@ async def upload_file(
     t_ref: Optional[float] = None,
     z: Optional[float] = None,
     vp_cible: Optional[float] = None,
-    clarification: Optional[str] = None,
+    unite_temps: str = Query(..., description="minute ou seconde — unité de la colonne temps"),
     procede: Optional[str] = None,
     ph: Optional[float] = None,
     titre_alcool: Optional[float] = None,
@@ -183,7 +184,7 @@ async def upload_file(
             z=z,
             vp_cible=vp_cible,
             microorganisme=microorganisme,
-            clarification=clarification,
+            unite_temps=unite_temps,
             procede=procede,
             ph=ph,
             titre_alcool=titre_alcool,
@@ -229,7 +230,7 @@ async def paste_data(
             z=request.z,
             vp_cible=request.vp_cible,
             microorganisme=request.microorganisme,
-            clarification=request.clarification,
+            unite_temps=request.unite_temps,
             procede=request.procede,
             ph=request.ph,
             titre_alcool=request.titre_alcool,
@@ -255,7 +256,6 @@ async def proposer_bareme(request: BaremeRequest):
             product_type=request.product_type,
             locale=request.locale,
             microorganisme=request.microorganisme,
-            clarification=request.clarification,
             procede=request.procede,
         )
     except ValueError as e:

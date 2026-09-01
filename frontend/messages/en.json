@@ -133,8 +133,6 @@
     "expertMode": "Expert mode",
     "product": "Product",
     "clarity": "Clarity",
-    "turbid": "Turbid",
-    "clear": "Clear",
     "physicoChem": "Physico-chemistry",
     "ph": "pH",
     "alcohol": "Alcohol %",
@@ -277,7 +275,11 @@
       "manualData": "Please enter some data",
       "unknown": "Unknown error"
     },
-    "defaultHelp": "What is PU?\nPasteurisation Units (PU) quantify the lethal effect of a heat treatment on target micro-organisms. It is expressed in PU and calculated using the Bigelow method.\n\nHow to use this tool\n1. Import your data: Excel/CSV file, paste, or manual entry\n2. Choose the product and pasteurisation parameters\n3. Run the analysis to get the PU value and diagnosis\n\nHow to interpret the results\n• Compliant: the Pasteurisation Value reaches or exceeds the target\n• Caution: the Pasteurisation Value is close to the target\n• Insufficient: the Pasteurisation Value is below the target\n\nExpert Mode: Reserved for EXPERT and ADMIN users. Lets you customise Tref, Z, target micro-organism, pH and alcohol content."
+    "defaultHelp": "What is PU?\nPasteurisation Units (PU) quantify the lethal effect of a heat treatment on target micro-organisms. It is expressed in PU and calculated using the Bigelow method.\n\nHow to use this tool\n1. Import your data: Excel/CSV file, paste, or manual entry\n2. Choose the product and pasteurisation parameters\n3. Run the analysis to get the PU value and diagnosis\n\nHow to interpret the results\n• Compliant: the Pasteurisation Value reaches or exceeds the target\n• Caution: the Pasteurisation Value is close to the target\n• Insufficient: the Pasteurisation Value is below the target\n\nExpert Mode: Reserved for EXPERT and ADMIN users. Lets you customise Tref, Z, target micro-organism, pH and alcohol content.",
+    "unitLabel": "Unit of the time column",
+    "unitMinute": "Minute",
+    "unitSecond": "Second",
+    "unitRequired": "Choose the unit of the time column before running the analysis."
   },
   "resultDisplay": {
     "lotVerdict": "Batch verdict",

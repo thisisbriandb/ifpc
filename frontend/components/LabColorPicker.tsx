@@ -57,10 +57,12 @@ const RADIUS = 114;
 // à l'intérieur, pour que l'utilisateur situe sa cible d'un coup d'œil).
 // La bande b* < 0 existe uniquement pour que l'axe a* (b* = 0) tombe DANS le
 // cadre et non sur son bord.
-const CIDRE_HEIGHT = 200;
+// Plages volontairement identiques sur les deux axes : le cadre est carré et
+// une unité de a* occupe donc la même distance qu'une unité de b*.
+const CIDRE_HEIGHT = 240;
 const CIDRE_A_MIN = -10;
-const CIDRE_A_MAX = 40;
-const CIDRE_B_MIN = -5;
+const CIDRE_A_MAX = 85;
+const CIDRE_B_MIN = -10;
 const CIDRE_B_MAX = 85;
 
 // Paramètres Espace Complet (disque 360°)
@@ -125,12 +127,13 @@ export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChange
       // Grille au pas de 10 unités
       ctx.strokeStyle = "rgba(0,0,0,0.10)";
       ctx.lineWidth = 1;
-      for (let aTick = CIDRE_A_MIN; aTick <= CIDRE_A_MAX; aTick += 10) {
+      const premierTick = (borne: number) => Math.ceil(borne / 10) * 10;
+      for (let aTick = premierTick(CIDRE_A_MIN); aTick <= CIDRE_A_MAX; aTick += 10) {
         if (aTick === 0) continue; // tracé plus bas comme axe
         const x = cidreX(aTick);
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, CIDRE_HEIGHT); ctx.stroke();
       }
-      for (let bTick = 0; bTick <= CIDRE_B_MAX; bTick += 10) {
+      for (let bTick = premierTick(CIDRE_B_MIN); bTick <= CIDRE_B_MAX; bTick += 10) {
         if (bTick === 0) continue; // tracé plus bas comme axe
         const y = cidreY(bTick);
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(WIDTH, y); ctx.stroke();
@@ -156,8 +159,7 @@ export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChange
       }
 
       // Graduations de l'axe a* (le long de l'horizontale b* = 0)
-      for (let aTick = CIDRE_A_MIN + 10; aTick <= CIDRE_A_MAX - 10; aTick += 10) {
-        if (aTick === 0) continue;
+      for (let aTick = 20; aTick <= 80; aTick += 20) {
         const x = cidreX(aTick);
         ctx.beginPath(); ctx.moveTo(x, axisY - 3); ctx.lineTo(x, axisY + 3); ctx.stroke();
         drawLabel(String(aTick), x, axisY - 6);
@@ -167,12 +169,11 @@ export default function LabColorPicker({ L, a, b, onChangeL, onChangeA, onChange
       ctx.font = "bold 9px system-ui, -apple-system, sans-serif";
       drawLabel("0", axisX - 5, axisY - 5, "right");
       drawLabel("b*", axisX - 6, 12, "right");
-      drawLabel("a*", WIDTH - 5, axisY - 6, "right");
+      // Sous l'axe : la ligne des graduations est déjà occupée jusqu'à 80
+      drawLabel("a*", WIDTH - 5, axisY + 12, "right");
 
-      // Bornes du cadre
-      ctx.font = "bold 8px system-ui, -apple-system, sans-serif";
-      drawLabel(`${CIDRE_B_MAX}`, axisX + 6, 12, "left");
-      drawLabel(`${CIDRE_A_MIN}`, 4, axisY - 6, "left");
+      // Pas d'étiquette de borne : elle chevaucherait la graduation 80, et la
+      // marge au-delà se lit directement sur la grille.
 
       ctx.restore();
 

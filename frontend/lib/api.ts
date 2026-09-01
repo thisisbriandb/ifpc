@@ -175,12 +175,19 @@ export async function getProcedes(locale = "fr") {
   return data;
 }
 
-export async function getClarifications(locale = "fr") {
-  const { data } = await api.get("/referentiels/clarifications", { params: { locale } });
+export async function getUnitesTemps(locale = "fr") {
+  const { data } = await api.get("/referentiels/unites-temps", { params: { locale } });
   return data;
 }
 
 // ── Module 1 : Contrôle ─────────────────────────────────────────────────────
+
+/**
+ * Unité dans laquelle la colonne « temps » a été relevée. C'est la seule
+ * donnée qui, mal renseignée, fausse la VP d'un facteur 60 : elle est donc
+ * choisie explicitement, jamais déduite du procédé.
+ */
+export type UniteTemps = "minute" | "seconde";
 
 export interface EvaluateParams {
   temperatures: number[];
@@ -191,7 +198,8 @@ export interface EvaluateParams {
   t_ref?: number | null;
   z?: number | null;
   vp_cible?: number | null;
-  clarification?: string | null;
+  /** « minute » ou « seconde » : unité de la colonne temps. Obligatoire. */
+  unite_temps: UniteTemps;
   procede?: string | null;
   ph?: number | null;
   titre_alcool?: number | null;
@@ -226,7 +234,7 @@ export async function collerDonnees(params: {
   t_ref?: number | null;
   z?: number | null;
   vp_cible?: number | null;
-  clarification?: string | null;
+  unite_temps: UniteTemps;
   procede?: string | null;
   ph?: number | null;
   titre_alcool?: number | null;
@@ -292,7 +300,6 @@ export async function proposerBareme(params: {
   product_type: string;
   locale?: string;
   microorganisme?: string | null;
-  clarification: string;
   procede: string;
 }) {
   const { data } = await api.post("/bareme/proposer", params);

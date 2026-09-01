@@ -93,12 +93,6 @@ function getInitialPasteType(searchParams: SearchParamReader): "flash" | "classi
   return "classique";
 }
 
-function getInitialTrouble(searchParams: SearchParamReader) {
-  const raw = searchParams.get("clarification")?.toLowerCase();
-  if (raw === "limpide" || raw === "clear") return false;
-  return true;
-}
-
 // ── Circular gauge ────────────────────────────────────────────────────────
 
 function HoldTimeGauge({ holdSec, holdMin, pasteType, verdict }: { holdSec: number; holdMin: number; pasteType: "flash" | "classique" | "tunnel"; verdict: Verdict }) {
@@ -179,7 +173,6 @@ function BaremePageInner() {
   const initialMicroKey = searchParams.get("microorganisme");
 
   const [productType, setProductType] = useState(initialProductType);
-  const [trouble, setTrouble] = useState(getInitialTrouble(searchParams));
   const [pasteType, setPasteType] = useState<"flash" | "classique" | "tunnel">(getInitialPasteType(searchParams));
   const [tConsigne, setTConsigne] = useState("75");
   const [expertMode, setExpertMode] = useState(Boolean(searchParams.get("t_ref") || searchParams.get("z") || initialMicroKey));
@@ -215,7 +208,6 @@ function BaremePageInner() {
           try {
             const p = typeof detail.parametres === "string" ? JSON.parse(detail.parametres) : detail.parametres;
             if (p.product_type) setProductType(p.product_type);
-            if (p.clarification) setTrouble(p.clarification === "trouble" || p.clarification === true);
             if (p.procede) setPasteType(p.procede);
             if (p.microorganisme && MICROORGANISMES[p.microorganisme]) setMicroKey(p.microorganisme);
             if (p.t_ref) setCustomTref(String(p.t_ref));
@@ -251,8 +243,9 @@ function BaremePageInner() {
       const multimicroKeys = ["saccharo_jus", "ecoli", "byssochlamys_fulva", "alicyclo_std"];
       const evaluations: MicroBaremeEval[] = multimicroKeys.map((key) => {
         const m = MICROORGANISMES[key];
-        let vp = m.vp_cible; // Standard 15-log reduction: VP = 15 * D_ref
-        if (trouble) vp *= 1.2; // +20% for turbid products
+        // VP cible du microorganisme, appliquée telle quelle : la majoration
+        // de 20 % réservée aux produits troubles a été supprimée.
+        const vp = m.vp_cible; // Standard 15-log reduction: VP = 15 * D_ref
         const L = Math.pow(10, (tC - m.t_ref) / m.z);
         const holdMin = vp / L;
         const holdSec = holdMin * 60;
@@ -301,8 +294,7 @@ function BaremePageInner() {
     const z    = customZ    ? parseFloat(customZ)    : micro.z;
     if (!tRef || !z) return null;
 
-    let vp = micro.vp_cible; // Standard 15-log reduction: VP = 15 * D_ref
-    if (trouble) vp *= 1.2; // +20% for turbid products
+    const vp = micro.vp_cible; // Standard 15-log reduction: VP = 15 * D_ref
     const L = Math.pow(10, (tC - tRef) / z);
     const holdMin = vp / L;
     return {
@@ -316,12 +308,11 @@ function BaremePageInner() {
       holdMin,
       holdSec: holdMin * 60,
     };
-  }, [productType, trouble, tConsigne, microKey, customTref, customZ, expertMode, vpCibleConfig, pasteType]);
+  }, [productType, tConsigne, microKey, customTref, customZ, expertMode, vpCibleConfig, pasteType]);
 
   const handleReset = useCallback(() => {
     setProductType("jus_pomme");
     setPasteType("classique");
-    setTrouble(true);
     setTConsigne("75");
     setMicroKey("");
     setCustomTref("");
@@ -471,16 +462,6 @@ function BaremePageInner() {
                   </select>
                 </section>
 
-                <div className="flex gap-1.5">
-                  {[[t("bareme.turbid"), true], [t("bareme.clear"), false]].map(([label, val]) => (
-                    <button key={String(val)} onClick={() => setTrouble(val as boolean)}
-                      className={`flex-1 py-1.5 rounded-md text-xs font-semibold transition-colors ${
-                        trouble === val ? "bg-brand-primary text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                      }`}>
-                      {label as string}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               <div className="mx-4 my-1 border-t border-black/[0.04]" />
