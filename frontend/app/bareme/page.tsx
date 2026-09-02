@@ -7,6 +7,7 @@ import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
 import HelpModal from "@/components/HelpModal";
 import { getProductConfig, getAnalysisById } from "@/lib/api";
+import { formatHoldTime } from "@/lib/pasteurisation";
 
 // ── Données de référence ──────────────────────────────────────────────────
 
@@ -102,7 +103,7 @@ function getInitialPasteType(searchParams: SearchParamReader): "flash" | "classi
 
 // ── Circular gauge ────────────────────────────────────────────────────────
 
-function HoldTimeGauge({ holdSec, holdMin, pasteType, verdict }: { holdSec: number; holdMin: number; pasteType: "flash" | "classique" | "tunnel"; verdict: Verdict }) {
+function HoldTimeGauge({ holdMin, verdict }: { holdMin: number; verdict: Verdict }) {
   const { t } = useI18n();
   const cfg = VERDICT_CONFIG[verdict];
   // Fill ratio: proportion of a "reasonable" range
@@ -115,15 +116,8 @@ function HoldTimeGauge({ holdSec, holdMin, pasteType, verdict }: { holdSec: numb
   const circumference = 2 * Math.PI * r;
   const filled = circumference * ratio;
 
-  const display = pasteType === "flash"
-    ? (holdSec <= 1
-        ? { value: "1", unit: t("bareme.sec") }
-        : holdSec >= 60
-        ? { value: holdMin < 10 ? holdMin.toFixed(1) : Math.round(holdMin).toString(), unit: t("bareme.min") }
-        : { value: holdSec < 10 ? holdSec.toFixed(1) : Math.round(holdSec).toString(), unit: t("bareme.sec") })
-    : (holdMin < 0.1
-        ? { value: "< 0.1", unit: t("bareme.min") }
-        : { value: holdMin < 10 ? holdMin.toFixed(1) : Math.round(holdMin).toString(), unit: t("bareme.min") });
+  const hold = formatHoldTime(holdMin);
+  const display = { value: hold.value, unit: t(`bareme.${hold.unit}`) };
 
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
@@ -346,22 +340,11 @@ function BaremePageInner() {
   const inputCls = "w-full px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-brand-accent focus:border-brand-accent outline-none text-xs";
   const labelCls = "block text-xs font-semibold text-gray-500 mb-1";
 
-  // Format hold time for narrative and cards
-  const formatHold = (c: { holdMin: number; holdSec: number }) => {
-    if (pasteType === "flash") {
-      if (c.holdSec <= 1) {
-        return `1 ${t("bareme.sec")}`;
-      }
-      if (c.holdSec >= 60) {
-        const val = c.holdMin < 10 ? c.holdMin.toFixed(1) : Math.round(c.holdMin).toString();
-        return `${val} ${t("bareme.min")}`;
-      }
-      const val = c.holdSec < 10 ? c.holdSec.toFixed(1) : Math.round(c.holdSec).toString();
-      return `${val} ${t("bareme.sec")}`;
-    } else {
-      const val = c.holdMin < 10 ? c.holdMin.toFixed(1) : Math.round(c.holdMin).toString();
-      return `${val} ${t("bareme.min")}`;
-    }
+  // Format hold time for narrative and cards — même règle que la jauge, et
+  // indépendante du procédé : la valeur seule décide de l'unité.
+  const formatHold = (c: { holdMin: number }) => {
+    const hold = formatHoldTime(c.holdMin);
+    return `${hold.value} ${t(`bareme.${hold.unit}`)}`;
   };
 
   // Build narrative

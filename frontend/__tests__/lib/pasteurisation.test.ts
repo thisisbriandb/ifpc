@@ -1,4 +1,4 @@
-import { uniteDuProcede, procedeAccorde } from '@/lib/pasteurisation';
+import { uniteDuProcede, procedeAccorde, formatHoldTime } from '@/lib/pasteurisation';
 
 describe('liaison procédé ↔ unité de temps', () => {
   test('un procédé impose son unité de relevé', () => {
@@ -33,5 +33,40 @@ describe('liaison procédé ↔ unité de temps', () => {
         expect(uniteDuProcede(accorde)).toBe(unite);
       }
     }
+  });
+});
+
+describe('affichage du temps de maintien', () => {
+  test("l'unité vient de la valeur, pas du procédé", () => {
+    expect(formatHoldTime(120)).toEqual({ value: '120', unit: 'min' });
+    expect(formatHoldTime(2.5)).toEqual({ value: '2.5', unit: 'min' });
+    expect(formatHoldTime(1)).toEqual({ value: '1.0', unit: 'min' });
+    // Sous la minute on bascule en secondes plutôt que d'écrire « 0.9 min »
+    expect(formatHoldTime(0.928)).toEqual({ value: '56', unit: 'sec' });
+    expect(formatHoldTime(0.0522)).toEqual({ value: '3.1', unit: 'sec' });
+  });
+
+  test('un temps très court ne devient jamais zéro', () => {
+    // Cidre doux à 72 °C puis 80 °C : 0,99 s et 0,0099 s
+    expect(formatHoldTime(0.0165)).toEqual({ value: '< 1', unit: 'sec' });
+    expect(formatHoldTime(0.000165)).toEqual({ value: '< 1', unit: 'sec' });
+  });
+
+  test('aucun barème cidre ne s\'affiche « 0.0 »', () => {
+    // Sacch. cerevisiae 1 (Tref 60 °C, z 4) et 2, sur toute la plage utile
+    for (const [tRef, z, vp] of [[60, 4, 16.5], [60, 4, 6.0]]) {
+      for (const tC of [60, 63, 65, 68, 70, 72, 75, 78, 80, 85, 90, 95]) {
+        const holdMin = vp / Math.pow(10, (tC - tRef) / z);
+        const { value } = formatHoldTime(holdMin);
+        expect(value).not.toBe('0.0');
+        expect(parseFloat(value)).not.toBe(0);
+      }
+    }
+  });
+
+  test('une valeur non exploitable ne prétend pas être un temps', () => {
+    expect(formatHoldTime(0)).toEqual({ value: '—', unit: 'min' });
+    expect(formatHoldTime(Number.POSITIVE_INFINITY)).toEqual({ value: '—', unit: 'min' });
+    expect(formatHoldTime(Number.NaN)).toEqual({ value: '—', unit: 'min' });
   });
 });
