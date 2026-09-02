@@ -279,7 +279,9 @@
     "unitLabel": "Unit of the time column",
     "unitMinute": "Minute",
     "unitSecond": "Second",
-    "unitRequired": "Choose the unit of the time column before running the analysis."
+    "unitRequired": "Choose the unit of the time column before running the analysis.",
+    "archiveFailedTitle": "Analysis not archived",
+    "archiveFailed": "Saving to the database failed. The result is shown but not kept: run the analysis again."
   },
   "resultDisplay": {
     "lotVerdict": "Batch verdict",

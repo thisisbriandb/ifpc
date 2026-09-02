@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import pasto
 import colori
-from auth import get_optional_user, verify_advanced_access
+from auth import get_optional_user, verify_advanced_access, signer_resultat
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("ifpc")
@@ -129,7 +129,7 @@ async def evaluer_pasteurisation(
             ph=request.ph,
             titre_alcool=request.titre_alcool,
         )
-        return result
+        return _sceller_resultat(result)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -193,7 +193,7 @@ async def upload_file(
         result["fichier"] = filename
         result["nb_points"] = len(temp_list)
         result["unite_temps_source"] = "horodatage" if unite_source else "declaration"
-        return result
+        return _sceller_resultat(result)
 
     except HTTPException:
         raise
@@ -240,7 +240,7 @@ async def paste_data(
         result["nb_points"] = len(temp_list)
         result["unite_temps_source"] = "horodatage" if unite_source else "declaration"
         logger.info(f"Résultat: VP={result['vp']} UP, statut={result['statut']}, vp_cible={result['vp_cible']}")
-        return result
+        return _sceller_resultat(result)
     except ValueError as e:
         logger.error(f"/coller ValueError: {e}")
         raise HTTPException(status_code=400, detail=str(e))
@@ -405,6 +405,24 @@ def _decode_bytes(content: bytes) -> str:
         except (UnicodeDecodeError, ValueError):
             continue
     return content.decode("utf-8", errors="replace")
+
+
+def _sceller_resultat(result: dict) -> dict:
+    """Attache au résultat le jeton qui permettra de l'enregistrer.
+
+    Le Core API n'accepte d'archiver un contrôle de pasteurisation que sur
+    présentation de ce jeton : le verdict, la VP et les paramètres viennent
+    alors de ses claims, jamais du corps de la requête. Sans cela, n'importe
+    quel appelant authentifié pouvait déposer un « conforme » de son choix.
+    """
+    result["jeton_resultat"] = signer_resultat("controle", {
+        "statut": result.get("statut"),
+        "vp": result.get("vp"),
+        "vp_cible": result.get("vp_cible"),
+        "k_calc": result.get("k_calc"),
+        "parametres": result.get("parametres"),
+    })
+    return result
 
 
 def _unite_effective(unite_declaree: str, unite_source: Optional[str]) -> str:

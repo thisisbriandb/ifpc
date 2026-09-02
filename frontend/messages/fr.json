@@ -279,7 +279,9 @@
     "unitLabel": "Unité de la colonne temps",
     "unitMinute": "Minute",
     "unitSecond": "Seconde",
-    "unitRequired": "Choisissez l'unité de la colonne temps avant de lancer l'analyse."
+    "unitRequired": "Choisissez l'unité de la colonne temps avant de lancer l'analyse.",
+    "archiveFailedTitle": "Analyse non archivée",
+    "archiveFailed": "L'enregistrement en base a échoué. Le résultat s'affiche mais n'est pas conservé : relancez l'analyse."
   },
   "resultDisplay": {
     "lotVerdict": "Verdict du lot",

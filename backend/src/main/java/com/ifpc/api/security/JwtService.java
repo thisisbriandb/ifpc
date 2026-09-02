@@ -91,6 +91,18 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    /**
+     * Relit les claims d'un jeton signé par le Calc Engine.
+     *
+     * <p>Sert à vérifier un résultat de calcul avant de l'archiver : le verdict
+     * d'une analyse ne doit pas venir du poste client. Lève une
+     * {@link io.jsonwebtoken.JwtException} si la signature ne tient pas ou si
+     * le jeton a expiré.</p>
+     */
+    public Claims lireClaims(String token) {
+        return extractAllClaims(token);
+    }
+
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()

@@ -517,7 +517,7 @@ def evaluer_pasteurisation(
     # Un produit évalué sur plusieurs cibles se juge sur son facteur limitant —
     # la cible la plus difficile à atteindre, c'est-à-dire celle dont le facteur
     # de réduction k est le plus faible. C'est la règle du référentiel
-    # (formule.md §6) et c'est déjà celle qu'applique l'aide au choix du barème.
+    # (referentiel-scientifique.md §5) et c'est déjà celle qu'applique l'aide au barème.
     # Sans elle, un jus traité 30 min à 95 °C était archivé « conforme » sur la
     # foi de Byssochlamys alors qu'Alicyclobacillus n'atteignait que k = 1,1.
     #

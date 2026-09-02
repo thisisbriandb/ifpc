@@ -55,6 +55,24 @@ public class AnalysisHistory {
     // Utilisateur ayant lancé l'analyse (null si anonyme)
     private String userEmail;
 
+    // Preuve que le verdict vient bien du moteur de calcul et non du poste
+    // client : le jeton signé par le Calc Engine, conservé tel quel pour qu'un
+    // contrôle ultérieur puisse le revérifier hors de l'application.
+    @Column(columnDefinition = "TEXT")
+    private String jetonResultat;
+
+    // Identifiant du jeton, à usage unique : un même résultat de calcul ne peut
+    // pas être archivé deux fois, ni rejoué sur un autre numéro de lot.
+    @Column(name = "resultat_jti", unique = true, length = 64)
+    private String resultatJti;
+
+    // Vrai quand le verdict provient d'un jeton vérifié. Les analyses
+    // antérieures à ce contrôle, et les types qui n'en produisent pas encore
+    // (colorimétrie), restent à faux : la distinction doit rester lisible.
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean scelle = false;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

@@ -3,6 +3,8 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import jwt
 import base64
 import os
+import time
+import uuid
 from typing import Optional
 
 # La même clé secrète que dans Spring Boot JwtService : Spring utilise
@@ -41,3 +43,40 @@ def verify_advanced_access(user: Optional[dict], t_ref, z, microorganisme):
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Vous devez être connecté avec un compte Expert ou Admin pour utiliser les paramètres avancés (t_ref, z, microorganisme).",
             )
+
+
+# Durée pendant laquelle un résultat reste enregistrable. Assez large pour
+# qu'un opérateur relise sa courbe avant d'enregistrer, assez courte pour
+# qu'un jeton égaré ne serve plus.
+VALIDITE_JETON_RESULTAT_S = 3600
+
+
+def signer_resultat(type_resultat: str, champs: dict, duree_validite_s: int = VALIDITE_JETON_RESULTAT_S) -> str:
+    """Scelle un résultat de calcul, pour que seul le moteur puisse en produire un.
+
+    L'enregistrement d'une analyse vaut pièce de maîtrise sanitaire : son
+    verdict ne doit pas pouvoir être écrit par le poste client. Le moteur signe
+    donc ce qu'il a calculé avec le secret déjà partagé avec le Core API, lequel
+    refuse d'enregistrer un résultat dont la signature ne tient pas.
+
+    Le « jti » est à usage unique côté Core API : un même résultat ne peut pas
+    être rejoué sur plusieurs numéros de lot.
+    """
+    maintenant = int(time.time())
+    payload = {
+        "typ_resultat": type_resultat,
+        **champs,
+        "jti": uuid.uuid4().hex,
+        "iat": maintenant,
+        "exp": maintenant + duree_validite_s,
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+
+def verifier_jeton_resultat(jeton: str) -> dict:
+    """Relit un jeton de résultat. Lève jwt.PyJWTError s'il ne tient pas.
+
+    Présent surtout pour les tests et pour un éventuel outil de vérification
+    hors ligne : en exploitation, c'est le Core API Spring Boot qui contrôle.
+    """
+    return jwt.decode(jeton, SECRET_KEY, algorithms=[ALGORITHM])
