@@ -656,6 +656,21 @@ def evaluer_risque(
 # ---------------------------------------------------------------------------
 # Aide au choix du barème
 # ---------------------------------------------------------------------------
+def arrondir_duree(valeur: float, decimales: int) -> float:
+    """
+    Arrondit une durée sans jamais l'écraser à zéro.
+
+    Le temps de maintien des cidres tombe sous la milliseconde dès 80 °C : un
+    arrondi fixe renvoyait 0.0, qui se lit comme « aucun maintien nécessaire »
+    au lieu de « très court ». Sous le seuil de l'arrondi demandé, on conserve
+    donc trois chiffres significatifs.
+    """
+    if not math.isfinite(valeur) or valeur <= 0:
+        return valeur
+    arrondi = round(valeur, decimales)
+    return arrondi if arrondi > 0 else float(f"{valeur:.3g}")
+
+
 def proposer_bareme(
     product_type: str,
     locale: str = "fr",
@@ -687,8 +702,8 @@ def proposer_bareme(
         duree_sec = duree_min * 60
         baremes.append({
             "temperature": temp,
-            "duree_minutes": round(duree_min, 2),
-            "duree_secondes": round(duree_sec, 1),
+            "duree_minutes": arrondir_duree(duree_min, 2),
+            "duree_secondes": arrondir_duree(duree_sec, 1),
             "taux_letal": round(l, 4),
         })
 

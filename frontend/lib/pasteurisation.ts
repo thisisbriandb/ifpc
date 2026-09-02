@@ -32,3 +32,30 @@ export function uniteDuProcede(procede: string): UniteTemps {
 export function procedeAccorde(procedeActuel: string, unite: UniteTemps): string {
   return uniteDuProcede(procedeActuel) === unite ? procedeActuel : PROCEDE_PAR_UNITE[unite];
 }
+
+/**
+ * Temps de maintien mis en forme : une seule règle pour la jauge, les cartes
+ * et la phrase d'interprétation.
+ *
+ * L'unité vient de la valeur et non du procédé — un maintien sous la minute
+ * s'écrit en secondes qu'il sorte d'un flash ou d'une pasteurisation
+ * classique. Sans cela, les cidres, dont le temps requis tombe à 0,01 s dès
+ * 80 °C, s'affichaient « 0.0 min » : un zéro qui se lit comme « aucun
+ * maintien nécessaire ». Sous la seconde, on affiche donc un plancher
+ * explicite plutôt qu'un arrondi.
+ */
+export type HoldTimeDisplay = { value: string; unit: "sec" | "min" };
+
+export function formatHoldTime(holdMin: number): HoldTimeDisplay {
+  if (!Number.isFinite(holdMin) || holdMin <= 0) {
+    return { value: "—", unit: "min" };
+  }
+  const holdSec = holdMin * 60;
+  if (holdSec < 1) {
+    return { value: "< 1", unit: "sec" };
+  }
+  if (holdMin < 1) {
+    return { value: holdSec < 10 ? holdSec.toFixed(1) : Math.round(holdSec).toString(), unit: "sec" };
+  }
+  return { value: holdMin < 10 ? holdMin.toFixed(1) : Math.round(holdMin).toString(), unit: "min" };
+}
