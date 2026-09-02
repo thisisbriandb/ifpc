@@ -42,9 +42,11 @@ class HistoryControllerTest {
         User user = User.builder().email("tech@ifpc.eu").role(Role.USER).build();
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
 
+        // Type sans verdict sanitaire : les champs restent déclaratifs et
+        // aucun jeton n'est exigé (cf. HistoryScellementTest pour un contrôle).
         HistoryController.SaveAnalysisRequest req = new HistoryController.SaveAnalysisRequest(
                 "bareme", "Analyse Pasteurisation", "LOT-100", "conforme",
-                15.5, 15.0, "{}", "[]", "{}"
+                15.5, 15.0, "{}", "[]", "{}", null
         );
 
         AnalysisHistory saved = AnalysisHistory.builder()

@@ -7,8 +7,9 @@ défaut, *Byssochlamys fulva*. Un palier de 30 min à 95 °C était donc archiv�
 « conforme » alors qu'*Alicyclobacillus acidoterrestris* n'atteignait que
 k = 1,1 pour un seuil de 15.
 
-formule.md §6 : « Le produit est diagnostiqué globalement conforme uniquement
-si la condition k ≥ 15,0 est validée pour l'ensemble des cibles. »
+referentiel-scientifique.md §5 : « Le produit est diagnostiqué globalement
+conforme uniquement si la condition k ≥ 15,0 est validée pour l'ensemble des
+cibles. »
 """
 
 import pytest

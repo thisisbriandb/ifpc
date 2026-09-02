@@ -256,6 +256,8 @@ export interface HistoryEntry {
   parametres?: string;
   date: string;
   userEmail?: string;
+  // Vrai quand le verdict vient d'un résultat signé par le moteur.
+  scelle?: boolean;
 }
 
 export interface AnalysisDetail extends HistoryEntry {
@@ -274,6 +276,10 @@ export async function saveAnalysis(params: {
   parametres?: string;
   courbe?: string;
   resultJson?: string;
+  // Jeton signé par le moteur de calcul. Obligatoire pour un contrôle de
+  // pasteurisation : le Core API en tire le verdict, la VP et les paramètres,
+  // et refuse d'archiver sans lui.
+  jetonResultat?: string;
 }) {
   const { data } = await api.post("/history", params);
   return data;

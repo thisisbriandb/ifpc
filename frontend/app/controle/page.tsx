@@ -49,6 +49,8 @@ interface PasteurisationResult {
     taux_letaux: number[];
     vp_cumulee: number[];
   };
+  // Sceau du moteur de calcul : sans lui, le Core API n'archive pas le contrôle.
+  jeton_resultat?: string;
 }
 
 export default function ControlePage() {
@@ -68,6 +70,8 @@ function ControlePageInner() {
   const [mode, setMode] = useState<InputMode>("upload");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Échec d'archivage : distinct de `error`, qui porte l'échec du calcul.
+  const [archiveError, setArchiveError] = useState<string | null>(null);
   const [result, setResult] = useState<PasteurisationResult | null>(null);
   const [expertMode, setExpertMode] = useState(false);
 
@@ -310,6 +314,7 @@ function ControlePageInner() {
     }
     setLoading(true);
     setError(null);
+    setArchiveError(null);
     setResult(null);
     try {
       const params = buildParams(uniteTemps);
@@ -336,20 +341,27 @@ function ControlePageInner() {
       // --- Sauvegarder l'activité récente ---
       const activityLabel = res.parametres?.produit || lotIdentifier || file?.name || (mode === "paste" ? t("controle.pastedDataLabel") : t("controle.manualDataLabel"));
       try {
-        // Sauvegarde persistante en base via Spring Boot
+        // Sauvegarde persistante en base via Spring Boot. Le verdict, la VP et
+        // les paramètres sont repris du jeton signé par le moteur : les envoyer
+        // ici ne sert plus qu'aux types d'analyse sans verdict sanitaire.
         await saveAnalysis({
           type: "controle",
           label: activityLabel,
           lotIdentifier: lotIdentifier || undefined,
-          statut: enrichedResult.statut,
-          vp: enrichedResult.vp,
-          vpCible: enrichedResult.vp_cible,
-          parametres: JSON.stringify(enrichedResult.parametres || {}),
           courbe: JSON.stringify(enrichedResult.courbe || {}),
           resultJson: JSON.stringify(enrichedResult),
+          jetonResultat: res.jeton_resultat,
         });
-      } catch {
-        // Fallback localStorage si le backend Spring est indisponible
+        setArchiveError(null);
+      } catch (err: any) {
+        // Un échec d'archivage ne doit pas passer inaperçu : l'analyse ne
+        // resterait que dans ce navigateur, et l'opérateur la croirait
+        // enregistrée.
+        setArchiveError(
+          err?.response?.data?.detail
+          || err?.response?.data?.message
+          || t("controle.archiveFailed")
+        );
       }
       try {
         const activity = {
@@ -631,6 +643,16 @@ function ControlePageInner() {
                     {error.split('\n').map((line, i) => (
                       <p key={i} className={i > 0 ? "mt-0.5 text-[10px] text-red-500" : ""}>{line}</p>
                     ))}
+                  </div>
+                </div>
+              )}
+
+              {archiveError && (
+                <div className="mt-3 bg-amber-50/60 border border-amber-200/40 rounded-lg p-3 text-amber-700 text-xs font-medium flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p>{t("controle.archiveFailedTitle")}</p>
+                    <p className="mt-0.5 text-[10px] text-amber-600">{archiveError}</p>
                   </div>
                 </div>
               )}
