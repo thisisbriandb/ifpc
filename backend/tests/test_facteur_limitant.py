@@ -86,11 +86,10 @@ class TestCoherenceDesChiffresRapportes:
         assert resultat["parametres"]["t_ref"] == micro["t_ref"]
         assert resultat["parametres"]["z"] == micro["z"]
 
-    def test_le_risque_est_evalue_sur_la_meme_cible(self):
-        # Un « conforme » assorti d'un « risque élevé » n'était pas lisible.
-        resultat = _evaluer(PALIER_95)
-        assert resultat["statut"] == "insuffisant"
-        assert resultat["risque"]["niveau"] in ("modéré", "élevé")
+    def test_le_resultat_ne_porte_plus_d_indicateur_de_risque(self):
+        # Le score de risque composite (ratio, sucres résiduels, pH, alcool)
+        # n'avait aucune source scientifique et a été retiré du moteur.
+        assert "risque" not in _evaluer(PALIER_95)
 
 
 class TestModeExpert:

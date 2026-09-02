@@ -46,7 +46,6 @@ class EvaluateRequest(BaseModel):
     # défaut implicite ne doit pouvoir s'appliquer en silence.
     unite_temps: str
     procede: Optional[str] = None
-    ph: Optional[float] = None
     titre_alcool: Optional[float] = None
 
 
@@ -79,7 +78,6 @@ class PasteDataRequest(BaseModel):
     vp_cible: Optional[float] = None
     unite_temps: str
     procede: Optional[str] = None
-    ph: Optional[float] = None
     titre_alcool: Optional[float] = None
 
 
@@ -126,7 +124,6 @@ async def evaluer_pasteurisation(
             microorganisme=request.microorganisme,
             unite_temps=request.unite_temps,
             procede=request.procede,
-            ph=request.ph,
             titre_alcool=request.titre_alcool,
         )
         return _sceller_resultat(result)
@@ -145,7 +142,6 @@ async def upload_file(
     vp_cible: Optional[float] = None,
     unite_temps: str = Query(..., description="minute ou seconde — unité de la colonne temps"),
     procede: Optional[str] = None,
-    ph: Optional[float] = None,
     titre_alcool: Optional[float] = None,
     user: Optional[dict] = Depends(get_optional_user)
 ):
@@ -187,7 +183,6 @@ async def upload_file(
             microorganisme=microorganisme,
             unite_temps=_unite_effective(unite_temps, unite_source),
             procede=procede,
-            ph=ph,
             titre_alcool=titre_alcool,
         )
         result["fichier"] = filename
@@ -234,7 +229,6 @@ async def paste_data(
             microorganisme=request.microorganisme,
             unite_temps=_unite_effective(request.unite_temps, unite_source),
             procede=request.procede,
-            ph=request.ph,
             titre_alcool=request.titre_alcool,
         )
         result["nb_points"] = len(temp_list)

@@ -15,12 +15,6 @@ import { useI18n } from "@/lib/i18n";
 
 type InputMode = "upload" | "paste" | "manual";
 
-interface RisqueData {
-  niveau: string;
-  score: number;
-  couleur: string;
-  conseil: string;
-}
 
 interface PasteurisationResult {
   vp: number;
@@ -29,7 +23,6 @@ interface PasteurisationResult {
   statut: string;
   message: string;
   evaluations_multimicro?: any[];
-  risque: RisqueData;
   parametres: {
     t_ref: number;
     z: number;
@@ -40,7 +33,6 @@ interface PasteurisationResult {
     unite_temps?: string | null;
     unite_temps_nom?: string | null;
     procede: string | null;
-    ph?: number;
     titre_alcool?: number;
   };
   courbe: {
@@ -101,7 +93,6 @@ function ControlePageInner() {
   const [procede, setProcede] = useState("classique");
   const [tRef, setTRef] = useState("");
   const [zValue, setZValue] = useState("");
-  const [ph, setPh] = useState("");
   const [titreAlcool, setTitreAlcool] = useState("");
 
   const [vpCibleConfig, setVpCibleConfig] = useState<Record<string, number>>({});
@@ -201,7 +192,6 @@ function ControlePageInner() {
     if (p.lot_identifier) setLotIdentifier(p.lot_identifier);
     if (p.t_ref !== undefined && p.t_ref !== null) setTRef(String(p.t_ref));
     if (p.z !== undefined && p.z !== null) setZValue(String(p.z));
-    if (p.ph !== undefined && p.ph !== null) setPh(String(p.ph));
     if (p.titre_alcool !== undefined && p.titre_alcool !== null) setTitreAlcool(String(p.titre_alcool));
   }, []);
 
@@ -273,14 +263,13 @@ function ControlePageInner() {
     if (microorganisme) params.microorganisme = microorganisme;
     if (tRef) params.t_ref = parseFloat(tRef);
     if (zValue) params.z = parseFloat(zValue);
-    if (ph) params.ph = parseFloat(ph);
     if (titreAlcool) params.titre_alcool = parseFloat(titreAlcool);
     // Auto-apply VP cible from admin config
     if (vpCibleConfig[productType]) {
       params.vp_cible = vpCibleConfig[productType];
     }
     return params;
-  }, [productType, microorganisme, procede, tRef, zValue, ph, titreAlcool, vpCibleConfig]);
+  }, [productType, microorganisme, procede, tRef, zValue, titreAlcool, vpCibleConfig]);
 
   const handleReset = useCallback(() => {
     setProductType("jus_pomme");
@@ -289,7 +278,6 @@ function ControlePageInner() {
     setProcede("classique");
     setTRef("");
     setZValue("");
-    setPh("");
     setTitreAlcool("");
     setExpertMode(false);
     setMode("manual");
@@ -485,7 +473,6 @@ function ControlePageInner() {
                 expertMode={expertMode}
                 tRef={tRef} onTRefChange={setTRef}
                 zValue={zValue} onZChange={setZValue}
-                ph={ph} onPhChange={setPh}
                 titreAlcool={titreAlcool} onTitreAlcoolChange={setTitreAlcool}
               />
 

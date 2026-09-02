@@ -17,12 +17,6 @@ interface EvaluationMicro {
   message: string;
 }
 
-interface RisqueData {
-  niveau: string;
-  score: number;
-  couleur: string;
-  conseil: string;
-}
 
 interface ResultData {
   vp: number;
@@ -31,7 +25,6 @@ interface ResultData {
   statut: string;
   message: string;
   evaluations_multimicro?: EvaluationMicro[];
-  risque: RisqueData;
   parametres: {
     t_ref: number;
     z: number;
@@ -44,7 +37,6 @@ interface ResultData {
     unite_temps?: string | null;
     unite_temps_nom?: string | null;
     procede: string | null;
-    ph?: number;
     titre_alcool?: number;
   };
   courbe?: {

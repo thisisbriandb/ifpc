@@ -31,8 +31,6 @@ interface Props {
   onTRefChange?: (v: string) => void;
   zValue?: string;
   onZChange?: (v: string) => void;
-  ph?: string;
-  onPhChange?: (v: string) => void;
   titreAlcool?: string;
   onTitreAlcoolChange?: (v: string) => void;
 }
@@ -45,7 +43,6 @@ export default function ProductSelector({
   expertMode = false,
   tRef, onTRefChange,
   zValue, onZChange,
-  ph, onPhChange,
   titreAlcool, onTitreAlcoolChange,
 }: Props) {
   const { t, locale } = useI18n();

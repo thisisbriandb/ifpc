@@ -6,6 +6,7 @@ import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.AnalysisHistoryRepository;
 import com.ifpc.api.security.JwtService;
+import com.ifpc.api.services.AuditService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.SignatureException;
@@ -43,6 +44,7 @@ class HistoryScellementTest {
 
     @Mock private AnalysisHistoryRepository historyRepository;
     @Mock private JwtService jwtService;
+    @Mock private AuditService auditService;
 
     private HistoryController controller;
 
@@ -52,7 +54,7 @@ class HistoryScellementTest {
         User user = User.builder().email("tech@ifpc.eu").role(Role.USER).build();
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-        controller = new HistoryController(historyRepository, jwtService, new ObjectMapper());
+        controller = new HistoryController(historyRepository, jwtService, new ObjectMapper(), auditService);
     }
 
     /** Ce que le moteur a réellement calculé. */

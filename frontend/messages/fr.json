@@ -134,7 +134,6 @@
     "product": "Produit",
     "clarity": "Clarté",
     "physicoChem": "Physico-chimie",
-    "ph": "pH",
     "alcohol": "Alcool %",
     "tempConsigne": "T° consigne (°C)",
     "pastType": "Type de pasteurisateur",
@@ -157,7 +156,6 @@
     "calcParams": "Paramètres de calcul",
     "micro": "Micro-organisme",
     "emptyState": "Renseignez les paramètres pour obtenir le barème.",
-    "alertHighPH": "pH élevé ({ph}) — risque fort de refermentation.",
     "alertFlashTime": "Temps de maintien > 1 min pour un flash : augmentez la T° consigne.",
     "alertAlcohol": "Alcool {n}% vol. — protection partielle, la VP cible peut être abaissée en mode expert.",
     "verdictOk": "Réalisable",
@@ -183,7 +181,6 @@
     "process": "Procédé",
     "microorganism": "Microorganisme",
     "autoByProduct": "Auto (selon produit)",
-    "ph": "pH",
     "alcohol": "Alcool (%)",
     "expert": "Expert"
   },
@@ -275,7 +272,7 @@
       "manualData": "Veuillez saisir des données",
       "unknown": "Erreur inconnue"
     },
-    "defaultHelp": "Qu'est-ce que la VP ?\nLa Valeur Pasteurisatrice (VP) quantifie l'effet létal d'un traitement thermique sur les microorganismes cibles. Elle s'exprime en UP (Unités de Pasteurisation) et est calculée par la méthode de Bigelow.\n\nComment utiliser cet outil ?\n1. Importez vos données : fichier Excel/CSV, collé ou saisie manuelle\n2. Choisissez le produit et les paramètres de pasteurisation\n3. Lancez l'analyse pour obtenir la VP et le diagnostic\n\nInterprétation des résultats\n• Conforme : la Valeur Pasteurisatrice atteint ou dépasse la cible\n• Vigilance : la Valeur Pasteurisatrice est proche de la cible\n• Insuffisant : la Valeur Pasteurisatrice est en dessous de la cible\n\nMode Expert : Réservé aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible, pH et titre alcoométrique.",
+    "defaultHelp": "Qu'est-ce que la VP ?\nLa Valeur Pasteurisatrice (VP) quantifie l'effet létal d'un traitement thermique sur les microorganismes cibles. Elle s'exprime en UP (Unités de Pasteurisation) et est calculée par la méthode de Bigelow.\n\nComment utiliser cet outil ?\n1. Importez vos données : fichier Excel/CSV, collé ou saisie manuelle\n2. Choisissez le produit et les paramètres de pasteurisation\n3. Lancez l'analyse pour obtenir la VP et le diagnostic\n\nInterprétation des résultats\n• Conforme : la Valeur Pasteurisatrice atteint ou dépasse la cible\n• Insuffisant : la Valeur Pasteurisatrice est en dessous de la cible\n\nMode Expert : Réservé aux utilisateurs EXPERT et ADMIN. Permet de personnaliser Tref, Z, microorganisme cible et titre alcoométrique.",
     "unitLabel": "Unité de la colonne temps",
     "unitMinute": "Minute",
     "unitSecond": "Seconde",
@@ -351,7 +348,6 @@
     },
     "statut": {
       "conforme": "Conforme",
-      "vigilance": "Vigilance",
       "insuffisant": "Insuffisant"
     }
   },

@@ -31,7 +31,7 @@ public class AnalysisHistory {
     // N° lot ou identifiant produit saisi par l'utilisateur
     private String lotIdentifier;
 
-    // Résultat : "conforme", "vigilance", "insuffisant"
+    // Résultat : "conforme" ou "insuffisant"
     private String statut;
 
     // VP obtenue
@@ -72,6 +72,17 @@ public class AnalysisHistory {
     @Column(nullable = false)
     @Builder.Default
     private Boolean scelle = false;
+
+    // Suppression logique : une analyse retirée de l'historique doit rester
+    // dans le registre. Une pièce de maîtrise sanitaire que l'on peut effacer
+    // ne démontre rien — il suffirait de retirer les résultats gênants.
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean deleted = false;
+
+    private LocalDateTime deletedAt;
+
+    private String deletedBy;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

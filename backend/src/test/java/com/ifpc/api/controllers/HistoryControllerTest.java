@@ -4,6 +4,7 @@ import com.ifpc.api.models.AnalysisHistory;
 import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.AnalysisHistoryRepository;
+import com.ifpc.api.services.AuditService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.*;
 class HistoryControllerTest {
 
     @Mock private AnalysisHistoryRepository historyRepository;
+    @Mock private AuditService auditService;
 
     @InjectMocks private HistoryController historyController;
 
@@ -74,7 +76,7 @@ class HistoryControllerTest {
                 .vp(15.0).vpCible(15.0).parametres("{}").createdAt(LocalDateTime.now())
                 .userEmail("tech@ifpc.eu").build();
 
-        when(historyRepository.findTop50ByUserEmailOrderByCreatedAtDesc("tech@ifpc.eu")).thenReturn(List.of(ah));
+        when(historyRepository.findTop50ByUserEmailAndDeletedFalseOrderByCreatedAtDesc("tech@ifpc.eu")).thenReturn(List.of(ah));
 
         ResponseEntity<List<HistoryController.HistoryDto>> response = historyController.getRecentHistory();
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -93,9 +95,9 @@ class HistoryControllerTest {
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
 
         AnalysisHistory ah = AnalysisHistory.builder().id(1L).userEmail("tech@ifpc.eu").build();
-        when(historyRepository.findByIdAndUserEmail(1L, "tech@ifpc.eu")).thenReturn(Optional.of(ah));
+        when(historyRepository.findByIdAndUserEmailAndDeletedFalse(1L, "tech@ifpc.eu")).thenReturn(Optional.of(ah));
         // L'analyse 2 appartient à un autre utilisateur : le dépôt ne la rend pas
-        when(historyRepository.findByIdAndUserEmail(2L, "tech@ifpc.eu")).thenReturn(Optional.empty());
+        when(historyRepository.findByIdAndUserEmailAndDeletedFalse(2L, "tech@ifpc.eu")).thenReturn(Optional.empty());
 
         ResponseEntity<AnalysisHistory> resp1 = historyController.getAnalysis(1L);
         assertEquals(HttpStatus.OK, resp1.getStatusCode());
@@ -105,20 +107,23 @@ class HistoryControllerTest {
     }
 
     @Test
-    @DisplayName("deleteAnalysis deletes user's own analysis and returns 404 otherwise")
+    @DisplayName("deleteAnalysis marque l'analyse du locataire supprimée, 404 sinon")
     void testDeleteAnalysis() {
         User user = User.builder().email("tech@ifpc.eu").role(Role.USER).build();
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
 
         AnalysisHistory own = AnalysisHistory.builder().id(1L).userEmail("tech@ifpc.eu").build();
 
-        when(historyRepository.findByIdAndUserEmail(1L, "tech@ifpc.eu")).thenReturn(Optional.of(own));
+        when(historyRepository.findByIdAndUserEmailAndDeletedFalse(1L, "tech@ifpc.eu")).thenReturn(Optional.of(own));
         // L'analyse 2 appartient à other@ifpc.eu : invisible pour ce locataire
-        when(historyRepository.findByIdAndUserEmail(2L, "tech@ifpc.eu")).thenReturn(Optional.empty());
+        when(historyRepository.findByIdAndUserEmailAndDeletedFalse(2L, "tech@ifpc.eu")).thenReturn(Optional.empty());
 
         ResponseEntity<Void> resp1 = historyController.deleteAnalysis(1L);
         assertEquals(HttpStatus.OK, resp1.getStatusCode());
-        verify(historyRepository).delete(own);
+        // Suppression logique : l'analyse est marquée, jamais retirée de la base
+        verify(historyRepository).save(own);
+        verify(historyRepository, never()).delete(any());
+        assertTrue(own.getDeleted());
 
         ResponseEntity<Void> resp2 = historyController.deleteAnalysis(2L);
         assertEquals(HttpStatus.NOT_FOUND, resp2.getStatusCode());

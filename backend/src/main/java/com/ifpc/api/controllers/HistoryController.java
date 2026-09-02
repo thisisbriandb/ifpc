@@ -3,7 +3,9 @@ package com.ifpc.api.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ifpc.api.models.AnalysisHistory;
+import com.ifpc.api.models.AuditAction;
 import com.ifpc.api.repositories.AnalysisHistoryRepository;
+import com.ifpc.api.services.AuditService;
 import com.ifpc.api.security.JwtService;
 import com.ifpc.api.security.Tenant;
 import io.jsonwebtoken.Claims;
@@ -15,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Historique d'analyses, cloisonné par locataire : une analyse n'est lisible
@@ -32,6 +36,7 @@ public class HistoryController {
     private final AnalysisHistoryRepository historyRepository;
     private final JwtService jwtService;
     private final ObjectMapper objectMapper;
+    private final AuditService auditService;
 
     // ── Sauvegarder une analyse ───────────────────────────────────────────
     @PostMapping
@@ -132,7 +137,7 @@ public class HistoryController {
     public ResponseEntity<List<HistoryDto>> getRecentHistory() {
         String email = Tenant.requireCurrentEmail();
 
-        List<AnalysisHistory> analyses = historyRepository.findTop50ByUserEmailOrderByCreatedAtDesc(email);
+        List<AnalysisHistory> analyses = historyRepository.findTop50ByUserEmailAndDeletedFalseOrderByCreatedAtDesc(email);
 
         List<HistoryDto> dtos = analyses.stream()
                 .map(a -> new HistoryDto(
@@ -148,17 +153,34 @@ public class HistoryController {
     // ── Récupérer une analyse par ID ─────────────────────────────────────
     @GetMapping("/{id}")
     public ResponseEntity<AnalysisHistory> getAnalysis(@PathVariable Long id) {
-        return historyRepository.findByIdAndUserEmail(id, Tenant.requireCurrentEmail())
+        return historyRepository.findByIdAndUserEmailAndDeletedFalse(id, Tenant.requireCurrentEmail())
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ── Supprimer une analyse ────────────────────────────────────────────
+    // ── Retirer une analyse de l'historique ──────────────────────────────
+    //
+    // La suppression est logique : l'analyse sort de l'historique consultable
+    // mais reste au registre, et l'opération est consignée au journal d'audit.
+    // Un registre de maîtrise sanitaire dont on peut retirer les résultats
+    // gênants ne démontre rien.
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAnalysis(@PathVariable Long id) {
-        return historyRepository.findByIdAndUserEmail(id, Tenant.requireCurrentEmail())
-                .map(a -> {
-                    historyRepository.delete(a);
+        String email = Tenant.requireCurrentEmail();
+        return historyRepository.findByIdAndUserEmailAndDeletedFalse(id, email)
+                .map(analyse -> {
+                    analyse.setDeleted(true);
+                    analyse.setDeletedAt(LocalDateTime.now());
+                    analyse.setDeletedBy(email);
+                    historyRepository.save(analyse);
+
+                    auditService.consigner(AuditAction.ANALYSE_SUPPRIMEE, "analyse",
+                            String.valueOf(analyse.getId()), Map.of(
+                                    "statut", String.valueOf(analyse.getStatut()),
+                                    "lot", String.valueOf(analyse.getLotIdentifier()),
+                                    "scelle", Boolean.TRUE.equals(analyse.getScelle()),
+                                    "creeeLe", String.valueOf(analyse.getCreatedAt())));
+
                     return ResponseEntity.ok().<Void>build();
                 })
                 .orElse(ResponseEntity.notFound().build());
