@@ -402,6 +402,38 @@ def get_specific_diagnostic_message(micro_key: str, statut: str, lang: str = "fr
     return "Les conditions de pasteurisation sont suffisantes." if is_ok else "Les conditions de pasteurisation ne sont pas suffisantes."
 
 
+def transposer_d_ref(
+    d_ref: Optional[float],
+    t_ref_mesure: float,
+    t_ref_retenu: float,
+    z: float,
+) -> Optional[float]:
+    """Ramène un temps de réduction décimale à une autre température de référence.
+
+    Le D suit la même loi que le taux létal : D(T) = D(Tref) × 10^((Tref − T)/z).
+
+    La transposition est indispensable au critère de conformité k = VP / D : les
+    deux termes doivent se rapporter à la même température. La VP est calculée
+    au Tref retenu, le D de la table est mesuré au Tref du microorganisme. Sans
+    transposition, un expert qui saisit 72 °C sur une souche tabulée à 60 °C
+    avec z = 4 obtenait un k faussé d'un facteur 10^((60−72)/4) = 1000, et le
+    même traitement basculait de « conforme » à « insuffisant » selon la
+    référence choisie — alors que le résultat physique est invariant.
+
+    Renvoie None quand la transposition n'est pas exploitable : mieux vaut ne
+    pas statuer que statuer sur un rapport qui n'a plus de sens.
+    """
+    if not d_ref or d_ref <= 0 or z <= 0:
+        return None
+    try:
+        d_transpose = d_ref * math.pow(10.0, (t_ref_mesure - t_ref_retenu) / z)
+    except OverflowError:
+        return None
+    if not math.isfinite(d_transpose) or d_transpose <= 0:
+        return None
+    return d_transpose
+
+
 def convertir_temps_en_minutes(temps: List[float], unite_temps: str) -> List[float]:
     """
     Ramène la colonne « temps » en minutes, unité de travail du modèle de Bigelow.
@@ -481,7 +513,21 @@ def evaluer_pasteurisation(
             })
 
     # Microorganisme principal / sélectionné
-    micro_key = microorganisme or produit["microorganisme_defaut"]
+    #
+    # Un produit évalué sur plusieurs cibles se juge sur son facteur limitant —
+    # la cible la plus difficile à atteindre, c'est-à-dire celle dont le facteur
+    # de réduction k est le plus faible. C'est la règle du référentiel
+    # (formule.md §6) et c'est déjà celle qu'applique l'aide au choix du barème.
+    # Sans elle, un jus traité 30 min à 95 °C était archivé « conforme » sur la
+    # foi de Byssochlamys alors qu'Alicyclobacillus n'atteignait que k = 1,1.
+    #
+    # Un expert qui désigne une cible ou impose Tref/z reprend la main : c'est
+    # alors son choix qui porte la VP, la courbe et le message.
+    choix_explicite = microorganisme is not None or t_ref is not None or z is not None
+    if evaluations_multimicro and not choix_explicite:
+        micro_key = min(evaluations_multimicro, key=lambda e: e["k_calc"])["key"]
+    else:
+        micro_key = microorganisme or produit["microorganisme_defaut"]
     micro = MICROORGANISMES.get(micro_key)
 
     effective_t_ref = t_ref if t_ref is not None else (micro["t_ref"] if micro else 60.0)
@@ -495,14 +541,43 @@ def evaluer_pasteurisation(
     result_vp["temps"] = temps
 
     # --- Diagnostic basé sur k_calc >= 15.0 ---
+    # Le D est ramené au Tref effectivement retenu : hors mode expert la
+    # transposition vaut 1 et ne change rien, mais elle rend k invariant par
+    # changement de température de référence, ce qu'il doit être.
     d_ref = micro.get("d_ref") if micro else None
-    if d_ref and d_ref > 0:
-        k_calc = round(vp_obtenue / d_ref, 1)
+    d_effectif = (
+        transposer_d_ref(d_ref, micro["t_ref"], effective_t_ref, effective_z)
+        if micro else None
+    )
+    if d_effectif:
+        k_calc = round(vp_obtenue / d_effectif, 1)
     else:
         k_calc = round(vp_obtenue / (effective_vp_cible / 5.0), 1) if effective_vp_cible > 0 else 0.0
 
     statut = "conforme" if k_calc >= 15.0 else "insuffisant"
-    message = get_specific_diagnostic_message(micro_key, statut, lang)
+
+    # Le verdict porte sur le produit, pas sur une seule cible : il suit la plus
+    # défavorable de toutes les évaluations présentées à l'opérateur. En mode
+    # standard le principal est déjà le facteur limitant et la boucle ne change
+    # rien ; en mode expert, elle empêche qu'une cible affichée « insuffisant »
+    # coexiste avec un enregistrement « conforme ».
+    facteur_limitant = {
+        "key": micro_key,
+        "nom": micro["nom"] if micro else micro_key,
+        "k_calc": k_calc,
+        "statut": statut,
+    }
+    for evaluation in evaluations_multimicro:
+        if evaluation["k_calc"] < facteur_limitant["k_calc"]:
+            facteur_limitant = {
+                "key": evaluation["key"],
+                "nom": evaluation["nom"],
+                "k_calc": evaluation["k_calc"],
+                "statut": evaluation["statut"],
+            }
+
+    statut = facteur_limitant["statut"]
+    message = get_specific_diagnostic_message(facteur_limitant["key"], statut, lang)
 
     # --- Risque ---
     risque = evaluer_risque(
@@ -520,7 +595,10 @@ def evaluer_pasteurisation(
         "parametres": {
             "t_ref": effective_t_ref,
             "z": effective_z,
-            "d_ref": micro["d_ref"] if micro else None,
+            # Le D affiché accompagne le Tref affiché : c'est le D transposé,
+            # sans quoi la fiche annoncerait « Tref 72 °C ; D 1,1 min » alors
+            # que ce D est mesuré à 60 °C.
+            "d_ref": arrondir_duree(d_effectif, 6) if d_effectif else d_ref,
             "microorganisme": micro["nom"] if micro else micro_key,
             "microorganisme_key": micro_key,
             "produit": localize_product_name(product_type, lang),
@@ -541,6 +619,7 @@ def evaluer_pasteurisation(
 
     if evaluations_multimicro:
         out["evaluations_multimicro"] = evaluations_multimicro
+        out["facteur_limitant"] = facteur_limitant
 
     return out
 
