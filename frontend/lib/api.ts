@@ -201,7 +201,6 @@ export interface EvaluateParams {
   /** « minute » ou « seconde » : unité de la colonne temps. Obligatoire. */
   unite_temps: UniteTemps;
   procede?: string | null;
-  ph?: number | null;
   titre_alcool?: number | null;
 }
 
@@ -236,7 +235,6 @@ export async function collerDonnees(params: {
   vp_cible?: number | null;
   unite_temps: UniteTemps;
   procede?: string | null;
-  ph?: number | null;
   titre_alcool?: number | null;
 }) {
   const { data } = await api.post("/pasteurisation/coller", params);

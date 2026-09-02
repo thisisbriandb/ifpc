@@ -34,7 +34,6 @@ interface RecentActivity {
 
 const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
   conforme: { bg: "bg-brand-primary/10", text: "text-brand-primary" },
-  vigilance: { bg: "bg-brand-accent/10", text: "text-brand-accent" },
   insuffisant: { bg: "bg-red-50", text: "text-red-700" },
 };
 

@@ -8,7 +8,9 @@ import java.util.Optional;
 
 public interface AnalysisHistoryRepository extends JpaRepository<AnalysisHistory, Long> {
 
-    List<AnalysisHistory> findTop50ByUserEmailOrderByCreatedAtDesc(String userEmail);
+    // Les analyses supprimées restent en base mais sortent de l'historique
+    // consultable : la suppression est logique, jamais physique.
+    List<AnalysisHistory> findTop50ByUserEmailAndDeletedFalseOrderByCreatedAtDesc(String userEmail);
 
-    Optional<AnalysisHistory> findByIdAndUserEmail(Long id, String userEmail);
+    Optional<AnalysisHistory> findByIdAndUserEmailAndDeletedFalse(Long id, String userEmail);
 }

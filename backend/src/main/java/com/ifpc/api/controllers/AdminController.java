@@ -1,12 +1,16 @@
 package com.ifpc.api.controllers;
 
+import com.ifpc.api.models.AuditAction;
+import com.ifpc.api.models.AuditLog;
 import com.ifpc.api.models.HelpText;
 import com.ifpc.api.models.ProductConfig;
 import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
+import com.ifpc.api.repositories.AuditLogRepository;
 import com.ifpc.api.repositories.HelpTextRepository;
 import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
+import com.ifpc.api.services.AuditService;
 import com.ifpc.api.services.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,6 +31,8 @@ public class AdminController {
     private final ProductConfigRepository productConfigRepository;
     private final HelpTextRepository helpTextRepository;
     private final EmailService emailService;
+    private final AuditService auditService;
+    private final AuditLogRepository auditLogRepository;
 
     // ── Admin-only endpoints ─────────────────────────────────────────────
 
@@ -53,6 +60,9 @@ public class AdminController {
             }
             userRepository.save(user);
 
+            auditService.consigner(AuditAction.ROLE_MODIFIE, "utilisateur", user.getEmail(),
+                    Map.of("avant", oldRole.name(), "apres", newRole.name()));
+
             if (oldRole == Role.PENDING && newRole != Role.PENDING) {
                 emailService.sendAccountApprovedNotification(user);
             }
@@ -78,9 +88,13 @@ public class AdminController {
     public ResponseEntity<String> approveUser(@PathVariable Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+        Role avant = user.getRole();
         user.setRole(Role.USER);
         user.setEnabled(true);
         userRepository.save(user);
+
+        auditService.consigner(AuditAction.COMPTE_APPROUVE, "utilisateur", user.getEmail(),
+                Map.of("avant", String.valueOf(avant), "apres", Role.USER.name()));
 
         emailService.sendAccountApprovedNotification(user);
 
@@ -93,6 +107,10 @@ public class AdminController {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
         userRepository.delete(user);
+
+        auditService.consigner(AuditAction.COMPTE_SUPPRIME, "utilisateur", user.getEmail(),
+                Map.of("motif", "demande rejetée", "role", String.valueOf(user.getRole())));
+
         return ResponseEntity.ok("Utilisateur " + user.getEmail() + " rejeté et supprimé.");
     }
 
@@ -107,6 +125,13 @@ public class AdminController {
         }
 
         userRepository.delete(user);
+
+        // Les lots, cuves et analyses restent rattachés à cette adresse : le
+        // journal garde donc trace du propriétaire de données désormais sans
+        // titulaire.
+        auditService.consigner(AuditAction.COMPTE_SUPPRIME, "utilisateur", user.getEmail(),
+                Map.of("motif", "suppression administrateur", "role", String.valueOf(user.getRole())));
+
         return ResponseEntity.ok("Utilisateur " + user.getEmail() + " supprimé avec succès.");
     }
 
@@ -130,12 +155,34 @@ public class AdminController {
                         .productName(request.productName() != null ? request.productName() : productType)
                         .vpCible(request.vpCible())
                         .build());
+        Double avant = config.getId() == null ? null : config.getVpCible();
         config.setVpCible(request.vpCible());
         if (request.productName() != null) {
             config.setProductName(request.productName());
         }
         productConfigRepository.save(config);
+
+        // Un paramètre de sécurité sanitaire ne doit pas pouvoir changer sans
+        // laisser trace de sa valeur antérieure.
+        auditService.consigner(AuditAction.VP_CIBLE_MODIFIEE, "configuration produit", productType,
+                Map.of("avant", String.valueOf(avant), "apres", String.valueOf(request.vpCible())));
+
         return ResponseEntity.ok(config);
+    }
+
+    // ── Journal d'audit (lecture admin) ──────────────────────────────────
+
+    /**
+     * Les 200 dernières opérations consignées, de la plus récente à la plus
+     * ancienne. Aucun point d'entrée ne permet d'en supprimer : le journal est
+     * en ajout seul.
+     */
+    @GetMapping("/api/admin/audit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<AuditLog>> getAuditLog(@RequestParam(required = false) String cibleType) {
+        return ResponseEntity.ok(cibleType == null || cibleType.isBlank()
+                ? auditLogRepository.findTop200ByOrderByCreatedAtDesc()
+                : auditLogRepository.findTop200ByCibleTypeOrderByCreatedAtDesc(cibleType));
     }
 
     // ── Public config endpoint (no auth required) ────────────────────────

@@ -4,9 +4,11 @@ import com.ifpc.api.models.HelpText;
 import com.ifpc.api.models.ProductConfig;
 import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
+import com.ifpc.api.repositories.AuditLogRepository;
 import com.ifpc.api.repositories.HelpTextRepository;
 import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
+import com.ifpc.api.services.AuditService;
 import com.ifpc.api.services.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +35,8 @@ class AdminControllerTest {
     @Mock private ProductConfigRepository productConfigRepository;
     @Mock private HelpTextRepository helpTextRepository;
     @Mock private EmailService emailService;
+    @Mock private AuditService auditService;
+    @Mock private AuditLogRepository auditLogRepository;
 
     @InjectMocks private AdminController adminController;
 

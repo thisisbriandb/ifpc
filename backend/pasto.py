@@ -16,14 +16,6 @@ MICROORGANISMES: Dict[str, Dict] = {
         "vp_cible_min": 417.0,
         "description": "Réf. jus de pomme — D=27,8 min à 95°C",
     },
-    "alicyclo_res": {
-        "nom": "Alicyclobacillus acidoterrestris",
-        "t_ref": 95.0,
-        "z": 16.4,
-        "d_ref": 27.80,
-        "vp_cible_min": 417.0,
-        "description": "Réf. jus de pomme — D=27,8 min à 95°C",
-    },
     # Pathogènes (communs jus pomme + cidre)
     "ecoli": {
         "nom": "Escherichia coli",
@@ -95,7 +87,6 @@ PRODUITS: Dict[str, Dict] = {
         "nom": "Jus de pomme",
         "microorganisme_defaut": "byssochlamys_fulva",
         "vp_cible_min": 27.15,
-        "ph_typique": 3.5,
         "description": "Jus de pomme pasteurisé",
         "microorganismes_associes": [
             {"key": "byssochlamys_fulva", "classique": True},
@@ -112,7 +103,6 @@ PRODUITS: Dict[str, Dict] = {
         "nom": "Cidre doux et demi-sec",
         "microorganisme_defaut": "saccharo_cidre",
         "vp_cible_min": 16.5,
-        "ph_typique": 3.6,
         "description": "Cidre doux et demi-sec (< 4% vol.)",
         "microorganismes_associes": [
             {"key": "saccharo_cidre", "classique": True},
@@ -124,7 +114,6 @@ PRODUITS: Dict[str, Dict] = {
         "nom": "Cidre brut et extra-brut",
         "microorganisme_defaut": "saccharo_cidre_low",
         "vp_cible_min": 6.0,
-        "ph_typique": 3.4,
         "description": "Cidre brut et extra-brut (> 4% vol.)",
         "microorganismes_associes": [
             {"key": "saccharo_cidre_low", "classique": True},
@@ -141,10 +130,26 @@ ALIAS_PRODUITS: Dict[str, str] = {
     "cidre_extra_brut": "cidre_brut",
 }
 
+# « alicyclo_res » annonçait une souche résistante d'Alicyclobacillus, mais
+# portait les paramètres exacts de « alicyclo_std » et ne correspond à aucune
+# ligne du tableau transmis par la R&D — qui ne connaît qu'un Alicyclobacillus.
+# L'entrée est retirée du référentiel ; la clé reste acceptée en entrée, les
+# analyses enregistrées la portant continuent d'être relues correctement.
+ALIAS_MICROORGANISMES: Dict[str, str] = {
+    "alicyclo_res": "alicyclo_std",
+}
+
 
 def normaliser_product_type(product_type: str) -> str:
     """Ramène un type de produit hérité vers l'entrée qui l'a absorbé."""
     return ALIAS_PRODUITS.get(product_type, product_type)
+
+
+def normaliser_microorganisme(cle: Optional[str]) -> Optional[str]:
+    """Ramène une clé de microorganisme héritée vers l'entrée qui l'a absorbée."""
+    if cle is None:
+        return None
+    return ALIAS_MICROORGANISMES.get(cle, cle)
 
 
 # Unité dans laquelle l'utilisateur a relevé la colonne « temps ». Le calcul de
@@ -172,25 +177,6 @@ TRANSLATIONS = {
     "unites_temps": {
         "minute": {"fr": "Minute", "en": "Minute"},
         "seconde": {"fr": "Seconde", "en": "Second"},
-    },
-    "risk_levels": {
-        "faible": {"fr": "faible", "en": "low"},
-        "modéré": {"fr": "modéré", "en": "moderate"},
-        "élevé": {"fr": "élevé", "en": "high"},
-    },
-    "risk_advice": {
-        "faible": {
-            "fr": "Conditions de pasteurisation satisfaisantes.",
-            "en": "Pasteurisation conditions are satisfactory.",
-        },
-        "modéré": {
-            "fr": "Vérifiez les conditions de stockage et la chaîne du froid.",
-            "en": "Check storage conditions and the cold chain.",
-        },
-        "élevé": {
-            "fr": "Pasteurisation probablement insuffisante. Risque d'altération ou de refermentation.",
-            "en": "Pasteurisation is likely insufficient. Risk of spoilage or re-fermentation.",
-        },
     },
 }
 
@@ -221,104 +207,6 @@ def localize_unite_temps_name(unite: Optional[str], locale: str) -> Optional[str
     if unite is None:
         return None
     return translate("unites_temps", unite, locale, unite)
-
-
-def build_diagnostic_message(statut: str, vp_obtenue: float, vp_cible: float, locale: str, microorganisme: str = "", product_type: str = "") -> str:
-    lang = normalize_locale(locale)
-    cible_int = int(round(vp_cible))
-
-    if lang == "en":
-        if statut in ("conforme", "vigilance"):
-            msg = (
-                f"Pasteurisation conditions are sufficient to reduce the risk "
-                f"related to {microorganisme}."
-            ) if microorganisme else (
-                f"Pasteurisation compliant. PU = {vp_obtenue:.2f} (target >= {cible_int} UP)."
-            )
-            if statut == "vigilance":
-                msg += " However, the safety margin is limited."
-            return msg
-        # insuffisant
-        msg = (
-            f"Pasteurisation conditions are insufficient to reduce the risk "
-            f"related to {microorganisme}.\n\n"
-            f"It is recommended to adjust the pasteurisation schedule."
-        ) if microorganisme else (
-            f"Pasteurisation insufficient. PU = {vp_obtenue:.2f} (target >= {cible_int} UP)."
-        )
-        return msg
-
-    # --- French ---
-    if statut in ("conforme", "vigilance"):
-        if microorganisme.lower().startswith("byssochlamys"):
-            msg = (
-                f"Les conditions de pasteurisation sont suffisantes pour "
-                f"réduire le risque lié aux moisissures ({microorganisme})."
-            )
-        elif microorganisme.lower().startswith("saccharomyces"):
-            if product_type == "jus_pomme":
-                msg = (
-                    "Les conditions de pasteurisation sont suffisantes pour "
-                    "réduire le risque lié à Saccharomyces cerevisiae."
-                )
-            else:
-                msg = (
-                    f"Les conditions de pasteurisation sont suffisantes pour "
-                    f"réduire le risque lié à {microorganisme} et aux reprises de fermentation."
-                )
-        elif microorganisme:
-            msg = (
-                f"Les conditions de pasteurisation sont suffisantes pour "
-                f"réduire le risque lié à {microorganisme}."
-            )
-        else:
-            msg = f"Pasteurisation conforme. VP = {vp_obtenue:.2f} UP (cible ≥ {cible_int} UP)."
-
-        if statut == "vigilance":
-            msg += "\n\nAttention : la marge de sécurité est limitée."
-        return msg
-
-    # insuffisant
-    if microorganisme.lower().startswith("byssochlamys"):
-        if product_type == "jus_pomme":
-            return (
-                f"Les conditions de pasteurisation sont insuffisantes pour "
-                f"réduire le risque lié aux moisissures ({microorganisme}).\n\n"
-                f"Il est recommandé d'ajuster le barème de pasteurisation."
-            )
-        else:
-            return (
-                f"Les conditions de pasteurisation sont insuffisantes pour "
-                f"réduire le risque lié aux moisissures ({microorganisme}) et prévenir une reprise de fermentation.\n\n"
-                f"Il est recommandé d'ajuster le barème de pasteurisation."
-            )
-    elif microorganisme.lower().startswith("saccharomyces"):
-        if product_type == "jus_pomme":
-            return (
-                "Les conditions de pasteurisation sont insuffisantes pour "
-                "réduire le risque lié à Saccharomyces cerevisiae.\n\n"
-                "Il est recommandé d'ajuster le barème de pasteurisation."
-            )
-        else:
-            return (
-                f"Les conditions de pasteurisation sont insuffisantes pour "
-                f"réduire le risque lié à {microorganisme} et prévenir une reprise de fermentation.\n\n"
-                f"Il est recommandé d'ajuster le barème de pasteurisation."
-            )
-    elif microorganisme:
-        if product_type == "jus_pomme":
-            return (
-                f"Les conditions de pasteurisation sont insuffisantes pour "
-                f"réduire le risque lié à {microorganisme}.\n\n"
-                f"Il est recommandé d'ajuster le barème de pasteurisation."
-            )
-        else:
-            return (
-                f"Les conditions de pasteurisation sont insuffisantes pour "
-                f"réduire le risque lié à {microorganisme} et prévenir une reprise de fermentation.\n\n"
-                f"Il est recommandé d'ajuster le barème de pasteurisation."
-            )
-    return f"Pasteurisation insuffisante. VP = {vp_obtenue:.2f} UP (cible ≥ {cible_int} UP)."
 
 
 # ---------------------------------------------------------------------------
@@ -465,7 +353,6 @@ def evaluer_pasteurisation(
     microorganisme: Optional[str] = None,
     unite_temps: str = "minute",
     procede: Optional[str] = None,
-    ph: Optional[float] = None,
     titre_alcool: Optional[float] = None,
 ) -> Dict:
     """
@@ -527,7 +414,7 @@ def evaluer_pasteurisation(
     if evaluations_multimicro and not choix_explicite:
         micro_key = min(evaluations_multimicro, key=lambda e: e["k_calc"])["key"]
     else:
-        micro_key = microorganisme or produit["microorganisme_defaut"]
+        micro_key = normaliser_microorganisme(microorganisme) or produit["microorganisme_defaut"]
     micro = MICROORGANISMES.get(micro_key)
 
     effective_t_ref = t_ref if t_ref is not None else (micro["t_ref"] if micro else 60.0)
@@ -579,19 +466,12 @@ def evaluer_pasteurisation(
     statut = facteur_limitant["statut"]
     message = get_specific_diagnostic_message(facteur_limitant["key"], statut, lang)
 
-    # --- Risque ---
-    risque = evaluer_risque(
-        vp_obtenue, effective_vp_cible, product_type, micro_key,
-        ph=ph, titre_alcool=titre_alcool, locale=lang,
-    )
-
     out = {
         "vp": vp_obtenue,
         "vp_cible": effective_vp_cible,
         "k_calc": k_calc,
         "statut": statut,
         "message": message,
-        "risque": risque,
         "parametres": {
             "t_ref": effective_t_ref,
             "z": effective_z,
@@ -606,7 +486,6 @@ def evaluer_pasteurisation(
             "unite_temps": unite_temps,
             "unite_temps_nom": localize_unite_temps_name(unite_temps, lang),
             "procede": localize_procede_name(procede, lang),
-            "ph": ph,
             "titre_alcool": titre_alcool,
         },
         "courbe": {
@@ -622,114 +501,6 @@ def evaluer_pasteurisation(
         out["facteur_limitant"] = facteur_limitant
 
     return out
-
-
-def _build_conseil(
-    niveau: str,
-    vp_obtenue: float,
-    vp_cible: float,
-    produit_nom: str,
-    lang: str,
-) -> str:
-    """Construit un conseil contextuel à partir des données réelles."""
-    vp_str = f"{vp_obtenue:.2f}"
-    cible_str = f"{vp_cible:.1f}"
-    ratio = vp_obtenue / vp_cible if vp_cible > 0 else 0
-
-    if lang == "en":
-        if niveau == "faible":
-            return (
-                f"Treatment validated — the achieved PU ({vp_str} UP) exceeds the "
-                f"{cible_str} UP target by a wide margin. {produit_nom} is stabilised."
-            )
-        if niveau == "modéré":
-            return (
-                f"The PU reached ({vp_str} UP) meets the {cible_str} UP target but "
-                f"with a limited safety margin. Monitor the cold chain for {produit_nom}."
-            )
-        return (
-            f"PU insufficient ({vp_str} UP vs target {cible_str} UP, "
-            f"ratio {ratio:.0%}). For {produit_nom}, retreatment or "
-            f"an adjustment of the pasteurisation schedule is recommended."
-        )
-    # Français
-    if niveau == "faible":
-        return (
-            f"Traitement validé — la VP obtenue ({vp_str} UP) dépasse largement "
-            f"la cible de {cible_str} UP. {produit_nom} stabilisé."
-        )
-    if niveau == "modéré":
-        return (
-            f"VP atteinte ({vp_str} UP) mais marge limitée par rapport à la cible "
-            f"({cible_str} UP). Surveillez la chaîne du froid pour {produit_nom}."
-        )
-    return (
-        f"VP insuffisante ({vp_str} UP vs cible {cible_str} UP, "
-        f"ratio {ratio:.0%}). Pour {produit_nom}, un retraitement ou "
-        f"un ajustement du barème est recommandé."
-    )
-
-
-# ---------------------------------------------------------------------------
-# Évaluation du risque
-# ---------------------------------------------------------------------------
-def evaluer_risque(
-    vp_obtenue: float,
-    vp_cible: float,
-    product_type: str,
-    microorganisme: str,
-    ph: Optional[float] = None,
-    titre_alcool: Optional[float] = None,
-    locale: str = "fr",
-) -> Dict:
-    """Calcule un indicateur de risque (faible / modéré / élevé)."""
-    score = 0
-
-    ratio = vp_obtenue / vp_cible if vp_cible > 0 else 0
-    if ratio >= 1.5:
-        score += 0
-    elif ratio >= 1.0:
-        score += 1
-    elif ratio >= 0.8:
-        score += 2
-    else:
-        score += 3
-
-    # Produits à sucre résiduel → risque refermentation
-    if normaliser_product_type(product_type) in ("cidre_doux", "jus_pomme"):
-        score += 1
-
-    # pH élevé → plus de risque
-    if ph is not None and ph > 3.8:
-        score += 1
-
-    # Alcool protège un peu
-    if titre_alcool is not None and titre_alcool > 4.0:
-        score -= 1
-
-    score = max(0, score)
-
-    if score <= 1:
-        niveau = "faible"
-        couleur = "#84A44A"
-    elif score <= 3:
-        niveau = "modéré"
-        couleur = "#F19B13"
-    else:
-        niveau = "élevé"
-        couleur = "#E53E3E"
-
-    # --- Conseil contextuel dynamique ---
-    lang = normalize_locale(locale)
-    produit_nom = localize_product_name(product_type, lang) or product_type
-    conseil = _build_conseil(niveau, vp_obtenue, vp_cible, produit_nom, lang)
-
-    return {
-        "niveau": translate("risk_levels", niveau, locale, niveau),
-        "score": score,
-        "couleur": couleur,
-        "conseil": conseil,
-    }
 
 
 # ---------------------------------------------------------------------------
@@ -762,7 +533,7 @@ def proposer_bareme(
     if produit is None:
         raise ValueError(f"Type de produit inconnu : {product_type}")
 
-    micro_key = microorganisme or produit["microorganisme_defaut"]
+    micro_key = normaliser_microorganisme(microorganisme) or produit["microorganisme_defaut"]
     micro = MICROORGANISMES.get(micro_key)
     if micro is None:
         raise ValueError(f"Microorganisme inconnu : {micro_key}")

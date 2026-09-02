@@ -8,43 +8,16 @@ import { useAuthStore } from "@/lib/store";
 import HelpModal from "@/components/HelpModal";
 import { getProductConfig, getAnalysisById } from "@/lib/api";
 import { formatHoldTime } from "@/lib/pasteurisation";
+import {
+  MICROORGANISMES,
+  PRODUITS,
+  PRODUCT_MICROS,
+  normaliserProduit,
+} from "@/lib/referentiel";
 
 // ── Données de référence ──────────────────────────────────────────────────
-
-const MICROORGANISMES: Record<string, { nom: string; t_ref: number; z: number; d_ref: number; vp_cible: number }> = {
-  alicyclo_std:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 16.4, d_ref: 27.8,  vp_cible: 417.0 },
-  alicyclo_res:       { nom: "Alicyclobacillus acidoterrestris", t_ref: 95, z: 16.4, d_ref: 27.8,  vp_cible: 417.0 },
-  ecoli:              { nom: "Escherichia coli",                  t_ref: 62, z: 6.0,  d_ref: 1.5,  vp_cible: 22.5  },
-  salmonella:         { nom: "Salmonella",                        t_ref: 62, z: 6.0,  d_ref: 0.49, vp_cible: 7.35  },
-  listeria:           { nom: "Listeria monocytogenes",            t_ref: 62, z: 5.6,  d_ref: 0.43, vp_cible: 6.45  },
-  byssochlamys_fulva: { nom: "Byssochlamys fulva",                t_ref: 95, z: 7.1,  d_ref: 1.81, vp_cible: 27.15 },
-  saccharo_jus:       { nom: "Saccharomyces cerevisiae",          t_ref: 60, z: 4.0,  d_ref: 22.5, vp_cible: 337.5 },
-  saccharo_cidre_low: { nom: "Saccharomyces cerevisiae 2",        t_ref: 60, z: 4.0,  d_ref: 0.4,  vp_cible: 6.0   },
-  saccharo_cidre:     { nom: "Saccharomyces cerevisiae 1",        t_ref: 60, z: 4.0,  d_ref: 1.1,  vp_cible: 16.5  },
-};
-
-// Trois types de produit : doux/demi-sec et brut/extra-brut partagent leur
-// microorganisme de référence et leur VP cible, ils ne font plus qu'une entrée.
-const PRODUITS: Record<string, { nom: string; micro: string; vp_cible: number }> = {
-  jus_pomme:  { nom: "Jus de pomme",             micro: "byssochlamys_fulva", vp_cible: 27.15 },
-  cidre_doux: { nom: "Cidre doux et demi-sec",   micro: "saccharo_cidre",     vp_cible: 16.5  },
-  cidre_brut: { nom: "Cidre brut et extra-brut", micro: "saccharo_cidre_low", vp_cible: 6.0   },
-};
-
-// Types supprimés par le regroupement, encore portés par des analyses enregistrées
-const ALIAS_PRODUITS: Record<string, string> = {
-  cidre_demi_sec: "cidre_doux",
-  cidre_extra_brut: "cidre_brut",
-};
-const normaliserProduit = (t: string) => ALIAS_PRODUITS[t] ?? t;
-
-// Association produit → microorganismes disponibles en mode expert
-const PRODUCT_MICROS: Record<string, string[]> = {
-  jus_pomme:  ["byssochlamys_fulva", "alicyclo_res", "saccharo_jus", "ecoli", "salmonella", "listeria"],
-  cidre_doux: ["saccharo_cidre", "ecoli", "salmonella"],
-  // Brut et extra-brut ont pour référence Sacch. cer. 2, pas la souche du doux
-  cidre_brut: ["saccharo_cidre_low", "ecoli", "salmonella"],
-};
+// Le référentiel scientifique vit dans lib/referentiel.ts, dont la conformité
+// au document `referentiel-scientifique.md` §4 est vérifiée par les tests.
 
 // Les clés héritées restent traduites : d'anciennes analyses les portent encore.
 const PRODUCT_LABELS: Record<string, { fr: string; en: string }> = {

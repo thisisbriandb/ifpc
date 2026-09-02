@@ -79,14 +79,14 @@ class TestLectureDuDocument:
         assert REFERENTIEL.is_file(), f"référentiel introuvable : {REFERENTIEL}"
 
     def test_les_deux_tableaux_sont_lus(self):
-        assert len(MICRO_DOCUMENTES) == 9
+        assert len(MICRO_DOCUMENTES) == 8
         assert len(PRODUITS_DOCUMENTES) == 3
 
     def test_la_majoration_trouble_ne_figure_plus_au_document(self):
         # Retirée du code, elle doit l'être du document : c'est la divergence
         # qui a motivé ce liage.
         texte = REFERENTIEL.read_text(encoding="utf-8")
-        section_courante = texte.split("## 6. Historique")[0]
+        section_courante = texte.split("## 7. Historique")[0]
         assert "trouble" not in section_courante.lower()
         assert "+20" not in section_courante
         # L'historique des révisions, lui, doit en garder la trace.
@@ -141,6 +141,12 @@ class TestProduits:
         assert PRODUITS_DOCUMENTES[cle]["vp_cible_min"] == pytest.approx(
             MICRO_DOCUMENTES[micro]["vp_cible_min"]
         )
+
+    def test_les_cles_de_microorganisme_heritees_restent_resolubles(self):
+        # Des analyses enregistrées portent encore « alicyclo_res ».
+        assert pasto.normaliser_microorganisme("alicyclo_res") == "alicyclo_std"
+        for cible in pasto.ALIAS_MICROORGANISMES.values():
+            assert cible in MICRO_DOCUMENTES
 
     def test_les_types_herites_sont_ramenes_a_leur_entree(self):
         # §4.2 : les anciens types restent acceptés en entrée.
