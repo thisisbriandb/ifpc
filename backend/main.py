@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 import io
 import csv
+import numbers
 import re
 import logging
 import numpy as np
@@ -156,7 +157,7 @@ async def upload_file(
 
         if filename.endswith((".xlsx", ".xls")):
             df = _read_excel_robust(content, filename)
-            temps_list, temp_list = _extract_numeric_columns(df)
+            temps_list, temp_list, unite_source = _extract_numeric_columns(df)
         elif filename.endswith(".csv") or filename.endswith(".txt") or filename.endswith(".tsv"):
             # Tenter d'abord le format enregistreur (DS1922E, etc.) qui a des
             # en-têtes métadonnées avant la table de données
@@ -165,10 +166,10 @@ async def upload_file(
             logger_rows = _try_parse_logger_format(lines)
             if logger_rows is not None and len(logger_rows) >= 2:
                 logger.info(f"Format enregistreur détecté (upload), {len(logger_rows)} lignes")
-                temps_list, temp_list = _datetime_rows_to_minutes(logger_rows)
+                temps_list, temp_list, unite_source = _datetime_rows_to_minutes(logger_rows)
             else:
                 df = _read_csv_robust(content)
-                temps_list, temp_list = _extract_numeric_columns(df)
+                temps_list, temp_list, unite_source = _extract_numeric_columns(df)
         else:
             raise HTTPException(
                 status_code=400,
@@ -184,13 +185,14 @@ async def upload_file(
             z=z,
             vp_cible=vp_cible,
             microorganisme=microorganisme,
-            unite_temps=unite_temps,
+            unite_temps=_unite_effective(unite_temps, unite_source),
             procede=procede,
             ph=ph,
             titre_alcool=titre_alcool,
         )
         result["fichier"] = filename
         result["nb_points"] = len(temp_list)
+        result["unite_temps_source"] = "horodatage" if unite_source else "declaration"
         return result
 
     except HTTPException:
@@ -215,7 +217,7 @@ async def paste_data(
         logger.info(f"raw_text ({len(request.raw_text)} chars), premières lignes:")
         for i, line in enumerate(request.raw_text.split('\n')[:5]):
             logger.info(f"  [{i}] {line!r}")
-        temps_list, temp_list = _parse_pasted_text(request.raw_text)
+        temps_list, temp_list, unite_source = _parse_pasted_text(request.raw_text)
         logger.info(f"Parse OK : {len(temps_list)} points")
         logger.info(f"  temps[:5]  = {temps_list[:5]}")
         logger.info(f"  temp[:5]   = {temp_list[:5]}")
@@ -230,12 +232,13 @@ async def paste_data(
             z=request.z,
             vp_cible=request.vp_cible,
             microorganisme=request.microorganisme,
-            unite_temps=request.unite_temps,
+            unite_temps=_unite_effective(request.unite_temps, unite_source),
             procede=request.procede,
             ph=request.ph,
             titre_alcool=request.titre_alcool,
         )
         result["nb_points"] = len(temp_list)
+        result["unite_temps_source"] = "horodatage" if unite_source else "declaration"
         logger.info(f"Résultat: VP={result['vp']} UP, statut={result['statut']}, vp_cible={result['vp_cible']}")
         return result
     except ValueError as e:
@@ -404,6 +407,18 @@ def _decode_bytes(content: bytes) -> str:
     return content.decode("utf-8", errors="replace")
 
 
+def _unite_effective(unite_declaree: str, unite_source: Optional[str]) -> str:
+    """Unité qui s'applique réellement à la colonne temps.
+
+    Un relevé numérique brut ne dit pas s'il compte en minutes ou en secondes :
+    c'est l'opérateur qui le déclare. Un relevé horodaté, lui, a déjà été
+    ramené en minutes au parsing ; lui appliquer en plus l'unité déclarée
+    diviserait la VP par 60 dès que le procédé retenu est le flash, puisque
+    l'interface impose alors « seconde ».
+    """
+    return unite_source or unite_declaree
+
+
 def _read_excel_robust(content: bytes, filename: str) -> pd.DataFrame:
     """Lecture robuste d'un fichier Excel avec gestion d'erreurs détaillée.
     
@@ -476,8 +491,21 @@ def _read_csv_robust(content: bytes) -> pd.DataFrame:
 
 
 def _clean_numeric(val) -> Optional[float]:
-    """Convertit une valeur en float, en gérant virgules décimales, espaces, unités."""
-    if isinstance(val, (int, float)):
+    """Convertit une valeur en float, en gérant virgules décimales, espaces, unités.
+
+    Le test porte sur l'ABC ``numbers.Real`` et non sur ``(int, float)`` : les
+    valeurs qui sortent de pandas sont des scalaires numpy, et ``numpy.int64``
+    n'hérite pas de ``int``. Avec l'ancien test, une colonne entière — ou en
+    ``float32`` — était rejetée ligne à ligne, et le fichier entier semblait
+    vide. Le cas ne se voyait pas toujours : ``iterrows()`` promeut la ligne en
+    ``float64`` dès qu'une seule colonne porte des décimales.
+
+    Les booléens sont écartés : une colonne de vrai/faux n'est ni un temps ni
+    une température, et ``bool`` est un sous-type de ``int``.
+    """
+    if isinstance(val, bool):
+        return None
+    if isinstance(val, numbers.Real):
         if pd.isna(val):
             return None
         return float(val)
@@ -493,32 +521,62 @@ def _clean_numeric(val) -> Optional[float]:
         return None
 
 
+# Mots-clés de reconnaissance des colonnes, du signal le plus spécifique au
+# plus faible. L'ordre est ce qui fait la correction : « Temps » contient
+# « temp », alors que « Température » ne contient aucun mot-clé de temps. Sans
+# cette hiérarchie, les deux colonnes d'un fichier français se résolvent vers
+# la même, et la VP est calculée en prenant le temps pour la température.
+TEMP_KEYWORDS_FORTS = ("température", "temperature", "temp\xe9rature",
+                       "°c", "celsius", "degré", "degre", "degree")
+TIME_KEYWORDS = ("temps", "time", "durée", "duree", "dur\xe9e", "dur e",
+                 "date", "heure", "hour", "minute", "min", "sec")
+TEMP_KEYWORDS_FAIBLES = ("temp", "t°")
+
+
+def _classer_colonne(intitule) -> Optional[str]:
+    """Classe un intitulé de colonne en « temps », « temperature », ou None.
+
+    Un intitulé ne reçoit qu'un seul rôle : « Temp. min » revient à la
+    température parce que le signal fort passe avant le mot-clé de temps.
+    """
+    low = str(intitule).lower().strip()
+    if any(k in low for k in TEMP_KEYWORDS_FORTS):
+        return "temperature"
+    # « Temp min » et « Temp max » sont des colonnes d'enregistreur courantes :
+    # un intitulé qui commence par « temp » sans être « temps » désigne bien la
+    # température, quel que soit ce qui suit.
+    if low.startswith("temp") and not low.startswith("temps"):
+        return "temperature"
+    if any(k in low for k in TIME_KEYWORDS):
+        return "temps"
+    if any(k in low for k in TEMP_KEYWORDS_FAIBLES):
+        return "temperature"
+    return None
+
+
 def _detect_columns(df: pd.DataFrame):
     """Détecte automatiquement les colonnes temps et température."""
-    cols_lower = {c: str(c).lower().strip() for c in df.columns}
-
     temps_col = None
     temp_col = None
 
-    TIME_KEYWORDS = ["temps", "time", "minute", "min", "sec", "durée", "duree",
-                     "dur\xe9e", "dur e", "heure", "hour", "date"]
-    TEMP_KEYWORDS = ["temp", "°c", "degre", "degree", "celsius", "temperature",
-                     "température", "temp\xe9rature"]
-
-    for orig, low in cols_lower.items():
-        if any(k in low for k in TIME_KEYWORDS):
+    for orig in df.columns:
+        role = _classer_colonne(orig)
+        if role == "temps" and temps_col is None:
             temps_col = orig
-        if any(k in low for k in TEMP_KEYWORDS):
-            if temp_col is None:
-                temp_col = orig
+        elif role == "temperature" and temp_col is None:
+            temp_col = orig
 
-    # Fallback : première colonne = temps, deuxième = température
+    # Fichier sans intitulés exploitables : première colonne = temps,
+    # deuxième = température.
     if temps_col is None and temp_col is None and len(df.columns) >= 2:
-        temps_col = df.columns[0]
-        temp_col = df.columns[1]
-    elif temps_col is None or temp_col is None:
+        return df.columns[0], df.columns[1]
+
+    # Un seul rôle reconnu : mieux vaut refuser que deviner quelle colonne
+    # porte l'autre, une erreur d'attribution ne se voyant pas dans la VP.
+    if temps_col is None or temp_col is None:
+        manquant = "température" if temp_col is None else "temps"
         raise ValueError(
-            f"Impossible de détecter les colonnes. Colonnes trouvées : {list(df.columns)}. "
+            f"Colonne « {manquant} » introuvable. Colonnes du fichier : {list(df.columns)}. "
             "Nommez-les 'temps' et 'temperature'."
         )
 
@@ -526,10 +584,13 @@ def _detect_columns(df: pd.DataFrame):
 
 
 def _extract_numeric_columns(df: pd.DataFrame):
-    """Extrait deux listes numériques (temps, température) d'un DataFrame.
-    
-    Gère le cas où la colonne temps contient des datetime/Timestamp :
-    les convertit automatiquement en minutes écoulées depuis le premier point.
+    """Extrait (temps, températures, unité produite) d'un DataFrame.
+
+    Gère le cas où la colonne temps contient des datetime/Timestamp : les
+    convertit automatiquement en minutes écoulées depuis le premier point, et
+    le signale par « minute » en troisième position. Sur une colonne numérique
+    brute, l'unité reste inconnue (None) : c'est la déclaration de l'opérateur
+    qui tranche.
     """
     from datetime import datetime as _dt
     temps_col, temp_col = _detect_columns(df)
@@ -597,11 +658,11 @@ def _extract_numeric_columns(df: pd.DataFrame):
             f"des valeurs numériques dans ces colonnes."
         )
 
-    return temps_list, temp_list
+    return temps_list, temp_list, None
 
 
 def _parse_pasted_text(raw_text: str):
-    """Parse du texte collé en listes temps (minutes) / température (°C).
+    """Parse du texte collé en (temps, températures, unité produite).
 
     Gère :
     - Format simple : deux colonnes numériques (temps, température)
@@ -671,7 +732,7 @@ def _parse_pasted_text(raw_text: str):
             f"  1              45{hint}"
         )
 
-    return temps_list, temp_list
+    return temps_list, temp_list, None
 
 
 # ── Mois français → numéro ────────────────────────────────────────────────
@@ -804,7 +865,12 @@ def _try_parse_logger_format(lines: list[str]):
 
 
 def _datetime_rows_to_minutes(rows):
-    """Convertit une liste [(datetime, temp), ...] en listes temps_minutes, températures."""
+    """Convertit une liste [(datetime, temp), ...] en temps (minutes), températures.
+
+    Le troisième élément renvoyé est l'unité produite : une colonne horodatée
+    est ramenée en minutes ici même, et l'unité déclarée par l'opérateur ne
+    doit donc plus lui être appliquée.
+    """
     t0 = rows[0][0]
     temps_list = []
     temp_list = []
@@ -812,7 +878,7 @@ def _datetime_rows_to_minutes(rows):
         delta = (dt_val - t0).total_seconds() / 60.0
         temps_list.append(round(delta, 4))
         temp_list.append(temp_val)
-    return temps_list, temp_list
+    return temps_list, temp_list, "minute"
 
 
 if __name__ == "__main__":
