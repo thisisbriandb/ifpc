@@ -69,14 +69,20 @@ public class AnalysisHistory {
     // Vrai quand le verdict provient d'un jeton vérifié. Les analyses
     // antérieures à ce contrôle, et les types qui n'en produisent pas encore
     // (colorimétrie), restent à faux : la distinction doit rester lisible.
-    @Column(nullable = false)
+    // La valeur par défaut est portée par la colonne elle-même, pas seulement
+    // par le builder : PostgreSQL refuse d'ajouter une colonne NOT NULL sans
+    // DEFAULT à une table déjà peuplée, et `ddl-auto: update` se contente alors
+    // de journaliser l'échec — l'application démarre avec la colonne manquante.
+    @Column(nullable = false, columnDefinition = "boolean default false")
     @Builder.Default
     private Boolean scelle = false;
 
     // Suppression logique : une analyse retirée de l'historique doit rester
     // dans le registre. Une pièce de maîtrise sanitaire que l'on peut effacer
     // ne démontre rien — il suffirait de retirer les résultats gênants.
-    @Column(nullable = false)
+    // Même raison que pour `scelle` : sans DEFAULT, l'ajout de la colonne
+    // échoue sur une table existante et laisse le schéma incomplet.
+    @Column(nullable = false, columnDefinition = "boolean default false")
     @Builder.Default
     private Boolean deleted = false;
 
