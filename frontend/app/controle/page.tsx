@@ -6,7 +6,7 @@ import ProductSelector from "@/components/ProductSelector";
 import ResultDisplay from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
 import HelpModal from "@/components/HelpModal";
-import { uploadFile, collerDonnees, getProductConfig, saveAnalysis, getAnalysisById, type UniteTemps } from "@/lib/api";
+import { uploadFile, collerDonnees, saveAnalysis, getAnalysisById, type UniteTemps } from "@/lib/api";
 import { uniteDuProcede, procedeAccorde } from "@/lib/pasteurisation";
 import { useAuthStore } from "@/lib/store";
 import { useSearchParams } from "next/navigation";
@@ -28,6 +28,7 @@ interface PasteurisationResult {
     z: number;
     d_ref?: number;
     microorganisme: string;
+    microorganisme_key?: string;
     produit: string;
     lot_identifier?: string;
     unite_temps?: string | null;
@@ -95,7 +96,6 @@ function ControlePageInner() {
   const [zValue, setZValue] = useState("");
   const [titreAlcool, setTitreAlcool] = useState("");
 
-  const [vpCibleConfig, setVpCibleConfig] = useState<Record<string, number>>({});
   const [showHelp, setShowHelp] = useState(false);
 
   const [file, setFile] = useState<File | null>(null);
@@ -148,16 +148,6 @@ function ControlePageInner() {
     checkAuth();
   }, [checkAuth]);
 
-  // Fetch admin VP cible config
-  useEffect(() => {
-    getProductConfig()
-      .then((data: { productType: string; vpCible: number }[]) => {
-        const map: Record<string, number> = {};
-        data.forEach(c => { map[c.productType] = c.vpCible; });
-        setVpCibleConfig(map);
-      })
-      .catch(() => {});
-  }, []);
 
   const restoreFormState = useCallback((parsed: any) => {
     if (!parsed?.parametres) return;
@@ -181,7 +171,12 @@ function ControlePageInner() {
       const key = productKeyByLabel[p.produit.toLowerCase()];
       if (key) setProductType(key);
     }
-    if (p.microorganisme) setMicroorganisme(p.microorganisme);
+    // Le sélecteur travaille avec la clé technique. `p.microorganisme` porte le
+    // nom affiché (« Saccharomyces cerevisiae 1 ») : le restaurer tel quel
+    // renvoyait au moteur une clé qu'il ne reconnaissait pas. Les analyses trop
+    // anciennes pour porter la clé ne restaurent pas la cible, et le
+    // microorganisme de référence du produit s'applique.
+    if (p.microorganisme_key) setMicroorganisme(p.microorganisme_key);
     if (p.procede) setProcede(p.procede);
     if (p.unite_temps === "minute" || p.unite_temps === "seconde") {
       setUniteTemps(p.unite_temps);
@@ -264,12 +259,8 @@ function ControlePageInner() {
     if (tRef) params.t_ref = parseFloat(tRef);
     if (zValue) params.z = parseFloat(zValue);
     if (titreAlcool) params.titre_alcool = parseFloat(titreAlcool);
-    // Auto-apply VP cible from admin config
-    if (vpCibleConfig[productType]) {
-      params.vp_cible = vpCibleConfig[productType];
-    }
     return params;
-  }, [productType, microorganisme, procede, tRef, zValue, titreAlcool, vpCibleConfig]);
+  }, [productType, microorganisme, procede, tRef, zValue, titreAlcool]);
 
   const handleReset = useCallback(() => {
     setProductType("jus_pomme");

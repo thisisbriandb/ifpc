@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store";
 import {
   getUsers, updateUserRole, getPendingUsers, approveUser, rejectUser, deleteUser,
-  getAdminProductConfig, updateProductConfig,
 } from "@/lib/api";
 import { Loader2, Search, X, Check, Activity, ShieldCheck, Trash2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
@@ -22,14 +21,8 @@ interface UserData {
   lastLogin: string | null;
 }
 
-interface ProductConfigData {
-  id?: number;
-  productType: string;
-  productName: string;
-  vpCible: number;
-}
 
-type Tab = "pending" | "users" | "config";
+type Tab = "pending" | "users";
 
 function formatRelativeTime(iso: string | null, t: any): string {
   if (!iso) return t("admin.never");
@@ -52,14 +45,12 @@ export default function AdminPage() {
 
   const [users, setUsers] = useState<UserData[]>([]);
   const [pendingUsers, setPendingUsers] = useState<UserData[]>([]);
-  const [configs, setConfigs] = useState<ProductConfigData[]>([]);
   
   const [isFetching, setIsFetching] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   
   const [processingId, setProcessingId] = useState<number | null>(null);
-  const [editedConfigs, setEditedConfigs] = useState<Record<string, number>>({});
 
   const isAdmin = user?.role === "ADMIN";
 
@@ -74,15 +65,9 @@ export default function AdminPage() {
     Promise.all([
       getUsers().catch(() => []),
       getPendingUsers().catch(() => []),
-      getAdminProductConfig().catch(() => [])
-    ]).then(([uData, pData, cData]) => {
+    ]).then(([uData, pData]) => {
       setUsers(uData.filter((u: UserData) => u.role !== "ADMIN"));
       setPendingUsers(pData);
-      setConfigs(cData);
-      
-      const initialConfigs: Record<string, number> = {};
-      cData.forEach((c: ProductConfigData) => { initialConfigs[c.productType] = c.vpCible; });
-      setEditedConfigs(initialConfigs);
     }).finally(() => setIsFetching(false));
   }, [isAdmin]);
 
@@ -139,19 +124,6 @@ export default function AdminPage() {
     }
   };
 
-  const handleSaveConfig = async (productType: string) => {
-    setProcessingId(productType as any);
-    try {
-      const vpCible = editedConfigs[productType];
-      const config = configs.find(c => c.productType === productType);
-      await updateProductConfig(productType, vpCible, config?.productName);
-      setConfigs(prev => prev.map(c => c.productType === productType ? { ...c, vpCible } : c));
-    } catch { 
-      alert(t("admin.saveError")); 
-    } finally { 
-      setProcessingId(null); 
-    }
-  };
 
   const filteredUsers = users.filter(u =>
     u.email.toLowerCase().includes(search.toLowerCase()) ||
@@ -199,7 +171,6 @@ export default function AdminPage() {
           {[
             { id: "pending", label: t("admin.tabRequests"), count: pendingUsers.length },
             { id: "users", label: t("admin.tabUsers") },
-            { id: "config", label: t("admin.tabConfig") },
           ].map(tab => (
             <button
               key={tab.id}
@@ -340,49 +311,6 @@ export default function AdminPage() {
                   )}
                 </tbody>
               </table>
-            </div>
-          </div>
-        )}
-
-        {/* CONFIGURATION */}
-        {activeTab === "config" && (
-          <div className="animate-in fade-in duration-300 max-w-2xl">
-            <div className="bg-white rounded-2xl border border-gray-200/60 shadow-sm divide-y divide-gray-50">
-              {configs.map(config => {
-                const edited = editedConfigs[config.productType];
-                const changed = edited !== undefined && edited !== config.vpCible;
-                const isSaving = processingId === config.productType as any;
-                
-                return (
-                  <div key={config.productType} className="px-6 py-5 flex items-center justify-between gap-4">
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{config.productName}</h4>
-                      <p className="text-xs text-gray-400 mt-0.5 font-mono">{config.productType}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-2 py-1 border border-transparent focus-within:border-gray-300 focus-within:bg-white transition-colors">
-                        <span className="text-xs font-medium text-gray-400 pl-1">VP</span>
-                        <input
-                          type="number"
-                          step="0.5"
-                          value={edited ?? config.vpCible}
-                          onChange={(e) => setEditedConfigs(prev => ({ ...prev, [config.productType]: parseFloat(e.target.value) || 0 }))}
-                          className="w-14 bg-transparent text-sm font-semibold text-gray-900 text-right outline-none"
-                        />
-                      </div>
-                      {changed && (
-                        <button
-                          onClick={() => handleSaveConfig(config.productType)}
-                          disabled={isSaving}
-                          className="w-8 h-8 rounded-lg bg-gray-900 text-white flex items-center justify-center hover:bg-gray-800 transition-colors"
-                        >
-                          {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           </div>
         )}

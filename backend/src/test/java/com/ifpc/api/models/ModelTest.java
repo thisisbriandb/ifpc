@@ -232,24 +232,6 @@ class ModelTest {
     }
 
     @Test
-    @DisplayName("ProductConfig entity lifecycle and methods")
-    void testProductConfig() {
-        ProductConfig pc = ProductConfig.builder()
-                .id(1L)
-                .productType("JUS_POMME")
-                .productName("Jus de Pomme Pasteurisé")
-                .vpCible(15.0)
-                .build();
-
-        pc.onUpdate();
-        assertEquals(1L, pc.getId());
-        assertEquals("JUS_POMME", pc.getProductType());
-        assertEquals("Jus de Pomme Pasteurisé", pc.getProductName());
-        assertEquals(15.0, pc.getVpCible());
-        assertNotNull(pc.getUpdatedAt());
-    }
-
-    @Test
     @DisplayName("Role Enum values")
     void testRoleEnum() {
         Role[] roles = Role.values();

@@ -131,20 +131,8 @@ export async function deleteUser(userId: number) {
 
 // ── Product Config (Admin) ──────────────────────────────────────────────────
 
-export async function getProductConfig() {
-  const response = await api.get("/config/products");
-  return response.data;
-}
 
-export async function getAdminProductConfig() {
-  const response = await api.get("/admin/product-config");
-  return response.data;
-}
 
-export async function updateProductConfig(productType: string, vpCible: number, productName?: string) {
-  const response = await api.put(`/admin/product-config/${productType}`, { vpCible, productName });
-  return response.data;
-}
 
 // ── Help Text ────────────────────────────────────────────────────────────────
 
@@ -197,7 +185,6 @@ export interface EvaluateParams {
   microorganisme?: string | null;
   t_ref?: number | null;
   z?: number | null;
-  vp_cible?: number | null;
   /** « minute » ou « seconde » : unité de la colonne temps. Obligatoire. */
   unite_temps: UniteTemps;
   procede?: string | null;
@@ -232,7 +219,6 @@ export async function collerDonnees(params: {
   microorganisme?: string | null;
   t_ref?: number | null;
   z?: number | null;
-  vp_cible?: number | null;
   unite_temps: UniteTemps;
   procede?: string | null;
   titre_alcool?: number | null;
@@ -352,11 +338,15 @@ export async function assemblageCouleur(
 
 export async function assemblageCouleurDb(
   data: {
+    // Densité optique brute, telle qu'enregistrée avec le lot.
     spectra: { name: string; wavelengths: number[]; do_values: number[] }[];
     target_L: number;
     target_a: number;
     target_b: number;
     volume_total?: number;
+    // Facteur de dilution par nom de cuve. La correction de Beer-Lambert est
+    // appliquée par le moteur, comme sur le chemin fichier.
+    dilution_factors?: Record<string, number>;
   }
 ): Promise<AssemblageResult> {
   const response = await api.post("/colorimetrie/assemblage-db", data);

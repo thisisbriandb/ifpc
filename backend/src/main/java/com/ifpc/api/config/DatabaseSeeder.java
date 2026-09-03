@@ -1,9 +1,7 @@
 package com.ifpc.api.config;
 
-import com.ifpc.api.models.ProductConfig;
 import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
-import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +19,6 @@ public class DatabaseSeeder {
     @Bean
     public CommandLineRunner seedDatabase(
             UserRepository userRepository,
-            ProductConfigRepository productConfigRepository,
             PasswordEncoder passwordEncoder,
             JdbcTemplate jdbcTemplate
     ) {
@@ -57,28 +54,6 @@ public class DatabaseSeeder {
                 System.out.println("===============================");
             }
 
-            // Trois types de produit, alignés sur le référentiel de pasto.py :
-            // doux/demi-sec et brut/extra-brut partagent leur microorganisme de
-            // référence et ne forment donc plus qu'une entrée.
-            // Les valeurs de VP cible sont celles déjà en service et restent
-            // modifiables depuis le panneau d'administration.
-            Map<String, Object[]> defaults = Map.of(
-                    "jus_pomme",  new Object[]{"Jus de pomme", 15.0},
-                    "cidre_doux", new Object[]{"Cidre doux et demi-sec", 10.0},
-                    "cidre_brut", new Object[]{"Cidre brut et extra-brut", 5.0}
-            );
-
-            for (var entry : defaults.entrySet()) {
-                if (productConfigRepository.findByProductType(entry.getKey()).isEmpty()) {
-                    ProductConfig config = ProductConfig.builder()
-                            .productType(entry.getKey())
-                            .productName((String) entry.getValue()[0])
-                            .vpCible((Double) entry.getValue()[1])
-                            .build();
-                    productConfigRepository.save(config);
-                    System.out.println("Config produit créée: " + entry.getKey() + " → VP cible = " + entry.getValue()[1]);
-                }
-            }
         };
     }
 

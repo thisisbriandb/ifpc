@@ -18,6 +18,11 @@
 -- Limite connue : `ddl-auto: update` n'enlève jamais rien et ne renomme rien.
 -- Une colonne retirée d'une entité subsiste en base sans que rien ne le
 -- signale. Passer à un outil de migration versionnée reste à décider.
+--
+-- Table orpheline : `product_config` a été retirée du modèle le 02/09/2026 (la
+-- VP cible dérive du référentiel et n'est plus réglable). Ses données restent
+-- en base, plus aucune application ne les lit. Elle peut être supprimée
+-- manuellement une fois l'historique de ses valeurs jugé sans intérêt.
 -- =============================================================================
 
 
@@ -185,22 +190,6 @@ CREATE TABLE audit_log (
 
 CREATE INDEX idx_audit_log_created ON audit_log(created_at);
 CREATE INDEX idx_audit_log_acteur ON audit_log(acteur_email);
-
-
--- ---------------------------------------------------------------------------
--- TABLE : product_config (VP cible par produit, réglable en administration)
--- ---------------------------------------------------------------------------
--- Attention : cette valeur pilote l'indicateur de risque et l'affichage, mais
--- pas le verdict de conformité, qui repose sur k >= 15 (cf.
--- referentiel-scientifique.md §3.1). Les deux règles coexistent — à unifier.
-
-CREATE TABLE product_config (
-    id              BIGSERIAL        PRIMARY KEY,
-    product_type    VARCHAR(255)     NOT NULL UNIQUE,
-    product_name    VARCHAR(255)     NOT NULL,
-    vp_cible        DOUBLE PRECISION NOT NULL,
-    updated_at      TIMESTAMP
-);
 
 
 -- ---------------------------------------------------------------------------

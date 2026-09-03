@@ -349,7 +349,6 @@ def evaluer_pasteurisation(
     locale: str = "fr",
     t_ref: Optional[float] = None,
     z: Optional[float] = None,
-    vp_cible: Optional[float] = None,
     microorganisme: Optional[str] = None,
     unite_temps: str = "minute",
     procede: Optional[str] = None,
@@ -410,18 +409,39 @@ def evaluer_pasteurisation(
     #
     # Un expert qui désigne une cible ou impose Tref/z reprend la main : c'est
     # alors son choix qui porte la VP, la courbe et le message.
-    choix_explicite = microorganisme is not None or t_ref is not None or z is not None
+    # Une chaîne vide vaut « aucune cible désignée » : le sélecteur la produit
+    # quand rien n'est choisi. La ramener à None ici évite qu'elle compte comme
+    # un choix d'expert et neutralise la règle du facteur limitant.
+    cible_demandee = normaliser_microorganisme(microorganisme) or None
+    choix_explicite = cible_demandee is not None or t_ref is not None or z is not None
     if evaluations_multimicro and not choix_explicite:
         micro_key = min(evaluations_multimicro, key=lambda e: e["k_calc"])["key"]
     else:
-        micro_key = normaliser_microorganisme(microorganisme) or produit["microorganisme_defaut"]
+        micro_key = cible_demandee or produit["microorganisme_defaut"]
+    # Une clé inconnue est refusée, comme l'est un produit inconnu. Le moteur
+    # retombait auparavant sur Tref = 60 °C et z = 7,0 — un z qui n'appartient
+    # à aucune souche du référentiel — et rendait malgré tout un verdict. Une
+    # analyse rouverte puis relancée passait par là et basculait de conforme à
+    # insuffisant sans le moindre message.
     micro = MICROORGANISMES.get(micro_key)
+    if micro is None:
+        raise ValueError(
+            f"Microorganisme inconnu : {micro_key}. "
+            f"Valeurs acceptées : {', '.join(sorted(MICROORGANISMES))}"
+        )
 
-    effective_t_ref = t_ref if t_ref is not None else (micro["t_ref"] if micro else 60.0)
-    effective_z = z if z is not None else (micro["z"] if micro else 7.0)
-    effective_vp_cible = vp_cible if vp_cible is not None else (
-        micro["vp_cible_min"] if micro else produit["vp_cible_min"]
-    )
+    effective_t_ref = t_ref if t_ref is not None else micro["t_ref"]
+    effective_z = z if z is not None else micro["z"]
+    # La cible est celle du microorganisme retenu — 15 × D_ref, cf. §3.1 du
+    # référentiel. Elle n'est pas un paramètre d'entrée : une cible fournie par
+    # l'appelant s'affichait à côté d'un verdict qui, lui, restait jugé sur
+    # k >= 15. Les deux se contredisaient dès qu'elles différaient.
+    effective_vp_cible = micro["vp_cible_min"]
+
+    # z intervient en dénominateur du taux létal : une valeur nulle ou négative
+    # n'a pas de sens physique et ferait échouer le calcul plus loin.
+    if effective_z <= 0:
+        raise ValueError(f"Le paramètre z doit être strictement positif (reçu : {effective_z}).")
 
     result_vp = calculer_vp_bigelow(temperatures, temps_calcul, effective_t_ref, effective_z)
     vp_obtenue = result_vp["vp"]
@@ -431,15 +451,14 @@ def evaluer_pasteurisation(
     # Le D est ramené au Tref effectivement retenu : hors mode expert la
     # transposition vaut 1 et ne change rien, mais elle rend k invariant par
     # changement de température de référence, ce qu'il doit être.
-    d_ref = micro.get("d_ref") if micro else None
-    d_effectif = (
-        transposer_d_ref(d_ref, micro["t_ref"], effective_t_ref, effective_z)
-        if micro else None
-    )
-    if d_effectif:
-        k_calc = round(vp_obtenue / d_effectif, 1)
-    else:
-        k_calc = round(vp_obtenue / (effective_vp_cible / 5.0), 1) if effective_vp_cible > 0 else 0.0
+    d_effectif = transposer_d_ref(micro["d_ref"], micro["t_ref"], effective_t_ref, effective_z)
+    if d_effectif is None:
+        raise ValueError(
+            "Impossible de ramener le temps de réduction décimale à la température "
+            f"de référence retenue ({effective_t_ref} °C, z = {effective_z}). "
+            "Aucun verdict n'est rendu sur des paramètres inexploitables."
+        )
+    k_calc = round(vp_obtenue / d_effectif, 1)
 
     statut = "conforme" if k_calc >= 15.0 else "insuffisant"
 
@@ -450,7 +469,7 @@ def evaluer_pasteurisation(
     # coexiste avec un enregistrement « conforme ».
     facteur_limitant = {
         "key": micro_key,
-        "nom": micro["nom"] if micro else micro_key,
+        "nom": micro["nom"],
         "k_calc": k_calc,
         "statut": statut,
     }
@@ -478,8 +497,8 @@ def evaluer_pasteurisation(
             # Le D affiché accompagne le Tref affiché : c'est le D transposé,
             # sans quoi la fiche annoncerait « Tref 72 °C ; D 1,1 min » alors
             # que ce D est mesuré à 60 °C.
-            "d_ref": arrondir_duree(d_effectif, 6) if d_effectif else d_ref,
-            "microorganisme": micro["nom"] if micro else micro_key,
+            "d_ref": arrondir_duree(d_effectif, 6),
+            "microorganisme": micro["nom"],
             "microorganisme_key": micro_key,
             "produit": localize_product_name(product_type, lang),
             "product_type": product_type,

@@ -3,12 +3,10 @@ package com.ifpc.api.controllers;
 import com.ifpc.api.models.AuditAction;
 import com.ifpc.api.models.AuditLog;
 import com.ifpc.api.models.HelpText;
-import com.ifpc.api.models.ProductConfig;
 import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.AuditLogRepository;
 import com.ifpc.api.repositories.HelpTextRepository;
-import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
 import com.ifpc.api.services.AuditService;
 import com.ifpc.api.services.EmailService;
@@ -28,7 +26,6 @@ import java.util.stream.Collectors;
 public class AdminController {
 
     private final UserRepository userRepository;
-    private final ProductConfigRepository productConfigRepository;
     private final HelpTextRepository helpTextRepository;
     private final EmailService emailService;
     private final AuditService auditService;
@@ -135,41 +132,6 @@ public class AdminController {
         return ResponseEntity.ok("Utilisateur " + user.getEmail() + " supprimé avec succès.");
     }
 
-    // ── Product config (admin CRUD) ──────────────────────────────────────
-
-    @GetMapping("/api/admin/product-config")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<ProductConfig>> getProductConfigs() {
-        return ResponseEntity.ok(productConfigRepository.findAll());
-    }
-
-    @PutMapping("/api/admin/product-config/{productType}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductConfig> upsertProductConfig(
-            @PathVariable String productType,
-            @RequestBody ProductConfigUpdateRequest request
-    ) {
-        ProductConfig config = productConfigRepository.findByProductType(productType)
-                .orElse(ProductConfig.builder()
-                        .productType(productType)
-                        .productName(request.productName() != null ? request.productName() : productType)
-                        .vpCible(request.vpCible())
-                        .build());
-        Double avant = config.getId() == null ? null : config.getVpCible();
-        config.setVpCible(request.vpCible());
-        if (request.productName() != null) {
-            config.setProductName(request.productName());
-        }
-        productConfigRepository.save(config);
-
-        // Un paramètre de sécurité sanitaire ne doit pas pouvoir changer sans
-        // laisser trace de sa valeur antérieure.
-        auditService.consigner(AuditAction.VP_CIBLE_MODIFIEE, "configuration produit", productType,
-                Map.of("avant", String.valueOf(avant), "apres", String.valueOf(request.vpCible())));
-
-        return ResponseEntity.ok(config);
-    }
-
     // ── Journal d'audit (lecture admin) ──────────────────────────────────
 
     /**
@@ -183,16 +145,6 @@ public class AdminController {
         return ResponseEntity.ok(cibleType == null || cibleType.isBlank()
                 ? auditLogRepository.findTop200ByOrderByCreatedAtDesc()
                 : auditLogRepository.findTop200ByCibleTypeOrderByCreatedAtDesc(cibleType));
-    }
-
-    // ── Public config endpoint (no auth required) ────────────────────────
-
-    @GetMapping("/api/config/products")
-    public ResponseEntity<List<ProductConfigDto>> getPublicProductConfig() {
-        List<ProductConfigDto> configs = productConfigRepository.findAll().stream()
-                .map(c -> new ProductConfigDto(c.getProductType(), c.getProductName(), c.getVpCible()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(configs);
     }
 
     // ── Help text (admin write, public read) ─────────────────────────────
@@ -232,8 +184,6 @@ public class AdminController {
 
     public record UserDto(Long id, String firstName, String lastName, String companyName, String companyRole, String email, String role, boolean enabled, LocalDateTime lastLogin) {}
     public record RoleUpdateRequest(String role) {}
-    public record ProductConfigUpdateRequest(Double vpCible, String productName) {}
-    public record ProductConfigDto(String productType, String productName, Double vpCible) {}
     public record HelpTextDto(String key, String content, String locale) {}
     public record HelpTextUpdateRequest(String content, String locale) {}
 }

@@ -41,7 +41,6 @@ class EvaluateRequest(BaseModel):
     microorganisme: Optional[str] = None
     t_ref: Optional[float] = None
     z: Optional[float] = None
-    vp_cible: Optional[float] = None
     # Obligatoire : une erreur d'unité fausse la VP d'un facteur 60, aucun
     # défaut implicite ne doit pouvoir s'appliquer en silence.
     unite_temps: str
@@ -66,6 +65,9 @@ class AssemblageDbRequest(BaseModel):
     target_a: float
     target_b: float
     volume_total: float = 1000.0
+    # Densité optique brute et facteur de dilution par cuve : la correction de
+    # Beer-Lambert est appliquée par le moteur, comme sur le chemin fichier.
+    dilution_factors: Optional[dict] = None
 
 
 class PasteDataRequest(BaseModel):
@@ -75,7 +77,6 @@ class PasteDataRequest(BaseModel):
     microorganisme: Optional[str] = None
     t_ref: Optional[float] = None
     z: Optional[float] = None
-    vp_cible: Optional[float] = None
     unite_temps: str
     procede: Optional[str] = None
     titre_alcool: Optional[float] = None
@@ -120,7 +121,6 @@ async def evaluer_pasteurisation(
             locale=request.locale,
             t_ref=request.t_ref,
             z=request.z,
-            vp_cible=request.vp_cible,
             microorganisme=request.microorganisme,
             unite_temps=request.unite_temps,
             procede=request.procede,
@@ -139,7 +139,6 @@ async def upload_file(
     microorganisme: Optional[str] = None,
     t_ref: Optional[float] = None,
     z: Optional[float] = None,
-    vp_cible: Optional[float] = None,
     unite_temps: str = Query(..., description="minute ou seconde — unité de la colonne temps"),
     procede: Optional[str] = None,
     titre_alcool: Optional[float] = None,
@@ -179,7 +178,6 @@ async def upload_file(
             locale=locale,
             t_ref=t_ref,
             z=z,
-            vp_cible=vp_cible,
             microorganisme=microorganisme,
             unite_temps=_unite_effective(unite_temps, unite_source),
             procede=procede,
@@ -225,7 +223,6 @@ async def paste_data(
             locale=request.locale,
             t_ref=request.t_ref,
             z=request.z,
-            vp_cible=request.vp_cible,
             microorganisme=request.microorganisme,
             unite_temps=_unite_effective(request.unite_temps, unite_source),
             procede=request.procede,
@@ -330,6 +327,7 @@ async def colorimetrie_assemblage_db(
             target_a=request.target_a,
             target_b=request.target_b,
             volume_total=request.volume_total,
+            dilution_factors=request.dilution_factors,
         )
         return result
     except ValueError as e:
