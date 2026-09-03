@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import jakarta.servlet.DispatcherType;
+
 import java.util.Arrays;
 
 @Configuration
@@ -33,6 +35,14 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // Spring Security 6 filtre aussi les répartitions internes vers
+                // /error. En session STATELESS le contexte d'authentification
+                // n'y existe plus : sans cette exception, toute erreur rendue
+                // par ce chemin ressort en 403 au corps vide, masquant le refus
+                // d'origine. ApiErrorHandler évite la répartition dans la
+                // plupart des cas ; ceci couvre le reste.
+                .authorizeHttpRequests(req -> req
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll())
                 .authorizeHttpRequests(req ->
                         // Seuls l'authentification, la configuration produit et le
                         // marqueur de déploiement sont publics. Toutes les données
