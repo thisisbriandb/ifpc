@@ -19,6 +19,13 @@
 -- Une colonne retirée d'une entité subsiste en base sans que rien ne le
 -- signale. Passer à un outil de migration versionnée reste à décider.
 --
+-- Ajout de colonne sur une table peuplée : PostgreSQL refuse une colonne
+-- NOT NULL sans DEFAULT si la table contient des lignes, et `ddl-auto: update`
+-- se contente de journaliser l'échec — l'application démarre alors avec une
+-- colonne manquante et toute requête qui la mentionne échoue. Les colonnes
+-- NOT NULL ajoutées après coup portent donc un DEFAULT explicite dans
+-- l'entité (`columnDefinition`).
+--
 -- Table orpheline : `product_config` a été retirée du modèle le 02/09/2026 (la
 -- VP cible dérive du référentiel et n'est plus réglable). Ses données restent
 -- en base, plus aucune application ne les lit. Elle peut être supprimée
