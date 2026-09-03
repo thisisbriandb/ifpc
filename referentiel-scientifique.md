@@ -130,11 +130,7 @@ Un utilisateur expert qui désigne une cible ou impose $T_{\text{ref}}$ / $z$ re
 
 ## 6. Points à confirmer
 
-Les valeurs de cette section sont en usage dans l'application et produisent des résultats aujourd'hui. Plusieurs ont été arrêtées en discussion sans être consignées : ce qui manque est la **trace écrite**, pas nécessairement le fondement.
-
-Cette section les rassemble pour qu'une confirmation puisse être donnée une fois, et qu'elle serve de référence ensuite. Aucune n'intervient dans le calcul de la valeur pasteurisatrice ni dans le critère de conformité — ceux-là reposent entièrement sur les §1 à §5.
-
-N'y figure que ce qui appelle une décision : les questions purement techniques relèvent du code, pas de ce document.
+Cette section est en attente de confirmation 
 
 ### 6.1. Seuils de faisabilité du barème
 
@@ -163,13 +159,8 @@ Ce statut est archivé avec l'analyse.
 
 *À confirmer : ces seuils conviennent-ils pour des jus et cidres, ou faut-il des bornes propres à la filière ?*
 
-### 6.3. Seuils d'alcool dans la désignation des cidres
 
-L'application décrit les produits comme « Cidre doux et demi-sec (**< 4 % vol.**) » et « Cidre brut et extra-brut (**> 4 % vol.**) ». Le tableau des micro-organismes nomme ces catégories sans mentionner de seuil.
-
-*À confirmer : le seuil de 4 % vol. est-il la bonne frontière entre les deux catégories, sachant qu'elles relèvent aussi d'une définition réglementaire ?*
-
-### 6.4. Choix normatifs du pipeline colorimétrique
+### 6.3. Choix normatifs du pipeline colorimétrique
 
 | Choix | Valeur retenue |
 | :--- | :--- |
@@ -183,23 +174,28 @@ La dernière ligne a un effet mesurable : un spectre relevé de 400 à 700 nm vo
 
 *À confirmer : ces conventions sont-elles celles employées par la R&D, et comment traiter un spectre plus étroit que le domaine CIE ?*
 
+### 6.4. Comportement du moteur en cas de paramètre inexploitable
+
+| Situation | Comportement actuel |
+| :--- | :--- |
+| Micro-organisme inconnu transmis au moteur | repli sur $T_{\text{ref}} = 60$ °C et $z = 7{,}0$, et le verdict est rendu |
+| $D_{\text{ref}}$ absent | $k$ calculé par $\text{VP} / (\text{VP}_{\text{cible}} / 5)$, là où le §3.1 pose un facteur 15 |
+
+Le $z = 7{,}0$ du premier cas n'appartient à aucune souche du §4.1, et le facteur 5 du second ne correspond pas à la règle du §3.1.
+
+*À confirmer : dans ces deux situations, l'application doit-elle rendre un avis sur des paramètres de repli, ou refuser de statuer ?*
+
+### 6.5. Statut « Vigilance »
+
+Un troisième niveau de verdict, entre « Conforme » et « Insuffisant », existe dans les traductions, dans les couleurs de l'historique et dans une fonction de diagnostic du moteur qui n'est pas appelée. Aucun seuil ne le définit, et le moteur ne le produit jamais.
+
+*À confirmer : une marge de sécurité limitée doit-elle donner lieu à un statut distinct ? Si oui, à partir de quel écart à la cible ?*
+
+### 6.6. Températures proposées par le barème
+
+Le barème propose les températures de consigne 60, 63, 65, 68, 70, 72, 75, 78, 80, 85, 90 et 95 °C. Cette liste n'influe que sur les points affichés, pas sur les calculs.
+
+*À confirmer : cette échelle couvre-t-elle les consignes réellement pratiquées ?*
+
 ---
 
-## 7. Historique des révisions
-
-| Date | Révision |
-| :--- | :--- |
-| 30/07/2026 | Référentiel micro-organismes et produits en vigueur (§4). |
-| 01/09/2026 | Regroupement des types produit : doux et demi-sec d'une part, brut et extra-brut d'autre part, partageant micro-organisme de référence et VP cible. Les anciens types restent acceptés en entrée. |
-| 01/09/2026 | L'unité de la colonne temps devient une déclaration explicite de l'opérateur, au lieu d'être déduite du procédé. |
-| 02/09/2026 | **Retrait de la majoration de 20 % appliquée à la VP cible des produits troubles.** La distinction trouble / limpide ne fait plus partie du référentiel : la VP cible d'un micro-organisme s'applique telle quelle, quel que soit l'état de clarification du produit. |
-| 02/09/2026 | Explicitation de la règle du facteur limitant (§5) et de la transposition du $D$ à la température de référence retenue (§3.2). |
-| 02/09/2026 | **Retrait de l'entrée `alicyclo_res`**, doublon d'`alicyclo_std` sans correspondance dans le tableau transmis par la R&D. La clé reste acceptée en entrée. |
-| 02/09/2026 | **Retrait de l'indicateur de risque composite** (score construit sur le rapport VP/cible, la teneur en sucres résiduels, le pH et le titre alcoométrique). Ses pondérations et ses seuils n'étaient consignés nulle part ; il n'était affiché dans aucun écran mais était archivé avec l'analyse. |
-| 02/09/2026 | **Retrait du pH** de l'ensemble de la chaîne : paramètre d'entrée, valeurs typiques par produit et alerte associée. Il n'alimentait que l'indicateur de risque et n'était saisissable dans aucun écran. |
-| 02/09/2026 | Recensement au §6 des points en usage dont la justification reste à consigner. |
-| 02/09/2026 | **Correction de dilution et longueur minimale de spectre unifiées** entre les deux entrées du module d'assemblage. La correction de Beer-Lambert est appliquée par le moteur dans les deux cas ; un spectre de moins de 10 points est refusé des deux côtés. |
-| 02/09/2026 | **La VP cible n'est plus un paramètre réglable.** Elle dérive du micro-organisme retenu ($15 \times D_{\text{ref}}$, §3.1). Une cible administrable existait dans le panneau d'administration : elle ne décidait pas du verdict — jugé sur $k \ge 15$ — mais s'affichait comme objectif de l'analyse, et les valeurs livrées par défaut (15 / 10 / 5 UP) ne correspondaient à aucune souche du §4.1. Le réglage a été retiré. |
-| 02/09/2026 | **Retrait du statut « Vigilance ».** Un troisième niveau de verdict figurait dans les traductions et les couleurs d'affichage sans qu'aucun seuil ne le définisse ; le moteur ne l'a jamais produit. Les verdicts sont « Conforme » et « Insuffisant ». |
-
-> Une analyse antérieure à une révision a été jugée selon les règles alors en vigueur. Ce tableau est le seul moyen de la réinterpréter correctement : il ne doit pas être élagué.
