@@ -1,12 +1,10 @@
 package com.ifpc.api.controllers;
 
 import com.ifpc.api.models.HelpText;
-import com.ifpc.api.models.ProductConfig;
 import com.ifpc.api.models.Role;
 import com.ifpc.api.models.User;
 import com.ifpc.api.repositories.AuditLogRepository;
 import com.ifpc.api.repositories.HelpTextRepository;
-import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
 import com.ifpc.api.services.AuditService;
 import com.ifpc.api.services.EmailService;
@@ -32,7 +30,6 @@ import static org.mockito.Mockito.*;
 class AdminControllerTest {
 
     @Mock private UserRepository userRepository;
-    @Mock private ProductConfigRepository productConfigRepository;
     @Mock private HelpTextRepository helpTextRepository;
     @Mock private EmailService emailService;
     @Mock private AuditService auditService;
@@ -168,15 +165,6 @@ class AdminControllerTest {
         verify(userRepository).delete(target);
     }
 
-    @Test
-    @DisplayName("upsertProductConfig creates new config if not existing")
-    void testUpsertProductConfigNew() {
-        when(productConfigRepository.findByProductType("new_type")).thenReturn(Optional.empty());
-
-        ResponseEntity<ProductConfig> response = adminController.upsertProductConfig("new_type", new AdminController.ProductConfigUpdateRequest(12.0, "New Product"));
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(productConfigRepository).save(any(ProductConfig.class));
-    }
 
     @Test
     @DisplayName("getHelpText returns fallback or unlocalized help text")

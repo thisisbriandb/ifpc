@@ -5,7 +5,6 @@ import com.ifpc.api.models.*;
 import com.ifpc.api.repositories.AnalysisHistoryRepository;
 import com.ifpc.api.repositories.AuditLogRepository;
 import com.ifpc.api.repositories.HelpTextRepository;
-import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
 import com.ifpc.api.security.JwtService;
 import com.ifpc.api.services.AuditService;
@@ -45,7 +44,6 @@ class TracabiliteOperationsTest {
     @Mock private AnalysisHistoryRepository historyRepository;
     @Mock private AuditLogRepository auditLogRepository;
     @Mock private UserRepository userRepository;
-    @Mock private ProductConfigRepository productConfigRepository;
     @Mock private HelpTextRepository helpTextRepository;
     @Mock private EmailService emailService;
     @Mock private JwtService jwtService;
@@ -156,7 +154,7 @@ class TracabiliteOperationsTest {
     class Administration {
 
         private AdminController controller() {
-            return new AdminController(userRepository, productConfigRepository, helpTextRepository,
+            return new AdminController(userRepository, helpTextRepository,
                     emailService, auditService, auditLogRepository);
         }
 
@@ -174,24 +172,6 @@ class TracabiliteOperationsTest {
             assertEquals("admin@ifpc.eu", entree.getActeurEmail());
             assertTrue(entree.getDetails().contains("USER"));
             assertTrue(entree.getDetails().contains("EXPERT"));
-        }
-
-        @Test
-        @DisplayName("une modification de VP cible consigne la valeur antérieure")
-        void laModificationDeVpCibleEstConsignee() {
-            ProductConfig config = ProductConfig.builder()
-                    .id(1L).productType("cidre_doux").productName("Cidre doux").vpCible(16.5).build();
-            when(productConfigRepository.findByProductType("cidre_doux")).thenReturn(Optional.of(config));
-
-            controller().upsertProductConfig("cidre_doux",
-                    new AdminController.ProductConfigUpdateRequest(30.0, null));
-
-            AuditLog entree = capturerJournal();
-            assertEquals(AuditAction.VP_CIBLE_MODIFIEE, entree.getAction());
-            assertEquals("configuration produit", entree.getCibleType());
-            assertEquals("cidre_doux", entree.getCibleId());
-            assertTrue(entree.getDetails().contains("16.5"), "la valeur d'avant doit rester lisible");
-            assertTrue(entree.getDetails().contains("30.0"));
         }
 
         @Test

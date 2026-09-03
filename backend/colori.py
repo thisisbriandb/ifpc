@@ -368,16 +368,27 @@ def find_best_blend(
 
 # ── API publique du module ──────────────────────────────────────────────────
 
+# Un spectre plus court que ce seuil, interpolé sur les 41 points de la grille
+# CIE, se réduit à quelques segments de droite : le Lab* qui en sort a l'air
+# d'une mesure sans en être une.
+MIN_POINTS_SPECTRE = 10
+
+
 def assembler_donnees(
     spectra: list,  # list of dicts: {"name": str, "wavelengths": list, "do": list}
     target_L: float,
     target_a: float,
     target_b: float,
     volume_total: float = 1000.0,
+    dilution_factors: Optional[dict[str, float]] = None,
 ) -> dict:
     """
     Similaire à assembler(), mais accepte des spectres déjà parsés.
-    Interpole chaque spectre sur la grille CIE pour pouvoir les assembler.
+
+    Applique les mêmes règles que la lecture de fichier : correction de
+    dilution et longueur minimale de spectre. Les deux entrées de l'API
+    doivent décrire la même physique — sans quoi un assemblage recalculé
+    depuis les spectres enregistrés ne redonne pas le résultat d'origine.
     """
     if not spectra:
         raise ValueError("Aucun spectre fourni.")
@@ -390,12 +401,26 @@ def assembler_donnees(
         names.append(spec["name"])
         wl_i = np.array(spec["wavelengths"], dtype=float)
         do_i = np.array(spec["do"], dtype=float)
-        
-        if len(wl_i) < 2:
-            raise ValueError(f"Spectre trop court pour {spec['name']}.")
-            
+
+        if len(wl_i) < MIN_POINTS_SPECTRE:
+            raise ValueError(
+                f"Spectre trop court pour {spec['name']} ({len(wl_i)} point(s)) : "
+                f"au moins {MIN_POINTS_SPECTRE} sont nécessaires."
+            )
+        if len(do_i) != len(wl_i):
+            raise ValueError(
+                f"Spectre incohérent pour {spec['name']} : "
+                f"{len(wl_i)} longueur(s) d'onde pour {len(do_i)} densité(s) optique(s)."
+            )
+
+        # Loi de Beer-Lambert : la DO d'un échantillon dilué se ramène à celle
+        # du produit par le facteur de dilution.
+        facteur = float((dilution_factors or {}).get(spec["name"], 1.0))
+        if facteur <= 0:
+            raise ValueError(f"Facteur de dilution invalide pour {spec['name']} : {facteur}.")
+
         # Interpolation sur la grille CIE
-        do_cie[:, i] = np.interp(CIE_WAVELENGTHS, wl_i, do_i, left=0.0, right=0.0)
+        do_cie[:, i] = np.interp(CIE_WAVELENGTHS, wl_i, do_i * facteur, left=0.0, right=0.0)
 
     # Lab* de chaque lot seul
     cuves_info = []
@@ -418,6 +443,7 @@ def assembler_donnees(
         "wavelengths": CIE_WAVELENGTHS.tolist(),
         "do_mix": do_mix_cie.tolist(),
         "do_cuves": [do_cie[:, i].tolist() for i in range(n_cuves)],
+        "dilution_factors": dilution_factors,
     }
 
     volume_total = max(0.0, float(volume_total))
@@ -479,8 +505,10 @@ def assembler(
     else:
         do_matrix = do_matrix * dilution_factor
 
-    if len(wl) < 10:
-        raise ValueError("Spectre trop court : au moins 10 points sont nécessaires.")
+    if len(wl) < MIN_POINTS_SPECTRE:
+        raise ValueError(
+            f"Spectre trop court : au moins {MIN_POINTS_SPECTRE} points sont nécessaires."
+        )
 
     do_cie = resample_to_cie(wl, do_matrix)
     n_cuves = do_cie.shape[1]

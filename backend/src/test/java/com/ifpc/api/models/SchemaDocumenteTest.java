@@ -135,7 +135,7 @@ class SchemaDocumenteTest {
         entites().forEach(e -> tables.add(nomDeTable(e)));
         assertEquals(
                 Set.of("users", "cuves", "lots", "stockages", "operations",
-                        "analysis_history", "audit_log", "product_config", "help_text"),
+                        "analysis_history", "audit_log", "help_text"),
                 tables,
                 "une entité a été ajoutée ou retirée : mettre à jour docs/schema.sql et ce test");
     }

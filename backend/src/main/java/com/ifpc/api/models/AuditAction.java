@@ -13,9 +13,6 @@ public enum AuditAction {
     /** Une analyse a été retirée de l'historique consultable. */
     ANALYSE_SUPPRIMEE,
 
-    /** La VP cible d'un produit a été modifiée depuis l'administration. */
-    VP_CIBLE_MODIFIEE,
-
     /** Le rôle d'un utilisateur a changé. */
     ROLE_MODIFIE,
 

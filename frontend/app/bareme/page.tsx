@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useAuthStore } from "@/lib/store";
 import HelpModal from "@/components/HelpModal";
-import { getProductConfig, getAnalysisById } from "@/lib/api";
+import { getAnalysisById } from "@/lib/api";
 import { formatHoldTime } from "@/lib/pasteurisation";
 import {
   MICROORGANISMES,
@@ -160,17 +160,7 @@ function BaremePageInner() {
 
   const [isConfigOpen, setIsConfigOpen] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
-  const [vpCibleConfig, setVpCibleConfig] = useState<Record<string, number>>({});
 
-  useEffect(() => {
-    getProductConfig()
-      .then((data: { productType: string; vpCible: number }[]) => {
-        const map: Record<string, number> = {};
-        data.forEach(c => { map[c.productType] = c.vpCible; });
-        setVpCibleConfig(map);
-      })
-      .catch(() => {});
-  }, []);
 
   // Fetch history entry if history query param is present
   useEffect(() => {
@@ -282,7 +272,7 @@ function BaremePageInner() {
       holdMin,
       holdSec: holdMin * 60,
     };
-  }, [productType, tConsigne, microKey, customTref, customZ, expertMode, vpCibleConfig, pasteType]);
+  }, [productType, tConsigne, microKey, customTref, customZ, expertMode, pasteType]);
 
   const handleReset = useCallback(() => {
     setProductType("jus_pomme");

@@ -260,20 +260,33 @@ function AssemblageContent() {
       let data;
       if (useDb) {
         const selected = dbLots.filter(l => selectedLotIds.includes(l.id!));
+        // La densité optique part brute, accompagnée de son facteur : la
+        // correction de Beer-Lambert est appliquée par le moteur, au même
+        // endroit que pour un fichier importé.
+        const facteursParCuve: Record<string, number> = {};
+        selected.forEach(l => {
+          facteursParCuve[l.identifiant] = parseDilutionFactor(
+            dbDilutionFactors[l.id!] || getStoredDilutionFactor(l)
+          );
+        });
         data = await assemblageCouleurDb({
           spectra: selected.map(l => {
             const spec = JSON.parse(l.spectrumJson!);
-            const dilutionFactor = parseDilutionFactor(dbDilutionFactors[l.id!] || getStoredDilutionFactor(l));
-            const baseDo = Array.isArray(spec.rawDo) ? spec.rawDo : spec.do;
             return {
               name: l.identifiant,
               wavelengths: spec.wavelengths,
-              do_values: baseDo.map((v: number) => v * dilutionFactor)
+              do_values: Array.isArray(spec.rawDo) ? spec.rawDo : spec.do,
             };
           }),
           target_L: target.L,
           target_a: target.a,
           target_b: target.b,
+          // Comme pour un fichier importé : 0 désactive la répartition en
+          // litres. Sans cette valeur, le chemin base de données héritait du
+          // défaut de 1000 L et affichait une répartition sur un volume que
+          // personne n'avait saisi.
+          volume_total: 0,
+          dilution_factors: facteursParCuve,
         });
       } else {
         const individualFactors: Record<string, number> = {};

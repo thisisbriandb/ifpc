@@ -1,8 +1,6 @@
 package com.ifpc.api.config;
 
-import com.ifpc.api.models.ProductConfig;
 import com.ifpc.api.models.User;
-import com.ifpc.api.repositories.ProductConfigRepository;
 import com.ifpc.api.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,22 +23,19 @@ import static org.mockito.Mockito.*;
 class DatabaseSeederTest {
 
     @Mock private UserRepository userRepository;
-    @Mock private ProductConfigRepository productConfigRepository;
     @Mock private PasswordEncoder passwordEncoder;
     @Mock private JdbcTemplate jdbcTemplate;
 
     @Test
-    @DisplayName("seedDatabase executes schema repair and seeds admin and product configs when empty")
+    @DisplayName("seedDatabase répare le schéma et crée le compte admin quand la base est vide")
     void testSeedDatabaseEmpty() throws Exception {
         DatabaseSeeder seeder = new DatabaseSeeder();
 
         when(userRepository.findByEmail("admin@ifpc.com")).thenReturn(Optional.empty());
         when(passwordEncoder.encode(anyString())).thenReturn("encodedAdmin");
-        when(productConfigRepository.findByProductType(anyString())).thenReturn(Optional.empty());
 
         CommandLineRunner runner = seeder.seedDatabase(
                 userRepository,
-                productConfigRepository,
                 passwordEncoder,
                 jdbcTemplate
         );
@@ -54,7 +49,6 @@ class DatabaseSeederTest {
         assertTrue(motDePasse.getValue().length() >= 24);
 
         verify(userRepository).save(any(User.class));
-        verify(productConfigRepository, atLeast(1)).save(any(ProductConfig.class));
         verify(jdbcTemplate, atLeastOnce()).execute(anyString());
     }
 
@@ -65,11 +59,9 @@ class DatabaseSeederTest {
 
         User existingAdmin = User.builder().email("admin@ifpc.com").build();
         when(userRepository.findByEmail("admin@ifpc.com")).thenReturn(Optional.of(existingAdmin));
-        when(productConfigRepository.findByProductType(anyString())).thenReturn(Optional.of(new ProductConfig()));
 
         CommandLineRunner runner = seeder.seedDatabase(
                 userRepository,
-                productConfigRepository,
                 passwordEncoder,
                 jdbcTemplate
         );
@@ -77,6 +69,5 @@ class DatabaseSeederTest {
         runner.run();
 
         verify(userRepository, never()).save(any(User.class));
-        verify(productConfigRepository, never()).save(any(ProductConfig.class));
     }
 }
