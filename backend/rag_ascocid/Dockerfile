@@ -29,12 +29,17 @@ COPY src/ ./src/
 RUN pip install --no-cache-dir ".[service]"
 
 COPY config/ ./config/
-COPY serve ./serve
+# `serve` sert le trafic ; `ingest` peuple le volume depuis le conteneur, et
+# `ask` permet de vérifier la recherche sans passer par le HTTP. Les deux
+# derniers ne coûtent rien : leurs dépendances sont déjà installées.
+COPY serve ingest ask ./
 
-# Le corpus et l'index sont montés ici (volume). Le répertoire existe même
-# vide : le service démarre en mode dégradé et le dit sur /api/ldc/sante
-# plutôt que de refuser de se lancer.
-VOLUME ["/data"]
+# Le corpus, l'index et le cache des poids vivent sous /data. Pas de directive
+# VOLUME : Railway la refuse (« use Railway Volumes ») et monte le sien sur ce
+# chemin. Le répertoire est créé quand même — sans volume monté, le service
+# démarre en mode dégradé et le dit sur /api/ldc/sante, plutôt que de refuser
+# de se lancer.
+RUN mkdir -p /data
 ENV ASCOCID_SQLITE=/data/ascocid.sqlite \
     ASCOCID_DATA=/data \
     LDC_HOST=::
