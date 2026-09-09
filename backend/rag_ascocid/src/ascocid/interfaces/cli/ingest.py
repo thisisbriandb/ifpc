@@ -15,6 +15,7 @@ from __future__ import annotations
 import concurrent.futures as cf
 import hashlib
 import json
+import os
 import pathlib
 import time
 
@@ -34,7 +35,9 @@ from ascocid.infrastructure.parsing.fiche import parser_fiche
 app = typer.Typer(add_completion=False, help=__doc__)
 console = Console()
 
-DONNEES = pathlib.Path("data")
+# Même racine que le service (interfaces/web/api.py) : en conteneur, les
+# données vivent sur le volume monté, pas dans le répertoire de travail.
+DONNEES = pathlib.Path(os.environ.get("ASCOCID_DATA", "data"))
 BLOBS = DONNEES / "blobs"
 MANIFESTE = DONNEES / "manifeste.json"
 BASE = DONNEES / "ascocid.sqlite"
@@ -57,7 +60,7 @@ def _lire(sha: str) -> str:
 @app.command()
 def collecte(
     env: str = typer.Option(".env"),
-    inventaire: str = typer.Option("data/probe/inventaire.json",
+    inventaire: str = typer.Option(str(DONNEES / "probe" / "inventaire.json"),
                                    help="Liste d'idoc à collecter (sortie de `probe inventaire`)."),
     ouvriers: int = typer.Option(3, help="Requêtes simultanées."),
     delai_ms: int = typer.Option(200),
@@ -230,7 +233,7 @@ def indexer(
     emb = EmbedderE5()
     console.print(f"encodage de {len(chunks)} chunks ({emb.identifiant_modele})…")
     vecteurs = emb.encoder([c.texte_indexe for c in chunks])
-    idx = IndexMemoire()
+    idx = IndexMemoire(DONNEES / "index")
     idx.construire([c.cle for c in chunks], vecteurs)
     console.print(f"[green]index vectoriel construit[/green] : {idx.taille} vecteurs "
                   f"× {emb.dimension} dimensions")

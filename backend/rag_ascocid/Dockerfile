@@ -32,7 +32,7 @@ COPY config/ ./config/
 # `serve` sert le trafic ; `ingest` peuple le volume depuis le conteneur, et
 # `ask` permet de vérifier la recherche sans passer par le HTTP. Les deux
 # derniers ne coûtent rien : leurs dépendances sont déjà installées.
-COPY serve ingest ask ./
+COPY serve ingest ask probe ./
 
 # Le corpus, l'index et le cache des poids vivent sous /data. Pas de directive
 # VOLUME : Railway la refuse (« use Railway Volumes ») et monte le sien sur ce
