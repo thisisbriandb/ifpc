@@ -95,22 +95,15 @@ export default function ProductSelector({
       <div>
         <label className={labelCls}>{t("productSelector.product")}</label>
         <select value={productType} onChange={(e) => {
-          const newProduct = e.target.value;
-          onProductChange(newProduct);
-          // Auto-select default microorganism for new product
-          const prod = produits.find(p => p.id === newProduct);
-          if (prod?.microorganisme_defaut) {
-            onMicroChange(prod.microorganisme_defaut);
-            const defaultMicro = micros.find(m => m.id === prod.microorganisme_defaut);
-            if (defaultMicro) {
-              onTRefChange?.(String(defaultMicro.t_ref));
-              onZChange?.(String(defaultMicro.z));
-            }
-          } else {
-            onMicroChange("");
-            onTRefChange?.("");
-            onZChange?.("");
-          }
+          onProductChange(e.target.value);
+          // Changer de produit remet à zéro les surcharges expertes plutôt que
+          // de les préremplir. Les préremplir revenait à envoyer trois
+          // paramètres avancés — microorganisme, Tref, z — pour un choix qui
+          // n'a rien d'avancé : un compte non expert se voyait refuser tout
+          // produit autre que celui présélectionné au chargement.
+          onMicroChange("");
+          onTRefChange?.("");
+          onZChange?.("");
         }} className={selectCls}>
           {produits.map((p) => (
             <option key={p.id} value={p.id}>{p.nom}</option>
@@ -161,6 +154,11 @@ export default function ProductSelector({
               }}
               className={selectCls}
             >
+              <option value="">
+                {currentProduct?.microorganisme_defaut
+                  ? `${t("productSelector.referenceOption")}`
+                  : "—"}
+              </option>
               {filteredMicros.map((m) => {
                 const isDefault = m.id === currentProduct?.microorganisme_defaut;
                 return (

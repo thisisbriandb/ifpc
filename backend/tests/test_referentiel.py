@@ -85,12 +85,9 @@ class TestLectureDuDocument:
     def test_la_majoration_trouble_ne_figure_plus_au_document(self):
         # Retirée du code, elle doit l'être du document : c'est la divergence
         # qui a motivé ce liage.
-        texte = REFERENTIEL.read_text(encoding="utf-8")
-        section_courante = texte.split("## 7. Historique")[0]
-        assert "trouble" not in section_courante.lower()
-        assert "+20" not in section_courante
-        # L'historique des révisions, lui, doit en garder la trace.
-        assert "trouble" in texte.lower()
+        texte = REFERENTIEL.read_text(encoding="utf-8").lower()
+        assert "trouble" not in texte
+        assert "+20" not in texte
 
 
 class TestMicroorganismes:

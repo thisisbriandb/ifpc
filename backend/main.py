@@ -113,7 +113,7 @@ async def evaluer_pasteurisation(
 ):
     """Évalue un cycle de pasteurisation à partir de données température/temps."""
     try:
-        verify_advanced_access(user, request.t_ref, request.z, request.microorganisme)
+        verify_advanced_access(user, request.t_ref, request.z, request.microorganisme, request.product_type)
         result = pasto.evaluer_pasteurisation(
             temperatures=request.temperatures,
             temps=request.temps,
@@ -146,7 +146,7 @@ async def upload_file(
 ):
     """Upload un fichier Excel (.xlsx) ou CSV et évalue la pasteurisation."""
     try:
-        verify_advanced_access(user, t_ref, z, microorganisme)
+        verify_advanced_access(user, t_ref, z, microorganisme, product_type)
         content = await file.read()
         filename = file.filename or ""
 
@@ -204,7 +204,7 @@ async def paste_data(
 ):
     """Évalue à partir de données collées (copier-coller depuis tableur)."""
     try:
-        verify_advanced_access(user, request.t_ref, request.z, request.microorganisme)
+        verify_advanced_access(user, request.t_ref, request.z, request.microorganisme, request.product_type)
         logger.info("=== /coller reçu ===")
         logger.info(f"product_type={request.product_type}, t_ref={request.t_ref}, z={request.z}")
         logger.info(f"raw_text ({len(request.raw_text)} chars), premières lignes:")
