@@ -140,26 +140,43 @@ function buildTemperatureScale(data: Array<Record<string, number>>, tRef: number
   return { domain: [min, max] as [number, number], ticks };
 }
 
+/**
+ * Pas de graduation « naturel » : 1, 2 ou 5 fois une puissance de dix.
+ *
+ * Le pas de l'axe des temps était fixe par paliers, et valait 1 pour toute
+ * amplitude inferieure a 25 : un releve de 20 minutes affichait 21
+ * graduations, illisibles sur un ecran etroit. Un pas derive de l'amplitude
+ * en donne toujours six ou sept, quelle que soit l'echelle.
+ */
+function pasNaturel(brut: number) {
+  if (!Number.isFinite(brut) || brut <= 0) return 1;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(brut)));
+  const normalise = brut / magnitude;
+  const facteur = normalise <= 1 ? 1 : normalise <= 2 ? 2 : normalise <= 5 ? 5 : 10;
+  return facteur * magnitude;
+}
+
+/** Arrondit a la precision du pas, pour eviter les 0.30000000000000004. */
+function arrondirAuPas(valeur: number, pas: number) {
+  const decimales = Math.max(0, -Math.floor(Math.log10(pas)));
+  return Number(valeur.toFixed(Math.min(decimales, 6)));
+}
+
+const GRADUATIONS_VISEES = 6;
+
 function buildTimeScale(data: Array<Record<string, number>>) {
   const values = data.map((d) => d.temps);
   const rawMin = values.length ? Math.min(...values) : 0;
   const rawMax = values.length ? Math.max(...values) : 0;
-  const min = Math.floor(rawMin);
-  const max = Math.ceil(rawMax);
-  const range = max - min;
 
-  let step = 1;
-  if (range > 180) step = 30;
-  else if (range > 90) step = 15;
-  else if (range > 45) step = 10;
-  else if (range > 25) step = 5;
+  const step = pasNaturel((rawMax - rawMin) / GRADUATIONS_VISEES);
+  const min = arrondirAuPas(Math.floor(rawMin / step) * step, step);
+  const max = arrondirAuPas(Math.ceil(rawMax / step) * step, step);
 
   const ticks: number[] = [];
-  for (let tick = min; tick <= max; tick += step) {
-    ticks.push(tick);
+  for (let i = 0; min + i * step <= max + step / 2; i++) {
+    ticks.push(arrondirAuPas(min + i * step, step));
   }
-
-  if (!ticks.includes(max)) ticks.push(max);
 
   return { domain: [min, max] as [number, number], ticks };
 }
@@ -176,16 +193,7 @@ function buildVpScale(data: Array<Record<string, number>>, evaluations?: Evaluat
   });
 
   const rawMax = Math.max(0, values.length ? Math.max(...values) : 0);
-  const targetTickCount = 6;
-  const roughStep = rawMax / targetTickCount || 1;
-  const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
-  const normalized = roughStep / magnitude;
-  const niceStep =
-    normalized <= 1 ? 1 :
-    normalized <= 2 ? 2 :
-    normalized <= 5 ? 5 :
-    10;
-  const step = niceStep * magnitude;
+  const step = pasNaturel(rawMax / GRADUATIONS_VISEES);
   const max = Math.max(step, Math.ceil(rawMax / step) * step);
   const ticks: number[] = [];
   for (let tick = 0; tick <= max; tick += step) {
@@ -289,8 +297,8 @@ export default function TemperatureChart({ courbe, evaluations, tRef, vpCible, p
               tick={{ fontSize: 9, fill: "#9ca3af", fontFamily: "monospace" }}
               axisLine={false}
               tickLine={{ stroke: "#d1d5db" }}
-              interval={0}
-              minTickGap={0}
+              interval="preserveStartEnd"
+              minTickGap={16}
               tickFormatter={(v) => `${v}`}
               label={{ value: `Durée (${timeUnit})`, position: "insideBottom", offset: -8, style: { fontSize: 9, fill: "#9ca3af", fontWeight: "bold" } }}
             />
