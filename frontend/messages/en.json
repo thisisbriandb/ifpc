@@ -31,7 +31,8 @@
     "login": "Sign In",
     "loginTitle": "Sign In",
     "historique": "History",
-    "corbeille": "Recycle Bin"
+    "corbeille": "Recycle Bin",
+    "assistant": "AsCoCid Assistant"
   },
   "login": {
     "welcomeBack": "Welcome back",

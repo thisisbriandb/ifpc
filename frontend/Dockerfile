@@ -13,8 +13,13 @@ COPY . .
 # au moment du build : les URLs des backends sont donc des ARG, pas des ENV runtime.
 ARG SPRING_URL=http://localhost:8080
 ARG FASTAPI_URL=http://localhost:8000
+# Assistant AsCoCid. Le défaut ne vaut que pour un build local : dans un
+# conteneur, « localhost » désigne le conteneur lui-même et la page d'assistant
+# affichera « service injoignable ». À renseigner au build comme les deux autres.
+ARG LDC_URL=http://localhost:8100
 ENV SPRING_URL=$SPRING_URL
 ENV FASTAPI_URL=$FASTAPI_URL
+ENV LDC_URL=$LDC_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 

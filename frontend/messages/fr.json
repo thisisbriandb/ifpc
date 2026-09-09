@@ -31,7 +31,8 @@
     "login": "Se connecter",
     "loginTitle": "Connexion",
     "historique": "Historique",
-    "corbeille": "Corbeille"
+    "corbeille": "Corbeille",
+    "assistant": "Assistant AsCoCid"
   },
   "login": {
     "welcomeBack": "Bienvenue",

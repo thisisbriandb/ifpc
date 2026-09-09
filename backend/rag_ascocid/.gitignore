@@ -1,0 +1,26 @@
+# Secrets — jamais versionnés
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+storage_state.json
+cookies.txt
+
+# Données collectées (peuvent contenir des documents internes)
+data/
+blobs/
+runs/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/

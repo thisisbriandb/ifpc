@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   FlaskConical, BarChart3, Home, LogOut, Shield, User,
-  ChevronRight, Thermometer, Palette, Container, Clock, Menu, X
+  ChevronRight, Thermometer, Palette, Container, Clock, Menu, X, BookOpen
 } from "lucide-react";
 import { useAuthStore } from "@/lib/store";
 import { useSidebar } from "@/lib/sidebar-context";
@@ -135,6 +135,23 @@ export default function Sidebar() {
             >
               <Home className="w-[18px] h-[18px] shrink-0" />
               {(!collapsed || mobileOpen) && <span>{t("nav.home")}</span>}
+            </Link>
+          </div>
+
+          {/* Assistant du Livre de Connaissances */}
+          <div className="px-2 mb-1">
+            <Link
+              href="/assistant"
+              onClick={closeMobile}
+              title={collapsed ? t("nav.assistant") : undefined}
+              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${collapsed && !mobileOpen ? "justify-center" : ""
+                } ${pathname === "/assistant"
+                  ? "text-brand-primary font-semibold bg-brand-primary/5"
+                  : "text-gray-400 hover:text-gray-700 hover:bg-gray-50"
+                }`}
+            >
+              <BookOpen className="w-[18px] h-[18px] shrink-0" />
+              {(!collapsed || mobileOpen) && <span>{t("nav.assistant")}</span>}
             </Link>
           </div>
 

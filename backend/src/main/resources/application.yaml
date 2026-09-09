@@ -15,6 +15,13 @@ spring:
 
 server:
   port: ${PORT:8080}
+  # Les 8 Ko par défaut de Tomcat suffisent à une API, pas à un navigateur :
+  # sur un poste de développement, tous les services d'un même hôte partagent
+  # le domaine « localhost » et leurs cookies s'additionnent. Au-delà de la
+  # limite, Tomcat refuse la requête AVANT tout traitement applicatif : la page
+  # de connexion recevait un 400 sans corps JSON, donc « Une erreur est
+  # survenue » — alors que le mot de passe n'avait même pas été lu.
+  max-http-request-header-size: 32KB
 
 # La clé de signature vient exclusivement de l'environnement : aucune valeur
 # par défaut ne doit vivre dans le dépôt (cf. JwtService.verifierSecret).

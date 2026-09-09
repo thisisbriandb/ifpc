@@ -1,0 +1,22 @@
+# Déploiement Railway du service de réponse AsCoCid.
+#
+# Le reste se règle dans le tableau de bord : la variable GEMINI_API_KEY, la
+# variable JWT_SECRET (la MÊME que le Core API), et un volume monté sur /data
+# qui porte le corpus, l'index et le cache des poids du modèle.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# Le démarrage charge l'index et les poids du modèle : ~15 s à froid, et
+# plusieurs minutes au tout premier démarrage d'un volume neuf, le temps de
+# télécharger le modèle d'embeddings. Une sonde impatiente redémarrerait le
+# service en boucle sans jamais le laisser finir.
+healthcheckPath = "/api/ldc/sante"
+healthcheckTimeout = 600
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+# Un seul exemplaire : chacun charge ~1,2 Go de poids en mémoire, et la base
+# SQLite du volume n'est pas faite pour être écrite depuis deux conteneurs.
+numReplicas = 1
