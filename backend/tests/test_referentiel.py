@@ -174,3 +174,28 @@ class TestCiblesEvaluees:
     def test_toute_cible_associee_existe_au_referentiel(self, produit):
         for associe in pasto.PRODUITS[produit]["microorganismes_associes"]:
             assert associe["key"] in MICRO_DOCUMENTES
+
+
+class TestLibellesDesProcedes:
+    """Les procédés portent le vocabulaire de la filière.
+
+    « Pasteurisation en batch » a remplacé « pasteurisation classique » à la
+    demande de la R&D. La clé technique `classique`, elle, ne bouge pas : des
+    analyses enregistrées la portent, et les relire correctement en dépend.
+    """
+
+    def test_la_cle_technique_est_preservee(self):
+        assert "classique" in pasto.PROCEDES
+
+    @pytest.mark.parametrize("locale, attendu", [("fr", "batch"), ("en", "Batch")])
+    def test_le_libelle_dit_batch(self, locale, attendu):
+        assert attendu in pasto.localize_procede_name("classique", locale)
+
+    @pytest.mark.parametrize("locale", ["fr", "en"])
+    def test_le_libelle_ne_dit_plus_classique(self, locale):
+        libelle = pasto.localize_procede_name("classique", locale).lower()
+        assert "classique" not in libelle
+        assert "conventional" not in libelle
+
+    def test_les_trois_procedes_restent_disponibles(self):
+        assert set(pasto.PROCEDES) == {"flash", "classique", "tunnel"}

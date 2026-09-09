@@ -317,7 +317,7 @@ function BaremePageInner() {
       temp: String(computed.tC),
       time: formatHold(computed),
       product: productLabel(productType),
-      process: pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel",
+      process: pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation en batch" : "Pasteurisation tunnel",
       micro: microName,
     };
     if (computed.isMulti) {
@@ -410,7 +410,7 @@ function BaremePageInner() {
                   <label className={labelCls}>{t("productSelector.process")}</label>
                   <select value={pasteType} onChange={e => setPasteType(e.target.value as "flash" | "classique" | "tunnel")} className={selectCls}>
                     <option value="flash">Flash-pasteurisation</option>
-                    <option value="classique">Pasteurisation classique</option>
+                    <option value="classique">Pasteurisation en batch</option>
                     <option value="tunnel">Pasteurisation tunnel</option>
                   </select>
                 </section>
@@ -549,7 +549,7 @@ function BaremePageInner() {
                       {evalList.map((item) => {
                         const vcfgItem = VERDICT_CONFIG[item.verdict];
                         const timeStr = formatHold(item);
-                        const procName = pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation classique" : "Pasteurisation tunnel";
+                        const procName = pasteType === "flash" ? "Flash-pasteurisation" : pasteType === "classique" ? "Pasteurisation en batch" : "Pasteurisation tunnel";
                         
                         const cardMessage = item.verdict === "ok"
                           ? `À ${computed.tC}°C, le temps de maintien nécessaire (${timeStr}) est parfaitement réalisable en ${procName}.`

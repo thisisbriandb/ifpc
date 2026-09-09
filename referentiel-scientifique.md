@@ -139,7 +139,7 @@ L'aide au choix du barème qualifie chaque temps de maintien de « réalisable �
 | Procédé | Réalisable | Exigeant | Au-delà |
 | :--- | ---: | ---: | :--- |
 | Flash-pasteurisation | ≤ 0,5 min | ≤ 2 min | changement de matériel |
-| Pasteurisation classique et tunnel | ≤ 30 min | ≤ 120 min | changement de matériel |
+| Pasteurisation en batch et tunnel | ≤ 30 min | ≤ 120 min | changement de matériel |
 
 Une alerte s'affiche par ailleurs au-delà de **1 min de maintien en flash-pasteurisation**.
 
