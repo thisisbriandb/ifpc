@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -75,5 +76,32 @@ class ApiErrorHandlerTest {
         assertNotNull(reponse.getBody());
         assertEquals("Une erreur interne est survenue.", reponse.getBody().get("message"));
         assertFalse(reponse.getBody().toString().contains("hunter2"));
+    }
+
+    @Test
+    @DisplayName("un mot de passe faux vaut 401, pas 500")
+    void unMotDePasseFauxVaut401() {
+        // Le catch-all rendait « Une erreur interne est survenue » : la page de
+        // connexion ne pouvait pas dire à l'utilisateur ce qui n'allait pas.
+        ResponseEntity<Map<String, Object>> reponse = handler.echecAuthentification(
+                new BadCredentialsException("Bad credentials"));
+
+        assertEquals(401, reponse.getStatusCode().value());
+        assertNotNull(reponse.getBody());
+        assertEquals(401, reponse.getBody().get("status"));
+        assertEquals("Identifiants invalides.", reponse.getBody().get("message"));
+    }
+
+    @Test
+    @DisplayName("le motif d'échec n'apprend rien sur l'existence du compte")
+    void leMotifNEnumerePasLesComptes() {
+        // Deux causes distinctes, un seul motif rendu : sinon la page de
+        // connexion devient un annuaire des adresses ayant un compte.
+        String motDePasseFaux = handler.echecAuthentification(
+                new BadCredentialsException("Bad credentials")).getBody().get("message").toString();
+        String compteInconnu = handler.echecAuthentification(
+                new BadCredentialsException("Identifiants invalides")).getBody().get("message").toString();
+
+        assertEquals(motDePasseFaux, compteInconnu);
     }
 }

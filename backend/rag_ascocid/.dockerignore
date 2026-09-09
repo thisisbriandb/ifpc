@@ -1,0 +1,13 @@
+# Le corpus (341 Mo) et l'environnement local n'ont rien à faire dans l'image :
+# les données vivent sur un volume Railway, montées à l'exécution.
+data/
+.venv/
+.env
+eval/
+docs/
+apercu
+__pycache__/
+**/__pycache__/
+*.pyc
+.git
+.gitignore

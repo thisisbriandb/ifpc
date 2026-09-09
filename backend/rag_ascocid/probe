@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Lanceur de la sonde AscoCID — ne nécessite aucune installation.
+cd "$(dirname "$0")" && PYTHONPATH=src exec python3 -m ascocid.interfaces.cli.probe "$@"

@@ -18,6 +18,37 @@ Module de calcul de la Valeur Pasteur cumulée (VP) à partir de relevés de tem
 ### Colorimétrie *(en développement)*
 Module de mesure et d'analyse des caractéristiques colorimétriques des productions. Permet la mesure objective des références colorées et l'analyse comparative des lots pour le suivi qualité et le contrôle de production.
 
+### Assistant du Livre de Connaissances *(nouveau)*
+Chatbot adossé au Livre de Connaissances cidricoles **AsCoCid** (415 fiches, IFPC / INRAE) :
+question en langage courant, réponse rédigée **avec ses sources** et le schéma
+concerné, étape mise en évidence. Écran `/assistant`.
+
+Le moteur vit dans [`backend/rag_ascocid/`](backend/rag_ascocid/) — recherche hybride
+(FTS5 + embeddings locaux), rédaction par modèle, contrôle de traçabilité avant
+affichage. Une question dont la réponse dépend des données de l'utilisateur (« quel
+barème pour mon lot ? ») n'est pas devinée : l'assistant renvoie vers l'outil de la
+plateforme qui la traite.
+
+```bash
+# 1. le service de réponse (charge l'index et le modèle d'embeddings : ~10 s)
+cd backend/rag_ascocid && ./serve          # écoute sur :8100
+
+# 2. le front le voit à travers son proxy — rien à configurer en local
+cd frontend && npm run dev                 # /api/ldc/* → LDC_URL (défaut :8100)
+```
+
+Sans `GEMINI_API_KEY` dans `backend/rag_ascocid/.env`, le service démarre et sert la
+recherche, mais `/api/ldc/ask` répond 503 : la page l'affiche au lieu de proposer un
+chat inerte. Détail des routes : [`docs/07-api-ui.md`](backend/rag_ascocid/docs/07-api-ui.md).
+
+**En production (Railway)** : service séparé, répertoire racine
+`backend/rag_ascocid`, `Dockerfile` + `railway.toml` fournis. Trois points qui ne
+s'improvisent pas — le corpus (341 Mo) vit sur un **volume monté sur `/data`** et non
+dans l'image, le réseau privé de Railway impose une écoute en IPv6 (`LDC_HOST=::`,
+déjà dans l'image), et `LDC_URL` doit être fournie **au build** du front, les rewrites
+Next étant figées à la construction. Procédure complète :
+[`docs/07-api-ui.md` §0](backend/rag_ascocid/docs/07-api-ui.md).
+
 ---
 
 ## Déploiement local
@@ -115,6 +146,9 @@ async rewrites() {
 - **Backend** : FastAPI + SQLAlchemy + Pydantic
 - **Base de données** : PostgreSQL
 - **Authentification** : JWT
+- **Assistant AsCoCid** : service Python séparé (`backend/rag_ascocid`, port 8100) —
+  SQLite + FTS5, embeddings locaux, SSE. Séparé parce qu'il embarque un modèle
+  d'embeddings et un index en mémoire dont le moteur de calcul n'a aucun besoin.
 
 ---
 

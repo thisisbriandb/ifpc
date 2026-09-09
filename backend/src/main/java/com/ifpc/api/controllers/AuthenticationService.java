@@ -7,6 +7,7 @@ import com.ifpc.api.security.JwtService;
 import com.ifpc.api.services.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,8 +47,11 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        // Même exception que pour un mot de passe faux : le client reçoit le
+        // même 401 et le même motif, sans quoi la page de connexion permettrait
+        // de savoir quelles adresses ont un compte.
         var user = repository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+                .orElseThrow(() -> new BadCredentialsException("Identifiants invalides"));
 
         if (user.getRole() == Role.PENDING || !user.isEnabled()) {
             return AuthenticationResponse.builder()

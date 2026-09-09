@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
@@ -51,6 +52,29 @@ public class ApiErrorHandler {
                 : "Une erreur interne est survenue.");
 
         return ResponseEntity.status(statut).body(corps);
+    }
+
+    /**
+     * Mot de passe faux, compte inconnu : un refus attendu, pas un incident.
+     *
+     * <p>Sans ce cas particulier, le catch-all ci-dessous rendait un 500
+     * « Une erreur interne est survenue » : l'utilisateur n'apprenait jamais
+     * que ses identifiants étaient en cause, et le journal serveur enregistrait
+     * une faute de frappe comme une erreur d'exploitation.</p>
+     *
+     * <p>Le motif est le même pour un mot de passe faux et pour un compte
+     * inexistant : distinguer les deux permettrait d'énumérer les comptes.</p>
+     */
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> echecAuthentification(AuthenticationException e) {
+        log.info("Authentification refusée : {}", e.getMessage());
+
+        Map<String, Object> corps = new LinkedHashMap<>();
+        corps.put("timestamp", Instant.now().toString());
+        corps.put("status", HttpStatus.UNAUTHORIZED.value());
+        corps.put("message", "Identifiants invalides.");
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(corps);
     }
 
     @ExceptionHandler(Exception.class)

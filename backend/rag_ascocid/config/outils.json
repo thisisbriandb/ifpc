@@ -1,0 +1,63 @@
+{
+  "_lecture": "Registre des outils d'aide à la décision de la plateforme IFPC. Le chatbot n'explique pas leur utilisation : il y renvoie. À compléter par l'équipe IFPC. « sujets » : préférer des RADICAUX (pasteuris) aux mots entiers, pour couvrir les déclinaisons — pasteuriser, pasteurisation, pasteurisateur. L'ordre compte : le premier outil dont un sujet apparaît dans la question l'emporte, donc les sujets les plus spécifiques d'abord.",
+  "outils": [
+    {
+      "id": "valeur_pasteurisatrice",
+      "nom": "Calcul de la valeur pasteurisatrice",
+      "url": "/controle",
+      "objet": "Calculer la VP d'un traitement à partir d'un relevé temps/température et vérifier sa conformité.",
+      "declencheurs_action": [
+        "calculer",
+        "mon relevé",
+        "ma courbe",
+        "mon traitement",
+        "est-ce suffisant",
+        "conforme"
+      ],
+      "sujets": [
+        "valeur pasteurisatrice",
+        " vp ",
+        "vp de",
+        "courbe de temperature",
+        "courbe de température"
+      ]
+    },
+    {
+      "id": "pasteurisation",
+      "nom": "Aide au choix du barème",
+      "url": "/bareme",
+      "objet": "Proposer un barème temps/température pour un produit et un micro-organisme cible donnés.",
+      "declencheurs_action": [
+        "calculer",
+        "mon barème",
+        "combien de temps",
+        "quelle température pour mon",
+        "dimensionner"
+      ],
+      "sujets": [
+        "pasteuris",
+        "bareme",
+        "barème"
+      ]
+    },
+    {
+      "id": "colorimetrie",
+      "nom": "Colorimétrie et assemblage",
+      "url": "/colorimetrie/assemblage",
+      "objet": "Mesurer et interpréter la couleur d'un moût ou d'un cidre, et simuler un assemblage.",
+      "declencheurs_action": [
+        "mesurer",
+        "ma couleur",
+        "mon échantillon",
+        "interpréter mon",
+        "assembler"
+      ],
+      "sujets": [
+        "colorim",
+        "couleur",
+        "indice de couleur",
+        "absorbance"
+      ]
+    }
+  ]
+}

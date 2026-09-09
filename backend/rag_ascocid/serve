@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# API HTTP du chatbot AsCoCid (spec 07 §2).
+#
+#   ./serve              écoute sur :8100
+#   ./serve --port 9000  autre port
+#
+# En conteneur, deux variables suffisent à tout régler :
+#   PORT      injecté par l'hébergeur (Railway) — prioritaire sur le défaut
+#   LDC_HOST  interface d'écoute ; « :: » est requis par le réseau privé de
+#             Railway, qui est en IPv6 uniquement. Un service qui n'écoute
+#             qu'en 0.0.0.0 y est injoignable depuis les autres services.
+cd "$(dirname "$0")"
+PY=.venv/bin/python; [ -x "$PY" ] || PY=python3
+PORT="${PORT:-8100}"
+if [ "$1" = "--port" ]; then PORT="$2"; shift 2; fi
+PYTHONPATH=src exec "$PY" -m uvicorn ascocid.interfaces.web.api:app \
+  --host "${LDC_HOST:-127.0.0.1}" --port "$PORT" "$@"

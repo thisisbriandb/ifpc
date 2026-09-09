@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const SPRING_URL = process.env.SPRING_URL || 'http://localhost:8080';
 const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
+// Chatbot du Livre de Connaissances (backend/rag_ascocid) : service séparé,
+// parce qu'il embarque un modèle d'embeddings et un index en mémoire dont le
+// moteur de calcul n'a aucun besoin.
+const LDC_URL = process.env.LDC_URL || 'http://localhost:8100';
 
 const nextConfig = {
   // Sortie autonome : embarque un serveur Node minimal + les seules dépendances
@@ -64,6 +68,10 @@ const nextConfig = {
       {
         source: '/api/operations/:path*',
         destination: `${SPRING_URL}/api/operations/:path*`,
+      },
+      {
+        source: '/api/ldc/:path*',
+        destination: `${LDC_URL}/api/ldc/:path*`,
       },
       {
         source: '/api/referentiels/:path*',

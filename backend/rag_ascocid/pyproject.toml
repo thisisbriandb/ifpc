@@ -1,0 +1,51 @@
+[project]
+name = "ascocid"
+version = "0.1.0"
+description = "RAG sur le livre de connaissances AscoCID"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "typer>=0.12",
+    "rich>=13",
+    "lxml>=5",
+    "python-dotenv>=1",
+    "pydantic>=2.7",
+]
+
+[project.optional-dependencies]
+# Ajoutées au fil des jalons (spec 09) — la sonde de Phase 0 n'en a pas besoin.
+ingestion = ["docling", "pymupdf", "pillow", "pyarrow"]
+index = ["qdrant-client", "FlagEmbedding", "sentence-transformers"]
+llm = ["anthropic"]
+api = ["fastapi", "uvicorn[standard]", "sse-starlette"]
+# Ce que le service HTTP charge réellement — c'est la liste que suit l'image
+# Docker. Ni sse-starlette (le flux SSE est écrit à la main, une dépendance de
+# moins sur le chemin critique) ni anthropic (l'adaptateur écrit est Gemini).
+service = [
+    "fastapi",
+    "uvicorn[standard]",
+    "pyjwt",
+    "sentence-transformers",
+    "numpy",
+    "google-genai",
+]
+dev = ["pytest", "ruff", "mypy", "import-linter"]
+
+[project.scripts]
+ascocid-probe = "ascocid.interfaces.cli.probe:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ascocid"]
+
+[tool.ruff]
+line-length = 95
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src/ascocid/domain", "src/ascocid/config.py"]

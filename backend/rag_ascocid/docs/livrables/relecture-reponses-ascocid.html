@@ -1,0 +1,1009 @@
+<title>Relecture des réponses AsCoCid</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Source+Sans+3:ital,wght@0,400;0,600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root{
+    --ground:#F6F7F3; --surface:#FFFFFF; --surface-sunk:#EFF1EA;
+    --ink:#1A1F1A; --ink-soft:#454C44; --ink-mute:#6A7268;
+    --rule:#DCE0D5; --rule-firm:#C3C9BA;
+    --accent:#2F6B4A; --accent-wash:#E7F0E9;
+    --amber:#8F6410; --amber-wash:#F5EEDD;
+    --rust:#94382A; --rust-wash:#F6E7E3;
+    --bleu:#2B5573; --bleu-wash:#E5EDF3;
+    --shadow:0 1px 2px rgba(26,31,26,.05),0 8px 24px -18px rgba(26,31,26,.3);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --ground:#131612; --surface:#1B1F19; --surface-sunk:#22271F;
+    --ink:#E9ECE4; --ink-soft:#C0C7BA; --ink-mute:#8F978A;
+    --rule:#2C3229; --rule-firm:#3D453A;
+    --accent:#82C29B; --accent-wash:#1E2C23;
+    --amber:#D6A951; --amber-wash:#2C2618;
+    --rust:#E29580; --rust-wash:#2E1F1B;
+    --bleu:#8FB6D1; --bleu-wash:#1B2730;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -18px rgba(0,0,0,.8);
+  }}
+  :root[data-theme="dark"]{
+    --ground:#131612; --surface:#1B1F19; --surface-sunk:#22271F;
+    --ink:#E9ECE4; --ink-soft:#C0C7BA; --ink-mute:#8F978A;
+    --rule:#2C3229; --rule-firm:#3D453A;
+    --accent:#82C29B; --accent-wash:#1E2C23;
+    --amber:#D6A951; --amber-wash:#2C2618;
+    --rust:#E29580; --rust-wash:#2E1F1B;
+    --bleu:#8FB6D1; --bleu-wash:#1B2730;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -18px rgba(0,0,0,.8);
+  }
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);
+    font-family:"Source Sans 3",system-ui,sans-serif;font-size:16px;line-height:1.6}
+  .page{max-width:880px;margin:0 auto;padding:52px 26px 90px}
+  p{margin:0 0 1em;max-width:68ch}
+  h1,h2{font-family:Newsreader,Georgia,serif;font-weight:600;
+    text-wrap:balance;line-height:1.18;margin:0}
+  h1{font-size:2.5rem;letter-spacing:-.012em}
+  h2{font-size:1.4rem;margin:0 0 .5em}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-mute);font-weight:600;display:block;
+    margin-bottom:14px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:30px}
+  .lede{font-family:Newsreader,Georgia,serif;font-size:1.2rem;line-height:1.5;
+    color:var(--ink-soft);margin-top:.7em;max-width:60ch}
+
+  .chiffres{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+    gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0}
+  .chiffre{background:var(--surface);padding:14px 16px}
+  .chiffre b{display:block;font-family:"JetBrains Mono",monospace;font-size:1.35rem;
+    font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2}
+  .chiffre span{font-size:.78rem;color:var(--ink-mute);display:block;margin-top:3px}
+
+  section{margin-top:40px}
+  .consigne{background:var(--surface);border:1px solid var(--rule-firm);
+    border-left:3px solid var(--accent);padding:18px 22px;margin:22px 0}
+  .consigne p:last-child{margin-bottom:0}
+
+  .q{background:var(--surface);border:1px solid var(--rule-firm);border-radius:3px;
+    box-shadow:var(--shadow);margin:0 0 20px;padding:18px 22px 14px}
+  .q-tete{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+  .id{font-family:"JetBrains Mono",monospace;font-size:.78rem;font-weight:600;
+    color:var(--ink-mute)}
+  .forme{font-family:"JetBrains Mono",monospace;font-size:.65rem;font-weight:600;
+    letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+  .f-fait{color:var(--bleu);background:var(--bleu-wash)}
+  .f-proc{color:var(--accent);background:var(--accent-wash)}
+  .f-arb{color:var(--amber);background:var(--amber-wash)}
+  .f-look{color:var(--ink-mute);background:var(--surface-sunk)}
+  .f-non{color:var(--rust);background:var(--rust-wash)}
+  .f-abr{color:var(--rust);background:var(--rust-wash)}
+  .theme{font-size:.8rem;color:var(--ink-mute);margin-left:auto}
+  .question{font-family:Newsreader,Georgia,serif;font-size:1.16rem;font-style:italic;
+    line-height:1.4;margin:0 0 12px;color:var(--ink)}
+  .reponse{background:var(--surface-sunk);border-radius:2px;padding:14px 16px;
+    font-size:.97rem;line-height:1.62}
+  .src-tag{font-family:"JetBrains Mono",monospace;font-size:.72em;color:var(--accent);
+    background:var(--accent-wash);padding:1px 4px;border-radius:2px;white-space:nowrap}
+
+  a.src-tag{text-decoration:none;border-bottom:1px solid transparent}
+  a.src-tag:hover,a.src-tag:focus{border-bottom-color:var(--accent);outline:none}
+  .src-tag.absente{color:var(--rust);background:var(--rust-wash)}
+
+  .sources{margin-top:12px}
+  .s-titre{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin:0 0 8px}
+  .source{border-left:2px solid var(--rule-firm);padding:2px 0 2px 12px;margin-bottom:10px}
+  .source:target{border-left-color:var(--accent);background:var(--accent-wash);
+    border-radius:0 2px 2px 0;padding-right:10px}
+  .source.absente{border-left-color:var(--rust)}
+  .s-tete{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;font-size:.9rem}
+  .s-tete code{font-family:"JetBrains Mono",monospace;font-size:.72rem;font-weight:600;
+    color:var(--accent);background:var(--accent-wash);padding:1px 5px;border-radius:2px}
+  .s-tete a{color:var(--ink);font-weight:600;text-decoration:none;
+    border-bottom:1px solid var(--rule-firm)}
+  .s-tete a:hover,.s-tete a:focus{border-bottom-color:var(--accent);color:var(--accent)}
+  .s-tete em{color:var(--ink-soft);font-size:.92em}
+  .s-tete .idoc{font-family:"JetBrains Mono",monospace;font-size:.68rem;
+    color:var(--ink-mute);margin-left:auto}
+  .source blockquote{margin:6px 0 0;font-size:.88rem;line-height:1.55;
+    color:var(--ink-soft)}
+  .vide{color:var(--ink-mute);font-style:italic;font-size:.9rem}
+
+  ul.alertes{list-style:none;margin:10px 0 0;padding:0;font-size:.87rem}
+  ul.alertes li{padding:7px 12px;border-radius:2px;margin-bottom:5px}
+  .al.bloq{background:var(--rust-wash);color:var(--rust);
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--rust) 26%,transparent)}
+  .al.avert{background:var(--amber-wash);color:var(--amber)}
+  ul.alertes b{font-family:"JetBrains Mono",monospace;font-size:.8em}
+
+  .verdict{margin-top:12px;padding-top:11px;border-top:1px dashed var(--rule-firm);
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:.87rem;
+    color:var(--ink-soft)}
+  .verdict > span:first-child{font-family:"JetBrains Mono",monospace;font-size:.68rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .verdict label{display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
+  .commentaire{color:var(--ink-mute);flex-basis:100%;font-size:.85rem}
+
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--rule);
+    color:var(--ink-mute);font-size:.86rem}
+
+  @page{size:A4;margin:14mm 13mm}
+  @media print{
+    :root,:root[data-theme="dark"]{
+      --ground:#FFF; --surface:#FFF; --surface-sunk:#F4F6F1;
+      --ink:#14180F; --ink-soft:#3D443B; --ink-mute:#6A7268;
+      --rule:#D5DACD; --rule-firm:#B4BBAA;
+      --accent:#2A6042; --accent-wash:#EAF2EC;
+      --amber:#7E5A0E; --amber-wash:#F6F0E0;
+      --rust:#8A3325; --rust-wash:#F8EAE6;
+      --bleu:#24506E; --bleu-wash:#E6EDF3; --shadow:none;
+    }
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body{font-size:10pt}
+    .page{max-width:none;padding:0}
+    h1{font-size:21pt}
+    .q,.consigne,.chiffre{break-inside:avoid}
+    .source blockquote{font-size:8.5pt;line-height:1.45}
+    .s-tete .idoc{margin-left:8px}
+    .q{box-shadow:none;margin-bottom:12px}
+  }
+  @media (max-width:600px){.page{padding:34px 16px 60px}h1{font-size:1.9rem}
+    .theme{margin-left:0;flex-basis:100%}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="page">
+<header>
+  <span class="eyebrow">Livre de Connaissances AsCoCid &nbsp;·&nbsp; 09/09/2026</span>
+  <h1>Relecture des réponses</h1>
+  <p class="lede">37 questions posées au système, et ce qu'il a répondu.
+  Votre relecture indique ce qui va, ce qui ne va pas, et ce qu'il faut reformuler.</p>
+</header>
+
+<div class="chiffres">
+  <div class="chiffre"><b>37 / 37</b><span>réponses obtenues</span></div>
+  <div class="chiffre"><b>34</b><span>sans alerte automatique</span></div>
+  <div class="chiffre"><b>0</b><span>bloquée(s) par le contrôle</span></div>
+  <div class="chiffre"><b>7.5 s</b><span>délai avant réponse (médian)</span></div>
+  <div class="chiffre"><b>0.090 $</b><span>coût des 37 questions</span></div>
+</div>
+
+<section>
+  <h2>Comment lire ce document</h2>
+  <div class="consigne">
+    <p><strong>Les questions sont de nous, les réponses sont du système.</strong> Nous
+    les avons écrites à partir du contenu réel du Livre, en couvrant les onze diagrammes
+    de procédé, de la récolte au post-conditionnement.</p>
+    <p><strong>Ce qui nous serait le plus utile :</strong> pour chaque réponse, dire si
+    elle est juste, incomplète, fausse ou à côté de la demande — et, quand la question
+    elle-même sonne faux, la reformuler comme un producteur la poserait. C'est cette
+    reformulation qui a le plus de valeur : elle nous dit comment on nous parle vraiment.</p>
+    <p><strong>Les marqueurs</strong> <span class="src-tag">S2</span> sont cliquables :
+    ils mènent au passage exact sur lequel la phrase s'appuie, reproduit sous chaque
+    réponse. Le titre de la fiche ouvre la fiche complète dans AsCoCid. Un contrôle
+    automatique vérifie par ailleurs que chaque chiffre cité figure bien dans un
+    passage ; ses alertes sont signalées.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Les 37 questions</h2>
+  
+<article class="q" id="Q01">
+  <div class="q-tete">
+    <span class="id">Q01</span>
+    <span class="forme f-proc">Procédure</span>
+    <span class="theme">Récolte</span>
+  </div>
+  <p class="question">Comment savoir si mes pommes sont mûres pour la récolte ?</p>
+  <div class="reponse">Cette appréciation intervient au verger, avant ou pendant le chantier de récolte [<a class="src-tag" href="#Q01-S3">S3</a>, <a class="src-tag" href="#Q01-S7">S7</a>]. <br><br>L&#x27;état de maturité des pommes à cidre peut être déterminé principalement par trois observations [<a class="src-tag" href="#Q01-S2">S2</a>] :<br>- Le taux de chute des fruits, qui est l&#x27;observation la plus répandue : le repère de 50 % de chute est connu pour chaque variété, et une récolte après une chute naturelle de l’ensemble des fruits permet d&#x27;avoir des fruits mûrs sans excès [<a class="src-tag" href="#Q01-S1">S1</a>, <a class="src-tag" href="#Q01-S2">S2</a>] ;<br>- Le degré de fermeté mesuré au pénétromètre, où une valeur inférieure à 6 kg signale une surmaturité, tandis qu&#x27;une valeur élevée traduit une sous-maturité (le seuil étant fixé à 11 kg ou plus selon [<a class="src-tag" href="#Q01-S2">S2</a>], ou au-dessus de 12 kg selon [<a class="src-tag" href="#Q01-S8">S8</a>]) ;<br>- Le suivi de la régression de l&#x27;amidon par le test au Lugol, l&#x27;amidon étant hydrolysé en sucres solubles à l&#x27;approche de la maturité [<a class="src-tag" href="#Q01-S2">S2</a>, <a class="src-tag" href="#Q01-S5">S5</a>].<br><br>D&#x27;autres paramètres comme l&#x27;observation de la couleur des pommes peuvent également être pris en compte pour renseigner sur le moment propice à la récolte [<a class="src-tag" href="#Q01-S5">S5</a>].</div>
+  <ul class="alertes"><li class="al avert"><b>unite_implicite</b> — « 12 » figure bien dans un passage, mais sans l&#x27;unité « kg » accolée — à vérifier</li></ul>
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q01-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1481" target="_blank" rel="noopener">L’état de maturité des pommes à cidre</a><em>Quand récolter les pommes ?</em><span class="idoc">fiche n°1481</span></div><blockquote>Il est beaucoup plus complexe de déterminer la maturité d’une pomme à cidre par rapport à une pomme à couteau. En effet, pour ces dernières, la couleur de fond du fruit et la note de régression d’amidon (test Lugol, qui repose sur la dégradation des substances de réserve sous forme d’amidon en sucres solubles) permettent de déterminer quand récolter manuellement les pommes en fonction de la durée de conservation prévue. Pour une récolte mécanique, le système est plus complexe puisqu’on ne va pas sélectionner les fruits dans l’arbre. L’état de maturité des pommes peut cependant être apprécié par trois observations : Le taux de chute des fruits. Pour une variété, la donnée de 50% de chute est connue (voir figure 1). Ainsi, en observant son propre verger et en connaissant les pratiques, il est possible de savoir à peu près quand la variété va se récolter (voir calendrier de maturité des principales variétés cidricoles élaboré par Dalival). Cette observation est la plus répandue. Les deux suivantes sont plus réservées aux travaux d’expérimentation. Le degré de fermeté des fruits (déterminée grâce à un pénétromètre qui mesure la pression en kg pour faire pénétrer un embout calibré dans le fruit). Une fermeté élevée (11 kg ou plus) ou trop basse (moins de 6 kg) traduit, respectivement, une sous ou une surmaturité. La régression d’amidon (test Lugol) permet aussi de savoir si les fruits se trouvent en état de sur ou sous maturité (voir « Le test au Lugol » ).</blockquote></div><div class="source" id="Q01-S8"><div class="s-tete"><code>S8</code><a href="https://ascocid.fr/ldc/view.php?id_document=1603" target="_blank" rel="noopener">L&#x27;agréage des lots</a><em>Le contrôle de l’état sanitaire des pommes</em><span class="idoc">fiche n°1603</span></div><blockquote>Dans le cas de pommes non matures, il peut s’avérer nécessaire de casser la chaîne d’amidon par un traitement enzymatique, de type amylase, afin de libérer les sucres solubles. Des pommes trop mûres peuvent également complexifier l’extraction, par leur consistance farineuse. Ces pommes sont alors moins juteuses, et le rendement en moût, plus faible. Une sur-maturité implique également une proportion de potentielles pommes pourries dans le lot, ce qui peut impacter négativement la production au niveau organoleptique, notamment par la présence de microorganismes d’altération (augmentation du risque de synthèse de phénols volatils, par exemple, voir « Les phénols volatils » ). Pour évaluer l’état de maturité des fruits livrés, il est possible d’utiliser un pénétromètre (Figure 2), qui détermine le degré de fermeté des fruits, en mesurant la pression en kg (voir « L’état de maturité des pommes à cidre » ). Cette méthode nécessite de peler une partie des pommes, où seront faites les mesures (sur environ 1 cm 2 ). La mesure doit être réalisée sur les deux faces du fruit. On considère généralement qu’en dessous de 6 kg, le fruit est en état de sur-maturité, et qu’au-dessus de 12, il est en sous-maturité. Il est conseillé de réaliser ces mesures sur une dizaine de pommes, et de réaliser une moyenne, les données pouvant être hétérogènes. L’interprétation des données peut dépendre de la variété de pommes à cidre considérée, certaines ayant une texture naturellement plus ferme que d’autres. Il est également possible de réaliser un test au Lugol, pour contrôler l’état de maturité des pommes (voir « Le test au Lugol » ). Ce test est conseillé en complément des mesures au pénétromètre.</blockquote></div><div class="source" id="Q01-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1503" target="_blank" rel="noopener">Le test au Lugol</a><em>Introduction</em><span class="idoc">fiche n°1503</span></div><blockquote>La récolte des pommes est une étape importante de la production cidricole, mais la période de cette récolte peut varier en fonction de nombreux facteurs, notamment la variété des pommes, la région où se situe les vergers ou encore les conditions climatiques (voir « Le chantier de récolte » ). Pour des pommes ramassées suite aux chutes dans le verger, les conditions de stockage peuvent également impacter l’évolution de la maturité des fruits. Différents paramètres permettent de suivre cet état de maturité tels que la couleur et la fermeté des pommes ou la dégradation de l’amidon (voir « L’état de maturité des pommes » ), renseignant ainsi les producteurs sur le moment le plus propice à la récolte ou au pressage. L’amidon est un composé que l’on retrouve chez les végétaux et qui leur sert de stockage. Ces réserves peuvent ensuite être remobilisées, notamment à l’approche du stade de maturité du fruit. L’amidon est alors hydrolysé, ce qui permet la libération de sucres solubles qui seront utilisés comme source d’énergie par les cellules végétales. En suivant l’évolution de cet amidon dans les pommes, il est donc possible de suivre leur état de maturité. Ceci pourrait s’avérer utile pour déterminer par exemple à quel moment récolter les pommes ou, dans le cas de pommes récoltées après les chutes au verger, à quel moment les presser afin d’avoir des pommes riches en sucres.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q02">
+  <div class="q-tete">
+    <span class="id">Q02</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Récolte</span>
+  </div>
+  <p class="question">À partir de quelle fermeté considère-t-on qu&#x27;une pomme à cidre est en surmaturité ?</p>
+  <div class="reponse">Lors de l&#x27;évaluation de la maturité des fruits au verger ou lors de l&#x27;agréage des lots à la réception, on considère généralement qu&#x27;une pomme à cidre est en état de surmaturité lorsque sa fermeté, mesurée au pénétromètre, est inférieure à 6 kg [<a class="src-tag" href="#Q02-S1">S1</a>], [<a class="src-tag" href="#Q02-S3">S3</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q02-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1481" target="_blank" rel="noopener">L’état de maturité des pommes à cidre</a><em>Quand récolter les pommes ?</em><span class="idoc">fiche n°1481</span></div><blockquote>Il est beaucoup plus complexe de déterminer la maturité d’une pomme à cidre par rapport à une pomme à couteau. En effet, pour ces dernières, la couleur de fond du fruit et la note de régression d’amidon (test Lugol, qui repose sur la dégradation des substances de réserve sous forme d’amidon en sucres solubles) permettent de déterminer quand récolter manuellement les pommes en fonction de la durée de conservation prévue. Pour une récolte mécanique, le système est plus complexe puisqu’on ne va pas sélectionner les fruits dans l’arbre. L’état de maturité des pommes peut cependant être apprécié par trois observations : Le taux de chute des fruits. Pour une variété, la donnée de 50% de chute est connue (voir figure 1). Ainsi, en observant son propre verger et en connaissant les pratiques, il est possible de savoir à peu près quand la variété va se récolter (voir calendrier de maturité des principales variétés cidricoles élaboré par Dalival). Cette observation est la plus répandue. Les deux suivantes sont plus réservées aux travaux d’expérimentation. Le degré de fermeté des fruits (déterminée grâce à un pénétromètre qui mesure la pression en kg pour faire pénétrer un embout calibré dans le fruit). Une fermeté élevée (11 kg ou plus) ou trop basse (moins de 6 kg) traduit, respectivement, une sous ou une surmaturité. La régression d’amidon (test Lugol) permet aussi de savoir si les fruits se trouvent en état de sur ou sous maturité (voir « Le test au Lugol » ).</blockquote></div><div class="source" id="Q02-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1603" target="_blank" rel="noopener">L&#x27;agréage des lots</a><em>Le contrôle de l’état sanitaire des pommes</em><span class="idoc">fiche n°1603</span></div><blockquote>Dans le cas de pommes non matures, il peut s’avérer nécessaire de casser la chaîne d’amidon par un traitement enzymatique, de type amylase, afin de libérer les sucres solubles. Des pommes trop mûres peuvent également complexifier l’extraction, par leur consistance farineuse. Ces pommes sont alors moins juteuses, et le rendement en moût, plus faible. Une sur-maturité implique également une proportion de potentielles pommes pourries dans le lot, ce qui peut impacter négativement la production au niveau organoleptique, notamment par la présence de microorganismes d’altération (augmentation du risque de synthèse de phénols volatils, par exemple, voir « Les phénols volatils » ). Pour évaluer l’état de maturité des fruits livrés, il est possible d’utiliser un pénétromètre (Figure 2), qui détermine le degré de fermeté des fruits, en mesurant la pression en kg (voir « L’état de maturité des pommes à cidre » ). Cette méthode nécessite de peler une partie des pommes, où seront faites les mesures (sur environ 1 cm 2 ). La mesure doit être réalisée sur les deux faces du fruit. On considère généralement qu’en dessous de 6 kg, le fruit est en état de sur-maturité, et qu’au-dessus de 12, il est en sous-maturité. Il est conseillé de réaliser ces mesures sur une dizaine de pommes, et de réaliser une moyenne, les données pouvant être hétérogènes. L’interprétation des données peut dépendre de la variété de pommes à cidre considérée, certaines ayant une texture naturellement plus ferme que d’autres. Il est également possible de réaliser un test au Lugol, pour contrôler l’état de maturité des pommes (voir « Le test au Lugol » ). Ce test est conseillé en complément des mesures au pénétromètre.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q03">
+  <div class="q-tete">
+    <span class="id">Q03</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Récolte</span>
+  </div>
+  <p class="question">Qu&#x27;est-ce que le test au Lugol et à quoi sert-il ?</p>
+  <div class="reponse">Le test au Lugol est un test simple et rapide utilisant un réactif composé d&#x27;iode et d&#x27;iodure (ou iodure de potassium) qui réagit avec l’amidon contenu dans les tissus de la pomme en le colorant en bleu foncé, les zones plus claires indiquant sa transformation en sucres solubles [<a class="src-tag" href="#Q03-S2">S2</a>, <a class="src-tag" href="#Q03-S3">S3</a>]. Dans le domaine cidricole, cette analyse sert à suivre la dégradation et la régression de l’amidon pour évaluer l’état de maturité des fruits, notamment pour repérer une éventuelle sous-maturité ou sur-maturité [<a class="src-tag" href="#Q03-S1">S1</a>, <a class="src-tag" href="#Q03-S4">S4</a>, <a class="src-tag" href="#Q03-S5">S5</a>]. Il constitue ainsi un outil pour déterminer la meilleure période de récolte au verger ou le moment optimal de pressage des pommes [<a class="src-tag" href="#Q03-S1">S1</a>, <a class="src-tag" href="#Q03-S6">S6</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <p class="vide">aucune source citée</p>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q04">
+  <div class="q-tete">
+    <span class="id">Q04</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Approvisionnement</span>
+  </div>
+  <p class="question">Combien de temps puis-je stocker mes pommes avant de les presser ?</p>
+  <div class="reponse">Cette étape de stockage intervient après la récolte, en attendant le transport ou le début de la transformation des fruits [<a class="src-tag" href="#Q04-S1">S1</a>]. <br><br>De manière générale, les transformateurs stockent les pommes en parc au maximum 48 à 72 h avant leur nettoyage et leur transformation afin d&#x27;éviter l&#x27;altération des fruits et le développement de microorganismes comme *Penicillium expansum* [<a class="src-tag" href="#Q04-S6">S6</a>]. Si le stockage a lieu avant un transport en vue d&#x27;une livraison, le délai maximum conseillé est de 48 h [<a class="src-tag" href="#Q04-S1">S1</a>]. <br><br>La durée admissible dépend toutefois de l&#x27;état de maturité initial, de la variété et des objectifs recherchés [<a class="src-tag" href="#Q04-S3">S3</a>, <a class="src-tag" href="#Q04-S5">S5</a>]. Le stockage peut être volontairement prolongé dans le cadre d&#x27;une maturation complémentaire pour augmenter la quantité de sucre extrait, la teneur en pectines ou les précurseurs d&#x27;arômes [<a class="src-tag" href="#Q04-S3">S3</a>]. À l&#x27;opposé, la durée de stockage doit être limitée pour éviter la surmaturité, certaines variétés sur-matures nécessitant d&#x27;être pressées rapidement ou en urgence pour ne pas faire chuter le rendement d&#x27;extraction [<a class="src-tag" href="#Q04-S2">S2</a>, <a class="src-tag" href="#Q04-S5">S5</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q04-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1602" target="_blank" rel="noopener">Le stockage et le transport des pommes</a><em>Le stockage des pommes</em><span class="idoc">fiche n°1602</span></div><blockquote>Une fois la récolte effectuée, les pommes sont stockées en attendant soit leur transport et livraison vers une cidrerie, soit le début de leur transformation (cas des cidreries qui produisent leurs propres pommes). Ce stockage des fruits ne doit pas se faire à même la terre, car cela s’accompagnerait alors d’une augmentation des contaminations par des microorganismes du sol (dits « telluriques »), qui aboutirait au développement d’altérations des pommes stockées. Il est donc important de stocker les pommes sur un sol propre, c’est-à-dire nettoyé régulièrement pour évacuer les débris et traces de moisissures potentielles de la surface de stockage. Généralement, le stockage des pommes se fait sur une zone bétonnée (appelée silo) et légèrement inclinée, facilitant le convoyage des pommes et permettant aussi les écoulements de liquides, vers les caniveaux de convoyage, notamment en cas de pluie ou lors du nettoyage. Dans certaines cidreries, cette zone de stockage bétonnée comporte un revêtement spécial : un ragréage avec un enduit alimentaire (résine époxy), rendant la surface plus lisse et donc plus facilement nettoyable. Les pommes peuvent être conditionnées dans des caisses-palettes, également appelées palox, en bois ou plastique (Figure 1A), des caissons métalliques, des sacs filets (Figure 1B) ou bien être entreposées en vrac dans les silos (Figure 1C). Dans ce cas, il est conseillé de ne pas faire des tas de pommes trop haut (une cinquantaine de centimètres maximum), afin de permettre une bonne ventilation entre les fruits. Notons que pour les assemblages variétaux, l’utilisation de grands contenants de type palox peut présenter un certain avantage pour le cidrier, qui détermine alors combien de palox des variétés considérées il souhaite assembler. Les contenants utilisés pour le stockage doivent être propres, c’est-à-dire nettoyés et désinfectés avant utilisation. Si les pommes sont transportées en vue d’une livraison, la durée de stockage avant la livraison doit être relativement courte, pour éviter que le lot ne s’altère. On conseille généralement un délai maximum de 48h.</blockquote></div><div class="source" id="Q04-S6"><div class="s-tete"><code>S6</code><a href="https://ascocid.fr/ldc/view.php?id_document=1602" target="_blank" rel="noopener">Le stockage et le transport des pommes</a><em>Transport et livraison des pommes</em><span class="idoc">fiche n°1602</span></div><blockquote>En ce qui concerne la livraison des pommes, le planning est généralement fait en amont. Le producteur de pommes peut estimer le tonnage des fruits au printemps. Une estimation des livraisons peut ensuite être réalisée sur la base de la moyenne des deux années précédentes. Une première prévision des récoltes est faite en juillet et une seconde, à la fin du mois d’août. Bien entendu, les aléas climatiques peuvent impacter les rendements en pommes ou contraindre à récolter les pommes plus rapidement ou plus tardivement que prévu. Un dialogue entre les producteurs et les transformateurs est donc primordial pour anticiper au mieux la récolte et éviter la saturation des parcs de stockage, avant la transformation des pommes. Un stockage tampon trop long est propice à l’altération des pommes et au développement de microorganismes dont Penicillium expansum , responsable de la production de patuline. Généralement, les transformateurs stockent les pommes en parc au maximum 48 à 72 h avant leur nettoyage et transformation. Concernant la livraison des pommes, elle est généralement faite en remorque (Figure 2). Celle-ci doit être propre et ne pas avoir contenue de produits allergènes, afin d’éviter une potentielle contamination croisée. L’agréeur est ensuite en charge d’évaluer la quantité, et surtout la qualité du lot livré, en termes d’état sanitaire des pommes et de la présence de débris (voir « L’agréage des lots » ).</blockquote></div><div class="source" id="Q04-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1604" target="_blank" rel="noopener">La texture des pommes</a><em>Question de maturation</em><span class="idoc">fiche n°1604</span></div><blockquote>On appelle « maturation complémentaire » le délai entre la chute du fruit et l’extraction du moût (voir « La maturation complémentaire » ). Au cours de ce laps de temps, plus ou moins long, le fruit continu à évoluer. Cette maturation complémentaire peut être involontaire, dans le cas par exemple où de nombreuses pommes sont à presser et que certains lots de pommes sont stockés en attendant d’être traités. A contrario, cette étape peut également être volontaire, dans le cas où le cidrier souhaite laisser ses fruits maturés pour augmenter la quantité de sucre extrait (grâce à la régression de l’amidon), la teneur en pectines ou celles en précurseurs d’arômes (notamment, l’hexanol).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q05">
+  <div class="q-tete">
+    <span class="id">Q05</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Extraction</span>
+  </div>
+  <p class="question">Comment améliorer le rendement de mon pressage ?</p>
+  <div class="reponse">Au sein de l&#x27;étape d&#x27;extraction des moûts, l&#x27;amélioration du rendement nécessite d&#x27;abord de maîtriser la maturité des fruits en récoltant idéalement après chute naturelle et en limitant le stockage pour éviter aussi bien la sous-maturité que la surmaturité [<a class="src-tag" href="#Q05-S3">S3</a>].<br><br>Il convient ensuite d&#x27;adapter le râpage à la fermeté des pommes, en râpant finement les fruits fermes ou peu mûres et plus grossièrement les fruits très mûrs pour éviter la formation d&#x27;une purée [<a class="src-tag" href="#Q05-S3">S3</a>, <a class="src-tag" href="#Q05-S7">S7</a>].<br><br>Sur la presse, le rendement augmente en réduisant le débit, c&#x27;est-à-dire en allongeant la durée du pressage ou en diminuant l&#x27;épaisseur de râpure entre les drains, tout en adaptant la pression exercée [<a class="src-tag" href="#Q05-S1">S1</a>, <a class="src-tag" href="#Q05-S3">S3</a>].<br><br>Pour les râpures collantes ou difficiles, il est possible d&#x27;ajouter des éléments drainants, de mélanger les fruits mous avec des variétés plus fermes, ou d&#x27;appliquer des enzymes d&#x27;aide au pressurage sur pommes sous-mûres, sachant que ces dernières imposent ensuite une clarification basse [<a class="src-tag" href="#Q05-S3">S3</a>]. <br><br>Des traitements physico-chimiques comme les champs électriques pulsés (CEP) permettent également d&#x27;agir sur la consistance de la râpure, bien qu&#x27;ils restent peu utilisés [<a class="src-tag" href="#Q05-S7">S7</a>]. <br><br>Enfin, le matériel utilisé est déterminant : la presse à corbeille Bucher permet d&#x27;obtenir les meilleurs rendements d&#x27;extraction [<a class="src-tag" href="#Q05-S3">S3</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q05-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1402" target="_blank" rel="noopener">Le rendement et le débit de pressage</a><em>Quelles pistes d’amélioration du rendement ?</em><span class="idoc">fiche n°1402</span></div><blockquote>Dans la mesure du possible, la durée du stockage des pommes avant pressage doit être limitée pour éviter la surmaturité, mais il ne s’agit pas pour autant de presser des pommes vertes car la sous-maturité fait également baisser le rendement. Une récolte après une chute naturelle de l’ensemble des fruits semble être un bon repère pour avoir des fruits mûrs sans excès (limiter l’usage du secouage). Lors du pressage, pour maximiser le rendement d’extraction, les cidriers tentent de s’adapter à la qualité de leur matière première. Les râpures difficiles à presser sont repérées par leurs caractéristiques « collantes », « compotées » lorsqu’elles proviennent de pommes très mûres. Inversement, la râpure est qualifiée de sèche lorsqu’elle provient de pommes très fermes, libérant peu de jus. Ces observations de la râpure associées à la connaissance des fruits traités (variétés, maturité) peuvent servir de base pour orienter les méthodes d’extraction. L’adaptation la plus classique est de modifier la taille des cossettes de pomme, qui constituent la râpure, en fonction de l’état de maturité des fruits, en modifiant les grilles ou couteaux de la râpe. Ainsi, les pommes peu mûres sont râpées finement tandis que les pommes très mûres sont râpées plus grossièrement (voir « Le râpage » ). Selon l’aspect de la râpure, le cidrier peut aussi diminuer ou augmenter la pression, ou encore, pour les râpures collantes, tenter d’améliorer le drainage du jus par addition d’éléments drainants (des éléments comme la balle de riz, testés par le passé, pourraient être testées même si ces pratiques ne semblent pas utilisées actuellement). Certains choisissent de mélanger les pommes manquant de fermeté à des variétés plus fermes avant de les presser mais il est difficile d’en connaître le réel bénéfice. Il est possible également de réduire le débit de pressage, soit par une augmentation de la durée du pressage, soit par une diminution de la quantité de râpure dans la presse (épaisseur entre deux drains). L’utilisation d’enzymes d’aide au pressurage peut permettre d’améliorer le rendement principalement pour les pommes sous-mûres. Il faut savoir que l’utilisation de ces enzymes est incompatible avec une clarification haute : seule la clarification basse sera possible. A signaler enfin que, le choix du type de presse influe également sur le rendement, la presse à corbeille Bucher étant associée à de meilleurs rendements d’extraction.</blockquote></div><div class="source" id="Q05-S7"><div class="s-tete"><code>S7</code><a href="https://ascocid.fr/ldc/view.php?id_document=1569" target="_blank" rel="noopener">L&#x27;extraction des moûts</a><em>Le râpage</em><span class="idoc">fiche n°1569</span></div><blockquote>Le râpage correspond à une étape de broyage, qui permet de fragmenter les pommes en une fine râpure, à l’aide d’une râpe (voir « Le râpage » ). La qualité et le rendement du pressage dépendent de la consistance de la râpure, qui dépend elle-même de la variété et de l’état de maturité des pommes. Au cours du râpage, les fruits sont projetés sur une grille fixe ou des couteaux, ce qui permet de les couper. Le râpage, et notamment la taille des grilles ou des couteaux, est à adapter en fonction des variétés de pommes et de leur maturité, afin d’optimiser le rendement de pressage (voir « Les types de râpe » ). L’utilisation d’un pénétromètre permet de déterminer la dureté des pommes et ainsi d’opter pour les grilles ou couteaux à utiliser, en fonction de la texture des fruits. Ainsi, des pommes fermes seront râpées finement pour bien casser les tissus, tandis que des pommes trop mûres ou farineuses, qui sont donc plus molles, seront râpées plus grossièrement, pour éviter de former une purée, dont l’extraction serait moins performante et qui conduirait à un moût très bourbeux. Remarque : Il est possible de traiter la râpure pour optimiser le pressage. Des traitements enzymatiques (enzymes d’aide au pressurage) ou physico-chimiques (application de champs électriques pulsés, CEP), peuvent modifier la consistance de la râpure, pour améliorer le rendement du pressage (voir « Les traitements d’optimisation du pressage » ). Toutefois ces traitements sont peu utilisés en cidrerie.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q06">
+  <div class="q-tete">
+    <span class="id">Q06</span>
+    <span class="forme f-proc">Procédure</span>
+    <span class="theme">Extraction</span>
+  </div>
+  <p class="question">Pourquoi faut-il laver et trier les pommes avant le râpage ?</p>
+  <div class="reponse">Cette étape intervient lors de la reprise et la préparation des fruits, en amont de l&#x27;extraction des moûts [<a class="src-tag" href="#Q06-S1">S1</a>], [<a class="src-tag" href="#Q06-S7">S7</a>]. Laver et trier les fruits est indispensable avant transformation pour écarter les pommes altérées pouvant dégrader la qualité finale du produit [<a class="src-tag" href="#Q06-S1">S1</a>]. Le tri et le lavage permettent d&#x27;éliminer une partie des débris et souillures comme les feuilles ou les cailloux [<a class="src-tag" href="#Q06-S3">S3</a>]. Cette opération permet notamment d&#x27;enlever les résidus de terre sur les pommes, qui risqueraient d&#x27;apporter du fer dans le moût et d&#x27;engendrer des casses ferriques, c&#x27;est-à-dire un noircissement du cidre dû aux liaisons entre le fer et les tanins [<a class="src-tag" href="#Q06-S1">S1</a>], [<a class="src-tag" href="#Q06-S3">S3</a>]. Enfin, le lavage limite l&#x27;apport de microorganismes d&#x27;altération dans le moût et le cidre, évitant ainsi de potentielles dérives organoleptiques [<a class="src-tag" href="#Q06-S3">S3</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q06-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1601" target="_blank" rel="noopener">La reprise et la préparation des fruits</a><em>Le lavage des pommes</em><span class="idoc">fiche n°1601</span></div><blockquote>Au verger, différents paramètres peuvent diminuer la qualité des pommes : leur état de maturité (une sous- ou sur-maturation, voir « L’état de maturité des pommes à cidre » ) et leur état sanitaire (terre, chocs, attaques par des insectes et/ou des microorganismes…, voir « Les altérations des fruits » ). Avant de les transformer, il est donc important de i) laver et ii) trier les fruits, pour écarter les pommes altérées, qui pourraient impacter négativement la qualité finale du produit. Les fruits à transformer peuvent soit provenir directement du verger (cas des producteurs transformateurs), soit être livrés, ce qui nécessite alors une étape d’agréage des lots livrés (voir « L’agréage des lots » ). Qu’ils soient en caisse-palette ou en vrac, les fruits sont amenés en zone de convoyage et de lavage. Lorsque le convoyage se fait via des canaux hydrauliques, le cidrier doit veiller à ce que le réseau soit nettoyable et vidangeable. Ce détail est important puisque cela permet de limiter les engorgements au niveau des canaux hydrauliques, et d’éliminer les débris piégés dans le réseau, limitant ainsi la présence de morceaux de fruits propices au développement de microorganismes ou d’insectes. De plus, l’eau de convoyage doit être changée régulièrement (au maximum toutes les 24 à 48h), afin d’éviter qu’elle ne soit chargée en débris et microorganismes d’altération (dont le développement est stimulé par le changement climatique). Le lavage des pommes est essentiel avant de les transformer, puisque cette étape permet d’éliminer notamment les traces de terre sur les pommes.</blockquote></div><div class="source" id="Q06-S7"><div class="s-tete"><code>S7</code><a href="https://ascocid.fr/ldc/view.php?id_document=1604" target="_blank" rel="noopener">La texture des pommes</a><em>Introduction</em><span class="idoc">fiche n°1604</span></div><blockquote>La saison de récolte et de pressage est une période dense pour les cidriers, puisqu’il faut gérer à la fois la récolte et l’approvisionnement des pommes, leur lavage et tri, en parallèle de l’extraction des moûts. Les conditions organisationnelles (gestion des débits, et le fait d’éviter le stockage long des pommes sur parc pour limiter leur altération) ainsi que les conditions techniques (matériels et paramètres de râpage et pressage) ne sont pas toujours simples à maîtriser. Généralement, les cidriers agissent selon un compromis entre le rendement d’extraction, le débit de fruits à traiter et la qualité du jus. Ce rendement, en plus de dépendre de paramètres techniques, dépend également de la texture des fruits utilisés, influencée notamment par la variété de pommes à cidre et son état de maturité. Il peut être amélioré, en jouant sur ces paramètres. L’optimisation des rendements d’extraction des moûts à partir de pommes à cidre a fait l’objet de deux projets au sein de l’IFPC : OPTIPRESS 1 et OPTIPRESS 2.</blockquote></div><div class="source" id="Q06-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1601" target="_blank" rel="noopener">La reprise et la préparation des fruits</a><em>Le lavage des pommes</em><span class="idoc">fiche n°1601</span></div><blockquote>Ces résidus de terre peuvent participer, dans une certaine mesure, à l’apport de fer dans le moût, qui peut conduire, suivant les concentrations, à des casses ferriques du cidre (noircissement du produit dû à des liaisons entre le fer et les tanins du cidre, voir « Les casses du cidre » ). Pour rappel, le décret cidre fixe une teneur limite en fer dans les produits cidricoles, à 10 mg/L pour les cidres et 17 mg/L pour les poirés (voir « Le décret cidre » ). L’opération de lavage des fruits permet également de limiter l’apport de microorganismes d’altération dans le moût et donc le cidre, ces derniers pouvant être à l’origine de dérives organoleptiques (voir « Les impacts sensoriels des Brettanomyces » et « Le framboisé » ). Dans la pratique, pour un lavage efficace des pommes, il est recommandé de les laver dans un bac rempli à moitié d’eau. Les pommes sont mises à tremper pendant une dizaine de minutes, puis agitées pour ôter les souillures des fruits (feuilles, ...). Avec cette méthode, les cailloux coulent ainsi au fond du bac ; les pommes saines flottent en surface du contenant. Cette étape de lavage permet ainsi d’éliminer une partie des débris et souillures. Généralement, l’eau de lavage est la même que celle utilisée pour le convoyage des fruits. Elle doit donc être régulièrement renouvelée pour ne pas laver les pommes dans une eau contaminée par des souillures et microorganismes potentiellement indésirables (notamment Penicillium expansum , un champignon produisant une mycotoxine, la patuline). Notons que la durée et le débit de lavage des pommes sont deux paramètres influençant la qualité du lavage. Certains producteurs utilisent des équipements issus d’autres filières, comme la laveuse à pommes de terre.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q07">
+  <div class="q-tete">
+    <span class="id">Q07</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Clarification des moûts</span>
+  </div>
+  <p class="question">Qu&#x27;est-ce que la clarification haute classique ?</p>
+  <div class="reponse">Au sein de l&#x27;étape de clarification des moûts, la clarification haute classique, autrefois appelée « défécation », est une méthode de réduction de la turbidité qui utilise la pectine du moût de pomme comme agent clarifiant [<a class="src-tag" href="#Q07-S1">S1</a>, <a class="src-tag" href="#Q07-S4">S4</a>]. <br><br>Ce procédé repose sur une modification enzymatique de la pectine par la pectine méthylestérase, suivie d&#x27;une gélification en présence de calcium [<a class="src-tag" href="#Q07-S4">S4</a>]. Le gel ainsi formé agglomère les bourbes et remonte à la surface grâce à un début de fermentation, constituant ce qui est appelé le « chapeau brun » [<a class="src-tag" href="#Q07-S4">S4</a>]. L&#x27;opération s&#x27;achève par un soutirage qui sépare définitivement le moût clarifié des bourbes, désignées sous le nom de lies de clarification haute [<a class="src-tag" href="#Q07-S2">S2</a>, <a class="src-tag" href="#Q07-S4">S4</a>]. <br><br>Outre l&#x27;élimination des bourbes, la clarification haute classique diminue la vitesse de fermentation et favorise le développement des levures *Hanseniaspora* au détriment des *Saccharomyces* dans les moûts non sulfités, ce qui pourrait expliquer son influence positive admise sur les arômes du cidre [<a class="src-tag" href="#Q07-S7">S7</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q07-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1046" target="_blank" rel="noopener">La clarification haute classique</a><span class="idoc">fiche n°1046</span></div><blockquote>Résumé : La clarification haute, qui était appelée « défécation », est un procédé de clarification qui utilise la pectine présente dans le moût de pomme comme agent de clarification. Le procédé comporte une modification enzymatique de la pectine par la pectine méthylestérase puis une gélification en présence de calcium et une séparation / flottation du gel ainsi formé et des bourbes qui y sont agglomérées, dans ce qui est appelé « chapeau brun ». La flottation est due à un début de fermentation et le procédé se termine par un soutirage qui permet de séparer définitivement le moût clarifié des bourbes.</blockquote></div><div class="source" id="Q07-S7"><div class="s-tete"><code>S7</code><a href="https://ascocid.fr/ldc/view.php?id_document=1088" target="_blank" rel="noopener">Les effets de la clarification haute classique</a><span class="idoc">fiche n°1088</span></div><blockquote>Résumé : La clarification haute ne se résume pas à une simple élimination des bourbes qui en est, cependant, le premier effet visible et concret. Ce procédé diminue aussi la vitesse de fermentation et permet ainsi une meilleure maîtrise de celle-ci. Par ailleurs, elle favorise les levures Hanseniaspora au détriment des Saccharomyces pour les moûts non sulfités. Son influence positive, souvent admise, sur les arômes du cidre pourrait être expliquée par l’augmentation du rapport Hanseniaspora/Saccharomyces.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q08">
+  <div class="q-tete">
+    <span class="id">Q08</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Clarification des moûts</span>
+  </div>
+  <p class="question">Ma clarification haute ne prend pas, d&#x27;où cela peut-il venir ?</p>
+  <div class="reponse">Lors de l&#x27;étape de clarification des moûts, différentes causes d’échec peuvent être identifiées dans la pratique [<a class="src-tag" href="#Q08-S5">S5</a>]. <br><br>Cela peut provenir d’une quantité de pectine insuffisante ou de la présence de pectine dégradée dans le moût [<a class="src-tag" href="#Q08-S5">S5</a>]. Le problème peut également être dû à une mauvaise gélification ou à un manque de fermeté du gel [<a class="src-tag" href="#Q08-S5">S5</a>]. Enfin, une flottation du gel qui se fait tardivement ou un soutirage trop tardif sont également des situations qui peuvent faire échouer la clarification ou en réduire l’efficacité [<a class="src-tag" href="#Q08-S5">S5</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q08-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1328" target="_blank" rel="noopener">Les causes d&#x27;échec de la clarification haute</a><span class="idoc">fiche n°1328</span></div><blockquote>Résumé : Lors de la clarification haute, différentes causes d’échec peuvent être identifiées dans la pratique : une quantité de pectine insuffisante ou de la pectine dégradée dans le moût, une mauvaise gélification ou un manque de fermeté du gel, une flottation du gel qui se fait tardivement, un soutirage trop tardif. Ces situations peuvent faire échouer la clarification ou en réduire l’efficacité.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q09">
+  <div class="q-tete">
+    <span class="id">Q09</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Clarification des moûts</span>
+  </div>
+  <p class="question">À quoi sert la pectinestérase dans le moût ?</p>
+  <div class="reponse">Intervenant dès l&#x27;extraction du moût dans le cadre de la clarification haute, la pectinestérase (ou pectine méthylestérase) a pour rôle de modifier les chaînes principales des pectines solubles en coupant les fonctions méthyles, réalisant ainsi leur déméthylation [<a class="src-tag" href="#Q09-S3">S3</a>, <a class="src-tag" href="#Q09-S6">S6</a>]. Cette modification enzymatique est indispensable pour permettre à la pectine de gélifier en présence d&#x27;une quantité suffisante de calcium [<a class="src-tag" href="#Q09-S1">S1</a>, <a class="src-tag" href="#Q09-S3">S3</a>, <a class="src-tag" href="#Q09-S5">S5</a>]. La formation de ce gel permet ensuite de piéger les bourbes afin d&#x27;éliminer le trouble présent après le pressage et d&#x27;assurer la clarification [<a class="src-tag" href="#Q09-S5">S5</a>, <a class="src-tag" href="#Q09-S7">S7</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <p class="vide">aucune source citée</p>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q10">
+  <div class="q-tete">
+    <span class="id">Q10</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Fermentation</span>
+  </div>
+  <p class="question">À quelle température faut-il faire fermenter le cidre ?</p>
+  <div class="reponse">Au cours de l&#x27;étape fermentaire, qui intervient après la clarification des moûts, le pilotage de la température dépend de la vitesse de fermentation souhaitée, de la préservation aromatique et de la maîtrise des risques microbiologiques [<a class="src-tag" href="#Q10-S1">S1</a>, <a class="src-tag" href="#Q10-S3">S3</a>, <a class="src-tag" href="#Q10-S4">S4</a>]. <br><br>Pour une température haute, comprise entre 15 et 25 °C, la vitesse de fermentation est plus rapide, mais les levures responsables (*Saccharomyces uvarum*) ne se développent pas bien au-dessus de 25 °C [<a class="src-tag" href="#Q10-S1">S1</a>, <a class="src-tag" href="#Q10-S2">S2</a>]. À l&#x27;inverse, travailler à des températures plus basses permet de limiter les pertes d&#x27;arômes volatils emportés par le gaz de fermentation [<a class="src-tag" href="#Q10-S3">S3</a>]. Sur le plan microbiologique, les températures supérieures à 10 °C sont propices au développement des microorganismes, tandis que les températures inférieures à 10 °C le limitent, hormis pour *Saccharomyces uvarum* qui est cryotolérante [<a class="src-tag" href="#Q10-S4">S4</a>]. Il est ainsi préconisé de maintenir la cuverie à 10 °C au maximum (l&#x27;idéal étant en dessous de 8 °C), sachant par exemple que les levures d&#x27;altération *Brettanomyces* cessent de se développer en dessous de 5 °C [<a class="src-tag" href="#Q10-S1">S1</a>, <a class="src-tag" href="#Q10-S4">S4</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q10-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1409" target="_blank" rel="noopener">Le refroidissement des moûts et des cidres</a><em>Comment agit la température ?</em><span class="idoc">fiche n°1409</span></div><blockquote>Il s’agit donc d’un levier important pour le pilotage de la fermentation. A ces effets biochimiques et microbiologiques s’ajoutent des effets sur la solubilité. Ainsi, la température modifie la solubilité des gaz et des solutés dans les liquides. Les gaz sont plus solubles dans un liquide froid (voir « La dissolution du gaz dans le cidre » ) tandis que d’autres composés sont moins solubles à froid. Cet effet de la température est bien connu des cidriers pour la dissolution du gaz carbonique, et il en est de même pour l’oxygène. Il est assez rare, dans le cidre, que des composés s’insolubilisent parce qu’ils ont atteint leur seuil de saturation. Cependant, un autre phénomène y ressemble, puisque certains composés peuvent former un trouble à froid, alors que le même liquide redevient limpide à chaud (voir « Les troubles et dépôts physico-chimiques » ). Par ailleurs, la température peut modifier la volatilité des composés volatils. Il existe, pour chaque composé, un rapport entre la concentration dans la phase gazeuse et celle de la phase liquide. Plus ce rapport sera élevé, plus le composé sera volatil et plus il pourra être entrainé par le gaz de fermentation. Or, ce rapport augmente avec la température ce qui explique probablement, en partie, la perte de certains arômes au cours de la fermentation. Cette perte sera plus limitée avec des températures basses.</blockquote></div><div class="source" id="Q10-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1567" target="_blank" rel="noopener">Entretien de l&#x27;air ambiant</a><em>La température de la cuverie</em><span class="idoc">fiche n°1567</span></div><blockquote>La température influence grandement le développement des microorganismes (levures et bactéries). De manière générale, les basses températures (inférieures à 10 °C) ont tendance à limiter le développement des principaux microorganismes rencontrés dans les cidres (hormis Saccharomyces uvarum qui est une levure cryotolérante). A l’inverse, des températures supérieures à 10 °C sont propices à leur développement. De ce fait, une cuverie non réfrigérée est soumise à des variations de températures qui augmentent le risque que des microorganismes d’altération se développent dans le produit. Il est donc préférable d’opter pour une cuverie réfrigérée (au maximum à 10 °C, mais l’idéal serait une température inférieure à 8 °C), pour limiter le développement de microorganismes d’altération (comme pour les levures Brettanomyces) au sein de la cuverie et dans le produit en cours d’élaboration.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q11">
+  <div class="q-tete">
+    <span class="id">Q11</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Fermentation</span>
+  </div>
+  <p class="question">Quelle est la différence entre la fermentation primaire et la fermentation principale ?</p>
+  <div class="reponse">Au sein de l&#x27;étape fermentaire, la différence tient à la méthode de fermentation employée et à l&#x27;issue de l&#x27;opération.<br><br>La fermentation primaire désigne la première période de l&#x27;étape fermentaire dans la méthode FR (fermentation ralentie), au cours de laquelle se déroule l&#x27;essentiel de la croissance des levures [<a class="src-tag" href="#Q11-S1">S1</a>]. Elle se conclut par une réduction de la population de levures (réduction de biomasse) entraînant une baisse de la vitesse de fermentation [<a class="src-tag" href="#Q11-S1">S1</a>, <a class="src-tag" href="#Q11-S3">S3</a>]. <br><br>À l&#x27;inverse, la fermentation principale désigne la période au cours de laquelle se déroule l&#x27;essentiel de la fermentation alcoolique dans la méthode FI (fermentation interrompue) ainsi que dans la méthode FMR [<a class="src-tag" href="#Q11-S2">S2</a>, <a class="src-tag" href="#Q11-S6">S6</a>]. Elle s&#x27;achève non pas par un simple ralentissement, mais par l&#x27;arrêt total de la fermentation via l&#x27;élimination des levures, suivi d&#x27;un stockage au froid [<a class="src-tag" href="#Q11-S2">S2</a>, <a class="src-tag" href="#Q11-S6">S6</a>].</div>
+  <ul class="alertes"><li class="al avert"><b>affirmation_non_etayee</b> — 1 phrase(s) sans marqueur de source : Au sein de l&#x27;étape fermentaire, la différence tient à la méthode de fe</li></ul>
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q11-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1098" target="_blank" rel="noopener">La méthode FR (fermentation ralentie)</a><em>définition de « Fermentation primaire »</em><span class="idoc">fiche n°1098</span></div><blockquote>La fermentation primaire désigne la première période de l&#x27;étape fermentaire (méthode FR) au cours de laquelle se déroule l&#x27;essentiel de la croissance des levures. Elle se termine par une réduction de la population de levures conduisant à une baisse de la vitesse de fermentation.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q12">
+  <div class="q-tete">
+    <span class="id">Q12</span>
+    <span class="forme f-proc">Procédure</span>
+    <span class="theme">Fermentation</span>
+  </div>
+  <p class="question">Comment suivre l&#x27;avancement de ma fermentation au quotidien ?</p>
+  <div class="reponse">Au cours de l&#x27;étape fermentaire, le suivi du bon déroulement de la fermentation s&#x27;effectue principalement par le contrôle régulier de la masse volumique [<a class="src-tag" href="#Q12-S2">S2</a>, <a class="src-tag" href="#Q12-S3">S3</a>]. <br><br>Il est recommandé de réaliser cette mesure sur le moût brut, lors de la clarification, puis tous les jours ou tous les deux jours jusqu&#x27;à la réduction de biomasse ou le premier soutirage [<a class="src-tag" href="#Q12-S3">S3</a>, <a class="src-tag" href="#Q12-S4">S4</a>]. La variation de la masse volumique permet d&#x27;estimer au quotidien la baisse de la teneur en sucres et l&#x27;alcool généré [<a class="src-tag" href="#Q12-S3">S3</a>]. À partir de deux points de mesure, le calcul de la vitesse de fermentation permet d&#x27;obtenir des données dynamiques pour anticiper les opérations de cuverie (comme la réduction de biomasse, la filtration ou l&#x27;embouteillage) et détecter les cuves qui fermentent trop ou pas assez vite [<a class="src-tag" href="#Q12-S1">S1</a>, <a class="src-tag" href="#Q12-S4">S4</a>]. Enfin, la fréquence de ces contrôles doit être ajustée selon la température de la cuverie et peut être espacée à une fois par semaine lorsque la vitesse de fermentation devient inférieure à 0,5 point/jour [<a class="src-tag" href="#Q12-S4">S4</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q12-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1495" target="_blank" rel="noopener">Estimation de la teneur en sucres par la masse volumique</a><em>Suivi de la fermentation par la masse volumique du cidre</em><span class="idoc">fiche n°1495</span></div><blockquote>La différence entre la masse volumique du cidre à un instant t (MVc) et la masse volumique initiale MVi permet de calculer la baisse de la teneur en sucres (S – Si), puisqu’on considère que seuls les sucres sont consommés au cours de la fermentation. Ainsi : (S - Si) = (MVc - MVi) . 2,14 De même, la teneur en alcool (A) généré peut être estimée en divisant la perte de sucres par le rendement fermentaire qui, dans les fermentations cidricoles, est fixé à 17 g/L pour 1 % vol. Ce rendement peut cependant varier quelque peu, selon les conditions de fermentation. A = (MVc - MVi) . (2,141/17) Soit : A = (MVc - MVi) . 0,126 Là aussi, il s’agit d’une estimation qui n’aura jamais la fiabilité d’un dosage mais qui suffit, en général, pour prendre les décisions. La précision dépend bien sûr des soins qui sont pris pour mesurer la masse volumique et corriger les écarts de température (voir « Mesure de la masse volumique » ). Effectuer un suivi régulier de la masse volumique permet ainsi de suivre l’évolution de la fermentation alcoolique afin de pouvoir intervenir efficacement si nécessaire, pour orienter la fermentation. Il est conseillé de réaliser cette mesure sur le moût brut, en fin de clarification haute, puis, selon la vitesse de fermentation, tous les jours ou tous les deux jours jusqu’à la réduction de biomasse. A partir de ces mesures, il est possible de déterminer une vitesse de fermentation exprimée en points de MV par jour (voir « L’estimation de la vitesse de fermentation » ) qui peut être un indicateur de bon (ou mauvais) déroulement de la fermentation. Lorsque la vitesse baisse en dessous de 0,5 point par semaine, la mesure de la masse volumique peut alors se faire toutes les deux semaines.</blockquote></div><div class="source" id="Q12-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1561" target="_blank" rel="noopener">L&#x27;estimation de la vitesse de fermentation</a><em>Quand faut-il mesurer la vitesse de fermentation ?</em><span class="idoc">fiche n°1561</span></div><blockquote>A partir de deux points de mesures de masse volumique, on peut calculer la vitesse de fermentation. Il est conseillé de mesurer la masse volumique le plus souvent possible, afin de suivre efficacement l’évolution du produit au cours du process. Ainsi, il est recommandé de mesurer la masse volumique : Sur le moût brut, pour estimer au mieux les teneurs en sucres initiales (voir « L’estimation de la teneur en sucres par la masse volumique » ). Cette mesure est également importante pour estimer et calculer le Titre Alcoométrique Volumique (TAV) acquis ou total. Au cours de la clarification pré-fermentaire (voir « La clarification haute classique » et « La clarification basse » ). Entre la clarification pré-fermentaire et le premier soutirage de fermentation, la masse volumique est à mesurer idéalement tous les 2 jours. Lorsque la vitesse de fermentation est faible (inférieure à 0,5 point/jour), une mesure plus espacée dans le temps est suffisante (1 fois par semaine). La fréquence des mesures est à ajuster en fonction de la vitesse de fermentation calculée et de la température de la cuverie. Une température élevée, comprise entre 15 et 25 °C, provoque une accélération de la fermentation par rapport à une température de 10 °C. Ainsi, pour des cuveries non réfrigérées, les contrôles de vitesse de fermentation devront être plus fréquents. Une température inférieure à 8 °C est idéale pour un bon déroulement de fermentation alcoolique, tout en limitant le développement de microorganismes d’altération (en particulier, pour les levures du genre Brettanomyces ou les bactéries). Par ailleurs, notons qu’il est possible de normaliser la vitesse de fermentation à une température de référence. Ceci peut être utile lorsqu’on a l’habitude de travailler à une certaine température mais que suite à un évènement en cuverie, par exemple, la température est différente de la température habituelle. Ainsi, si le produit n’est pas à cette température de référence (pour cet exemple, 10 °C), il est possible de corriger la vitesse de fermentation, sachant que l’on considère pour une température comprise entre 4 et 20 °C, que la vitesse de fermentation est globalement proportionnelle à la température (°C). En partant de cette approximation, on obtient la formule suivante : Vitesse de fermentation à 10 °C = A titre d’exemple, pour une vitesse de fermentation de 4,5 points/jour à 12 °C, le calcul sera le suivant : = vitesse de 3,75 points/jour à 10 °C.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q13">
+  <div class="q-tete">
+    <span class="id">Q13</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Fermentation</span>
+  </div>
+  <p class="question">Quelle méthode choisir entre fermentation interrompue, ralentie et moûts reconstitués ?</p>
+  <div class="reponse">Au cours de l&#x27;étape fermentaire, le choix de la méthode dépend des matières premières mises en œuvre, des contraintes de stockage en cuverie et des objectifs recherchés en matière de profil de produit et de protection microbiologique [<a class="src-tag" href="#Q13-S1">S1</a>, <a class="src-tag" href="#Q13-S3">S3</a>, <a class="src-tag" href="#Q13-S4">S4</a>].<br><br>* **La méthode de fermentation ralentie (FR)** est préconisée pour maintenir un dégagement continu de CO2 jusqu&#x27;à l&#x27;assemblage, ce qui protège le produit contre l&#x27;oxydation et les microorganismes d&#x27;altération, tout en favorisant la stabilité microbiologique ultérieure (notamment pour les cidres non pasteurisés) grâce à la consommation de l&#x27;azote assimilable résiduel par les levures restantes [<a class="src-tag" href="#Q13-S1">S1</a>, <a class="src-tag" href="#Q13-S8">S8</a>].<br>* **La méthode de fermentation interrompue (FI)** est choisie pour stopper la fermentation alcoolique par élimination des levures à une masse volumique cible, ce qui permet d&#x27;obtenir des produits aux teneurs en sucres ou profils aromatiques variés afin de réaliser des assemblages entre différentes cuvées [<a class="src-tag" href="#Q13-S1">S1</a>].<br>* **La méthode de fermentation de moûts reconstitués (FMR)** est employée lorsque l&#x27;on travaille à partir de moûts concentrés nécessitant un ensemencement par des levures commerciales ; elle s&#x27;avère particulièrement utile pour réduire les volumes de stockage en cuverie et lisser les fluctuations de récolte d&#x27;une année sur l&#x27;autre [<a class="src-tag" href="#Q13-S1">S1</a>, <a class="src-tag" href="#Q13-S4">S4</a>, <a class="src-tag" href="#Q13-S6">S6</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q13-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1536" target="_blank" rel="noopener">L&#x27;étape fermentaire</a><em>Les conduites de l’étape fermentaire</em><span class="idoc">fiche n°1536</span></div><blockquote>A noter qu’un cycle de centrifugation permet de réduire la population de levures de 10 7 à 10 4 ufc/mL. Cette méthode FR est utilisée pour assurer une fermentation alcoolique ralentie jusqu’à l’étape d’assemblage ; cela permet de protéger le produit contre l’oxydation, grâce à la production de CO 2 tout au long du procédé de fabrication. Cela limite ainsi le développement de microorganismes d’altération ainsi que l’oxydation et la dégradation de certains constituants du cidre. La méthode FI (Fermentation interrompue) : cette modalité de l’étape fermentaire implique d’arrêter la fermentation alcoolique en éliminant l’ensemble des levures, principalement par centrifugation, ou par microfiltration tangentielle (voir « La méthode FI (fermentation interrompue) » ). La fermentation peut être arrêtée à différents stades (en fonction de la masse volumique), ce qui permet d’obtenir des produits différents, notamment au niveau de leur teneur en sucres ou leur profil aromatique. Cette méthode permet de contrôler la fermentation et de réaliser des assemblages entre différentes cuvées pour obtenir le produit souhaité. Attention toutefois à ce que les levures ne reprennent pas leur croissance si la fermentation est arrêtée de manière trop précoce et qu’il reste des éléments nutritifs dans leur milieu. La méthode FMR (Fermentation des Moûts Reconstitués) : cette modalité de l’étape fermentaire consiste à appliquer la méthode FI sur des moûts concentrés et reconstitués (voir « La concentration des moûts » et « La méthode FMR (Fermentation des moûts reconstitués) » ). La fermentation de ces moûts reconstitués nécessite un ensemencement préalable par des levures commerciales. Elle est ensuite arrêtée à un certain stade, déterminé par la masse volumique.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q14">
+  <div class="q-tete">
+    <span class="id">Q14</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Fermentation</span>
+  </div>
+  <p class="question">Qu&#x27;est-ce que la transformation malolactique ?</p>
+  <div class="reponse">La transformation malolactique (TML) est la transformation biochimique de l&#x27;acide L-malique en acide L-lactique et en gaz carbonique (CO2) sous l&#x27;action de bactéries lactiques, principalement *Oenococcus oeni* [<a class="src-tag" href="#Q14-S2">S2</a>, <a class="src-tag" href="#Q14-S4">S4</a>, <a class="src-tag" href="#Q14-S5">S5</a>, <a class="src-tag" href="#Q14-S7">S7</a>]. Cette réaction, catalysée par l&#x27;enzyme malolactique, intervient généralement après la fermentation primaire ou principale [<a class="src-tag" href="#Q14-S4">S4</a>, <a class="src-tag" href="#Q14-S7">S7</a>]. En transformant un diacide en monoacide, elle entraîne la perte d&#x27;une fonction acide, ce qui diminue l&#x27;acidité globale du cidre et augmente son pH [<a class="src-tag" href="#Q14-S4">S4</a>, <a class="src-tag" href="#Q14-S7">S7</a>]. Cette réaction modifie les qualités organoleptiques en réduisant la saveur acide, mais l&#x27;élévation du pH peut également fragiliser la stabilité microbiologique du cidre vis-à-vis d&#x27;autres micro-organismes [<a class="src-tag" href="#Q14-S1">S1</a>, <a class="src-tag" href="#Q14-S7">S7</a>, <a class="src-tag" href="#Q14-S8">S8</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <p class="vide">aucune source citée</p>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q15">
+  <div class="q-tete">
+    <span class="id">Q15</span>
+    <span class="forme f-proc">Procédure</span>
+    <span class="theme">Altérations</span>
+  </div>
+  <p class="question">Comment éviter le développement des Brettanomyces dans mon cidre ?</p>
+  <div class="reponse">Pour prévenir l&#x27;apparition de *Brettanomyces*, il est fortement conseillé d&#x27;utiliser des pommes ayant un bon état sanitaire, c&#x27;est-à-dire des fruits non altérés, non sur-maturés et bien nettoyés [<a class="src-tag" href="#Q15-S1">S1</a>, <a class="src-tag" href="#Q15-S6">S6</a>]. Il convient également d&#x27;assurer une hygiène stricte de l&#x27;environnement de la cuverie et du matériel de transfert, avec une vigilance toute particulière sur les saturateurs et les tireuses lors de la mise en bouteille [<a class="src-tag" href="#Q15-S1">S1</a>, <a class="src-tag" href="#Q15-S6">S6</a>]. En cas de contamination ou pour freiner sa croissance durant l&#x27;étape fermentaire, il est recommandé d&#x27;abaisser la température de fermentation, une température inférieure à 8°C étant idéale pour affecter la multiplication de cette levure [<a class="src-tag" href="#Q15-S2">S2</a>]. Enfin, comme la présence d&#x27;oxygène semble accélérer sa multiplication, il est préconisé de limiter les apports d&#x27;air au cours de la production, notamment en réalisant des inertages au dioxyde de carbone (CO2) ou à l&#x27;azote (N2) en fin de fermentation [<a class="src-tag" href="#Q15-S2">S2</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q15-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1558" target="_blank" rel="noopener">La gestion du risque Brettanomyces</a><em>Comment limiter la croissance de Brettanomyces en cas de contamination ?</em><span class="idoc">fiche n°1558</span></div><blockquote>La dégradation des esters d’acétate et la production de phénols volatils sont généralement proportionnelles à la croissance des Brettanomyces, bien que d’autres paramètres jouent également, comme les souches de levures ou la quantité de précurseurs dans le milieu (qui peut dépendre de la qualité sanitaire des pommes). La seule solution pour limiter l’impact négatif de cette levure, en cas de contamination, est de limiter le développement de sa population. Agir sur le milieu de développement de Brettanomyces : Brettanomyces est une levure ayant peu de besoins en nutriments (voir « Le développement des Brettanomyces » ). La température de la cuverie est toutefois un levier important pour maîtriser et limiter le développement de cette levure . Elle est en effet sensible aux basses températures, qui limitent son développement. Ainsi, pour réduire la croissance de la population, et donc les effets sur l’arôme du cidre , il est conseillé de réduire la température à laquelle se déroule la fermentation . Une température inférieure à 8°C serait idéale pour affecter la multiplication de cette levure d’altération (Figure 2). De plus, Brettanomyces est une levure ayant la capacité de se développer en présence ou en absence d’oxygène, en adaptant son métabolisme aux conditions du milieu dans lequel elle se trouve. Cependant, la présence d’oxygène semble accélérer sa multiplication. Il est donc préférable de limiter l’apport d’oxygène au cours de la production, notamment en fin de fermentation (puisqu’il n’y a plus de libération de CO 2 permettant l’inertage naturel du cidre). Il est possible de réaliser des inertages, qui consistent à remplacer l’air de la cuve par un gaz neutre, généralement du gaz carbonique (CO 2 ) ou de l’azote (N 2 ).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q16">
+  <div class="q-tete">
+    <span class="id">Q16</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Altérations</span>
+  </div>
+  <p class="question">Qu&#x27;est-ce que la piqûre lactique ?</p>
+  <div class="reponse">La piqûre lactique désigne un défaut technologique causé par une production importante d’acide acétique par des bactéries lactiques hétérofermentaires, notamment *Oenococcus oeni* [<a class="src-tag" href="#Q16-S1">S1</a>, <a class="src-tag" href="#Q16-S4">S4</a>, <a class="src-tag" href="#Q16-S6">S6</a>]. Ce phénomène intervient lorsque ces bactéries dégradent les sucres fermentescibles en conditions anaérobies (en l’absence d’air), produisant simultanément de l’acide D-lactique et de l’acide acétique [<a class="src-tag" href="#Q16-S1">S1</a>, <a class="src-tag" href="#Q16-S5">S5</a>, <a class="src-tag" href="#Q16-S7">S7</a>]. Cette formation d’acide acétique entraîne une augmentation de l’acidité volatile pouvant conférer au cidre une odeur de piqué de type vinaigre [<a class="src-tag" href="#Q16-S5">S5</a>]. Sans piqûre lactique, la concentration en acide acétique dans un cidre final dépasse rarement 0,3 g/L [<a class="src-tag" href="#Q16-S1">S1</a>]. Le suivi et le dosage des teneurs en acide D-lactique permettent ainsi d’anticiper et de détecter l&#x27;apparition d&#x27;une potentielle piqûre lactique [<a class="src-tag" href="#Q16-S7">S7</a>, <a class="src-tag" href="#Q16-S8">S8</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q16-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1572" target="_blank" rel="noopener">L&#x27;acidité volatile</a><em>Quels sont les paramètres affectant l’acidité volatile du cidre ?</em><span class="idoc">fiche n°1572</span></div><blockquote>Dans certaines cuves, il peut arriver d’observer une forte production d’acide acétique. Ce phénomène est dû à des bactéries et est appelé « piqûre acétique », lorsque les bactéries responsables sont des bactéries acétiques (voir « La piqûre acétique » ), ou « piqûre lactique », lorsqu’elle est due à des bactéries lactiques (voir « La piqûre lactique » ). Ces deux types de piqûres conduisent à une augmentation plus ou moins marquée de l’acidité volatile, ce qui peut apporter une odeur de piqué au cidre (odeur de type vinaigre). Les bactéries acétiques : Les bactéries acétiques ( Acetobacter aceti ) sont des microorganismes strictement aérobies, qui peuvent se développer dans les cuves uniquement en présence d’oxygène (voir « Le développement des bactéries acétiques » ). Ces bactéries transforment l’éthanol en acide acétique, augmentant de ce fait, l’acidité volatile du produit contaminé. Les bactéries lactiques : Les bactéries lactiques, responsables de la transformation malolactique ( Oenococcus oeni , notamment), peuvent également être à l’origine d’une synthèse importante d’acide acétique, résultant de la transformation de sucres en acide D-lactique et acide acétique. Cette « piqûre lactique » peut donc contribuer à l’élévation de l’acidité volatile du produit. Contrairement aux bactéries acétiques, les bactéries lactiques n’ont pas besoin d’oxygène pour se développer (voir « Le développement et les effets des Oenococcus » ).</blockquote></div><div class="source" id="Q16-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1379" target="_blank" rel="noopener">La piqûre lactique</a><em>Introduction</em><span class="idoc">fiche n°1379</span></div><blockquote>Le terme « piqûre » est utilisé dans le domaine des boissons fermentées pour désigner la présence ou la production d’acide acétique. La piqûre acétique est due à la production d’acide acétique (acidité volatile) par des bactéries acétiques, en présence d’air. La piqûre lactique correspond également à une production d’acide acétique, mais par certaines bactéries lactiques (d’où l’expression « piqûre lactique »). Ces bactéries que l’on rencontre couramment dans les cidres peuvent dégrader les sucres fermentescibles en produisant, en absence d’air, différents composés dont de l’acide lactique (majoritairement), mais aussi de l’acide acétique. L’apparition d’acide lactique n’est pas, en soit, un problème pour la qualité organoleptique du produit final. En revanche, l’acide acétique est beaucoup plus gênant, car la présence de cet acide est considérée comme un défaut dans les produits alcoolisés et sa teneur est réglementée (voir « Le décret cidre » ). La présence de faibles quantités d’acide acétique est normale dans un cidre et l’expression « piqûre lactique » est en réalité un vocable œnologique ou technologique signifiant avant tout un défaut, c’est-à-dire un excès d’acide acétique. Sans piqûre lactique, les concentrations en acide acétique dans un cidre final dépassent rarement 0,3 g/L.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q17">
+  <div class="q-tete">
+    <span class="id">Q17</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Altérations</span>
+  </div>
+  <p class="question">Mon cidre a une odeur défectueuse, comment identifier d&#x27;où elle vient ?</p>
+  <div class="reponse">L&#x27;origine du défaut peut être identifiée selon les descripteurs olfactifs constatés et les altérations associées :<br><br>Une odeur rappelant le liège ou le moisi signale un « goût de bouchon », lié à des chloroanisoles qui peuvent résulter d&#x27;un défaut de rinçage de produits chlorés comme la javel ou d&#x27;autres alcalins chlorés [<a class="src-tag" href="#Q17-S4">S4</a>]. <br><br>Une forte odeur de piqué rappelant le vinaigre ou une odeur de colle scotch révèle une piqûre acétique due respectivement à l&#x27;acide acétique et à l&#x27;acétate d&#x27;éthyle [<a class="src-tag" href="#Q17-S2">S2</a>]. Cette altération s&#x27;accompagne en cuve d&#x27;un voile jaune gluant en surface, d&#x27;une baisse du pH ainsi que d&#x27;une hausse de l&#x27;acidité totale et volatile [<a class="src-tag" href="#Q17-S2">S2</a>]. <br><br>Une odeur « végétale verte » ou « herbacée », rappelant la ronce ou parfois la banane putride, caractérise la maladie du « framboisé » causée par la bactérie *Zymomonas mobilis* et sa production d&#x27;éthanal [<a class="src-tag" href="#Q17-S1">S1</a>, <a class="src-tag" href="#Q17-S3">S3</a>]. Ce défaut s&#x27;identifie également par l&#x27;apparition d&#x27;un voile laiteux, un désucrage rapide du produit et une montée rapide de la pression en bouteille [<a class="src-tag" href="#Q17-S1">S1</a>, <a class="src-tag" href="#Q17-S3">S3</a>]. <br><br>Enfin, d&#x27;autres composés volatils peuvent être à l&#x27;origine de défauts aromatiques tels que des odeurs de réduction [<a class="src-tag" href="#Q17-S5">S5</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q17-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1523" target="_blank" rel="noopener">Les odeurs défectueuses (défauts aromatiques)</a><em>définition de « Goût de bouchon »</em><span class="idoc">fiche n°1523</span></div><blockquote>Arôme indésirable que l&#x27;on retrouve aussi bien dans les vins que dans les cidres, rappelant le liège ou le moisi. Ce défaut aromatique peut résulter d&#x27;un défaut de rinçage de produits chlorés (javel ou autres alcalins chlorés). Cette odeur défectueuse est notamment due à des chloroanisoles, dont les seuils de perception sont de l’ordre du ng/L.</blockquote></div><div class="source" id="Q17-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1486" target="_blank" rel="noopener">La piqûre acétique</a><em>Les indicateurs</em><span class="idoc">fiche n°1486</span></div><blockquote>Plusieurs indicateurs permettent de reconnaître une piqûre acétique : 1) cette altération se traduit par l’a pparition à la surface du cidre d’un trouble ou d’un voile jaune, plus ou moins épais et gluant en fonction de l’importance de l’accident. Au final, ce voile sédimentera au fond de la cuve ; 2) Le cidre présente alors une forte odeur de piqué, due à une concentration importante en acide acétique, et rappelant celle du vinaigre. La formation d’acétate d’éthyle, à des teneurs également élevées, apporte une odeur de colle scotch qui n’est pas recherchée dans les cidres. La teneur élevée en acide acétique entraine une perception acide importante en bouche (voir « La saveur acide » ). D’un point de vue physicochimique, cela se traduit par une baisse du pH et une augmentation de l’acidité totale (voir « L’acidité fixe » ) et de l’acidité volatile (voir « L&#x27;acidité volatile » ), dont la limite légale est de 1 g/L H 2 SO 4 .</blockquote></div><div class="source" id="Q17-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1523" target="_blank" rel="noopener">Les odeurs défectueuses (défauts aromatiques)</a><em>Introduction</em><span class="idoc">fiche n°1523</span></div><blockquote>Les odeurs et arômes d’un cidre sont dus à des composés volatils, des molécules ayant la faculté de passer facilement en phase gazeuse (voir « Les arômes du cidre » ). Ces composés volatils appartiennent à différentes familles chimiques telles que les alcools supérieurs, les esters, les « thiols variétaux », les composés soufrés volatils ou les phénols volatils (voir « Les composés volatils odorants » ). Certains confèrent des notes aromatiques agréables et appréciées (fruitées/florales), on parle alors de composés volatils d’intérêt aromatique (voir « Les composés volatils d’intérêt aromatique » ). D’autres, en revanche, apportent aux cidres des odeurs défectueuses telles que les odeurs de réduction ou de vinaigre. Elles sont alors qualifiées de défauts aromatiques. Comprendre l’origine de ces défauts aromatiques est la première étape pour tenter de limiter leur apparition au cours de l’élaboration du produit.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q18">
+  <div class="q-tete">
+    <span class="id">Q18</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Altérations</span>
+  </div>
+  <p class="question">D&#x27;où vient le goût de framboise que je retrouve dans certains cidres ?</p>
+  <div class="reponse">Ce goût ou arôme est associé à une maladie d&#x27;altération appelée « le framboisé » (ou « Cider sickness »), causée par la bactérie *Zymomonas mobilis* [<a class="src-tag" href="#Q18-S1">S1</a>]. Cette bactérie consomme les sucres via la voie métabolique d&#x27;Entner-Doudoroff et génère notamment de grandes quantités d&#x27;éthanal et de gaz carbonique [<a class="src-tag" href="#Q18-S2">S2</a>, <a class="src-tag" href="#Q18-S3">S3</a>]. C’est principalement l’éthanal qui altère l&#x27;arôme du cidre en lui conférant des notes de type « végétal vert », décrites comme de l&#x27;herbacé, de la ronce, de la tige, de la banane verte ou de la framboise verte [<a class="src-tag" href="#Q18-S2">S2</a>, <a class="src-tag" href="#Q18-S3">S3</a>, <a class="src-tag" href="#Q18-S6">S6</a>]. Cette altération peut survenir en cuve comme en bouteille et s&#x27;accompagne d&#x27;un désucrage rapide, d&#x27;un voile laiteux ainsi que d&#x27;une forte montée en pression en bouteille [<a class="src-tag" href="#Q18-S2">S2</a>, <a class="src-tag" href="#Q18-S3">S3</a>]. L&#x27;apparition de cette maladie est particulièrement favorisée dans les cidres ayant une quantité importante d&#x27;azote résiduel et un pH supérieur à 3,7 [<a class="src-tag" href="#Q18-S1">S1</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q18-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1547" target="_blank" rel="noopener">Le framboisé</a><em>Introduction</em><span class="idoc">fiche n°1547</span></div><blockquote>Les bactéries sont des microorganismes unicellulaires que l’on retrouve dans tous les milieux. Durant l’élaboration des cidres, les produits peuvent être contaminés par différentes espèces de bactéries apportées par les fruits, le matériel ou l’environnement de la cuverie. Parmi ces bactéries d’altération, Zymomonas mobilis est responsable d’une maladie pouvant rendre les cidres impropres à la consommation. Cette maladie s’appelle le framboisé, dite « Cider sickness » en anglais, également observée dans les bières. Les conditions favorables à l’apparition de cette maladie sont les cidres ayant une quantité importante d’azote résiduel, et ceux ayant un pH supérieur à 3,7.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q19">
+  <div class="q-tete">
+    <span class="id">Q19</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Clarification des cidres</span>
+  </div>
+  <p class="question">En quoi consiste le collage d&#x27;un cidre ?</p>
+  <div class="reponse">Cette opération intervient lors de la clarification des cidres lorsqu&#x27;un produit limpide et stable est recherché avant la mise en bouteille [<a class="src-tag" href="#Q19-S1">S1</a>]. <br><br>Elle consiste à incorporer au cidre des adjuvants de collage, principalement des protéines comme la gélatine, capables de floculer en se liant aux composés phénoliques (tanins) présents en solution [<a class="src-tag" href="#Q19-S1">S1</a>, <a class="src-tag" href="#Q19-S3">S3</a>, <a class="src-tag" href="#Q19-S4">S4</a>]. Ces agents s&#x27;agglomèrent avec les polyphénols et finissent par sédimenter [<a class="src-tag" href="#Q19-S1">S1</a>, <a class="src-tag" href="#Q19-S7">S7</a>]. L&#x27;élimination de ces agglomérats « colle-polyphénols » par soutirage permet de supprimer le trouble associé, le cidre pouvant ensuite faire l&#x27;objet d&#x27;une séparation grossière puis d&#x27;une séparation fine telle qu&#x27;une filtration [<a class="src-tag" href="#Q19-S1">S1</a>]. Enfin, cette élimination des polyphénols permet d&#x27;abaisser l&#x27;astringence du cidre et impacte également sa couleur [<a class="src-tag" href="#Q19-S1">S1</a>, <a class="src-tag" href="#Q19-S5">S5</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q19-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1587" target="_blank" rel="noopener">La clarification de finition des cidres</a><em>La clarification des cidres avec collage</em><span class="idoc">fiche n°1587</span></div><blockquote>Cette méthode peut être utilisée lorsque le cidrier cherche à obtenir un produit limpide, avant la mise en bouteille. Le produit est dit « brillant » et est généralement plus stable post-embouteillage. A noter que des cas de « sur-collage » peuvent conduire à l’apparition de nouveaux troubles en bouteille. Certains conseillent de centrifuger le produit assemblé avant de faire un collage. Cette centrifugation permet ainsi d’éliminer les plus gros amas et particules et permet également de s’assurer que la fermentation est bien terminée, permettant une bonne sédimentation de la colle. Après cette centrifugation, le cidre est collé par l’ajout d’agents de collage. Cette opération repose sur la capacité des polyphénols à se lier aux protéines. Les agents de collage (le plus souvent des protéines), dont la dose sera à déterminer en fonction du produit traité, s’agglomèrent avec les polyphénols et finissent par sédimenter. Ainsi, en éliminant ces agglomérats « colle-polyphénols » par soutirage, on élimine le trouble associé (voir « Le collage » , « Les agents de collage » ). Le cidre collé peut subir une première opération de séparation grossière, généralement une centrifugation. Une opération de séparation fine est ensuite nécessaire, telle qu’une filtration de type microfiltration tangentielle ou filtration fine sur plaques. Le cidre limpide ainsi obtenu est ensuite prêt à être embouteillé. Notons que l’élimination des polyphénols (tanins) lors du collage permet de diminuer l’astringence du cidre, et impacte également sa couleur (voir « Les effets sensoriels du collage » ).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q20">
+  <div class="q-tete">
+    <span class="id">Q20</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Clarification des cidres</span>
+  </div>
+  <p class="question">Décantation, centrifugation ou filtration : que choisir pour clarifier mes cidres ?</p>
+  <div class="reponse">Lors de l&#x27;étape de clarification des cidres, le choix entre ces procédés dépend du niveau de turbidité, de la taille des particules à éliminer, du risque de colmatage et du type de prise de mousse recherché [<a class="src-tag" href="#Q20-S1">S1</a>, <a class="src-tag" href="#Q20-S4">S4</a>]. <br><br>Pour une première séparation grossière des particules les plus grosses, la décantation suppose que les particules soient décantables — c&#x27;est-à-dire de taille suffisante et plus denses que le liquide — avec une agitation faible ou nulle [<a class="src-tag" href="#Q20-S2">S2</a>, <a class="src-tag" href="#Q20-S4">S4</a>]. La centrifugation agit selon le même principe mais de manière nettement plus efficace grâce à la force centrifuge : elle est particulièrement utilisée pour éliminer les levures, clarifier les dépôts ou préparer le cidre en amont d&#x27;une filtration afin de limiter le colmatage [<a class="src-tag" href="#Q20-S1">S1</a>, <a class="src-tag" href="#Q20-S3">S3</a>, <a class="src-tag" href="#Q20-S6">S6</a>]. La filtration sur Kieselguhr (ou terres blanches) constitue une autre option de séparation grossière pour retenir les débris et levures, mais elle présente un risque de colmatage sur les cidres très chargés [<a class="src-tag" href="#Q20-S2">S2</a>, <a class="src-tag" href="#Q20-S6">S6</a>]. <br><br>Les opérations de filtration plus fines interviennent ensuite pour parfaire la limpidité et éliminer les microorganismes avant la mise en bouteille [<a class="src-tag" href="#Q20-S1">S1</a>, <a class="src-tag" href="#Q20-S6">S6</a>]. La filtration sur plaques nécessite d&#x27;adapter le seuil de coupure au niveau de population de levures pour éviter les colmatages, tandis que la microfiltration tangentielle évite l&#x27;arrivée frontale du liquide et limite grandement ce phénomène tout en offrant une très haute performance d&#x27;élimination [<a class="src-tag" href="#Q20-S1">S1</a>, <a class="src-tag" href="#Q20-S6">S6</a>]. Enfin, pour une prise de mousse en bouteille, la clarification ne doit pas être trop poussée afin de préserver une population suffisante de levures, alors qu&#x27;une filtration fine sous contre-pression conviendra aux cidres destinés à une prise de mousse en cuve close [<a class="src-tag" href="#Q20-S1">S1</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q20-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1587" target="_blank" rel="noopener">La clarification de finition des cidres</a><em>La clarification des cidres sans collage</em><span class="idoc">fiche n°1587</span></div><blockquote>Cette méthode de clarification permet d’obtenir un produit quasi limpide, mais un léger trouble peut encore être présent, suivant les opérations de séparation choisies. Ceci peut également dépendre du niveau de turbidité du produit assemblé. A titre d’exemple, si le produit assemblé est relativement limpide (avec une turbidité inférieure à 30 NTU), un collage n’est pas nécessaire. Cette clarification sans collage commence généralement par une opération de séparation physique grossière, soit une centrifugation soit une filtration sur Kieselguhr, par exemple (voir « La centrifugation » et « La filtration sur Kieselguhr » ). Ceci permet de rendre le cidre plus limpide en éliminant une partie des matières en suspension. Cette première séparation permet également de diminuer les risques de colmatage des filtres plus sélectifs, utilisés lors de la seconde opération de séparation. Celle-ci se veut en effet plus fine, et permet ainsi de clarifier plus finement le produit, grâce à une filtration sur plaques à faible seuil de coupure, par exemple, ou par microfiltration tangentielle (voir « La filtration sur plaques » et « La microfiltration tangentielle » ). Notons que l’élimination fine des matières en suspension, suivant le seuil de coupure choisi, peut également permettre d’éliminer les microorganismes d’altération, avant la mise en bouteille. Toutefois, le matériel utilisé lors de ces étapes de séparation doit être correctement entretenu et nettoyé/désinfecté, pour ne pas apporter de microorganismes indésirables (voir « Les principes d’hygiène dans le domaine cidricole » ). Remarques : Une filtration fine peut conduire à l’élimination de la majorité des populations de levures. Pour les cidriers souhaitant conserver le gaz produit au cours de la fermentation, il est possible de réaliser une prise de mousse en cuve close. La filtration sous contre-pression permet de conserver le gaz produit lors de la fermentation. Le cidre clarifié reste sous pression et est embouteillé avec une soutireuse isobarométrique (voir « L’embouteillage iso-barométrique » ). Pour une prise de mousse en bouteille, la clarification ne doit pas être trop poussée, afin de conserver un certain niveau de population de levures, et donc un certain trouble. Cette méthode de prise de mousse demande un contrôle de la clarification et du niveau de population de levures restant dans le produit clarifié (voir « La prise de mousse en bouteille » ).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q21">
+  <div class="q-tete">
+    <span class="id">Q21</span>
+    <span class="forme f-proc">Procédure</span>
+    <span class="theme">Assemblage</span>
+  </div>
+  <p class="question">Comment réalise-t-on un assemblage de cidres ?</p>
+  <div class="reponse">Cette opération intervient au stade post-fermentaire afin de mélanger différentes cuvées pour obtenir un produit commercialisable aux caractéristiques souhaitées [<a class="src-tag" href="#Q21-S1">S1</a>, <a class="src-tag" href="#Q21-S3">S3</a>, <a class="src-tag" href="#Q21-S7">S7</a>]. <br><br>La réalisation de l&#x27;assemblage suit les étapes suivantes :<br><br>1. **Définition et formulation de l&#x27;assemblage** : le cidrier fixe les caractéristiques recherchées pour le cidre final, puis calcule les volumes nécessaires de chaque cuvée selon leurs caractéristiques, en intégrant les contraintes réglementaires, logistiques et organoleptiques [<a class="src-tag" href="#Q21-S2">S2</a>, <a class="src-tag" href="#Q21-S8">S8</a>]. Une autre pratique plus simple consiste à assembler directement une proportion fixe de différentes cuvées, comme 20 % du volume de 5 cuvées [<a class="src-tag" href="#Q21-S1">S1</a>].<br>2. **Réalisation d&#x27;un assemblage test** : un premier essai est préparé à petite échelle [<a class="src-tag" href="#Q21-S3">S3</a>, <a class="src-tag" href="#Q21-S8">S8</a>].<br>3. **Validation de l&#x27;assemblage test** : ce test fait l&#x27;objet d&#x27;analyses physico-chimiques, microbiologiques et sensorielles pour confirmer ou ajuster la formulation [<a class="src-tag" href="#Q21-S3">S3</a>, <a class="src-tag" href="#Q21-S8">S8</a>].<br>4. **Réalisation de l&#x27;assemblage final** : le mélange est ensuite réalisé à grande échelle en cuverie [<a class="src-tag" href="#Q21-S3">S3</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q21-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1598" target="_blank" rel="noopener">Définition et formulation de l&#x27;assemblage</a><em>Introduction</em><span class="idoc">fiche n°1598</span></div><blockquote>Mener des fermentations en cuve pour obtenir un cidre n’aboutit pas toujours à un cidre avec des caractéristiques physico-chimiques et organoleptiques idéales pour une commercialisation. Un assemblage de différentes cuvées est donc nécessaire, pour arriver au type de cidre souhaité. On définit ainsi l’assemblage comme étant l’étape de la production qui permet de travailler différentes cuvées pour obtenir un cidre avec certaines caractéristiques analytiques et organoleptiques. Certains cidriers réalisent un assemblage post-fermentaire sans particulièrement tenir compte des caractéristiques des cuvées de base. L’assemblage consiste alors à mélanger 20 % du volume de 5 cuvées différentes. Les caractéristiques du cidre assemblé doivent toutefois être conformes à la réglementation du cidre français (voir « Le décret cidre » ). Une autre pratique consiste à formuler un assemblage qui sera réalisé en prenant davantage en compte les caractéristiques des cuvées disponibles et en définissant les volumes nécessaires.</blockquote></div><div class="source" id="Q21-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1600" target="_blank" rel="noopener">Les contraintes à l&#x27;assemblage</a><em>Introduction</em><span class="idoc">fiche n°1600</span></div><blockquote>L’étape d’assemblage post-fermentaire comprend plusieurs opérations : i) la définition et la formulation de l’assemblage, ii) la réalisation d’un assemblage test, iii) la validation de cet assemblage test par des analyses microbiologiques, physico-chimiques et sensorielles. C’est seulement après ce processus que l’assemblage final, à grande échelle, est réalisé, afin de produire un cidre qui corresponde le plus possible aux critères définis initialement (voir « L’étape d’assemblage » ). Dans un monde idéal, les cuvées sont prêtes à être assemblées au même moment et ne présentent aucun défaut. La réalité est bien différente, et de nombreuses contraintes régissent finalement une partie de l’assemblage des cidres en cuverie. Cette fiche a pour objectif de présenter les principales contraintes liées à l’assemblage post-fermentaire (Figure 1).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q22">
+  <div class="q-tete">
+    <span class="id">Q22</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Conditionnement</span>
+  </div>
+  <p class="question">Quelle méthode choisir pour obtenir l&#x27;effervescence de mon cidre ?</p>
+  <div class="reponse">L&#x27;obtention de l&#x27;effervescence intervient lors de l&#x27;étape de conditionnement du cidre [<a class="src-tag" href="#Q22-S4">S4</a>]. Le choix de la méthode dépend principalement des équipements disponibles (présence ou non d&#x27;un saturateur ou d&#x27;une soutireuse isobarométrique), de la facilité de maîtrise de la pression et du souhait de valoriser le produit avec la mention « Effervescence naturelle » [<a class="src-tag" href="#Q22-S3">S3</a>], [<a class="src-tag" href="#Q22-S6">S6</a>], [<a class="src-tag" href="#Q22-S7">S7</a>]. <br><br>Plusieurs options sont possibles selon votre situation :<br>- La prise de mousse en bouteille convient particulièrement aux petites cidreries car elle ne requiert pas de moyens matériels sophistiqués et autorise la mention « Effervescence naturelle », mais elle exige un savoir-faire précis car aucune intervention n&#x27;est possible après le bouchage [<a class="src-tag" href="#Q22-S5">S5</a>], [<a class="src-tag" href="#Q22-S6">S6</a>].<br>- La prise de mousse en cuve close permet de gérer plus facilement le niveau d&#x27;effervescence avant le conditionnement isobarométrique, tout en permettant aussi l&#x27;emploi de la mention « Effervescence naturelle » [<a class="src-tag" href="#Q22-S3">S3</a>], [<a class="src-tag" href="#Q22-S7">S7</a>].<br>- La méthode avec gazéification repose sur l&#x27;apport de gaz carbonique exogène dissous avant un embouteillage isobarométrique destiné à éviter les pertes de gaz [<a class="src-tag" href="#Q22-S5">S5</a>], [<a class="src-tag" href="#Q22-S7">S7</a>].<br>- La méthode mixte combine gazéification préalable et prise de mousse pour obtenir rapidement une effervescence contrôlée, une relative stabilité microbiologique et une consommation de l&#x27;oxygène en bouteille, mais impose de maîtriser la population de levures pour écarter tout risque de surpression [<a class="src-tag" href="#Q22-S1">S1</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q22-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1143" target="_blank" rel="noopener">La méthode de conditionnement par effervescence &quot;mixte&quot;</a><em>définition de « Méthode de conditionnement à effervescence mixte »</em><span class="idoc">fiche n°1143</span></div><blockquote>Modalité de l&#x27;étape &quot;Conditionnement et obtention de l&#x27;effervescence&quot;. L&#x27;effervescence est obtenue par dissolution de gaz carbonique &quot;exogène&quot; dans le cidre. Le conditionnement se fait sous pression (embouteilleuse isobarométrique) en maintenant une faible quantité de levures en bouteille.</blockquote></div><div class="source" id="Q22-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1595" target="_blank" rel="noopener">La méthode de conditionnement avec prise de mousse en cuve close</a><em>Introduction</em><span class="idoc">fiche n°1595</span></div><blockquote>Il existe trois grandes méthodes pour rendre un cidre effervescent : la méthode de gazéification (ou carbonatation), la méthode avec prise de mousse (en bouteille ou en cuve close) et la méthode à effervescence mixte, combinant une gazéification et une prise de mousse (voir « Effervescence et conditionnement » ). Le principe de la prise de mousse en cuve close repose sur la capacité des levures à produire du gaz carbonique (CO 2 ) lors de la fermentation, pour obtenir un cidre effervescent. L’avantage de cette méthode est qu’il est plus facile pour le cidrier de gérer le niveau d’effervescence du produit avant son embouteillage, comparé à une prise de mousse qui se fait en bouteille. L’effervescence étant due à la fermentation de sucres résiduels par les levures, la prise de mousse en cuve close permet d’apposer la mention facultative « Effervescence naturelle » sur l’étiquette, comme définie par le décret cidre (voir « Le décret cidre » et « L’étiquetage des bouteilles de cidre » ).</blockquote></div><div class="source" id="Q22-S6"><div class="s-tete"><code>S6</code><a href="https://ascocid.fr/ldc/view.php?id_document=1410" target="_blank" rel="noopener">La prise de mousse en bouteille</a><em>Introduction</em><span class="idoc">fiche n°1410</span></div><blockquote>La prise de mousse en bouteille est une des méthodes employées pour obtenir un cidre effervescent, c’est-à-dire un cidre contenant une teneur élevée en gaz carbonique dissous, en équilibre, avec une pression supérieure à la pression atmosphérique. Cette méthode est principalement pratiquée dans les petites cidreries (surtout les fermiers), car elle nécessite peu de moyens matériels sophistiqués (saturateur, embouteilleuse isobarométrique) qu’il serait difficile de rentabiliser dans une petite installation. En revanche, elle nécessite plus de savoir-faire, pour que la quantité de gaz carbonique dans le produit fini corresponde à l’objectif fixé. La principale difficulté est de parvenir à orienter la fermentation, au moment de l’embouteillage, en sachant qu’il n’est plus possible d’intervenir après. L’absence d’intrants et la possibilité d’utiliser la mention « effervescence naturelle » sont plutôt favorables à l’image du produit.</blockquote></div><div class="source" id="Q22-S7"><div class="s-tete"><code>S7</code><a href="https://ascocid.fr/ldc/view.php?id_document=1606" target="_blank" rel="noopener">L&#x27;embouteillage isobarométrique</a><em>Introduction</em><span class="idoc">fiche n°1606</span></div><blockquote>L’obtention de l’effervescence d’un cidre peut être due à une prise de mousse et/ou à une opération de gazéification, également appelée carbonatation (voir « Effervescence et conditionnement » ). Contrairement aux produits issus d’une prise de mousse en bouteille, les autres modes d’obtention de l’effervescence (carbonatation, prise de mousse en cuve close, méthode mixte) ont lieu avant embouteillage. L’étape de mise en bouteille doit donc être réalisée de manière à ne pas perdre le gaz carbonique (CO 2 ) du cidre, au risque que le produit devienne plat après embouteillage. L’embouteillage isobarométrique permet ainsi la mise en bouteille de cidres effervescents, sous pression, tout en conservant le gaz dissous dans le produit.</blockquote></div><div class="source" id="Q22-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1592" target="_blank" rel="noopener">La méthode de conditionnement avec prise de mousse en bouteille</a><em>Introduction</em><span class="idoc">fiche n°1592</span></div><blockquote>On distingue trois grandes méthodes d’obtention de l’effervescence : la méthode de conditionnement avec gazéification, par l’apport de gaz exogène (appelée aussi « par carbonatation »), la méthode de conditionnement avec prise de mousse, et la méthode d’effervescence mixte, combinant une gazéification et une prise de mousse (voir « La méthode de conditionnement avec gazéification » ). Le principe de la prise de mousse en bouteille repose sur la capacité des levures à produire du gaz carbonique (CO 2 ) lors de la fermentation. Ainsi, en embouteillant un produit en présence de levures et de sucres, les levures peuvent continuer à fermenter ces sucres résiduels, ce qui conduit à l’obtention d’un cidre effervescent. Cette méthode de gazéification « naturelle » peut être valorisée auprès du consommateur par l’ajout sur l’étiquette de la mention facultative définie par le décret cidre : « Effervescence naturelle » (voir « Le décret cidre » et « L’étiquetage des bouteilles de cidre » ).</blockquote></div><div class="source" id="Q22-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1596" target="_blank" rel="noopener">Effervescence et conditionnement</a><em>La méthode de conditionnement à effervescence mixte</em><span class="idoc">fiche n°1596</span></div><blockquote>La méthode mixte est un procédé mêlant gazéification et prise de mousse par des levures, pour obtenir l’effervescence du produit. Généralement, le cidre clarifié est gazéifié à hauteur de 1,5 bar et ensemencé avec moitié moins de LSA que pour une prise de mousse (entre 0,5 et 1 g/HL). Le cidre est ensuite mis en bouteille, à l’aide d’une soutireuse isobarométrique (voir « L’embouteillage isobarométrique » ). Cette méthode présente ainsi plusieurs avantages : i) obtenir rapidement un cidre à l’effervescence contrôlée, ii) relativement stable d’un point de vue microbiologique et iii) de consommer l’oxygène présent en bouteille, grâce aux levures. Toutefois, il est important de veiller au niveau de population de levures, afin d’éviter des phénomènes de surpression, qui pourraient conduire à des explosions de bouteilles.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q23">
+  <div class="q-tete">
+    <span class="id">Q23</span>
+    <span class="forme f-proc">Procédure</span>
+    <span class="theme">Conditionnement</span>
+  </div>
+  <p class="question">Comment se déroule une prise de mousse en bouteille ?</p>
+  <div class="reponse">Cette opération intervient lors de l&#x27;étape de conditionnement et obtention de l&#x27;effervescence, après l&#x27;assemblage [<a class="src-tag" href="#Q23-S3">S3</a>].<br><br>Le déroulement d&#x27;une prise de mousse en bouteille s&#x27;organise selon les étapes suivantes :<br><br>1. **Clarification et gestion de la population de levures** : après l&#x27;assemblage, le cidre est clarifié par centrifugation ou filtration [<a class="src-tag" href="#Q23-S3">S3</a>]. Une filtration fine élimine les microorganismes mais nécessite un ajout de Levures Sèches Actives (LSA) [<a class="src-tag" href="#Q23-S3">S3</a>]. En cas d&#x27;utilisation de levures indigènes, un dénombrement (sur cellule de Malassez, boîte de Petri ou cytométrie en flux) permet de vérifier le niveau de la population : s&#x27;il est insuffisant, un ajout de LSA complète le seuil, et s&#x27;il est trop élevé, une nouvelle réduction par filtration ou centrifugation est requise [<a class="src-tag" href="#Q23-S3">S3</a>, <a class="src-tag" href="#Q23-S8">S8</a>].<br>2. **Embouteillage** : le cidre plat ou faiblement gazéifié est embouteillé « à plat » à la pression atmosphérique, sans recours à un embouteillage isobarométrique [<a class="src-tag" href="#Q23-S3">S3</a>, <a class="src-tag" href="#Q23-S5">S5</a>].<br>3. **Bouchage et muselage** : les bouteilles sont ensuite bouchées et muselées [<a class="src-tag" href="#Q23-S3">S3</a>].<br>4. **Prise de mousse et conservation** : les bouteilles sont conservées plusieurs semaines pour permettre aux levures de réaliser une nouvelle fermentation à partir des sucres résiduels [<a class="src-tag" href="#Q23-S3">S3</a>, <a class="src-tag" href="#Q23-S6">S6</a>, <a class="src-tag" href="#Q23-S8">S8</a>]. Le gaz carbonique ainsi produit et piégé dans la bouteille confère l&#x27;effervescence, générant généralement une pression comprise entre 2 et 4 bars à 10 °C [<a class="src-tag" href="#Q23-S6">S6</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q23-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1592" target="_blank" rel="noopener">La méthode de conditionnement avec prise de mousse en bouteille</a><em>Les étapes d’un conditionnement avec prise de mousse en bouteille</em><span class="idoc">fiche n°1592</span></div><blockquote>Une prise de mousse en bouteille comprend plusieurs opérations en amont et en aval (Figure 1). Après assemblage, le cidre est clarifié plus ou moins finement, ce qui dépend de la méthode de clarification choisie (centrifugation ou type de filtration) et, dans le cas d’une filtration, par le seuil de coupure utilisé. Une filtration fine présente l’avantage de réduire les risques de développement de microorganismes d’altération après embouteillage, mais cela nécessite alors l’ajout de LSA (Levures Sèches Actives) pour conduire la fermentation en bouteille. Certains cidriers choisissent plutôt de travailler avec les levures indigènes, c’est-à-dire avec celles déjà présentes dans le cidre. Il est alors conseillé de réaliser un comptage de levures, pour déterminer le niveau de population et évaluer si celui-ci est suffisant ou, à l’inverse, trop élevé pour une prise de mousse. S’il est insuffisant, l’ajout de LSA pourra permettre d’atteindre le seuil de population nécessaire à la prise de mousse. S’il est trop élevé, il sera alors nécessaire de procéder à une nouvelle réduction de la population de levures, par centrifugation ou filtration. Le cidre plat, ou tout du moins faiblement gazéifié est ensuite embouteillé et la bouteille, bouchée et muselée. Notons que contrairement aux autres méthodes d’obtention de l’effervescence, la prise de mousse en bouteille ne nécessite pas d’embouteillage isobarométrique. Les bouteilles sont ensuite conservées plusieurs semaines, le temps que la fermentation reprenne en bouteille, grâce à la présence des levures et des sucres résiduels, au moment de l’embouteillage.</blockquote></div><div class="source" id="Q23-S6"><div class="s-tete"><code>S6</code><a href="https://ascocid.fr/ldc/view.php?id_document=1597" target="_blank" rel="noopener">Les problèmes de gazéification en bouteille</a><em>Introduction</em><span class="idoc">fiche n°1597</span></div><blockquote>La prise de mousse en bouteille est une méthode d’obtention de l’effervescence qui nécessite la présence de levures et de sucres à l’embouteillage (voir « La méthode de conditionnement avec prise de mousse en bouteille » ). Les levures réalisent une nouvelle fermentation en consommant les sucres, et produisent ainsi du gaz carbonique (CO 2 ), qui, piégé dans la bouteille, confère l’effervescence au cidre (voir « Effervescence et conditionnement » ). Généralement, la pression obtenue lors d’une prise de mousse en bouteille est comprise entre 2 et 4 bars à 10 °C. Il est important pour le cidrier de savoir maîtriser cette prise de mousse pour contrôler l’intensité de l’effervescence du produit, afin d’éviter qu’il ne soit trop, ou pas assez effervescent (Figure 1). En effet, ces problèmes de gazéification pourraient perturber la dégustation, de par les sensations tactiles en bouche (foisonnement ou cidre trop plat), l’aspect visuel du produit (taille des bulles, persistance de la mousse, …) mais aussi le dégagement des arômes (libération des composés volatils). Dans des cas extrêmes, des débordements excessifs, voire des explosions de bouteilles, peuvent également survenir, suite à des problèmes de surpression. Il est donc nécessaire de connaître les différents paramètres pouvant conduire à des problèmes de gazéification en bouteille, afin de les maîtriser au mieux.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q24">
+  <div class="q-tete">
+    <span class="id">Q24</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Conditionnement</span>
+  </div>
+  <p class="question">Qu&#x27;est-ce que l&#x27;embouteillage isobarométrique ?</p>
+  <div class="reponse">Cette opération intervient lors de l&#x27;étape de conditionnement et consiste à mettre en bouteille un cidre déjà gazéifié (par carbonatation, prise de mousse en cuve close ou méthode mixte) de manière à empêcher la perte de gaz carbonique [<a class="src-tag" href="#Q24-S2">S2</a>, <a class="src-tag" href="#Q24-S3">S3</a>]. <br><br>Pour cela, la mise en bouteille s&#x27;effectue à l&#x27;aide d&#x27;une soutireuse isobarométrique qui maintient une contre-pression, la pression dans la cloche devant constamment rester supérieure à la pression de saturation [<a class="src-tag" href="#Q24-S1">S1</a>, <a class="src-tag" href="#Q24-S2">S2</a>]. La pression de la bouteille est mise à l&#x27;équilibre avec celle de la cloche grâce à l&#x27;ouverture d&#x27;une canule permettant la circulation d&#x27;air [<a class="src-tag" href="#Q24-S2">S2</a>]. Du fait de cet équilibre des pressions, l&#x27;écoulement du cidre dans la bouteille s&#x27;effectue par simple gravité, tandis que la pression dans la cloche est ajustée en continu par apport de CO₂ exogène pour compenser les sorties de liquide [<a class="src-tag" href="#Q24-S2">S2</a>, <a class="src-tag" href="#Q24-S3">S3</a>]. L&#x27;opération se divise ainsi en quatre grandes étapes : la mise sous vide de la bouteille, l&#x27;équilibrage de la pression entre la bouteille et la cloche, le remplissage de la bouteille puis la dépressurisation [<a class="src-tag" href="#Q24-S1">S1</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q24-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1606" target="_blank" rel="noopener">L&#x27;embouteillage isobarométrique</a><em>Qu’est-ce que l’embouteillage isobarométrique ?</em><span class="idoc">fiche n°1606</span></div><blockquote>L’embouteillage isobarométrique consiste à mettre en bouteille un cidre déjà gazéifié, par carbonatation, prise de mousse en cuve close ou méthode mixte, mais de sorte à empêcher la perte de gaz carbonique, lors de la mise en bouteille. L’enjeu de l’embouteillage isobarométrique est donc de maintenir un équilibre de pressions à la fois entre le saturateur et la cloche (ou cuve) de l’embouteilleuse, mais également entre la cloche et l’atmosphère de la bouteille, en cours de remplissage (voir « La soutireuse isobarométrique » ). Pour entrer davantage dans les détails, la pression dans la cloche doit constamment être supérieure à la pression de saturation, c’est pourquoi cet embouteillage est décrit comme étant un embouteillage à contre-pression. Concernant les bouteilles à remplir, elles se trouvent, au départ, à la pression atmosphérique puisqu’elles arrivent ouvertes, au niveau de la soutireuse. La pression des bouteilles est donc mise à l’équilibre avec celle de la cloche, par l’ouverture d’une canule, qui permet la circulation d’air entre la cloche et la bouteille, et l’équilibrage des pressions. Du fait de cet équilibre des pressions, l’écoulement du cidre se fait par simple gravité, comme s’il s’agissait d’un soutirage à pression constante. Toutefois, la pression dans la cloche doit être ajustée en continu par apport de CO 2 exogène, pour compenser les sorties de liquide.</blockquote></div><div class="source" id="Q24-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1606" target="_blank" rel="noopener">L&#x27;embouteillage isobarométrique</a><span class="idoc">fiche n°1606</span></div><blockquote>Résumé : L’embouteillage de cidres gazéifiés est une opération présentant un enjeu principal : la conservation de l’effervescence du produit. Pour cela, la mise en bouteille nécessite une soutireuse isobarométrique, qui permet un embouteillage du cidre sous contre-pression. Cette opération se divise en 4 grandes étapes : la mise sous vide de la bouteille, l’équilibrage de la pression entre la bouteille et la cloche, le remplissage de la bouteille puis la dépressurisation. L’étape de mise en bouteille étant sensible aux risques de contaminations microbiologiques, il est important de veiller à l’hygiène de cet équipement.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q25">
+  <div class="q-tete">
+    <span class="id">Q25</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Post-conditionnement</span>
+  </div>
+  <p class="question">Faut-il pasteuriser mes bouteilles ?</p>
+  <div class="reponse">Dans le procédé cidricole, la pasteurisation intervient lors des opérations de post-conditionnement après l&#x27;embouteillage et constitue une opération éventuelle [<a class="src-tag" href="#Q25-S5">S5</a>], [<a class="src-tag" href="#Q25-S6">S6</a>]. <br><br>La nécessité de pasteuriser dépend de la gestion des flores résiduelles et de la tolérance aux altérations du produit [<a class="src-tag" href="#Q25-S2">S2</a>], [<a class="src-tag" href="#Q25-S8">S8</a>]. En effet, le cidre ayant un pH inférieur à 4,5, il ne contient pas de bactéries pathogènes et ne présente aucun risque grave pour la santé des consommateurs [<a class="src-tag" href="#Q25-S8">S8</a>]. Le risque en l&#x27;absence de pasteurisation est uniquement d&#x27;ordre technique, pouvant entraîner l&#x27;apparition d&#x27;un trouble ou une modification de la qualité gustative [<a class="src-tag" href="#Q25-S8">S8</a>]. <br><br>Ainsi, le recours à la pasteurisation permet de détruire l&#x27;ensemble des flores présentes dans le cidre et son contenant via un barème durée/température adapté [<a class="src-tag" href="#Q25-S2">S2</a>]. À l&#x27;inverse, si vous choisissez de ne pas pasteuriser, la présence de cette flore résiduelle ou l&#x27;ajout de sulfites peuvent être utilisés durant un temps de stockage pour consommer l&#x27;oxygène apporté au cours de l&#x27;embouteillage [<a class="src-tag" href="#Q25-S7">S7</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q25-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1593" target="_blank" rel="noopener">Le post-conditionnement</a><em>Introduction</em><span class="idoc">fiche n°1593</span></div><blockquote>Le post-conditionnement en bouteille comprend jusqu’à trois grandes opérations finalisant la production du produit avant sa commercialisation. Ces trois opérations sont i) une éventuelle pasteurisation, ii) l’étiquetage des bouteilles et iii) la conservation ou le stockage des bouteilles à commercialiser (Figure 1).</blockquote></div><div class="source" id="Q25-S6"><div class="s-tete"><code>S6</code><a href="https://ascocid.fr/ldc/view.php?id_document=1593" target="_blank" rel="noopener">Le post-conditionnement</a><span class="idoc">fiche n°1593</span></div><blockquote>Résumé : Le post-conditionnement en bouteille marque la fin de l’élaboration des cidres. Cette étape comprend une éventuelle opération de pasteurisation, l’étiquetage des bouteilles et enfin, une période de conservation ou de stockage des bouteilles, avant leur commercialisation.</blockquote></div><div class="source" id="Q25-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1321" target="_blank" rel="noopener">La pasteurisation en bouteille</a><em>définition de « Pasteurisation en bouteille »</em><span class="idoc">fiche n°1321</span></div><blockquote>Traitement thermique ayant pour but de pasteuriser le cidre et son contenant par chauffage de l&#x27;ensemble à un barême durée/température suffisant pour détruire les flores présentes.</blockquote></div><div class="source" id="Q25-S8"><div class="s-tete"><code>S8</code><a href="https://ascocid.fr/ldc/view.php?id_document=1399" target="_blank" rel="noopener">Les principes de la pasteurisation</a><em>Le traitement doit être adapté au produit</em><span class="idoc">fiche n°1399</span></div><blockquote>Tous les micro-organismes ne sont pas égaux vis-à-vis de l&#x27;action de la température. Certains sont thermosensibles et leur destruction commence entre 40 et 50°C alors que d&#x27;autres, les thermorésistants, résistent à des températures de l&#x27;ordre de 80 à 100°C, voire davantage. Certaines bactéries pathogènes, capables de former des spores très résistantes, ne peuvent être détruites qu’à partir de 100°C. Soyons rassurés, de telles bactéries n&#x27;ont jamais été trouvées dans les produits acides (pH &lt; 4,5), comme le cidre. Le produit sélectionne donc ses micro-organismes et, selon le type de produit, il sera nécessaire de se débarrasser de germes plus ou moins difficiles à détruire. Ajoutons que le risque lié à une mauvaise destruction des germes est plus ou moins grave selon que le germe est pathogène ou non. Dans le cas des cidres, les germes présents n’étant pas pathogènes, il n’y a pas de risques graves pour la santé des consommateurs, mais « seulement » un risque technique (trouble, qualité gustative …). Dans ce cas, on peut se permettre de prendre moins de marge de sécurité. De plus, durant la pasteurisation elle-même, l&#x27;efficacité de l&#x27;action de la température est influencée par le milieu : plus le pH est bas, plus la pasteurisation est efficace. De même, des teneurs élevées en alcool vont favoriser la destruction des micro-organismes par la chaleur. Ainsi, un jus de pomme dont le pH est inférieur à 4,5 peut être stabilisé par des traitements à des températures inférieures à celle utilisée pour le traitement de la bière, et un cidre nécessitera un barème encore moins élevé (présence d’alcool) que celui d’un jus de pomme. A noter que la présence de trouble et de sucre augmente la résistance des micro-organismes. C&#x27;est pourquoi, un barème doit être choisi à la fois en fonction du micro-organisme le plus thermorésistant, et du type de produit que l&#x27;on veut pasteuriser.</blockquote></div><div class="source" id="Q25-S7"><div class="s-tete"><code>S7</code><a href="https://ascocid.fr/ldc/view.php?id_document=1320" target="_blank" rel="noopener">La conservation des bouteilles non pasteurisées</a><em>définition de « Conservation des bouteilles non pasteurisées »</em><span class="idoc">fiche n°1320</span></div><blockquote>Le cidre après embouteillage est souvent oxygéné. Certains cidriers prévoient un délai entre l&#x27;embouteillage et la commercialisation pour permettre la consommation de l&#x27;oxygène soit par la flore résiduelle présente soit par les sulfites ajoutés (éventuellement supplémenté d&#x27;acide ascorbique).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q26">
+  <div class="q-tete">
+    <span class="id">Q26</span>
+    <span class="forme f-arb">Arbitrage</span>
+    <span class="theme">Sulfites</span>
+  </div>
+  <p class="question">Faut-il sulfiter mon cidre, et à quel moment ?</p>
+  <div class="reponse">L&#x27;opportunité de sulfiter votre cidre dépend du stade d&#x27;élaboration, du niveau de risque microbiologique, de l&#x27;exposition à l&#x27;oxygène et du recours ou non à la pasteurisation [<a class="src-tag" href="#Q26-S1">S1</a>, <a class="src-tag" href="#Q26-S2">S2</a>]. <br><br>En cours de fermentation, il n&#x27;est pas judicieux de sulfiter car la levure synthétise de l&#x27;éthanal qui élimine une partie du SO2, alors qu&#x27;un traitement préventif peut être utile en situation à risque avant le déclenchement d&#x27;une maladie [<a class="src-tag" href="#Q26-S2">S2</a>]. <br><br>Cette opération intervient essentiellement au moment de l&#x27;embouteillage, lors du conditionnement, afin de compenser les contaminations en oxygène et de freiner la flore microbienne [<a class="src-tag" href="#Q26-S1">S1</a>, <a class="src-tag" href="#Q26-S4">S4</a>]. Pour les cidres pasteurisés, le sulfitage peut être réduit en limitant l&#x27;oxygénation grâce à l&#x27;inertage des cuves de stockage [<a class="src-tag" href="#Q26-S1">S1</a>]. Pour les cidres non pasteurisés, le sulfitage est couramment pratiqué aux environs de 50 mg/L, mais cette dose peut être abaissée à une teneur intermédiaire située entre 15 et 20 mg/L sous réserve d&#x27;une filtration fine et d&#x27;une hygiène stricte du matériel [<a class="src-tag" href="#Q26-S1">S1</a>]. Enfin, pour le seul rôle antioxydant à la mise en bouteille, 8 mg/L de SO2 suffisent pour consommer une contamination de 2 mg/L d&#x27;oxygène, une dose de 15 mg/L offrant une marge confortable [<a class="src-tag" href="#Q26-S4">S4</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q26-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1412" target="_blank" rel="noopener">Les sulfites</a><em>Effet antiseptique et sélectivité</em><span class="idoc">fiche n°1412</span></div><blockquote>Seul un sulfitage réalisé en préventif avant le déclenchement de la maladie peut être utile dans les situations à risque. De même, il n’est pas judicieux de sulfiter en cours de fermentation, car la levure produit également de l’éthanal qui éliminera une partie du SO 2 .</blockquote></div><div class="source" id="Q26-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1413" target="_blank" rel="noopener">Le sulfitage</a><em>Ajout au moment de l’embouteillage</em><span class="idoc">fiche n°1413</span></div><blockquote>Le sulfitage sera d’autant plus efficace que le cidre aura été bien filtré et que le matériel de traitement (filtres, pompes, tuyaux, et surtout l’ensemble saturateur et embouteilleuse) aura été nettoyé/désinfecté après chaque utilisation et maintenu en conditions bactériostatiques (sans croissance de bactéries et autres microorganismes). L’évolution vers des filtrations fines comme la microfiltration tangentielle ou des filtrations complémentaires sur membranes (filtre de garde) permet de descendre à des niveaux de contamination très faibles. De petites quantités de SO 2 suffiront alors pour éliminer les quelques levures ou bactéries résiduelles. A ce stade, il est actuellement courant de sulfiter aux environs de 50 mg/L. On a vu que cette quantité est en large excès pour sa fonction antioxydante (8 mg/L calculé plus haut). Pour les cidres pasteurisés, il n’y a donc pas d’impossibilité majeure à réduire le sulfitage en limitant l’oxygénation (inertage des cuves de stockage). Pour les cidres non pasteurisés, le rôle antimicrobien des sulfites est utile à ce stade. Toutefois, en prenant les précautions d’hygiène indiquées, il est probablement possible de réduire la quantité pour se placer à une teneur intermédiaire (entre 15 et 20 mg/L), même s’il est difficile d’affirmer que la stabilité microbiologique sera assurée vis-à-vis des levures (croissance de Saccharomyces en bouteille). La question est alors de savoir si, pour ces cidres, une légère croissance levurienne est acceptable ou non. Une autre question est d’évaluer le risque d’une croissance de Brettanomyces (perte de fruité et odeur phénolée).</blockquote></div><div class="source" id="Q26-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1413" target="_blank" rel="noopener">Le sulfitage</a><em>Ajout au moment de l’embouteillage</em><span class="idoc">fiche n°1413</span></div><blockquote>Lors de l’embouteillage isobarométrique, il est fréquent d’introduire de l’oxygène. Cette opération est même souvent la principale cause d’oxygénation des cidres (voir « L’oxygénation du cidre à l’embouteillage » ). Une introduction de SO 2 dans la bouteille peut permettre, là aussi, de compenser cette contamination en oxygène. Pour que la consommation de l’O 2 soit la plus rapide possible, il est préconisé, dans le vin, une addition d’un mélange à part égale d’acide ascorbique et de SO 2 , car l’oxydation de l’acide ascorbique est rapide. Le SO 2 intervient ensuite pour régénérer l’acide ascorbique à partir de son produit d’oxydation en devenant lui-même du SO 4 2- . Il est clair cependant que la meilleure solution reste de réduire au maximum la teneur en oxygène dans le cidre embouteillé. L’ordre de grandeur des quantités nécessaires reste faible, car il suffit théoriquement de 4 mg de SO 2 pour consommer 1 mg d’oxygène. Comme les précautions anti-oxygène à l’embouteillage permettent de réduire à 2 mg/L la contamination en oxygène, il suffit de 8 mg/L de SO 2 pour assurer la consommation totale. Même en prenant une marge confortable (15 mg/L), on reste à des apports faibles en SO 2 . Par ailleurs, lorsque le cidre est embouteillé, il n’est plus possible d’intervenir. Une croissance de microorganismes indésirables peut alors modifier définitivement les caractéristiques du cidre. C’est pourquoi beaucoup de cidriers, attachés à la production de cidres non pasteurisés, considèrent ce stade comme un point critique, et gardent un sulfitage suffisant pour réduire la population microbienne.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q27">
+  <div class="q-tete">
+    <span class="id">Q27</span>
+    <span class="forme f-proc">Procédure</span>
+    <span class="theme">Hygiène</span>
+  </div>
+  <p class="question">Comment nettoyer et désinfecter mes cuves ?</p>
+  <div class="reponse">Cette opération intervient dès qu&#x27;une cuve est vide afin d&#x27;éviter la propagation de contaminations microbiologiques dans la cuverie [<a class="src-tag" href="#Q27-S2">S2</a>]. <br><br>Pour le nettoyage de la cuve :<br>- Après un premier rinçage, le nettoyage permet de décoller les souillures adhérentes, les dépôts et les éventuels biofilms microbiens [<a class="src-tag" href="#Q27-S1">S1</a>].<br>-</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q27-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1580" target="_blank" rel="noopener">Procédure de nettoyage et désinfection des cuves</a><span class="idoc">fiche n°1580</span></div><blockquote>Résumé : La cuve est un élément central de la cuverie. Contenant le produit au cours des différentes étapes de la production, cet équipement présente la plus grande surface en contact avec le produit, par rapport aux autres équipements. De ce fait, des contaminations par différents microorganismes peuvent apparaître à ce niveau et, lorsque le cas est avéré, il est nécessaire de traiter la cuve et son contenu, pour éviter que d’autres cuves ne soient contaminées à leur tour, notamment en transitant par des équipements communs. Il est donc important de veiller à l’état microbiologique des cuves, et de suivre une procédure de nettoyage et désinfection, dès qu’une cuve est vide.</blockquote></div><div class="source" id="Q27-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1580" target="_blank" rel="noopener">Procédure de nettoyage et désinfection des cuves</a><em>Le nettoyage d’une cuve</em><span class="idoc">fiche n°1580</span></div><blockquote>Les outils de nettoyage d’une cuve : après ce premier rinçage vient l’étape de nettoyage, qui permet de décoller les souillures adhérentes (dépôts et éventuels biofilms microbiens). A nouveau, il est conseillé d’utiliser des outils pour nettoyer efficacement les cuves, comme le système de boules d’aspersion en inox ou le système de tête de lavage rotative « fury » (Figure 2). Concernant les boules de lavage, elles permettent de nettoyer par aspersion, par jets fixes ou mobiles. L’effet mécanique résultant de la pression et de la présence d’agents tensioactifs mouillants et peu moussants améliore ainsi l’efficacité du nettoyage. Ces boules peuvent avoir une partie rotative mise en mouvement avec la pression du liquide, ce qui permet de mieux répartir la solution nettoyante sur les différentes surfaces de la cuve, y compris vers le haut. Notons qu’il en existe de différentes tailles et de différents débits. Si la cidrerie ne dispose pas de ce type d’outils, le nettoyage se fait en circuit ouvert et manuellement, l’opérateur devant rentrer dans la cuve pour frotter les parois de la cuve avec les solutions nettoyantes (action mécanique). Toutefois, cette méthode est longue, fatigante et potentiellement dangereuse, puisque l’opérateur est en contact avec les produits détergents. Il est alors impératif de porter des Equipements de Protection Individuelle (EPI), à savoir des gants, des lunettes de protection, une blouse, des chaussures de sécurité et un masque, pour se protéger des vapeurs chimiques. Compte tenu des risques potentiels pour les opérateurs, il est donc conseillé aux cidreries de s’équiper d’une tête rotative, pour garantir la sécurité du personnel (tarifs à partir de 3000 €).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q28">
+  <div class="q-tete">
+    <span class="id">Q28</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Hygiène</span>
+  </div>
+  <p class="question">Quelle température faut-il maintenir dans une cuverie ?</p>
+  <div class="reponse">Il est préférable d’opter pour une cuverie réfrigérée maintenue au maximum à 10 °C, l&#x27;idéal étant une température inférieure à 8 °C [<a class="src-tag" href="#Q28-S1">S1</a>]. Cette maîtrise des températures permet de limiter le développement des microorganismes d&#x27;altération (notamment les bactéries et les levures *Brettanomyces*) dans la cuverie et dans le produit, tout en assurant un bon déroulement de la fermentation alcoolique [<a class="src-tag" href="#Q28-S1">S1</a>, <a class="src-tag" href="#Q28-S3">S3</a>]. À l’inverse, des températures supérieures à 10 °C sont propices au développement de ces microorganismes [<a class="src-tag" href="#Q28-S1">S1</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q28-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1567" target="_blank" rel="noopener">Entretien de l&#x27;air ambiant</a><em>La température de la cuverie</em><span class="idoc">fiche n°1567</span></div><blockquote>La température influence grandement le développement des microorganismes (levures et bactéries). De manière générale, les basses températures (inférieures à 10 °C) ont tendance à limiter le développement des principaux microorganismes rencontrés dans les cidres (hormis Saccharomyces uvarum qui est une levure cryotolérante). A l’inverse, des températures supérieures à 10 °C sont propices à leur développement. De ce fait, une cuverie non réfrigérée est soumise à des variations de températures qui augmentent le risque que des microorganismes d’altération se développent dans le produit. Il est donc préférable d’opter pour une cuverie réfrigérée (au maximum à 10 °C, mais l’idéal serait une température inférieure à 8 °C), pour limiter le développement de microorganismes d’altération (comme pour les levures Brettanomyces) au sein de la cuverie et dans le produit en cours d’élaboration.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q29">
+  <div class="q-tete">
+    <span class="id">Q29</span>
+    <span class="forme f-fait">Fait</span>
+    <span class="theme">Réglementation</span>
+  </div>
+  <p class="question">Quelles mentions sont obligatoires sur l&#x27;étiquette d&#x27;une bouteille de cidre ?</p>
+  <div class="reponse">Lors des opérations de post-conditionnement, l&#x27;étiquette d&#x27;une bouteille de cidre doit comporter obligatoirement sa dénomination, son titre alcoométrique volumique (TAV) exprimé en % vol., la mention de présence d’allergènes comme les sulfites, ainsi que le logo d’absence d’alcool pendant la grossesse [<a class="src-tag" href="#Q29-S1">S1</a>], [<a class="src-tag" href="#Q29-S8">S8</a>]. De plus, le numéro de lot apposé sur l’étiquette ou la bouteille doit obligatoirement être lisible [<a class="src-tag" href="#Q29-S4">S4</a>]. <br><br>D&#x27;autres mentions et éléments obligatoires s&#x27;appliquent selon les signes de qualité ou démarches spécifiques :<br>- pour les cidres bénéficiant d&#x27;une IGP, la mention correspondante (« Cidre de Bretagne » ou « Cidre breton », ou « Cidre de Normandie » ou « Cidre normand ») ainsi que le logo européen de l&#x27;IGP doivent obligatoirement figurer sur l’étiquette [<a class="src-tag" href="#Q29-S6">S6</a>] ;<br>- pour les cidres sous label AB, le logo associé ainsi qu&#x27;une mention indiquant si le cidre a été gazéifié sont obligatoires [<a class="src-tag" href="#Q29-S3">S3</a>] ;<br>- pour le cidre Guillevic sous Label Rouge, l&#x27;étiquette doit obligatoirement présenter le logo « Label Rouge », le numéro d’homologation du cahier des charges (LA 15/99), ainsi que les mentions « Pur jus », « Élaboré exclusivement avec des pommes de variété Guillevic » et « Prise de mousse naturelle » [<a class="src-tag" href="#Q29-S5">S5</a>].</div>
+  <ul class="alertes"><li class="al avert"><b>affirmation_non_etayee</b> — 1 phrase(s) sans marqueur de source : Lors des opérations de post-conditionnement, l&#x27;étiquette d&#x27;une bouteil</li></ul>
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q29-S1"><div class="s-tete"><code>S1</code><a href="https://ascocid.fr/ldc/view.php?id_document=1585" target="_blank" rel="noopener">Le décret cidre</a><em>Mentions d’étiquetage</em><span class="idoc">fiche n°1585</span></div><blockquote>L’étiquetage des denrées alimentaires est régi par une règlementation européenne (règlement (UE) N° 1169/2011 du 25 octobre 2011, concernant l’information des consommateurs sur les denrées alimentaires). L’étiquette d’une bouteille de cidre doit donc obligatoirement comporter certaines mentions obligatoires, telles que sa dénomination, son TAV, la présence d’allergène (comme les sulfites) ou le logo d’absence d’alcool pendant la grossesse. D’autres mentions, facultatives, peuvent également être présentes sur l’étiquette (voir « L’étiquetage des bouteilles de cidre » ). L’article 14 du décret prévoit certaines mentions possibles quant à l’étiquetage des produits cidricoles (pour les cidres et poirés) : Les qualificatifs « Doux », « Demi-sec » ou « Brut » Les mentions « Primeur jusqu’au 1 er mars » ou « Nouveau jusqu’au 1 er mars », suivies de l’année de récolte, sont utilisées pour les produits élaborés à partir de fruits provenant de la dernière récolte (sauf pour les moûts concentrés). La mention « Pur jus » garantit que le produit n’a pas été additionné d’eau au cours de son élaboration. La mention « Effervescence naturelle » ou « Prise de mousse naturelle » est utilisée pour les produits dont l’effervescence est exclusivement due à la fermentation alcoolique et non à une opération de gazéification.</blockquote></div><div class="source" id="Q29-S8"><div class="s-tete"><code>S8</code><a href="https://ascocid.fr/ldc/view.php?id_document=1514" target="_blank" rel="noopener">Dosage de l&#x27;alcool</a><em>Introduction</em><span class="idoc">fiche n°1514</span></div><blockquote>Le titre alcoométrique volumique acquis (qui a remplacé le « degré alcoolique ») correspond au taux alcoolique, présent dans le cidre après fermentation. Celui-ci est exprimé en % vol. et doit obligatoirement figurer sur l&#x27;étiquette. Ce titre alcoométrique volumique, noté TAV, correspond au nombre de litres d&#x27;éthanol contenu dans 100 litres de cidre, à 20°C. A noter qu’il est également possible d’exprimer la quantité d&#x27;alcool en grammes par litre à 20 °C, en multipliant le titre alcoométrique volumique par le facteur 7,8924. Dans les cidres doux, le TAV doit être compris entre 1,5 et 3 % vol, pour les cidres mi-sec, entre 3 et 4,5 % vol, et pour les cidres bruts, il se situe autour de 5 % vol. Puisque le TAV doit obligatoirement être inscrit sur l’étiquette de la bouteille, il est donc important de connaître les différentes méthodes permettant de le déterminer.</blockquote></div><div class="source" id="Q29-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1593" target="_blank" rel="noopener">Le post-conditionnement</a><em>L’étiquetage des bouteilles</em><span class="idoc">fiche n°1593</span></div><blockquote>Une étiquette est ensuite collée sur les bouteilles. Celle-ci sert à apporter différentes informations au consommateur, certaines mentions étant obligatoires, tandis que d’autres sont facultatives (mais elles ne doivent, en aucun cas, induire le consommateur en erreur, avec de fausses informations). L’étiquetage des produits alimentaires, dont les bouteilles de cidre ou poiré, est régi par le règlement (UE) N° 1169/2011 du 25 octobre 2011 (voir « L’étiquetage des bouteilles de cidre » ). A noter que le numéro de lot, généralement apposé sur l’étiquette ou la bouteille, doit être lisible. Si un lot est défectueux et le numéro de lot non lisible, c’est alors l’ensemble de la production qui sera retirée du marché. Les bouteilles peuvent éventuellement être habillées, pour les cidriers souhaitant y apposer une contre-étiquette, une coiffe, ou un médaillon, par exemple. Concernant l’emballage, il peut avoir lieu juste après l’étiquetage ou après un certain temps de conservation ou de stockage des bouteilles. Celles-ci peuvent être emballées dans des cartons et mis sur palettes, avant leur transport et leur commercialisation.</blockquote></div><div class="source" id="Q29-S6"><div class="s-tete"><code>S6</code><a href="https://ascocid.fr/ldc/view.php?id_document=1511" target="_blank" rel="noopener">Le cahier des charges des IGP (Cidre de Bretagne et Cidre de Normandie)</a><em>Règles spécifiques applicables à l&#x27;étiquetage du produit auquel la dénomination fait référence</em><span class="idoc">fiche n°1511</span></div><blockquote>En plus des mentions obligatoires qui doivent figurer sur les étiquettes des bouteilles (voir « L’étiquetage des bouteilles de cidre » ), les cidres ayant une IGP doivent obligatoirement le mentionner sur l’étiquette du produit (mention « Cidre de Bretagne » ou « Cidre breton », ou mention « Cidre de Normandie » ou « Cidre normand »). Le logo européen de l’IGP (Figure 3) doit également figurer sur l’étiquette. Cela permet notamment de mettre le produit en avant auprès des consommateurs, qui peuvent facilement identifier ces produits labellisés. Les logos SIQO IGP, AOC/AOP (Appellation d’Origine Contrôlée/Protégée) et STG (Spécialité Traditionnelle Garantie) sont régis par le règlement d’exécution (UE) n°668/2014 de la Commission du 13 juin 2014, portant modalités d’application du règlement (UE) n°1151/2012 du Parlement européen et du Conseil relatif aux systèmes de qualité applicables aux produits agricoles et aux denrées alimentaires. En fonction de la couleur du fond de l’étiquette, les couleurs du logo IGP ne seront pas les mêmes (Figure 3). Ainsi : Pour une étiquette colorée : le logo est également en couleur (Figure 3, A). Le symbole IGP en Pantone correspond aux couleurs « Pantone © Reflex Blue » et « Pantone © Yellow 109 » Le symbole IGP en quadrichromie correspond aux couleurs 100 % « Cyan » et 80 % « Magenta » pour la couleur bleue et 10 % « Magenta » et 90 % « Yellow » pour le jaune. Pour une étiquette uniquement en noir et blanc, le symbole IGP est également en noir et blanc (Figure 3, B). Pour un fond d’étiquette sombre, le logo peut être en noir et blanc, en négatif (Figure 3, C). La taille et la police des logos SIQO sont également règlementées. Le texte dans les logos est écrit en lettres capitales et en police de type Times Roman. Enfin, compte tenu de la taille des étiquettes des bouteilles de cidre, le diamètre minimal des SIQO de l’Union est généralement de 15 mm.</blockquote></div><div class="source" id="Q29-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1584" target="_blank" rel="noopener">L’étiquetage des bouteilles de cidre</a><em>Les mentions facultatives</em><span class="idoc">fiche n°1584</span></div><blockquote>Le logo associé doit obligatoirement être présent sur l’étiquette du produit . Remarque : pour les cidres ayant le label AB, il est obligatoire de mentionner sur l’étiquette si le cidre a été gazéifié. Les consignes concernant les logos de ces différents SIQO sont présentées dans leur fiche respective. Une médaille ou autre distinction . Si le produit a reçu une médaille ou une autre distinction, le cidrier peut également la faire figurer sur l’étiquette de la bouteille pour en informer le consommateur.</blockquote></div><div class="source" id="Q29-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1599" target="_blank" rel="noopener">Le cahier des charges Label Rouge</a><em>Les grandes lignes du cahier des charges Label Rouge</em><span class="idoc">fiche n°1599</span></div><blockquote>L’étiquetage des bouteilles de cidre Label Rouge Les bouteilles labellisées sont habillées d’une étiquette en dorure à chaud et d’une coiffe dorée ou argentée. Le logo « Label Rouge » (Figure 1) doit obligatoirement figurer sur l’étiquette, ainsi que le numéro d’homologation du cahier des charges (LA 15/99), qui permet au consommateur de retrouver le cahier des charges auquel répond le produit. Les mentions « Pur jus », « Élaboré exclusivement avec des pommes de variété Guillevic » et « Prise de mousse naturelle » sont des caractéristiques garanties par la méthode de production du Cidre Guillevic sous Label Rouge et sont à indiquer sur l’étiquette (voir « L’étiquetage des bouteilles de cidre » ).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q30">
+  <div class="q-tete">
+    <span class="id">Q30</span>
+    <span class="forme f-look">Recherche par nom</span>
+    <span class="theme">Recherche par nom</span>
+  </div>
+  <p class="question">Où est la fiche sur le test au Lugol ?</p>
+  <div class="reponse">Le Livre de Connaissances ne traite pas de l&#x27;emplacement ou de l&#x27;arborescence permettant de localiser cette fiche dans l&#x27;outil. Vous pouvez vous référer aux fiches « Le test au Lugol » [<a class="src-tag" href="#Q30-S2">S2</a>] ou « L’état de maturité des pommes à cidre » [<a class="src-tag" href="#Q30-S3">S3</a>, <a class="src-tag" href="#Q30-S5">S5</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q30-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1503" target="_blank" rel="noopener">Le test au Lugol</a><span class="idoc">fiche n°1503</span></div><blockquote>Résumé : Le test Lugol est un test utilisé pour révéler la teneur en amidon dans des échantillons d’origine végétale. Dans le domaine cidricole, ce test simple et rapide permet de suivre l’évolution de l’amidon dans les pommes pour évaluer leur état de maturité. Ce test peut donc être un outil utile et qualitatif pour déterminer la meilleure période de récolte ou de pressage des fruits.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q31">
+  <div class="q-tete">
+    <span class="id">Q31</span>
+    <span class="forme f-look">Recherche par nom</span>
+    <span class="theme">Recherche par nom</span>
+  </div>
+  <p class="question">Je cherche la procédure de nettoyage des soutireuses isobarométriques.</p>
+  <div class="reponse">Le Livre de Connaissances ne traite pas du protocole opératoire détaillé (produits, dosages, températures et durées) spécifique au nettoyage des soutireuses isobarométriques dans les extraits fournis ; vous pouvez vous référer à la fiche « Procédure de nettoyage et désinfection des soutireuses isobarométriques » ou « Les procédures de nettoyage et d’hygiène ».</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <p class="vide">aucune source citée</p>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q32">
+  <div class="q-tete">
+    <span class="id">Q32</span>
+    <span class="forme f-look">Recherche par nom</span>
+    <span class="theme">Recherche par nom</span>
+  </div>
+  <p class="question">Qu&#x27;est-ce qu&#x27;un moût concentré ?</p>
+  <div class="reponse">Le Livre de Connaissances ne traite pas de la définition du moût concentré dans les extraits fournis. <br><br>Les passages précisent seulement qu&#x27;il s&#x27;agit d&#x27;un produit présentant de fortes teneurs en sucres [<a class="src-tag" href="#Q32-S5">S5</a>], qui peut être obtenu à partir de « petit jus » issu du rémiage [<a class="src-tag" href="#Q32-S4">S4</a>] et qui est destiné à être dil</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q32-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1395" target="_blank" rel="noopener">La gélification de la pectine dans les concentrés</a><em>Introduction</em><span class="idoc">fiche n°1395</span></div><blockquote>La gélification des pectines est recherchée pour la clarification haute des moûts (voir « La clarification haute classique » ). Elle est alors due à la déméthylation enzymatique de la pectine associée à la présence de calcium. Mais la pectine peut également gélifier selon un autre mécanisme de gélification que l’on peut observer lors de l’élaboration d’une confiture par exemple : il s’agit alors de pectine native (non modifiée par action enzymatique) dont la gélification est provoquée par la présence de fortes teneurs en sucres. Cette gélification constitue un incident grave dans le cas de la concentration des moûts car la formation d’un gel dans un concentré augmente considérablement la viscosité et risque d’empêcher le bon fonctionnement du concentrateur et rendra très difficiles les transferts par pompage.</blockquote></div><div class="source" id="Q32-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1569" target="_blank" rel="noopener">L&#x27;extraction des moûts</a><em>Le rémiage du marc</em><span class="idoc">fiche n°1569</span></div><blockquote>Le rémiage est une opération facultative qui consiste à réextraire le moût restant, appelé « petit jus », du marc vert. On effectue alors une seconde extraction du marc par mouillage ou percolation d’eau, puis un nouveau pressage (voir « Le rémiage du marc » ). Dans certains cas, le rémiage peut être réalisé sur une bande de diffusion. On ajoute généralement de l’eau au cours de cette opération, ce qui conduit à l’obtention d’un moût « non pur jus ». Ceci permet de désucrer le marc, ce qui peut être suivi par l’opérateur grâce à la mesure de la masse volumique du marc (voir « Mesure de la masse volumique » ). Le « petit jus » ainsi obtenu peut être utilisé en mélange (« non pur jus ») ou être concentré et reconstitué, pour une utilisation ultérieure (voir « La reconstitution des moûts à base de concentrés » ).</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q33">
+  <div class="q-tete">
+    <span class="id">Q33</span>
+    <span class="forme f-non">Aucune réponse attendue</span>
+    <span class="theme">Hors corpus</span>
+  </div>
+  <p class="question">À quel prix dois-je vendre ma bouteille de cidre ?</p>
+  <div class="reponse">Le Livre de Connaissances ne traite pas de la fixation du prix de vente des bouteilles de cidre. Le thème le plus proche abordé dans les fiches concerne « L’étiquetage des bouteilles de cidre », qui mentionne simplement l&#x27;utilisation éventuelle d&#x27;un code-barres pour indiquer le prix [<a class="src-tag" href="#Q33-S2">S2</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q33-S2"><div class="s-tete"><code>S2</code><a href="https://ascocid.fr/ldc/view.php?id_document=1584" target="_blank" rel="noopener">L’étiquetage des bouteilles de cidre</a><em>Les mentions facultatives</em><span class="idoc">fiche n°1584</span></div><blockquote>La déclaration nutritionnelle . Le règlement (CE) 1169/2011 ne rend pas obligatoire cette mention pour les boissons alcoolisées. Le pays de provenance. Cette indication est notamment utilisée si le produit est exporté. Les mentions « Product of France » ou « Produit français » peuvent ainsi être utilisées. Un code barre. Cet élément sert à identifier le produit et son origine, à indiquer son prix et à renseigner les vendeurs sur la quantité de produit en stock. Le type de cidre. Brut - Demi-sec – Doux, sont des qualificatifs qui dépendent de la teneur en sucres résiduels dans le produit (voir « Le décret cidre » ). D’après la règlementation actuelle, le qualificatif « Demi-sec » concerne les produits ayant une teneur en sucres résiduels (exprimée en saccharose) supérieure à 28 g/L mais inférieure à 42 g/L et le qualificatif « Brut », les produits dont cette teneur est inférieure à 28 g/L. Le qualificatif « Doux » est utilisé pour les cidres dont la teneur en sucres résiduels est supérieure ou égale à 35 g/L ou, pour un produit « Bouché Doux », supérieure ou égale à 42 g/L. Le TAV acquis doit être de maximum 3 % vol. pour les produits « Doux », qu’ils soient bouchés ou non. Les autres mentions rencontrées dans le domaine cidricole (voir « Le décret cidre » ) . La mention « Pur jus » garantit que le produit n’a pas été additionné d’eau au cours de son élaboration. La mention « Effervescence naturelle » est utilisée pour les produits dont l’effervescence est exclusivement due à la fermentation alcoolique et non à une opération de gazéification. On peut également rencontrer la mention « Prise de mousse naturelle ».</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q34">
+  <div class="q-tete">
+    <span class="id">Q34</span>
+    <span class="forme f-non">Aucune réponse attendue</span>
+    <span class="theme">Hors corpus</span>
+  </div>
+  <p class="question">Quel tracteur choisir pour l&#x27;entretien de mon verger ?</p>
+  <div class="reponse">Le Livre de Connaissances ne traite pas du choix du modèle ou du type de tracteur pour l&#x27;entretien d&#x27;un verger. Pour les aspects liés aux interventions matérielles et aux pratiques culturales, les fiches les plus proches sont « La conception et l’implantation d’un verger cidricole » et « La conduite de verger ».</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <p class="vide">aucune source citée</p>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q35">
+  <div class="q-tete">
+    <span class="id">Q35</span>
+    <span class="forme f-non">Aucune réponse attendue</span>
+    <span class="theme">Hors corpus</span>
+  </div>
+  <p class="question">Comment déclarer mes revenus agricoles ?</p>
+  <div class="reponse">Le Livre de Connaissances ne traite pas de la déclaration des revenus agricoles. Pour les aspects juridiques et administratifs encadrant la filière, le thème le plus proche concerne la réglementation avec la fiche « Réglementations applicables à la transformation cidricole ».</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <p class="vide">aucune source citée</p>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q36">
+  <div class="q-tete">
+    <span class="id">Q36</span>
+    <span class="forme f-abr">Formulation abrégée</span>
+    <span class="theme">Formulation abrégée</span>
+  </div>
+  <p class="question">brett bouteille ?</p>
+  <div class="reponse">Lors de l&#x27;étape de conditionnement par prise de mousse en bouteille, la maîtrise des levures d&#x27;altération comme *Brettanomyces* s&#x27;appuie sur une filtration fine préalable [<a class="src-tag" href="#Q36-S3">S3</a>]. Réensemencer le produit uniquement avec des LSA permet de réaliser cette filtration (« pauvre en germes » sur plaque stérilisante ou par microfiltration tangentielle) avant l&#x27;ensemencement [<a class="src-tag" href="#Q36-S3">S3</a>]. Une filtration efficace assure ainsi l&#x27;élimination des éventuelles *Brettanomyces* et confère une relative stabilité microbienne au produit [<a class="src-tag" href="#Q36-S3">S3</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q36-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1592" target="_blank" rel="noopener">La méthode de conditionnement avec prise de mousse en bouteille</a><em>Quelques informations techniques pour réaliser une prise de mousse en bouteille</em><span class="idoc">fiche n°1592</span></div><blockquote>Réensemencer le produit uniquement avec des LSA présente l’avantage de pouvoir filtrer finement le cidre avant l’ensemencement (filtration « pauvre en germes » sur plaque stérilisante ou microfiltration tangentielle), ce qui permet une relative stabilité microbienne du produit (une filtration efficace permet notamment d’éliminer les éventuelles levures d’altération comme Brettanomyces ). Cela permet également de limiter les problèmes de surpression en contrôlant plus précisément le niveau de population au moment de l’embouteillage. Cela suppose aussi de connaître la teneur en azote assimilable dans le produit à embouteiller, pour éviter les risques de surpression/explosion de bouteilles (voir « Dosage de l’azote » ). Fermentation et prise de mousse : L’objectif de la prise de mousse est de consommer des sucres résiduels en bouteille pour produire une certaine quantité de gaz carbonique, conduisant à une effervescence. Généralement, la pression obtenue par une prise de mousse en bouteille est comprise entre 2 et 4 bars à 10 °C. Une pression supérieure peut occasionner des problèmes de « gerbage » au moment du débouchage de la bouteille, voire à l’explosion de la bouteille. Le cidre doit être embouteillé à une masse volumique légèrement supérieure à la masse volumique souhaitée, puisque le cidre va encore évoluer une fois en bouteille. On considère que la perte de 4 points de masse volumique (kg/m 3 ) correspond à la consommation d’environ 8 g/L de sucre. Cela équivaut également à l’obtention d’une pression d’environ 2 bars, à 10 °C. Il est donc conseillé d’embouteiller le cidre de 4 à 8 points de masse volumique (kg/m 3 ) au-dessus de la masse volumique cible, afin d’obtenir une pression finale entre 2 et 4 bars.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+<article class="q" id="Q37">
+  <div class="q-tete">
+    <span class="id">Q37</span>
+    <span class="forme f-abr">Formulation abrégée</span>
+    <span class="theme">Formulation abrégée</span>
+  </div>
+  <p class="question">densité arrêt ferm ?</p>
+  <div class="reponse">Au cours de l&#x27;étape fermentaire (notamment dans le cadre de la méthode FI ou FMR), l&#x27;arrêt de la fermentation ne correspond pas à une valeur unique, mais peut être réalisé à différents stades suivis par la masse volumique [<a class="src-tag" href="#Q37-S4">S4</a>]. Le référentiel précise d&#x27;ailleurs qu&#x27;il est préférable d&#x27;abandonner la notion de densité au profit de la masse volumique [<a class="src-tag" href="#Q37-S3">S3</a>]. <br><br>Le choix du moment d&#x27;arrêt dépend directement de deux facteurs :<br>- Les caractéristiques visées pour les cidres, le stade d&#x27;arrêt permettant d&#x27;obtenir des produits différents, en particulier au niveau de leur teneur en sucres résiduels et de leur profil aromatique en vue des assemblages [<a class="src-tag" href="#Q37-S4">S4</a>], [<a class="src-tag" href="#Q37-S5">S5</a>].<br>- La fin de la croissance des levures : il ne faut pas intervenir de façon trop précoce afin de s&#x27;assurer que les levures ont épuisé les nutriments indispensables (généralement l&#x27;azote assimilable), évitant ainsi une reprise de la fermentation [<a class="src-tag" href="#Q37-S4">S4</a>], [<a class="src-tag" href="#Q37-S6">S6</a>]. <br><br>Les passages fournis n&#x27;indiquent aucune valeur numérique précise de masse volumique pour cet arrêt [<a class="src-tag" href="#Q37-S4">S4</a>].</div>
+  
+  <div class="sources">
+    <p class="s-titre">Ce sur quoi le système s'est appuyé — le titre ouvre la fiche dans AsCoCid</p>
+    <div class="source" id="Q37-S4"><div class="s-tete"><code>S4</code><a href="https://ascocid.fr/ldc/view.php?id_document=1536" target="_blank" rel="noopener">L&#x27;étape fermentaire</a><em>Les conduites de l’étape fermentaire</em><span class="idoc">fiche n°1536</span></div><blockquote>A noter qu’un cycle de centrifugation permet de réduire la population de levures de 10 7 à 10 4 ufc/mL. Cette méthode FR est utilisée pour assurer une fermentation alcoolique ralentie jusqu’à l’étape d’assemblage ; cela permet de protéger le produit contre l’oxydation, grâce à la production de CO 2 tout au long du procédé de fabrication. Cela limite ainsi le développement de microorganismes d’altération ainsi que l’oxydation et la dégradation de certains constituants du cidre. La méthode FI (Fermentation interrompue) : cette modalité de l’étape fermentaire implique d’arrêter la fermentation alcoolique en éliminant l’ensemble des levures, principalement par centrifugation, ou par microfiltration tangentielle (voir « La méthode FI (fermentation interrompue) » ). La fermentation peut être arrêtée à différents stades (en fonction de la masse volumique), ce qui permet d’obtenir des produits différents, notamment au niveau de leur teneur en sucres ou leur profil aromatique. Cette méthode permet de contrôler la fermentation et de réaliser des assemblages entre différentes cuvées pour obtenir le produit souhaité. Attention toutefois à ce que les levures ne reprennent pas leur croissance si la fermentation est arrêtée de manière trop précoce et qu’il reste des éléments nutritifs dans leur milieu. La méthode FMR (Fermentation des Moûts Reconstitués) : cette modalité de l’étape fermentaire consiste à appliquer la méthode FI sur des moûts concentrés et reconstitués (voir « La concentration des moûts » et « La méthode FMR (Fermentation des moûts reconstitués) » ). La fermentation de ces moûts reconstitués nécessite un ensemencement préalable par des levures commerciales. Elle est ensuite arrêtée à un certain stade, déterminé par la masse volumique.</blockquote></div><div class="source" id="Q37-S3"><div class="s-tete"><code>S3</code><a href="https://ascocid.fr/ldc/view.php?id_document=1493" target="_blank" rel="noopener">La masse volumique</a><em>Masse volumique et densité : quelle différence ?</em><span class="idoc">fiche n°1493</span></div><blockquote>La masse volumique d’un liquide (notée ρ ) est, comme son nom l’indique, la masse d’un certain volume de cet échantillon. Ce paramètre correspond ainsi au rapport de la masse de ce liquide sur son volume, soit ρ = m/V, où m correspond à la masse (en kg) et V, au volume (en m 3 ). Cette masse volumique est donc généralement exprimée en kg/m 3 . Elle peut également parfois être exprimée en g/mL ou kg/L, mais il faut éviter la confusion avec une concentration (Figure 1). Il est important de noter que la masse volumique d’un liquide dépend de la température, puisque son volume, contrairement à sa masse, est modifié par la température suivant son coefficient de dilatation. La masse volumique est souvent confondue avec une autre grandeur, la densité, dont la définition n’est pas toujours claire pour tous. Cette densité est le rapport entre la masse volumique du liquide considéré et la masse volumique d’un liquide de référence. En cidrerie ce liquide de référence est l’eau, dont la masse volumique est proche de 1000 kg/m 3 (998.2 à 20 °C). La valeur obtenue pour la densité est donc proche de 1 et ne possède pas d’unité contrairement à la masse volumique. La confusion entre ces deux paramètres est entretenue par l’usage de l’anglais puisque la masse volumique se dit « density » et la densité « specific gravity ». De plus, les appareils de mesure de masse volumique et de densité sont tous appelés « densimètres ». Par ailleurs, l’utilisation des mesures de densité pose des difficultés de conversion car il existe plusieurs façons d’exprimer la densité selon la température du liquide mesuré et du liquide de référence : certains anciens densimètres étaient calibrés en d 15/4 (cidre à 15°C et eau à 4°), en d 15/15 (cidre à 15°C et eau à 15°) ou encore en d 20/4 ou d 20/20 . C’est pourquoi il est préférable d’abandonner la densité et de se servir de la masse volumique dont l’unité est clairement affichée, en particulier lorsqu’il s’agit d’échanger des informations (résultats d’analyses, limites légales, comparaisons). Les anciens densimètres qui existent encore peuvent servir à suivre la fermentation mais ces valeurs restent imprécises.</blockquote></div><div class="source" id="Q37-S5"><div class="s-tete"><code>S5</code><a href="https://ascocid.fr/ldc/view.php?id_document=1083" target="_blank" rel="noopener">Les sucres du moût</a><em>Détermination des teneurs en sucres du moût</em><span class="idoc">fiche n°1083</span></div><blockquote>La masse volumique d’un liquide correspond au rapport entre sa masse (kg) et son volume (m 3 ), et dépend notamment des matières dissoutes qui le compose ( voir « La masse volumique » ) . Ce paramètre physique ne doit pas être confondu avec la densité, qui correspond au rapport (sans unité) entre la masse volumique du cidre et la masse volumique de l’eau pure. Les sucres représentent les principaux composés dissous du moût. Dans la pratique courante, il est donc possible d’estimer la richesse en sucres du moût en mesurant la masse volumique à 20 °C (voir « Mesure de la masse volumique » et « Estimation de la teneur en sucres par la masse volumique » ). Cette masse volumique du moût est généralement comprise entre 1045 à 1060 kg/m³. Il suffit ensuite de se reporter à une table de correspondance entre la masse volumique et la teneur en sucres (qui indique également le titre alcoométrique potentiel du cidre). A noter que dans le cas où la mesure n’est pas effectuée à 20 °C, il existe une table de correction de la valeur de la masse volumique. Cette méthode d’estimation par la masse volumique permet notamment de suivre le déroulement de la fermentation, apportant ainsi une aide dans le choix du moment de l’arrêt de fermentation. Il est également possible de mesurer de manière plus précise les quantités de sucres du moût (et des cidres), en utilisant des protocoles de dosages, réalisables en laboratoire (voir « Dosage des sucres » ) .</blockquote></div><div class="source" id="Q37-S6"><div class="s-tete"><code>S6</code><a href="https://ascocid.fr/ldc/view.php?id_document=1371" target="_blank" rel="noopener">La méthode FI (Fermentation Interrompue)</a><em>Quelques subtilités à connaître pour réaliser correctement cette méthode fermentaire</em><span class="idoc">fiche n°1371</span></div><blockquote>L’élimination des levures n’est jamais totale. Une faible quantité de levures restent généralement dans le cidre, et leur croissance peut redémarrer si le milieu contient encore les nutriments nécessaires. Ainsi, une intervention trop précoce, c’est-à-dire bien avant la fin de croissance des levures, ne permet pas un contrôle correct de la fermentation puisqu’à ce stade, il reste encore assez de nutriments dans le cidre pour donner lieu à une nouvelle croissance de levures et une reprise de la fermentation. C’est pour cette raison que le procédé classique consiste à laisser démarrer franchement la fermentation, et d’intervenir seulement après la fin de la croissance. A ce stade, les levures ont normalement épuisé un des nutriments indispensables à leur développement, généralement l’azote assimilable, et une nouvelle production importante de levures est alors assez peu probable. Cependant, il existe quelques cas où le contrôle de la fermentation est plus délicat. Ainsi, avec des moûts initialement très riches en nutriments azotés (&gt; 120 mg/L exprimé en azote), la fermentation peut s’arrêter par carence d’un autre nutriment (stérols en anaérobiose, par exemple). Il reste alors des nutriments azotés disponibles dans le cidre et la croissance peut redémarrer grâce à l’oxygénation provoquée par la centrifugation.</blockquote></div>
+  </div>
+  <div class="verdict">
+    <span>Votre avis :</span>
+    <label><input type="checkbox"> correcte</label>
+    <label><input type="checkbox"> incomplète</label>
+    <label><input type="checkbox"> fausse</label>
+    <label><input type="checkbox"> hors sujet</label>
+    <span class="commentaire">Commentaire / reformulation : ______________________________________</span>
+  </div>
+</article>
+</section>
+
+<footer>
+  Réponses produites par le modèle gemini-3.8-flash à partir des fiches du Livre de
+  Connaissances AsCoCid (IFPC / INRAE). Coût moyen : 0.0024 $ par question.
+  Aucune réponse n'a été retouchée à la main.
+</footer>
+</div>
