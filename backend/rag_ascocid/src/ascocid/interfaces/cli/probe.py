@@ -7,6 +7,7 @@ aucun suivi de lien hors du périmètre configuré.
 from __future__ import annotations
 
 import collections
+import os
 import pathlib
 import re
 from urllib.parse import urljoin, urlsplit
@@ -28,7 +29,7 @@ from ascocid.infrastructure.collecte.auth import (
 app = typer.Typer(add_completion=False, help=__doc__)
 console = Console()
 
-SORTIE = pathlib.Path("data/probe")
+SORTIE = pathlib.Path(os.environ.get("ASCOCID_DATA", "data")) / "probe"
 
 EXT_DOCUMENT = {
     ".pdf": "PDF",
