@@ -60,14 +60,14 @@ class TestDetectionColonnes:
         ("Date / Heure", "Température (°C)"),
     ])
     def test_les_deux_colonnes_sont_distinctes(self, entetes):
-        temps_col, temp_col = main._detect_columns(_df(*entetes))
+        temps_col, temp_col, _ = main._detect_columns(_df(*entetes))
         assert temps_col == entetes[0]
         assert temp_col == entetes[1]
         assert temps_col != temp_col
 
     def test_ordre_des_colonnes_indifferent(self):
         df = pd.DataFrame({"Température (°C)": [20.5, 65.2], "Temps (min)": [0.0, 5.0]})
-        temps_col, temp_col = main._detect_columns(df)
+        temps_col, temp_col, _ = main._detect_columns(df)
         assert temps_col == "Temps (min)"
         assert temp_col == "Température (°C)"
 
@@ -77,11 +77,11 @@ class TestDetectionColonnes:
             "Unité": ["C", "C"],
             "Température (°C)": [20.5, 65.2],
         })
-        assert main._detect_columns(df) == ("Date / Heure", "Température (°C)")
+        assert main._detect_columns(df)[:2] == ("Date / Heure", "Température (°C)")
 
     def test_repli_positionnel_sans_intitule_reconnu(self):
         df = pd.DataFrame({"col_0": [0.0, 5.0], "col_1": [20.5, 65.2]})
-        assert main._detect_columns(df) == ("col_0", "col_1")
+        assert main._detect_columns(df)[:2] == ("col_0", "col_1")
 
     def test_refus_quand_un_seul_role_est_reconnu(self):
         # Deviner l'autre colonne produirait une VP fausse et silencieuse :
@@ -97,7 +97,7 @@ class TestNonRegressionVP:
     def test_entetes_francais_et_anglais_donnent_la_meme_vp(self):
         vps = []
         for entetes in [("Temps (min)", "Température (°C)"), ("Time", "Temp")]:
-            temps, temperatures, _ = main._extract_numeric_columns(_df(*entetes))
+            temps, temperatures, _ = main._extract_numeric_columns(_df(*entetes))[:3]
             resultat = pasto.evaluer_pasteurisation(
                 temperatures=temperatures, temps=temps,
                 product_type="cidre_doux", unite_temps="minute",
@@ -109,7 +109,7 @@ class TestNonRegressionVP:
     def test_la_colonne_temperature_n_est_pas_la_colonne_temps(self):
         temps, temperatures, _ = main._extract_numeric_columns(
             _df("Temps (min)", "Température (°C)")
-        )
+        )[:3]
         assert temps == [0.0, 5.0, 10.0, 15.0, 20.0]
         assert temperatures == [20.5, 65.2, 72.1, 72.0, 60.3]
 
@@ -119,7 +119,7 @@ class TestNonRegressionVP:
             "0.0;20.5\n5.0;65.2\n10.0;72.1\n15.0;72.0\n20.0;60.3\n"
         )
         df = main._read_csv_robust(csv.encode("utf-8"))
-        temps, temperatures, _ = main._extract_numeric_columns(df)
+        temps, temperatures, _ = main._extract_numeric_columns(df)[:3]
         resultat = pasto.evaluer_pasteurisation(
             temperatures=temperatures, temps=temps,
             product_type="cidre_doux", unite_temps="minute",
