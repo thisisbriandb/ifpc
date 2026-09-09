@@ -65,7 +65,7 @@ class TestImportColonnesEntieres:
         csv = "Time;Temp\n0;20\n5;65\n10;72\n15;72\n20;60\n"
         df = main._read_csv_robust(csv.encode("utf-8"))
         assert all(str(t).startswith("int") for t in df.dtypes)  # bien des entiers
-        temps, temperatures, _ = main._extract_numeric_columns(df)
+        temps, temperatures, _ = main._extract_numeric_columns(df)[:3]
         assert temps == [0.0, 5.0, 10.0, 15.0, 20.0]
         assert temperatures == [20.0, 65.0, 72.0, 72.0, 60.0]
 
@@ -75,7 +75,7 @@ class TestImportColonnesEntieres:
         vps = []
         for csv in (entiers, decimaux):
             df = main._read_csv_robust(csv.encode("utf-8"))
-            temps, temperatures, _ = main._extract_numeric_columns(df)
+            temps, temperatures, _ = main._extract_numeric_columns(df)[:3]
             vps.append(pasto.evaluer_pasteurisation(
                 temperatures=temperatures, temps=temps,
                 product_type="cidre_doux", unite_temps="minute",
@@ -90,7 +90,7 @@ class TestImportColonnesEntieres:
             "Unité": ["C", "C", "C"],
             "Température (°C)": np.array([20, 65, 72], dtype=np.int64),
         })
-        temps, temperatures, _ = main._extract_numeric_columns(df)
+        temps, temperatures, _ = main._extract_numeric_columns(df)[:3]
         assert temps == [0.0, 5.0, 10.0]
         assert temperatures == [20.0, 65.0, 72.0]
 
@@ -100,6 +100,6 @@ class TestImportColonnesEntieres:
             "Temps (min)": [0, 5, None, 15],
             "Température (°C)": [20, 65, 72, None],
         })
-        temps, temperatures, _ = main._extract_numeric_columns(df)
+        temps, temperatures, _ = main._extract_numeric_columns(df)[:3]
         assert temps == [0.0, 5.0]
         assert temperatures == [20.0, 65.0]

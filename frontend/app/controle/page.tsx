@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useCallback, useEffect, Suspense } from "react";
-import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, Settings2, Table as TableIcon, X, Activity, AlertTriangle, Plus, Trash2, HelpCircle, RotateCcw } from "lucide-react";
+import { Upload, ClipboardPaste, Keyboard, Loader2, FileSpreadsheet, ChevronRight, ChevronLeft, Settings2, Table as TableIcon, X, Activity, AlertTriangle, Plus, Trash2, HelpCircle, RotateCcw, Info } from "lucide-react";
 import ProductSelector from "@/components/ProductSelector";
 import ResultDisplay from "@/components/ResultDisplay";
 import TemperatureChart from "@/components/TemperatureChart";
 import HelpModal from "@/components/HelpModal";
+import AideImport from "@/components/AideImport";
 import { uploadFile, collerDonnees, saveAnalysis, getAnalysisById, type UniteTemps } from "@/lib/api";
 import { uniteDuProcede, procedeAccorde } from "@/lib/pasteurisation";
 import { useAuthStore } from "@/lib/store";
@@ -44,6 +45,9 @@ interface PasteurisationResult {
   };
   // Sceau du moteur de calcul : sans lui, le Core API n'archive pas le contrôle.
   jeton_resultat?: string;
+  // Phrase à afficher quand une colonne du fichier a été interprétée plutôt
+  // que nommée : une déduction doit se voir, pas rester dans un journal.
+  colonnes_deduites?: string | null;
 }
 
 export default function ControlePage() {
@@ -521,6 +525,7 @@ function ControlePageInner() {
               </div>
 
               {mode === "upload" && (
+                <>
                 <div
                   onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
                   onDragLeave={() => setDragActive(false)}
@@ -545,6 +550,9 @@ function ControlePageInner() {
                     </div>
                   )}
                 </div>
+
+                <AideImport />
+                </>
               )}
 
               {mode === "paste" && (
@@ -622,6 +630,13 @@ function ControlePageInner() {
                       <p key={i} className={i > 0 ? "mt-0.5 text-[10px] text-red-500" : ""}>{line}</p>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {result?.colonnes_deduites && (
+                <div className="mt-3 bg-blue-50/60 border border-blue-200/40 rounded-lg p-3 text-blue-800 text-xs font-medium flex items-start gap-2">
+                  <Info className="w-4 h-4 shrink-0 mt-0.5" />
+                  <p>{result.colonnes_deduites}</p>
                 </div>
               )}
 

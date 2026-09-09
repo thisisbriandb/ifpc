@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, NamedTuple, Optional
 import io
 import csv
 import numbers
@@ -127,6 +127,8 @@ async def evaluer_pasteurisation(
             titre_alcool=request.titre_alcool,
         )
         return _sceller_resultat(result)
+    except HTTPException:
+        raise
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -152,7 +154,7 @@ async def upload_file(
 
         if filename.endswith((".xlsx", ".xls")):
             df = _read_excel_robust(content, filename)
-            temps_list, temp_list, unite_source = _extract_numeric_columns(df)
+            releve = _extract_numeric_columns(df)
         elif filename.endswith(".csv") or filename.endswith(".txt") or filename.endswith(".tsv"):
             # Tenter d'abord le format enregistreur (DS1922E, etc.) qui a des
             # en-têtes métadonnées avant la table de données
@@ -161,10 +163,10 @@ async def upload_file(
             logger_rows = _try_parse_logger_format(lines)
             if logger_rows is not None and len(logger_rows) >= 2:
                 logger.info(f"Format enregistreur détecté (upload), {len(logger_rows)} lignes")
-                temps_list, temp_list, unite_source = _datetime_rows_to_minutes(logger_rows)
+                releve = _datetime_rows_to_minutes(logger_rows)
             else:
                 df = _read_csv_robust(content)
-                temps_list, temp_list, unite_source = _extract_numeric_columns(df)
+                releve = _extract_numeric_columns(df)
         else:
             raise HTTPException(
                 status_code=400,
@@ -172,20 +174,21 @@ async def upload_file(
             )
 
         result = pasto.evaluer_pasteurisation(
-            temperatures=temp_list,
-            temps=temps_list,
+            temperatures=releve.temperatures,
+            temps=releve.temps,
             product_type=product_type,
             locale=locale,
             t_ref=t_ref,
             z=z,
             microorganisme=microorganisme,
-            unite_temps=_unite_effective(unite_temps, unite_source),
+            unite_temps=_unite_effective(unite_temps, releve.unite_source),
             procede=procede,
             titre_alcool=titre_alcool,
         )
         result["fichier"] = filename
-        result["nb_points"] = len(temp_list)
-        result["unite_temps_source"] = "horodatage" if unite_source else "declaration"
+        result["nb_points"] = len(releve.temperatures)
+        result["unite_temps_source"] = "horodatage" if releve.unite_source else "declaration"
+        result["colonnes_deduites"] = releve.deduction
         return _sceller_resultat(result)
 
     except HTTPException:
@@ -210,7 +213,8 @@ async def paste_data(
         logger.info(f"raw_text ({len(request.raw_text)} chars), premières lignes:")
         for i, line in enumerate(request.raw_text.split('\n')[:5]):
             logger.info(f"  [{i}] {line!r}")
-        temps_list, temp_list, unite_source = _parse_pasted_text(request.raw_text)
+        releve = _parse_pasted_text(request.raw_text)
+        temps_list, temp_list = releve.temps, releve.temperatures
         logger.info(f"Parse OK : {len(temps_list)} points")
         logger.info(f"  temps[:5]  = {temps_list[:5]}")
         logger.info(f"  temp[:5]   = {temp_list[:5]}")
@@ -224,14 +228,19 @@ async def paste_data(
             t_ref=request.t_ref,
             z=request.z,
             microorganisme=request.microorganisme,
-            unite_temps=_unite_effective(request.unite_temps, unite_source),
+            unite_temps=_unite_effective(request.unite_temps, releve.unite_source),
             procede=request.procede,
             titre_alcool=request.titre_alcool,
         )
         result["nb_points"] = len(temp_list)
-        result["unite_temps_source"] = "horodatage" if unite_source else "declaration"
+        result["unite_temps_source"] = "horodatage" if releve.unite_source else "declaration"
+        result["colonnes_deduites"] = releve.deduction
         logger.info(f"Résultat: VP={result['vp']} UP, statut={result['statut']}, vp_cible={result['vp_cible']}")
         return _sceller_resultat(result)
+    except HTTPException:
+        # Un refus délibéré — 403 sur les paramètres avancés, notamment — doit
+        # traverser intact : sans ce relais, il ressortait en 500 muet.
+        raise
     except ValueError as e:
         logger.error(f"/coller ValueError: {e}")
         raise HTTPException(status_code=400, detail=str(e))
@@ -539,7 +548,8 @@ def _clean_numeric(val) -> Optional[float]:
 TEMP_KEYWORDS_FORTS = ("température", "temperature", "temp\xe9rature",
                        "°c", "celsius", "degré", "degre", "degree")
 TIME_KEYWORDS = ("temps", "time", "durée", "duree", "dur\xe9e", "dur e",
-                 "date", "heure", "hour", "minute", "min", "sec")
+                 "date", "heure", "hour", "minute", "min", "sec",
+                 "horodat", "timestamp", "instant")
 TEMP_KEYWORDS_FAIBLES = ("temp", "t°")
 
 
@@ -564,8 +574,81 @@ def _classer_colonne(intitule) -> Optional[str]:
     return None
 
 
-def _detect_columns(df: pd.DataFrame):
-    """Détecte automatiquement les colonnes temps et température."""
+class ReleveLu(NamedTuple):
+    """Relevé extrait d'un fichier ou d'un collage.
+
+    `deduction` porte la phrase à montrer à l'opérateur quand une colonne a été
+    interprétée plutôt que nommée. Une déduction qui ne remonte pas jusqu'à
+    l'écran n'est qu'une devinette silencieuse de plus.
+    """
+    temps: List[float]
+    temperatures: List[float]
+    unite_source: Optional[str]
+    deduction: Optional[str] = None
+
+
+class ColonnesDetectees(NamedTuple):
+    """Colonnes retenues, et la façon dont la température a été trouvée.
+
+    `deduction` est None quand l'intitulé nommait explicitement la
+    température. Il porte sinon une phrase à afficher à l'opérateur : une
+    colonne interprétée doit être annoncée, jamais devinée en silence.
+    """
+    temps: str
+    temperature: str
+    deduction: Optional[str] = None
+
+
+# Plage de températures qu'un relevé de pasteurisation peut plausiblement
+# contenir. Sert uniquement à écarter des colonnes candidates, jamais à
+# valider une mesure.
+PLAGE_TEMPERATURE_PLAUSIBLE = (-80.0, 200.0)
+
+
+def _valeurs_numeriques(df: pd.DataFrame, colonne) -> list:
+    """Valeurs d'une colonne effectivement convertibles en nombre."""
+    return [v for v in (_clean_numeric(x) for x in df[colonne].head(200)) if v is not None]
+
+
+def _est_un_index(valeurs: list) -> bool:
+    """Vrai pour une suite d'entiers consécutifs — un numéro de ligne."""
+    if len(valeurs) < 3:
+        return False
+    entiers = [v for v in valeurs if float(v).is_integer()]
+    if len(entiers) != len(valeurs):
+        return False
+    return all(b - a == 1 for a, b in zip(entiers, entiers[1:]))
+
+
+def _candidates_temperature(df: pd.DataFrame, exclues: set) -> list:
+    """Colonnes qui pourraient porter la mesure, faute d'intitulé explicite.
+
+    Un enregistreur ne mesure souvent qu'une grandeur et ne la nomme pas :
+    « Valeur », « Voie 1 », « CH1 ». On retient les colonnes numériques dont
+    les valeurs sont dans une plage de température plausible, en écartant les
+    numéros de ligne.
+    """
+    candidates = []
+    for colonne in df.columns:
+        if colonne in exclues:
+            continue
+        valeurs = _valeurs_numeriques(df, colonne)
+        if len(valeurs) < 2 or _est_un_index(valeurs):
+            continue
+        bas, haut = PLAGE_TEMPERATURE_PLAUSIBLE
+        if all(bas <= v <= haut for v in valeurs):
+            candidates.append(colonne)
+    return candidates
+
+
+def _entete_generee(intitule) -> bool:
+    """Vrai pour un intitulé fabriqué faute d'en-tête dans le fichier."""
+    texte = str(intitule).strip().lower()
+    return bool(re.fullmatch(r"(col_)?\d+|unnamed:? ?\d+", texte))
+
+
+def _detect_columns(df: pd.DataFrame) -> ColonnesDetectees:
+    """Détecte les colonnes temps et température."""
     temps_col = None
     temp_col = None
 
@@ -576,21 +659,43 @@ def _detect_columns(df: pd.DataFrame):
         elif role == "temperature" and temp_col is None:
             temp_col = orig
 
-    # Fichier sans intitulés exploitables : première colonne = temps,
-    # deuxième = température.
-    if temps_col is None and temp_col is None and len(df.columns) >= 2:
-        return df.columns[0], df.columns[1]
+    if temps_col is not None and temp_col is not None:
+        return ColonnesDetectees(temps_col, temp_col)
 
-    # Un seul rôle reconnu : mieux vaut refuser que deviner quelle colonne
-    # porte l'autre, une erreur d'attribution ne se voyant pas dans la VP.
-    if temps_col is None or temp_col is None:
-        manquant = "température" if temp_col is None else "temps"
+    # Fichier sans en-tête : les intitulés ont été fabriqués à la lecture, la
+    # position est la seule information disponible.
+    if temps_col is None and temp_col is None and len(df.columns) >= 2:
+        if all(_entete_generee(c) for c in df.columns):
+            return ColonnesDetectees(df.columns[0], df.columns[1],
+                                     "Fichier sans en-tête : première colonne lue comme le temps, "
+                                     "seconde comme la température.")
         raise ValueError(
-            f"Colonne « {manquant} » introuvable. Colonnes du fichier : {list(df.columns)}. "
-            "Nommez-les 'temps' et 'temperature'."
+            f"Impossible d'identifier les colonnes temps et température. "
+            f"Colonnes du fichier : {list(df.columns)}. "
+            "Nommez-les par exemple 'temps' et 'temperature'."
         )
 
-    return temps_col, temp_col
+    # Le temps est nommé, la mesure ne l'est pas : c'est le cas des
+    # enregistreurs qui appellent leur unique grandeur « Valeur » ou « Voie 1 ».
+    if temps_col is not None and temp_col is None:
+        candidates = _candidates_temperature(df, exclues={temps_col})
+        if len(candidates) == 1:
+            return ColonnesDetectees(
+                temps_col, candidates[0],
+                f"Colonne « {candidates[0]} » interprétée comme la température : "
+                "aucune colonne ne la nomme explicitement.",
+            )
+        if len(candidates) > 1:
+            raise ValueError(
+                f"Plusieurs colonnes peuvent porter la température : {candidates}. "
+                "Renommez celle à suivre, par exemple en 'temperature'."
+            )
+
+    manquant = "température" if temp_col is None else "temps"
+    raise ValueError(
+        f"Colonne « {manquant} » introuvable. Colonnes du fichier : {list(df.columns)}. "
+        "Nommez-les par exemple 'temps' et 'temperature'."
+    )
 
 
 def _extract_numeric_columns(df: pd.DataFrame):
@@ -603,15 +708,28 @@ def _extract_numeric_columns(df: pd.DataFrame):
     qui tranche.
     """
     from datetime import datetime as _dt
-    temps_col, temp_col = _detect_columns(df)
+    colonnes = _detect_columns(df)
+    temps_col, temp_col = colonnes.temps, colonnes.temperature
     logger.info(f"Colonnes détectées: temps='{temps_col}', temp='{temp_col}'")
+    if colonnes.deduction:
+        logger.info(f"Déduction : {colonnes.deduction}")
 
-    # Check if time column contains datetime objects
+    # La colonne temps porte-t-elle un horodatage ? Selon le lecteur et le
+    # format, pandas rend soit des objets datetime, soit les chaînes brutes.
+    # Ne reconnaître que les premiers laissait un export d'enregistreur lu en
+    # texte produire zéro point exploitable.
     time_is_datetime = False
     for val in df[temps_col].dropna().head(5):
         if isinstance(val, (_dt, pd.Timestamp)):
             time_is_datetime = True
             break
+        if isinstance(val, str) and _clean_numeric(val) is None:
+            try:
+                _parse_french_datetime(val)
+                time_is_datetime = True
+                break
+            except ValueError:
+                pass
 
     if time_is_datetime:
         logger.info("Colonne temps contient des dates/heures → conversion en minutes écoulées")
@@ -641,7 +759,7 @@ def _extract_numeric_columns(df: pd.DataFrame):
                 f"Pas assez de données exploitables ({len(datetime_rows)} point(s)). "
                 f"Vérifiez les colonnes temps='{temps_col}' et température='{temp_col}'."
             )
-        return _datetime_rows_to_minutes(datetime_rows)
+        return _datetime_rows_to_minutes(datetime_rows, colonnes.deduction)
 
     # Standard numeric columns
     temps_list = []
@@ -668,7 +786,7 @@ def _extract_numeric_columns(df: pd.DataFrame):
             f"des valeurs numériques dans ces colonnes."
         )
 
-    return temps_list, temp_list, None
+    return ReleveLu(temps_list, temp_list, None, colonnes.deduction)
 
 
 def _parse_pasted_text(raw_text: str):
@@ -742,7 +860,7 @@ def _parse_pasted_text(raw_text: str):
             f"  1              45{hint}"
         )
 
-    return temps_list, temp_list, None
+    return ReleveLu(temps_list, temp_list, None)
 
 
 # ── Mois français → numéro ────────────────────────────────────────────────
@@ -874,7 +992,7 @@ def _try_parse_logger_format(lines: list[str]):
     return rows if len(rows) >= 2 else None
 
 
-def _datetime_rows_to_minutes(rows):
+def _datetime_rows_to_minutes(rows, deduction: Optional[str] = None):
     """Convertit une liste [(datetime, temp), ...] en temps (minutes), températures.
 
     Le troisième élément renvoyé est l'unité produite : une colonne horodatée
@@ -888,7 +1006,7 @@ def _datetime_rows_to_minutes(rows):
         delta = (dt_val - t0).total_seconds() / 60.0
         temps_list.append(round(delta, 4))
         temp_list.append(temp_val)
-    return temps_list, temp_list, "minute"
+    return ReleveLu(temps_list, temp_list, "minute", deduction)
 
 
 if __name__ == "__main__":

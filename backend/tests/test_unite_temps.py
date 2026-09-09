@@ -43,14 +43,14 @@ class TestUniteProduiteParLeParsing:
     def test_horodatage_produit_des_minutes(self):
         rows = [(datetime(2025, 9, 25, 15, m), t)
                 for m, t in zip([0, 5, 10, 15, 20], TEMPERATURES)]
-        temps, temperatures, unite_source = main._datetime_rows_to_minutes(rows)
+        temps, temperatures, unite_source = main._datetime_rows_to_minutes(rows)[:3]
         assert unite_source == "minute"
         assert temps == MINUTES
         assert temperatures == TEMPERATURES
 
     def test_colonne_numerique_brute_laisse_l_unite_inconnue(self):
         df = pd.DataFrame({"Temps": MINUTES, "Température (°C)": TEMPERATURES})
-        temps, temperatures, unite_source = main._extract_numeric_columns(df)
+        temps, temperatures, unite_source = main._extract_numeric_columns(df)[:3]
         assert unite_source is None
         assert temps == MINUTES
 
@@ -59,18 +59,18 @@ class TestUniteProduiteParLeParsing:
             "Date / Heure": [datetime(2025, 9, 25, 15, m) for m in [0, 5, 10, 15, 20]],
             "Température (°C)": TEMPERATURES,
         })
-        temps, temperatures, unite_source = main._extract_numeric_columns(df)
+        temps, temperatures, unite_source = main._extract_numeric_columns(df)[:3]
         assert unite_source == "minute"
         assert temps == MINUTES
 
     def test_texte_colle_au_format_enregistreur(self):
-        temps, temperatures, unite_source = main._parse_pasted_text("\n".join(LOGGER_CSV))
+        temps, temperatures, unite_source = main._parse_pasted_text("\n".join(LOGGER_CSV))[:3]
         assert unite_source == "minute"
         assert temps == MINUTES
 
     def test_texte_colle_en_deux_colonnes_simples(self):
         colle = "\n".join(f"{t}\t{T}" for t, T in zip(MINUTES, TEMPERATURES))
-        temps, temperatures, unite_source = main._parse_pasted_text(colle)
+        temps, temperatures, unite_source = main._parse_pasted_text(colle)[:3]
         assert unite_source is None
         assert temps == MINUTES
 
@@ -90,14 +90,14 @@ class TestNonRegressionVP:
     """Le test qui aurait arrêté le défaut."""
 
     def test_un_releve_horodate_donne_la_meme_vp_quel_que_soit_le_procede(self):
-        temps, temperatures, unite_source = main._parse_pasted_text("\n".join(LOGGER_CSV))
+        temps, temperatures, unite_source = main._parse_pasted_text("\n".join(LOGGER_CSV))[:3]
         # « seconde » est ce que l'interface impose pour une flash-pasteurisation.
         vp_flash = _vp(temps, temperatures, main._unite_effective("seconde", unite_source))
         vp_classique = _vp(temps, temperatures, main._unite_effective("minute", unite_source))
         assert vp_flash == vp_classique
 
     def test_la_vp_d_un_releve_horodate_est_bien_calculee_en_minutes(self):
-        temps, temperatures, unite_source = main._parse_pasted_text("\n".join(LOGGER_CSV))
+        temps, temperatures, unite_source = main._parse_pasted_text("\n".join(LOGGER_CSV))[:3]
         vp = _vp(temps, temperatures, main._unite_effective("seconde", unite_source))
         assert vp == pytest.approx(10399.003, rel=1e-6)
 
@@ -105,7 +105,7 @@ class TestNonRegressionVP:
         # Un relevé numérique nu ne dit pas son unité : diviser par 60 est
         # alors le comportement attendu, pas un défaut.
         colle = "\n".join(f"{t}\t{T}" for t, T in zip(MINUTES, TEMPERATURES))
-        temps, temperatures, unite_source = main._parse_pasted_text(colle)
+        temps, temperatures, unite_source = main._parse_pasted_text(colle)[:3]
         vp_min = _vp(temps, temperatures, main._unite_effective("minute", unite_source))
         vp_sec = _vp(temps, temperatures, main._unite_effective("seconde", unite_source))
         # La VP est arrondie à 4 décimales en interne : le facteur 60
