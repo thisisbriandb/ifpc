@@ -148,8 +148,15 @@ export interface SanteLdc {
  * Comme les rewrites, cette valeur est figée au build : la changer impose une
  * reconstruction du front.
  */
-export const BASE_LDC =
-  process.env.NEXT_PUBLIC_LDC_URL?.replace(/\/$/, "") || "/api/ldc";
+export function normaliserBase(url: string | undefined): string {
+  const propre = (url ?? "").trim().replace(/\/+$/, "");
+  if (!propre) return "/api/ldc";
+  // Les deux écritures sont acceptées : « https://hote » comme
+  // « https://hote/api/ldc ». Se tromper produisait un 404 sans indice.
+  return propre.endsWith("/api/ldc") ? propre : `${propre}/api/ldc`;
+}
+
+export const BASE_LDC = normaliserBase(process.env.NEXT_PUBLIC_LDC_URL);
 
 const TYPES_CONNUS = new Set([
   "analyse", "outil", "sources", "illustrations", "delta", "fin", "erreur",
@@ -261,10 +268,22 @@ export async function demanderReponse(
   if (!reponse.ok || !reponse.body) {
     const detail = await reponse.text().catch(() => "");
     let message = `Le service a répondu ${reponse.status}.`;
-    try {
-      message = JSON.parse(detail).detail || message;
-    } catch {
-      /* réponse non JSON : on garde le message générique */
+    // Un 404 ne vient jamais du contenu de la question : soit la route existe,
+    // soit l'adresse du service est fausse. Le dire évite de chercher du côté
+    // du corpus une panne qui est dans la configuration du déploiement.
+    if (reponse.status === 404) {
+      message =
+        `Route introuvable (404) sur « ${BASE_LDC} » : l'assistant n'est pas ` +
+        `joignable à cette adresse. Vérifier LDC_URL côté front, et que le ` +
+        `déploiement a été reconstruit depuis.`;
+    } else if (reponse.status === 401) {
+      message = "Session expirée. Reconnectez-vous pour interroger l'assistant.";
+    } else {
+      try {
+        message = JSON.parse(detail).detail || message;
+      } catch {
+        /* réponse non JSON : on garde le message générique */
+      }
     }
     surEvenement({ type: "erreur", code: String(reponse.status), message });
     return;

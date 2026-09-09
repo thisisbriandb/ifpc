@@ -4,7 +4,12 @@ const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
 // Chatbot du Livre de Connaissances (backend/rag_ascocid) : service séparé,
 // parce qu'il embarque un modèle d'embeddings et un index en mémoire dont le
 // moteur de calcul n'a aucun besoin.
-const LDC_URL = process.env.LDC_URL || 'http://localhost:8100';
+// Le chemin /api/ldc est ajouté par la rewrite ci-dessous : si LDC_URL le porte
+// déjà, on le retire plutôt que de produire une URL en double — la panne se
+// manifesterait par un 404 opaque, impossible à rattacher à sa cause.
+const LDC_URL = (process.env.LDC_URL || 'http://localhost:8100')
+  .replace(/\/+$/, '')
+  .replace(/\/api\/ldc$/, '');
 
 const nextConfig = {
   // Sortie autonome : embarque un serveur Node minimal + les seules dépendances

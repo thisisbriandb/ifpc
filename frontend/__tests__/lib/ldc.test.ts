@@ -9,6 +9,7 @@ import {
   baliserCitations,
   numeroDeCitation,
   historiquePour,
+  normaliserBase,
 } from "@/lib/ldc";
 
 const evenement = (nom: string, charge: object) =>
@@ -137,5 +138,35 @@ describe("historiquePour", () => {
 
   it("part d'un historique vide au premier tour", () => {
     expect(historiquePour([])).toEqual([]);
+  });
+});
+
+describe("normaliserBase", () => {
+  it("retombe sur le proxy du front quand rien n'est configuré", () => {
+    expect(normaliserBase(undefined)).toBe("/api/ldc");
+    expect(normaliserBase("")).toBe("/api/ldc");
+  });
+
+  it("complète une URL de service donnée sans son chemin", () => {
+    expect(normaliserBase("https://ldc.up.railway.app")).toBe(
+      "https://ldc.up.railway.app/api/ldc",
+    );
+  });
+
+  it("ne double pas le chemin quand il est déjà là", () => {
+    // La confusion entre les deux écritures produisait un 404 opaque :
+    // .../api/ldc/api/ldc/ask.
+    expect(normaliserBase("https://ldc.up.railway.app/api/ldc")).toBe(
+      "https://ldc.up.railway.app/api/ldc",
+    );
+  });
+
+  it("tolère une barre oblique finale", () => {
+    expect(normaliserBase("https://ldc.up.railway.app/")).toBe(
+      "https://ldc.up.railway.app/api/ldc",
+    );
+    expect(normaliserBase("https://ldc.up.railway.app/api/ldc/")).toBe(
+      "https://ldc.up.railway.app/api/ldc",
+    );
   });
 });

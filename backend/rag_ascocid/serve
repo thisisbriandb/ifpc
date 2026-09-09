@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 # API HTTP du chatbot AsCoCid (spec 07 §2).
 #
-#   ./serve              écoute sur :8100
+#   ./serve              écoute sur 127.0.0.1:8100
 #   ./serve --port 9000  autre port
 #
-# En conteneur, deux variables suffisent à tout régler :
+# En conteneur, deux variables suffisent :
 #   PORT      injecté par l'hébergeur (Railway) — prioritaire sur le défaut
-#   LDC_HOST  interface d'écoute ; « :: » est requis par le réseau privé de
-#             Railway, qui est en IPv6 uniquement. Un service qui n'écoute
-#             qu'en 0.0.0.0 y est injoignable depuis les autres services.
+#   LDC_HOST  interface d'écoute. « :: » ouvre une socket à DOUBLE PILE
+#             (cf. interfaces/web/lancer.py) : le domaine public de Railway
+#             entre en IPv4, son réseau privé en IPv6, et les deux passent.
 cd "$(dirname "$0")"
 PY=.venv/bin/python; [ -x "$PY" ] || PY=python3
-PORT="${PORT:-8100}"
-if [ "$1" = "--port" ]; then PORT="$2"; shift 2; fi
-PYTHONPATH=src exec "$PY" -m uvicorn ascocid.interfaces.web.api:app \
-  --host "${LDC_HOST:-127.0.0.1}" --port "$PORT" "$@"
+if [ "$1" = "--port" ]; then export PORT="$2"; shift 2; fi
+PYTHONPATH=src exec "$PY" -m ascocid.interfaces.web.lancer "$@"
