@@ -13,7 +13,7 @@ const FALLBACK_PRODUITS = [
 
 const FALLBACK_PROCEDES = [
   { id: "flash", nom: "Pasteurisation flash" },
-  { id: "classique", nom: "Pasteurisation classique" },
+  { id: "classique", nom: "Pasteurisation en batch" },
   { id: "tunnel", nom: "Tunnel / douchette" },
 ];
 

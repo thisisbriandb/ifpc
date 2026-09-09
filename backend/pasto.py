@@ -159,7 +159,8 @@ UNITES_TEMPS = ["minute", "seconde"]
 
 PROCEDES = {
     "flash": {"nom": "Flash-pasteurisation ", "description": "Haute température, courte durée"},
-    "classique": {"nom": "Pasteurisation classique", "description": "Température modérée, durée moyenne"},
+    # La clé « classique » reste : des analyses enregistrées la portent.
+    "classique": {"nom": "Pasteurisation en batch", "description": "Température modérée, durée moyenne"},
     "tunnel": {"nom": "Pasteurisation Tunnel", "description": "Pasteurisation en bouteille"},
 }
 
@@ -171,7 +172,7 @@ TRANSLATIONS = {
     },
     "procedes": {
         "flash": {"fr": "Flash-pasteurisation", "en": "Flash pasteurisation"},
-        "classique": {"fr": "Pasteurisation classique", "en": "Conventional pasteurisation"},
+        "classique": {"fr": "Pasteurisation en batch", "en": "Batch pasteurisation"},
         "tunnel": {"fr": "Pasteurisation Tunnel", "en": "Tunnel / spray"},
     },
     "unites_temps": {

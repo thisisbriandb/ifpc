@@ -267,7 +267,7 @@ export default function Home() {
 
   const processLabels: Record<string, { fr: string; en: string }> = {
     flash: { fr: "Pasteurisation flash", en: "Flash pasteurisation" },
-    classique: { fr: "Pasteurisation classique", en: "Conventional pasteurisation" },
+    classique: { fr: "Pasteurisation en batch", en: "Batch pasteurisation" },
     tunnel: { fr: "Tunnel / douchette", en: "Tunnel / spray" },
   };
 
