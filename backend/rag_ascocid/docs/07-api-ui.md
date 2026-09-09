@@ -65,10 +65,28 @@ redéploiements rapides. Corollaire : la sonde de santé doit être patiente
 (`healthcheckTimeout = 600`), et **la mise en veille automatique est à
 proscrire** — chaque réveil coûterait le rechargement du modèle (~15 s).
 
-**3. Le réseau privé de Railway est en IPv6 seul.** D'où `LDC_HOST=::` dans
-l'image : un service qui n'écoute qu'en `0.0.0.0` est injoignable depuis les
-autres services. Fixer aussi `PORT=8100` sur le service rend l'adresse interne
-déterministe : `http://<nom-du-service>.railway.internal:8100`.
+**3. Les deux familles d'adresses, sur une seule socket.** Le réseau privé de
+Railway est en IPv6 ; son proxy public entre en IPv4. Aucune valeur de
+`--host` ne satisfait les deux — et « :: » ne suffit pas : uvicorn ouvre alors
+une socket IPv6 **exclusive**. Mesuré dans le conteneur, `bindv6only = 0`
+pourtant :
+
+```
+[::1]:8100      → HTTP 200
+127.0.0.1:8100  → connexion refusée      ⇒ « Application failed to respond »
+```
+
+D'où `interfaces/web/lancer.py`, qui construit la socket avec `IPV6_V6ONLY`
+désactivé. `LDC_HOST=::` (défaut de l'image) signifie donc « double pile ».
+Fixer `PORT=8100` rend en outre l'adresse interne déterministe :
+`http://<nom-du-service>.railway.internal:8100`.
+
+⚠️ **Pendant le chargement, le service ne répond pas encore.** L'index et le
+modèle sont chargés dans le `lifespan`, avant que le port n'accepte des
+connexions : le domaine renvoie 502 tant que le journal n'affiche pas
+`Application startup complete`. Quelques secondes en régime normal, plusieurs
+minutes au tout premier démarrage d'un volume neuf, le temps de télécharger les
+poids. C'est ce que couvre `healthcheckTimeout = 600`.
 
 **Front hébergé ailleurs (Vercel).** Le service `ldc` a alors besoin d'un
 domaine public Railway, et `JWT_SECRET` cesse d'être une précaution : c'est la
