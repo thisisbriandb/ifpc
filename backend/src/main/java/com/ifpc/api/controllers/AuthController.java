@@ -36,7 +36,8 @@ public class AuthController {
         }
         
         User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(new UserDto(user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole().name()));
+        return ResponseEntity.ok(new UserDto(user.getFirstName(), user.getLastName(), user.getCompanyName(),
+                user.getCompanyRole(), user.getEmail(), user.getRole().name()));
     }
 
     @PutMapping("/profile")
@@ -48,8 +49,11 @@ public class AuthController {
         User user = (User) authentication.getPrincipal();
         if (request.firstName() != null) user.setFirstName(request.firstName());
         if (request.lastName() != null) user.setLastName(request.lastName());
+        if (request.companyName() != null) user.setCompanyName(request.companyName());
+        if (request.companyRole() != null) user.setCompanyRole(request.companyRole());
         userRepository.save(user);
-        return ResponseEntity.ok(new UserDto(user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole().name()));
+        return ResponseEntity.ok(new UserDto(user.getFirstName(), user.getLastName(), user.getCompanyName(),
+                user.getCompanyRole(), user.getEmail(), user.getRole().name()));
     }
 
     @PutMapping("/password")
@@ -103,8 +107,26 @@ public class AuthController {
         }
     }
 
-    public record UserDto(String firstName, String lastName, String email, String role) {}
-    public record ProfileUpdateRequest(String firstName, String lastName) {}
+    /**
+     * Profil renvoyé au client.
+     *
+     * <p>L'entreprise et la fonction en étaient absentes : le formulaire de
+     * profil les affichait donc vides même une fois enregistrées, puisqu'il se
+     * remplit à partir de cette réponse.</p>
+     */
+    public record UserDto(String firstName, String lastName, String companyName,
+                          String companyRole, String email, String role) {}
+
+    /**
+     * Champs modifiables depuis le profil.
+     *
+     * <p>{@code companyName} et {@code companyRole} en étaient absents. Le
+     * client les envoyait, Jackson les écartait en silence — la configuration
+     * par défaut de Spring Boot ignore les propriétés inconnues — et
+     * l'enregistrement répondait 200 sans les avoir écrits.</p>
+     */
+    public record ProfileUpdateRequest(String firstName, String lastName,
+                                       String companyName, String companyRole) {}
     public record PasswordChangeRequest(String currentPassword, String newPassword) {}
     public record ForgotPasswordRequest(String email) {}
     public record ResetPasswordApiRequest(String token, String newPassword) {}

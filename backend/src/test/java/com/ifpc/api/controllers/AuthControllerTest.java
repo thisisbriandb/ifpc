@@ -91,7 +91,7 @@ class AuthControllerTest {
                 new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
         );
 
-        AuthController.ProfileUpdateRequest req = new AuthController.ProfileUpdateRequest("Robert", "New");
+        AuthController.ProfileUpdateRequest req = new AuthController.ProfileUpdateRequest("Robert", "New", null, null);
         ResponseEntity<?> response = authController.updateProfile(req);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -103,7 +103,7 @@ class AuthControllerTest {
     @Test
     @DisplayName("updateProfile returns 401 when unauthenticated")
     void testUpdateProfileUnauthenticated() {
-        ResponseEntity<?> response = authController.updateProfile(new AuthController.ProfileUpdateRequest("A", "B"));
+        ResponseEntity<?> response = authController.updateProfile(new AuthController.ProfileUpdateRequest("A", "B", null, null));
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 

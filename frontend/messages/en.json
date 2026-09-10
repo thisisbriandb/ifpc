@@ -15,7 +15,7 @@
     "home": "Home",
     "subTitle": "Cider industry",
     "pasteurisation": "Pasteurisation",
-    "calculVP": "Pasteurisation value calculation",
+    "calculVP": "Heat treatment effectiveness",
     "aideBareme": "Scale Guide",
     "colorimetrie": "Colorimetry",
     "mesure": "Measurement",
@@ -227,7 +227,7 @@
     "saved": "Analysis saved to history"
   },
   "controle": {
-    "title": "Pasteurisation Value Calculation",
+    "title": "Heat treatment effectiveness",
     "titleReady": "Ready to analyse your batch",
     "subtitleReady": "Use the configuration panel on the left to define your parameters and import your temperature readings.",
     "openConfig": "Open configuration",
@@ -348,7 +348,7 @@
     "showMorePlural": "Show {n} more",
     "modules": {
       "pasteurisation": "Pasteurisation",
-      "calculVP": "VP Calculation",
+      "calculVP": "Heat effectiveness",
       "bareme": "Schedule",
       "colorimetrie": "Colorimetry",
       "assemblage": "Blending",
@@ -358,7 +358,7 @@
       "config": "Config"
     },
     "moduleMeta": {
-      "controle": "Pasteurisation Value Control",
+      "controle": "Heat treatment effectiveness",
       "bareme": "Schedule guide"
     },
     "statut": {
