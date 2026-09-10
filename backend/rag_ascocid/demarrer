@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Point d'entrée du conteneur : amorçage en tâche de fond, puis service.
+#
+# L'ingestion dure des dizaines de minutes ; la lancer avant d'écouter ferait
+# échouer la sonde de santé et Railway annulerait le déploiement. Le service
+# répond donc tout de suite — sur un corpus encore vide, ce que /api/ldc/sante
+# annonce honnêtement — pendant que le volume se remplit derrière.
+#
+# LDC_AMORCAGE=0 désactive complètement ce comportement.
+set -u
+cd "$(dirname "$0")"
+RACINE="${ASCOCID_DATA:-data}"
+
+if [ "${LDC_AMORCAGE:-1}" != "0" ]; then
+  mkdir -p "$RACINE"
+  # tee : la progression reste visible dans les journaux de l'hébergeur, et
+  # une trace persiste sur le volume pour l'après-coup.
+  ( ./amorcer 2>&1 | tee -a "$RACINE/amorcage.log" ) &
+fi
+
+exec ./serve

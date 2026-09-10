@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Peuple le volume si le corpus est absent — puis s'arrête.
+#
+# Railway ne donne pas d'accès shell aux conteneurs : l'ingestion ne peut pas
+# être lancée à la main. Elle est donc déclenchée au démarrage, une seule fois,
+# et seulement si deux conditions sont réunies : un corpus vide, et des
+# identifiants d'accès à AsCoCid dans l'environnement.
+#
+# Idempotent : sur un volume déjà peuplé, il ne fait rien et rend la main.
+set -u
+cd "$(dirname "$0")"
+PY=.venv/bin/python; [ -x "$PY" ] || PY=python3
+RACINE="${ASCOCID_DATA:-data}"
+
+fiches=$("$PY" - <<PYEOF
+import sqlite3, pathlib
+base = pathlib.Path("${RACINE}") / "ascocid.sqlite"
+try:
+    cx = sqlite3.connect(f"file:{base}?mode=ro", uri=True)
+    print(cx.execute("SELECT count(*) FROM fiche").fetchone()[0])
+except Exception:
+    print(0)
+PYEOF
+)
+
+if [ "${fiches:-0}" -gt 0 ]; then
+  echo "[amorçage] corpus déjà présent ($fiches fiches) — rien à faire."
+  exit 0
+fi
+
+if [ -z "${ASCOCID_ROOT_URL:-}" ]; then
+  echo "[amorçage] corpus vide, et aucun ASCOCID_ROOT_URL : ingestion impossible."
+  echo "[amorçage] le service démarre en mode dégradé — /api/ldc/sante le dit."
+  exit 0
+fi
+
+echo "[amorçage] corpus vide → ingestion complète dans ${RACINE}."
+echo "[amorçage] compter plusieurs dizaines de minutes (314 Mo à collecter)."
+set -e
+# L'ordre est imposé : l'inventaire liste les fiches, la collecte les
+# télécharge, l'extraction remplit la base, l'indexation calcule les vecteurs.
+echo "[amorçage] 1/4 inventaire…"  ; ./probe inventaire
+echo "[amorçage] 2/4 collecte…"    ; ./ingest collecte
+echo "[amorçage] 3/4 extraction…"  ; ./ingest extraire
+echo "[amorçage] 4/4 indexation…"  ; ./ingest indexer
+echo "[amorçage] TERMINÉ — REDÉMARRER LE SERVICE : l'index vectoriel et la carte"
+echo "[amorçage] du corpus sont chargés au démarrage, le processus en cours les ignore."
