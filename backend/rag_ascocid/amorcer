@@ -28,8 +28,44 @@ if [ "${fiches:-0}" -gt 0 ]; then
   exit 0
 fi
 
+if [ -n "${ASCOCID_ARCHIVE_URL:-}" ]; then
+  # Certains réseaux (Railway notamment) n'atteignent pas ascocid.fr — un pare-feu
+  # y répond 200 sans jamais servir le vrai contenu, le crawl tourne dans le vide
+  # sans jamais échouer franchement. Repli : une archive de data/ déjà ingérée
+  # ailleurs (poste avec le bon accès réseau), déposée en asset d'une release
+  # GitHub et téléchargée ici telle quelle. Prioritaire sur ASCOCID_ROOT_URL.
+  echo "[amorçage] corpus vide → téléchargement de l'archive pré-construite."
+  set -e
+  "$PY" - <<PYEOF
+import os, pathlib, urllib.request, zipfile
+
+url = os.environ["ASCOCID_ARCHIVE_URL"]
+racine = pathlib.Path("${RACINE}")
+racine.mkdir(parents=True, exist_ok=True)
+archive = racine / "_archive.zip"
+
+print(f"[amorçage] téléchargement depuis {url}", flush=True)
+with urllib.request.urlopen(url) as rep, open(archive, "wb") as f:
+    total = 0
+    while chunk := rep.read(1 << 20):
+        f.write(chunk)
+        total += len(chunk)
+        if total % (20 << 20) < (1 << 20):
+            print(f"[amorçage]   … {total // (1 << 20)} Mo", flush=True)
+
+print("[amorçage] extraction…", flush=True)
+with zipfile.ZipFile(archive) as zf:
+    zf.extractall(racine)
+archive.unlink()
+print("[amorçage] archive extraite dans ${RACINE}.", flush=True)
+PYEOF
+  echo "[amorçage] TERMINÉ — REDÉMARRER LE SERVICE : l'index vectoriel et la carte"
+  echo "[amorçage] du corpus sont chargés au démarrage, le processus en cours les ignore."
+  exit 0
+fi
+
 if [ -z "${ASCOCID_ROOT_URL:-}" ]; then
-  echo "[amorçage] corpus vide, et aucun ASCOCID_ROOT_URL : ingestion impossible."
+  echo "[amorçage] corpus vide, et ni ASCOCID_ARCHIVE_URL ni ASCOCID_ROOT_URL : ingestion impossible."
   echo "[amorçage] le service démarre en mode dégradé — /api/ldc/sante le dit."
   exit 0
 fi
