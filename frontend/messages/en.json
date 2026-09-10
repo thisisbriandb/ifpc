@@ -15,14 +15,14 @@
     "home": "Home",
     "subTitle": "Cider industry",
     "pasteurisation": "Pasteurisation",
-    "calculVP": "Pasteurisation Value Calc.",
+    "calculVP": "Pasteurisation value calculation",
     "aideBareme": "Scale Guide",
     "colorimetrie": "Colorimetry",
     "mesure": "Measurement",
     "analyse": "Analysis",
     "gestionCuves": "Tank Management",
     "chaiVirtuel": "Virtual Cellar",
-    "suiviCuves": "Tank Tracking",
+    "suiviCuves": "Tank monitoring",
     "lots": "Lots / Products",
     "assemblage": "Blending",
     "admin": "Administration",
@@ -364,7 +364,15 @@
     "statut": {
       "conforme": "Compliant",
       "insuffisant": "Insufficient"
-    }
+    },
+    "toolsHeading": "Access your tools",
+    "cards": {
+      "pasteurisation": "Schedules, pasteurisation value",
+      "colorimetrie": "Colour, spectra, blends",
+      "cuvesTitre": "Tank management",
+      "cuves": "Virtual cellar, batches, monitoring"
+    },
+    "resume": "Pick up where you left off"
   },
   "historique": {
     "title": "Analysis History",

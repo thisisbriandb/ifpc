@@ -5,12 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store";
+import { ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
-  ArrowRight, Clock, ChevronDown,
-  Thermometer, FlaskConical, BarChart3,
-  Pipette, Palette, Container,
-  Shield, Users, Settings,
-} from "lucide-react";
+  GlypheeColorimetrie,
+  GlypheeCuve,
+  GlypheePasteurisation,
+} from "@/components/icones";
 import { getHistory, type HistoryEntry } from "@/lib/api";
 import { useI18n } from "@/lib/i18n";
 
@@ -32,139 +33,212 @@ interface RecentActivity {
   parametres?: string;
 }
 
-const STATUS_BADGE: Record<string, { bg: string; text: string }> = {
-  conforme: { bg: "bg-brand-primary/10", text: "text-brand-primary" },
-  insuffisant: { bg: "bg-red-50", text: "text-red-700" },
+const PUCES: Record<string, string> = {
+  controle: "bg-brand-primary",
+  bareme: "bg-brand-accent",
+  assemblage: "bg-brand-link",
 };
 
-interface HistorySubMeta { type: string; dot: string; bar: string; }
-interface HistoryParentMeta { key: string; icon: any; accent: string; iconColor: string; subModules: HistorySubMeta[]; }
-
-const HISTORY_MODULES: HistoryParentMeta[] = [
-  {
-    key: "pasteurisation",
-    icon: Thermometer,
-    accent: "border-l-[3px] border-brand-primary",
-    iconColor: "text-brand-primary",
-    subModules: [
-      { type: "controle", dot: "bg-brand-primary", bar: "bg-brand-primary/30" },
-      { type: "bareme", dot: "bg-brand-accent", bar: "bg-brand-accent/30" },
-    ],
-  },
-];
-
-// ── Module data ──────────────────────────────────────────────────────────────
+const CIBLES: Record<string, string> = {
+  controle: "/controle",
+  bareme: "/bareme",
+  assemblage: "/colorimetrie/assemblage",
+};
 
 interface SubModule {
   href: string;
   label: string;
-  icon: any;
 }
 
 interface Module {
   key: string;
   label: string;
-  icon: any;
-  gradient: string;
-  ring: string;
-  subColor: string;
+  /** Seule trace de couleur : le nom du domaine. Ni pastille, ni dégradé. */
+  couleur: string;
+  /** Glyphe métier, dessiné pour PADOC (components/icones). */
+  glyphe?: (p: { className?: string }) => JSX.Element;
   subModules: SubModule[];
   adminOnly?: boolean;
 }
 
+// ── Couronne de domaines ─────────────────────────────────────────────────────
 
-// ── Arc Module Component ─────────────────────────────────────────────────────
+/**
+ * Les domaines disposés en couronne autour d'un noyau, à la manière de la
+ * carte d'accueil d'AsCoCid : un centre identitaire, des branches colorées,
+ * les accès en périphérie.
+ *
+ * La géométrie est calculée, pas dessinée à la main : n domaines se répartissent
+ * sur 360°, la première branche au nord. Ajouter un domaine ne demande donc
+ * aucun ajustement — l'écran se réorganise seul, y compris quand le bloc
+ * Administration apparaît pour un compte ADMIN.
+ *
+ * En dessous de `lg`, la couronne cède la place à une liste : un cercle de
+ * 560 px ne tient pas sur un téléphone, et le réduire le rendrait illisible.
+ */
 
-function ArcModule({ mod }: { mod: Module }) {
-  const [open, setOpen] = useState(false);
-  const Icon = mod.icon;
-  const count = mod.subModules.length;
+const RAYON_NOYAU = 82;      // rayon du cercle central, en px
+const RAYON_COURONNE = 196;  // distance du centre à chaque pastille
+const LARGEUR = 640;
+const HAUTEUR = 520;
 
-  // Compute arc positions for sub-modules (semi-circle below parent)
-  const ARC_RADIUS = 80; // Slightly smaller for mobile
-  const getArcPosition = (index: number, total: number) => {
-    // Spread evenly across 180° arc (π), centered below
-    const startAngle = Math.PI * 0.1;
-    const endAngle = Math.PI * 0.9;
-    const angle = total === 1
-      ? Math.PI / 2
-      : startAngle + (index / (total - 1)) * (endAngle - startAngle);
-    return {
-      x: -Math.cos(angle) * ARC_RADIUS,
-      y: Math.sin(angle) * ARC_RADIUS,
-    };
-  };
+function positionPolaire(angleDeg: number, rayon: number) {
+  const a = (angleDeg * Math.PI) / 180;
+  return { x: LARGEUR / 2 + rayon * Math.cos(a), y: HAUTEUR / 2 + rayon * Math.sin(a) };
+}
+
+function Couronne({ modules }: { modules: Module[] }) {
+  const [actif, setActif] = useState<string | null>(null);
+  // Première branche au nord, les suivantes réparties également.
+  const angles = modules.map((_, i) => -90 + (i * 360) / modules.length);
 
   return (
-    <div
-      className="relative flex flex-col items-center z-10"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      style={{ width: 160, height: 120 }}
-    >
-      {/* Main module icon */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className={`relative z-10 w-16 h-16 rounded-full bg-gradient-to-br ${mod.gradient} text-white shadow-lg
-          flex items-center justify-center transition-all duration-300
-          hover:scale-110 hover:shadow-xl ring-4 ${mod.ring}
-          ${open ? "scale-110 shadow-xl" : ""}`}
-      >
-        <Icon className="w-7 h-7" />
-      </button>
-      <span className="mt-2 text-xs font-bold text-gray-600 tracking-wide text-center px-2">{mod.label}</span>
-
-      {/* Semi-circle arc of sub-modules */}
-      <div className="absolute top-8 left-1/2 z-20" style={{ width: 0, height: 0 }}>
-        {mod.subModules.map((sub, i) => {
-          const { x, y } = getArcPosition(i, count);
-          const SubIcon = sub.icon;
+    <div className="relative mx-auto hidden lg:block"
+         style={{ width: LARGEUR, height: HAUTEUR }}>
+      {/* Branches : tracées sous les pastilles, du bord du noyau au bord de
+          la pastille, dans la couleur du domaine. */}
+      <svg className="absolute inset-0" width={LARGEUR} height={HAUTEUR} aria-hidden>
+        <circle cx={LARGEUR / 2} cy={HAUTEUR / 2} r={RAYON_COURONNE - 58}
+                fill="none" stroke="currentColor" strokeWidth="1"
+                strokeDasharray="2 6" className="text-gray-300" />
+        {modules.map((mod, i) => {
+          const depart = positionPolaire(angles[i], RAYON_NOYAU + 6);
+          const arrivee = positionPolaire(angles[i], RAYON_COURONNE - 46);
           return (
-            <Link
-              key={sub.href + sub.label}
-              href={sub.href}
-              className={`absolute flex flex-col items-center transition-all duration-300 ease-out
-                ${open
-                  ? "opacity-100 scale-100 pointer-events-auto"
-                  : "opacity-0 scale-50 pointer-events-none"
-                }`}
-              style={{
-                left: x,
-                top: y,
-                transform: "translate(-50%, -50%)",
-                transitionDelay: open ? `${i * 60}ms` : "0ms",
-              }}
-            >
-              <div className={`w-11 h-11 rounded-xl border ${mod.subColor} flex items-center justify-center shadow-sm transition-all hover:scale-110 hover:shadow-md`}>
-                <SubIcon className="w-5 h-5" />
-              </div>
-              <span className="mt-1 text-[9px] font-semibold text-gray-500 whitespace-nowrap">{sub.label}</span>
-            </Link>
+            <g key={mod.key} className={mod.couleur}>
+              <line x1={depart.x} y1={depart.y} x2={arrivee.x} y2={arrivee.y}
+                    stroke="currentColor" strokeWidth={actif === mod.key ? 2 : 1.25}
+                    strokeLinecap="round"
+                    opacity={actif && actif !== mod.key ? 0.25 : 0.75} />
+              <circle cx={depart.x} cy={depart.y} r="3.5" fill="currentColor"
+                      opacity={actif && actif !== mod.key ? 0.25 : 0.9} />
+            </g>
           );
         })}
+      </svg>
+
+      {/* Noyau */}
+      <div
+        className="absolute flex items-center justify-center rounded-full border
+          border-gray-200/70 bg-white/80 backdrop-blur-sm"
+        style={{
+          width: RAYON_NOYAU * 2, height: RAYON_NOYAU * 2,
+          left: LARGEUR / 2 - RAYON_NOYAU, top: HAUTEUR / 2 - RAYON_NOYAU,
+        }}
+      >
+        <Image src="/assets/log.svg" alt="IFPC" width={120} height={120}
+               className="h-16 w-16" priority />
       </div>
 
-      {/* Decorative arc line (SVG) */}
-      <svg
-        className={`absolute top-12 left-1/2 -translate-x-1/2 transition-opacity duration-300 ${open ? "opacity-20" : "opacity-0"}`}
-        width="180" height="100" viewBox="-90 -10 180 100"
-        fill="none"
-      >
-        <path
-          d={`M ${ARC_RADIUS * Math.cos(Math.PI * 0.1)} ${ARC_RADIUS * Math.sin(Math.PI * 0.1)} A ${ARC_RADIUS} ${ARC_RADIUS} 0 0 0 ${ARC_RADIUS * Math.cos(Math.PI * 0.9)} ${ARC_RADIUS * Math.sin(Math.PI * 0.9)}`}
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeDasharray="4 4"
-          className="text-gray-400"
-        />
-      </svg>
+      {modules.map((mod, i) => {
+        const p = positionPolaire(angles[i], RAYON_COURONNE);
+        const Glyphe = mod.glyphe;
+        const ouvert = actif === mod.key;
+        // Le panneau s'ouvre vers l'extérieur : au-dessus pour une pastille
+        // haute, en dessous pour les autres. Sinon il reviendrait sur le noyau.
+        const versLeHaut = p.y < HAUTEUR / 2;
+        return (
+          <div
+            key={mod.key}
+            className="absolute"
+            style={{ left: p.x - 78, top: p.y - 42, width: 156 }}
+            onMouseEnter={() => setActif(mod.key)}
+            onMouseLeave={() => setActif(null)}
+          >
+            <button
+              onClick={() => setActif((v) => (v === mod.key ? null : mod.key))}
+              aria-expanded={ouvert}
+              className={`flex w-full flex-col items-center gap-2 rounded-xl px-2 py-3
+                transition-all duration-200 ${ouvert ? "bg-white shadow-sm" : ""}`}
+            >
+              {Glyphe ? (
+                <Glyphe className={`h-8 w-8 transition-transform duration-200
+                  ${mod.couleur} ${ouvert ? "scale-110" : ""}`} />
+              ) : null}
+              <span className="text-center text-[12.5px] font-semibold leading-tight
+                text-gray-700">{mod.label}</span>
+            </button>
+
+            <AnimatePresence>
+              {ouvert && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.16, ease: "easeOut" }}
+                  className={`absolute left-1/2 z-20 w-56 -translate-x-1/2 rounded-xl
+                    border border-gray-100 bg-white p-1.5
+                    shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                    ${versLeHaut ? "bottom-full mb-2" : "top-full mt-2"}`}
+                >
+                  {mod.subModules.map((sous, n) => (
+                    <motion.div
+                      key={sous.href}
+                      initial={{ opacity: 0, x: -4 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.03 * n, duration: 0.16 }}
+                    >
+                      <Link
+                        href={sous.href}
+                        className="group flex items-center justify-between gap-2 rounded-lg
+                          px-3 py-2 text-[13px] text-gray-600 transition-colors
+                          hover:bg-brand-gray hover:text-gray-900"
+                      >
+                        <span className="leading-snug">{sous.label}</span>
+                        <ChevronRight className="h-3.5 w-3.5 shrink-0 text-gray-200
+                          transition-all group-hover:translate-x-0.5
+                          group-hover:text-gray-400" />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Repli sous `lg` : la même matière, en liste. */
+function ListeDomaines({ modules }: { modules: Module[] }) {
+  return (
+    <div className="space-y-7 lg:hidden">
+      {modules.map((mod) => {
+        const Glyphe = mod.glyphe;
+        return (
+          <section key={mod.key}>
+            <h2 className={`flex items-center gap-2 border-b border-gray-200/70 pb-2
+              text-[11px] font-semibold uppercase tracking-[0.16em] ${mod.couleur}`}>
+              {Glyphe ? <Glyphe className="h-[18px] w-[18px] shrink-0" /> : null}
+              {mod.label}
+            </h2>
+            <ul className="mt-1">
+              {mod.subModules.map((sous) => (
+                <li key={sous.href}>
+                  <Link
+                    href={sous.href}
+                    className="group flex items-center justify-between gap-3 rounded-lg
+                      px-2 py-2.5 text-[14px] text-gray-600 transition-colors
+                      hover:bg-white hover:text-gray-900"
+                  >
+                    <span className="leading-snug">{sous.label}</span>
+                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-gray-200
+                      transition-all group-hover:translate-x-0.5
+                      group-hover:text-gray-400" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
     </div>
   );
 }
 
 // ── Page ─────────────────────────────────────────────────────────────────────
-
-const PREVIEW_COUNT = 3;
 
 export default function Home() {
   const { user } = useAuthStore();
@@ -176,39 +250,45 @@ export default function Home() {
   const modules: Module[] = [
     {
       key: "pasto",
+      glyphe: GlypheePasteurisation,
       label: t("home.modules.pasteurisation"),
-      icon: Thermometer,
-      gradient: "from-brand-primary to-brand-primary/80",
-      ring: "ring-brand-primary/20",
-      subColor: "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 border-brand-primary/20",
+      couleur: "text-brand-primary",
       subModules: [
-        { href: "/controle", label: t("home.modules.calculVP"), icon: FlaskConical },
-        { href: "/bareme", label: t("home.modules.bareme"), icon: BarChart3 },
+        { href: "/controle", label: t("nav.calculVP") },
+        { href: "/bareme", label: t("nav.aideBareme") },
       ],
     },
     {
       key: "colori",
+      glyphe: GlypheeColorimetrie,
       label: t("home.modules.colorimetrie"),
-      icon: Palette,
-      gradient: "from-brand-accent to-brand-sand",
-      ring: "ring-brand-accent/20",
-      subColor: "bg-brand-accent/10 text-brand-accent hover:bg-brand-accent/20 border-brand-accent/20",
+      couleur: "text-brand-accent",
       subModules: [
-        { href: "/colorimetrie/assemblage", label: t("home.modules.assemblage"), icon: Pipette },
-        { href: "/cuves", label: t("home.modules.cuves"), icon: Container },
+        { href: "/colorimetrie/assemblage", label: t("colori.title") },
+      ],
+    },
+    {
+      // « Suivi des cuves » était rangé sous Colorimétrie : un module de
+      // quatre pages classé comme sous-rubrique d'un autre.
+      key: "cuves",
+      glyphe: GlypheeCuve,
+      label: t("home.cards.cuvesTitre"),
+      couleur: "text-brand-link",
+      subModules: [
+        // Mêmes retraits que la barre latérale : laisser ces liens sur
+        // l'accueil pendant qu'ils disparaissent du menu ferait de la page
+        // d'entrée le seul chemin vers des écrans qu'on retire.
+        { href: "/cuves/chai", label: t("nav.chaiVirtuel") },
       ],
     },
     {
       key: "admin",
       label: t("home.modules.admin"),
-      icon: Shield,
-      gradient: "from-gray-600 to-gray-500",
-      ring: "ring-gray-200",
-      subColor: "bg-gray-100 text-gray-600 hover:bg-gray-200 border-gray-200",
+      couleur: "text-gray-500",
       adminOnly: true,
       subModules: [
-        { href: "/admin", label: t("home.modules.users"), icon: Users },
-        { href: "/expert", label: t("home.modules.config"), icon: Settings },
+        { href: "/admin", label: t("home.modules.users") },
+        { href: "/expert", label: t("home.modules.config") },
       ],
     },
   ];
@@ -247,6 +327,17 @@ export default function Home() {
     return () => { cancelled = true; };
   }, [user]);
 
+  /** « il y a 2 h », « hier » — sans dépendance, via l'API du navigateur. */
+  const depuis = (date: string) => {
+    const t0 = new Date(date).getTime();
+    if (Number.isNaN(t0)) return "";
+    const minutes = Math.round((t0 - Date.now()) / 60000);
+    const fmt = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+    if (Math.abs(minutes) < 60) return fmt.format(minutes, "minute");
+    if (Math.abs(minutes) < 60 * 24) return fmt.format(Math.round(minutes / 60), "hour");
+    return fmt.format(Math.round(minutes / 1440), "day");
+  };
+
   const greeting = () => {
     const h = new Date().getHours();
     if (h < 12) return t("home.greetingMorning");
@@ -255,54 +346,6 @@ export default function Home() {
   };
 
   const visibleModules = modules.filter((m) => !m.adminOnly || user?.role === "ADMIN");
-
-  const productLabels: Record<string, { fr: string; en: string }> = {
-    jus_pomme: { fr: "Jus de pomme", en: "Apple juice" },
-    cidre_doux: { fr: "Cidre doux et demi-sec", en: "Sweet and semi-dry cider" },
-    cidre_brut: { fr: "Cidre brut et extra-brut", en: "Dry and extra-dry cider" },
-    // Clés héritées du regroupement, encore portées par d'anciennes analyses
-    cidre_demi_sec: { fr: "Cidre doux et demi-sec", en: "Sweet and semi-dry cider" },
-    cidre_extra_brut: { fr: "Cidre brut et extra-brut", en: "Dry and extra-dry cider" },
-  };
-
-  const processLabels: Record<string, { fr: string; en: string }> = {
-    flash: { fr: "Pasteurisation flash", en: "Flash pasteurisation" },
-    classique: { fr: "Pasteurisation en batch", en: "Batch pasteurisation" },
-    tunnel: { fr: "Tunnel / douchette", en: "Tunnel / spray" },
-  };
-
-  const productNameToKey: Record<string, string> = Object.fromEntries(
-    Object.entries(productLabels).flatMap(([key, values]) => Object.values(values).map((name) => [name, key]))
-  );
-
-  const processNameToKey: Record<string, string> = Object.fromEntries(
-    Object.entries(processLabels).flatMap(([key, values]) => Object.values(values).map((name) => [name, key]))
-  );
-
-  const translateProduct = (value?: string) => {
-    if (!value) return value;
-    const key = productNameToKey[value];
-    return key ? productLabels[key][locale] : value;
-  };
-
-  const translateProcess = (value?: string) => {
-    if (!value) return value;
-    const key = processNameToKey[value];
-    return key ? processLabels[key][locale] : value;
-  };
-
-  const activityMeta = (activity: RecentActivity) => {
-    let parametres: any = null;
-    try {
-      parametres = activity.parametres ? JSON.parse(activity.parametres) : null;
-    } catch { }
-
-    const produit = translateProduct(parametres?.produit || activity.produit);
-    const procede = translateProcess(parametres?.procede || activity.procede);
-    const title = activity.lotIdentifier || produit || activity.label;
-
-    return { produit, procede, title };
-  };
 
   return (
     <div className="min-h-screen bg-[#fafaf8] text-gray-950 px-4 sm:px-8 py-6 sm:py-10 relative overflow-hidden">
@@ -333,147 +376,53 @@ export default function Home() {
 
         {/* Welcome */}
         <header className="text-center">
-          <Image src="/assets/log.svg" alt="IFPC" width={280} height={280} className="mx-auto mb-4 w-12 h-12 sm:w-16 sm:h-16" />
           <h1 className="text-xl sm:text-2xl font-bold text-brand-text">
             {greeting()}{user ? `, ${user.firstName}` : ""}
           </h1>
           <p className="text-gray-400 mt-1 text-xs sm:text-sm">{t("home.subtitle")}</p>
         </header>
 
-        {/* Module arcs */}
-        <div className="flex justify-center gap-6 sm:gap-12 flex-wrap pt-2 overflow-visible relative z-10">
-          {visibleModules.map((mod) => (
-            <ArcModule key={mod.key} mod={mod} />
-          ))}
-        </div>
+        <Couronne modules={visibleModules} />
+        <ListeDomaines modules={visibleModules} />
 
-        {/* Recent Activities */}
-        <section>
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Clock className="w-3.5 h-3.5 text-gray-400" />
-              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t("home.recentActivities")}</h2>
-            </div>
-            {activities.length > 0 && (
+        {/* Reprendre — aperçu compact ; le détail, le regroupement et le tri
+            vivent sur /historique, qui est fait pour ça. */}
+        {activities.length > 0 && (
+          <section>
+            <div className="mb-2 flex items-baseline justify-between">
+              <h2 className="text-[11px] font-medium text-gray-400">{t("home.resume")}</h2>
               <Link
                 href="/historique"
-                className="flex items-center gap-1 text-xs text-gray-400 hover:text-brand-primary transition-colors"
+                className="text-[11px] text-gray-300 transition-colors hover:text-brand-primary"
               >
                 {t("home.viewAll")}
-                <ArrowRight className="w-3 h-3" />
               </Link>
-            )}
-          </div>
-
-          {(() => {
-            const grouped = activities.reduce<Record<string, RecentActivity[]>>((acc, a) => {
-              if (!acc[a.type]) acc[a.type] = [];
-              acc[a.type].push(a);
-              return acc;
-            }, {});
-            Object.values(grouped).forEach(items =>
-              items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-            );
-
-            return (
-              <div className="space-y-2">
-                {HISTORY_MODULES.map(parent => {
-                  const ParentIcon = parent.icon;
-                  const totalEntries = parent.subModules.reduce((sum, sub) => sum + (grouped[sub.type]?.length ?? 0), 0);
-                  const isOpen = openModules[parent.key] ?? false;
-                  return (
-                    <div key={parent.key} className={`bg-white rounded-xl border border-gray-200 overflow-hidden ${parent.accent}`}>
-
-                      {/* ── Accordion trigger ── */}
-                      <button
-                        onClick={() => setOpenModules(prev => ({ ...prev, [parent.key]: !isOpen }))}
-                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50/50 transition-colors text-left"
-                      >
-                        <ParentIcon className={`w-4 h-4 shrink-0 ${parent.iconColor}`} />
-                        <span className="flex-1 text-sm font-semibold text-gray-700">{t(`home.modules.${parent.key}`)}</span>
-                        {totalEntries > 0 && (
-                          <span className="text-[11px] font-semibold text-gray-400 tabular-nums mr-1">{totalEntries}</span>
-                        )}
-                        <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
-                      </button>
-
-                      {/* ── Expanded content ── */}
-                      {isOpen && (
-                        <div className="border-t border-gray-100">
-                          {parent.subModules.map((sub, subIdx) => {
-                            const items = grouped[sub.type] ?? [];
-                            const visible = items.slice(0, PREVIEW_COUNT);
-                            return (
-                              <div key={sub.type} className={subIdx > 0 ? "border-t border-gray-100" : ""}>
-
-                                {/* Sub-module label */}
-                                <div className="flex items-center gap-2 px-4 pt-2.5 pb-1">
-                                  <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${sub.dot}`} />
-                                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    {t(`home.moduleMeta.${sub.type}`)}
-                                  </span>
-                                </div>
-
-                                {items.length === 0 ? (
-                                  <p className="px-4 pb-3 text-[11px] text-gray-300 italic">{t("home.noEntries")}</p>
-                                ) : (
-                                  <>
-                                    <div className="divide-y divide-gray-50">
-                                      {visible.map((a) => {
-                                        const badge = a.statut ? STATUS_BADGE[a.statut] : undefined;
-                                        const meta = activityMeta(a);
-                                        const handleClick = () => {
-                                          if (a.resultJson) localStorage.setItem("ifpc_restore_result", a.resultJson);
-                                          const target = a.type === "controle" ? "/controle" : "/bareme";
-                                          const href = a.fromDb ? `${target}?history=${a.id}` : target;
-                                          router.push(href);
-                                        };
-                                        return (
-                                          <button
-                                            key={a.id}
-                                            onClick={handleClick}
-                                            className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50/60 transition-colors group text-left"
-                                          >
-                                            <span className={`w-0.5 h-7 rounded-full shrink-0 ${sub.bar}`} />
-                                            <div className="min-w-0 flex-1">
-                                              <p className="text-xs font-semibold text-gray-800 truncate">{meta.title}</p>
-                                              <p className="text-[10px] text-gray-400">
-                                                {new Date(a.date).toLocaleString(locale === "en" ? "en-GB" : "fr-FR", { dateStyle: "short", timeStyle: "short" })}
-                                                {meta.procede && <span className="ml-1">&middot; {meta.procede}</span>}
-                                              </p>
-                                            </div>
-                                            {badge && a.statut && (
-                                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${badge.bg} ${badge.text}`}>
-                                                {t(`home.statut.${a.statut}`)}
-                                              </span>
-                                            )}
-                                            <ArrowRight className="w-3 h-3 text-gray-300 group-hover:text-brand-primary transition-colors shrink-0" />
-                                          </button>
-                                        );
-                                      })}
-                                    </div>
-                                    {items.length > PREVIEW_COUNT && (
-                                      <Link
-                                        href="/historique"
-                                        className="w-full block py-2 text-center text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors border-t border-gray-50"
-                                      >
-                                        {t("home.viewAll")} →
-                                      </Link>
-                                    )}
-                                  </>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })()}
-        </section>
+            </div>
+            <ul className="divide-y divide-gray-50 overflow-hidden rounded-xl border
+              border-gray-100 bg-white">
+              {activities.slice(0, 3).map((a) => (
+                <li key={a.id}>
+                  <Link
+                    href={CIBLES[a.type] ?? "/historique"}
+                    className="flex items-center gap-2.5 px-3 py-2 transition-colors
+                      hover:bg-brand-gray"
+                  >
+                    <span className={`h-1.5 w-1.5 shrink-0 rounded-full
+                      ${PUCES[a.type] ?? "bg-gray-300"}`} />
+                    <span className="min-w-0 flex-1 truncate text-[12.5px] text-gray-600">
+                      {a.label}
+                      {a.lotIdentifier ? (
+                        <span className="text-gray-400"> · {a.lotIdentifier}</span>
+                      ) : null}
+                    </span>
+                    <span className="shrink-0 text-[11px] text-gray-300">{depuis(a.date)}</span>
+                    <ChevronRight className="h-3 w-3 shrink-0 text-gray-200" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </div>
   );

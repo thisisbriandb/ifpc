@@ -15,14 +15,14 @@
     "home": "Accueil",
     "subTitle": "Filière cidricole",
     "pasteurisation": "Pasteurisation",
-    "calculVP": "Calcul Valeur Pasteurisatrice",
+    "calculVP": "Calcul de la valeur pasteurisatrice",
     "aideBareme": "Aide au choix du barème",
     "colorimetrie": "Colorimétrie",
     "mesure": "Mesure",
     "analyse": "Analyse",
     "gestionCuves": "Gestion de cuves",
     "chaiVirtuel": "Chai Virtuel",
-    "suiviCuves": "Suivi cuves",
+    "suiviCuves": "Suivi des cuves",
     "lots": "Lots / Produits",
     "assemblage": "Assemblage",
     "admin": "Administration",
@@ -364,7 +364,15 @@
     "statut": {
       "conforme": "Conforme",
       "insuffisant": "Insuffisant"
-    }
+    },
+    "toolsHeading": "Accédez à vos différents outils",
+    "cards": {
+      "pasteurisation": "Barèmes, valeur pasteurisatrice",
+      "colorimetrie": "Couleur, spectres, assemblages",
+      "cuvesTitre": "Gestion de cuve",
+      "cuves": "Chai virtuel, lots, suivi"
+    },
+    "resume": "Reprendre"
   },
   "historique": {
     "title": "Historique des analyses",

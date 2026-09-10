@@ -58,7 +58,16 @@ function etapeDe(tour: Tour): "analyse" | "recherche" | "redaction" {
   return "redaction";
 }
 
-export default function AssistantChat() {
+export default function AssistantChat({
+  variante = "page",
+}: {
+  /**
+   * « page » occupe l'écran ; « panneau » vit dans la bulle flottante, où la
+   * place est comptée : en-tête réduit, colonne étroite, pas de bandeau.
+   */
+  variante?: "page" | "panneau";
+}) {
+  const enPanneau = variante === "panneau";
   const [tours, setTours] = useState<Tour[]>([]);
   const [saisie, setSaisie] = useState("");
   const [enCours, setEnCours] = useState(false);
@@ -178,8 +187,29 @@ export default function AssistantChat() {
   const indisponible = sante !== null && !sante.generation;
 
   return (
-    <div className="flex h-[calc(100vh-3.5rem)] flex-col bg-brand-gray lg:h-screen">
-      {/* En-tête */}
+    <div className={`flex flex-col bg-brand-gray ${
+      enPanneau ? "h-full" : "h-[calc(100vh-3.5rem)] lg:h-screen"}`}>
+      {/* En-tête — remplacé par une simple ligne d'état dans la bulle */}
+      {enPanneau ? (
+        <div className="flex shrink-0 items-center justify-between gap-2 border-b
+          border-gray-100 bg-white px-3 py-1.5">
+          <span className="truncate text-[11px] text-gray-400">
+            {sante
+              ? `AsCoCid · ${sante.corpus.fiche} fiches · recherche ${sante.recherche}`
+              : "service injoignable"}
+          </span>
+          {tours.length > 0 && (
+            <button
+              onClick={nouvelleConversation}
+              aria-label="Nouvelle question"
+              className="flex shrink-0 items-center gap-1 rounded-lg px-1.5 py-1 text-[11px]
+                text-gray-400 transition-colors hover:bg-gray-50 hover:text-brand-primary"
+            >
+              <Plus className="h-3 w-3" /> Nouvelle
+            </button>
+          )}
+        </div>
+      ) : (
       <header className="z-10 flex shrink-0 items-center justify-between gap-3 border-b
         border-gray-100 bg-white/80 px-4 py-3 backdrop-blur-sm sm:px-6">
         <div className="flex min-w-0 items-center gap-2.5">
@@ -220,15 +250,17 @@ export default function AssistantChat() {
           )}
         </div>
       </header>
+      )}
 
       {/* Fil */}
       <div ref={fil} className="flex-1 overflow-y-auto">
-        <div className="mx-auto w-full max-w-3xl px-4 pb-8 sm:px-6">
+        <div className={`mx-auto w-full px-4 pb-8 sm:px-6 ${enPanneau ? "" : "max-w-3xl"}`}>
           {tours.length === 0 ? (
             <EmptyState
               suggestions={suggestions}
               onChoisir={poser}
               fiches={sante?.corpus.fiche ?? 0}
+              compact={enPanneau}
             />
           ) : (
             <div className="space-y-8 py-8">
@@ -243,7 +275,7 @@ export default function AssistantChat() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                     className={`space-y-4 ${
-                      rang === tours.length - 1 ? "min-h-[calc(100vh-13rem)]" : ""}`}
+                      rang === tours.length - 1 && !enPanneau ? "min-h-[calc(100vh-13rem)]" : ""}`}
                   >
                     <div className="flex justify-end">
                       <p className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md
@@ -355,7 +387,7 @@ export default function AssistantChat() {
       {/* Saisie */}
       <div className="shrink-0 bg-gradient-to-t from-brand-gray via-brand-gray to-transparent
         px-4 pb-4 pt-2 sm:px-6">
-        <div className="mx-auto w-full max-w-3xl">
+        <div className={`mx-auto w-full ${enPanneau ? "" : "max-w-3xl"}`}>
           <Composer
             valeur={saisie}
             onChange={setSaisie}
@@ -364,7 +396,7 @@ export default function AssistantChat() {
             enCours={enCours}
             placeholder="Posez une question sur le cidre, un procédé, une étape…"
           />
-          <p className="mt-2 text-center text-[11px] text-gray-400">
+          <p className={`mt-2 text-center text-[11px] text-gray-400 ${enPanneau ? "hidden" : ""}`}>
             Les réponses proviennent du Livre de Connaissances AsCoCid et citent leurs sources.
             <span className="hidden sm:inline">
               {" "}Pour un calcul sur vos propres lots, l&apos;assistant renvoie vers

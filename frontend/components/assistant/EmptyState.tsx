@@ -13,28 +13,33 @@ export default function EmptyState({
   suggestions,
   onChoisir,
   fiches,
+  compact = false,
 }: {
   suggestions: string[];
   onChoisir: (question: string) => void;
   fiches: number;
+  /** Dans la bulle flottante, la place se compte en pixels, pas en écrans. */
+  compact?: boolean;
 }) {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center px-4 py-12 text-center">
+    <div className={`flex flex-col items-center justify-center px-4 text-center ${
+      compact ? "py-6" : "min-h-[70vh] py-12"}`}>
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl
-          bg-brand-primary/10 text-brand-primary"
+        className={`mb-4 flex items-center justify-center rounded-2xl bg-brand-primary/10
+          text-brand-primary ${compact ? "h-10 w-10" : "h-14 w-14"}`}
       >
-        <BookOpen className="h-6 w-6" />
+        <BookOpen className={compact ? "h-5 w-5" : "h-6 w-6"} />
       </motion.div>
 
       <motion.h1
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.05, duration: 0.35 }}
-        className="text-[22px] font-semibold tracking-tight text-brand-text"
+        className={`font-semibold tracking-tight text-brand-text ${
+          compact ? "text-[16px]" : "text-[22px]"}`}
       >
         Que voulez-vous savoir ?
       </motion.h1>
@@ -43,15 +48,17 @@ export default function EmptyState({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.12, duration: 0.35 }}
-        className="mt-2 max-w-md text-[13.5px] leading-relaxed text-gray-500"
+        className={`mt-2 max-w-md leading-relaxed text-gray-500 ${
+          compact ? "text-[12px]" : "text-[13.5px]"}`}
       >
-        Posez votre question en langage courant. La réponse est rédigée à partir du
-        Livre de Connaissances AsCoCid{fiches ? ` — ${fiches} fiches` : ""}, avec ses
-        sources et ses schémas.
+        {compact
+          ? "Posez votre question en langage courant : la réponse cite ses sources."
+          : `Posez votre question en langage courant. La réponse est rédigée à partir du Livre de Connaissances AsCoCid${fiches ? ` — ${fiches} fiches` : ""}, avec ses sources et ses schémas.`}
       </motion.p>
 
-      <div className="mt-8 grid w-full max-w-xl gap-2 sm:grid-cols-2">
-        {suggestions.slice(0, 4).map((s, i) => (
+      <div className={`grid w-full gap-2 ${
+        compact ? "mt-5 max-w-none" : "mt-8 max-w-xl sm:grid-cols-2"}`}>
+        {suggestions.slice(0, compact ? 3 : 4).map((s, i) => (
           <motion.button
             key={s}
             initial={{ opacity: 0, y: 10 }}
