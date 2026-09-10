@@ -2,14 +2,12 @@
  * Couleur d'accent par section de la plateforme.
  *
  * Une page appartient à un domaine, et ce domaine a une couleur — la même que
- * sur la couronne du tableau de bord. Elle sert deux fois : l'élément actif de
- * la barre latérale la porte, et une traînée de cette teinte part de cet
- * élément vers la page. C'est ce franchissement de la couture qui relie « où
- * je suis dans le menu » et « ce que je regarde ».
+ * sur la couronne du tableau de bord. Elle marque l'élément actif de la barre
+ * latérale : son libellé et son indicateur la portent.
  *
- * Les alphas du voile sont volontairement bas : la traînée est étroite et peu
- * floutée, elle marque donc bien plus qu'une nappe large à teinte égale. Une
- * première version, à plus du double, gênait la lecture de la page.
+ * Elle a un temps servi aussi à teinter la frontière barre / page. Les deux
+ * tentatives — une nappe radiale, puis une traînée horizontale — gênaient la
+ * lecture du contenu ; la couleur reste donc dans la barre.
  *
  * Fonction pure : c'est la table de correspondance, elle se teste seule.
  */
@@ -19,34 +17,32 @@ export interface Accent {
   cle: string;
   /** Couleur pleine, pour l'indicateur et le texte actif. */
   couleur: string;
-  /** La même, très diluée : la traînée qui part de l'élément actif. */
-  voile: string;
 }
 
-const NEUTRE: Accent = { cle: "neutre", couleur: "#628d17", voile: "rgba(98,141,23,0)" };
+const NEUTRE: Accent = { cle: "neutre", couleur: "#628d17" };
 
 /** Du plus spécifique au plus général : la première entrée qui préfixe gagne. */
 const SECTIONS: { prefixes: string[]; accent: Accent }[] = [
   {
     prefixes: ["/controle", "/bareme"],
-    accent: { cle: "pasteurisation", couleur: "#628d17", voile: "rgba(98,141,23,0.16)" },
+    accent: { cle: "pasteurisation", couleur: "#628d17" },
   },
   {
     prefixes: ["/colorimetrie"],
-    accent: { cle: "colorimetrie", couleur: "#ee8c00", voile: "rgba(238,140,0,0.15)" },
+    accent: { cle: "colorimetrie", couleur: "#ee8c00" },
   },
   {
     prefixes: ["/cuves", "/lots"],
-    accent: { cle: "cuves", couleur: "#67a5db", voile: "rgba(103,165,219,0.18)" },
+    accent: { cle: "cuves", couleur: "#67a5db" },
   },
   {
     prefixes: ["/assistant"],
-    accent: { cle: "assistant", couleur: "#628d17", voile: "rgba(98,141,23,0.13)" },
+    accent: { cle: "assistant", couleur: "#628d17" },
   },
   {
     // Administration : un rouge discret, cohérent avec l'entrée de la barre.
     prefixes: ["/admin", "/expert"],
-    accent: { cle: "admin", couleur: "#C62828", voile: "rgba(198,40,40,0.12)" },
+    accent: { cle: "admin", couleur: "#C62828" },
   },
 ];
 
