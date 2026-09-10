@@ -27,8 +27,8 @@ export default function Sidebar() {
   const { user, isLoading, checkAuth, logout } = useAuthStore();
   const { collapsed, setCollapsed, mobileOpen, setMobileOpen } = useSidebar();
   const { t } = useI18n();
-  // La couleur de la section courante : l'indicateur la porte, et le voile
-  // de fond (components/TeinteSection) la reprend.
+  // La couleur de la section courante, portée par le libellé actif et son
+  // indicateur.
   const accent = accentDe(pathname ?? "/");
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 

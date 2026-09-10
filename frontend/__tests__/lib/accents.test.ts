@@ -26,11 +26,11 @@ describe("accentDe", () => {
     expect(accentDe("/lots").couleur).toBe(accentDe("/cuves").couleur);
   });
 
-  it("ne teinte pas les écrans sans domaine", () => {
-    // Un voile totalement transparent : l'accueil et l'historique gardent
-    // leur fond neutre.
+  it("rend l'accent neutre pour les écrans sans domaine", () => {
+    // Accueil, historique et profil n'appartiennent à aucune section : leur
+    // entrée de menu garde la couleur neutre.
     expect(accentDe("/").cle).toBe("neutre");
-    expect(accentDe("/historique").voile).toContain("0)");
+    expect(accentDe("/historique").cle).toBe("neutre");
     expect(accentDe("/profil").cle).toBe("neutre");
   });
 
