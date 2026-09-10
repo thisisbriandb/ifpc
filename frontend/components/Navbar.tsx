@@ -8,6 +8,9 @@ import {
   FlaskConical, BarChart3, Home, LogOut, Shield, User,
   ChevronRight, Thermometer, Palette, Container, Clock, Menu, X, BookOpen
 } from "lucide-react";
+import { motion } from "framer-motion";
+
+import { accentDe } from "@/lib/accents";
 import { useAuthStore } from "@/lib/store";
 import { useSidebar } from "@/lib/sidebar-context";
 import { useI18n } from "@/lib/i18n";
@@ -24,6 +27,9 @@ export default function Sidebar() {
   const { user, isLoading, checkAuth, logout } = useAuthStore();
   const { collapsed, setCollapsed, mobileOpen, setMobileOpen } = useSidebar();
   const { t } = useI18n();
+  // La couleur de la section courante : l'indicateur la porte, et le voile
+  // de fond (components/TeinteSection) la reprend.
+  const accent = accentDe(pathname ?? "/");
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   useEffect(() => { checkAuth(); }, [checkAuth]);
@@ -61,10 +67,10 @@ export default function Sidebar() {
       label: t("nav.gestionCuves"),
       icon: Container,
       children: [
+        // Suivi des cuves, Lots / Produits et Corbeille sont retirés de la
+        // navigation : les pages existent toujours et restent atteignables
+        // par leur URL, mais elles ne sont plus proposées.
         { href: "/cuves/chai", label: t("nav.chaiVirtuel") },
-        { href: "/cuves", label: t("nav.suiviCuves") },
-        { href: "/lots", label: t("nav.lots") },
-        { href: "/cuves/corbeille", label: t("nav.corbeille") },
       ],
     },
   ];
@@ -126,6 +132,7 @@ export default function Sidebar() {
             <Link
               href="/"
               onClick={closeMobile}
+              data-actif={pathname === "/" || undefined}
               title={collapsed ? t("nav.home") : undefined}
               className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${collapsed && !mobileOpen ? "justify-center" : ""
                 } ${pathname === "/"
@@ -143,6 +150,7 @@ export default function Sidebar() {
             <Link
               href="/assistant"
               onClick={closeMobile}
+              data-actif={pathname === "/assistant" || undefined}
               title={collapsed ? t("nav.assistant") : undefined}
               className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${collapsed && !mobileOpen ? "justify-center" : ""
                 } ${pathname === "/assistant"
@@ -168,6 +176,10 @@ export default function Sidebar() {
                   <Link
                     href={group.children[0].href}
                     onClick={closeMobile}
+                    // Barre repliée : les sous-éléments ne sont pas rendus, c'est
+                    // donc l'icône du groupe qui porte la sélection — et que le
+                    // halo doit suivre.
+                    data-actif={hasActiveChild || undefined}
                     title={group.label}
                     className={`flex items-center justify-center py-2 rounded-lg transition-colors ${hasActiveChild
                       ? "text-brand-primary bg-brand-primary/5"
@@ -199,11 +211,22 @@ export default function Sidebar() {
                               key={href}
                               href={href}
                               onClick={closeMobile}
-                              className={`block pl-3 pr-2 py-1.5 text-[12px] transition-colors rounded-r-md ${active
-                                ? "text-brand-primary font-semibold border-l-2 border-brand-primary -ml-px bg-brand-primary/5"
+                              data-actif={active || undefined}
+                              style={active ? { color: accent.couleur } : undefined}
+                              className={`relative block pl-3 pr-2 py-1.5 text-[12px] rounded-r-md
+                                transition-colors duration-700 ${active
+                                ? "font-semibold"
                                 : "text-gray-400 hover:text-gray-700 hover:bg-gray-50"
                                 }`}
                             >
+                              {active && (
+                                <motion.span
+                                  layoutId="repere-section"
+                                  transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                                  className="absolute inset-y-0 -left-px w-[2px] rounded-full"
+                                  style={{ backgroundColor: accent.couleur }}
+                                />
+                              )}
                               {label}
                             </Link>
                           );
@@ -221,6 +244,7 @@ export default function Sidebar() {
             <Link
               href="/historique"
               onClick={closeMobile}
+              data-actif={pathname === "/historique" || undefined}
               title={collapsed ? t("nav.historique") : undefined}
               className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] transition-colors ${collapsed && !mobileOpen ? "justify-center" : ""
                 } ${pathname === "/historique"
