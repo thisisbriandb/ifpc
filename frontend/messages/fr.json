@@ -15,7 +15,7 @@
     "home": "Accueil",
     "subTitle": "Filière cidricole",
     "pasteurisation": "Pasteurisation",
-    "calculVP": "Calcul de la valeur pasteurisatrice",
+    "calculVP": "Efficacité du traitement thermique",
     "aideBareme": "Aide au choix du barème",
     "colorimetrie": "Colorimétrie",
     "mesure": "Mesure",
@@ -227,7 +227,7 @@
     "saved": "Analyse enregistrée dans l'historique"
   },
   "controle": {
-    "title": "Calcul de la Valeur Pasteurisatrice",
+    "title": "Efficacité du traitement thermique",
     "titleReady": "Prêt à analyser votre lot",
     "subtitleReady": "Utilisez le panneau de configuration à gauche pour définir vos paramètres et importer vos relevés de température.",
     "openConfig": "Ouvrir la configuration",
@@ -348,7 +348,7 @@
     "showMorePlural": "Voir {n} autres",
     "modules": {
       "pasteurisation": "Pasteurisation",
-      "calculVP": "Calcul VP",
+      "calculVP": "Efficacité thermique",
       "bareme": "Barème",
       "colorimetrie": "Colorimétrie",
       "assemblage": "Assemblage",
@@ -358,7 +358,7 @@
       "config": "Config"
     },
     "moduleMeta": {
-      "controle": "Calcul Valeur Pasteurisatrice",
+      "controle": "Efficacité du traitement thermique",
       "bareme": "Aide barème"
     },
     "statut": {

@@ -2,37 +2,47 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { accentDe } from "@/lib/accents";
 import { useSidebar } from "@/lib/sidebar-context";
 
 /**
- * Nappe colorée à la frontière barre latérale / page.
+ * Diffusion horizontale depuis l'élément de menu actif.
  *
- * Le principe n'est pas de teinter une surface mais de **relier les deux** :
- * un halo large, très flou, centré sur la couture verticale, déborde des deux
- * côtés. La barre latérale garde son fond blanc — la couleur s'y mélange, elle
- * ne le remplace pas.
+ * L'élément actif de la barre latérale « déteint » vers la droite : une traînée
+ * de sa hauteur part de son bord, franchit la couture et s'éteint quelques
+ * centaines de pixels plus loin dans la page. C'est ce franchissement qui relie
+ * « où je suis dans le menu » et « ce que je regarde ».
  *
- * Le halo se cale sur la hauteur de l'élément de menu actif, mesuré dans le
- * DOM (`[data-actif]`). Changer de page le fait donc **glisser** vers la
- * nouvelle sélection, avec un ressort lent : c'est ce déplacement, et non une
- * transition de couleur, qui donne la sensation que les deux surfaces
- * appartiennent au même écran.
+ * Contraintes de lisibilité, apprises d'une première version trop ambitieuse
+ * — une nappe radiale de 620 × 520 px posée sur toute la zone de contenu :
  *
- * Trois contraintes techniques :
- *   * les pages peignent un fond opaque : le halo passe donc au-dessus d'elles
- *     — et au-dessus de la barre (z-70), sans quoi il s'arrêterait à la
- *     couture au lieu de la traverser ;
- *   * `mix-blend-multiply` évite de délaver le texte : multiplier un texte
- *     presque noir par une couleur claire ne le change pas, alors que les
- *     surfaces claires prennent la teinte ;
- *   * `pointer-events-none`, évidemment : rien ne doit devenir incliquable.
+ *   * la traînée reste **de la hauteur de l'élément**, pas de celle de l'écran.
+ *     Elle ne recouvre donc qu'une ligne de la page, jamais un paragraphe ;
+ *   * elle s'éteint en moins de 300 px, avant d'atteindre le corps du contenu ;
+ *   * `mix-blend-multiply` est conservé : multiplier un texte presque noir par
+ *     une couleur claire ne le change pas, alors qu'un voile en alpha normal
+ *     l'éclaircirait et lui ferait perdre du contraste ;
+ *   * `pointer-events-none` : rien ne devient incliquable.
+ *
+ * La traînée se cale sur l'élément marqué `[data-actif]` et **glisse** vers la
+ * nouvelle sélection au changement de page — c'est le déplacement, plus que la
+ * couleur, qui fait le lien.
  */
 
-const LARGEUR_HALO = 620;
-const HAUTEUR_HALO = 520;
+/** Portée de la diffusion vers la droite, au-delà de la couture. */
+const PORTEE = 280;
+/** Amorce à gauche de la couture, pour que la traînée parte bien de l'élément. */
+const AMORCE = 28;
+/** Débord vertical de part et d'autre de l'élément, pour adoucir les bords. */
+const DEBORD = 10;
+
+interface Ancre {
+  x: number;
+  y: number;
+  hauteur: number;
+}
 
 export default function TeinteSection() {
   const chemin = usePathname() ?? "/";
@@ -40,19 +50,23 @@ export default function TeinteSection() {
   const mouvementReduit = useReducedMotion();
   const accent = accentDe(chemin);
 
-  const [ancre, setAncre] = useState<{ y: number; x: number } | null>(null);
+  const [ancre, setAncre] = useState<Ancre | null>(null);
 
   const mesurer = useCallback(() => {
     if (typeof window === "undefined") return;
     const barre = document.querySelector("aside");
     const actif = document.querySelector<HTMLElement>("aside [data-actif='true']");
-    const bordBarre = barre ? barre.getBoundingClientRect().right : 0;
-    const cible = actif?.getBoundingClientRect();
+    if (!barre || !actif) {
+      // Sans élément actif marqué, aucune traînée : mieux vaut rien qu'un
+      // trait posé au hasard.
+      setAncre(null);
+      return;
+    }
+    const cible = actif.getBoundingClientRect();
     setAncre({
-      x: bordBarre,
-      // Sans élément actif marqué, le halo se pose au tiers supérieur plutôt
-      // que de disparaître : la couture reste vivante.
-      y: cible ? cible.top + cible.height / 2 : window.innerHeight * 0.32,
+      x: barre.getBoundingClientRect().right,
+      y: cible.top,
+      hauteur: cible.height,
     });
   }, []);
 
@@ -70,33 +84,35 @@ export default function TeinteSection() {
 
   if (chemin === "/login" || !ancre) return null;
 
+  const hauteur = ancre.hauteur + DEBORD * 2;
+
   return (
     <motion.div
       aria-hidden
       className="pointer-events-none fixed left-0 top-0 z-[65] mix-blend-multiply"
-      style={{ width: LARGEUR_HALO, height: HAUTEUR_HALO, filter: "blur(56px)" }}
-      animate={{ x: ancre.x - LARGEUR_HALO * 0.42, y: ancre.y - HAUTEUR_HALO / 2 }}
+      style={{ width: AMORCE + PORTEE, height: hauteur, filter: "blur(14px)" }}
+      animate={{ x: ancre.x - AMORCE, y: ancre.y - DEBORD }}
       transition={
         mouvementReduit
           ? { duration: 0 }
-          // Ressort lent et amorti : la nappe se déplace, elle ne saute pas.
-          : { type: "spring", stiffness: 42, damping: 18, mass: 1.4 }
+          // Ressort lent et amorti : la traînée se déplace, elle ne saute pas.
+          : { type: "spring", stiffness: 60, damping: 20, mass: 1.1 }
       }
     >
-      <AnimatePresence>
-        <motion.div
-          key={accent.cle}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: mouvementReduit ? 0 : 1.1, ease: "easeInOut" }}
-          className="absolute inset-0"
-          style={{
-            background:
-              `radial-gradient(50% 50% at 50% 50%, ${accent.voile}, transparent 72%)`,
-          }}
-        />
-      </AnimatePresence>
+      <motion.div
+        key={accent.cle}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: mouvementReduit ? 0 : 0.6, ease: "easeOut" }}
+        className="absolute inset-0"
+        style={{
+          // Pleine teinte à l'amorce, extinction complète bien avant le contenu.
+          background: `linear-gradient(to right, ${accent.voile} 0%, ${accent.voile} 12%, transparent 100%)`,
+          // Les bords haut et bas s'estompent : la traînée n'a pas de coin.
+          maskImage: "linear-gradient(to bottom, transparent, black 28%, black 72%, transparent)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 28%, black 72%, transparent)",
+        }}
+      />
     </motion.div>
   );
 }
