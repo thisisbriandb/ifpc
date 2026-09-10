@@ -49,14 +49,33 @@ Railway ; ce service y prend place comme un service de plus, avec son propre
 
 Trois particularités, qui ne s'inventent pas au moment du déploiement :
 
-**1. Le corpus n'est pas dans l'image.** `data/` pèse 341 Mo (base SQLite,
-blobs d'images, index vectoriel) et reste hors du dépôt. Il vit sur un
-**volume monté sur `/data`** ; l'image lit `ASCOCID_DATA=/data`. Le volume se
-peuple une fois, depuis le conteneur lui-même : l'image embarque la CLI
-d'ingestion et ses dépendances, donc `./ingest` s'y exécute tel quel (il faut
-alors les variables `ASCOCID_ROOT_URL` / `ASCOCID_USER` / `ASCOCID_PASSWORD`
-d'accès à ascocid.fr). Tant que le volume est vide, le service démarre quand
-même et l'annonce sur `/api/ldc/sante` — il ne refuse pas de se lancer.
+**1. Le corpus n'est pas dans l'image, et il s'amorce tout seul.** `data/` pèse
+341 Mo (base SQLite, blobs d'images, index vectoriel) et reste hors du dépôt.
+Il vit sur un **volume monté sur `/data`** ; l'image lit `ASCOCID_DATA=/data`.
+
+Railway ne donne pas d'accès shell aux conteneurs : l'ingestion ne peut donc
+pas être lancée à la main. Le point d'entrée de l'image est `./demarrer`, qui
+lance `./amorcer` **en tâche de fond** puis sert immédiatement. `amorcer` ne
+fait quelque chose que si le corpus est vide *et* que les identifiants d'accès
+sont présents (`ASCOCID_ROOT_URL`, `ASCOCID_AUTH=basic`, `ASCOCID_USER`,
+`ASCOCID_PASSWORD`) ; il enchaîne alors `probe inventaire` → `ingest collecte`
+→ `ingest extraire` → `ingest indexer`, en journalisant sur la sortie standard
+et dans `/data/amorcage.log`.
+
+L'ingestion dure des dizaines de minutes : la lancer avant d'écouter ferait
+échouer la sonde de santé et Railway annulerait le déploiement. Le service
+répond donc tout de suite, sur un corpus encore vide — ce que `/api/ldc/sante`
+annonce honnêtement, et où l'on voit le nombre de fiches grimper pendant
+l'extraction.
+
+⚠️ **Redémarrer le service une fois l'amorçage terminé.** L'index vectoriel et
+la carte du corpus sont chargés au démarrage : le processus qui a lancé
+l'ingestion continue de tourner sur l'état d'avant. Le journal le rappelle en
+fin d'amorçage.
+
+Les deux garde-fous sont vérifiés sur l'image : volume déjà peuplé → amorçage
+ignoré, service complet (415 fiches, recherche hybride) ; volume vide sans
+identifiants → message explicite, service en mode dégradé, aucun plantage.
 
 **2. Les poids du modèle non plus.** `HF_HOME=/data/modeles` place le cache
 Hugging Face sur le volume : 1,1 Go téléchargés au tout premier démarrage, puis
