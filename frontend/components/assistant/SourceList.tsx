@@ -26,6 +26,8 @@ export default function SourceList({
 }) {
   const [ouvert, setOuvert] = useState(false);
   if (!sources.length) return null;
+  // « du Livre » n'est vrai que si toutes les sources viennent d'AsCoCid.
+  const toutesDuLivre = sources.every((s) => s.provenance !== "document");
 
   return (
     <motion.div
@@ -40,7 +42,7 @@ export default function SourceList({
           transition-colors hover:text-brand-primary"
       >
         <BookOpen className="h-3.5 w-3.5" />
-        {sources.length} source{sources.length > 1 ? "s" : ""} du Livre
+        {sources.length} source{sources.length > 1 ? "s" : ""}{toutesDuLivre ? " du Livre" : ""}
         <ChevronDown
           className={`h-3.5 w-3.5 transition-transform duration-200 ${ouvert ? "rotate-180" : ""}`}
         />
@@ -79,8 +81,14 @@ export default function SourceList({
                     {s.index}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[13px] font-medium text-brand-text">
-                      {s.titre_fiche}
+                    <span className="flex items-center gap-1.5 text-[13px] font-medium text-brand-text">
+                      <span className="truncate">{s.titre_fiche}</span>
+                      {s.provenance === "document" && (
+                        <span className="shrink-0 rounded bg-amber-50 px-1.5 py-px text-[10px]
+                          font-semibold text-amber-700">
+                          Document IFPC
+                        </span>
+                      )}
                     </span>
                     {(s.titre_section || s.terme) && (
                       <span className="block truncate text-[11px] text-gray-400">

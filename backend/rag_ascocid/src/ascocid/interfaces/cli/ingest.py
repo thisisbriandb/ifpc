@@ -26,6 +26,7 @@ from rich.table import Table
 
 from ascocid.config import ConfigAcces
 from ascocid.application.ingestion.chunking import decouper, dedupliquer_definitions
+from ascocid.application.ingestion.documents import Bibliotheque, reinjecter
 from ascocid.domain.modeles import Bloc, Corpus, Fiche, TypeBloc, TypeFiche
 from ascocid.infrastructure.collecte.auth import construire_client, diagnostiquer
 from ascocid.infrastructure.graphe.sqlite import MagasinSqlite
@@ -162,6 +163,10 @@ def extraire(base_donnees: str = typer.Option(str(BASE))) -> None:
     with MagasinSqlite(base_donnees) as m:
         m.vider()
         m.ecrire(corpus)
+        # Les documents ajoutés depuis l'administration de la plateforme ne
+        # viennent pas d'AsCoCid : sans cette réinjection, reconstruire la base
+        # les effacerait. `ingest indexer` les vectorise ensuite avec le reste.
+        anomalies += reinjecter(Bibliotheque(DONNEES / "documents"), m)
         compte = m.compter()
 
     t = Table(title="Corpus extrait")

@@ -28,6 +28,9 @@ service = [
     "sentence-transformers",
     "numpy",
     "google-genai",
+    # Lecture des documents ajoutés depuis l'administration (PDF, Word).
+    "pymupdf",
+    "python-docx",
 ]
 dev = ["pytest", "ruff", "mypy", "import-linter"]
 
