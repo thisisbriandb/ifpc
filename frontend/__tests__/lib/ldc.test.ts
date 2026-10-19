@@ -10,6 +10,7 @@ import {
   numeroDeCitation,
   historiquePour,
   normaliserBase,
+  envoyerDocument,
 } from "@/lib/ldc";
 
 const evenement = (nom: string, charge: object) =>
@@ -168,5 +169,39 @@ describe("normaliserBase", () => {
     expect(normaliserBase("https://ldc.up.railway.app/api/ldc/")).toBe(
       "https://ldc.up.railway.app/api/ldc",
     );
+  });
+});
+
+describe("envoyerDocument", () => {
+  const fetchOrigine = global.fetch;
+  afterEach(() => {
+    global.fetch = fetchOrigine;
+    localStorage.clear();
+  });
+
+  it("envoie le fichier brut, son nom dans l'adresse et le jeton", async () => {
+    localStorage.setItem("token", "jeton-admin");
+    const appel = jest.fn().mockResolvedValue({
+      ok: true, json: async () => ({ idoc: 1000000, etat: "en_cours" }),
+    });
+    global.fetch = appel as unknown as typeof fetch;
+    const fichier = new File(["%PDF"], "Guide été.pdf", { type: "application/pdf" });
+
+    await envoyerDocument(fichier, "  Guide  ");
+
+    const [url, options] = appel.mock.calls[0];
+    expect(url).toBe("/api/ldc/documents?nom=Guide+%C3%A9t%C3%A9.pdf&titre=Guide");
+    expect(options.method).toBe("POST");
+    expect(options.body).toBe(fichier);
+    expect(options.headers["Content-Type"]).toBe("application/octet-stream");
+    expect(options.headers.Authorization).toBe("Bearer jeton-admin");
+  });
+
+  it("remonte la raison d'un refus telle que le service l'écrit", async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false, status: 422,
+      json: async () => ({ detail: "Ce fichier a déjà été ajouté, sous le titre « Guide »." }),
+    }) as unknown as typeof fetch;
+    await expect(envoyerDocument(new File(["x"], "a.pdf"), "")).rejects.toThrow(/déjà été ajouté/);
   });
 });

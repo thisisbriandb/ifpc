@@ -37,6 +37,8 @@ export interface SourceLdc {
   titre_section: string;
   terme: string;
   origine: "lexical" | "dense" | "fusion" | "graphe" | string;
+  /** Fiche du Livre AsCoCid, ou document ajouté par l'IFPC depuis l'administration. */
+  provenance?: "ascocid" | "document";
   url: string;
 }
 
@@ -111,6 +113,7 @@ export interface FicheLdc {
   code: string;
   type: string;
   titre: string;
+  provenance?: "ascocid" | "document";
   modifie_le: string;
   auteurs: { statut: string; affiliation: string; courriel: string }[];
   source_url: string;
@@ -354,4 +357,62 @@ export function historiquePour(
     `Question : ${dernier.question}`,
     `Réponse : ${dernier.reponse.slice(0, 500)}`,
   ];
+}
+
+// ── Documents ajoutés par les administrateurs ────────────────────────────────
+
+export interface DocumentAdmin {
+  idoc: number;
+  titre: string;
+  nom_fichier: string;
+  format: "pdf" | "docx";
+  octets: number;
+  ajoute_le: string;
+  ajoute_par: string;
+  /** « en_cours » : lu et accepté, vecteurs en cours de calcul. */
+  etat: "en_cours" | "pret" | "erreur";
+  message: string;
+  passages: number;
+}
+
+async function detailErreur(r: Response, defaut: string): Promise<string> {
+  try {
+    const corps = await r.json();
+    return typeof corps.detail === "string" ? corps.detail : defaut;
+  } catch {
+    return defaut;
+  }
+}
+
+export async function listerDocuments(
+  signal?: AbortSignal,
+): Promise<{ documents: DocumentAdmin[]; taille_max: number }> {
+  const r = await fetch(`${BASE_LDC}/documents`, { headers: entetes(), signal });
+  if (!r.ok) throw new Error(await detailErreur(r, "Liste des documents indisponible."));
+  return r.json();
+}
+
+/**
+ * Envoie le fichier tel quel dans le corps de la requête, et son nom dans
+ * l'adresse : le service lit le contenu brut, sans formulaire multipart.
+ * Une réponse 422 porte un refus expliqué (scan, format, doublon) à afficher.
+ */
+export async function envoyerDocument(fichier: File, titre: string): Promise<DocumentAdmin> {
+  const params = new URLSearchParams({ nom: fichier.name });
+  if (titre.trim()) params.set("titre", titre.trim());
+  const r = await fetch(`${BASE_LDC}/documents?${params}`, {
+    method: "POST",
+    headers: { ...entetes(), "Content-Type": "application/octet-stream" },
+    body: fichier,
+  });
+  if (!r.ok) throw new Error(await detailErreur(r, "Envoi refusé."));
+  return r.json();
+}
+
+export async function retirerDocument(idoc: number): Promise<void> {
+  const r = await fetch(`${BASE_LDC}/documents/${idoc}`, {
+    method: "DELETE",
+    headers: entetes(),
+  });
+  if (!r.ok) throw new Error(await detailErreur(r, "Retrait impossible."));
 }

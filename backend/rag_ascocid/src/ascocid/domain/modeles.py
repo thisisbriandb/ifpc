@@ -24,6 +24,10 @@ class TypeFiche(StrEnum):
     PROCESS = "PROCESS"    # diagramme de procédé
     MENU = "MENU"
     GRAPHE = "GRAPHE"
+    # Document ajouté par un administrateur de la plateforme (PDF, Word) : il
+    # ne vient pas d'AsCoCid et n'y a donc pas de page — sa source est le
+    # fichier lui-même.
+    DOCUMENT = "DOC"
     INCONNU = "INCONNU"
 
     @classmethod
@@ -68,7 +72,7 @@ class Fiche(BaseModel):
 
     @property
     def porte_du_texte(self) -> bool:
-        return self.type in (TypeFiche.ARTICLE,)
+        return self.type in (TypeFiche.ARTICLE, TypeFiche.DOCUMENT)
 
 
 class Bloc(BaseModel):

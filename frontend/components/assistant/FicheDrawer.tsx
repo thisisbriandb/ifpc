@@ -157,7 +157,9 @@ export default function FicheDrawer({
                             {b.titre_section}
                           </h3>
                         )}
-                        <p className={`text-[13.5px] leading-relaxed ${
+                        {/* whitespace-pre-line : un bloc de document regroupe
+                            plusieurs paragraphes séparés par des lignes vides. */}
+                        <p className={`whitespace-pre-line text-[13.5px] leading-relaxed ${
                           b.type === "resume" ? "text-brand-text" : "text-gray-600"}`}>
                           {b.texte}
                         </p>
@@ -199,7 +201,7 @@ export default function FicheDrawer({
                     transition-colors hover:text-brand-primary"
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
-                  Ouvrir dans AsCoCid
+                  {fiche.provenance === "document" ? "Ouvrir le document d'origine" : "Ouvrir dans AsCoCid"}
                 </a>
               </footer>
             )}

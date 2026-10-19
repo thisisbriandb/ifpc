@@ -28,15 +28,23 @@ import os
 import pathlib
 import time
 from collections.abc import Iterator
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
+from ascocid.application.ingestion.documents import (
+    TAILLE_MAX,
+    Bibliotheque,
+    DocumentAjoute,
+    DocumentRefuse,
+)
 from ascocid.application.requete import prompt as gabarit
 from ascocid.application.requete.analyse import Analyseur, RegistreOutils
 from ascocid.application.requete.pipeline import Pipeline
@@ -53,6 +61,12 @@ BLOBS = RACINE / "blobs"
 MANIFESTE = RACINE / "manifeste.json"
 RETOURS = RACINE / "retours.jsonl"
 SUGGESTIONS = pathlib.Path("config/suggestions.json")
+# Documents ajoutés depuis l'administration de la plateforme : sur le même
+# volume que le corpus, pour être sauvegardés et déplacés avec lui.
+BIBLIOTHEQUE = Bibliotheque(RACINE / "documents")
+# Un seul ouvrier : les intégrations s'enchaînent au lieu de se disputer le
+# processeur pour le calcul des vecteurs, et la file reste lisible.
+ATELIER = ThreadPoolExecutor(max_workers=1, thread_name_prefix="documents")
 URL_ASCOCID = "https://ascocid.fr/ldc/view.php?id_document={idoc}"
 
 # Le corpus ne bouge qu'à la réindexation : une illustration peut être mise en
@@ -133,6 +147,17 @@ class Moteur:
                   "la rédaction est indisponible, seules les sources seront renvoyées")
         self.charge_le = time.perf_counter() - debut
 
+    def rafraichir_carte(self) -> None:
+        """Recalcule la carte du corpus après un ajout ou un retrait de document.
+
+        La carte entre dans le prompt : sans ce recalcul, le modèle ignorerait
+        jusqu'au prochain redémarrage qu'un document existe.
+        """
+        with MagasinSqlite(BASE_DONNEES) as magasin:
+            self.carte = gabarit.carte_du_corpus(magasin)
+        if self.generateur is not None:
+            self.generateur.carte = self.carte
+
     def pipeline(self, magasin: MagasinSqlite, k: int) -> Pipeline:
         """Une chaîne par requête, autour de la connexion SQLite de la requête."""
         recherche = RechercheHybride(magasin, self.embedder, self.index)
@@ -147,7 +172,9 @@ moteur = Moteur()
 @asynccontextmanager
 async def cycle_de_vie(_: FastAPI):  # noqa: ANN201
     moteur.charger()
+    reprendre_integrations()
     yield
+    ATELIER.shutdown(wait=False, cancel_futures=True)
 
 
 app = FastAPI(
@@ -163,7 +190,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=os.environ.get("LDC_ORIGINES", "*").split(","),
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
+    allow_methods=["GET", "POST", "DELETE"],
     allow_headers=["*"],
 )
 
@@ -195,6 +222,21 @@ def utilisateur(request: Request) -> dict | None:
         return jwt.decode(entete[7:], base64.b64decode(secret), algorithms=["HS256"])
     except Exception as exc:  # noqa: BLE001 — toute erreur de jeton vaut refus
         raise HTTPException(status_code=401, detail="Jeton invalide.") from exc
+
+
+ROLE_ADMIN = "ROLE_ADMIN"
+
+
+def administrateur(claims: dict | None = Depends(utilisateur)) -> dict | None:
+    """Réservé aux administrateurs de la plateforme.
+
+    Le rôle est lu dans le jeton émis par le Core API (claim `role`, de la
+    forme `ROLE_ADMIN`). Sans `JWT_SECRET`, en développement, `utilisateur`
+    laisse tout passer — et donc ceci aussi, comme pour `/ask`.
+    """
+    if claims is not None and claims.get("role") != ROLE_ADMIN:
+        raise HTTPException(status_code=403, detail="Réservé aux administrateurs.")
+    return claims
 
 
 # ── Contrats ─────────────────────────────────────────────────────────────────
@@ -317,6 +359,7 @@ def fiche(idoc: int) -> dict:
     hauteur = carte["hauteur"] if carte else 0
     return {
         "idoc": f["idoc"], "code": f["code"], "type": f["type"], "titre": f["titre"],
+        "provenance": "document" if f["type"] == "DOC" else "ascocid",
         "modifie_le": f["modifie_le"],
         "auteurs": json.loads(f["auteurs"] or "[]"),
         "source_url": f["source_url"] or URL_ASCOCID.format(idoc=idoc),
@@ -331,6 +374,105 @@ def fiche(idoc: int) -> dict:
                              for z in zones]} if carte else None),
         "voir_aussi": [{"idoc": v["cible_idoc"], "titre": v["titre"]} for v in voisins],
     }
+
+
+# ── Documents ajoutés par les administrateurs ────────────────────────────────
+
+
+def _integrer(doc: DocumentAjoute, lu: Any) -> None:
+    """Tâche de fond : lecture faite, il reste à découper, vectoriser, publier."""
+    try:
+        with MagasinSqlite(BASE_DONNEES, multi_threads=True) as magasin:
+            BIBLIOTHEQUE.integrer(doc, lu, magasin, moteur.embedder, moteur.index)
+        moteur.rafraichir_carte()
+    except Exception as exc:  # noqa: BLE001 — une tâche de fond n'a personne à qui lever
+        print(f"[ldc] intégration du document {doc.idoc} : {type(exc).__name__}: {exc}")
+        BIBLIOTHEQUE.mettre_a_jour(doc.idoc, etat="erreur",
+                                   message=f"Intégration impossible ({type(exc).__name__}).")
+
+
+def reprendre_integrations() -> None:
+    """Relance les intégrations qu'un arrêt du service a interrompues."""
+    for doc in BIBLIOTHEQUE.lister():
+        if doc.etat != "en_cours":
+            continue
+        try:
+            lu = BIBLIOTHEQUE.lire(doc)
+        except Exception as exc:  # noqa: BLE001
+            BIBLIOTHEQUE.mettre_a_jour(doc.idoc, etat="erreur", message=str(exc))
+            continue
+        ATELIER.submit(_integrer, doc, lu)
+
+
+@app.get(f"{PREFIXE}/documents")
+def lister_documents(_: dict | None = Depends(administrateur)) -> dict:
+    documents = sorted(BIBLIOTHEQUE.lister(), key=lambda d: d.ajoute_le, reverse=True)
+    return {"documents": [d.model_dump() for d in documents],
+            "taille_max": TAILLE_MAX}
+
+
+@app.post(f"{PREFIXE}/documents", status_code=202)
+async def ajouter_document(
+    request: Request, nom: str, titre: str = "",
+    admin: dict | None = Depends(administrateur),
+) -> dict:
+    """Ajoute un PDF ou un .docx, envoyé tel quel dans le corps de la requête.
+
+    Corps brut plutôt que formulaire multipart : une dépendance de moins, et
+    le nom du fichier voyage dans l'adresse. La lecture du fichier a lieu tout
+    de suite — un scan ou un format inconnu est refusé dans la réponse — mais
+    le calcul des vecteurs, qui prend de quelques secondes à une minute, part
+    en tâche de fond : la réponse dit « en cours », la page interroge la liste.
+    """
+    morceaux: list[bytes] = []
+    recu = 0
+    async for morceau in request.stream():
+        recu += len(morceau)
+        if recu > TAILLE_MAX:
+            raise HTTPException(
+                status_code=413,
+                detail=f"Le fichier dépasse {TAILLE_MAX // (1024 * 1024)} Mo.")
+        morceaux.append(morceau)
+    try:
+        doc, lu = await run_in_threadpool(
+            BIBLIOTHEQUE.enregistrer, nom, b"".join(morceaux),
+            titre=titre, auteur=(admin or {}).get("sub", ""))
+    except DocumentRefuse as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    ATELIER.submit(_integrer, doc, lu)
+    return doc.model_dump()
+
+
+@app.delete(f"{PREFIXE}/documents/{{idoc}}")
+def retirer_document(idoc: int, _: dict | None = Depends(administrateur)) -> dict:
+    """Retire un document : de la liste, de la base, de l'index — immédiatement."""
+    with MagasinSqlite(BASE_DONNEES) as magasin:
+        doc = BIBLIOTHEQUE.retirer(idoc, magasin, moteur.index)
+    if doc is None:
+        raise HTTPException(status_code=404, detail="Document inconnu.")
+    moteur.rafraichir_carte()
+    return {"retire": doc.idoc}
+
+
+@app.get(f"{PREFIXE}/document/{{idoc}}/fichier")
+def fichier_document(idoc: int) -> FileResponse:
+    """Le fichier d'origine — la source qu'une citation permet de vérifier.
+
+    Sans jeton : le lien s'ouvre dans un nouvel onglet, qui n'emporte pas le
+    jeton du stockage local, et ces documents sont publics par décision de
+    l'équipe IFPC (seuls des documents publics sont ajoutés).
+    """
+    doc = BIBLIOTHEQUE.trouver(idoc)
+    if doc is None or not BIBLIOTHEQUE.chemin(doc).exists():
+        raise HTTPException(status_code=404, detail="Document inconnu.")
+    return FileResponse(
+        BIBLIOTHEQUE.chemin(doc),
+        media_type=("application/pdf" if doc.format == "pdf" else
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+        filename=doc.nom_fichier,
+        # « inline » : un PDF s'ouvre dans le navigateur au lieu d'être téléchargé.
+        content_disposition_type="inline",
+    )
 
 
 @app.get(f"{PREFIXE}/suggestions")
@@ -360,6 +502,7 @@ def sante() -> dict:
         comptes = magasin.compter()
     return {
         "corpus": comptes,
+        "documents": len(BIBLIOTHEQUE.lister()),
         "chunks": moteur.index.taille if moteur.index else 0,
         "recherche": "hybride" if moteur.index else "lexicale",
         "generation": moteur.generation_disponible,

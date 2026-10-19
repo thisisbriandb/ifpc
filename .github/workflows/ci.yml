@@ -135,11 +135,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      # Seulement de quoi exercer les adaptateurs de modèle : ni torch, ni
-      # sentence-transformers, qui pèsent plus d'un gigaoctet et que ces tests
-      # n'atteignent jamais. Le service complet est construit par son image.
+      # Seulement de quoi exercer les adaptateurs de modèle et la gestion des
+      # documents : ni torch, ni sentence-transformers, qui pèsent plus d'un
+      # gigaoctet et que ces tests n'atteignent jamais (l'embedder y est
+      # simulé). Le service complet est construit par son image.
       - name: Dépendances
-        run: pip install pytest httpx pydantic
+        run: pip install pytest httpx pydantic numpy pymupdf python-docx fastapi pyjwt python-dotenv
 
       # Aucun appel réseau : le transport HTTP est simulé. Un test qui
       # joindrait vraiment ARGO échouerait ici faute de clé, et surtout

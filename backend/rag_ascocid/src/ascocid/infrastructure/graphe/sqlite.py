@@ -182,6 +182,35 @@ class MagasinSqlite:
         )
         self.cx.commit()
 
+    def retirer_fiche(self, idoc: int) -> list[str]:
+        """Supprime une fiche et tout ce qui en dépend ; renvoie les clés de ses chunks.
+
+        Les tables FTS5 ignorent les clés étrangères : sans ces deux DELETE
+        explicites, la recherche lexicale continuerait de remonter des passages
+        dont la fiche n'existe plus.
+        """
+        cles = [r["cle"] for r in self.cx.execute(
+            "SELECT cle FROM chunk WHERE fiche_idoc=?", (idoc,))]
+        if cles:
+            marques = ",".join("?" * len(cles))
+            self.cx.execute(f"DELETE FROM chunk_fts WHERE cle IN ({marques})", cles)
+        self.cx.execute("DELETE FROM recherche WHERE cible=?", (str(idoc),))
+        for table, colonne in (("chunk", "fiche_idoc"), ("bloc", "fiche_idoc"),
+                               ("renvoi", "source_idoc"), ("renvoi", "cible_idoc"),
+                               ("fiche", "idoc")):
+            self.cx.execute(f"DELETE FROM {table} WHERE {colonne}=?", (idoc,))
+        self.cx.commit()
+        return cles
+
+    def provenances(self, idocs: Iterable[int]) -> dict[int, sqlite3.Row]:
+        """Type et adresse d'origine des fiches — pour présenter une source."""
+        idocs = list(dict.fromkeys(idocs))
+        if not idocs:
+            return {}
+        marques = ",".join("?" * len(idocs))
+        return {r["idoc"]: r for r in self.cx.execute(
+            f"SELECT idoc, type, source_url FROM fiche WHERE idoc IN ({marques})", idocs)}
+
     def chunks(self) -> list[sqlite3.Row]:
         return self.cx.execute(
             "SELECT c.*, f.titre AS titre_fiche FROM chunk c"

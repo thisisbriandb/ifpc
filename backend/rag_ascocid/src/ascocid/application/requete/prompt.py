@@ -64,6 +64,11 @@ def carte_du_corpus(magasin) -> str:  # noqa: ANN001
         "SELECT titre FROM fiche WHERE type IN ('FICHE','FDC') ORDER BY titre"
     ):
         lignes.append(f"- {f['titre']}")
+    documents = magasin.cx.execute(
+        "SELECT titre FROM fiche WHERE type='DOC' ORDER BY titre").fetchall()
+    if documents:
+        lignes += ["", "Documents ajoutés par l'IFPC (hors AsCoCid) :"]
+        lignes += [f"- {d['titre']}" for d in documents]
     return "\n".join(lignes)
 
 

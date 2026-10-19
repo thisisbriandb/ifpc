@@ -69,10 +69,11 @@ class Pipeline:
             return
 
         passages = self.recherche.chercher(analyse.requete_recherche, k=self.k)
+        provenances = self.magasin.provenances(p.fiche_idoc for p in passages)
         yield {"type": "sources", "passages": [
             {"index": i, "fiche_idoc": p.fiche_idoc, "titre_fiche": p.titre_fiche,
              "titre_section": p.titre_section, "terme": p.terme, "origine": p.origine,
-             "url": f"https://ascocid.fr/ldc/view.php?id_document={p.fiche_idoc}"}
+             **self._provenance(p.fiche_idoc, provenances)}
             for i, p in enumerate(passages, 1)]}
         # Les illustrations partent avec les sources, avant le premier mot de la
         # réponse : la plateforme peut composer sa mise en page pendant que le
@@ -114,6 +115,19 @@ class Pipeline:
                         "total_ms": round((time.perf_counter() - t0) * 1000)},
             "usage": reponse.usage.model_dump() if reponse else None,
         }
+
+    @staticmethod
+    def _provenance(idoc: int, provenances: dict) -> dict:
+        """D'où vient une source, et où la consulter.
+
+        Un document ajouté par l'IFPC n'a pas de page AsCoCid : le renvoyer vers
+        `view.php` produirait un lien mort, présenté comme une référence.
+        """
+        ligne = provenances.get(idoc)
+        if ligne is not None and ligne["type"] == "DOC":
+            return {"provenance": "document", "url": ligne["source_url"]}
+        return {"provenance": "ascocid",
+                "url": f"https://ascocid.fr/ldc/view.php?id_document={idoc}"}
 
     def _direct(self, texte: str, analyse: Analyse, t0: float) -> Iterator[dict]:
         """Réponse sans recherche ni modèle : ni source à citer, ni rien à vérifier."""

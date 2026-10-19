@@ -76,6 +76,7 @@ le remplace bien.
 | [07](07-api-ui.md) | API & UI | Contrats HTTP, SSE, expérience de réponse | **implémenté** — `./serve` + `frontend/app/assistant` |
 | [08](08-evaluation.md) | Évaluation | Jeu d'or, métriques, non-régression | rédigé |
 | [09](09-roadmap.md) | Roadmap | Jalons, effort, risques | rédigé |
+| [10](10-documents-ajoutes.md) | Documents ajoutés | PDF et Word ajoutés par les admins de la plateforme, intégrés à chaud | **implémenté** — Administration → Documents de l'assistant |
 
 Lecture minimale pour démarrer : **README → 01 → 09**.
 
