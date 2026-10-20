@@ -26,6 +26,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import re
 import time
 from collections.abc import Iterator
 from concurrent.futures import ThreadPoolExecutor
@@ -40,8 +41,10 @@ from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
 from ascocid.application.ingestion import schemas
+from ascocid.application.ingestion import transcriptions_images
 from ascocid.application.ingestion.documents import (
     TAILLE_MAX,
+    VERROU as VERROU_ECRITURE,
     Bibliotheque,
     DocumentAjoute,
     DocumentRefuse,
@@ -63,6 +66,9 @@ MANIFESTE = RACINE / "manifeste.json"
 RETOURS = RACINE / "retours.jsonl"
 SUGGESTIONS = pathlib.Path("config/suggestions.json")
 SCHEMAS = pathlib.Path("config/schemas")
+# Illustrations en image transcrites par OCR puis relues : des données, qui
+# vivent avec le corpus (et sont corrigées sur place par la relecture).
+TRANSCRIPTIONS_IMAGES = RACINE / "transcriptions" / "images"
 # Documents ajoutés depuis l'administration de la plateforme : sur le même
 # volume que le corpus, pour être sauvegardés et déplacés avec lui.
 BIBLIOTHEQUE = Bibliotheque(RACINE / "documents")
@@ -142,6 +148,15 @@ class Moteur:
                       f"({len(self.schemas)} transcriptions)")
             for alerte in anomalies + schemas.schemas_modifies(self.schemas, manifeste):
                 print(f"[ldc] schémas : {alerte}")
+            erreurs: list[str] = []
+            illustrations = transcriptions_images.charger_dossier(TRANSCRIPTIONS_IMAGES, erreurs)
+            ecrits, anomalies = transcriptions_images.synchroniser(
+                illustrations, magasin, self.embedder, self.index)
+            if ecrits is not None:
+                print(f"[ldc] illustrations : {ecrits} passages indexés "
+                      f"({len(illustrations)} transcriptions)")
+            for alerte in erreurs + anomalies:
+                print(f"[ldc] illustrations : {alerte}")
             self.carte = gabarit.carte_du_corpus(magasin, self.schemas)
 
         from ascocid.infrastructure.llm import fabrique
@@ -205,7 +220,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=os.environ.get("LDC_ORIGINES", "*").split(","),
     allow_credentials=True,
-    allow_methods=["GET", "POST", "DELETE"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
 
@@ -488,6 +503,74 @@ def fichier_document(idoc: int) -> FileResponse:
         # « inline » : un PDF s'ouvre dans le navigateur au lieu d'être téléchargé.
         content_disposition_type="inline",
     )
+
+
+# ── Relecture des transcriptions d'illustrations ─────────────────────────────
+
+
+CODE_VALIDE = re.compile(r"^[A-Za-z0-9_]{1,120}$")
+
+
+class Correction(BaseModel):
+    titre: str = Field(min_length=1, max_length=300)
+    statut: str = Field(pattern="^(corrige|valide)$")
+    rubriques: list[transcriptions_images.Rubrique]
+
+
+def _transcription(code: str) -> transcriptions_images.TranscriptionImage:
+    # Le code devient un nom de fichier : rien d'autre que lettres, chiffres, _.
+    chemin = TRANSCRIPTIONS_IMAGES / f"{code}.toml"
+    if not CODE_VALIDE.match(code) or not chemin.exists():
+        raise HTTPException(status_code=404, detail="Transcription inconnue.")
+    return transcriptions_images.charger(chemin)
+
+
+@app.get(f"{PREFIXE}/transcriptions")
+def lister_transcriptions(_: dict | None = Depends(administrateur)) -> dict:
+    erreurs: list[str] = []
+    liste = transcriptions_images.charger_dossier(TRANSCRIPTIONS_IMAGES, erreurs)
+    return {
+        "transcriptions": [
+            {"code": t.code, "idoc": t.idoc, "titre": t.titre, "statut": t.statut,
+             "douteux": t.nb_douteux, "verifie_par": t.verifie_par, "verifie_le": t.verifie_le,
+             "famille": t.code.split("_", 1)[0], "qualite": t.qualite_ocr,
+             # Trop mal lue pour entrer dans l'assistant avant correction.
+             "indexee": t.indexable}
+            for t in liste],
+        "erreurs": erreurs,
+    }
+
+
+@app.get(f"{PREFIXE}/transcriptions/{{code}}")
+def lire_transcription(code: str, _: dict | None = Depends(administrateur)) -> dict:
+    t = _transcription(code)
+    return {**t.model_dump(), "image": f"{PREFIXE}/illustration/{t.idoc}"}
+
+
+@app.put(f"{PREFIXE}/transcriptions/{{code}}")
+def corriger_transcription(code: str, correction: Correction,
+                           admin: dict | None = Depends(administrateur)) -> dict:
+    """Enregistre une relecture et met à jour l'assistant pour cette fiche.
+
+    Ce qui vient de l'OCR (empreinte de l'image, texte brut) n'est pas
+    modifiable : seuls le titre, les rubriques et le statut le sont. L'auteur
+    et la date de la relecture sont posés par le serveur, d'après le jeton.
+    """
+    with VERROU_ECRITURE:
+        t = _transcription(code)
+        t = t.model_copy(update={
+            "titre": correction.titre.strip(),
+            "statut": correction.statut,
+            "rubriques": correction.rubriques,
+            "verifie_par": (admin or {}).get("sub", ""),
+            "verifie_le": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        })
+        transcriptions_images.enregistrer(TRANSCRIPTIONS_IMAGES, t)
+        toutes = transcriptions_images.charger_dossier(TRANSCRIPTIONS_IMAGES, [])
+        with MagasinSqlite(BASE_DONNEES) as magasin:
+            passages = transcriptions_images.remplacer_une(
+                t, toutes, magasin, moteur.embedder, moteur.index)
+    return {**t.model_dump(), "image": f"{PREFIXE}/illustration/{t.idoc}", "passages": passages}
 
 
 @app.get(f"{PREFIXE}/suggestions")

@@ -106,3 +106,73 @@ def test_fichier_trop_gros_refuse(client, monkeypatch):
     r = client.post("/api/ldc/documents", params={"nom": "a.pdf"},
                     content=b"x" * 11, headers=jeton("ROLE_ADMIN"))
     assert r.status_code == 413
+
+
+# ── Relecture des transcriptions d'illustrations ─────────────────────────────
+
+
+@pytest.fixture
+def relecture(client, tmp_path, monkeypatch):
+    from ascocid.application.ingestion import transcriptions_images as ti
+    from ascocid.domain.modeles import Corpus, Fiche, TypeFiche
+
+    dossier = tmp_path / "transcriptions"
+    dossier.mkdir()
+    monkeypatch.setattr(api, "TRANSCRIPTIONS_IMAGES", dossier)
+    with MagasinSqlite(api.BASE_DONNEES) as m:
+        m.ecrire(Corpus(fiches=[Fiche(idoc=1416, code="FDC_ARMAGNAC", type=TypeFiche.VARIETE,
+                                      titre="Armagnac")]))
+    ti.enregistrer(dossier, ti.TranscriptionImage(
+        idoc=1416, code="FDC_ARMAGNAC", titre="Armagnac", image_sha256="sha",
+        texte_ocr="Densité du jus : 1 065,5.",
+        rubriques=[ti.Rubrique(titre="QUALITES TECHNOLOGIQUES DU FRUIT", lignes=[
+            ti.Ligne(intitule="Densité du jus", valeur="1 O65,5.", douteux=["O65,5."])])]))
+    return client, dossier
+
+
+def test_relecture_reservee_aux_admins(relecture):
+    client, _ = relecture
+    assert client.get("/api/ldc/transcriptions", headers=jeton("ROLE_USER")).status_code == 403
+    assert client.put("/api/ldc/transcriptions/FDC_ARMAGNAC", headers=jeton("ROLE_USER"),
+                      json={"titre": "x", "statut": "valide", "rubriques": []}).status_code == 403
+
+
+def test_correction_enregistree_et_reindexee(relecture):
+    client, dossier = relecture
+    admin = jeton("ROLE_ADMIN")
+    liste = client.get("/api/ldc/transcriptions", headers=admin).json()["transcriptions"]
+    assert [(t["code"], t["statut"], t["douteux"]) for t in liste] == [("FDC_ARMAGNAC", "a_verifier", 1)]
+
+    lue = client.get("/api/ldc/transcriptions/FDC_ARMAGNAC", headers=admin).json()
+    assert lue["image"] == "/api/ldc/illustration/1416"
+    rubriques = lue["rubriques"]
+    rubriques[0]["lignes"][0] |= {"valeur": "1 065,5.", "douteux": []}   # « O » lu pour « 0 »
+
+    r = client.put("/api/ldc/transcriptions/FDC_ARMAGNAC", headers=admin,
+                   json={"titre": "Armagnac", "statut": "valide", "rubriques": rubriques,
+                         # Tentatives de modifier ce qui vient de l'OCR : ignorées.
+                         "image_sha256": "pirate", "texte_ocr": "pirate"})
+    assert r.status_code == 200, r.text
+    assert r.json()["passages"] == 1
+
+    from ascocid.application.ingestion import transcriptions_images as ti
+    relue = ti.charger(dossier / "FDC_ARMAGNAC.toml")
+    assert (relue.statut, relue.verifie_par) == ("valide", "admin@ifpc.com")
+    assert relue.image_sha256 == "sha" and relue.texte_ocr.startswith("Densité")
+    with MagasinSqlite(api.BASE_DONNEES) as m:
+        textes = [r["texte"] for r in m.cx.execute("SELECT texte FROM chunk WHERE type='illustration'")]
+    assert textes and "Densité du jus : 1 065,5." in textes[0] and "O65" not in textes[0]
+
+
+def test_code_de_transcription_ne_sort_pas_du_dossier(relecture):
+    client, _ = relecture
+    for code in ("..%2F..%2Fetc", "inconnu"):
+        assert client.get(f"/api/ldc/transcriptions/{code}",
+                          headers=jeton("ROLE_ADMIN")).status_code == 404
+
+
+def test_statut_invalide_refuse(relecture):
+    client, _ = relecture
+    r = client.put("/api/ldc/transcriptions/FDC_ARMAGNAC", headers=jeton("ROLE_ADMIN"),
+                   json={"titre": "Armagnac", "statut": "a_verifier", "rubriques": []})
+    assert r.status_code == 422

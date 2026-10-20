@@ -25,7 +25,7 @@ from rich.console import Console
 from rich.table import Table
 
 from ascocid.config import ConfigAcces
-from ascocid.application.ingestion import schemas
+from ascocid.application.ingestion import schemas, transcriptions_images
 from ascocid.application.ingestion.chunking import decouper, dedupliquer_definitions
 from ascocid.application.ingestion.documents import Bibliotheque, reinjecter
 from ascocid.domain.modeles import Bloc, Corpus, Fiche, TypeBloc, TypeFiche
@@ -219,10 +219,20 @@ def indexer(
         manifeste = json.loads(MANIFESTE.read_text()) if MANIFESTE.exists() else {}
         for alerte in anomalies + schemas.schemas_modifies(transcriptions, manifeste):
             console.print(f"[yellow]  {alerte}[/yellow]")
+        # Les illustrations en image, transcrites par OCR puis relues.
+        erreurs: list[str] = []
+        illustrations = transcriptions_images.charger_dossier(
+            DONNEES / "transcriptions" / "images", erreurs)
+        chunks_illustrations, anomalies = transcriptions_images.construire(illustrations, m)
+        chunks.extend(chunks_illustrations)
+        for alerte in erreurs + anomalies:
+            console.print(f"[yellow]  {alerte}[/yellow]")
         chunks.sort(key=lambda c: (c.fiche_idoc, c.ordre))
         m.ecrire_chunks(chunks)
         suffixe = ":lexical" if sans_vecteurs else ""
         m.ecrire_meta(schemas.CLE_META, schemas.empreinte(transcriptions) + suffixe)
+        m.ecrire_meta(transcriptions_images.CLE_META,
+                      transcriptions_images.empreinte(illustrations) + suffixe)
 
         t = Table(title="Index")
         t.add_column("mesure"); t.add_column("valeur", justify="right")

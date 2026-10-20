@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# OCR des illustrations en image vers des TOML relisibles (voir docs/12-transcriptions-images.md).
+cd "$(dirname "$0")"
+PY=.venv/bin/python; [ -x "$PY" ] || PY=python3
+PYTHONPATH=src exec "$PY" -m ascocid.interfaces.cli.transcrire "$@"
