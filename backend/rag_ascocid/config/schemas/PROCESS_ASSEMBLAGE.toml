@@ -1,0 +1,88 @@
+# Transcription du schéma « Assemblage » (AsCoCid, fiche 1021).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+
+idoc = 1021
+code = "PROCESS_ASSEMBLAGE"
+titre = "Assemblage"
+svg_sha256 = "79e581edba118f48ea76876978ca7b352bdd104e9401314531771a01ae7515db"
+relecture = ""
+
+[[etapes]]
+id = "formulation"
+libelle = "Formulation"
+fiche = 1123
+groupe = "Choix de l'assemblage"
+
+[[etapes]]
+id = "assemblage_test"
+libelle = "Réalisation de l'assemblage test"
+fiche = 1132
+groupe = "Choix de l'assemblage"
+# Ce qui peut entrer dans un assemblage (cadres du haut du schéma) ; les
+# additifs sont reliés en pointillés.
+intrants = [
+  "Cidres à assembler",
+  "Cuvées correctrices (amères ou acides)",
+  "Concentrés-reconstitués, concentrés ou moûts non fermentés",
+  "Moûts ou cidres issus de la valorisation des coproduits et cidres insatisfaisants",
+  "Additifs éventuels (acidifiants ou colorant, arômes pour cidres aromatisés)",
+]
+
+[[etapes]]
+id = "validation"
+libelle = "Validation"
+fiche = 1122
+groupe = "Choix de l'assemblage"
+
+[[etapes]]
+id = "assemblage"
+libelle = "Réalisation de l'assemblage"
+fiche = 1124
+# Trait épais : les cidres à assembler arrivent directement à la réalisation.
+intrants = ["Cidres à assembler"]
+
+[[etapes]]
+id = "stockage_court"
+libelle = "Stockage court du cidre assemblé"
+
+# ── Choix de l'assemblage ────────────────────────────────────────────────────
+
+[[transitions]]
+vers = "formulation"
+produit = "Cidres à assembler"
+
+[[transitions]]
+de = "formulation"
+vers = "assemblage_test"
+produit = "Recette de l'assemblage"
+
+[[transitions]]
+de = "assemblage_test"
+vers = "validation"
+produit = "Mélange test"
+
+# Retour en pointillés de la validation vers la formulation.
+[[transitions]]
+de = "validation"
+vers = "formulation"
+condition = "si l'assemblage test n'est pas validé"
+retour = true
+
+[[transitions]]
+de = "validation"
+vers = "assemblage"
+condition = "une fois l'assemblage test validé"
+
+# ── Réalisation ──────────────────────────────────────────────────────────────
+
+[[transitions]]
+de = "assemblage"
+vers = "stockage_court"
+
+[[transitions]]
+de = "assemblage"
+produit = "Cidres assemblés"
+
+[[transitions]]
+de = "stockage_court"
+produit = "Cidres assemblés"

@@ -1,0 +1,76 @@
+# Transcription du schéma « Opérations post-conditionnement » (AsCoCid, fiche 1023).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+
+idoc = 1023
+code = "PROCESS_POST_CONDITIONNEMENT"
+titre = "Opérations post-conditionnement"
+svg_sha256 = "f72e72a0955eb2cf263aa5840c7dc3267c480ce5170606205516f82d975efe4f"
+relecture = ""
+# Fiches des deux méthodes : sans pasteurisation 1318, avec pasteurisation 1319.
+
+[[etapes]]
+id = "etiquetage_sp"
+libelle = "Étiquetage, habillage, emballage"
+groupe = "Méthode sans pasteurisation"
+
+[[etapes]]
+id = "conservation"
+libelle = "Conservation"
+fiche = 1320
+groupe = "Méthode sans pasteurisation"
+
+[[etapes]]
+id = "pasteurisation"
+libelle = "Pasteurisation en bouteille"
+fiche = 1321
+groupe = "Méthode avec pasteurisation"
+
+[[etapes]]
+id = "etiquetage_ap"
+libelle = "Étiquetage, habillage, emballage"
+groupe = "Méthode avec pasteurisation"
+
+[[etapes]]
+id = "stockage"
+libelle = "Stockage"
+fiche = 1322
+groupe = "Méthode avec pasteurisation"
+
+# Les cidres à effervescence naturelle ne vont que vers la méthode sans
+# pasteurisation ; les cidres gazéifiés, vers les deux.
+[[transitions]]
+vers = "etiquetage_sp"
+produit = "Cidres à effervescence naturelle conditionnés avec dépôt ou limpide"
+
+[[transitions]]
+vers = "etiquetage_sp"
+produit = "Cidres gazéifiés conditionnés légèrement troubles ou limpides"
+condition = "sans pasteurisation"
+
+[[transitions]]
+vers = "pasteurisation"
+produit = "Cidres gazéifiés conditionnés légèrement troubles ou limpides"
+condition = "avec pasteurisation"
+
+[[transitions]]
+de = "etiquetage_sp"
+vers = "conservation"
+produit = "Cidres non pasteurisés étiquetés"
+
+[[transitions]]
+de = "conservation"
+produit = "Cidres non pasteurisés à commercialiser"
+
+[[transitions]]
+de = "pasteurisation"
+vers = "etiquetage_ap"
+produit = "Cidres pasteurisés en bouteilles"
+
+[[transitions]]
+de = "etiquetage_ap"
+vers = "stockage"
+produit = "Cidres pasteurisés étiquetés"
+
+[[transitions]]
+de = "stockage"
+produit = "Cidres pasteurisés à commercialiser"

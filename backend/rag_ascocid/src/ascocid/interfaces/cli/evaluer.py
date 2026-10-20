@@ -20,6 +20,7 @@ import typer
 from dotenv import load_dotenv
 from rich.console import Console
 
+from ascocid.application.ingestion import schemas
 from ascocid.application.requete import prompt as gabarit
 from ascocid.application.requete.recherche import RechercheHybride
 from ascocid.application.requete.verification import verifier
@@ -60,7 +61,7 @@ def lancer(
         else:
             console.print("[yellow]Pas de clé — recherche seule.[/yellow]")
 
-    carte = gabarit.carte_du_corpus(magasin) if generateur else ""
+    carte = gabarit.carte_du_corpus(magasin, schemas.charger("config/schemas")) if generateur else ""
     resultats = []
 
     for i, item in enumerate(jeu, 1):

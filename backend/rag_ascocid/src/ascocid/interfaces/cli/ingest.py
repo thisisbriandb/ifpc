@@ -25,6 +25,7 @@ from rich.console import Console
 from rich.table import Table
 
 from ascocid.config import ConfigAcces
+from ascocid.application.ingestion import schemas
 from ascocid.application.ingestion.chunking import decouper, dedupliquer_definitions
 from ascocid.application.ingestion.documents import Bibliotheque, reinjecter
 from ascocid.domain.modeles import Bloc, Corpus, Fiche, TypeBloc, TypeFiche
@@ -42,6 +43,7 @@ DONNEES = pathlib.Path(os.environ.get("ASCOCID_DATA", "data"))
 BLOBS = DONNEES / "blobs"
 MANIFESTE = DONNEES / "manifeste.json"
 BASE = DONNEES / "ascocid.sqlite"
+SCHEMAS = pathlib.Path("config/schemas")
 
 
 def _ranger(contenu: bytes) -> str:
@@ -209,8 +211,18 @@ def indexer(
                                    parents.get(idoc, [])))
         avant = len(chunks)
         chunks = dedupliquer_definitions(chunks)
+        # Le sens des schémas (ordre des étapes, branches), transcrit dans
+        # config/schemas : absent du texte des pages, il n'existe que là.
+        transcriptions = schemas.charger(SCHEMAS)
+        chunks_schemas, anomalies = schemas.construire(transcriptions, m)
+        chunks.extend(chunks_schemas)
+        manifeste = json.loads(MANIFESTE.read_text()) if MANIFESTE.exists() else {}
+        for alerte in anomalies + schemas.schemas_modifies(transcriptions, manifeste):
+            console.print(f"[yellow]  {alerte}[/yellow]")
         chunks.sort(key=lambda c: (c.fiche_idoc, c.ordre))
         m.ecrire_chunks(chunks)
+        suffixe = ":lexical" if sans_vecteurs else ""
+        m.ecrire_meta(schemas.CLE_META, schemas.empreinte(transcriptions) + suffixe)
 
         t = Table(title="Index")
         t.add_column("mesure"); t.add_column("valeur", justify="right")

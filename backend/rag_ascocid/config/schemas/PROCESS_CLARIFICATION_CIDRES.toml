@@ -1,0 +1,152 @@
+# Transcription du schéma « Clarification des cidres » (AsCoCid, fiche 1020).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+
+idoc = 1020
+code = "PROCESS_CLARIFICATION_CIDRES"
+titre = "Clarification des cidres"
+svg_sha256 = "621c3b433aeb53b8d80450b86f8adb10142e31cca0ffc22b3bc2a97e5ba069a5"
+relecture = ""
+
+# ── Par simple décantation ───────────────────────────────────────────────────
+
+[[etapes]]
+id = "decantation"
+libelle = "Décantation"
+fiche = 1037
+groupe = "Clarification des cidres par simple décantation"
+
+[[etapes]]
+id = "soutirage_decantation"
+libelle = "Soutirage"
+fiche = 1038
+groupe = "Clarification des cidres par simple décantation"
+
+# ── Sans collage ─────────────────────────────────────────────────────────────
+
+[[etapes]]
+id = "grossiere_sc"
+libelle = "Opération de séparation grossière"
+fiche = 1129
+groupe = "Clarification des cidres sans collage"
+
+[[etapes]]
+id = "fine_sc"
+libelle = "Opération de séparation fine"
+fiche = 1130
+groupe = "Clarification des cidres sans collage"
+
+# ── Avec collage ─────────────────────────────────────────────────────────────
+
+[[etapes]]
+id = "centrifugation_ac"
+libelle = "Centrifugation"
+fiche = 1039
+groupe = "Clarification des cidres avec collage"
+
+[[etapes]]
+id = "collage"
+libelle = "Collage"
+fiche = 1035
+groupe = "Clarification des cidres avec collage"
+intrants = ["Protéines et autres adjuvants de collage"]
+
+[[etapes]]
+id = "soutirage_collage"
+libelle = "Soutirage"
+fiche = 1038
+groupe = "Clarification des cidres avec collage"
+
+[[etapes]]
+id = "grossiere_ac"
+libelle = "Opération de séparation grossière"
+fiche = 1129
+groupe = "Clarification des cidres avec collage"
+
+[[etapes]]
+id = "fine_ac"
+libelle = "Opération de séparation fine"
+fiche = 1130
+groupe = "Clarification des cidres avec collage"
+
+# ── Enchaînement ─────────────────────────────────────────────────────────────
+
+[[transitions]]
+vers = "decantation"
+produit = "Cidres assemblés"
+condition = "clarification par simple décantation"
+
+[[transitions]]
+de = "decantation"
+vers = "soutirage_decantation"
+
+[[transitions]]
+de = "soutirage_decantation"
+produit = "Cidres contenant des levures prêts à la mise"
+
+[[transitions]]
+vers = "grossiere_sc"
+produit = "Cidres assemblés"
+condition = "clarification sans collage"
+
+[[transitions]]
+de = "grossiere_sc"
+vers = "fine_sc"
+produit = "Cidre partiellement clarifié"
+
+[[transitions]]
+de = "fine_sc"
+produit = "Cidres clarifiés prêts à la mise"
+
+# Avec collage : une centrifugation préalable est dessinée en dérivation
+# (facultative) avant le collage.
+[[transitions]]
+vers = "centrifugation_ac"
+produit = "Cidres assemblés"
+condition = "clarification avec collage"
+
+[[transitions]]
+vers = "collage"
+produit = "Cidres assemblés"
+condition = "clarification avec collage"
+
+[[transitions]]
+de = "centrifugation_ac"
+vers = "collage"
+
+[[transitions]]
+de = "collage"
+vers = "soutirage_collage"
+
+[[transitions]]
+de = "soutirage_collage"
+vers = "grossiere_ac"
+produit = "Cidre collé"
+
+# Dérivation dessinée à droite : la séparation grossière peut être évitée.
+[[transitions]]
+de = "soutirage_collage"
+vers = "fine_ac"
+produit = "Cidre collé"
+
+[[transitions]]
+de = "grossiere_ac"
+vers = "fine_ac"
+produit = "Cidre collé et centrifugé"
+
+[[transitions]]
+de = "fine_ac"
+produit = "Cidres collés prêts à la mise"
+
+# ── Procédés annexes et coproduits ───────────────────────────────────────────
+
+[[rattachements]]
+etapes = ["grossiere_sc", "fine_sc"]
+nature = "annexe"
+libelle = "Procédés annexes"
+elements = ["Traitement des terres de filtration"]
+
+[[rattachements]]
+etapes = ["grossiere_sc", "fine_sc", "centrifugation_ac", "collage", "grossiere_ac", "fine_ac"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Lies de fermentation", "Lies de collage de cidre"]

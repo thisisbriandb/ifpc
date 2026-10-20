@@ -1,0 +1,49 @@
+# Transcription du « Graphe d'influence - échec clarification haute » (AsCoCid, fiche 1049).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+#
+# Ce schéma n'a aucune zone cliquable : sans cette transcription, tout son
+# contenu est absent de l'assistant. Au centre, « La clarification haute
+# classique » ; au-dessus, les chaînes de causes d'échec ; en dessous, les
+# conséquences d'une clarification réussie ou en échec.
+
+idoc = 1049
+code = "GRAPHE_INFLUENCE_CLARIFICATION_HAUTE"
+titre = "Graphe d'influence - échec de la clarification haute classique"
+svg_sha256 = "f4469333dd6b7ff8cd5197b9cfed8d3defcbce5ed00199a4514175aa6b4180ae"
+relecture = ""
+
+[[chaines]]
+contexte = "Cause d'échec de la clarification haute classique"
+maillons = ["Soutirage trop tardif ou températures trop élevées", "Accélération de la fermentation", "Destruction du chapeau brun"]
+
+[[chaines]]
+contexte = "Cause d'échec de la clarification haute classique"
+maillons = ["Variétés de pommes acides", "Acidité trop élevée", "Échec de la gélification"]
+
+[[chaines]]
+contexte = "Cause d'échec de la clarification haute classique"
+maillons = ["Températures trop basses", "Départ en fermentation lent", "Échec de la flottation (mauvaise remontée du chapeau brun)"]
+
+[[chaines]]
+contexte = "Cause d'échec de la clarification haute classique"
+maillons = ["Mauvais état sanitaire", "Présence de polygalacturonase", "Dégradation de la pectine", "Échec de la gélification"]
+
+[[chaines]]
+contexte = "Cause d'échec de la clarification haute classique"
+maillons = ["Temps de conservation des pommes inférieur à 15 jours ou temps de cuvage inférieur à 30 minutes", "Faible quantité de pectines solubles", "Échec (partiel) de la gélification"]
+
+[[chaines]]
+contexte = "Conséquence d'une clarification haute réussie"
+maillons = ["Clarification réussie", "Élimination du trouble"]
+
+[[chaines]]
+contexte = "Conséquence d'une clarification haute réussie"
+maillons = ["Clarification réussie", "Baisse de la vitesse de fermentation"]
+
+[[chaines]]
+contexte = "Conséquence d'une clarification haute réussie"
+maillons = ["Clarification réussie", "Meilleure croissance ultérieure des levures Hanseniaspora"]
+
+[[chaines]]
+contexte = "Conséquence d'un échec de la clarification haute"
+maillons = ["Clarification en échec", "Actions correctives (opération de séparation, dépectinisation, collage…)"]

@@ -1,0 +1,219 @@
+# Transcription du schéma « Étape fermentaire » (AsCoCid, fiche 1019).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+
+idoc = 1019
+code = "PROCESS_FERMENTATION"
+titre = "Étape fermentaire"
+svg_sha256 = "14847dd2943bbb54b13d7294934f543d0af167261b2be3a1ab8b7ebcc11da62e"
+relecture = ""
+
+# ── Méthode FR (fermentation ralentie) ───────────────────────────────────────
+
+[[etapes]]
+id = "mise_fr"
+libelle = "Mise en fermentation"
+fiche = 1117
+groupe = "Méthode FR (fermentation ralentie)"
+
+[[etapes]]
+id = "primaire_fr"
+libelle = "Fermentation primaire"
+fiche = 1114
+groupe = "Méthode FR (fermentation ralentie)"
+
+[[etapes]]
+id = "reduction_fr"
+libelle = "Réduction de la quantité de levures"
+fiche = 1119
+groupe = "Méthode FR (fermentation ralentie)"
+
+[[etapes]]
+id = "secondaire_fr"
+libelle = "Fermentation secondaire"
+fiche = 1116
+groupe = "Méthode FR (fermentation ralentie)"
+
+[[etapes]]
+id = "elimination_fr"
+libelle = "Élimination des levures"
+fiche = 1113
+groupe = "Méthode FR (fermentation ralentie)"
+
+# ── Méthode FI (fermentation interrompue) ────────────────────────────────────
+
+[[etapes]]
+id = "mise_fi"
+libelle = "Mise en fermentation"
+fiche = 1117
+groupe = "Méthode FI (fermentation interrompue)"
+
+[[etapes]]
+id = "principale_fi"
+libelle = "Fermentation principale"
+fiche = 1115
+groupe = "Méthode FI (fermentation interrompue)"
+
+[[etapes]]
+id = "elimination_fi"
+libelle = "Élimination des levures"
+fiche = 1113
+groupe = "Méthode FI (fermentation interrompue)"
+
+[[etapes]]
+id = "sulfitage_fi"
+libelle = "Sulfitage"
+fiche = 1147
+groupe = "Méthode FI (fermentation interrompue)"
+
+[[etapes]]
+id = "conservation_fi"
+libelle = "Conservation à basse température"
+fiche = 1120
+groupe = "Méthode FI (fermentation interrompue)"
+
+# ── Méthode FMR (fermentation de moûts reconstitués) ─────────────────────────
+
+[[etapes]]
+id = "reconstitution"
+libelle = "Reconstitution « à la demande »"
+fiche = 1118
+groupe = "Méthode FMR (fermentation de moûts reconstitués)"
+
+[[etapes]]
+id = "mise_fmr"
+libelle = "Mise en fermentation (avec ensemencement)"
+fiche = 1117
+groupe = "Méthode FMR (fermentation de moûts reconstitués)"
+
+[[etapes]]
+id = "principale_fmr"
+libelle = "Fermentation principale"
+fiche = 1115
+groupe = "Méthode FMR (fermentation de moûts reconstitués)"
+
+[[etapes]]
+id = "elimination_fmr"
+libelle = "Élimination des levures"
+fiche = 1113
+groupe = "Méthode FMR (fermentation de moûts reconstitués)"
+
+[[etapes]]
+id = "conservation_fmr"
+libelle = "Conservation à basse température (courte)"
+fiche = 1120
+groupe = "Méthode FMR (fermentation de moûts reconstitués)"
+
+# ── Enchaînement : FR ────────────────────────────────────────────────────────
+
+[[transitions]]
+vers = "mise_fr"
+produit = "Moûts à fermenter (clarifiés ou non)"
+condition = "méthode FR"
+
+[[transitions]]
+de = "mise_fr"
+vers = "primaire_fr"
+produit = "Moût en croissance levurienne"
+
+[[transitions]]
+de = "primaire_fr"
+vers = "reduction_fr"
+produit = "Moût en cours de 1ère fermentation"
+
+[[transitions]]
+de = "reduction_fr"
+vers = "secondaire_fr"
+produit = "Moût appauvri en levures"
+
+# Boucle dessinée à gauche, annotée « En cas de re-croissance ».
+[[transitions]]
+de = "secondaire_fr"
+vers = "reduction_fr"
+condition = "en cas de re-croissance"
+retour = true
+
+[[transitions]]
+de = "secondaire_fr"
+vers = "elimination_fr"
+
+[[transitions]]
+de = "secondaire_fr"
+produit = "Cidres en fermentation lente à assembler"
+
+[[transitions]]
+de = "elimination_fr"
+produit = "Cidres en fermentation lente à assembler"
+
+# ── Enchaînement : FI ────────────────────────────────────────────────────────
+
+[[transitions]]
+vers = "mise_fi"
+produit = "Moûts à fermenter (clarifiés ou non)"
+condition = "méthode FI"
+
+[[transitions]]
+de = "mise_fi"
+vers = "principale_fi"
+produit = "Moût en croissance levurienne"
+
+[[transitions]]
+de = "principale_fi"
+vers = "elimination_fi"
+produit = "Moût en fermentation principale"
+
+[[transitions]]
+de = "elimination_fi"
+vers = "sulfitage_fi"
+produit = "Moût en arrêt de fermentation"
+
+[[transitions]]
+de = "elimination_fi"
+vers = "conservation_fi"
+produit = "Moût en arrêt de fermentation"
+
+[[transitions]]
+de = "sulfitage_fi"
+vers = "conservation_fi"
+
+[[transitions]]
+de = "conservation_fi"
+produit = "Cidres stabilisés à assembler"
+
+# ── Enchaînement : FMR ───────────────────────────────────────────────────────
+
+[[transitions]]
+vers = "reconstitution"
+produit = "Moûts concentrés"
+condition = "méthode FMR"
+
+[[transitions]]
+de = "reconstitution"
+vers = "mise_fmr"
+produit = "Moût reconstitué"
+
+[[transitions]]
+de = "mise_fmr"
+vers = "principale_fmr"
+produit = "Moût en croissance levurienne"
+
+[[transitions]]
+de = "principale_fmr"
+vers = "elimination_fmr"
+produit = "Moût en fermentation"
+
+[[transitions]]
+de = "elimination_fmr"
+vers = "conservation_fmr"
+produit = "Moût en arrêt de fermentation"
+
+[[transitions]]
+de = "conservation_fmr"
+produit = "Cidres à base de moût concentré, stabilisés, à assembler"
+
+# ── Coproduits ───────────────────────────────────────────────────────────────
+
+[[rattachements]]
+etapes = ["reduction_fr", "elimination_fr", "elimination_fi", "elimination_fmr"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Lies de fermentation"]

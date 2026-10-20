@@ -77,6 +77,7 @@ le remplace bien.
 | [08](08-evaluation.md) | Évaluation | Jeu d'or, métriques, non-régression | rédigé |
 | [09](09-roadmap.md) | Roadmap | Jalons, effort, risques | rédigé |
 | [10](10-documents-ajoutes.md) | Documents ajoutés | PDF et Word ajoutés par les admins de la plateforme, intégrés à chaud | **implémenté** — Administration → Documents de l'assistant |
+| [11](11-schemas.md) | Sens des schémas | Ordre des étapes, branches, boucles et graphes d'influence, transcrits et indexés | **implémenté** — `config/schemas/`, à relire par l'IFPC |
 
 Lecture minimale pour démarrer : **README → 01 → 09**.
 

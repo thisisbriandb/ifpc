@@ -39,6 +39,7 @@ from fastapi.responses import FileResponse, StreamingResponse
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
+from ascocid.application.ingestion import schemas
 from ascocid.application.ingestion.documents import (
     TAILLE_MAX,
     Bibliotheque,
@@ -61,6 +62,7 @@ BLOBS = RACINE / "blobs"
 MANIFESTE = RACINE / "manifeste.json"
 RETOURS = RACINE / "retours.jsonl"
 SUGGESTIONS = pathlib.Path("config/suggestions.json")
+SCHEMAS = pathlib.Path("config/schemas")
 # Documents ajoutés depuis l'administration de la plateforme : sur le même
 # volume que le corpus, pour être sauvegardés et déplacés avec lui.
 BIBLIOTHEQUE = Bibliotheque(RACINE / "documents")
@@ -99,6 +101,7 @@ class Moteur:
         self.analyseur_modele: Any = None
         self.generateur: Any = None
         self.carte = ""
+        self.schemas: list = []
         self.generation_disponible = False
         self.modele_redaction = ""
         self.modele_analyse = ""
@@ -126,8 +129,20 @@ class Moteur:
             print(f"[ldc] index vectoriel indisponible ({type(exc).__name__}: {exc}) "
                   f"— recherche lexicale seule")
 
+        # Le sens des schémas (ordre des étapes, branches) vient des
+        # transcriptions versionnées avec le code : une nouvelle version déployée
+        # est indexée ici, sans commande à lancer sur le serveur.
+        self.schemas = schemas.charger(SCHEMAS)
+        manifeste = json.loads(MANIFESTE.read_text()) if MANIFESTE.exists() else {}
         with MagasinSqlite(BASE_DONNEES) as magasin:
-            self.carte = gabarit.carte_du_corpus(magasin)
+            ecrits, anomalies = schemas.synchroniser(
+                self.schemas, magasin, self.embedder, self.index)
+            if ecrits is not None:
+                print(f"[ldc] schémas : {ecrits} passages indexés "
+                      f"({len(self.schemas)} transcriptions)")
+            for alerte in anomalies + schemas.schemas_modifies(self.schemas, manifeste):
+                print(f"[ldc] schémas : {alerte}")
+            self.carte = gabarit.carte_du_corpus(magasin, self.schemas)
 
         from ascocid.infrastructure.llm import fabrique
 
@@ -154,7 +169,7 @@ class Moteur:
         jusqu'au prochain redémarrage qu'un document existe.
         """
         with MagasinSqlite(BASE_DONNEES) as magasin:
-            self.carte = gabarit.carte_du_corpus(magasin)
+            self.carte = gabarit.carte_du_corpus(magasin, self.schemas)
         if self.generateur is not None:
             self.generateur.carte = self.carte
 

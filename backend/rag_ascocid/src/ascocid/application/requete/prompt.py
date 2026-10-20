@@ -8,6 +8,9 @@ fournisseur.
 
 from __future__ import annotations
 
+from collections.abc import Iterable
+
+from ascocid.application.ingestion.schemas import Transcription, ordre
 from ascocid.domain.ports.recherche import Passage
 
 REGLES = """\
@@ -46,8 +49,15 @@ Quand le contexte de navigation le permet, situe la réponse dans le processus \
 """
 
 
-def carte_du_corpus(magasin) -> str:  # noqa: ANN001
-    """Vue d'ensemble du livre, destinée au préfixe mis en cache."""
+def carte_du_corpus(magasin, transcriptions: Iterable[Transcription] = ()) -> str:  # noqa: ANN001
+    """Vue d'ensemble du livre, destinée au préfixe mis en cache.
+
+    L'ordre des étapes vient de la transcription du schéma quand elle existe.
+    Sans elle, les zones cliquables sont listées sans flèches : leur ordre dans
+    la page n'est pas celui du procédé (« Récolte » y arrive neuvième), et une
+    suite « A → B » présentée au modèle serait un enchaînement faux.
+    """
+    transcrits = {t.idoc: t for t in transcriptions}
     lignes = ["Structure du Livre de Connaissances AsCoCid.", ""]
     cartes = magasin.cx.execute(
         "SELECT f.idoc, f.titre FROM fiche f JOIN carte c ON c.idoc=f.idoc"
@@ -55,10 +65,16 @@ def carte_du_corpus(magasin) -> str:  # noqa: ANN001
     ).fetchall()
     lignes.append("Diagrammes de procédé :")
     for c in cartes:
+        t = transcrits.get(c["idoc"])
+        if t is not None and t.etapes:
+            lignes.append(f"- {c['titre']} (dans l'ordre) : "
+                          + " → ".join(e.libelle for e in ordre(t)[:14]))
+            continue
         etapes = magasin.cx.execute(
             "SELECT libelle FROM zone WHERE carte_idoc=? ORDER BY ordre", (c["idoc"],)
         ).fetchall()
-        lignes.append(f"- {c['titre']} : " + " → ".join(e["libelle"] for e in etapes[:12]))
+        lignes.append(f"- {c['titre']} — rubriques : "
+                      + ", ".join(e["libelle"] for e in etapes[:12]))
     lignes += ["", "Fiches de connaissance disponibles :"]
     for f in magasin.cx.execute(
         "SELECT titre FROM fiche WHERE type IN ('FICHE','FDC') ORDER BY titre"

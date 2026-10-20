@@ -1,0 +1,30 @@
+# Transcription du schéma « Concentration & Stockage » (AsCoCid, fiche 1017).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+
+idoc = 1017
+code = "PROCESS_CONCENTRATION"
+titre = "Concentration & Stockage"
+svg_sha256 = "0b2a73624f5dbab25a3923f99a9cf7612d3240bd79fbccb31fbdfbd97bd2c878"
+relecture = ""
+
+[[etapes]]
+id = "concentration"
+libelle = "Concentration thermique"
+fiche = 1134
+
+[[etapes]]
+id = "stockage"
+libelle = "Stockage"
+
+[[transitions]]
+vers = "concentration"
+produit = "Moûts clarifiés par « Clarification basse »"
+
+[[transitions]]
+de = "concentration"
+vers = "stockage"
+produit = "Moût concentré"
+
+[[transitions]]
+de = "stockage"
+produit = "Moût concentré en stock"

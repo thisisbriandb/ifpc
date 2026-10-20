@@ -1,0 +1,376 @@
+# Transcription du schéma « Extraction des moûts » (AsCoCid, fiche 1016).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+#
+# Convention : une opération dessinée à côté de la ligne principale, avec un
+# retour sur celle-ci (sulfitage, refroidissement, traitements de la râpure),
+# est facultative — transcrite par une transition qui la contourne.
+
+idoc = 1016
+code = "PROCESS_EXTRACTION"
+titre = "Extraction des moûts"
+svg_sha256 = "a56cc6c0cd848da9b95102de692fa274b4673f6db161fe1d8aa17613317ed648"
+relecture = ""
+
+# ── Lavage et tri (commun aux deux voies) ────────────────────────────────────
+
+[[etapes]]
+id = "reprise_contenant"
+libelle = "Reprise des pommes en contenant"
+groupe = "Lavage et tri"
+
+[[etapes]]
+id = "reprise_hydraulique"
+libelle = "Reprise hydraulique des pommes en vrac"
+groupe = "Lavage et tri"
+
+[[etapes]]
+id = "lavage_tri"
+libelle = "Lavage et Tri"
+fiche = 1070
+groupe = "Lavage et tri"
+
+# ── Extraction avec rémiage ──────────────────────────────────────────────────
+
+[[etapes]]
+id = "rapage_ar"
+libelle = "Râpage"
+fiche = 1072
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "mouillage_ar"
+libelle = "Mouillage de la râpure"
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "traitements_ar"
+libelle = "Traitements facultatifs de la râpure"
+fiche = 1073
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "stockage_tampon_ar"
+libelle = "Stockage tampon"
+fiche = 1075
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "cuvage_ar"
+libelle = "Cuvage"
+fiche = 1074
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "pressage_ar"
+libelle = "Pressage"
+fiche = 1077
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "sulfitage_ar"
+libelle = "Sulfitage"
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "refroidissement_ar"
+libelle = "Refroidissement"
+fiche = 1079
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "remiage"
+libelle = "Rémiage"
+fiche = 1078
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "sulfitage_remiage"
+libelle = "Sulfitage du moût de rémiage"
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "refroidissement_remiage"
+libelle = "Refroidissement du moût de rémiage"
+fiche = 1079
+groupe = "Extraction avec rémiage"
+
+[[etapes]]
+id = "melange"
+libelle = "Mélange des moûts"
+groupe = "Extraction avec rémiage"
+
+# ── Extraction sans rémiage ──────────────────────────────────────────────────
+
+[[etapes]]
+id = "rapage_sr"
+libelle = "Râpage"
+fiche = 1072
+groupe = "Extraction sans rémiage"
+
+[[etapes]]
+id = "traitements_sr"
+libelle = "Traitements facultatifs de la râpure"
+fiche = 1073
+groupe = "Extraction sans rémiage"
+
+[[etapes]]
+id = "stockage_tampon_sr"
+libelle = "Stockage tampon"
+fiche = 1075
+groupe = "Extraction sans rémiage"
+
+[[etapes]]
+id = "cuvage_sr"
+libelle = "Cuvage"
+fiche = 1074
+groupe = "Extraction sans rémiage"
+
+[[etapes]]
+id = "pressage_sr"
+libelle = "Pressage"
+fiche = 1077
+groupe = "Extraction sans rémiage"
+
+[[etapes]]
+id = "sulfitage_sr"
+libelle = "Sulfitage"
+groupe = "Extraction sans rémiage"
+
+[[etapes]]
+id = "refroidissement_sr"
+libelle = "Refroidissement"
+fiche = 1079
+groupe = "Extraction sans rémiage"
+
+# ── Enchaînement : lavage et tri ─────────────────────────────────────────────
+
+[[transitions]]
+vers = "reprise_contenant"
+produit = "Pommes en stock"
+
+[[transitions]]
+vers = "reprise_hydraulique"
+produit = "Pommes en stock"
+
+[[transitions]]
+de = "reprise_contenant"
+vers = "lavage_tri"
+produit = "Pommes en cours de convoyage"
+
+[[transitions]]
+de = "reprise_hydraulique"
+vers = "lavage_tri"
+produit = "Pommes en cours de convoyage"
+
+[[transitions]]
+de = "lavage_tri"
+vers = "rapage_ar"
+produit = "Pommes à presser"
+condition = "extraction avec rémiage"
+
+[[transitions]]
+de = "lavage_tri"
+vers = "rapage_sr"
+produit = "Pommes à presser"
+condition = "extraction sans rémiage"
+
+# ── Enchaînement : avec rémiage ──────────────────────────────────────────────
+
+[[transitions]]
+de = "rapage_ar"
+vers = "mouillage_ar"
+produit = "Râpure fraîche"
+
+[[transitions]]
+de = "rapage_ar"
+vers = "traitements_ar"
+produit = "Râpure fraîche"
+
+[[transitions]]
+de = "rapage_ar"
+vers = "stockage_tampon_ar"
+produit = "Râpure fraîche"
+
+[[transitions]]
+de = "rapage_ar"
+vers = "cuvage_ar"
+produit = "Râpure fraîche"
+
+[[transitions]]
+de = "mouillage_ar"
+vers = "stockage_tampon_ar"
+produit = "Râpure traitée"
+
+[[transitions]]
+de = "mouillage_ar"
+vers = "cuvage_ar"
+produit = "Râpure traitée"
+
+[[transitions]]
+de = "traitements_ar"
+vers = "stockage_tampon_ar"
+produit = "Râpure traitée"
+
+[[transitions]]
+de = "traitements_ar"
+vers = "cuvage_ar"
+produit = "Râpure traitée"
+
+[[transitions]]
+de = "stockage_tampon_ar"
+vers = "pressage_ar"
+produit = "Râpure à presser"
+
+[[transitions]]
+de = "cuvage_ar"
+vers = "pressage_ar"
+produit = "Râpure à presser"
+
+[[transitions]]
+de = "pressage_ar"
+vers = "sulfitage_ar"
+produit = "Moût pur jus sortie de presse"
+
+[[transitions]]
+de = "sulfitage_ar"
+vers = "refroidissement_ar"
+
+[[transitions]]
+de = "refroidissement_ar"
+vers = "melange"
+
+[[transitions]]
+de = "pressage_ar"
+vers = "melange"
+produit = "Moût pur jus sortie de presse"
+
+[[transitions]]
+de = "pressage_ar"
+vers = "remiage"
+produit = "Marc vert"
+
+[[transitions]]
+de = "remiage"
+vers = "sulfitage_remiage"
+produit = "Moût de rémiage"
+
+[[transitions]]
+de = "sulfitage_remiage"
+vers = "refroidissement_remiage"
+
+[[transitions]]
+de = "refroidissement_remiage"
+vers = "melange"
+
+[[transitions]]
+de = "remiage"
+vers = "melange"
+produit = "Moût de rémiage"
+
+[[transitions]]
+de = "refroidissement_remiage"
+produit = "Moût brut « de rémiage »"
+
+[[transitions]]
+de = "remiage"
+produit = "Moût brut « de rémiage »"
+
+[[transitions]]
+de = "melange"
+produit = "Moût brut « non pur jus »"
+
+# Chacune des deux opérations sur le moût est facultative séparément.
+[[transitions]]
+de = "pressage_ar"
+vers = "refroidissement_ar"
+
+[[transitions]]
+de = "sulfitage_ar"
+vers = "melange"
+
+[[transitions]]
+de = "remiage"
+vers = "refroidissement_remiage"
+
+[[transitions]]
+de = "sulfitage_remiage"
+vers = "melange"
+
+[[transitions]]
+de = "sulfitage_remiage"
+
+# ── Enchaînement : sans rémiage ──────────────────────────────────────────────
+
+[[transitions]]
+de = "rapage_sr"
+vers = "traitements_sr"
+produit = "Râpure fraîche"
+
+[[transitions]]
+de = "rapage_sr"
+vers = "stockage_tampon_sr"
+produit = "Râpure fraîche"
+
+[[transitions]]
+de = "rapage_sr"
+vers = "cuvage_sr"
+produit = "Râpure fraîche"
+
+[[transitions]]
+de = "traitements_sr"
+vers = "stockage_tampon_sr"
+produit = "Râpure traitée"
+
+[[transitions]]
+de = "traitements_sr"
+vers = "cuvage_sr"
+produit = "Râpure traitée"
+
+[[transitions]]
+de = "stockage_tampon_sr"
+vers = "pressage_sr"
+produit = "Râpure à presser"
+
+[[transitions]]
+de = "cuvage_sr"
+vers = "pressage_sr"
+produit = "Râpure à presser"
+
+[[transitions]]
+de = "pressage_sr"
+vers = "sulfitage_sr"
+produit = "Moût pur jus sortie de presse"
+
+[[transitions]]
+de = "sulfitage_sr"
+vers = "refroidissement_sr"
+
+[[transitions]]
+de = "refroidissement_sr"
+produit = "Moût brut « pur jus »"
+
+[[transitions]]
+de = "pressage_sr"
+produit = "Moût brut « pur jus »"
+
+# Chacune des deux opérations sur le moût est facultative séparément.
+[[transitions]]
+de = "pressage_sr"
+vers = "refroidissement_sr"
+
+[[transitions]]
+de = "sulfitage_sr"
+
+# ── Procédés annexes et coproduits ───────────────────────────────────────────
+
+[[rattachements]]
+etapes = ["lavage_tri"]
+nature = "annexe"
+libelle = "Procédés annexes saisonniers"
+elements = ["Eaux de lavage"]
+
+[[rattachements]]
+etapes = ["remiage", "pressage_sr"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Marc vert", "Marc épuisé"]
