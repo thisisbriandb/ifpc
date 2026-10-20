@@ -1,0 +1,100 @@
+# Transcription de l'illustration de la fiche 1558 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1558
+code = "FICHE_GESTION_DU_RISQUE_BRETTANOMYCES"
+titre = "La gestion du risque Brettanomyces"
+image_sha256 = "ce376314873dd7ee1e7dc05db5fac2227c78581043cf70bcf9e52a38eebe31d8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 78.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+10 rectangles
+Ed re æÙ 4 Cellules de
+g a levures
+o mn e P ©L Débri
++——— Débris
+All soon sur dr lé . in ou
+-] rectangle quadrillé bull
+: me 0 patis camés) | D | n
+> 100 rectangles au total,
+correspondant à 1 pL
+Figure 1 : Comptage de levures sur une cellule de Malassez
+1000000 BAvant filtration
+BAprès filtration
+œ@ Z 100000
+—— Brettanomyces LR
+[0] —
+—a— S. uvarum Su 10000
+D à 1000
+© 8
+5 À 100
+SNS
+0 È 10 1 20 25 30 Filtre àterre  Échantillon Échantillon Échantillon
+Température (°C) MFT 1 MFT 2 MFT 3
+Figure 2 : Effet de la température sur la multiplication Figure 3 : Efficacité de la microfiltration tangentielle (MFT) par rapport
+de Brettanomyces et Saccharomyces uvarum à la filtration sur terre, sur le niveau de population de Brettanomyces
+Source: Bauduin, R. (2007). Guide de recommandations pour limiter Source: extrait adapté de Bauduin, R., Guichard, H., Poupard, P., Le Quéré, J.-M. (2015). Les
+les altérations organoleptiques d'origine microbiologique. phénols volatils : état des lieux et leviers technologiques possibles. Présentation aux
+Entretiens cidricoles, SIVAL."""
+
+[[rubriques]]
+titre = "10 rectangles"
+
+[[rubriques.lignes]]
+valeur = "Ed re æÙ 4 Cellules de g a levures o mn e P ©L Débri"
+douteux = ["Ed", "re", "æÙ", "4", "a", "o", "mn", "P", "©L"]
+
+[[rubriques.lignes]]
+valeur = "+——— Débris All soon sur dr lé . in ou -] rectangle quadrillé bull"
+douteux = ["All", "soon", "dr", "lé", "in", "quadrillé"]
+
+[[rubriques.lignes]]
+valeur = ": me 0 patis camés) | D | n"
+douteux = ["me", "0", "patis", "camés)", "D", "n"]
+
+[[rubriques.lignes]]
+valeur = "> 100 rectangles au total, correspondant à 1 pL"
+douteux = ["pL"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Comptage de levures sur une cellule de Malassez"
+
+[[rubriques]]
+titre = "1000000 BAvant filtration"
+
+[[rubriques.lignes]]
+valeur = "BAprès filtration"
+douteux = ["BAprès", "filtration"]
+
+[[rubriques.lignes]]
+valeur = "œ@ Z 100000 —— Brettanomyces LR [0] — —a— S. uvarum Su 10000 D à 1000 © 8"
+douteux = ["œ@", "Z", "100000", "LR", "[0]", "—a—", "S.", "uvarum", "Su", "D", "à", "8"]
+
+[[rubriques]]
+titre = "5 À 100"
+
+[[rubriques.lignes]]
+valeur = "SNS"
+douteux = ["SNS"]
+
+[[rubriques.lignes]]
+valeur = "0 È 10 1 20 25 30 Filtre àterre  Échantillon Échantillon Échantillon Température (°C) MFT 1 MFT 2 MFT 3"
+douteux = ["È", "1", "àterre", " Échantillon"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Effet de la température sur la multiplication Figure 3 : Efficacité de la microfiltration tangentielle (MFT) par rapport"
+
+[[rubriques.lignes]]
+valeur = "de Brettanomyces et Saccharomyces uvarum à la filtration sur terre, sur le niveau de population de Brettanomyces"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Bauduin, R. (2007). Guide de recommandations pour limiter Source: extrait adapté de Bauduin, R., Guichard, H., Poupard, P., Le Quéré, J.-M. (2015). Les"
+
+[[rubriques.lignes]]
+valeur = "les altérations organoleptiques d'origine microbiologique. phénols volatils : état des lieux et leviers technologiques possibles. Présentation aux Entretiens cidricoles, SIVAL."

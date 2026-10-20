@@ -1,0 +1,65 @@
+# Transcription de l'illustration de la fiche 1572 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1572
+code = "FICHE_ACIDITE_VOLATILE"
+titre = "L'acidité volatile"
+image_sha256 = "c35ed0e389b806ae79380de5d820ca565cf879278ed210dce2f7919aeff33612"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+2,5
+— 2
+Z 15
+2
+2
+& ‘1
+2
+2 05
+0
+France Royaume-Uni Irlande Belgique Allemagne Espagne République
+tchèque
+Figure 1 : Variabilité de l'acidité volatile des cidres français et étrangers
+Représentation appelée « boîte à moustaches ». Les points orange représentent les médianes des
+acidités volatiles par pays (valeur centrale de chaque jeu de données). Les limites représentées par les
+tirets noirs correspondent aux valeurs minimales et maximales.
+Nombres d'échantillons: France = 8, Royaume-Uni= 7, Irlande= 5, Belgique= 4, Allemagne= 3,
+Espagne= 8, République Tchèque= 4.
+Source: Résultats IFPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "2,5"
+
+[[rubriques.lignes]]
+valeur = "— 2 Z 15 2 2 & ‘1 2"
+douteux = ["Z", "2", "2", "‘1"]
+
+[[rubriques]]
+titre = "2 05"
+
+[[rubriques.lignes]]
+valeur = "0 France Royaume-Uni Irlande Belgique Allemagne Espagne République tchèque"
+douteux = ["Irlande"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Variabilité de l'acidité volatile des cidres français et étrangers"
+douteux = ["l'acidité"]
+
+[[rubriques.lignes]]
+valeur = "Représentation appelée « boîte à moustaches ». Les points orange représentent les médianes des acidités volatiles par pays (valeur centrale de chaque jeu de données). Les limites représentées par les tirets noirs correspondent aux valeurs minimales et maximales."
+
+[[rubriques.lignes]]
+intitule = "Nombres d'échantillons"
+valeur = "France = 8, Royaume-Uni= 7, Irlande= 5, Belgique= 4, Allemagne= 3, Espagne= 8, République Tchèque= 4."
+douteux = ["d'échantillons:", "Tchèque="]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Résultats IFPC"

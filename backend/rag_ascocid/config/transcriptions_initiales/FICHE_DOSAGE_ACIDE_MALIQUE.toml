@@ -1,0 +1,112 @@
+# Transcription de l'illustration de la fiche 1516 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1516
+code = "FICHE_DOSAGE_ACIDE_MALIQUE"
+titre = "Dosage de l'acide malique"
+image_sha256 = "c748758bd3b691626a84d7176e820af7016abfdfa6f1c90518766ae7a2829b9e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Couvercle
+hermétique Lo
+<— Front de migration
+Papier Whatman Après 3-4 h de <— Migration de l'acide
+migration par capillarité lactique
+puis temps de séchage
+Cuve de …:
+chromatographie <——— Migration de l'acide
+malique
+Dépôt
+Ligne de dépôt Ligne de dépôt des
+échantillons
+Solvant d'élution
+Figure 1 : La chromatographie sur papier pour suivre l'évolution de l'acide malique
+1) Témoin Acide malique (acide malique dans de l’eau)
+2) Tâches importantes d'acide malique mais pas d’acide lactique = la TML n'a pas commencé
+3) Tâches d'acide malique et d'acide lactique = la TML a commencé
+4) Tâches importantes d'acide lactique mais pas d'acide malique = la TML est terminée
+L-MDH
+Acide L-malique + NAD* «+ Oxaloacétate + NADH + H°
+GOT
+il) Oxaloacétate + L-glutamate ———+  2-oxoglutarate + L-aspartate
+Figure 2 : Réactions sur lesquelles repose le dosage enzymatique de l'acide malique
+La quantité de NADH formée suite à ces deux réactions est mesurée par spectrophotométrie, permettant de déterminer
+la quantité d'acide L-malique.
+L-MDH = enzyme L-malate déshydrogénase
+GOT = enzyme Glutamate-oxaloacétate transaminase
+Source: Megazyme, L-malic acid (L-malate) assay procedure."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Couvercle"
+
+[[rubriques.lignes]]
+valeur = "hermétique Lo <— Front de migration"
+douteux = ["Lo"]
+
+[[rubriques.lignes]]
+valeur = "Papier Whatman Après 3-4 h de <— Migration de l'acide migration par capillarité lactique puis temps de séchage"
+douteux = ["l'acide"]
+
+[[rubriques.lignes]]
+intitule = "Cuve de …"
+valeur = "chromatographie <——— Migration de l'acide"
+
+[[rubriques.lignes]]
+valeur = "malique"
+
+[[rubriques.lignes]]
+valeur = "Dépôt"
+
+[[rubriques.lignes]]
+valeur = "Ligne de dépôt Ligne de dépôt des échantillons"
+
+[[rubriques.lignes]]
+valeur = "Solvant d'élution"
+douteux = ["d'élution"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La chromatographie sur papier pour suivre l'évolution de l'acide malique 1) Témoin Acide malique (acide malique dans de l’eau)"
+douteux = ["l'évolution", "l'acide"]
+
+[[rubriques.lignes]]
+valeur = "2) Tâches importantes d'acide malique mais pas d’acide lactique = la TML n'a pas commencé 3) Tâches d'acide malique et d'acide lactique = la TML a commencé"
+douteux = ["d'acide", "n'a", "d'acide", "d'acide"]
+
+[[rubriques.lignes]]
+valeur = "4) Tâches importantes d'acide lactique mais pas d'acide malique = la TML est terminée"
+douteux = ["d'acide", "d'acide"]
+
+[[rubriques.lignes]]
+valeur = "L-MDH Acide L-malique + NAD* «+ Oxaloacétate + NADH + H°"
+douteux = ["NAD*", "Oxaloacétate", "H°"]
+
+[[rubriques.lignes]]
+valeur = "GOT il) Oxaloacétate + L-glutamate ———+  2-oxoglutarate + L-aspartate"
+douteux = [" 2-oxoglutarate"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Réactions sur lesquelles repose le dosage enzymatique de l'acide malique"
+douteux = ["l'acide"]
+
+[[rubriques.lignes]]
+valeur = "La quantité de NADH formée suite à ces deux réactions est mesurée par spectrophotométrie, permettant de déterminer la quantité d'acide L-malique."
+douteux = ["d'acide"]
+
+[[rubriques.lignes]]
+valeur = "L-MDH = enzyme L-malate déshydrogénase"
+
+[[rubriques.lignes]]
+valeur = "GOT = enzyme Glutamate-oxaloacétate transaminase"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Megazyme, L-malic acid (L-malate) assay procedure."

@@ -1,0 +1,34 @@
+# Transcription de l'illustration de la fiche 1535 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1535
+code = "FDC_FERMENTATION_ALCOOLIQUE"
+titre = "La fermentation alcoolique"
+image_sha256 = "810ba39fa19509f45fdee0063bba33b1caa654f535d3dcb63dbf9e441fb5e0f7"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 85.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+2 NAD* 2 NADH,
+Réduction:
+Alcool déshydrogénas
+2 éthanols <
+Figure 1 : La fermentation alcoolic
+les produits cidricoles, €"""
+
+[[rubriques]]
+titre = "2 NAD* 2 NADH,"
+
+[[rubriques.lignes]]
+intitule = "Réduction"
+valeur = "Alcool déshydrogénas"
+douteux = ["Alcool"]
+
+[[rubriques]]
+titre = "2 éthanols <"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La fermentation alcoolic les produits cidricoles, €"

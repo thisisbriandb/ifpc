@@ -1,0 +1,116 @@
+# Transcription de l'illustration de la fiche 1532 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1532
+code = "FDC_LA_MICROBIOLOGIE_DU_CIDRE"
+titre = "La microbiologie du cidre"
+image_sha256 = "28a60bdd811780baea4666c025482e66dc947aa5d8b94125cc57b16acb9ea339"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Rôles et Impacts sur les cidres
+- Fermentation alcoolique
+- Production de composés volatils d'intérêt aromatique et
+composés soufrés malodorants
+Profil aromatique fruité
+(esters d'acétate ++)
+- Dégradation des esters d'acétate
+- Production de phénols volatils
+- Transformation malolactique
+- Dégradation des sucres et production d'acide acétique (piqûre
+lactique)
+- Certaines peuvent produire des phénols volatils
+- Maladie de la graisse
+- Production d'acide acétique
+(piqûre acétique)
+- Production d'acétate d’éthyle
+Maladie du framboisé : production excessive d’éthanal et de CO»,
+problèmes de surpression en bouteille et défauts aromatiques
+urs rôles et impacts au cours de la production cidricole
+ge d'isolation Origine
+1 Moût
+0,5 Moût
+1,5 Moût
+1 Moût
+10,5 Cidre en bouteille
+3,5 Moût
+6,5 Moût
+1 Moût
+15 Moût / Cidre en bouteille
+2,5 Moût
+3,5 Moût
+1,5 Moût
+1,5 Moût
+34,5 Moût / Cidre en bouteille
+16 Moût / Cidre en bouteille
+ts cidricoles français (d’après l'étude de Coton et al., 2006)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Rôles et Impacts sur les cidres"
+
+[[rubriques.lignes]]
+valeur = "- Fermentation alcoolique - Production de composés volatils d'intérêt aromatique et composés soufrés malodorants"
+douteux = ["d'intérêt"]
+
+[[rubriques.lignes]]
+valeur = "Profil aromatique fruité (esters d'acétate ++)"
+douteux = ["d'acétate"]
+
+[[rubriques.lignes]]
+valeur = "- Dégradation des esters d'acétate - Production de phénols volatils"
+douteux = ["d'acétate"]
+
+[[rubriques.lignes]]
+valeur = "- Transformation malolactique - Dégradation des sucres et production d'acide acétique (piqûre lactique) - Certaines peuvent produire des phénols volatils - Maladie de la graisse"
+douteux = ["d'acide", "Certaines"]
+
+[[rubriques.lignes]]
+valeur = "- Production d'acide acétique (piqûre acétique) - Production d'acétate d’éthyle"
+douteux = ["d'acide", "(piqûre", "d'acétate", "d’éthyle"]
+
+[[rubriques.lignes]]
+intitule = "Maladie du framboisé"
+valeur = "production excessive d’éthanal et de CO», problèmes de surpression en bouteille et défauts aromatiques"
+douteux = ["d’éthanal", "CO»,"]
+
+[[rubriques.lignes]]
+valeur = "urs rôles et impacts au cours de la production cidricole"
+
+[[rubriques.lignes]]
+valeur = "ge d'isolation Origine"
+douteux = ["d'isolation"]
+
+[[rubriques]]
+titre = "1 Moût"
+
+[[rubriques.lignes]]
+valeur = "0,5 Moût 1,5 Moût"
+douteux = ["1,5"]
+
+[[rubriques]]
+titre = "1 Moût"
+
+[[rubriques.lignes]]
+valeur = "10,5 Cidre en bouteille 3,5 Moût 6,5 Moût"
+
+[[rubriques]]
+titre = "1 Moût"
+
+[[rubriques]]
+titre = "15 Moût / Cidre en bouteille"
+
+[[rubriques.lignes]]
+valeur = "2,5 Moût 3,5 Moût 1,5 Moût 1,5 Moût 34,5 Moût / Cidre en bouteille"
+
+[[rubriques]]
+titre = "16 Moût / Cidre en bouteille"
+
+[[rubriques.lignes]]
+valeur = "ts cidricoles français (d’après l'étude de Coton et al., 2006)"
+douteux = ["l'étude"]

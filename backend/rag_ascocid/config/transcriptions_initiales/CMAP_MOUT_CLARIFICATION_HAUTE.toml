@@ -1,0 +1,104 @@
+# Transcription de l'illustration de la fiche 1043 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1043
+code = "CMAP_MOUT_CLARIFICATION_HAUTE"
+titre = "Les moûts clarifiés par clarification haute"
+image_sha256 = "2aaf959e59e764699c6b13d6d18d1365012f54d144f04022b3723ed1877533d2"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les moûts clarifiés par clarification haute
+sont des : Produits intermédiaires de l’élaboration du cidre
+regroupent : Le moût clarifié par clarification haute classique | Le moût clarifié par clarification haute à flottation provoquée
+sont caractérisés par : Leur teneur en sucres | Leur teneur en acide malique | Leur teneur en polyphénols | Leur teneur résiduelle en pectines solubles | Leur teneur en azote assimilable | Leur teneur en matières en suspension | Leur teneur en minéraux
+sont décrits par : Leur turbidité | Leur couleur | Leur saveur sucrée | Leur saveur acide | Leur saveur amère | Leur astringence | Leurs arômes
+peuvent avoir pour défauts : La présence de bourbes résiduelles | Des altérations organoleptiques | La présence de flores indésirables | Une oxydation (à basse température)
+sont produits par : La clarification haute des moûts"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Produits intermédiaires de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Le moût clarifié par clarification haute classique"
+
+[[rubriques.lignes]]
+valeur = "Le moût clarifié par clarification haute à flottation provoquée"
+
+[[rubriques]]
+titre = "sont caractérisés par"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en sucres"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en acide malique"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en polyphénols"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur résiduelle en pectines solubles"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en azote assimilable"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en matières en suspension"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en minéraux"
+
+[[rubriques]]
+titre = "sont décrits par"
+
+[[rubriques.lignes]]
+valeur = "Leur turbidité"
+
+[[rubriques.lignes]]
+valeur = "Leur couleur"
+
+[[rubriques.lignes]]
+valeur = "Leur saveur sucrée"
+
+[[rubriques.lignes]]
+valeur = "Leur saveur acide"
+
+[[rubriques.lignes]]
+valeur = "Leur saveur amère"
+
+[[rubriques.lignes]]
+valeur = "Leur astringence"
+
+[[rubriques.lignes]]
+valeur = "Leurs arômes"
+
+[[rubriques]]
+titre = "peuvent avoir pour défauts"
+
+[[rubriques.lignes]]
+valeur = "La présence de bourbes résiduelles"
+
+[[rubriques.lignes]]
+valeur = "Des altérations organoleptiques"
+
+[[rubriques.lignes]]
+valeur = "La présence de flores indésirables"
+
+[[rubriques.lignes]]
+valeur = "Une oxydation (à basse température)"
+
+[[rubriques]]
+titre = "sont produits par"
+
+[[rubriques.lignes]]
+valeur = "La clarification haute des moûts"

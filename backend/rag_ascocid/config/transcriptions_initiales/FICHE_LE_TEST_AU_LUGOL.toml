@@ -1,0 +1,45 @@
+# Transcription de l'illustration de la fiche 1503 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1503
+code = "FICHE_LE_TEST_AU_LUGOL"
+titre = "Le test au Lugol"
+image_sha256 = "18a02ed982580aa4a57b403b289490e30c3cb3f74b019cc7fc2e32e51fda0896"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Les étapes du test au Lugol pour révéler l'évolution physiologique de l'amidon et l’état de
+maturité des pommes (Peau de Chien)
+1) Découpe transversale des pommes
+2) Bain des moitiés de pommes dans la solution de Lugol
+3) Transfert des moitiés de pommes sur du papier absorbant
+4) Séchage des échantillons
+5) Lecture de la régression de l’amidon pour les différentes pommes étudiées
+Photos IFPC, code de régression de l’amidon d’après le Ctifl."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les étapes du test au Lugol pour révéler l'évolution physiologique de l'amidon et l’état de"
+douteux = ["l'évolution", "l'amidon"]
+
+[[rubriques.lignes]]
+valeur = "maturité des pommes (Peau de Chien)"
+
+[[rubriques.lignes]]
+valeur = "1) Découpe transversale des pommes"
+
+[[rubriques.lignes]]
+valeur = "2) Bain des moitiés de pommes dans la solution de Lugol"
+
+[[rubriques.lignes]]
+valeur = "3) Transfert des moitiés de pommes sur du papier absorbant 4) Séchage des échantillons"
+
+[[rubriques.lignes]]
+valeur = "5) Lecture de la régression de l’amidon pour les différentes pommes étudiées Photos IFPC, code de régression de l’amidon d’après le Ctifl."
+douteux = ["Ctifl."]

@@ -1,0 +1,75 @@
+# Transcription de l'illustration de la fiche 1336 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1336
+code = "CMAP_REGROUPEMENT_TESTS_SEMI_QUANTITATIFS"
+titre = "Tests semi-quantitatifs"
+image_sha256 = "4939918f61b89ddb1f57174e7f590883877fbeb01fa85c02a7f24d075515555c"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 90.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Tests semi-quantitatifs
+sont un : Ensemble de méthodes de tests
+regroupent : Le test d'estimation de la pectine (test à l’alcool) | Le test d'estimation du point de colle | Le test d'estimation de l'acidité totale | Le test d'estimation du risque de framboisé | Le test de prise de mousse | Le test au Lugol (maturité des pommes) | Le test prédictif d’un trouble physico-chimique | Le test Chromato papier pour l'estimation de la TML | Le test indicateur de la présence d’H,S
+ont pour fonction : D’apporter rapidement une estimation à un critère servant à la prise de décision
+sont caractérisés par : Une simplicité de mise en œuvre | Une faible précision"""
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de méthodes de tests"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Le test d'estimation de la pectine (test à l’alcool)"
+douteux = ["d'estimation"]
+
+[[rubriques.lignes]]
+valeur = "Le test d'estimation du point de colle"
+douteux = ["d'estimation"]
+
+[[rubriques.lignes]]
+valeur = "Le test d'estimation de l'acidité totale"
+douteux = ["d'estimation", "l'acidité"]
+
+[[rubriques.lignes]]
+valeur = "Le test d'estimation du risque de framboisé"
+douteux = ["d'estimation"]
+
+[[rubriques.lignes]]
+valeur = "Le test de prise de mousse"
+
+[[rubriques.lignes]]
+valeur = "Le test au Lugol (maturité des pommes)"
+
+[[rubriques.lignes]]
+valeur = "Le test prédictif d’un trouble physico-chimique"
+
+[[rubriques.lignes]]
+valeur = "Le test Chromato papier pour l'estimation de la TML"
+douteux = ["l'estimation"]
+
+[[rubriques.lignes]]
+valeur = "Le test indicateur de la présence d’H,S"
+douteux = ["d’H,S"]
+
+[[rubriques]]
+titre = "ont pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’apporter rapidement une estimation à un critère servant à la prise de décision"
+
+[[rubriques]]
+titre = "sont caractérisés par"
+
+[[rubriques.lignes]]
+valeur = "Une simplicité de mise en œuvre"
+
+[[rubriques.lignes]]
+valeur = "Une faible précision"

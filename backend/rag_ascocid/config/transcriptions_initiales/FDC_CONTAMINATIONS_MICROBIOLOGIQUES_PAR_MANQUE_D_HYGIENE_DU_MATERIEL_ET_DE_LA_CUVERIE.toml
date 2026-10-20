@@ -1,0 +1,99 @@
+# Transcription de l'illustration de la fiche 1562 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1562
+code = "FDC_CONTAMINATIONS_MICROBIOLOGIQUES_PAR_MANQUE_D_HYGIENE_DU_MATERIEL_ET_DE_LA_CUVERIE"
+titre = "Les contaminations microbiologiques par manque d'hygiène du matériel et de la cuverie"
+image_sha256 = "b11dae7c5f4e14ee5b57ac2e7ea74b48d68d1e9b2a5dc006573ee8a56bdd9634"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+100000000
+ro] 10000000
+5 OAprès nettoyage
+& 9 — 1000000
+2 6
+D SE 100000
+FE 10000
+3a 1000
+œ 100
+10 fl
+1
+1 2 3 4 5 6 7
+Prélèvements
+BAvant nettoyage
+Figure 1 : L'hygiène des équipements cidricoles avant/af
+A. Photos avant/après nettoyage de la centrifugeuse.
+B. Résultats microbiologiques concernant les populations de
+prélèvements ont été effectués dans différentes zones de la
+3=Vanne de régulation de débit, 4= Haut de la cloche, 5=
+Collecteur des boues.
+C. Résultats microbiologiques concernant les populations de Br
+Les prélèvements ont été effectués dans différentes zones de
+Source : Présentation R. Bauduin (2018). Un levier essentiel : l'hygiène. Présent"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "100000000"
+
+[[rubriques.lignes]]
+valeur = "ro] 10000000"
+douteux = ["ro]"]
+
+[[rubriques]]
+titre = "5 OAprès nettoyage"
+
+[[rubriques.lignes]]
+valeur = "& 9 — 1000000"
+douteux = ["9"]
+
+[[rubriques]]
+titre = "2 6"
+
+[[rubriques.lignes]]
+valeur = "D SE 100000 FE 10000 3a 1000 œ 100"
+douteux = ["D", "SE", "100000", "FE", "3a", "œ"]
+
+[[rubriques]]
+titre = "10 fl"
+
+[[rubriques.lignes]]
+valeur = "1"
+
+[[rubriques]]
+titre = "1 2 3 4 5 6 7"
+
+[[rubriques.lignes]]
+valeur = "Prélèvements"
+
+[[rubriques.lignes]]
+valeur = "BAvant nettoyage"
+douteux = ["BAvant"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "L'hygiène des équipements cidricoles avant/af"
+douteux = ["L'hygiène"]
+
+[[rubriques.lignes]]
+valeur = "A. Photos avant/après nettoyage de la centrifugeuse."
+douteux = ["A."]
+
+[[rubriques.lignes]]
+valeur = "B. Résultats microbiologiques concernant les populations de prélèvements ont été effectués dans différentes zones de la 3=Vanne de régulation de débit, 4= Haut de la cloche, 5= Collecteur des boues."
+
+[[rubriques.lignes]]
+valeur = "C. Résultats microbiologiques concernant les populations de Br"
+douteux = ["Résultats"]
+
+[[rubriques.lignes]]
+valeur = "Les prélèvements ont été effectués dans différentes zones de"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Présentation R. Bauduin (2018). Un levier essentiel : l'hygiène. Présent"

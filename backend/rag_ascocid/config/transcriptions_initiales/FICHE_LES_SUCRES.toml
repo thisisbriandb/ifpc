@@ -1,0 +1,50 @@
+# Transcription de l'illustration de la fiche 1411 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1411
+code = "FICHE_LES_SUCRES"
+titre = "Les sucres"
+image_sha256 = "cdb028cf5af572d48013a988100881ca9f0e7eaa63bdaa0d2d3f8c1d9e1f4874"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 80.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Tableau 1 : Correspondance entre
+Masse volumique, teneur en sucres et
+alcool potentiel.
+Masse volumique | ___Sucres |\" Alcool |
+à20°C(kg/m?)_ [Min _[ Moy f° Max | Min | Moy | Max |
+79.9 84.0 4.5 4.7 49
+82.1 86.2 4.6 4.8 5.1
+Sorbitol
+Figure 1 : Formules chimiques des
+sucres et du sorbitol, les composés
+sucrants présents dans les moûts de
+pommes."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Correspondance entre Masse volumique, teneur en sucres et alcool potentiel."
+douteux = ["1"]
+
+[[rubriques.lignes]]
+valeur = "Masse volumique | ___Sucres |\" Alcool | à20°C(kg/m?)_ [Min _[ Moy f° Max | Min | Moy | Max |"
+douteux = ["volumique", "___Sucres", "Alcool", "à20°C(kg/m?)_", "[Min", "_[", "f°", "Max", "Min"]
+
+[[rubriques]]
+titre = "79.9 84.0 4.5 4.7 49"
+
+[[rubriques]]
+titre = "82.1 86.2 4.6 4.8 5.1"
+
+[[rubriques.lignes]]
+valeur = "Sorbitol"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Formules chimiques des sucres et du sorbitol, les composés sucrants présents dans les moûts de pommes."

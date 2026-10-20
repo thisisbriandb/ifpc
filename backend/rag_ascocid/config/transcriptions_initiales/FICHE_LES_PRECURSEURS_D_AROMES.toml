@@ -1,0 +1,94 @@
+# Transcription de l'illustration de la fiche 1525 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1525
+code = "FICHE_LES_PRECURSEURS_D_AROMES"
+titre = "Les précurseurs d'arômes"
+image_sha256 = "195c12aea5413dfc1c004a0455c1a676b0482acce32136fba38064f6eb7c9784"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 83.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Métabolisme azoté Métabolisme carboné (sucres) Métabolisme lipidique
+Ve . C6: Hexanol, _
+(Ethanal) Aldéhydes Cis-3-hexenol + Hexanal
+Alcools supérieurs ---» Alcools supérieurs/Éthanol +  Acétyl/Acyl-CoA
+Esters d’acétate Esters éthyliques
+Figure 1 : Biosynthèse des alcools supérieurs et esters dans les produits cidricoles.
+QAbides hydroxycinnamiques estérifiés
+Cinnamoyl estérase |
+ÂAcides hydroxycinnamiques désestérifiés :
+Acide caféique Acide p-coumarique Acide férulique
+PAD
+(PhenolicAcid
+Réactions réalisées par Y y Decarboxylase)
+les levures Brettanomyces — 4-Vinylcatéchol 4-vinylphénol 4-vinylgaïacol
+ou certaines bactéries
+lactiques VPR
+Y (VinyiPhénol réductase)
+4-éthylcatéchol 4-éthylphénol 4-éthylgaïacol
+E (Fumé, Camphre) (Cuir, Gouache) (Clou de girofle)
+Figure 2 : Biosynthèse des phénols volatils dans les produits cidricoles."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Métabolisme azoté Métabolisme carboné (sucres) Métabolisme lipidique"
+
+[[rubriques.lignes]]
+intitule = "Ve . C6"
+valeur = "Hexanol, _ (Ethanal) Aldéhydes Cis-3-hexenol + Hexanal"
+douteux = ["Ve", "_"]
+
+[[rubriques.lignes]]
+valeur = "Alcools supérieurs ---» Alcools supérieurs/Éthanol +  Acétyl/Acyl-CoA"
+douteux = [" Acétyl/Acyl-CoA"]
+
+[[rubriques.lignes]]
+valeur = "Esters d’acétate Esters éthyliques"
+douteux = ["d’acétate"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Biosynthèse des alcools supérieurs et esters dans les produits cidricoles."
+
+[[rubriques.lignes]]
+valeur = "QAbides hydroxycinnamiques estérifiés"
+douteux = ["QAbides"]
+
+[[rubriques.lignes]]
+valeur = "Cinnamoyl estérase |"
+
+[[rubriques.lignes]]
+intitule = "ÂAcides hydroxycinnamiques désestérifiés"
+valeur = ""
+douteux = ["ÂAcides"]
+
+[[rubriques.lignes]]
+valeur = "Acide caféique Acide p-coumarique Acide férulique"
+
+[[rubriques.lignes]]
+valeur = "PAD (PhenolicAcid"
+
+[[rubriques.lignes]]
+valeur = "Réactions réalisées par Y y Decarboxylase)"
+douteux = ["Y", "y"]
+
+[[rubriques.lignes]]
+valeur = "les levures Brettanomyces — 4-Vinylcatéchol 4-vinylphénol 4-vinylgaïacol ou certaines bactéries"
+douteux = ["4-Vinylcatéchol", "4-vinylgaïacol"]
+
+[[rubriques.lignes]]
+valeur = "lactiques VPR Y (VinyiPhénol réductase)"
+douteux = ["Y", "(VinyiPhénol"]
+
+[[rubriques.lignes]]
+valeur = "4-éthylcatéchol 4-éthylphénol 4-éthylgaïacol E (Fumé, Camphre) (Cuir, Gouache) (Clou de girofle)"
+douteux = ["E"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Biosynthèse des phénols volatils dans les produits cidricoles."

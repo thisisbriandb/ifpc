@@ -1,0 +1,91 @@
+# Transcription de l'illustration de la fiche 1512 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1512
+code = "FICHE_OSMOSE_INVERSE"
+titre = "L'osmose inverse"
+image_sha256 = "ec3fa21b107933fdd72463b31ee8a0513bdecb161caeaf6098aa74d74c7bee56"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Osmose Osmose inverse
+Déplacement de l'eau Déplacement de l’eau
+Solution
+concentrée : : Pression
+externe
+Solution peu
+concentrée
+Solution peu
+A Solution
+concentrée
+concentrée
+Membrane semi- Membrane semi-
+perméable perméable
+Figure 1 : Représentation schématique des principes de l’osmose et de l'osmose inverse
+Schéma adapté de https://uae.fr/jetraitemoneau/zoom-sur-l-osmose-inverse/
+Module(s)
+d'osmose inverse
+Pompe haute pression
+Figure 2 : Représentation schématique d'une installation d'osmose inverse
+Q, correspond au débit d'entrée, C, à la conductivité du jus entrant, Q, au débit de perméat, C, à la
+conductivité du perméat, QR au débit rejeté (ou rétentat) et CR, à la conductivité du rétentat."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Osmose Osmose inverse"
+
+[[rubriques.lignes]]
+valeur = "Déplacement de l'eau Déplacement de l’eau"
+douteux = ["l’eau"]
+
+[[rubriques.lignes]]
+valeur = "Solution"
+
+[[rubriques.lignes]]
+intitule = "concentrée"
+valeur = ": Pression"
+
+[[rubriques.lignes]]
+valeur = "externe Solution peu concentrée"
+
+[[rubriques.lignes]]
+valeur = "Solution peu"
+
+[[rubriques.lignes]]
+valeur = "A Solution concentrée"
+douteux = ["A"]
+
+[[rubriques.lignes]]
+valeur = "concentrée"
+
+[[rubriques.lignes]]
+valeur = "Membrane semi- Membrane semi-"
+
+[[rubriques.lignes]]
+valeur = "perméable perméable"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique des principes de l’osmose et de l'osmose inverse"
+douteux = ["l’osmose", "l'osmose"]
+
+[[rubriques.lignes]]
+intitule = "Schéma adapté de https"
+valeur = "//uae.fr/jetraitemoneau/zoom-sur-l-osmose-inverse/"
+
+[[rubriques.lignes]]
+valeur = "Module(s) d'osmose inverse"
+douteux = ["d'osmose"]
+
+[[rubriques.lignes]]
+valeur = "Pompe haute pression"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Représentation schématique d'une installation d'osmose inverse Q, correspond au débit d'entrée, C, à la conductivité du jus entrant, Q, au débit de perméat, C, à la conductivité du perméat, QR au débit rejeté (ou rétentat) et CR, à la conductivité du rétentat."
+douteux = ["d'une", "d'osmose", "Q,", "d'entrée,", "Q,", "C,", "CR,"]

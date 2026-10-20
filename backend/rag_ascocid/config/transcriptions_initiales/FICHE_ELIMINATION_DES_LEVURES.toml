@@ -1,0 +1,70 @@
+# Transcription de l'illustration de la fiche 1563 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1563
+code = "FICHE_ELIMINATION_DES_LEVURES"
+titre = "L'élimination des levures"
+image_sha256 = "864cce445fbb46c3115bdbb315b4a60cc4bb39c533ed93bd555ba671d2cb0871"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+140000
+BLevures Brettanomyces
+120000
+100000 OLevures totales
+80000
+60000
+40000
+20000
+mal | _
+Avant Après Avant Après
+0
+Kieselguhr Microfiltration tangentielle
+(Membrane organique)
+Figure 1 : Comparaison de l'efficacité de filtration entre la filtration Kieselguhr et
+la microfiltration tangentielle.
+Données du graphique issues d'analyses présentées dans « Microfiltration tangentielle, quelques éléments », de R. Bauduin."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "140000"
+
+[[rubriques.lignes]]
+valeur = "BLevures Brettanomyces 120000"
+douteux = ["BLevures"]
+
+[[rubriques]]
+titre = "100000 OLevures totales"
+
+[[rubriques.lignes]]
+valeur = "80000 60000 40000"
+
+[[rubriques.lignes]]
+valeur = "20000"
+
+[[rubriques.lignes]]
+valeur = "mal | _"
+douteux = ["mal", "_"]
+
+[[rubriques.lignes]]
+valeur = "Avant Après Avant Après"
+
+[[rubriques.lignes]]
+valeur = "0"
+
+[[rubriques.lignes]]
+valeur = "Kieselguhr Microfiltration tangentielle (Membrane organique)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Comparaison de l'efficacité de filtration entre la filtration Kieselguhr et"
+douteux = ["l'efficacité"]
+
+[[rubriques.lignes]]
+valeur = "la microfiltration tangentielle. Données du graphique issues d'analyses présentées dans « Microfiltration tangentielle, quelques éléments », de R. Bauduin."
+douteux = ["d'analyses"]

@@ -1,0 +1,161 @@
+# Transcription de l'illustration de la fiche 1426 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1426
+code = "FDC_DOMAINES"
+titre = "Domaines"
+image_sha256 = "76a878aeedead93137cfbceaa5ca0f88478ec48b4815cd01a680cae53e6aaeeb"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: DOMAINES
+PRINCIPALES ZONES DE PRODUCTION
+Normandie : Pays d'Auge.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 500 tonnes.
+Ph Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin le 30 novembre 1953)
+Dégustation du jus : doux.
+Dégustation du cidre : doux amer.
+Rendement en jus (%) : 51,2.
+Densité du jus : 1068,1 - Alcool en puissance : 8° 7.
+Acidité de titration en g. SO‘H: par litre : 1,56.
+Azote/sucres totaux : 0,48.
+Tanin (en g. par litre) : 3,60.
+Aspect du jus : assez coloré.
+Parfum : assez marqué à maturité.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : généralement moyenne, parfois grande en sol profond.
+Port : en dôme parfait. Très bel arbre.
+Résistance aux maladies : assez bonne mais craint la tavelure sur les
+fruits, les chenilles sur les feuilles et certaines années, les gelées
+et l'anthonome sur les fleurs tardives.
+Productivité : grande dans les bonnes années.
+Saison de floraison : 1re.
+Saison de maturité : 2°.
+Conservation et transport des fruits : passables.
+Calibre du fruit : moyen à gros.
+OBSERVATIONS DIVERSES
+Variété intéressante par la beauté de sa floraison (grandes fleurs) et
+par la grosseur de ses fruits et sa bonne productivité malheureusement
+un peu capricieuse.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*+r) ©
+Edition 1964"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Normandie : Pays d'Auge."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin le 30 novembre 1953"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "51,2."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1068,1"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "8° 7."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘H"
+valeur = "par litre : 1,56."
+douteux = ["SO‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,48."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "3,60."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "assez coloré."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "assez marqué à maturité."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "généralement moyenne, parfois grande en sol profond."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en dôme parfait. Très bel arbre."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez bonne mais craint la tavelure sur les fruits, les chenilles sur les feuilles et certaines années, les gelées et l'anthonome sur les fleurs tardives."
+douteux = ["l'anthonome"]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "grande dans les bonnes années."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "1re."
+douteux = ["1re."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+douteux = ["2°."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "passables."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à gros."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété intéressante par la beauté de sa floraison (grandes fleurs) et par la grosseur de ses fruits et sa bonne productivité malheureusement un peu capricieuse."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*+r) ©"
+douteux = ["(1*+r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1964"

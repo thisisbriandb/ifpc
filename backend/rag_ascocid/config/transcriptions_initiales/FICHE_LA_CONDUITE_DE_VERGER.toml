@@ -1,0 +1,43 @@
+# Transcription de l'illustration de la fiche 1480 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1480
+code = "FICHE_LA_CONDUITE_DE_VERGER"
+titre = "La conduite de verger"
+image_sha256 = "7fbaff4ec3b5e276d1dc478d15681b1224f3f9621e8629dfbd8ec13457c21a01"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Automne Hiver
+Récolte Taille, Préparation
+| du plan de
+Possible apport de fertilisation, de
+fertilisation protection du verger
+Été Printemps
+Fertilisation Lutte contre le gel
+Irrigation Fertilisation
+Taille en vert Traitements
+réparation de la Eclaircissage
+récolte Broyage
+Figure 1 : Principales actions à réaliser dans l'itinéraire cultural d'un verger adulte
+au cours d'une année. Les actions en italiques relèvent d'opérations facultatives."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Automne Hiver"
+
+[[rubriques.lignes]]
+valeur = "Récolte Taille, Préparation | du plan de Possible apport de fertilisation, de fertilisation protection du verger Été Printemps Fertilisation Lutte contre le gel Irrigation Fertilisation Taille en vert Traitements réparation de la Eclaircissage"
+
+[[rubriques.lignes]]
+valeur = "récolte Broyage"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Principales actions à réaliser dans l'itinéraire cultural d'un verger adulte au cours d'une année. Les actions en italiques relèvent d'opérations facultatives."
+douteux = ["l'itinéraire", "d'un", "d'une"]

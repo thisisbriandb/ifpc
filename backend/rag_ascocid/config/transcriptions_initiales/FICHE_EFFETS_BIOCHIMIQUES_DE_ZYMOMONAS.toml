@@ -1,0 +1,108 @@
+# Transcription de l'illustration de la fiche 1385 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1385
+code = "FICHE_EFFETS_BIOCHIMIQUES_DE_ZYMOMONAS"
+titre = "Les effets biochimiques de Zymomonas"
+image_sha256 = "60e3410913e38877daeb2b16f08b6cca0a4ab77811c51e253ae2812a41da2bb6"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 72.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+D-glucose
+ATP:D-glucose
+ADP 6-phosphotransferas
+wie s »
+B-D-Glucose-6P
+NADP
+beta-D-Glucose-6-phosphate:
+% mt NADP+ 1-oxoreductase , ré
+NADPH* H Zymomonas mobilis
+Photo KM Pappas, site JGI
+2 ATP 2 ADP
+CH phosphate” 3- 29 1
+2 NADH+HT 2 NAD+
+O- pe OH NAD*  NADH+H+ Pyruvate
+D-Glucono-1,5-lactone phosphate ch,
+6-phosphate
+lactonohydrolase __J.
+6-Phospho- ours À»
+2 Ethanol
+P-2-keto-3-deoxy-
+hydro-lyase gluconate aldolase
+CH OH … [e) Pyruvate
+6-Phospho-D-gluconate O
+2-dehydro-3-deoxy-D-
+gluconate-6P
+Figure 1 : Voie d'Entner-Doudoroff utilisée par la bactérie Zymomonas mobilis pour assimiler du glucose."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "D-glucose"
+
+[[rubriques.lignes]]
+intitule = "ATP"
+valeur = "D-glucose ADP 6-phosphotransferas"
+
+[[rubriques.lignes]]
+valeur = "wie s » B-D-Glucose-6P NADP"
+douteux = ["wie", "s"]
+
+[[rubriques.lignes]]
+intitule = "beta-D-Glucose-6-phosphate"
+valeur = "% mt NADP+ 1-oxoreductase , ré"
+douteux = ["mt", "ré"]
+
+[[rubriques]]
+titre = "NADPH* H Zymomonas mobilis"
+
+[[rubriques.lignes]]
+valeur = "Photo KM Pappas, site JGI"
+
+[[rubriques]]
+titre = "2 ATP 2 ADP"
+
+[[rubriques.lignes]]
+valeur = "CH phosphate” 3- 29 1"
+douteux = ["phosphate”"]
+
+[[rubriques]]
+titre = "2 NADH+HT 2 NAD+"
+
+[[rubriques.lignes]]
+valeur = "O- pe OH NAD*  NADH+H+ Pyruvate"
+douteux = ["pe", "NAD*", " NADH+H+"]
+
+[[rubriques.lignes]]
+valeur = "D-Glucono-1,5-lactone phosphate ch, 6-phosphate"
+douteux = ["ch,"]
+
+[[rubriques.lignes]]
+valeur = "lactonohydrolase __J."
+douteux = ["__J."]
+
+[[rubriques.lignes]]
+valeur = "6-Phospho- ours À»"
+douteux = ["ours", "À»"]
+
+[[rubriques]]
+titre = "2 Ethanol"
+
+[[rubriques.lignes]]
+valeur = "P-2-keto-3-deoxy- hydro-lyase gluconate aldolase"
+
+[[rubriques.lignes]]
+valeur = "CH OH … [e) Pyruvate 6-Phospho-D-gluconate O"
+douteux = ["CH", "OH", "[e)", "O"]
+
+[[rubriques.lignes]]
+valeur = "2-dehydro-3-deoxy-D- gluconate-6P"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Voie d'Entner-Doudoroff utilisée par la bactérie Zymomonas mobilis pour assimiler du glucose."
+douteux = ["Zymomonas"]

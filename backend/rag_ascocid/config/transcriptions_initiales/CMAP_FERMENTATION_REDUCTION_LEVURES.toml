@@ -1,0 +1,81 @@
+# Transcription de l'illustration de la fiche 1119 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1119
+code = "CMAP_FERMENTATION_REDUCTION_LEVURES"
+titre = "La réduction de la quantité de levures"
+image_sha256 = "50734b611b01bf63f55f42594221a5e1be83835c46a2ad31b90e4a5672e4eaa7"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La réduction de la quantité de levures
+est une : Opération de l’étape fermentaire (méthode FR)
+a pour fonction : De diminuer la vitesse de fermentation par élimination partielle des levures
+est fondée sur : Soit l’élimination quasi -totale des levures sur une proportion donnée du cidre | Soit l’élimination partielle des levures sur la totalité du cidre à traiter
+a pour méthodes : Une centrifugation | Une filtration sur Kieselguhr | Une filtration sur plaques | Une microfiltration tangentielle
+est influencée par : Le stade de croissance des levures au moment de l’opération
+est pilotée selon : La vitesse de fermentation avant l’opération | La vitesse de fermentation 2 re souhaitée | La charge du produit à traiter (taux de lies)
+présente le risque : De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape fermentaire (méthode FR)"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De diminuer la vitesse de fermentation par élimination partielle des levures"
+
+[[rubriques]]
+titre = "est fondée sur"
+
+[[rubriques.lignes]]
+valeur = "Soit l’élimination quasi -totale des levures sur une proportion donnée du cidre"
+
+[[rubriques.lignes]]
+valeur = "Soit l’élimination partielle des levures sur la totalité du cidre à traiter"
+
+[[rubriques]]
+titre = "a pour méthodes"
+
+[[rubriques.lignes]]
+valeur = "Une centrifugation"
+
+[[rubriques.lignes]]
+valeur = "Une filtration sur Kieselguhr"
+
+[[rubriques.lignes]]
+valeur = "Une filtration sur plaques"
+
+[[rubriques.lignes]]
+valeur = "Une microfiltration tangentielle"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Le stade de croissance des levures au moment de l’opération"
+
+[[rubriques]]
+titre = "est pilotée selon"
+
+[[rubriques.lignes]]
+valeur = "La vitesse de fermentation avant l’opération"
+
+[[rubriques.lignes]]
+valeur = "La vitesse de fermentation 2 re souhaitée"
+
+[[rubriques.lignes]]
+valeur = "La charge du produit à traiter (taux de lies)"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"

@@ -1,0 +1,56 @@
+# Transcription de l'illustration de la fiche 1028 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1028
+code = "CMAP_CLARIFICATION_DEMETHYLATION"
+titre = "La déméthylation de la pectine"
+image_sha256 = "b09bb196e0dce5c5d419368117b4fc294e40cf7fdf1021c2fc05cd6dd490d20a"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La déméthylation de la pectine
+est un : Phénomène se produisant au cours de la clarification haute
+a pour synonyme : La désestérification
+a pour fonction : La modification de la pectine pour permettre sa gélification
+est fiabilisée par : L’ajout de pectinestérase
+est influencée par : La température du moût
+a pour cause d’échec : Une trop faible teneur en pectinestérase dans le moût"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant au cours de la clarification haute"
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "La désestérification"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "La modification de la pectine pour permettre sa gélification"
+
+[[rubriques]]
+titre = "est fiabilisée par"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de pectinestérase"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La température du moût"
+
+[[rubriques]]
+titre = "a pour cause d’échec"
+
+[[rubriques.lignes]]
+valeur = "Une trop faible teneur en pectinestérase dans le moût"

@@ -1,0 +1,73 @@
+# Transcription de l'illustration de la fiche 1083 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1083
+code = "FICHE_SUCRES_MOUT"
+titre = "Les sucres du moût"
+image_sha256 = "d021bc2da1af83f40e5fe696da61f4b2a3c0011599880fbeab7ab747ddfd6354"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 72.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Alcools Alcool
+a primaires b «H>0H primaire
+6CH,0H OH |
+| 0 à £ o où
+Ld N \\/4 N7/
+sC u où Æ  Cétone F ou u se Aldéhyde
+ONE AT Ne
+Alcools  }, L Alcools œH
+secondaires secondaires
+a-D-glucose (PP D: =
+H On Oside > Brut 72 sec
+C CH,0H ’ 1,2 E 3
+LRQ 2 Brut 2 sec Doux *
+B-D-fructose | AC w À 1,5 28 42
+è ç tHLOH Sucres (g/L)
+Figure 1 : Structures des glucides principaux de la pomme. Tableau 1 : Limites réglementaires des teneurs
+a) B-D-fructose en sucres et en alcool des trois catégories de
+b) a-D-glucose cidres.
+c) Saccharose Chambre d'agriculture Normandie, 2011. Elaboration des
+JL Boutonnier, 2014. Glucides et alimentation — Aspects physicochimiques. cidres — Le sucre dans les cidres, Fiche 3"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Alcools Alcool"
+
+[[rubriques.lignes]]
+valeur = "a primaires b «H>0H primaire"
+douteux = ["b", "«H>0H"]
+
+[[rubriques]]
+titre = "6CH,0H OH |"
+
+[[rubriques.lignes]]
+valeur = "| 0 à £ o où Ld N \\/4 N7/ sC u où Æ  Cétone F ou u se Aldéhyde"
+douteux = ["0", "à", "o", "où", "Ld", "\\/4", "N7/", "u", "Æ", " Cétone", "F", "ou", "u", "se"]
+
+[[rubriques]]
+titre = "ONE AT Ne"
+
+[[rubriques.lignes]]
+valeur = "Alcools  }, L Alcools œH secondaires secondaires"
+douteux = ["Alcools", "L", "Alcools", "œH"]
+
+[[rubriques.lignes]]
+intitule = "a-D-glucose (PP D"
+valeur = "= H On Oside > Brut 72 sec C CH,0H ’ 1,2 E 3 LRQ 2 Brut 2 sec Doux * B-D-fructose | AC w À 1,5 28 42 è ç tHLOH Sucres (g/L)"
+douteux = ["(PP", "D:", "H", "On", "72", "C", "E", "LRQ", "2", "2", "AC", "w", "À", "è", "ç", "tHLOH"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structures des glucides principaux de la pomme. Tableau 1 : Limites réglementaires des teneurs"
+
+[[rubriques.lignes]]
+valeur = "a) B-D-fructose en sucres et en alcool des trois catégories de b) a-D-glucose cidres. c) Saccharose Chambre d'agriculture Normandie, 2011. Elaboration des"
+douteux = ["d'agriculture"]
+
+[[rubriques.lignes]]
+valeur = "JL Boutonnier, 2014. Glucides et alimentation — Aspects physicochimiques. cidres — Le sucre dans les cidres, Fiche 3"

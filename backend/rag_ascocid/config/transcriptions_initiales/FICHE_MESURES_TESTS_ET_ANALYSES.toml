@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1565 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1565
+code = "FICHE_MESURES_TESTS_ET_ANALYSES"
+titre = "Les mesures, tests et analyses"
+image_sha256 = "b190c5615cd811d7444ff7587d8254236b938b09e49069ea7e0a8844e3aa03ff"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Mesures physiques:
+Déterminer la valeur d'un paramètre
+physique et/ou estimer une
+caractéristique liée à ce paramètre
+Tests semi-quantitatifs:
+Estimer rapidement et simplement Va |
+un critère particulier, pour prendre [!
+une décision concernant la gestion
+de la production
+Évaluations sensorielles: D\"
+Caractériser ou comparer des produits, contrôler si une
+modification du procédé influence la qualité du produit
+Analyses microbiologiques:
+Détecter et dénombrer des
+populations de microorganismes
+Analyses biochimiques:
+Caractériser précisément la composition d’un
+moût ou cidre, assurer la conformité du produit à
+la réglementation, identifier la cause d’un défaut
+Figure 1 : Les mesures, tests et analyses dans le domaine cidricole.
+Photos IFPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Mesures physiques"
+valeur = "Déterminer la valeur d'un paramètre physique et/ou estimer une caractéristique liée à ce paramètre"
+douteux = ["d'un"]
+
+[[rubriques.lignes]]
+intitule = "Tests semi-quantitatifs"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "Estimer rapidement et simplement Va | un critère particulier, pour prendre [! une décision concernant la gestion de la production"
+douteux = ["Va"]
+
+[[rubriques.lignes]]
+intitule = "Évaluations sensorielles"
+valeur = "D\" Caractériser ou comparer des produits, contrôler si une modification du procédé influence la qualité du produit"
+douteux = ["D\""]
+
+[[rubriques.lignes]]
+intitule = "Analyses microbiologiques"
+valeur = "Détecter et dénombrer des populations de microorganismes"
+
+[[rubriques.lignes]]
+intitule = "Analyses biochimiques"
+valeur = "Caractériser précisément la composition d’un moût ou cidre, assurer la conformité du produit à la réglementation, identifier la cause d’un défaut"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les mesures, tests et analyses dans le domaine cidricole. Photos IFPC"

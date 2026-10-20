@@ -1,0 +1,31 @@
+# Transcription de l'illustration de la fiche 1577 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1577
+code = "FICHE_PROCEDURE_NETTOYAGE_ET_DESINFECTION_DES_CENTRIFUGEUSES"
+titre = "Procédure de nettoyage et désinfection des centrifugeuses"
+image_sha256 = "28056c888ee9e271813f4fdec72588472b4c5d41ce51d67e35943fb25c12b4ad"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Avant nettoyage Après nettoyage
+Débourbage
+toutes les 3 - 5
+minutes
+Figure 2 : Schéma du circuit fermé préconisé pour la procédure de nettoyage d’une centrifugeuse"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Avant nettoyage Après nettoyage"
+
+[[rubriques.lignes]]
+valeur = "Débourbage toutes les 3 - 5 minutes"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Schéma du circuit fermé préconisé pour la procédure de nettoyage d’une centrifugeuse"

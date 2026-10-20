@@ -1,0 +1,54 @@
+# Transcription de l'illustration de la fiche 1371 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1371
+code = "FICHE_FERMENTATION_METHODE_FI"
+titre = "La méthode FI (Fermentation Interrompue)"
+image_sha256 = "884bc2fa8dd64380ef549e4d367ef343a23916a2473411f41aa9b8f1f0b9ca8e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 75.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+1060
+= 1050 —— Cidre 1
+= —e— Cidre 2
+T7 1040 —e— Cidre 3
+© —+— Cidre 4
+Z 1030
+% 1020
+1010
+Durée (jours)
+Figure 1 : Exemples d'évolution de fermentations interrompues dans différents cidres"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "1060"
+
+[[rubriques.lignes]]
+valeur = "= 1050 —— Cidre 1"
+
+[[rubriques.lignes]]
+valeur = "= —e— Cidre 2 T7 1040 —e— Cidre 3"
+douteux = ["—e—", "T7", "—e—"]
+
+[[rubriques.lignes]]
+valeur = "© —+— Cidre 4"
+
+[[rubriques.lignes]]
+valeur = "Z 1030 % 1020"
+douteux = ["Z", "1030", "1020"]
+
+[[rubriques.lignes]]
+valeur = "1010"
+
+[[rubriques.lignes]]
+valeur = "Durée (jours)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemples d'évolution de fermentations interrompues dans différents cidres"
+douteux = ["d'évolution"]

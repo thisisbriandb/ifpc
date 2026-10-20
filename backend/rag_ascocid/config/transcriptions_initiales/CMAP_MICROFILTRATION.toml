@@ -1,0 +1,80 @@
+# Transcription de l'illustration de la fiche 1040 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1040
+code = "CMAP_MICROFILTRATION"
+titre = "La microfiltration tangentielle"
+image_sha256 = "531c2c1fbe97a055735499d63466173e0e9a4c903a7ef7adedccea182eb8f66e"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La microfiltration tangentielle
+est une : Opération de séparation utilisée au cours de la clarification des moûts et des cidres
+doit être complétée par : Une procédure de nettoyage / désinfection du filtre tangentiel
+a pour fonctions : L’élimination poussée des matières en suspension | L'élimination des flores levuriennes et bactériennes
+est fondée sur : La rétention des particules supérieure au seuil de rejet des membranes | La suppression du colmatage par un flux tangentiel
+a pour équipement : Les différents types de filtres tangentiels et de membranes de filtration
+est ralentie par : Une forte teneur de matières en suspension dans la boucle de filtration
+est pilotée par : La fréquence des rétro-filtrations | Le débit de perméation (filtrat) | Le débit de balayage | Le débit de rétentat"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de séparation utilisée au cours de la clarification des moûts et des cidres"
+
+[[rubriques]]
+titre = "doit être complétée par"
+
+[[rubriques.lignes]]
+valeur = "Une procédure de nettoyage / désinfection du filtre tangentiel"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "L’élimination poussée des matières en suspension"
+douteux = ["L’élimination"]
+
+[[rubriques.lignes]]
+valeur = "L'élimination des flores levuriennes et bactériennes"
+douteux = ["L'élimination"]
+
+[[rubriques]]
+titre = "est fondée sur"
+
+[[rubriques.lignes]]
+valeur = "La rétention des particules supérieure au seuil de rejet des membranes"
+
+[[rubriques.lignes]]
+valeur = "La suppression du colmatage par un flux tangentiel"
+
+[[rubriques]]
+titre = "a pour équipement"
+
+[[rubriques.lignes]]
+valeur = "Les différents types de filtres tangentiels et de membranes de filtration"
+
+[[rubriques]]
+titre = "est ralentie par"
+
+[[rubriques.lignes]]
+valeur = "Une forte teneur de matières en suspension dans la boucle de filtration"
+
+[[rubriques]]
+titre = "est pilotée par"
+
+[[rubriques.lignes]]
+valeur = "La fréquence des rétro-filtrations"
+
+[[rubriques.lignes]]
+valeur = "Le débit de perméation (filtrat)"
+
+[[rubriques.lignes]]
+valeur = "Le débit de balayage"
+
+[[rubriques.lignes]]
+valeur = "Le débit de rétentat"

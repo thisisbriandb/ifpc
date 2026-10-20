@@ -1,0 +1,56 @@
+# Transcription de l'illustration de la fiche 1390 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1390
+code = "FICHE_FLAVONOIDES_POLYPHENOL"
+titre = "Les flavonoïdes de la pomme"
+image_sha256 = "052b89f937a8bec211892df00a1829ebf5c6ddb53a8a49c0c13cc736ad6b4777"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La (+)-catéchine
+La (-)-épicatéchine
+Les flavan-3-ols
+Ho 0 oo
+La phloridzine (glucoside de phlorétine)
+L'idéaïne (cyanidin-3-galactoside)
+Figure 1 : Les principaux flavonoïdes de la pomme et du cidre.
+Les flavan-3-ols constituent une sous-classe importante sur le plan quantitatif avec des monomères, les catéchines (a
+et b) et des polymères appelés procyanidines ou tanins (c). Les dihydrochalcones sont surtout représentés par la
+phloridzine (d). La quercétine (e) est le principal pigment jaune de la peau des pommes, tandis que l’anthocyane
+majoritaire, l'idéaïne (f), est le pigment rouge de la peau de pomme, mais aussi de la chair des pommes à chair rouge."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "La (+)-catéchine"
+
+[[rubriques.lignes]]
+valeur = "La (-)-épicatéchine"
+
+[[rubriques.lignes]]
+valeur = "Les flavan-3-ols"
+douteux = ["flavan-3-ols"]
+
+[[rubriques.lignes]]
+valeur = "Ho 0 oo"
+douteux = ["0", "oo"]
+
+[[rubriques.lignes]]
+valeur = "La phloridzine (glucoside de phlorétine)"
+
+[[rubriques.lignes]]
+valeur = "L'idéaïne (cyanidin-3-galactoside)"
+douteux = ["L'idéaïne"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les principaux flavonoïdes de la pomme et du cidre."
+
+[[rubriques.lignes]]
+valeur = "Les flavan-3-ols constituent une sous-classe importante sur le plan quantitatif avec des monomères, les catéchines (a et b) et des polymères appelés procyanidines ou tanins (c). Les dihydrochalcones sont surtout représentés par la phloridzine (d). La quercétine (e) est le principal pigment jaune de la peau des pommes, tandis que l’anthocyane majoritaire, l'idéaïne (f), est le pigment rouge de la peau de pomme, mais aussi de la chair des pommes à chair rouge."
+douteux = ["majoritaire,", "l'idéaïne", "chair"]

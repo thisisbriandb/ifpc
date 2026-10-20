@@ -1,0 +1,33 @@
+# Transcription de l'illustration de la fiche 1591 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1591
+code = "FICHE_LES_CASSES_DU_CIDRE"
+titre = "Les casses du cidre"
+image_sha256 = "eb9efd122a43d0bb34f025894c12d4489437b1ce8f06b7af2ba20a8108527ff0"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+En moins
+d'une heure
+Au bout de
+quelques heures
+Figure 1 : La casse ferrique Figure 2 : La casse oxydasique
+Photos IFPC Photos IFPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "En moins d'une heure"
+douteux = ["d'une"]
+
+[[rubriques.lignes]]
+valeur = "Au bout de quelques heures"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La casse ferrique Figure 2 : La casse oxydasique Photos IFPC Photos IFPC"

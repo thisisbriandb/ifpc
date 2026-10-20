@@ -1,0 +1,112 @@
+# Transcription de l'illustration de la fiche 1521 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1521
+code = "FICHE_LES_PHENOLS_VOLATILS"
+titre = "Les phénols volatils"
+image_sha256 = "0f31f11a6b8e1a67190ec3fdb671961052ba91a9b538d637bfce9b202ec91cc2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+es hydroxycinnamiques estérifiés
+Enzyme a activité
+Cinnamoyl estérase
+(Origine fongique)
+Acides hydroxycinnamiques désestérifiés :
+Acide caféique Acide p-coumarique Acide férulique
+PAD
+(PhenolicAcid Decarboxylase)
+Réactions réalisées par les . l | | :
+levures Brettanomyces _J  4-vinylcatéchol 4-vinylphénol 4-vinyigaïacol
+ou certaines bactéries lactiques
+VPR
+(VinylPhénol réductase)
+4-éthylcatéchol 4-éthylphénol 4-éthylgaïacol
+(Fumé, Camphre) (Cuir, Gouache) (Clou de girofle)
+Figure 1 : Biosynthèse des phénols volatils dans les produits cidricoles.
+Ÿ::::::56 ä FL Figure 2 : Brettanomyces et synthèse de phénols volatils
+Î Profil de croissance de la souche de levure Brettanomyces IFPC-1
+dans 3 cidres différents à 10°C (lignes en pointillés noirs).
+Evolution des teneurs en 4-éthylcatéchol, un phénol volatil dans ces
+mêmes cidres (lignes pleines).
+Cidre 1 : 1
+Cidre 2 : A
+Cidre 3 :@
+Source: Adaptée de la figure 5 de l’article Guichard et al., 2019. Brettanomyces
+anomalus, a double drawback for cider aroma.
+LWT — Food Science and Technology 102 (2019) 214-222."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "es hydroxycinnamiques estérifiés"
+douteux = ["es"]
+
+[[rubriques.lignes]]
+valeur = "Enzyme a activité"
+
+[[rubriques.lignes]]
+valeur = "Cinnamoyl estérase (Origine fongique)"
+
+[[rubriques.lignes]]
+intitule = "Acides hydroxycinnamiques désestérifiés"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "Acide caféique Acide p-coumarique Acide férulique"
+
+[[rubriques.lignes]]
+valeur = "PAD (PhenolicAcid Decarboxylase)"
+
+[[rubriques.lignes]]
+intitule = "Réactions réalisées par les . l | |"
+valeur = "levures Brettanomyces _J  4-vinylcatéchol 4-vinylphénol 4-vinyigaïacol"
+douteux = ["l", " 4-vinylcatéchol", "4-vinylphénol", "4-vinyigaïacol"]
+
+[[rubriques.lignes]]
+valeur = "ou certaines bactéries lactiques VPR"
+
+[[rubriques.lignes]]
+valeur = "(VinylPhénol réductase)"
+
+[[rubriques.lignes]]
+valeur = "4-éthylcatéchol 4-éthylphénol 4-éthylgaïacol"
+douteux = ["4-éthylgaïacol"]
+
+[[rubriques.lignes]]
+valeur = "(Fumé, Camphre) (Cuir, Gouache) (Clou de girofle)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Biosynthèse des phénols volatils dans les produits cidricoles."
+
+[[rubriques.lignes]]
+intitule = "Ÿ:::::"
+valeur = "56 ä FL Figure 2 : Brettanomyces et synthèse de phénols volatils"
+douteux = ["Ÿ::::::56", "ä", "FL"]
+
+[[rubriques.lignes]]
+valeur = "Î Profil de croissance de la souche de levure Brettanomyces IFPC-1 dans 3 cidres différents à 10°C (lignes en pointillés noirs). Evolution des teneurs en 4-éthylcatéchol, un phénol volatil dans ces mêmes cidres (lignes pleines)."
+douteux = ["Î", "IFPC-1"]
+
+[[rubriques.lignes]]
+intitule = "Cidre 1"
+valeur = "1"
+douteux = ["1"]
+
+[[rubriques.lignes]]
+intitule = "Cidre 2"
+valeur = "A"
+
+[[rubriques.lignes]]
+intitule = "Cidre 3"
+valeur = "@"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Adaptée de la figure 5 de l’article Guichard et al., 2019. Brettanomyces anomalus, a double drawback for cider aroma. LWT — Food Science and Technology 102 (2019) 214-222."
+douteux = ["al.,"]

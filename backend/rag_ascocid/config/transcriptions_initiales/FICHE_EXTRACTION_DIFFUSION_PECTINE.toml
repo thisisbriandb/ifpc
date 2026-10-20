@@ -1,0 +1,60 @@
+# Transcription de l'illustration de la fiche 1178 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1178
+code = "FICHE_EXTRACTION_DIFFUSION_PECTINE"
+titre = "La diffusion de la pectine"
+image_sha256 = "71d43d431b39ecec924d4ed0055089aa4ea8a1851bda8082adb62f43185fdc2b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La molécule de pectine
+Zone ramifiée possédant
+des chaînes latérales
+Chaine principale linéaire
+Acide
+galacturonique
+méthylé *., Représentation schématique de la
+chaîne principale de la pectine
+Représentation
+- schématique du
+groupe méthyle
+Acide à D galacturonique Acide aD galacturonique
+méthylé
+Figure 1 : Structure de la structure générale de la pectine comprenant la chaîne principale et les zones
+ramifiées (a) ; Schéma de la chaîne principale (b), constituée d'acide galacturonique méthylé (c) et de l'acide
+galacturonique (d)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "La molécule de pectine"
+
+[[rubriques.lignes]]
+valeur = "Zone ramifiée possédant des chaînes latérales"
+
+[[rubriques.lignes]]
+valeur = "Chaine principale linéaire"
+
+[[rubriques.lignes]]
+valeur = "Acide galacturonique méthylé *., Représentation schématique de la chaîne principale de la pectine"
+douteux = ["méthylé", "chaîne"]
+
+[[rubriques.lignes]]
+valeur = "Représentation - schématique du groupe méthyle"
+
+[[rubriques.lignes]]
+valeur = "Acide à D galacturonique Acide aD galacturonique"
+douteux = ["à"]
+
+[[rubriques.lignes]]
+valeur = "méthylé"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure de la structure générale de la pectine comprenant la chaîne principale et les zones ramifiées (a) ; Schéma de la chaîne principale (b), constituée d'acide galacturonique méthylé (c) et de l'acide galacturonique (d)."
+douteux = ["d'acide", "l'acide"]

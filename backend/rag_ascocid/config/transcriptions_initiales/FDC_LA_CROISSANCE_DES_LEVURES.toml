@@ -1,0 +1,40 @@
+# Transcription de l'illustration de la fiche 1533 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1533
+code = "FDC_LA_CROISSANCE_DES_LEVURES"
+titre = "La croissance des levures"
+image_sha256 = "15f585572e684f2116ac1f24345fe7fcbe125b3ef464bafa2c1660deffbbabdc"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Bourgeon
+Cellule mère
+Figure 1 : Levures Saccharomyces cerevisiae
+observées au microscope.
+Image d'après  https://planet-vie.ens.fr/thematiques/microbiologie/biologie-du-vin-et-de-la-biere,
+modifiée et annotée"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Bourgeon"
+
+[[rubriques.lignes]]
+valeur = "Cellule mère"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Levures Saccharomyces cerevisiae"
+
+[[rubriques.lignes]]
+valeur = "observées au microscope."
+
+[[rubriques.lignes]]
+intitule = "Image d'après  https"
+valeur = "//planet-vie.ens.fr/thematiques/microbiologie/biologie-du-vin-et-de-la-biere, modifiée et annotée"
+douteux = [" https://planet-vie.ens.fr/thematiques/microbiologie/biologie-du-vin-et-de-la-biere,"]

@@ -1,0 +1,48 @@
+# Transcription de l'illustration de la fiche 1322 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1322
+code = "CMAP_POST_CONDITIONNEMENT_STOCKAGE_BOUTEILLES_PASTEURISEES"
+titre = "Le stockage des bouteilles pasteurisées"
+image_sha256 = "fe7379fa2607b5ec3ce72e3458a431e433791a16e0c8b95e39da876c651829c9"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le stockage des bouteilles pasteurisées
+est une : Opération utilisée au cours l’étape post - conditionnement
+a pour fonction : De disposer d’un stock de cidre prêt pour la commercialisation
+a pour conséquences : Une possible modification sensorielle du cidre | Une possible apparition de trouble post -clarification
+est influencée par : La température du cidre | La présence d’antioxydants (SO2 et ac . Ascorbique)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération utilisée au cours l’étape post - conditionnement"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De disposer d’un stock de cidre prêt pour la commercialisation"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une possible modification sensorielle du cidre"
+
+[[rubriques.lignes]]
+valeur = "Une possible apparition de trouble post -clarification"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La température du cidre"
+
+[[rubriques.lignes]]
+valeur = "La présence d’antioxydants (SO2 et ac . Ascorbique)"

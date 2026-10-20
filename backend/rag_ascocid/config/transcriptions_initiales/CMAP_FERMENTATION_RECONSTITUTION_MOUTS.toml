@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1118 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1118
+code = "CMAP_FERMENTATION_RECONSTITUTION_MOUTS"
+titre = "La reconstitution des mouts"
+image_sha256 = "d9d5968f1ea82d30ddd2bf7e3f15f8a3e5dc0ce8146bd4686e74805f726da956"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La reconstitution des moûts
+est une : Opération de l’étape fermentaire (méthode FMR)
+est constituée de : Un transfert vers une cuve de mélange | Une addition d’eau (et/ou de vapeur) selon la teneur en sucre souhaitée | Un mélange | Une pasteurisation (facultative)
+est suivie par : Une mise en fermentation avec ensemencement (en levures sèches actives)
+a pour fonctions : De diluer le moût concentré à la masse volumique souhaitée | De rendre le moût fermentescible
+est pilotée par : Les quantités d’eau et de concentré"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape fermentaire (méthode FMR)"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un transfert vers une cuve de mélange"
+
+[[rubriques.lignes]]
+valeur = "Une addition d’eau (et/ou de vapeur) selon la teneur en sucre souhaitée"
+
+[[rubriques.lignes]]
+valeur = "Un mélange"
+
+[[rubriques.lignes]]
+valeur = "Une pasteurisation (facultative)"
+
+[[rubriques]]
+titre = "est suivie par"
+
+[[rubriques.lignes]]
+valeur = "Une mise en fermentation avec ensemencement (en levures sèches actives)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De diluer le moût concentré à la masse volumique souhaitée"
+
+[[rubriques.lignes]]
+valeur = "De rendre le moût fermentescible"
+
+[[rubriques]]
+titre = "est pilotée par"
+
+[[rubriques.lignes]]
+valeur = "Les quantités d’eau et de concentré"

@@ -1,0 +1,90 @@
+# Transcription de l'illustration de la fiche 1333 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1333
+code = "CMAP_REGROUPEMENT_MESURES_PHYSIQUES"
+titre = "Mesures physiques"
+image_sha256 = "55d7b10183357580aae775616f7043cc0b199bb32fb3fcc00b43f7c9473749e6"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Mesures physiques
+sont un : Ensemble de méthodes de mesures donnant accès à un paramètre physique
+regroupent : La mesure de masse volumique | La mesure de température | La mesure du pH | La mesure de la pression en bouteille | La mesure de turbidité | La mesure de l’oxygène dissous | La mesure de couleur | La mesure de densité optique | La mesure du spectre infrarouge (IRTF) | La mesure de la quantité de CO, dégagé
+ont pour fonctions : Estimation de la teneur en sucres par la masse volumique | Estimation de la croissance des levures par l’augmentation de turbidité | Estimation de la teneur en polyphénols par la DO | Estimation de la composition biochimique par l'IRTF | Estimation de l’avancement de la fermentation
+ont pour avantage : De déterminer la valeur d’une grandeur physique utile | D’estimer un paramètre lié à cette grandeur mesurée | D’être rapide et reproductible (éventuellement comparable à une valeur de référence)"""
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de méthodes de mesures donnant accès à un paramètre physique"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La mesure de masse volumique"
+
+[[rubriques.lignes]]
+valeur = "La mesure de température"
+
+[[rubriques.lignes]]
+valeur = "La mesure du pH"
+
+[[rubriques.lignes]]
+valeur = "La mesure de la pression en bouteille"
+
+[[rubriques.lignes]]
+valeur = "La mesure de turbidité"
+
+[[rubriques.lignes]]
+valeur = "La mesure de l’oxygène dissous"
+
+[[rubriques.lignes]]
+valeur = "La mesure de couleur"
+
+[[rubriques.lignes]]
+valeur = "La mesure de densité optique"
+
+[[rubriques.lignes]]
+valeur = "La mesure du spectre infrarouge (IRTF)"
+
+[[rubriques.lignes]]
+valeur = "La mesure de la quantité de CO, dégagé"
+
+[[rubriques]]
+titre = "ont pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "Estimation de la teneur en sucres par la masse volumique"
+
+[[rubriques.lignes]]
+valeur = "Estimation de la croissance des levures par l’augmentation de turbidité"
+
+[[rubriques.lignes]]
+valeur = "Estimation de la teneur en polyphénols par la DO"
+
+[[rubriques.lignes]]
+valeur = "Estimation de la composition biochimique par l'IRTF"
+douteux = ["l'IRTF"]
+
+[[rubriques.lignes]]
+valeur = "Estimation de l’avancement de la fermentation"
+
+[[rubriques]]
+titre = "ont pour avantage"
+
+[[rubriques.lignes]]
+valeur = "De déterminer la valeur d’une grandeur physique utile"
+
+[[rubriques.lignes]]
+valeur = "D’estimer un paramètre lié à cette grandeur mesurée"
+douteux = ["D’estimer"]
+
+[[rubriques.lignes]]
+valeur = "D’être rapide et reproductible (éventuellement comparable à une valeur de référence)"
+douteux = ["D’être"]

@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1104 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1104
+code = "CMAP_FERMENTATION_DEV_SACCHAROMYCES"
+titre = "Le développement des Saccharomyces"
+image_sha256 = "fdb0be4a02757c597933bc32bc4751463e711e58120d4abdb8b5f1d28cd72a87"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le développement des Saccharomyces
+est un : Phénomène se produisant principalement au cours de l’étape fermentaire
+a pour phases : Une croissance exponentielle | Un arrêt de croissance (à la population maximale) | Une décroissance des levures viables (mortalité)
+induit : Les principaux effets des Saccharomyces
+a pour autres conséquences : Une consommation de nutriments nécessaires à la croissance | Une carence en nutriments (en général en azote) | Une compétition avec Hanseniaspora | Une production de composés soufrés légers (H2S)
+concerne : Principalement Saccharomyces uvarum | Plus rarement Saccharomyces cerevisiae
+est influencé par : La quantité initiale du nutriment limitant (en général l’azote) | La population initiale des Saccharomyces | La population des Hanseniaspora (compétition) | La disponibilité en oxygène (petites quantités) | La clarification des moûts | La température du moût | Une éventuelle toxicité du milieu (teneur élevée en SO 2)"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant principalement au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "a pour phases"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une croissance exponentielle"
+
+[[rubriques.lignes]]
+valeur = "Un arrêt de croissance (à la population maximale)"
+
+[[rubriques.lignes]]
+valeur = "Une décroissance des levures viables (mortalité)"
+
+[[rubriques]]
+titre = "induit"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Saccharomyces"
+
+[[rubriques]]
+titre = "a pour autres conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de nutriments nécessaires à la croissance"
+
+[[rubriques.lignes]]
+valeur = "Une carence en nutriments (en général en azote)"
+
+[[rubriques.lignes]]
+valeur = "Une compétition avec Hanseniaspora"
+
+[[rubriques.lignes]]
+valeur = "Une production de composés soufrés légers (H2S)"
+
+[[rubriques]]
+titre = "concerne"
+
+[[rubriques.lignes]]
+valeur = "Principalement Saccharomyces uvarum"
+
+[[rubriques.lignes]]
+valeur = "Plus rarement Saccharomyces cerevisiae"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La quantité initiale du nutriment limitant (en général l’azote)"
+
+[[rubriques.lignes]]
+valeur = "La population initiale des Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "La population des Hanseniaspora (compétition)"
+
+[[rubriques.lignes]]
+valeur = "La disponibilité en oxygène (petites quantités)"
+
+[[rubriques.lignes]]
+valeur = "La clarification des moûts"
+
+[[rubriques.lignes]]
+valeur = "La température du moût"
+
+[[rubriques.lignes]]
+valeur = "Une éventuelle toxicité du milieu (teneur élevée en SO 2)"

@@ -1,0 +1,48 @@
+# Transcription de l'illustration de la fiche 1485 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1485
+code = "FICHE_LA_TRANSFORMATION_MALOLACTIQUE"
+titre = "La transformation malolactique"
+image_sha256 = "f86c91ee7ed7101b09df7577faf1b0405f655ff89917511b4608cbb471f3b18b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principales évolutions de la TML
+Acide L-Malique = Acide L-Lactique
+= Acide D-Lactique — Acide acétique
+Seuil de piqûre
+Durée (jour)
+Figure 1 : Représentation schématique des évolutions qui sont
+provoquées par les bactéries lactiques (Œnococcus œni en photo
+microscope).
+La production des acides D-Lactique et acétique est variable selon les conditions
+(azote). lci, l'acide D-Lactique atteint en 50 jours le seuil de 200 mg/L défini en vin
+(par S. Lafond Lafourcade) comme le seuil où l'on peut considérer qu'il y a
+réellement une piqüre lactique."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Les principales évolutions de la TML"
+
+[[rubriques.lignes]]
+valeur = "Acide L-Malique = Acide L-Lactique = Acide D-Lactique — Acide acétique Seuil de piqûre"
+douteux = ["Seuil", "piqûre"]
+
+[[rubriques.lignes]]
+valeur = "Durée (jour)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique des évolutions qui sont provoquées par les bactéries lactiques (Œnococcus œni en photo"
+
+[[rubriques.lignes]]
+valeur = "microscope)."
+
+[[rubriques.lignes]]
+valeur = "La production des acides D-Lactique et acétique est variable selon les conditions (azote). lci, l'acide D-Lactique atteint en 50 jours le seuil de 200 mg/L défini en vin (par S. Lafond Lafourcade) comme le seuil où l'on peut considérer qu'il y a réellement une piqüre lactique."

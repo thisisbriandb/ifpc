@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1113 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1113
+code = "CMAP_FERMENTATION_ELIMINATION_LEVURES"
+titre = "L'élimination des levures"
+image_sha256 = "634cd6f304a30b7fc3a4b37c8f5a532f4248b0e766cba9384f17f17b09bfa3fa"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+L’élimination des levures
+est une : Opération de l’étape fermentaire (méthode FI et FMR)
+a pour fonction : D’interrompre la fermentation en retirant la quasi totalité des levures
+a pour méthodes : Une centrifugation | Une microfiltration tangentielle | Une filtration sur Kieselguhr | Une décantation suivie d’une filtration sur plaques
+est pilotée selon : L’estimation de la turbidité du produit sortant (indicateur de la population résiduelle) | L’estimation de la turbidité du produit entrant (indicateur de population)
+présente le risque : De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape fermentaire (méthode FI et FMR)"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’interrompre la fermentation en retirant la quasi totalité des levures"
+
+[[rubriques]]
+titre = "a pour méthodes"
+
+[[rubriques.lignes]]
+valeur = "Une centrifugation"
+
+[[rubriques.lignes]]
+valeur = "Une microfiltration tangentielle"
+
+[[rubriques.lignes]]
+valeur = "Une filtration sur Kieselguhr"
+
+[[rubriques.lignes]]
+valeur = "Une décantation suivie d’une filtration sur plaques"
+
+[[rubriques]]
+titre = "est pilotée selon"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la turbidité du produit sortant (indicateur de la population résiduelle)"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la turbidité du produit entrant (indicateur de population)"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"

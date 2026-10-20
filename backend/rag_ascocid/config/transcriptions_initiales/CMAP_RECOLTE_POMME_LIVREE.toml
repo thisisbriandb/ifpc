@@ -1,0 +1,77 @@
+# Transcription de l'illustration de la fiche 1065 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1065
+code = "CMAP_RECOLTE_POMME_LIVREE"
+titre = "La pomme livrée"
+image_sha256 = "0ec639861ff925abee97c9f1cfb06216239fcae16d0e7d2d3ebeb62ddbce4081"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La pomme livrée
+est une : Matière première de l'élaboration du cidre
+est caracterisee par : Sa ou ses variété(s) | Son état de maturité | Son niveau d’altérations physiques | Son type et niveau de souillures | Son niveau d’altération fongique | Ses signes de qualité (bio, IGP...)
+est influencée par : Le mode de récolte | Le nettoyage et tri au verger | La durée et les conditions de stockage au verger
+peut avoir pour défauts : Une sous-maturité | Une texture insuffisamment ferme | Un niveau élevé d’altération fongique | Un niveau élevé d’altérations physiques | Un niveau élevé de souillures"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Matière première de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "est caracterisee par"
+
+[[rubriques.lignes]]
+valeur = "Sa ou ses variété(s)"
+
+[[rubriques.lignes]]
+valeur = "Son état de maturité"
+
+[[rubriques.lignes]]
+valeur = "Son niveau d’altérations physiques"
+
+[[rubriques.lignes]]
+valeur = "Son type et niveau de souillures"
+
+[[rubriques.lignes]]
+valeur = "Son niveau d’altération fongique"
+
+[[rubriques.lignes]]
+valeur = "Ses signes de qualité (bio, IGP...)"
+douteux = ["IGP...)"]
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Le mode de récolte"
+
+[[rubriques.lignes]]
+valeur = "Le nettoyage et tri au verger"
+
+[[rubriques.lignes]]
+valeur = "La durée et les conditions de stockage au verger"
+
+[[rubriques]]
+titre = "peut avoir pour défauts"
+
+[[rubriques.lignes]]
+valeur = "Une sous-maturité"
+
+[[rubriques.lignes]]
+valeur = "Une texture insuffisamment ferme"
+
+[[rubriques.lignes]]
+valeur = "Un niveau élevé d’altération fongique"
+
+[[rubriques.lignes]]
+valeur = "Un niveau élevé d’altérations physiques"
+
+[[rubriques.lignes]]
+valeur = "Un niveau élevé de souillures"

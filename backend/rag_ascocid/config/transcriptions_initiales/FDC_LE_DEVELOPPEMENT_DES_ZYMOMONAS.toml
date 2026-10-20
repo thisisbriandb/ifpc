@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1546 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1546
+code = "FDC_LE_DEVELOPPEMENT_DES_ZYMOMONAS"
+titre = "Le développement des Zymomonas"
+image_sha256 = "0a6ced5bc4f14334a9dea813e820a9d41b0209e5fa2e7b3264a6bcec2fd9be84"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 84.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Bactéries Zymomonas Figure 2:
+mobilis observées au microscope. pH à 3,3 (o)
+Culture en condition anaérobie. Echelle: 5 pm. (A)-6(m)et
+Source: Fuchino et al, 2021. « The Ethanologenic Source: Coton
+Bacterium Zymomonas mobilis divides asymmetrically implication and
+and exhibits heterogeneity in DNA content. Applied and
+Environmental Microbiology, 87(6):e02441-20.
+1
+c 0.9
+S 08
+© 07
+o 0.6
+© 0.5
+© 0.4
+© 0.3
+ao 0.2
+2 0.1
+(9) 10 20 30
+Ten
+Figure 3 : Effet de la concentration en éthanol sur
+Contrôle à 0 %vol (+) - 1 %vol (m) - 3 vol (A) - 4 Lvol (x)
+Source: Coton et al., 2006. « Framboisé » spoilage in French ciders : Z"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Bactéries Zymomonas Figure 2:"
+douteux = ["Figure", "2:"]
+
+[[rubriques.lignes]]
+valeur = "mobilis observées au microscope. pH à 3,3 (o)"
+douteux = ["(o)"]
+
+[[rubriques.lignes]]
+intitule = "Culture en condition anaérobie. Echelle"
+valeur = "5 pm. (A)-6(m)et"
+douteux = ["(A)-6(m)et"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Fuchino et al, 2021. « The Ethanologenic Source: Coton Bacterium Zymomonas mobilis divides asymmetrically implication and and exhibits heterogeneity in DNA content. Applied and"
+douteux = ["al,"]
+
+[[rubriques.lignes]]
+intitule = "Environmental Microbiology, 87(6)"
+valeur = "e02441-20."
+douteux = ["87(6):e02441-20."]
+
+[[rubriques.lignes]]
+valeur = "1 c 0.9 S 08 © 07 o 0.6 © 0.5 © 0.4"
+douteux = ["c", "o"]
+
+[[rubriques.lignes]]
+valeur = "© 0.3 ao 0.2"
+douteux = ["ao", "0.2"]
+
+[[rubriques]]
+titre = "2 0.1"
+
+[[rubriques.lignes]]
+valeur = "(9) 10 20 30"
+douteux = ["(9)"]
+
+[[rubriques.lignes]]
+valeur = "Ten"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Effet de la concentration en éthanol sur"
+
+[[rubriques.lignes]]
+valeur = "Contrôle à 0 %vol (+) - 1 %vol (m) - 3 vol (A) - 4 Lvol (x)"
+douteux = ["0", "(m)", "vol", "Lvol"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Coton et al., 2006. « Framboisé » spoilage in French ciders : Z"
+douteux = ["Z"]

@@ -1,0 +1,180 @@
+# Transcription de l'illustration de la fiche 1437 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1437
+code = "FDC_LOCARD_VERT"
+titre = "Locard vert"
+image_sha256 = "032f025dfada5422d63f5b341d03027e3fbb07cc2c5076a058c33e287d0db2c5"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: LOCARD VERT
+PRINCIPALES ZONES DE PRODUCTION
+Sarthe : Sillé-le-Guillaume - Loué - Brulon - Marolles.
+Ille-et-Vilaine : Région centrale et Pays de Redon - La
+Guerche - Retiers.
+Loire-Atlantique : St-Nicolas-de-Redon - Derval - Rougé
+- Châteaubriant - Guéméné Penfao - Nozay - Blain.
+CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT
+(Moyenne des analyses effectuées
+à la Station cidricole de Rennes INRA)
+Poids moyen du fruit (g.): 137.
+Rendement en jus (%): 76,1.
+Densité du jus : 1,0547.
+Sucres totaux (en g. par litre): 119,3.
+Acidité de titration (en g. H,SO, par litre) : 4,0
+(en m.eq.) : 81.
+Rapport sucres/acidité : 29,8.
+Extrait sec réduit (en g. par litre): 22,5.
+Tanins (en g. par litre): 1,3.
+Couleur du jus : ambré.
+Dégustation : acidulé, peu parfumé.
+CARACTERISTIQUES CULTURALES DE L'ARBRE
+Vigueur : grande.
+Port : en dôme semi-étalé.
+Résistance aux maladies : sensible à la tavelure des feuilles, quelquefois
+des fruits.
+Mise à fruits : assez rapide.
+Productivité : bonne à très bonne peu alternante.
+Saison de floraison: 3e.
+Saison de maturité : 2e.
+Calibre du fruit: assez gros.
+Conservation et transport des fruits : bons.
+OBSERVATIONS DIVERSES
+Variété intéressante s'adaptant bien en différentes régions.
+L'arbre se forme avec peu de taille.
+Le nom de Locard vert correspond à de nombreuses formes voisines,
+plus ou moins vertes, jaunes et quelquefois lavées de rose et plus ou
+moins grosses. Locard et petit Locard sont probablement des Locard
+vert. De gros fruits dits gros Locard s'altèrent rapidement.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*)
+Documentation I.N.R.A. - Edition 1973"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Sarthe : Sillé-le-Guillaume - Loué - Brulon - Marolles."
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : Région centrale et Pays de Redon - La Guerche - Retiers."
+
+[[rubriques.lignes]]
+valeur = "Loire-Atlantique : St-Nicolas-de-Redon - Derval - Rougé - Châteaubriant - Guéméné Penfao - Nozay - Blain."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(Moyenne des analyses effectuées à la Station cidricole de Rennes INRA)"
+
+[[rubriques.lignes]]
+intitule = "Poids moyen du fruit (g.)"
+valeur = "137."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "76,1."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1,0547."
+
+[[rubriques.lignes]]
+intitule = "Sucres totaux (en g. par litre)"
+valeur = "119,3."
+douteux = ["litre):"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration (en g. H,SO, par litre)"
+valeur = "4,0"
+douteux = ["H,SO,"]
+
+[[rubriques.lignes]]
+intitule = "(en m.eq.)"
+valeur = "81."
+douteux = ["m.eq.)"]
+
+[[rubriques.lignes]]
+intitule = "Rapport sucres/acidité"
+valeur = "29,8."
+
+[[rubriques.lignes]]
+intitule = "Extrait sec réduit (en g. par litre)"
+valeur = "22,5."
+douteux = ["litre):"]
+
+[[rubriques.lignes]]
+intitule = "Tanins (en g. par litre)"
+valeur = "1,3."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "ambré."
+
+[[rubriques.lignes]]
+intitule = "Dégustation"
+valeur = "acidulé, peu parfumé."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en dôme semi-étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "sensible à la tavelure des feuilles, quelquefois des fruits."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "assez rapide."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne à très bonne peu alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "assez gros."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété intéressante s'adaptant bien en différentes régions. L'arbre se forme avec peu de taille. Le nom de Locard vert correspond à de nombreuses formes voisines,"
+douteux = ["s'adaptant"]
+
+[[rubriques.lignes]]
+valeur = "plus ou moins vertes, jaunes et quelquefois lavées de rose et plus ou moins grosses. Locard et petit Locard sont probablement des Locard vert. De gros fruits dits gros Locard s'altèrent rapidement."
+douteux = ["s'altèrent"]
+
+[[rubriques.lignes]]
+valeur = "Documentation I.N.R.A. - Edition 1973"
+douteux = ["I.N.R.A."]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*)"

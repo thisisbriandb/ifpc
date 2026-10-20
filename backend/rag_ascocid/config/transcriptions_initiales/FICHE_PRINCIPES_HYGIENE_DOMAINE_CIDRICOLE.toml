@@ -1,0 +1,106 @@
+# Transcription de l'illustration de la fiche 1575 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1575
+code = "FICHE_PRINCIPES_HYGIENE_DOMAINE_CIDRICOLE"
+titre = "Les principes d'hygiène dans le domaine cidricole"
+image_sha256 = "319cb9db90c476cd2f53b8875da5c64188bff04234e406ce7f876727975ab123"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Température
+Eau froide pour les rinçages
+Eau chaude pour le nettoyage
+Action mécanique
+Brossage, grattage, agitation, circulation,
+Concentration
+Sous-dosage > moins efficace
+Surdosage > coûteux, rinçage critique,
+néfaste pour l'environnement
+Temps
+Temps d'application à respecter pour une
+meilleure efficacité
+Figure 1 : Exemples de sources de contamination
+microbiologique au cours de l'élaboration cidricole, |
+par manque d'hygiène. Figure 3 : Les règles TACT
+À) Des pommes à cidre, B) Le bec d’une soutireuse à plat,
+C) Une centrifugeuse
+Figure 2 : Exemple montrant l'importance de . ocoocco BAvant nettoyage
+l'hygiène au cours de la production cidricole. 3 ® 1000000 HAprès nettoyage
+Le graphique représente des résultats microbiologiques © 82 100000
+concernant les populations de Brettanomyces avant/après 2 8 £ 10000
+nettoyage d’une centrifugeuse. Les prélèvements ont été LE 1000 | | |
+effectués dans différentes zones de la centrifugeuse: 1= EN 100
+Tuyau d'arrivée, 2= Entrée de la centrifugeuse, 3=Vanne de Ê 10 []
+régulation de débit, 4= Haut de la cloche, 5= Haut de la 1 : ) à à 5 6 7
+chambre à débourber, 6= Evacuation des boues, 7=
+Collecteur des boues.
+Prélèvements"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Température"
+
+[[rubriques.lignes]]
+valeur = "Eau froide pour les rinçages Eau chaude pour le nettoyage"
+
+[[rubriques.lignes]]
+valeur = "Action mécanique"
+
+[[rubriques.lignes]]
+valeur = "Brossage, grattage, agitation, circulation,"
+douteux = ["circulation,"]
+
+[[rubriques.lignes]]
+valeur = "Concentration"
+
+[[rubriques.lignes]]
+valeur = "Sous-dosage > moins efficace Surdosage > coûteux, rinçage critique, néfaste pour l'environnement"
+douteux = ["l'environnement"]
+
+[[rubriques.lignes]]
+valeur = "Temps"
+
+[[rubriques.lignes]]
+valeur = "Temps d'application à respecter pour une meilleure efficacité"
+douteux = ["d'application"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemples de sources de contamination microbiologique au cours de l'élaboration cidricole, | par manque d'hygiène. Figure 3 : Les règles TACT"
+douteux = ["l'élaboration", "d'hygiène."]
+
+[[rubriques.lignes]]
+valeur = "À) Des pommes à cidre, B) Le bec d’une soutireuse à plat, C) Une centrifugeuse"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Exemple montrant l'importance de . ocoocco BAvant nettoyage l'hygiène au cours de la production cidricole. 3 ® 1000000 HAprès nettoyage Le graphique représente des résultats microbiologiques © 82 100000"
+douteux = ["l'importance", "ocoocco", "BAvant", "1000000", "HAprès", "82"]
+
+[[rubriques.lignes]]
+valeur = "concernant les populations de Brettanomyces avant/après 2 8 £ 10000"
+douteux = ["2", "8"]
+
+[[rubriques.lignes]]
+valeur = "nettoyage d’une centrifugeuse. Les prélèvements ont été LE 1000 | | | effectués dans différentes zones de la centrifugeuse: 1= EN 100"
+douteux = ["LE", "EN"]
+
+[[rubriques.lignes]]
+valeur = "Tuyau d'arrivée, 2= Entrée de la centrifugeuse, 3=Vanne de Ê 10 []"
+douteux = ["d'arrivée,", "Ê"]
+
+[[rubriques.lignes]]
+valeur = "régulation de débit, 4= Haut de la cloche, 5= Haut de la 1 : ) à à 5 6 7"
+douteux = ["à", "à", "6"]
+
+[[rubriques.lignes]]
+valeur = "chambre à débourber, 6= Evacuation des boues, 7= Collecteur des boues."
+
+[[rubriques.lignes]]
+valeur = "Prélèvements"

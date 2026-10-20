@@ -1,0 +1,84 @@
+# Transcription de l'illustration de la fiche 1523 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1523
+code = "FICHE_LES_ODEURS_DEFECTUEUSES"
+titre = "Les odeurs défectueuses (défauts aromatiques)"
+image_sha256 = "cbb46d4b2c35164d95c34cdf209e84fc197f7503b202a06b2cc7075d4523d3ca"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 80.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+! LE Souches de levure, Azote
+Pommes sur-maturées, altérées
+Arôme sous-bois >
+(moisi/terreux)
+Bactéries acétiques, Bactéries lactiques Méthionol > Chou
+Oxygène EL
+Un Ethanethiol > Oignon
+Acide acétique | Dh |
+Mauvais contrôle du sulfitage
+ODEURS DE RÉDUCTION À
+Sulfure d'hydrogène — Œuf pourri
+Méthanethiol + Croupi, putréfaction
+Odeur vinaigrée
+; Défauts de rinçage, résidus de
+Zymomonas mobilis | javel ou autres produits chlores ,
+pra À Ed Chloroanisoles
+Végétal, herbacé, RE « Goût de bouchon », chlore
+ronce
+Figure 1 : Les différentes odeurs défectueuses dans les cidres et leurs principales sources.
+Photo : C. Ingargiola, IFPC."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "! LE Souches de levure, Azote"
+douteux = ["LE"]
+
+[[rubriques.lignes]]
+valeur = "Pommes sur-maturées, altérées Arôme sous-bois > (moisi/terreux)"
+
+[[rubriques.lignes]]
+valeur = "Bactéries acétiques, Bactéries lactiques Méthionol > Chou"
+
+[[rubriques.lignes]]
+valeur = "Oxygène EL Un Ethanethiol > Oignon Acide acétique | Dh |"
+douteux = ["EL", "Un", "Dh"]
+
+[[rubriques.lignes]]
+valeur = "Mauvais contrôle du sulfitage"
+
+[[rubriques]]
+titre = "ODEURS DE RÉDUCTION À"
+
+[[rubriques.lignes]]
+valeur = "Sulfure d'hydrogène — Œuf pourri"
+
+[[rubriques.lignes]]
+valeur = "Méthanethiol + Croupi, putréfaction"
+
+[[rubriques.lignes]]
+valeur = "Odeur vinaigrée"
+
+[[rubriques.lignes]]
+valeur = "; Défauts de rinçage, résidus de Zymomonas mobilis | javel ou autres produits chlores ,"
+
+[[rubriques.lignes]]
+valeur = "pra À Ed Chloroanisoles"
+douteux = ["pra", "À", "Ed"]
+
+[[rubriques.lignes]]
+valeur = "Végétal, herbacé, RE « Goût de bouchon », chlore ronce"
+douteux = ["RE"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes odeurs défectueuses dans les cidres et leurs principales sources."
+
+[[rubriques.lignes]]
+intitule = "Photo"
+valeur = "C. Ingargiola, IFPC."

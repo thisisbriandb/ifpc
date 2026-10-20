@@ -1,0 +1,54 @@
+# Transcription de l'illustration de la fiche 1538 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1538
+code = "FDC_LES_EFFETS_DES_SACCHAROMYCES"
+titre = "Les effets des Saccharomyces"
+image_sha256 = "677390925e699f792447bd1bcf8fbcd7c528c160f5880faa357e882033db2b10"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 80.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+1070
+1060
+1050
+X 1040
+© 1030
+3 1020
+® 1010
+Z 1000
+990
+Figure 1 : Vitesse de fermentati
+l'espèce de levure Saccharomyc
+IFPC, Projet MoNArC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "1070"
+
+[[rubriques.lignes]]
+valeur = "1060 1050 X 1040 © 1030"
+douteux = ["X", "1030"]
+
+[[rubriques]]
+titre = "3 1020"
+
+[[rubriques.lignes]]
+valeur = "® 1010 Z 1000"
+douteux = ["1010", "Z", "1000"]
+
+[[rubriques.lignes]]
+valeur = "990"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Vitesse de fermentati"
+douteux = ["fermentati"]
+
+[[rubriques.lignes]]
+valeur = "l'espèce de levure Saccharomyc IFPC, Projet MoNArC"
+douteux = ["l'espèce"]

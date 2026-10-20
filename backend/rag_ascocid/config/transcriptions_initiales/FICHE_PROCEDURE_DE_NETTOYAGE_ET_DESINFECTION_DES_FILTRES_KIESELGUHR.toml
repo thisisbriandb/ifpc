@@ -1,0 +1,98 @@
+# Transcription de l'illustration de la fiche 1578 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1578
+code = "FICHE_PROCEDURE_DE_NETTOYAGE_ET_DESINFECTION_DES_FILTRES_KIESELGUHR"
+titre = "Procédure de nettoyage et désinfection des filtres Kieselguhr"
+image_sha256 = "53fde475f9ce7c65a51b94e54c9dc41aa5725f47f8d77a6efb9d15f905b4025f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
++ Démontage du gâteau
+e Evacuation des terres de filtration (compostage/épandage)
+e Eau chaude et claire pendant 5 à 10 minutes
++ Remontage du filtre et nouveau rinçage (contre-courant) pendant 5 à 10
+Rinçage minutes
+* Circuit fermé
+* Solution détergente (soude 2 %) à 45 — 50 °C pendant 20 minutes
+* Ajout d’une solution oxydante (peroxyde d'hydrogène 1 %) à 45 — 50 °C
+Nettoyage pendant 20 minutes
+e Eau froide et claire
+: e5à 10 minutes
+Rinçage
+e Solution désinfectante (acide peracétique 1 %) à 15 — 20 °C
+Hygiène des filtres sur Kieselguhr + Circuit fermé
+Désinfection, + 20 minutes
+e Eau froide et claire pendant 5 à 10 minutes
++ Contrôle du pH de l’eau de rinçage
+Rinçage & |, Vidange du filtre, égouttage des tuyaux, pompes et bacs
+Contrôle
+Figure 1 : Exemple de procédure de nettoyage et désinfection d’un filtre Kieselguhr
+Sources des illustrations:
+- DELLA TOFFOLA. Notice d'utilisation et d'entretien des filtres NF5
+- https://michaelpaetzold.com/fr/produits/collecte-et-recyclage-des-terres-de-filtration"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "+ Démontage du gâteau e Evacuation des terres de filtration (compostage/épandage)"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = "e Eau chaude et claire pendant 5 à 10 minutes"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = "+ Remontage du filtre et nouveau rinçage (contre-courant) pendant 5 à 10 Rinçage minutes"
+
+[[rubriques.lignes]]
+valeur = "* Circuit fermé * Solution détergente (soude 2 %) à 45 — 50 °C pendant 20 minutes * Ajout d’une solution oxydante (peroxyde d'hydrogène 1 %) à 45 — 50 °C"
+douteux = ["d'hydrogène"]
+
+[[rubriques.lignes]]
+valeur = "Nettoyage pendant 20 minutes"
+
+[[rubriques.lignes]]
+valeur = "e Eau froide et claire"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = ": e5à 10 minutes Rinçage"
+douteux = ["e5à"]
+
+[[rubriques.lignes]]
+valeur = "e Solution désinfectante (acide peracétique 1 %) à 15 — 20 °C"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = "Hygiène des filtres sur Kieselguhr + Circuit fermé Désinfection, + 20 minutes"
+douteux = ["Désinfection,"]
+
+[[rubriques.lignes]]
+valeur = "e Eau froide et claire pendant 5 à 10 minutes + Contrôle du pH de l’eau de rinçage"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = "Rinçage & |, Vidange du filtre, égouttage des tuyaux, pompes et bacs"
+
+[[rubriques.lignes]]
+valeur = "Contrôle"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple de procédure de nettoyage et désinfection d’un filtre Kieselguhr"
+douteux = ["d’un"]
+
+[[rubriques.lignes]]
+intitule = "Sources des illustrations"
+valeur = "- DELLA TOFFOLA. Notice d'utilisation et d'entretien des filtres NF5"
+douteux = ["d'entretien"]
+
+[[rubriques.lignes]]
+intitule = "- https"
+valeur = "//michaelpaetzold.com/fr/produits/collecte-et-recyclage-des-terres-de-filtration"
+douteux = ["https://michaelpaetzold.com/fr/produits/collecte-et-recyclage-des-terres-de-filtration"]

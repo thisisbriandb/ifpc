@@ -1,0 +1,51 @@
+# Transcription de l'illustration de la fiche 1064 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1064
+code = "CMAP_RECOLTE_STOCKAGE_ET_LIVRAISON"
+titre = "Le stockage au verger et la livraison"
+image_sha256 = "bb2003e29268b4e34eb378e7ee3e1b62c2c6618cba68722bfccb0eafa53340ea"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le stockage au verger et la livraison
+est une : Opération facultative de l’étape de récolte
+a pour fonction : De réguler le flux de pommes livrées
+est influencé par : Les plannings de livraison | Le niveau d’altération fongique des pommes | La température ambiante
+a pour conséquences : Une maturation des pommes (faible) | Une altération fongique des pommes"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape de récolte"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De réguler le flux de pommes livrées"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "Les plannings de livraison"
+
+[[rubriques.lignes]]
+valeur = "Le niveau d’altération fongique des pommes"
+
+[[rubriques.lignes]]
+valeur = "La température ambiante"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une maturation des pommes (faible)"
+
+[[rubriques.lignes]]
+valeur = "Une altération fongique des pommes"

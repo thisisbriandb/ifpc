@@ -1,0 +1,132 @@
+# Transcription de l'illustration de la fiche 1493 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1493
+code = "FICHE_LA_MASSE_VOLUMIQUE"
+titre = "La masse volumique"
+image_sha256 = "ee9f5fd5bb3d6584d11c155513c7733b177a7dd0562ffa3f47df9abca807ebc6"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 81.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Rappel des correspondances entre les Figure 2 : Mesure de la masse volumique d’un
+différentes unités de mesure de la masse volumique échantillon à 20 °C avec un aréomètre
+Masse volumique p = Masse/ Volume
+4 g/mL
+- Lecture de la masse volumique
+Équivaut à
+Se reporter à la table d'équivalence
+1 kg/L Masse Volumique — Teneurs en sucres
+| & alcool! potentiel
+Masse volumique Sucres totaux Alcool Potentiel
+Équivaut à Équivaut à ec) eu D
+1041 523 54 56
+_ 1042 551 , 3 5,5 58
+x1000 +1000 = ï. +
+1064 D A , : 58 6
+1045 e 1016 59 62
+1086 À 103,7 6 63
+1047 105,3 , D 62 64
+1088 108 63 65
+1045 102 64 67
+1 000 kg/m° 1050 123 65 64
+1051 145 67 63
+1052 166 ) 68 7
+1053 138 69 72
+1054 123 71 73
+1055 123,1 72 TA
+1056 125,2 , , 73 75
+Unité de référence de la
+masse volumique"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Rappel des correspondances entre les Figure 2 : Mesure de la masse volumique d’un différentes unités de mesure de la masse volumique échantillon à 20 °C avec un aréomètre"
+
+[[rubriques.lignes]]
+valeur = "Masse volumique p = Masse/ Volume"
+
+[[rubriques]]
+titre = "4 g/mL"
+
+[[rubriques.lignes]]
+valeur = "- Lecture de la masse volumique"
+
+[[rubriques.lignes]]
+valeur = "Équivaut à"
+
+[[rubriques.lignes]]
+valeur = "Se reporter à la table d'équivalence"
+
+[[rubriques]]
+titre = "1 kg/L Masse Volumique — Teneurs en sucres"
+
+[[rubriques.lignes]]
+valeur = "| & alcool! potentiel"
+
+[[rubriques.lignes]]
+valeur = "Masse volumique Sucres totaux Alcool Potentiel"
+
+[[rubriques.lignes]]
+valeur = "Équivaut à Équivaut à ec) eu D"
+douteux = ["ec)", "eu", "D"]
+
+[[rubriques]]
+titre = "1041 523 54 56"
+
+[[rubriques.lignes]]
+valeur = "_ 1042 551 , 3 5,5 58"
+douteux = ["3", "5,5", "58"]
+
+[[rubriques.lignes]]
+valeur = "x1000 +1000 = ï. +"
+douteux = ["+1000", "ï."]
+
+[[rubriques.lignes]]
+intitule = "1064 D A ,"
+valeur = "58 6"
+douteux = ["1064", "D", "A"]
+
+[[rubriques]]
+titre = "1045 e 1016 59 62"
+
+[[rubriques]]
+titre = "1086 À 103,7 6 63"
+
+[[rubriques]]
+titre = "1047 105,3 , D 62 64"
+
+[[rubriques]]
+titre = "1088 108 63 65"
+
+[[rubriques]]
+titre = "1045 102 64 67"
+
+[[rubriques]]
+titre = "1 000 kg/m° 1050 123 65 64"
+
+[[rubriques]]
+titre = "1051 145 67 63"
+
+[[rubriques]]
+titre = "1052 166 ) 68 7"
+
+[[rubriques]]
+titre = "1053 138 69 72"
+
+[[rubriques]]
+titre = "1054 123 71 73"
+
+[[rubriques]]
+titre = "1055 123,1 72 TA"
+
+[[rubriques]]
+titre = "1056 125,2 , , 73 75"
+
+[[rubriques.lignes]]
+valeur = "Unité de référence de la masse volumique"

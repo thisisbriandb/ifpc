@@ -1,0 +1,144 @@
+# Transcription de l'illustration de la fiche 1436 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1436
+code = "FDC_LOCARD_BLANC"
+titre = "Locard blanc"
+image_sha256 = "fa8f0c6ee5bb3496e12608ec4e6c4fd80ecd47a6968dc3c3d8cb6c303f20f5a2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: LOCARD BLANC
+PRINCIPALES ZONES DE PRODUCTION
+(départements et cantons)
+Sarthe : Fresnay sur Sarthe - Conlie - Loué.
+Ille-et-Vilaine : La Guerche - Retiers.
+Loire-Atlantique : Blain - Derval - Nozay.
+POSSIBILITES de COMMERCIALISATION en bonne année
+Sarthe : 1 500 tonnes.
+Ille-et-Vilaine : 5 tonnes.
+Loire-Atlantique : tonnage insignifiant.
+QUALITES TECHNOLOGIQUES DU FRUIT
+Dégustation du fruit : acidulé.
+Dégustation du jus : acidulé, agréable, parfumé.
+Rendement en jus (%) : 67,6.
+Densité du jus : 1 048.
+Acidité de titration en g. SO* H? par litre : 4,10.
+Azote/Sucres totaux : 0,75.
+Tanin (en g. par litre) : 1,8.
+Couleur du jus : jaune pâle.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : grande.
+Port : en dome, étalé.
+Résistance aux maladies : sensible à la tavelure sur feuilles.
+Productivité : bonne à très bonne mais alternante.
+Saison de floraison : 2e-3e.
+Saison de maturité : 22-3e.
+Conservation et transport des fruits : faibles.
+Grosseur du fruit : moyen à gros.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "départements et cantons"
+
+[[rubriques.lignes]]
+valeur = "Sarthe : Fresnay sur Sarthe - Conlie - Loué. Ille-et-Vilaine : La Guerche - Retiers. Loire-Atlantique : Blain - Derval - Nozay."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques.lignes]]
+valeur = "Sarthe : 1 500 tonnes. Ille-et-Vilaine : 5 tonnes. Loire-Atlantique : tonnage insignifiant."
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acidulé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acidulé, agréable, parfumé."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "67,6."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 048."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H? par litre"
+valeur = "4,10."
+douteux = ["SO*", "H?"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,75."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,8."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune pâle."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en dome, étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "sensible à la tavelure sur feuilles."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne à très bonne mais alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "22-3e."
+douteux = ["22-3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "faibles."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen à gros."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)"
+douteux = ["Cidricoles", "(ler)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

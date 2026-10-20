@@ -1,0 +1,28 @@
+# Transcription de l'illustration de la fiche 1396 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1396
+code = "FICHE_LA_CAVITATION"
+titre = "La cavitation"
+image_sha256 = "b6a9bc36d6c47c947bf3de3757ebd7a7ee9b4be306ced144115fbb16b0268c2d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+https://www.debem.com/fr/la-cavitation-dans-les-
+pompes-centrifuges/
+Figure 1 : Destructions causées par des zones de
+cavitation."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "https"
+valeur = "//www.debem.com/fr/la-cavitation-dans-les- pompes-centrifuges/"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Destructions causées par des zones de cavitation."

@@ -1,0 +1,132 @@
+# Transcription de l'illustration de la fiche 1585 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1585
+code = "FICHE_DECRET_CIDRE"
+titre = "Le décret cidre"
+image_sha256 = "3c039b976dcb77f85ac70d4b84da7ee137ce7c281c655985511acfe38f732116"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Titre alcoométrique
+volumique total minium
+1,5 % 1,5 %
+Maximum 3 % pour les Maximum 3 % pour les Minimum 1,5 %
+dénominations « doux » dénominations « doux »
+Minimum 1,5 %
+Maximum 3 %
+Titre alcoométrique
+volumique acquis minium
+Doux : minimum 35 Doux : minimum 42
+Demi-sec : entre 28 et 42 | Demi-sec : entre 28 et 42
+Brut : maximum 28 Brut : maximum 28
+Teneur en sucres
+résiduels * (g/L)
+Acidité volatile maximale
+en (g/L d'acide sulfurique
+(H}S04))
+Extrait sec total réduit
+minimal (g/L)
+Matières minérales
+(cendres) minimales (g/L)
+10 pour les cidres 10 pour les fermentés de 10 pour les pétillants de
+Teneur maximale en fer 10 pour les cidres bouchés pommes pommes
+(mg/L) 17 pour les poirés 17 pour les poirés 17 pour les fermentés de 17 pour les pétillants de
+bouchés poires poires
+Teneur maximale en
+éthanal total (mg/L)
+Teneur maximale en
+anhydride sulfureux total Cf. arrêté du 02/10/1997
+Teneur minimale en 3 si fermentation
+anhydride carbonique naturelle en bouteille
+(g/L) Sinon 4
+Tableau 1 : Synthèse des Annexes | et Il du décret n°53-978 du 30 septembre 1953 (Décret cidre), concernant
+les caractéristiques des cidres, poirés, produits bouchés, fermentés de pommes ou de poires et pétillants de
+pommes ou de poires.
+* Pour les dénominations « Demi sec » et « Brut », cette teneur est exprimée en saccharose.
+Source: D'après le décret n°53-978 du 30 septembre 1953 relatif à l'orientation de la production cidricole et à la commercialisation des cidres,
+poirés et de certaines boissons similaires"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Titre alcoométrique volumique total minium"
+
+[[rubriques.lignes]]
+valeur = "1,5 % 1,5 % Maximum 3 % pour les Maximum 3 % pour les Minimum 1,5 % dénominations « doux » dénominations « doux »"
+
+[[rubriques.lignes]]
+valeur = "Minimum 1,5 % Maximum 3 %"
+
+[[rubriques.lignes]]
+valeur = "Titre alcoométrique volumique acquis minium"
+
+[[rubriques.lignes]]
+intitule = "Doux"
+valeur = "minimum 35 Doux : minimum 42"
+
+[[rubriques.lignes]]
+intitule = "Demi-sec"
+valeur = "entre 28 et 42 | Demi-sec : entre 28 et 42"
+douteux = ["Demi-sec"]
+
+[[rubriques.lignes]]
+intitule = "Brut"
+valeur = "maximum 28 Brut : maximum 28"
+
+[[rubriques.lignes]]
+valeur = "Teneur en sucres résiduels * (g/L)"
+
+[[rubriques.lignes]]
+valeur = "Acidité volatile maximale"
+
+[[rubriques.lignes]]
+valeur = "en (g/L d'acide sulfurique"
+douteux = ["d'acide"]
+
+[[rubriques]]
+titre = "(H}S04))"
+
+[[rubriques.lignes]]
+valeur = "Extrait sec total réduit minimal (g/L)"
+
+[[rubriques.lignes]]
+valeur = "Matières minérales (cendres) minimales (g/L)"
+
+[[rubriques.lignes]]
+valeur = "10 pour les cidres 10 pour les fermentés de 10 pour les pétillants de Teneur maximale en fer 10 pour les cidres bouchés pommes pommes (mg/L) 17 pour les poirés 17 pour les poirés 17 pour les fermentés de 17 pour les pétillants de bouchés poires poires"
+
+[[rubriques.lignes]]
+valeur = "Teneur maximale en éthanal total (mg/L)"
+
+[[rubriques.lignes]]
+valeur = "Teneur maximale en"
+
+[[rubriques.lignes]]
+valeur = "anhydride sulfureux total Cf. arrêté du 02/10/1997"
+
+[[rubriques.lignes]]
+valeur = "Teneur minimale en 3 si fermentation"
+
+[[rubriques.lignes]]
+valeur = "anhydride carbonique naturelle en bouteille (g/L) Sinon 4"
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Synthèse des Annexes | et Il du décret n°53-978 du 30 septembre 1953 (Décret cidre), concernant les caractéristiques des cidres, poirés, produits bouchés, fermentés de pommes ou de poires et pétillants de"
+douteux = ["Il"]
+
+[[rubriques.lignes]]
+valeur = "pommes ou de poires."
+
+[[rubriques.lignes]]
+valeur = "* Pour les dénominations « Demi sec » et « Brut », cette teneur est exprimée en saccharose."
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "D'après le décret n°53-978 du 30 septembre 1953 relatif à l'orientation de la production cidricole et à la commercialisation des cidres, poirés et de certaines boissons similaires"
+douteux = ["D'après", "l'orientation"]

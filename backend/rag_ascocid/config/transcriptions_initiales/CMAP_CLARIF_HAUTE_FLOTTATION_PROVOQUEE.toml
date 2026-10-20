@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1027 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1027
+code = "CMAP_CLARIF_HAUTE_FLOTTATION_PROVOQUEE"
+titre = "La clarification haute par flottation provoquée"
+image_sha256 = "47c7b72e9c82005cf48ab50d3ff998486257a6c2d098f3fb1a90441b673d414d"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification haute par flottation provoquée
+est une a pour synonyme : Modalité de l’étape de clarification des moûts | La flottation
+est constituée de : La déméthylation des pectines | La gélification des pectines | La flottation provoquée (en continu)
+a pour fonction : L’élimination du trouble
+a pour conséquences : De faciliter les opérations de séparation ultérieures | De réduire la durée de clarification haute | De faciliter l’organisation
+a pour équipement nécessite : Un flottateur
+est pilotée par a pour causes d’échec : L’ajout de pectinestérase | L’ajout de sels de calcium | L’injection d’azote (gazeux) | Les réglages du flottateur | Une trop faible quantité de pectines solubles du moût | Une dégradation de la pectine | Une acidité trop élevée du moût (variétés acides) | Des pratiques inadéquates (PE, Ca)"""
+
+[[rubriques]]
+titre = "est une a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de clarification des moûts"
+
+[[rubriques.lignes]]
+valeur = "La flottation"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La déméthylation des pectines"
+
+[[rubriques.lignes]]
+valeur = "La gélification des pectines"
+
+[[rubriques.lignes]]
+valeur = "La flottation provoquée (en continu)"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "L’élimination du trouble"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De faciliter les opérations de séparation ultérieures"
+
+[[rubriques.lignes]]
+valeur = "De réduire la durée de clarification haute"
+
+[[rubriques.lignes]]
+valeur = "De faciliter l’organisation"
+
+[[rubriques]]
+titre = "a pour équipement nécessite"
+
+[[rubriques.lignes]]
+valeur = "Un flottateur"
+
+[[rubriques]]
+titre = "est pilotée par a pour causes d’échec"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de pectinestérase"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de sels de calcium"
+
+[[rubriques.lignes]]
+valeur = "L’injection d’azote (gazeux)"
+
+[[rubriques.lignes]]
+valeur = "Les réglages du flottateur"
+
+[[rubriques.lignes]]
+valeur = "Une trop faible quantité de pectines solubles du moût"
+
+[[rubriques.lignes]]
+valeur = "Une dégradation de la pectine"
+
+[[rubriques.lignes]]
+valeur = "Une acidité trop élevée du moût (variétés acides)"
+
+[[rubriques.lignes]]
+valeur = "Des pratiques inadéquates (PE, Ca)"

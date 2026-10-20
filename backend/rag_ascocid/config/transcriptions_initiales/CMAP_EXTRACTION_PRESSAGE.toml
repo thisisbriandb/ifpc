@@ -1,0 +1,53 @@
+# Transcription de l'illustration de la fiche 1077 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1077
+code = "CMAP_EXTRACTION_PRESSAGE"
+titre = "Le pressage"
+image_sha256 = "a6ce7ee4b59f713cf22444cceff5809a2e56117bf88a002b0ef2bbdf8092e7c0"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 89.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le type et les caractéristiques de la presse
+(relation non lue) : Opération de l'étape d'extraction | Le pressurage | L’extraction du moût | Le mode de conduite de la presse (durée du cycle, débit d'entrée, charge de la presse, mode de remplissage...) | La force maximale appliquée | Le débit de moût en sortie | La consistance de la râpure | Son rendement | Sa productivité (production par jour) | L’oxydation de certains composés du moût (polyphénols, lipides...)"""
+anomalies = ["une colonne est loin de sa relation (inf points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "(relation non lue)"
+
+[[rubriques.lignes]]
+valeur = "Opération de l'étape d'extraction"
+douteux = ["l'étape", "d'extraction"]
+
+[[rubriques.lignes]]
+valeur = "Le pressurage"
+
+[[rubriques.lignes]]
+valeur = "L’extraction du moût"
+douteux = ["L’extraction", "moût"]
+
+[[rubriques.lignes]]
+valeur = "Le mode de conduite de la presse (durée du cycle, débit d'entrée, charge de la presse, mode de remplissage...)"
+douteux = ["d'entrée,", "remplissage...)"]
+
+[[rubriques.lignes]]
+valeur = "La force maximale appliquée"
+
+[[rubriques.lignes]]
+valeur = "Le débit de moût en sortie"
+
+[[rubriques.lignes]]
+valeur = "La consistance de la râpure"
+
+[[rubriques.lignes]]
+valeur = "Son rendement"
+
+[[rubriques.lignes]]
+valeur = "Sa productivité (production par jour)"
+
+[[rubriques.lignes]]
+valeur = "L’oxydation de certains composés du moût (polyphénols, lipides...)"
+douteux = ["L’oxydation", "(polyphénols,"]

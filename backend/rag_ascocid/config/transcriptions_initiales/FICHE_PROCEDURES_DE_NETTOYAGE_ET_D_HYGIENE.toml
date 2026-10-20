@@ -1,0 +1,203 @@
+# Transcription de l'illustration de la fiche 1574 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1574
+code = "FICHE_PROCEDURES_DE_NETTOYAGE_ET_D_HYGIENE"
+titre = "Les procédures de nettoyage et d'hygiène"
+image_sha256 = "9e21ef86acdcf6616b963299903c8c1c53f0c7c014cc61f42d599315878612ac"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 80.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Éliminer les matières Rinçage du matériel à
+. Utilisation d'eau froide à ,, .… F
+organiques solubles et les l'eau claire jusqu'à ce que
+particules non adhérentes VS Zi E l'eau soit claire (5 à 10
+grâce à l'eau. minutes).
+Contrôle visuel de la
+Après chaque utilisation. clarté et de la couleur de
+l'eau de rinçage en sortie.
+Rinçage initial
+Utilisation d'un détergent
+(solution alcaline),
+Étape 1 : Eliminer les Je , . . . !
+. , a Utilisation d'une solution circulant en circuit fermé
+souillures fixées (dépôts, , RTE
+. . d'eau et de soude pour nettoyer l'intérieur
+incrustations,
+(NaOH) à 2 %, à une des équipements. Cette Nettoyage impératif après
+encrassements,  biofilms  &bérature de 45 - 50 première phase de le passage d'un produit à
+microbiens) par un
+détergent alcalin Le LT dure 20 ds ne
+‘ minutes, en maintenant la gauoidien ET. … Contrôle éventuel en fin
+Nettoyage température. canioaux ' ' d'essai et contrôle de
+Étape 2 : Éliminer les Après chaque utilisation PONS Ste par
+souillures ayant résisté à écouvillonnage.
+l'étape | du nettoyage, par
+l'ajout d'un oxydant ajouté
+à l'agent détergent alcalin
+(dégagement de bulles en
+milieu alcalin et à chaud,
+pour les cuves.
+Ajout d'une solution  -Une à deux fois par an
+d'oxydant, en circuit pour les murs.
+fermé pour le nettoyage
+interne des équipements,
+pendant 20 minutes.
+Ajout progressif d'une
+solution de peroxyde
+d'hydrogène (H:0;) à 1%
+à la solution précédente,
+à une température de 45
+ue — 50 °C.
+renforçant l'action
+mécanique du nettoyage).
+Éliminer les traces de A
+détergent de l'étape ae Ne ou 1
+précédente et les mètre) _de Es P de
+Dee matières organiques Utilisation d'eau froide, à  Rinçage du matériel à ES
+t te restant en suspension où une température entre 15 l’eau claire pendant 10 netto à e L désinfection sc le retour au ke de
+nie hotiminnnt don it en solution, pour et 20 °C. minutes. yag ° , P
+permettre l'action du l'eau de rnçage
+A DE (généralement proche de
+désinfectant appliqué à 7
+l'étape suivante. ).
+Désinfection  impérative
+après le passage d'un
+Diminuer le nombre de Solution d'acide Circulation en circuit produit à risque, sinon Contrôle par
+RE microorganismes sur les  peracétique (C,H,0;) à 1 fermé d'un désinfectant désinfection au moins  écouvillonnage et
+surfaces et les %, à une température de (acide peracétique), une fois par semaine (en  ATPmétrie ou suivi
+équipements. 15 à 20 °C. pendant 20 minutes. fin de semaine) et microbiologique.
+idéalement désinfection
+quotidienne.
+ue _ Te 4 Contrôle du pH
+l'eau claire, de l'entrée à (bandelettes à pH ou pH-
+E a. e, sécha — Jp) NOMME
+Eliminer les traces de Eee , ; : J ge; g : ; rinçage en sortie, pour
+roduits de nettovade et Utilisation d'eau froide, à  raclage des surfaces. Après chaque procédure vérifier le retour au oH de
+Rinçage final es ction er aux Une température entre 15 Les tuyaux sont mis à de nettoyage et/ou l'eau de je ace
+. Fr et 20 °C. égoutter (en hélice sur désinfection. . çag
+étapes précédentes. : (généralement proche de
+des arbres à tuyaux, par 7)
+al sd SE Contrôle bandelettes de
+presence d'eau test de peroxyde.
+résiduelle.
+Figure 1 : Préconisations de procédures de nettoyage / désinfection dans le domaine cidricole
+Le rinçage est effectué au jet d’eau pour les surfaces extérieures des équipements, les presses à bandes, le tapis des chaînes
+d'embouteillage et les locaux (sols, caniveaux, murs). Le rinçage des surfaces internes des équipements est effectué en circuit
+fermé (centrifugeuse, cuves, tuyaux, pompes, ….)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Éliminer les matières Rinçage du matériel à"
+
+[[rubriques.lignes]]
+valeur = ". Utilisation d'eau froide à ,, .… F organiques solubles et les l'eau claire jusqu'à ce que"
+douteux = ["F"]
+
+[[rubriques.lignes]]
+valeur = "particules non adhérentes VS Zi E l'eau soit claire (5 à 10"
+douteux = ["VS", "Zi", "E"]
+
+[[rubriques.lignes]]
+valeur = "grâce à l'eau. minutes)."
+
+[[rubriques.lignes]]
+valeur = "Contrôle visuel de la"
+douteux = ["la"]
+
+[[rubriques.lignes]]
+valeur = "Après chaque utilisation. clarté et de la couleur de l'eau de rinçage en sortie."
+
+[[rubriques.lignes]]
+valeur = "Rinçage initial"
+
+[[rubriques.lignes]]
+valeur = "Utilisation d'un détergent (solution alcaline),"
+
+[[rubriques.lignes]]
+intitule = "Étape 1"
+valeur = "Eliminer les Je , . . . ! . , a Utilisation d'une solution circulant en circuit fermé"
+douteux = ["Je", "a"]
+
+[[rubriques.lignes]]
+valeur = "souillures fixées (dépôts, , RTE"
+douteux = ["RTE"]
+
+[[rubriques.lignes]]
+valeur = ". . d'eau et de soude pour nettoyer l'intérieur"
+
+[[rubriques.lignes]]
+valeur = "incrustations,"
+
+[[rubriques.lignes]]
+valeur = "(NaOH) à 2 %, à une des équipements. Cette Nettoyage impératif après"
+douteux = ["Nettoyage"]
+
+[[rubriques.lignes]]
+valeur = "encrassements,  biofilms  &bérature de 45 - 50 première phase de le passage d'un produit à"
+douteux = ["encrassements,", " biofilms", " &bérature", "première"]
+
+[[rubriques.lignes]]
+valeur = "microbiens) par un"
+
+[[rubriques.lignes]]
+valeur = "détergent alcalin Le LT dure 20 ds ne ‘ minutes, en maintenant la gauoidien ET. … Contrôle éventuel en fin Nettoyage température. canioaux ' ' d'essai et contrôle de"
+douteux = ["Le", "LT", "ds", "ne", "gauoidien", "ET.", "canioaux"]
+
+[[rubriques.lignes]]
+intitule = "Étape 2"
+valeur = "Éliminer les Après chaque utilisation PONS Ste par"
+douteux = ["Éliminer", "Après", "utilisation", "PONS", "Ste"]
+
+[[rubriques.lignes]]
+valeur = "souillures ayant résisté à écouvillonnage."
+
+[[rubriques.lignes]]
+valeur = "l'étape | du nettoyage, par l'ajout d'un oxydant ajouté à l'agent détergent alcalin (dégagement de bulles en milieu alcalin et à chaud,"
+douteux = ["l'ajout", "l'agent"]
+
+[[rubriques.lignes]]
+valeur = "pour les cuves."
+
+[[rubriques.lignes]]
+valeur = "Ajout d'une solution  -Une à deux fois par an d'oxydant, en circuit pour les murs."
+douteux = [" -Une", "circuit", "pour", "les"]
+
+[[rubriques.lignes]]
+valeur = "fermé pour le nettoyage interne des équipements, pendant 20 minutes."
+
+[[rubriques.lignes]]
+valeur = "Ajout progressif d'une solution de peroxyde"
+douteux = ["peroxyde"]
+
+[[rubriques.lignes]]
+intitule = "d'hydrogène (H"
+valeur = "0;) à 1% à la solution précédente, à une température de 45"
+douteux = ["(H:0;)"]
+
+[[rubriques.lignes]]
+valeur = "ue — 50 °C. renforçant l'action mécanique du nettoyage). Éliminer les traces de A détergent de l'étape ae Ne ou 1 précédente et les mètre) _de Es P de Dee matières organiques Utilisation d'eau froide, à  Rinçage du matériel à ES t te restant en suspension où une température entre 15 l’eau claire pendant 10 netto à e L désinfection sc le retour au ke de nie hotiminnnt don it en solution, pour et 20 °C. minutes. yag ° , P permettre l'action du l'eau de rnçage A DE (généralement proche de désinfectant appliqué à 7 l'étape suivante. ). Désinfection  impérative après le passage d'un Diminuer le nombre de Solution d'acide Circulation en circuit produit à risque, sinon Contrôle par RE microorganismes sur les  peracétique (C,H,0;) à 1 fermé d'un désinfectant désinfection au moins  écouvillonnage et surfaces et les %, à une température de (acide peracétique), une fois par semaine (en  ATPmétrie ou suivi équipements. 15 à 20 °C. pendant 20 minutes. fin de semaine) et microbiologique. idéalement désinfection quotidienne. ue _ Te 4 Contrôle du pH l'eau claire, de l'entrée à (bandelettes à pH ou pH- E a. e, sécha — Jp) NOMME"
+douteux = ["ue", "l'action", "A", "ae", "Ne", "1", "_de", "Es", "P", "Dee", "Utilisation", "à", " Rinçage", "ES", "t", "te", "où", "l’eau", "à", "L", "sc", "ke", "nie", "hotiminnnt", "don", "it", "et", "20", "l'action", "du", "rnçage", "A", "DE", "circuit", "Contrôle", "RE", " peracétique", "(C,H,0;)", "moins", " écouvillonnage", "les", "une", " ATPmétrie", "ue", "_", "Te", "4", "E", "a.", "Jp)", "NOMME"]
+
+[[rubriques.lignes]]
+intitule = "Eliminer les traces de Eee , ;"
+valeur = "J ge; g : ; rinçage en sortie, pour roduits de nettovade et Utilisation d'eau froide, à  raclage des surfaces. Après chaque procédure vérifier le retour au oH de Rinçage final es ction er aux Une température entre 15 Les tuyaux sont mis à de nettoyage et/ou l'eau de je ace . Fr et 20 °C. égoutter (en hélice sur désinfection. . çag"
+douteux = ["Eee", "J", "ge;", "g", "oH", "es", "er", "aux", "Une", "Les", "je", "ace", "Fr", "°C.", "désinfection.", "çag"]
+
+[[rubriques.lignes]]
+intitule = "étapes précédentes."
+valeur = "(généralement proche de des arbres à tuyaux, par 7) al sd SE Contrôle bandelettes de presence d'eau test de peroxyde. résiduelle."
+douteux = ["al", "sd", "SE"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Préconisations de procédures de nettoyage / désinfection dans le domaine cidricole"
+
+[[rubriques.lignes]]
+valeur = "Le rinçage est effectué au jet d’eau pour les surfaces extérieures des équipements, les presses à bandes, le tapis des chaînes d'embouteillage et les locaux (sols, caniveaux, murs). Le rinçage des surfaces internes des équipements est effectué en circuit fermé (centrifugeuse, cuves, tuyaux, pompes, ….)."
+douteux = ["chaînes", "pompes,"]

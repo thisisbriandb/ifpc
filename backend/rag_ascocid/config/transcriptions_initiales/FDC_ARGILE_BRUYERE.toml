@@ -1,0 +1,162 @@
+# Transcription de l'illustration de la fiche 1415 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1415
+code = "FDC_ARGILE_BRUYERE"
+titre = "Argile Bruyère"
+image_sha256 = "fcdd06ee3854b4bf1ea20da87e5879b1a915e06605f7b97d92258ec5dea550cc"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: ARGILE BRUYÈRE
+PRINCIPALES ZONES DE PRODUCTION
+Normandie et Picardie : Pays de Caux - Pays de Bray -
+Vimeu (Somme) et en petite quantité dans la Manche
+Variété maintenant cultivée en petites formes en Seine-
+Maritime.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 1.000 tonnes.
+Ph. Laurent
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Jacquin le 9 décembre 1964)
+Dégustation du jus : doux légèrement amer, parfumé.
+Dégustation du cidre : habituellement sec et parfumé.
+Rendement en jus (%) : 66.
+Densité du jus : 1062,3 - Alcool en puissance : 8°.
+Acidité de titration en g. SO‘H: par litre : 1,51.
+Azote/sucres totaux : 1,35.
+Tanin (en g. par litre) : 2,16.
+Aspect du jus : très coloré.
+Parfum : développé.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Port : élevé.
+Résistance aux maladies : satisfaisante. Les fruits sont généralement sains.
+Productivité : satisfaisante sur les jeunes arbres.
+Saison de floraison : 2e-3e,
+Saison de maturité : 3e.
+Conservation et transport des fruits : très faciles.
+Grosseur du fruit: supérieure à la moyenne en particulier sur les arbres
+bien cultivés.
+OBSERVATIONS DIVERSES
+L'aspect du fruit - liégeux avec plages dorées à maturité, légèrement
+veinées de rouge - varie suivant les années, les arbres et leur exposition.
+Il existe de nombreuses variétés appelées Argile qui n'ont pas les mêmes
+caractéristiques et avec lesquelles il ne faut pas la confondre.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er) @
+Edition 1964"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Normandie et Picardie : Pays de Caux - Pays de Bray - Vimeu (Somme) et en petite quantité dans la Manche Variété maintenant cultivée en petites formes en Seine- Maritime."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 1.000 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Laurent"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Jacquin le 9 décembre 1964"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux légèrement amer, parfumé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "habituellement sec et parfumé."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "66."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1062,3"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "8°."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘H"
+valeur = "par litre : 1,51."
+douteux = ["SO‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "1,35."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,16."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "très coloré."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "développé."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "élevé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "satisfaisante. Les fruits sont généralement sains."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "satisfaisante sur les jeunes arbres."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e,"
+douteux = ["2e-3e,"]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très faciles."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "supérieure à la moyenne en particulier sur les arbres bien cultivés."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "L'aspect du fruit - liégeux avec plages dorées à maturité, légèrement veinées de rouge - varie suivant les années, les arbres et leur exposition. Il existe de nombreuses variétés appelées Argile qui n'ont pas les mêmes caractéristiques et avec lesquelles il ne faut pas la confondre."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er) @"
+douteux = ["(1er)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1964"

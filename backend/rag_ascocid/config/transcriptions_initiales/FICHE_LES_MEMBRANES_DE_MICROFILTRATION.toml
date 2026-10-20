@@ -1,0 +1,28 @@
+# Transcription de l'illustration de la fiche 1484 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1484
+code = "FICHE_LES_MEMBRANES_DE_MICROFILTRATION"
+titre = "Les membranes de microfiltration"
+image_sha256 = "be5d7f042ebca6dc2d48aa5f21fc051bf0bc4fc4ac6da56bbb944eccaef68ff1"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Filtres en (a) acétate ou (b) Figure 2 : Membrane spirale (Lentech)
+nitrate de cellulose (filtres Sartorius)
+Figure 3 : Membrane de filtration capillaire | Figure 4 : Membranes en céramique
+(Bürker) (Tamis)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Filtres en (a) acétate ou (b) Figure 2 : Membrane spirale (Lentech) nitrate de cellulose (filtres Sartorius)"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Membrane de filtration capillaire | Figure 4 : Membranes en céramique (Bürker) (Tamis)"

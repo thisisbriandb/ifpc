@@ -1,0 +1,69 @@
+# Transcription de l'illustration de la fiche 1536 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1536
+code = "FDC_ETAPE_FERMENTAIRE"
+titre = "L'étape fermentaire"
+image_sha256 = "b9313b7b90694656116c22f67c05ec073d175082d7925e4f73155ed361de4aa9"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Méthode FR Méthc
+(Fermentation Ralentie) (Fermentation
+Moûts à fermenter Moûts à f
+Transfert en cuve à fermentation, Transfert en cu
+Mise en fermentation Mise en fi
+Croissance des levures et augmentation Croissance des lev
+de la vitesse de fermentation : de la vitesse c
+Fermentation primaire Fermentati
+Réduction de biomasse Arrêt de la fermentat
+(Décantation à froid, Centrifugation, Filtration) en fonction de la
+Elimination
+| (centrifugation, micrc
+Reprise de fermentation
+(+ lente)
+| Éventue
+Éventuelle nouvelle réduction de biomasse
+en cas de reprise de croissance des Conservation à b
+levures (équivaut à des soutirages
+Cidres en fermentation lente, Cidres stabilis
+pour assemblage
+Figure 1 : L’éte"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Méthode FR Méthc"
+douteux = ["Méthc"]
+
+[[rubriques.lignes]]
+valeur = "(Fermentation Ralentie) (Fermentation Moûts à fermenter Moûts à f Transfert en cuve à fermentation, Transfert en cu Mise en fermentation Mise en fi Croissance des levures et augmentation Croissance des lev de la vitesse de fermentation : de la vitesse c Fermentation primaire Fermentati Réduction de biomasse Arrêt de la fermentat (Décantation à froid, Centrifugation, Filtration) en fonction de la Elimination | (centrifugation, micrc"
+douteux = ["fi", "c", "fermentat"]
+
+[[rubriques.lignes]]
+valeur = "Reprise de fermentation"
+
+[[rubriques.lignes]]
+valeur = "(+ lente)"
+
+[[rubriques.lignes]]
+valeur = "| Éventue"
+
+[[rubriques.lignes]]
+valeur = "Éventuelle nouvelle réduction de biomasse"
+
+[[rubriques.lignes]]
+valeur = "en cas de reprise de croissance des Conservation à b levures (équivaut à des soutirages"
+douteux = ["b"]
+
+[[rubriques.lignes]]
+valeur = "Cidres en fermentation lente, Cidres stabilis pour assemblage"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "L’éte"
+douteux = ["L’éte"]

@@ -1,0 +1,154 @@
+# Transcription de l'illustration de la fiche 1450 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1450
+code = "FDC_RENE_MARTIN"
+titre = "René Martin"
+image_sha256 = "4b5073b7fb6e428b97ef83db5ae3db751c15109bddb058909bb557d1c3ae35df"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: RENÉ MARTIN
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Calvados : Livarot - Mesnil Guillaume - St Gabriel.
+POSSIBILITES de COMMERCIALISATION en bonne année
+Tonnage insignifiant
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse du Laboratoire de Caen le 22-12-60)
+Dégustation du fruit : acide, peu sucré.
+Dégustation du jus : très acide avec pointe d'amertume.
+Rendement en jus (%) : 70.
+Densité du jus : 1 048,8.
+Acidité de titration en g. SO* H° par litre : 5,92.
+Azote/Sucres totaux : 0,37.
+Tanin (en g. par litre) : 1,90.
+Couleur du jus : assez pâle.
+Parfum : faible.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Port : légèrement érigé chez les arbres jeunes.
+Résistance aux maladies : sensible à la tavelure des feuilles et des fruits
+2 années sur 10.
+Productivité : bonne - mais alternante.
+Saison de floraison : 3e.
+Saison de maturité : 2°-3e.
+Conservation et transport des fruits : bons pour des fruits de 2e saison.
+Grosseur du fruit : au-dessous de la moyenne.
+OBSERVATIONS DIVERSES
+Variété très localisée, de dispersion récente, inconnue en dehors du
+Calvados. À ne pas planter dans les lieux favorables à la tavelure.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Calvados : Livarot - Mesnil Guillaume - St Gabriel."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques.lignes]]
+valeur = "Tonnage insignifiant"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse du Laboratoire de Caen le 22-12-60"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acide, peu sucré."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "très acide avec pointe d'amertume."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "70."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 048,8."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H° par litre"
+valeur = "5,92."
+douteux = ["H°"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,37."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,90."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "assez pâle."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "faible."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "légèrement érigé chez les arbres jeunes."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "sensible à la tavelure des feuilles et des fruits"
+
+[[rubriques]]
+titre = "2 années sur 10."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne - mais alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°-3e."
+douteux = ["2°-3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons pour des fruits de 2e saison."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "au-dessous de la moyenne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété très localisée, de dispersion récente, inconnue en dehors du Calvados. À ne pas planter dans les lieux favorables à la tavelure."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)"
+douteux = ["(1*r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

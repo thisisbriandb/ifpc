@@ -1,0 +1,37 @@
+# Transcription de l'illustration de la fiche 1389 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1389
+code = "FICHE_ACIDES_PHENOLIQUES_POLYPHENOL"
+titre = "Les acides phénoliques de la pomme"
+image_sha256 = "a4e963134367077046859eae4b8a248ccb6dcaf302db28aa69fdbdf57b1adc1f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Les acides hydroxycinnamiques sont des dérivés phénoliques de l'acide
+cinnamique (a).
+Les formes libres sont l'acide para-coumarique (b) et l'acide caféique (c). Les esters quiniques de ces deux
+acides donnent respectivement : l'acide para-coumaroylquinique (d) et l'acide caféoylquinique (e). Seules
+les formes estérifiées sont présentes dans les pommes saines, mais des formes libres sont aussi
+présentes dans le moût et le cidre, dans certaines conditions."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les acides hydroxycinnamiques sont des dérivés phénoliques de l'acide cinnamique (a)."
+
+[[rubriques.lignes]]
+valeur = "Les formes libres sont l'acide para-coumarique (b) et l'acide caféique (c). Les esters quiniques de ces deux"
+
+[[rubriques.lignes]]
+intitule = "acides donnent respectivement"
+valeur = "l'acide para-coumaroylquinique (d) et l'acide caféoylquinique (e). Seules"
+
+[[rubriques.lignes]]
+valeur = "les formes estérifiées sont présentes dans les pommes saines, mais des formes libres sont aussi présentes dans le moût et le cidre, dans certaines conditions."
+douteux = ["conditions."]

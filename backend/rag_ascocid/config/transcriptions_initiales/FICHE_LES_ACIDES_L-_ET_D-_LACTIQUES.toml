@@ -1,0 +1,47 @@
+# Transcription de l'illustration de la fiche 1496 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1496
+code = "FICHE_LES_ACIDES_L-_ET_D-_LACTIQUES"
+titre = "Les acides L- et D- lactiques"
+image_sha256 = "0a3823842a61c5ec21f9f581dc4aa0dde2a0f30492c4d9f8fa96bb222d1741ee"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Structure chimique Figure 2 : Formation de l'acide L-lactique lors de
+de l'acide lactique la Transformation Malolactique (TML)
+Enzyme
+malolactique
+Acide malique Acide L-lactique + CO,
+Figure 3 : Synthèse de l'acide D-lactique pouvant
+OH conduire à une piqûre lactique
+| D-Glucose + Acide D-lactique
+Acide carboxylique + Acide acétique"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure chimique Figure 2 : Formation de l'acide L-lactique lors de de l'acide lactique la Transformation Malolactique (TML)"
+douteux = ["l'acide", "l'acide"]
+
+[[rubriques.lignes]]
+valeur = "Enzyme malolactique"
+
+[[rubriques.lignes]]
+valeur = "Acide malique Acide L-lactique + CO,"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Synthèse de l'acide D-lactique pouvant OH conduire à une piqûre lactique"
+douteux = ["l'acide", "piqûre"]
+
+[[rubriques.lignes]]
+valeur = "| D-Glucose + Acide D-lactique"
+
+[[rubriques.lignes]]
+valeur = "Acide carboxylique + Acide acétique"

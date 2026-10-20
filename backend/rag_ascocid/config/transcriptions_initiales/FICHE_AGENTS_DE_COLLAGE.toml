@@ -1,0 +1,13 @@
+# Transcription de l'illustration de la fiche 1382 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1382
+code = "FICHE_AGENTS_DE_COLLAGE"
+titre = "Les agents de collage"
+image_sha256 = "4707951aee2dc9d5b7347b3a39028935f3091f4771c7b7a82ea68c289d0ab173"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 0.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = ""

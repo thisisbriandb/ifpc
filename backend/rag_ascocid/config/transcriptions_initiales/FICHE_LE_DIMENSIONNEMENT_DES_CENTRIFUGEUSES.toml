@@ -1,0 +1,54 @@
+# Transcription de l'illustration de la fiche 1510 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1510
+code = "FICHE_LE_DIMENSIONNEMENT_DES_CENTRIFUGEUSES"
+titre = "Le dimensionnement des centrifugeuses"
+image_sha256 = "0664f777d7f4e75aa8788dee8730f4cce2829a1ab93296e25e7de4d3f442d74b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+VX Flottweg
+Separation Technology
+Force centrifuge
+Figure 1 : Représentation schématique | Figure 2 : Schéma des principaux éléments du bol d'une
+du principe de la force centrifuge F., où | centrifugeuse : (1) bol du séparateur, (2) tube d'alimentation fixe, (3)
+m correspond à la masse de l’objet et | distributeur pour accélérer le produit, (4) chambre à boues, (5) pile
+G à l'accélération centrifuge. d'assiettes, (6) turbine fixe pour la sortie du liquide clarifié, (7) garde
+hydraulique.
+Source schéma: Flottweg"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "VX Flottweg"
+douteux = ["VX"]
+
+[[rubriques.lignes]]
+valeur = "Separation Technology"
+
+[[rubriques.lignes]]
+valeur = "Force centrifuge"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique | Figure 2 : Schéma des principaux éléments du bol d'une"
+
+[[rubriques.lignes]]
+valeur = "du principe de la force centrifuge F., où | centrifugeuse : (1) bol du séparateur, (2) tube d'alimentation fixe, (3)"
+douteux = ["F.,", "d'alimentation"]
+
+[[rubriques.lignes]]
+valeur = "m correspond à la masse de l’objet et | distributeur pour accélérer le produit, (4) chambre à boues, (5) pile"
+
+[[rubriques.lignes]]
+valeur = "G à l'accélération centrifuge. d'assiettes, (6) turbine fixe pour la sortie du liquide clarifié, (7) garde hydraulique."
+douteux = ["l'accélération", "d'assiettes,"]
+
+[[rubriques.lignes]]
+intitule = "Source schéma"
+valeur = "Flottweg"

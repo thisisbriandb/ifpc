@@ -1,0 +1,27 @@
+# Transcription de l'illustration de la fiche 1361 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1361
+code = "CMAP_PRODUITS"
+titre = "Les produits"
+image_sha256 = "9f75fbcf827c63aa98d94d2b5efce37dc15bb812e3233b1ab2c118aaaf0cec70"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 31.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+en? , 4 w ARE) D | “4 F4 _ (Æ SP Pr 4 p U à! . es. 4 mme \\ manie
+(relation non lue) : e 3 Re DNS , 2 We — me 5 F ete ; SNS : 5 2. È J sé EST L. 4 22. 4 TRE 2 | | Jepron ete 2 | | Le. ss PES y tif Does 5 152 2j) ne, 7 , | cé see. ST RSS f£ 252720 Ge one sd ‘ | PRES ; IIS 1/48 M 2. FRS 2. SRE PRE . AIS 2 | 2. .e MIS | ( En SAS { 22. SE rie, ti } ue \"RAT | “2e, EE ARTE | 44 # d 2 . FÈ PR * 54 \"41 Er. A1 pu ” ES H] 0 : e - 2 : CAE g'; | à déaié: DA ALT Lér D d : “4 £ 4 à A # 14 * LL < 19 À * 4 ME? cachés 1 7 | (Ne pen a auanitills is 4 ” | il ! ù CEE NE ns — = Fr RARE TETE LES tre 4 NE NE nn EU qe ——— HG, 2 Ti Î M: à 1 | NET ET \\ Î | + es y [8 ? | EE : LL 4? % It 4 | 1} LA à i | | 1 @ ja be. A 4 (M Li EL. s “ + 4 M: ù x Ci 1 k | ‘2 L 7 3 - —* BREE"""
+anomalies = ["une colonne est loin de sa relation (inf points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "(relation non lue)"
+
+[[rubriques.lignes]]
+valeur = "e 3 Re DNS , 2 We — me 5 F ete ; SNS : 5 2. È J sé EST L. 4 22. 4 TRE 2 | | Jepron ete 2 | | Le. ss PES y tif Does 5 152 2j) ne, 7 , | cé see. ST RSS f£ 252720 Ge one sd ‘ | PRES ; IIS 1/48 M 2. FRS 2. SRE PRE . AIS 2 | 2. .e MIS | ( En SAS { 22. SE rie, ti } ue \"RAT | “2e, EE ARTE | 44 # d 2 . FÈ PR * 54 \"41 Er. A1 pu ” ES H] 0 : e - 2 : CAE g'; | à déaié: DA ALT Lér D d : “4 £ 4 à A # 14 * LL < 19 À * 4 ME? cachés 1 7"
+douteux = ["SNS", "2", "We", "me", "5", "F", "5", "tif", "Does", "5", "cé", "see.", "ST", "sé", "EST", "L.", "4", "TRE", "2", "Jepron", "ete", "2", "152", "2j)", "ne,", "7", "252720", "Ge", "one", "sd", "IIS", "1/48", "M", "AIS", "2", "En", "SAS", ".e", "MIS", "ARTE", "FÈ", "PR", "54", "\"41", "CAE", "g';", "ALT", "Lér", "D", "d", "“4", "4", "ME?", "cachés", "4", "A", "1", "7", "ete", "Re", "DNS", "e", "3", "RSS", "f£", "PRES", "2.", "FRS", "2.", "SRE", "PRE", "2.", "22.", "4", "2.", "È", "J", "22.", "Le.", "ss", "PES", "y", "SE", "rie,", "“2e,", "EE", "ti", "ue", "\"RAT", "Er.", "A1", "pu", "ES", "44", "d", "2", "e", "2", "H]", "0", "14", "à", "déaié:", "DA", "LL", "19", "À"]
+
+[[rubriques.lignes]]
+valeur = "(Ne pen a auanitills is 4 ” | il ! ù CEE NE ns — = Fr RARE TETE LES tre 4 NE NE nn EU qe ——— HG, 2 Ti Î M: à 1 | NET ET \\ Î | + es y [8 ? | EE : LL 4? % It 4 | 1} LA à i | | 1 @ ja be. A 4 (M Li EL. s “ + 4 M: ù x Ci 1 k | ‘2 L 7 3 - —* BREE"
+douteux = ["(Ne", "pen", "a", "auanitills", "is", "ns", "Fr", "RARE", "TETE", "LES", "tre", "NE", "NE", "nn", "EU", "qe", "NET", "ET", "EE", "LL", "4?", "EL.", "s", "4", "M:", "ù", "BREE", "il", "ù", "CEE", "NE", "HG,", "2", "Ti", "Î", "M:", "à", "Î", "es", "y", "[8", "It", "4", "1}", "LA", "à", "i", "1", "ja", "be.", "A", "(M", "Li", "x", "Ci", "1", "k", "‘2", "7", "3"]

@@ -1,0 +1,66 @@
+# Transcription de l'illustration de la fiche 1031 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1031
+code = "CMAP_CLARIFICATION_FLOTTATION_PROVOQUEE"
+titre = "La flottation provoquée"
+image_sha256 = "c8c019d7680faf65836366a115c50e2527b9b92733c2a3bfd95cbf7f77557920"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La flottation « provoquée »
+est une : Opération de la clarification haute par flottation provoquée
+a pour synonyme : La montée du « chapeau brun »
+a pour conséquence : La remontée des bourbes
+nécessite : Une injection d’azote gazeux
+est influencée par : Les réglages du flottateur | La température du moût
+a pour équipement : Un flottateur
+est évaluée par : La limpidité du moût traité"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de la clarification haute par flottation provoquée"
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "La montée du « chapeau brun »"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "La remontée des bourbes"
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "Une injection d’azote gazeux"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Les réglages du flottateur"
+
+[[rubriques.lignes]]
+valeur = "La température du moût"
+
+[[rubriques]]
+titre = "a pour équipement"
+
+[[rubriques.lignes]]
+valeur = "Un flottateur"
+
+[[rubriques]]
+titre = "est évaluée par"
+
+[[rubriques.lignes]]
+valeur = "La limpidité du moût traité"

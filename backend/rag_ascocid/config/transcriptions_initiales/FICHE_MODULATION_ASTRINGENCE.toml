@@ -1,0 +1,48 @@
+# Transcription de l'illustration de la fiche 1386 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1386
+code = "FICHE_MODULATION_ASTRINGENCE"
+titre = "Comment moduler l’astringence des cidres"
+image_sha256 = "2dd2b99fadac95507a94051db2e0f407b7c6daf4159e08d801342bf4e6c92df8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+ECatéchines
+B Procyanidines
+O Ac. hydroxycinnamiques
+ODihydrochalcones
+Sans oxydation Avec oxydation
+Traitements
+Figure 1 : Effet visuel des procédés pour Marie Figure 2 : Réduction de la teneur en polyphénols par
+Ménard avec, à gauche, les moûts non oxydés (non différentes méthodes de clarification préfermentaire
+collé et collé) et à droite les moûts oxydés (non collé sur des moûts préparés avec ou sans protection de
+et collé). la râpure contre l'oxydation."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "ECatéchines"
+douteux = ["ECatéchines"]
+
+[[rubriques.lignes]]
+valeur = "B Procyanidines"
+douteux = ["B"]
+
+[[rubriques.lignes]]
+valeur = "O Ac. hydroxycinnamiques ODihydrochalcones"
+douteux = ["O", "Ac.", "ODihydrochalcones"]
+
+[[rubriques.lignes]]
+valeur = "Sans oxydation Avec oxydation"
+
+[[rubriques.lignes]]
+valeur = "Traitements"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Effet visuel des procédés pour Marie Figure 2 : Réduction de la teneur en polyphénols par Ménard avec, à gauche, les moûts non oxydés (non différentes méthodes de clarification préfermentaire collé et collé) et à droite les moûts oxydés (non collé sur des moûts préparés avec ou sans protection de et collé). la râpure contre l'oxydation."

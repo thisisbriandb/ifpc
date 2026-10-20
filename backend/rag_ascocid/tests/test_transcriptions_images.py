@@ -127,3 +127,48 @@ def test_guillemets_et_antislash_survivent_au_toml(tmp_path):
 
 def test_ligne_ocr_sans_texte_ignoree():
     assert ti.structurer([LigneOcr(texte="  ", confiance=0)]) == ("", [])
+
+
+# ── Point de départ livré avec le code ───────────────────────────────────────
+
+
+def test_semer_amene_ce_qui_manque_sans_jamais_ecraser_une_relecture(tmp_path):
+    livrees, volume = tmp_path / "livrees", tmp_path / "volume"
+    livrees.mkdir()
+
+    def ecrire(dossier, code, statut, valeur):
+        ti.enregistrer(dossier, ti.TranscriptionImage(
+            idoc=1, code=code, titre=code, image_sha256="s", statut=statut,
+            rubriques=[ti.Rubrique(titre="R", lignes=[ti.Ligne(valeur=valeur)])]))
+
+    for code in ("NOUVELLE", "NON_RELUE", "RELUE", "ILLISIBLE"):
+        ecrire(livrees, code, "a_verifier", "version livrée")
+    assert ti.semer(livrees, volume) == (4, 0)            # volume vide : tout est amené
+    assert ti.semer(livrees, volume) == (0, 0)            # rien n'a changé : rien n'est refait
+
+    (volume / "NOUVELLE.toml").unlink()
+    ecrire(volume, "NON_RELUE", "a_verifier", "ancienne extraction")
+    ecrire(volume, "RELUE", "valide", "corrigée par l'IFPC")
+    (volume / "ILLISIBLE.toml").write_text("ceci n'est pas du TOML [", encoding="utf-8")
+
+    assert ti.semer(livrees, volume) == (1, 1)
+    valeur = lambda code: ti.charger(volume / f"{code}.toml").rubriques[0].lignes[0].valeur  # noqa: E731
+    assert valeur("NOUVELLE") == "version livrée"
+    assert valeur("NON_RELUE") == "version livrée"         # personne n'y avait touché
+    assert valeur("RELUE") == "corrigée par l'IFPC"        # la relecture est intacte
+    assert (volume / "ILLISIBLE.toml").read_text(encoding="utf-8").startswith("ceci n'est pas")
+
+
+def test_semer_sans_copie_livree_ne_fait_rien(tmp_path):
+    assert ti.semer(tmp_path / "absent", tmp_path / "volume") == (0, 0)
+
+
+def test_les_transcriptions_livrees_se_chargent_toutes():
+    from pathlib import Path
+
+    dossier = Path(__file__).resolve().parent.parent / "config" / "transcriptions_initiales"
+    erreurs: list[str] = []
+    transcriptions = ti.charger_dossier(dossier, erreurs)
+    assert erreurs == []
+    assert len(transcriptions) >= 390
+    assert {t.code.split("_", 1)[0] for t in transcriptions} >= {"FDC", "FICHE", "CMAP"}

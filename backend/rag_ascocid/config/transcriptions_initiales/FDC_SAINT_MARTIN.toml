@@ -1,0 +1,157 @@
+# Transcription de l'illustration de la fiche 1454 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1454
+code = "FDC_SAINT_MARTIN"
+titre = "Saint-Martin"
+image_sha256 = "59ff9c23bfd11259fb8d9f0a27bdbab778dfcda4a8ddcd6795b89a7cb5410593"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: SAINT-MARTIN
+PRINCIPALES ZONES DE PRODUCTION
+Calvados : Pays d'Auge.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 1.500 tonnes.
+Ph. Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+(moyenne de deux analyses de MM. Tavernier et Jacquin
+des 29-12-1949 et 31-1-1966)
+Dégustation du jus : doux légèrement amer.
+Dégustation du cidre : doux avec un peu d'amertume.
+Rendement en jus (%) : 55,4.
+Densité du jus : 1061,6 - Alcool en puissance : 7° 9.
+Acidité de titration en g. SO'H: par litre : 1,9.
+Azote/sucres totaux : 0,57.
+Tanin (en g. par litre) : 2,36.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : très grande.
+Port : secteur sphérique étroit.
+Résistance aux maladies : grande. Tavelure et oïdium plutôt exceptionnels.
+Productivité : grande.
+Saison de floraison : 3°.
+Saison de maturité : début 3e.
+Conservation et transport des fruits : très bons.
+Calibre du fruit : petit en très forte production - plutôt gros en production
+normale.
+Précocité de mise à fruits : assez bonne.
+OBSERVATIONS DIVERSES
+Fruits de grosseur variable suivant l'importance de la récolte.
+Arbre pouvant devenir très volumineux en terrain riche.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1°') @)
+Edition 1965"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Calvados : Pays d'Auge."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 1.500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(moyenne de deux analyses de MM. Tavernier et Jacquin des 29-12-1949 et 31-1-1966)"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux légèrement amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux avec un peu d'amertume."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "55,4."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1061,6"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "7° 9."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'H"
+valeur = "par litre : 1,9."
+douteux = ["SO'H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,57."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,36."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "très grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "secteur sphérique étroit."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "grande. Tavelure et oïdium plutôt exceptionnels."
+douteux = ["oïdium"]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3°."
+douteux = ["3°."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "début 3e."
+douteux = ["3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "petit en très forte production - plutôt gros en production normale."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "assez bonne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Fruits de grosseur variable suivant l'importance de la récolte. Arbre pouvant devenir très volumineux en terrain riche."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1°') @)"
+douteux = ["(1°')"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1965"

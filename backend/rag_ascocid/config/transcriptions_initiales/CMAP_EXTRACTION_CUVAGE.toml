@@ -1,0 +1,78 @@
+# Transcription de l'illustration de la fiche 1074 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1074
+code = "CMAP_EXTRACTION_CUVAGE"
+titre = "Le cuvage de la râpure"
+image_sha256 = "531d4b93fd2ee1fc8e26ac7ac0c3397b926546509eda47bf0ed48e3b1a9dd842"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le cuvage de la râpure
+est une : Opération facultative de l’étape d’extraction
+a pour synonyme : La macération
+a pour fonctions : La diffusion de la pectine soluble | La diminution de l’astringence
+a pour effet : D’ajuster le flux de râpage au flux de pressage
+est piloté par : Le temps de séjour en cuve
+est influencé par : La température de la râpure
+a pour conséquences : L’adsorption de procyanidines (tanins) sur la râpure | Une oxydation du marc en surface | La diffusion de composés vers le jus (pectine, polyphénols …) | Une légère augmentation du rendement de pressage | Une diffusion de composés responsables de l’arôme des cidres"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape d’extraction"
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "La macération"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "La diffusion de la pectine soluble"
+
+[[rubriques.lignes]]
+valeur = "La diminution de l’astringence"
+
+[[rubriques]]
+titre = "a pour effet"
+
+[[rubriques.lignes]]
+valeur = "D’ajuster le flux de râpage au flux de pressage"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Le temps de séjour en cuve"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La température de la râpure"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "L’adsorption de procyanidines (tanins) sur la râpure"
+
+[[rubriques.lignes]]
+valeur = "Une oxydation du marc en surface"
+
+[[rubriques.lignes]]
+valeur = "La diffusion de composés vers le jus (pectine, polyphénols …)"
+
+[[rubriques.lignes]]
+valeur = "Une légère augmentation du rendement de pressage"
+
+[[rubriques.lignes]]
+valeur = "Une diffusion de composés responsables de l’arôme des cidres"

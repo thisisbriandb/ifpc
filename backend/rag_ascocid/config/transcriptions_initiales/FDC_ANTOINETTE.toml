@@ -1,0 +1,158 @@
+# Transcription de l'illustration de la fiche 1414 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1414
+code = "FDC_ANTOINETTE"
+titre = "Antoinette"
+image_sha256 = "b4d4383b00f368184705225a86d5000c1c63119ae66cb79824be11664c3aeff7"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: ANTOINETTE
+PRINCIPALES ZONES DE PRODUCTION
+Seine-Maritime : Pays de Caux et Vallée de la Seine.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 2.000 tonnes.
+Ph. Laurent
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin du 12 novembre 1951)
+Dégustation du jus : doux.
+Dégustation du cidre : amer.
+Rendement du jus (4) : 57,2.
+Densité du jus : 1048,6 - Alcool en puissance : 6° 2.
+Acidité de titration en g. SO'H: par litre : 2,55.
+Azote/sucres totaux : 1,07.
+Tanin (en g. par litre) : 2,42.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : très bonne.
+Port : érigé.
+Résistance aux maladies : assez bonne en général mais sujette certaines
+années à l'oïdium et à la tavelure.
+Productivité : bonne.
+Saison de floraison : 1'e-2e.
+Saison de maturité : 2°.
+Conservation et transport des fruits : moyens.
+Calibre du fruit : moyen.
+Précocité de mise à fruits : bonne à très bonne.
+OBSERVATIONS DIVERSES
+Variété appréciée en Seine-Maritime et dans l'Oise.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler) @
+Edition 1965"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Seine-Maritime : Pays de Caux et Vallée de la Seine."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 2.000 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Laurent"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin du 12 novembre 1951"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement du jus (4)"
+valeur = "57,2."
+douteux = ["(4)"]
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1048,6"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "6° 2."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'H"
+valeur = "par litre : 2,55."
+douteux = ["SO'H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "1,07."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,42."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "très bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "érigé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez bonne en général mais sujette certaines années à l'oïdium et à la tavelure."
+douteux = ["l'oïdium"]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "1'e-2e."
+douteux = ["1'e-2e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "moyens."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "bonne à très bonne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété appréciée en Seine-Maritime et dans l'Oise."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler) @"
+douteux = ["Paris", "(ler)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1965"

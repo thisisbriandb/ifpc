@@ -1,0 +1,44 @@
+# Transcription de l'illustration de la fiche 1403 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1403
+code = "FICHE_LES_TYPES_DE_PRESSES"
+titre = "Les types de presses"
+image_sha256 = "8a4e93972c4fa8e83ef6900884a7028593ef57e986dd8119cfe238ae74d30171"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Avant pressage En cours de pressage
+Boudin non gonflé Boudin gonflé
+Râpure de pomme Räpure de pomme pressée
+Moût de pomme
+Figure 1 : La presse à paquet, photo de la presse Figure 2 : Les presses à corbeille, schéma de
+(a) et des claies (b) en cours de pressage, montage l'hydropresse au repos et en fonctionnement (a), photo
+du gâteau (c et d). Source : UNICID d'une presse pneumatique (b)
+Figure 3 : Une presse à bande, photo d'ensemble Figure 4 : La presse Bücher-Guyer, photo d'ensemble (a),
+(a), Coupe de la presse (b), Représentation vue sur les drains (b), coupe schématique d'un drain (c),
+schématique du cycle de pressage (c) représentation schématique du cycle de pressage (d)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Avant pressage En cours de pressage"
+
+[[rubriques.lignes]]
+valeur = "Boudin non gonflé Boudin gonflé Râpure de pomme Räpure de pomme pressée"
+douteux = ["Râpure", "Räpure"]
+
+[[rubriques.lignes]]
+valeur = "Moût de pomme"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La presse à paquet, photo de la presse Figure 2 : Les presses à corbeille, schéma de (a) et des claies (b) en cours de pressage, montage l'hydropresse au repos et en fonctionnement (a), photo du gâteau (c et d). Source : UNICID d'une presse pneumatique (b)"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Une presse à bande, photo d'ensemble Figure 4 : La presse Bücher-Guyer, photo d'ensemble (a), (a), Coupe de la presse (b), Représentation vue sur les drains (b), coupe schématique d'un drain (c), schématique du cycle de pressage (c) représentation schématique du cycle de pressage (d)"

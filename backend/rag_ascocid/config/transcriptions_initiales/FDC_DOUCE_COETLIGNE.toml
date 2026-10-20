@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1464 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1464
+code = "FDC_DOUCE_COETLIGNE"
+titre = "Douce Coetligné"
+image_sha256 = "6d43d985c9c61b8dac28cb330e4391ce8131a4fd94035c0055a327c139e04bd6"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+faible à moyenne (moyenne à forte au PRM12) selon la vigueur et la
+charge.
+A la plantation, le scion a souvent de nombreux anticipés vigoureux. 3 à 5 anticipés bien répartis le long du
+tronc peuvent être conservés. En l'absence de ce type d'anticipés, il est préférable de tous les supprimer.
+En effet, les anticipés même ouverts au départ, ont tendance à se renforcer par la suite.
+Les premières années, dès qu'un étranglement est pressenti, la suppression progressive des quelques
+ramifications les plus concurrentes est nécessaire afin de faire monter l'arbre. Une arcure sous l'horizontale des
+autres dominantes, bien positionnées, est possible, en les vrillant par exemple.
+Les gourmands fréquents doivent être supprimés surtout lorsqu'ils se situent à la base des branches, près du
+tronc. Vers l'extrémité de la branche, leur conservation contribue à augmenter la ramification. lIs peuvent être
+inclinés en les vrillant s'ils sont trop vigoureux. De même, les « pattes d'oie » en bout de branches peuvent être
+conservées. Une augmentation de la ramification à l'extrémité de la branche favorisera une ouverture de celle-ci
+(charge de fruits plus élevée).
+ASPECT RECOLTE
+moyen à gros (50 à 70g)
+fruit aplati à épiderme de couleur jaune avec
+souvent présence de rugosité.
+début à mi octobre 4
+Le potentiel de grossissement des
+fruits est élevé (90 à 100 g).
+bonne conservation des fruits
+au sol.
+totale le plus souvent. .
+Faible Moyen Important
+D 120-150 |
+D 1047-1059
+1,2 -1,8
+182,1
+55-70 |
+3,8 à 4,1
+à préciser
+douce sucrée, peu parfumée
+sucré
+Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "faible à moyenne (moyenne à forte au PRM12) selon la vigueur et la charge."
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion a souvent de nombreux anticipés vigoureux. 3 à 5 anticipés bien répartis le long du tronc peuvent être conservés. En l'absence de ce type d'anticipés, il est préférable de tous les supprimer."
+douteux = ["d'anticipés,"]
+
+[[rubriques.lignes]]
+valeur = "En effet, les anticipés même ouverts au départ, ont tendance à se renforcer par la suite."
+
+[[rubriques.lignes]]
+valeur = "Les premières années, dès qu'un étranglement est pressenti, la suppression progressive des quelques ramifications les plus concurrentes est nécessaire afin de faire monter l'arbre. Une arcure sous l'horizontale des autres dominantes, bien positionnées, est possible, en les vrillant par exemple."
+douteux = ["qu'un", "l'arbre."]
+
+[[rubriques.lignes]]
+valeur = "Les gourmands fréquents doivent être supprimés surtout lorsqu'ils se situent à la base des branches, près du tronc. Vers l'extrémité de la branche, leur conservation contribue à augmenter la ramification. lIs peuvent être inclinés en les vrillant s'ils sont trop vigoureux. De même, les « pattes d'oie » en bout de branches peuvent être conservées. Une augmentation de la ramification à l'extrémité de la branche favorisera une ouverture de celle-ci (charge de fruits plus élevée)."
+douteux = ["lIs"]
+
+[[rubriques]]
+titre = "ASPECT RECOLTE"
+
+[[rubriques.lignes]]
+valeur = "moyen à gros (50 à 70g)"
+
+[[rubriques.lignes]]
+valeur = "fruit aplati à épiderme de couleur jaune avec"
+
+[[rubriques.lignes]]
+valeur = "souvent présence de rugosité. début à mi octobre 4 Le potentiel de grossissement des"
+
+[[rubriques.lignes]]
+valeur = "fruits est élevé (90 à 100 g)."
+
+[[rubriques.lignes]]
+valeur = "bonne conservation des fruits au sol. totale le plus souvent. ."
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Important D 120-150 | D 1047-1059 1,2 -1,8 182,1 55-70 | 3,8 à 4,1 à préciser douce sucrée, peu parfumée sucré"
+douteux = ["D", "120-150", "D", "1047-1059", "1,2", "-1,8", "182,1", "55-70"]
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."

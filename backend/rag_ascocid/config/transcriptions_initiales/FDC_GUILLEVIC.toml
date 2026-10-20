@@ -1,0 +1,167 @@
+# Transcription de l'illustration de la fiche 1433 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1433
+code = "FDC_GUILLEVIC"
+titre = "Guillevic"
+image_sha256 = "b2fe8116df8912b818d8c4d48e11fc9b159eaa51a03bed9b0a2888607efc7bab"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété : GUILLEVIC
+PRINCIPALES ZONES DE PRODUCTION
+Morbihan: Auray - Nord de Vannes - Hennebont -
+Pluvigner - Baud.
+CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT
+(Moyenne des analyses effectuées
+à la Station cidricole de Rennes INRA)
+Poids moyen du fruit (g.): 66,6.
+Rendement en jus (%): 63,1.
+Densité du jus : 1,0645.
+Sucres totaux (en g. par litre): 137,2.
+Acidité de titration (en g. H.SO, par litre): 4,7.
+(en m.eq.) : 95.
+Rapport sucres/acidité : 29,1.
+Extrait sec réduit (en g. par litre): 25,3.
+Tanins (en g. par litre) : 1,45.
+Couleur du jus : jaune doré.
+Dégustation : acidulé, bien parfumé.
+CARACTERISTIQUES CULTURALES DE L'ARBRE
+Vigueur : moyenne à grande.
+Port: érigé puis très étalé.
+Résistance aux maladies : variété très rustique.
+Mise à fruits : peu rapide.
+Productivité : bonne, mais alternante.
+Saison de floraison : 2e-3%e.
+Saison de maturité : 2°.
+Calibre du fruit: moyen à gros.
+Conservation et transport des fruits : bons.
+OBSERVATIONS DIVERSES
+Pommes excellentes pour la fabrication des jus et des cidres de couleur
+claire. |
+Variété pouvant se brasser seule.
+La formation des arbres est facile.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1#)
+Documentation I.N.R.A. - Edition 1973 ©)"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Morbihan: Auray - Nord de Vannes - Hennebont - Pluvigner - Baud."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(Moyenne des analyses effectuées à la Station cidricole de Rennes INRA)"
+
+[[rubriques.lignes]]
+intitule = "Poids moyen du fruit (g.)"
+valeur = "66,6."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "63,1."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1,0645."
+
+[[rubriques.lignes]]
+intitule = "Sucres totaux (en g. par litre)"
+valeur = "137,2."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration (en g. H.SO, par litre)"
+valeur = "4,7."
+douteux = ["H.SO,"]
+
+[[rubriques.lignes]]
+intitule = "(en m.eq.)"
+valeur = "95."
+douteux = ["m.eq.)"]
+
+[[rubriques.lignes]]
+intitule = "Rapport sucres/acidité"
+valeur = "29,1."
+
+[[rubriques.lignes]]
+intitule = "Extrait sec réduit (en g. par litre)"
+valeur = "25,3."
+
+[[rubriques.lignes]]
+intitule = "Tanins (en g. par litre)"
+valeur = "1,45."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune doré."
+
+[[rubriques.lignes]]
+intitule = "Dégustation"
+valeur = "acidulé, bien parfumé."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne à grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "érigé puis très étalé."
+douteux = ["Port:", "étalé."]
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "variété très rustique."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "peu rapide."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne, mais alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3%e."
+douteux = ["2e-3%e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à gros."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Pommes excellentes pour la fabrication des jus et des cidres de couleur claire. |"
+
+[[rubriques.lignes]]
+valeur = "Variété pouvant se brasser seule. La formation des arbres est facile."
+
+[[rubriques.lignes]]
+valeur = "Documentation I.N.R.A. - Edition 1973 ©)"
+douteux = ["I.N.R.A."]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1#)"
+douteux = ["(1#)"]

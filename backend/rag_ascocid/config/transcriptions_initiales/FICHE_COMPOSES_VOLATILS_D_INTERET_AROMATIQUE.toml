@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1520 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1520
+code = "FICHE_COMPOSES_VOLATILS_D_INTERET_AROMATIQUE"
+titre = "Les composés volatils d’intérêt aromatique"
+image_sha256 = "534d4355267d05be3ccb07d16c77d4b1f9e8060921106ae2c98f0018b0f23fb1"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 68.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Se Lu evters à acélale 3-mercaptohexan-1-0l ee
+à atért 2% Acétate d'isoamyle
+3-mercaptohexyl acétate
+Acétate d'hexyle
+Acétate de 2-phényléthyle &.
+| Géraniol
+LA ele fuyliques |
+Linalol
+Décanoate d'éthyle
+Estragol
+2-phényléthanol Hexanoate d'éthyle
+Le (1 3-notiooprénoïdea
+Hexanol \\ B-damascénone &.
+Figure 1 : Les principaux composés volatils d'intérêt aromatique et leur descripteur"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Se Lu evters à acélale 3-mercaptohexan-1-0l ee à atért 2% Acétate d'isoamyle 3-mercaptohexyl acétate"
+douteux = ["Se", "Lu", "evters", "à", "acélale", "3-mercaptohexan-1-0l", "ee", "à", "atért", "2%"]
+
+[[rubriques.lignes]]
+valeur = "Acétate d'hexyle"
+
+[[rubriques.lignes]]
+valeur = "Acétate de 2-phényléthyle &. | Géraniol"
+
+[[rubriques.lignes]]
+valeur = "LA ele fuyliques | Linalol"
+douteux = ["LA", "ele", "fuyliques"]
+
+[[rubriques.lignes]]
+valeur = "Décanoate d'éthyle Estragol"
+
+[[rubriques.lignes]]
+valeur = "2-phényléthanol Hexanoate d'éthyle"
+
+[[rubriques.lignes]]
+valeur = "Le (1 3-notiooprénoïdea"
+douteux = ["Le", "(1", "3-notiooprénoïdea"]
+
+[[rubriques.lignes]]
+valeur = "Hexanol \\ B-damascénone &."
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les principaux composés volatils d'intérêt aromatique et leur descripteur"
+douteux = ["d'intérêt"]

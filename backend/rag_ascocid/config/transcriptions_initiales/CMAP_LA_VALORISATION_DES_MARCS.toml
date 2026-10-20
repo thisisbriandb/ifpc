@@ -1,0 +1,69 @@
+# Transcription de l'illustration de la fiche 1491 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1491
+code = "CMAP_LA_VALORISATION_DES_MARCS"
+titre = "La valorisation des marcs"
+image_sha256 = "a5215654c1bda8b61a806332a0d0fdfabd34f6a1f8d4b4fa86025ef4fe697084"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La valorisation des marcs (hors rémiage )
+regroupe : Ensemble d’opérations annexes de l’extraction | Une vente en pectinerie | Un éventuel pressage complémentaire du marc épuisé (après rémiage ) | Un séchage du marc (à air chaud) | Un stockage du marc sec (à faible humidité) | Une vente en marché de niche (ex : alimentation animale)
+a pour fonctions : De créer de la valeur à partir d’un produit annexe | D’éviter la stagnation de produits fermentescibles
+entraine : Une consommation d’énergie proportionnelle à la quantité d’eau à évaporer
+a pour méthodes alternatives : Le compostage (petits producteurs) | L’ensilage (petits producteurs) | La méthanisation"""
+anomalies = ["5 relations pour 4 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Ensemble d’opérations annexes de l’extraction"
+
+[[rubriques.lignes]]
+intitule = "Ensemble d’opérations annexes de l’extraction"
+valeur = "Une vente en pectinerie"
+
+[[rubriques.lignes]]
+valeur = "Un éventuel pressage complémentaire du marc épuisé (après rémiage )"
+
+[[rubriques.lignes]]
+valeur = "Un séchage du marc (à air chaud)"
+
+[[rubriques.lignes]]
+valeur = "Un stockage du marc sec (à faible humidité)"
+
+[[rubriques.lignes]]
+intitule = "Un stockage du marc sec (à faible humidité)"
+valeur = "Une vente en marché de niche (ex : alimentation animale)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De créer de la valeur à partir d’un produit annexe"
+
+[[rubriques.lignes]]
+valeur = "D’éviter la stagnation de produits fermentescibles"
+
+[[rubriques]]
+titre = "entraine"
+
+[[rubriques.lignes]]
+valeur = "Une consommation d’énergie proportionnelle à la quantité d’eau à évaporer"
+
+[[rubriques]]
+titre = "a pour méthodes alternatives"
+
+[[rubriques.lignes]]
+valeur = "Le compostage (petits producteurs)"
+
+[[rubriques.lignes]]
+valeur = "L’ensilage (petits producteurs)"
+
+[[rubriques.lignes]]
+valeur = "La méthanisation"

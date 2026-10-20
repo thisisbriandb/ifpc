@@ -1,0 +1,110 @@
+# Transcription de l'illustration de la fiche 1588 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1588
+code = "FICHE_COMPOSES_AZOTES"
+titre = "Les composés azotés"
+image_sha256 = "b1afa7d568cbf5ddd4229818779f76d2a670e4bedd838f4f2f8345032b46503f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 71.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Glycine (Gly) Sérine (Ser)  Thréonine (Thr)
+COOH ts COOH
+HN | H | \"HN HN ——H Polaires non-chargés
+| (neutre)
+H Los ro
+Asparagine (Asn) Glutamine Aspartate (Asp) Glutamate
+COOH (Gin) COOH (Glu)
+HN |, “HAN | H | “HN HN | H
+L > L. > Polaires chargés
+| | négativement
+HN So 0 Yo |
+Principaux acides HN y “0 So
+Lysine (Lys) Arginine (Arg) Histidine (His)
+COOH COOH COOH
+CH2 CH2 CH2 H Polaires Chargés
+positivement
+NH:* CH; Tryptophane (Trp) Phénylalanine (Phe)  Tyrosine (Tyr)
+COOH COOH COOH
+” sn 4 HAN ——H “H a+
+Méthionine (Met) Cystéine (Cys)
+COOH COOH CH; CHz CH2
+HaN HO HN H —
+[Aides aminés Acides aminés aromatiques Figure 1 : Les différents acides aminés
+soufrés : : 0 s ; PET
+- Le nom des acides aminés est suivi entre parenthèse par l’abréviation
+Alanine (Ala) Valine (Val) Leucine (Leu) Isoleucine a Proline (Pro)
+COOH COOH COCH COOH de leur nom.
+un | 4 TN | H n— in LE Les codes couleurs correspondent aux différentes catégories d'acides
+| | aminés (polaires non chargés, polaires chargés positivement ou
+CH; CH CH; TT 72 : . . . . . .
+HsC CHs | c négativement, non polaires aliphatiques, aromatiques et soufrés.
+Hc° SCHa L. ‘ L'asparagine, l’aspartate et la glutamine sont les trois principaux
+a Non-polaires aliphatiques | acides aminés du moût de pommes."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Glycine (Gly) Sérine (Ser)  Thréonine (Thr)"
+douteux = [" Thréonine"]
+
+[[rubriques.lignes]]
+valeur = "COOH ts COOH HN | H | \"HN HN ——H Polaires non-chargés | (neutre) H Los ro Asparagine (Asn) Glutamine Aspartate (Asp) Glutamate COOH (Gin) COOH (Glu)"
+douteux = ["ts", "HN", "\"HN", "HN", "——H", "Los", "ro", "(Glu)"]
+
+[[rubriques]]
+titre = "HN |, “HAN | H | “HN HN | H"
+
+[[rubriques.lignes]]
+valeur = "L > L. > Polaires chargés | | négativement HN So 0 Yo | Principaux acides HN y “0 So Lysine (Lys) Arginine (Arg) Histidine (His)"
+douteux = ["L", "L.", "HN", "So", "0", "Yo", "HN", "y", "“0", "So"]
+
+[[rubriques]]
+titre = "COOH COOH COOH"
+
+[[rubriques.lignes]]
+valeur = "CH2 CH2 CH2 H Polaires Chargés positivement"
+douteux = ["CH2", "CH2", "CH2"]
+
+[[rubriques.lignes]]
+intitule = "NH"
+valeur = "* CH; Tryptophane (Trp) Phénylalanine (Phe)  Tyrosine (Tyr)"
+douteux = ["NH:*", "CH;", "Phénylalanine", "(Phe)", " Tyrosine"]
+
+[[rubriques]]
+titre = "COOH COOH COOH"
+
+[[rubriques.lignes]]
+valeur = "” sn 4 HAN ——H “H a+"
+douteux = ["sn", "4", "HAN", "——H", "“H", "a+"]
+
+[[rubriques.lignes]]
+valeur = "Méthionine (Met) Cystéine (Cys)"
+
+[[rubriques]]
+titre = "COOH COOH CH; CHz CH2"
+
+[[rubriques]]
+titre = "HaN HO HN H —"
+
+[[rubriques.lignes]]
+valeur = "[Aides aminés Acides aminés aromatiques Figure 1 : Les différents acides aminés"
+douteux = ["[Aides"]
+
+[[rubriques.lignes]]
+intitule = "soufrés"
+valeur = ": 0 s ; PET - Le nom des acides aminés est suivi entre parenthèse par l’abréviation Alanine (Ala) Valine (Val) Leucine (Leu) Isoleucine a Proline (Pro) COOH COOH COCH COOH de leur nom. un | 4 TN | H n— in LE Les codes couleurs correspondent aux différentes catégories d'acides | | aminés (polaires non chargés, polaires chargés positivement ou"
+douteux = ["0", "s", "PET", "l’abréviation", "(Val)", "a", "un", "4", "TN", "H", "n—", "in", "LE", "d'acides"]
+
+[[rubriques.lignes]]
+intitule = "CH; CH CH; TT 72"
+valeur = ". . . . . . HsC CHs | c négativement, non polaires aliphatiques, aromatiques et soufrés. Hc° SCHa L. ‘ L'asparagine, l’aspartate et la glutamine sont les trois principaux"
+douteux = ["CH;", "CH", "TT", "72", "HsC", "CHs", "c", "Hc°", "SCHa", "L.", "L'asparagine,"]
+
+[[rubriques.lignes]]
+valeur = "a Non-polaires aliphatiques | acides aminés du moût de pommes."
+douteux = ["a", "Non-polaires", "aliphatiques", "acides"]

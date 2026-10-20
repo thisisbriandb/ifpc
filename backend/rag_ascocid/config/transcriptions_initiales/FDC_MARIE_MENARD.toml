@@ -1,0 +1,115 @@
+# Transcription de l'illustration de la fiche 1473 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1473
+code = "FDC_MARIE_MENARD"
+titre = "Marie Ménard"
+image_sha256 = "55c6734c4776b9b3a9302a697b1dc436ecdef9c3a3c8e119c347b1cc8de091c1"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Formation de l'arbre :
+A la plantation le scion est peu ramifié. La suppression de tous les anticipés est recommandée.
+Les branches les plus fortes se situent comme souvent en pomme à cidre en partie basse des arbres. Les
+charpentières sont souvent d'une grande section et se développent surtout en s’allongeant : privilégier les
+branches sur le rang car celles orientées vers l'allée deviennent rapidement gênantes pour le passage dans les
+allées.
+Marie Ménard est une variété très vigoureuse mais ramifiant peu sur le tronc. La suppression d'une
+charpentière créé une zone vide difficile à combler. L'arcure des branches est un outil intéressant dans ce
+contexte. Par ailleurs, lors de la suppression d'une charpentière effectuer la coupe à 1-2 cm du tronc afin de
+favoriser des repercements.
+Cette variété est à éviter en sols trop fertiles où sa vigueur est difficilement maîtrisable.
+Calibre : assez gros (50 à 90 g)
+Forme : arrondi à plat de couleur verte souvent
+strié de rouge (présence de rugosité)
+Epoque de récolte : Première quinzaine d'octobre
+Particularités : -
+Conservation au sol : assez bonne
+Régression de l’amidon : partielle à maturité
+Masse volumique (kg/m3) | 1,061 — 1,074
+sin La _ mn
+pH:3,9à4,1
+Conditions d'extraction : à préciser
+Saveur du moût : amère
+Cidre : amer et astringent (profil proche de Kermerrien et Kéramère cov)
+Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Formation de l'arbre"
+valeur = ""
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "A la plantation le scion est peu ramifié. La suppression de tous les anticipés est recommandée."
+
+[[rubriques.lignes]]
+valeur = "Les branches les plus fortes se situent comme souvent en pomme à cidre en partie basse des arbres. Les charpentières sont souvent d'une grande section et se développent surtout en s’allongeant : privilégier les branches sur le rang car celles orientées vers l'allée deviennent rapidement gênantes pour le passage dans les allées."
+douteux = ["s’allongeant"]
+
+[[rubriques.lignes]]
+valeur = "Marie Ménard est une variété très vigoureuse mais ramifiant peu sur le tronc. La suppression d'une charpentière créé une zone vide difficile à combler. L'arcure des branches est un outil intéressant dans ce contexte. Par ailleurs, lors de la suppression d'une charpentière effectuer la coupe à 1-2 cm du tronc afin de favoriser des repercements."
+douteux = ["d'une"]
+
+[[rubriques.lignes]]
+valeur = "Cette variété est à éviter en sols trop fertiles où sa vigueur est difficilement maîtrisable."
+douteux = ["maîtrisable."]
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "assez gros (50 à 90 g)"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "arrondi à plat de couleur verte souvent strié de rouge (présence de rugosité)"
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "Première quinzaine d'octobre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = "-"
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "assez bonne"
+
+[[rubriques.lignes]]
+intitule = "Régression de l’amidon"
+valeur = "partielle à maturité"
+douteux = ["l’amidon"]
+
+[[rubriques.lignes]]
+valeur = "Masse volumique (kg/m3) | 1,061 — 1,074"
+
+[[rubriques.lignes]]
+valeur = "sin La _ mn"
+douteux = ["sin", "La", "_", "mn"]
+
+[[rubriques.lignes]]
+intitule = "pH"
+valeur = "3,9à4,1"
+douteux = ["pH:3,9à4,1"]
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "à préciser"
+douteux = ["d'extraction"]
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "amère"
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "amer et astringent (profil proche de Kermerrien et Kéramère cov)"
+douteux = ["cov)"]
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."

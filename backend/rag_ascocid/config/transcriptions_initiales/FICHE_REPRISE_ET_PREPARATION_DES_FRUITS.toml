@@ -1,0 +1,35 @@
+# Transcription de l'illustration de la fiche 1601 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1601
+code = "FICHE_REPRISE_ET_PREPARATION_DES_FRUITS"
+titre = "La reprise et la préparation des fruits"
+image_sha256 = "20c42b430007a418bc5807274b645b4e374ff80f03d83adc95bdd7542022bae7"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+C-HENRY
+1) Le convoyage des fruits
+4) Le tri des fruits
+2) Le lavage des fruits
+3) Le rinçage des fruits
+Figure 1 : Les étapes de reprise et préparation des fruits"""
+
+[[rubriques]]
+titre = "C-HENRY"
+
+[[rubriques.lignes]]
+valeur = "1) Le convoyage des fruits"
+
+[[rubriques.lignes]]
+valeur = "4) Le tri des fruits 2) Le lavage des fruits"
+
+[[rubriques.lignes]]
+valeur = "3) Le rinçage des fruits"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les étapes de reprise et préparation des fruits"

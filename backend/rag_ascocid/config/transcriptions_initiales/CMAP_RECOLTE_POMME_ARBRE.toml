@@ -1,0 +1,63 @@
+# Transcription de l'illustration de la fiche 1054 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1054
+code = "CMAP_RECOLTE_POMME_ARBRE"
+titre = "La pomme dans l'arbre"
+image_sha256 = "f7d2bd9da870053ade75c85257d56df310c3ca3fcb6cbcb6bd9b21182fb3b419"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La pomme dans l’arbre
+est une : Matière première de l’élaboration du cidre
+est caractérisée par : Sa variété | Son état de maturité | Son niveau d’altération fongique | Le poids moyen des fruits | Le nombre de fruits par arbre (charge de l’arbre)
+est influencée par : La conduite du verger | Les facteurs pédoclimatiques
+a pour principales causes d’altération : Une atteinte par Monilia | Une atteinte par carpocapse | Une atteinte par Venturia (tavelure)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Matière première de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "Sa variété"
+
+[[rubriques.lignes]]
+valeur = "Son état de maturité"
+
+[[rubriques.lignes]]
+valeur = "Son niveau d’altération fongique"
+
+[[rubriques.lignes]]
+valeur = "Le poids moyen des fruits"
+
+[[rubriques.lignes]]
+valeur = "Le nombre de fruits par arbre (charge de l’arbre)"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La conduite du verger"
+
+[[rubriques.lignes]]
+valeur = "Les facteurs pédoclimatiques"
+
+[[rubriques]]
+titre = "a pour principales causes d’altération"
+
+[[rubriques.lignes]]
+valeur = "Une atteinte par Monilia"
+
+[[rubriques.lignes]]
+valeur = "Une atteinte par carpocapse"
+
+[[rubriques.lignes]]
+valeur = "Une atteinte par Venturia (tavelure)"

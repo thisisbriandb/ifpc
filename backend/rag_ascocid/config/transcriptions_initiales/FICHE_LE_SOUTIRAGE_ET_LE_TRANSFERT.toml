@@ -1,0 +1,30 @@
+# Transcription de l'illustration de la fiche 1404 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1404
+code = "FICHE_LE_SOUTIRAGE_ET_LE_TRANSFERT"
+titre = "Le soutirage et le transfert"
+image_sha256 = "685152861d6221873489a48a1f493c74c00d2a25bd688a9f6b3a625e8135c862"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Equipements qui peuvent faciliter le soutirage - coudes tâte-lies (a) et
+mireurs (b).
+Figure 2 : Equipements qui permettent d'améliorer l'égouttage des tuyaux souples
+(2a), et la lutte contre l'oxydation (2b) : lance d'aspersion de neige carbonique
+(2b;) et son utilisation (2b;), diffuseurs de CO, gazeux en surface (2b,; et 2b;)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Equipements qui peuvent faciliter le soutirage - coudes tâte-lies (a) et mireurs (b)."
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Equipements qui permettent d'améliorer l'égouttage des tuyaux souples (2a), et la lutte contre l'oxydation (2b) : lance d'aspersion de neige carbonique (2b;) et son utilisation (2b;), diffuseurs de CO, gazeux en surface (2b,; et 2b;)."
+douteux = ["(2b;)", "(2b;),", "(2b,;", "2b;)."]

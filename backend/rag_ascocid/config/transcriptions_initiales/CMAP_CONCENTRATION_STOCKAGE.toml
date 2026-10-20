@@ -1,0 +1,77 @@
+# Transcription de l'illustration de la fiche 1133 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1133
+code = "CMAP_CONCENTRATION_STOCKAGE"
+titre = "L'étape de concentration & Stockage"
+image_sha256 = "1cf825e7a38d8d444fa9fbaca9c7bc94ba7af5355e534f69f7cbf0587222403b"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+L'étape de concentration et stockage
+est une : Etape de l'élaboration du cidre
+est constituée de : Une concentration thermique | Un stockage du moût concentré
+a pour fonctions : De réduire le volume de cuverie | De disposer toute l’année de moûts non fermentés | De pouvoir démarrer des fermentations « à la demande »
+a pour conséquences : Une inhibition de la croissance des microorganismes par la teneur en sucres (voir AW) | Une perte aromatique | L'apparition de composés liés au traitement thermique (odeurs de cuit, brunissement)
+a pour incidents : Une légère dilution en surface due à une condensation (croissance de levures osmophiles) | Une gélification des pectines due à une mauvaise dépectinisation | Une altération organoleptique par les Alicyclobacillus acidoterrestris (ACB) | Un développement excessif de notes de cuit et d’oxydation"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Etape de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une concentration thermique"
+
+[[rubriques.lignes]]
+valeur = "Un stockage du moût concentré"
+douteux = ["moût"]
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De réduire le volume de cuverie"
+
+[[rubriques.lignes]]
+valeur = "De disposer toute l’année de moûts non fermentés"
+
+[[rubriques.lignes]]
+valeur = "De pouvoir démarrer des fermentations « à la demande »"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une inhibition de la croissance des microorganismes par la teneur en sucres (voir AW)"
+
+[[rubriques.lignes]]
+valeur = "Une perte aromatique"
+
+[[rubriques.lignes]]
+valeur = "L'apparition de composés liés au traitement thermique (odeurs de cuit, brunissement)"
+douteux = ["L'apparition"]
+
+[[rubriques]]
+titre = "a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "Une légère dilution en surface due à une condensation (croissance de levures osmophiles)"
+
+[[rubriques.lignes]]
+valeur = "Une gélification des pectines due à une mauvaise dépectinisation"
+
+[[rubriques.lignes]]
+valeur = "Une altération organoleptique par les Alicyclobacillus acidoterrestris (ACB)"
+
+[[rubriques.lignes]]
+valeur = "Un développement excessif de notes de cuit et d’oxydation"

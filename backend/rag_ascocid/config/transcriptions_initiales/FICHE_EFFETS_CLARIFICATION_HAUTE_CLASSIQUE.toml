@@ -1,0 +1,26 @@
+# Transcription de l'illustration de la fiche 1088 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1088
+code = "FICHE_EFFETS_CLARIFICATION_HAUTE_CLASSIQUE"
+titre = "Les effets de la clarification haute classique"
+image_sha256 = "390710126bcfcce728201f415de23192667ad816f2d0c04c9b445e58c141329b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Bombonne de moût de pomme en fin de
+clarification haute
+Photo P. GESTIN - INRA"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Bombonne de moût de pomme en fin de"
+
+[[rubriques.lignes]]
+valeur = "clarification haute Photo P. GESTIN - INRA"

@@ -1,0 +1,80 @@
+# Transcription de l'illustration de la fiche 1458 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1458
+code = "FDC_AVROLLES"
+titre = "Avrolles"
+image_sha256 = "81c6ed30564b9d14604df7c0175330ccc41a7fcb1fe4ae0ff82953cd4ea553f4"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+A la plantation, le scion a de nombreux anticipés plus ou moins pleureurs. Quelques anticipés, ouverts peuvent
+être conservés.
+La souplesse du bois impose un palissage haut (3m) afin de maintenir l'axe droit.
+Les repercements nombreux nécessitent de bien gérer la pénétration de la lumière dans l'arbre :
+- Créer des trous de lumière en éliminant les branches dont l'angle d'insertion est fermé.
+- Supprimer les branches de la partie haute qui deviennent trop forte et ainsi éviter un dégarnissement du
+bas de l'arbre
+Hormis ce problème de lumière, Avrolles est une variété dont la conduite est assez facile dès lors que la
+vigueur n'est pas exacerbée: son port est naturellement pleureur.
+ASPECT RECOLTE
+petit à moyen (41 à 70 g)
+globuleux, rayé et lavé de rouge
+mi-novembre
+bonne conservation
+totale.
+TECHNOLOGIE
+Faible Moyen Important
+3,1 à 3,3
+à préciser
+peu parfumé, très acide
+apporte de l'acidité aux cidres (variété de base pour la production de cidre traditionnel dans sa zone
+d'origine le Pays d'Othe - Aube)
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion a de nombreux anticipés plus ou moins pleureurs. Quelques anticipés, ouverts peuvent être conservés."
+
+[[rubriques.lignes]]
+valeur = "La souplesse du bois impose un palissage haut (3m) afin de maintenir l'axe droit. Les repercements nombreux nécessitent de bien gérer la pénétration de la lumière dans l'arbre : - Créer des trous de lumière en éliminant les branches dont l'angle d'insertion est fermé. - Supprimer les branches de la partie haute qui deviennent trop forte et ainsi éviter un dégarnissement du bas de l'arbre"
+douteux = ["l'axe", "l'arbre", "Créer", "Supprimer", "l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "Hormis ce problème de lumière, Avrolles est une variété dont la conduite est assez facile dès lors que la"
+
+[[rubriques.lignes]]
+intitule = "vigueur n'est pas exacerbée"
+valeur = "son port est naturellement pleureur."
+
+[[rubriques]]
+titre = "ASPECT RECOLTE"
+
+[[rubriques.lignes]]
+valeur = "petit à moyen (41 à 70 g) globuleux, rayé et lavé de rouge"
+
+[[rubriques.lignes]]
+valeur = "mi-novembre"
+
+[[rubriques.lignes]]
+valeur = "bonne conservation"
+
+[[rubriques.lignes]]
+valeur = "totale."
+
+[[rubriques]]
+titre = "TECHNOLOGIE"
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Important 3,1 à 3,3 à préciser"
+
+[[rubriques.lignes]]
+valeur = "peu parfumé, très acide apporte de l'acidité aux cidres (variété de base pour la production de cidre traditionnel dans sa zone d'origine le Pays d'Othe - Aube)"
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

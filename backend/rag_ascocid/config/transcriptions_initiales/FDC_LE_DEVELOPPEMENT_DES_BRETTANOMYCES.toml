@@ -1,0 +1,49 @@
+# Transcription de l'illustration de la fiche 1543 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1543
+code = "FDC_LE_DEVELOPPEMENT_DES_BRETTANOMYCES"
+titre = "Le développement des Brettanomyces"
+image_sha256 = "26ab21a13f020339704de35d9fae19f7d2ed7ce8fc4dc2385de66f5695999826"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+AccV Spot Magn Det WD 1 10m
+140KV 40 3500%x SE 132 Levure lamelle ethanol CPD
+Figure 1 : Observation de Brettanomyces
+bruxellensis en microscopie électronique à balayage
+Source: Thèse Serpaggi, V. (2011). Etude et caractérisation de l'état
+« Viable mais Non Cultivable » chez Brettanomyces, une levure
+d'altération des vins : nouvel outil de détection et de quantification
+spécifique de Brettanomyces en vin."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "AccV Spot Magn Det WD 1 10m"
+douteux = ["1", "10m"]
+
+[[rubriques.lignes]]
+valeur = "140KV 40 3500%x SE 132 Levure lamelle ethanol CPD"
+douteux = ["140KV", "3500%x", "SE", "ethanol"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Observation de Brettanomyces"
+douteux = ["1", "Brettanomyces"]
+
+[[rubriques.lignes]]
+valeur = "bruxellensis en microscopie électronique à balayage"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Thèse Serpaggi, V. (2011). Etude et caractérisation de l'état « Viable mais Non Cultivable » chez Brettanomyces, une levure"
+
+[[rubriques.lignes]]
+intitule = "d'altération des vins"
+valeur = "nouvel outil de détection et de quantification spécifique de Brettanomyces en vin."
+douteux = ["d'altération"]

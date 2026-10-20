@@ -1,0 +1,85 @@
+# Transcription de l'illustration de la fiche 1166 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1166
+code = "FICHE_EXTRACTION_REMIAGE"
+titre = "Le rémiage"
+image_sha256 = "ce7be7d85698e85287ca2602b4aeee21d2faf46fcd301743f7d7414041877284"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Transfert du bac
+(une fois vidé)
+Déchargement Apport Arrivée du marc
+du marc épuisé pporten vert de la presse
+eau potable
+Chargement
+Vers second du marc vert
+pressage
+Sortie du moût
+de rémiage
+Figure 1 : Schéma représentant le principe d'une extraction à l'eau par macération
+semi-continue à contre-courant
+Arrivée du marc
+Apport d'eau vert de la presse
+potable
+Déchargement Re
+du marc épuisé
+Bande de
+convoyage
+Vers second
+pressage
+Figure 2 : Schéma représentant le principe d'une extraction à l'eau par percolation
+continue à contre-courant"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Transfert du bac (une fois vidé)"
+
+[[rubriques.lignes]]
+valeur = "Déchargement Apport Arrivée du marc du marc épuisé pporten vert de la presse"
+douteux = ["Apport", "pporten"]
+
+[[rubriques.lignes]]
+valeur = "eau potable"
+
+[[rubriques.lignes]]
+valeur = "Chargement Vers second du marc vert"
+
+[[rubriques.lignes]]
+valeur = "pressage"
+
+[[rubriques.lignes]]
+valeur = "Sortie du moût de rémiage"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schéma représentant le principe d'une extraction à l'eau par macération semi-continue à contre-courant"
+
+[[rubriques.lignes]]
+valeur = "Arrivée du marc"
+
+[[rubriques.lignes]]
+valeur = "Apport d'eau vert de la presse potable"
+
+[[rubriques.lignes]]
+valeur = "Déchargement Re"
+douteux = ["Re"]
+
+[[rubriques.lignes]]
+valeur = "du marc épuisé"
+
+[[rubriques.lignes]]
+valeur = "Bande de convoyage"
+
+[[rubriques.lignes]]
+valeur = "Vers second pressage"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Schéma représentant le principe d'une extraction à l'eau par percolation continue à contre-courant"

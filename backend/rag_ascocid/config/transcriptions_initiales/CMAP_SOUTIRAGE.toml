@@ -1,0 +1,49 @@
+# Transcription de l'illustration de la fiche 1038 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1038
+code = "CMAP_SOUTIRAGE"
+titre = "Le soutirage"
+image_sha256 = "d04606a0b540ab255a468f96a97209749df42784e3ffdfa87f08c140d1f8914a"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le soutirage
+est une : Opération de l’élaboration du cidre
+doit être complété par : Un procédure de nettoyage / désinfection du matériel (tuyaux, pompe, cuves)
+a pour fonction : De recueillir le produit clarifié
+a pour conséquence : Un risque d’oxygénation du produit en cas de conception inadaptée de l’installation
+est piloté selon : La turbidité du produit au cours du soutirage (surveillance du mireur)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "doit être complété par"
+
+[[rubriques.lignes]]
+valeur = "Un procédure de nettoyage / désinfection du matériel (tuyaux, pompe, cuves)"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De recueillir le produit clarifié"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "Un risque d’oxygénation du produit en cas de conception inadaptée de l’installation"
+
+[[rubriques]]
+titre = "est piloté selon"
+
+[[rubriques.lignes]]
+valeur = "La turbidité du produit au cours du soutirage (surveillance du mireur)"

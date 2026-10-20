@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1079 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1079
+code = "CMAP_EXTRACTION_REFROIDISSEMENT_MOUT"
+titre = "Le refroidissement du moût"
+image_sha256 = "4e35781915cc3268a89c6b8c359defa8398b6dca17780dd7a01cc386087b4a30"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le refroidissement du moût
+est une : Opération facultative de l’étape d’extraction
+regroupe : Le refroidissement en échangeur (à plaques, tubulaire) | Le refroidissement en cuves (drapeau, double enveloppe…)
+a pour fonction : D’atteindre une température cible en sortie de presse
+est piloté par : La température finale du moût
+est influencé par : La température du moût en entrée | La capacité de refroidissement"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape d’extraction"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Le refroidissement en échangeur (à plaques, tubulaire)"
+
+[[rubriques.lignes]]
+valeur = "Le refroidissement en cuves (drapeau, double enveloppe…)"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’atteindre une température cible en sortie de presse"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "La température finale du moût"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La température du moût en entrée"
+
+[[rubriques.lignes]]
+valeur = "La capacité de refroidissement"

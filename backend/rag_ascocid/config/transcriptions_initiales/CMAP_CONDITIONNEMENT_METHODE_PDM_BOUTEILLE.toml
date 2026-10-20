@@ -1,0 +1,87 @@
+# Transcription de l'illustration de la fiche 1144 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1144
+code = "CMAP_CONDITIONNEMENT_METHODE_PDM_BOUTEILLE"
+titre = "La méthode de conditionnement par prise de mousse en bouteille"
+image_sha256 = "e65b4ed5598fffe30fdadea864207095387d158d942c1ec751468260d8ebf246"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode de conditionnement avec prise de mousse en bouteille
+est une : Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres
+est constituée de : Un levurage par des levures sèches actives (facultatif) | Un embouteillage de cidre plat | Un bouchage & muselage | Une prise de mousse en bouteille
+a pour action complémentaire : Un sulfitage (facultatif)
+a pour fonctions : De produire un cidre à effervescence naturelle | De limiter l’investissement lié au conditionnement (faibles volumes produits)
+a pour conséquences : Une limitation de l’oxydation du cidre (consommation d’oxygène par les levures) | La présence éventuelle d’un trouble et/ou d’un dépôt en bouteille | De différer la mise en vente (1 à 2 mois de fermentation en bouteille) | Une consommation de sucre pour la prise de mousse (environ 4 points de MV)
+présente les risques : D’une sur -gazéification en bouteille pouvant conduire à l’explosion de bouteilles | D’une sous -gazéification en bouteille | D’une contamination ou d’un maintien de flores indésirables | La présence de notes soufrées et/ou « levures »"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un levurage par des levures sèches actives (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Un embouteillage de cidre plat"
+
+[[rubriques.lignes]]
+valeur = "Un bouchage & muselage"
+
+[[rubriques.lignes]]
+valeur = "Une prise de mousse en bouteille"
+
+[[rubriques]]
+titre = "a pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Un sulfitage (facultatif)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De produire un cidre à effervescence naturelle"
+
+[[rubriques.lignes]]
+valeur = "De limiter l’investissement lié au conditionnement (faibles volumes produits)"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une limitation de l’oxydation du cidre (consommation d’oxygène par les levures)"
+
+[[rubriques.lignes]]
+valeur = "La présence éventuelle d’un trouble et/ou d’un dépôt en bouteille"
+
+[[rubriques.lignes]]
+valeur = "De différer la mise en vente (1 à 2 mois de fermentation en bouteille)"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de sucre pour la prise de mousse (environ 4 points de MV)"
+
+[[rubriques]]
+titre = "présente les risques"
+
+[[rubriques.lignes]]
+valeur = "D’une sur -gazéification en bouteille pouvant conduire à l’explosion de bouteilles"
+
+[[rubriques.lignes]]
+valeur = "D’une sous -gazéification en bouteille"
+
+[[rubriques.lignes]]
+valeur = "D’une contamination ou d’un maintien de flores indésirables"
+
+[[rubriques.lignes]]
+valeur = "La présence de notes soufrées et/ou « levures »"

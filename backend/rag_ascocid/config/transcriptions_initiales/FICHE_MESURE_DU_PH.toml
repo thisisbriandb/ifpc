@@ -1,0 +1,66 @@
+# Transcription de l'illustration de la fiche 1498 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1498
+code = "FICHE_MESURE_DU_PH"
+titre = "Mesure du pH"
+image_sha256 = "985af5560ede0d75b0eebf20b906bf7e4069403fffda825fbb94d361053798ec"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Comment déterminer le pH d’un échantillon?
+Référence pour la
+lecture du test
+Référence pour la
+lecture du test
+Sonde à
+mpérature
+Sonde à pH
+Echantillon
+Échantillon Échantillon
+Avant Après Après
+Figure 1: Estimation du pH d'un échantillon de jus Figure 2: Estimation du pH d'un échantillon de jus Figure 3: Mesure du pH d'un
+de pommes avec des bandelettes à pH. Dans cet de pommes avec du papier pH. Dans cet exemple, échantillon de jus de pommes avec
+exemple, le PH se situe entre 3 et 4. le pH se situe entre 3 et 4. un pH-mètre. Dans cet exemple, le
+pH mesuré est de 3,64."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Comment déterminer le pH d’un échantillon?"
+
+[[rubriques.lignes]]
+valeur = "Référence pour la lecture du test"
+
+[[rubriques.lignes]]
+valeur = "Référence pour la lecture du test"
+
+[[rubriques.lignes]]
+valeur = "Sonde à mpérature"
+douteux = ["mpérature"]
+
+[[rubriques.lignes]]
+valeur = "Sonde à pH"
+
+[[rubriques.lignes]]
+valeur = "Echantillon"
+
+[[rubriques.lignes]]
+valeur = "Échantillon Échantillon"
+
+[[rubriques.lignes]]
+valeur = "Avant Après Après"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Estimation du pH d'un échantillon de jus Figure 2: Estimation du pH d'un échantillon de jus Figure 3: Mesure du pH d'un"
+
+[[rubriques.lignes]]
+valeur = "de pommes avec des bandelettes à pH. Dans cet de pommes avec du papier pH. Dans cet exemple, échantillon de jus de pommes avec"
+
+[[rubriques.lignes]]
+valeur = "exemple, le PH se situe entre 3 et 4. le pH se situe entre 3 et 4. un pH-mètre. Dans cet exemple, le pH mesuré est de 3,64."

@@ -1,0 +1,60 @@
+# Transcription de l'illustration de la fiche 1211 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1211
+code = "FICHE_FILTRATION_SUR_PLAQUES"
+titre = "La filtration sur plaques"
+image_sha256 = "4ed15cb5e1911623f126f8f215cf4f694ececaa96a6987e73a000101120105c8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+AP KLEL KLEL
+Figure 1 : Les filtres à plaques (a) filtre avec chambre de
+renversement (b) schéma de fonctionnement d'un filtre mono-étage.
+20x20 30 L/heure 15 L/heure 11 L/heure
+40 x 40 140 L/heure 70 L/heure 50 L/heure
+60 x 60 330 L/heure 160 L/heure 110 L/heure
+Tableau 1 : Débit en fonction de la taille et de la nature des plaques (chiffres
+indicatifs par plaque).
+Rétention à la surface Rétention en profondeur
+(effet de tamisage des particules)
+Par encombrement Par adsorption
+CA NLHI
+ue 2 : Qu) des mécanismes de ne sur plaques."""
+
+[[rubriques]]
+titre = "AP KLEL KLEL"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les filtres à plaques (a) filtre avec chambre de renversement (b) schéma de fonctionnement d'un filtre mono-étage."
+
+[[rubriques.lignes]]
+valeur = "20x20 30 L/heure 15 L/heure 11 L/heure"
+
+[[rubriques]]
+titre = "40 x 40 140 L/heure 70 L/heure 50 L/heure"
+
+[[rubriques]]
+titre = "60 x 60 330 L/heure 160 L/heure 110 L/heure"
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Débit en fonction de la taille et de la nature des plaques (chiffres indicatifs par plaque)."
+
+[[rubriques.lignes]]
+valeur = "Rétention à la surface Rétention en profondeur (effet de tamisage des particules)"
+
+[[rubriques.lignes]]
+valeur = "Par encombrement Par adsorption"
+
+[[rubriques]]
+titre = "CA NLHI"
+
+[[rubriques.lignes]]
+intitule = "ue 2"
+valeur = "Qu) des mécanismes de ne sur plaques."
+douteux = ["ue", "Qu)", "ne"]

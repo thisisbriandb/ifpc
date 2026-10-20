@@ -1,0 +1,54 @@
+# Transcription de l'illustration de la fiche 1048 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1048
+code = "FICHE_DEMETHYLATION_PECTINE"
+titre = "La déméthylation de la pectine"
+image_sha256 = "34a6bb666f2177740151324fddc94dce7c1e830d0a76b4f13f1dc9a5327663c5"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La déméthylation de la pectine
+Représentation Acide galacturonique Acide galacturonique Portion de la chaine
+schématique du méthylé (après déméthylation) principale déméthylée Représentation
+groupe méthyle , pret ne schématique de la
+ms “ na 27 ..-\"\" chaine principale
+Acide « D galacturonique
+méthylé
+Figure 1 : Représentation schématique de la structure de la chaîne principale de la pectine et modifications par
+la pectinestérase.
+Schéma de la chaîne principale (a) constituée d'acide galacturonique méthylé (b) et d'acide galacturonique (c) après déméthylation
+par la pectinestérase (PE) générant ainsi des zones déméthylées (d)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "La déméthylation de la pectine"
+
+[[rubriques.lignes]]
+valeur = "Représentation Acide galacturonique Acide galacturonique Portion de la chaine"
+
+[[rubriques.lignes]]
+valeur = "schématique du méthylé (après déméthylation) principale déméthylée Représentation"
+
+[[rubriques.lignes]]
+valeur = "groupe méthyle , pret ne schématique de la ms “ na 27 ..-\"\" chaine principale"
+douteux = ["pret", "ne", "ms", "na", "27"]
+
+[[rubriques.lignes]]
+valeur = "Acide « D galacturonique"
+
+[[rubriques.lignes]]
+valeur = "méthylé"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique de la structure de la chaîne principale de la pectine et modifications par"
+
+[[rubriques.lignes]]
+valeur = "la pectinestérase. Schéma de la chaîne principale (a) constituée d'acide galacturonique méthylé (b) et d'acide galacturonique (c) après déméthylation par la pectinestérase (PE) générant ainsi des zones déméthylées (d)."
+douteux = ["d'acide"]

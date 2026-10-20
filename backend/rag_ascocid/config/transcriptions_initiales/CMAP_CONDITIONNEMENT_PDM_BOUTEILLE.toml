@@ -1,0 +1,71 @@
+# Transcription de l'illustration de la fiche 1145 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1145
+code = "CMAP_CONDITIONNEMENT_PDM_BOUTEILLE"
+titre = "La prise de mousse en bouteille"
+image_sha256 = "54e6966e1bfca07123f8f3e1d3d18f905d0d875fb81a59618ce42d004691cb9f"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La prise de mousse en bouteille
+est une : Phénomène de la modalité conditionnement avec prise de mousse en bouteille
+est constituée a pour fonctions de : Une légère croissance des levures | Une fermentation en bouteille
+a pour conséquences : De saturer le cidre en gaz carbonique par fermentation en bouteille
+est influencée par : Une faible précision de la saturation en CO 2 | Une faible précision de teneur en alcool acquis et sucres résiduels | De placer le cidre en conditions réductrices (effets aromatiques)
+a pour incidents : La procédure utilisée (flore indigène ou filtration & levurage ) | Une effervescence insuffisante ou excessive | La génération d’odeurs soufrées (conditions réductrices) | La présence excessive de phénols volatils | La présence excessive d’éthanal (framboisé)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Phénomène de la modalité conditionnement avec prise de mousse en bouteille"
+
+[[rubriques]]
+titre = "est constituée a pour fonctions de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une légère croissance des levures"
+
+[[rubriques.lignes]]
+valeur = "Une fermentation en bouteille"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De saturer le cidre en gaz carbonique par fermentation en bouteille"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Une faible précision de la saturation en CO 2"
+
+[[rubriques.lignes]]
+valeur = "Une faible précision de teneur en alcool acquis et sucres résiduels"
+
+[[rubriques.lignes]]
+valeur = "De placer le cidre en conditions réductrices (effets aromatiques)"
+
+[[rubriques]]
+titre = "a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "La procédure utilisée (flore indigène ou filtration & levurage )"
+
+[[rubriques.lignes]]
+valeur = "Une effervescence insuffisante ou excessive"
+
+[[rubriques.lignes]]
+valeur = "La génération d’odeurs soufrées (conditions réductrices)"
+
+[[rubriques.lignes]]
+valeur = "La présence excessive de phénols volatils"
+
+[[rubriques.lignes]]
+valeur = "La présence excessive d’éthanal (framboisé)"

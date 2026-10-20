@@ -1,0 +1,47 @@
+# Transcription de l'illustration de la fiche 1377 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1377
+code = "CMAP_PHENOMENES"
+titre = "Phénomènes"
+image_sha256 = "f59ed0177ca06fac61c3c8b7bf9626db579156b7557e60371bf8a48cbccb48cf"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 91.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Maturation et altérations des pommes
+(relation non lue) : Croissance et action des levures | Impacts sensoriels des polyphénols (amertume, astringence, trouble) | Oxydation et adsorption des polyphénols | Croissance et action des bactéries | Composition aromatique des cidres | Modification de la pectine | Défauts olfactifs des cidres | 40) 7"""
+anomalies = ["une colonne est loin de sa relation (inf points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "(relation non lue)"
+
+[[rubriques.lignes]]
+valeur = "Croissance et action des levures"
+
+[[rubriques.lignes]]
+intitule = "Croissance et action des levures"
+valeur = "Impacts sensoriels des polyphénols (amertume, astringence, trouble)"
+
+[[rubriques.lignes]]
+valeur = "Oxydation et adsorption des polyphénols"
+
+[[rubriques.lignes]]
+intitule = "Oxydation et adsorption des polyphénols"
+valeur = "Croissance et action des bactéries"
+
+[[rubriques.lignes]]
+valeur = "Composition aromatique des cidres"
+
+[[rubriques.lignes]]
+valeur = "Modification de la pectine"
+
+[[rubriques.lignes]]
+intitule = "Modification de la pectine"
+valeur = "Défauts olfactifs des cidres"
+
+[[rubriques.lignes]]
+valeur = "40) 7"
+douteux = ["40)", "7"]

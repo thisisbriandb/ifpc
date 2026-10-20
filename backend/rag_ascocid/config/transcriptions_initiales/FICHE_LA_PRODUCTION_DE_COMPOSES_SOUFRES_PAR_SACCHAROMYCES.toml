@@ -1,0 +1,50 @@
+# Transcription de l'illustration de la fiche 1405 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1405
+code = "FICHE_LA_PRODUCTION_DE_COMPOSES_SOUFRES_PAR_SACCHAROMYCES"
+titre = "La production de composés soufrés par Saccharomyces"
+image_sha256 = "a065ff16bb7aca83f29fc8f152a9d44f73da22765cb6791406d7b07378146bc7"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Séquence
+de réduction
+des sulfates
+Séquence de
+réduction
+des sulfates
+Acides
+aminés Acides aminés
+soufrés soufrés
+Figure 1 : Interconnexion du métabolisme du soufre et de l'azote dans les levures.
+À) Voies de formation des acides aminés soufrés par les levures à partir des sources de soufre et
+d'azote disponibles dans le milieu; B) Relargage de sulfure d'hydrogène (H;S) par les levures lors
+d'une carence azotée."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Séquence de réduction des sulfates"
+
+[[rubriques.lignes]]
+valeur = "Séquence de réduction des sulfates"
+
+[[rubriques.lignes]]
+valeur = "Acides"
+
+[[rubriques.lignes]]
+valeur = "aminés Acides aminés soufrés soufrés"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Interconnexion du métabolisme du soufre et de l'azote dans les levures."
+douteux = ["l'azote"]
+
+[[rubriques.lignes]]
+valeur = "À) Voies de formation des acides aminés soufrés par les levures à partir des sources de soufre et d'azote disponibles dans le milieu; B) Relargage de sulfure d'hydrogène (H;S) par les levures lors d'une carence azotée."
+douteux = ["d'azote", "d'hydrogène", "(H;S)"]

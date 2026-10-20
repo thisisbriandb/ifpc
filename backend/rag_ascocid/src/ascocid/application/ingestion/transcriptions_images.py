@@ -409,3 +409,48 @@ def remplacer_une(t: TranscriptionImage, toutes: list[TranscriptionImage], magas
                       embedder.encoder([c.texte_indexe for c in nouveaux]))
     magasin.ecrire_meta(CLE_META, empreinte(toutes) + ("" if avec_vecteurs else ":lexical"))
     return len(nouveaux)
+
+
+# ── Point de départ embarqué ─────────────────────────────────────────────────
+
+
+def semer(source: str | Path, cible: str | Path) -> tuple[int, int]:
+    """Amène dans le volume les transcriptions livrées avec le code.
+
+    Les transcriptions sont produites une fois, sur un poste (OCR, SVG), puis
+    corrigées sur place par la relecture. Pour qu'un déploiement les amène sans
+    accès au serveur (Railway n'en donne pas), l'image en embarque une copie de
+    départ, et le démarrage du service :
+
+    * copie celles qui manquent dans le volume ;
+    * remplace celles qui y sont encore « à vérifier » quand la copie livrée
+      diffère — personne n'y a touché, une meilleure extraction peut passer ;
+    * ne touche **jamais** à une transcription corrigée ou validée, ni à un
+      fichier illisible (il peut porter une relecture).
+
+    Renvoie (copiées, remplacées).
+    """
+    source, cible = Path(source), Path(cible)
+    if not source.exists():
+        return 0, 0
+    cible.mkdir(parents=True, exist_ok=True)
+    copiees = remplacees = 0
+    for livree in sorted(source.glob("*.toml")):
+        destination = cible / livree.name
+        contenu = livree.read_bytes()
+        if not destination.exists():
+            destination.write_bytes(contenu)
+            copiees += 1
+            continue
+        if destination.read_bytes() == contenu:
+            continue
+        try:
+            if charger(destination).statut != "a_verifier":
+                continue
+        except Exception:  # noqa: BLE001 — illisible : peut-être une relecture, on n'y touche pas
+            continue
+        tmp = destination.with_suffix(".tmp")
+        tmp.write_bytes(contenu)
+        os.replace(tmp, destination)
+        remplacees += 1
+    return copiees, remplacees

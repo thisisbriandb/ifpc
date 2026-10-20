@@ -1,0 +1,52 @@
+# Transcription de l'illustration de la fiche 1136 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1136
+code = "CMAP_CONDITIONNEMENT_BOUCHAGE_MUSELAGE"
+titre = "Le bouchage & muselage"
+image_sha256 = "4f52a93d31d2afdd9f383ca19316b2e7ad72f85157823440ad425b11b72b96e4"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le bouchage et le muselage des bouteilles
+est une : Opération utilisée au cours du conditionnement des cidres
+est constitué de : La compression du bouchon | L’insertion du bouchon | L’application et la torsion du muselet sur le bouchon
+a pour fonction : D’assurer le maintien de la pression dans la bouteille
+a pour équipements : Une boucheuse | Une museleuse"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération utilisée au cours du conditionnement des cidres"
+
+[[rubriques]]
+titre = "est constitué de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La compression du bouchon"
+
+[[rubriques.lignes]]
+valeur = "L’insertion du bouchon"
+
+[[rubriques.lignes]]
+valeur = "L’application et la torsion du muselet sur le bouchon"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’assurer le maintien de la pression dans la bouteille"
+
+[[rubriques]]
+titre = "a pour équipements"
+
+[[rubriques.lignes]]
+valeur = "Une boucheuse"
+
+[[rubriques.lignes]]
+valeur = "Une museleuse"

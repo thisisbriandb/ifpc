@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1557 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1557
+code = "FICHE_PRODUCTION_DE_COMPOSES_VOLATILS_AROMATIQUES_PAR_SACCHAROMYCES"
+titre = "La production de composés volatils aromatiques par Saccharomyces"
+image_sha256 = "12495f50f5c9a02c4179336b6ea55829b318bf55ec0f218d4aee142a137b08bd"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 84.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Azote Autres nutriments
+Oxygène \\ / Température
+Levures
+| (niveau de population)
+Métabolisme azoté Métabolisme carboné (sucres) Métabolisme lipidique
+Û C6: Hexanol,
+(Ethanal)  Aldéhydes
+Cis-3-hexenol Us Hexanal
+Alcools supérieurs ---» Alcools supérieurs/Éthanol + Acétyl/Acyl-CoA
+u Esters d'acétate Esters éthyliques
+Figure 1 : Biosynthèse des composés volatils aromatiques (alcools supérieurs et esters) dans les cidres"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Azote Autres nutriments"
+
+[[rubriques.lignes]]
+valeur = "Oxygène \\ / Température"
+douteux = ["Oxygène"]
+
+[[rubriques.lignes]]
+valeur = "Levures | (niveau de population) Métabolisme azoté Métabolisme carboné (sucres) Métabolisme lipidique"
+
+[[rubriques.lignes]]
+intitule = "Û C6"
+valeur = "Hexanol,"
+douteux = ["Û"]
+
+[[rubriques.lignes]]
+valeur = "(Ethanal)  Aldéhydes"
+douteux = [" Aldéhydes"]
+
+[[rubriques.lignes]]
+valeur = "Cis-3-hexenol Us Hexanal"
+douteux = ["Us", "Hexanal"]
+
+[[rubriques.lignes]]
+valeur = "Alcools supérieurs ---» Alcools supérieurs/Éthanol + Acétyl/Acyl-CoA u Esters d'acétate Esters éthyliques"
+douteux = ["supérieurs", "u", "d'acétate"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Biosynthèse des composés volatils aromatiques (alcools supérieurs et esters) dans les cidres"

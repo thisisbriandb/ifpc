@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1518 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1518
+code = "FICHE_ACIDE_ACETIQUE"
+titre = "L'acide acétique"
+image_sha256 = "0a1a9e032ae3275a25d4da4ae339db8a3166df5495c1fd7d010068b9c3e0f779"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Structure chimique || Figure 2 : Synthèse d'acide acétique par les bactéries acétiques
+de l'acide acétique (piqûre acétique), en absence d'oxygène.
+De + Acide acétique + H,O
+Éthanol + Oxygène
+Éthanol + Acide acétique + Acétate d'éthyle + H,0
+H3C
+Figure 3 : Synthèse d'acide acétique par les bactéries lactiques
+(piqûre lactique), en présence d'oxygène.
+| D-Glucose
++ Acide D-lactique
+Acide carboxylique
++ Acide acétique"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure chimique || Figure 2 : Synthèse d'acide acétique par les bactéries acétiques de l'acide acétique (piqûre acétique), en absence d'oxygène."
+douteux = ["l'acide", "d'oxygène."]
+
+[[rubriques.lignes]]
+valeur = "De + Acide acétique + H,O"
+douteux = ["De", "H,O"]
+
+[[rubriques.lignes]]
+valeur = "Éthanol + Oxygène"
+
+[[rubriques.lignes]]
+valeur = "Éthanol + Acide acétique + Acétate d'éthyle + H,0"
+douteux = ["d'éthyle"]
+
+[[rubriques.lignes]]
+valeur = "H3C"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Synthèse d'acide acétique par les bactéries lactiques (piqûre lactique), en présence d'oxygène."
+douteux = ["d'acide", "d'oxygène."]
+
+[[rubriques.lignes]]
+valeur = "| D-Glucose"
+
+[[rubriques.lignes]]
+valeur = "+ Acide D-lactique Acide carboxylique"
+
+[[rubriques.lignes]]
+valeur = "+ Acide acétique"

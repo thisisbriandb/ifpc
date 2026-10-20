@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1071 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1071
+code = "CMAP_EXTRACTION_POMME_A_PRESSER"
+titre = "La pomme à presser"
+image_sha256 = "51f89a3abcfa7ba128868f38127b57030481f4fc6605be78a3304c3161ee15ad"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La pomme à presser
+est une : Matière première de l'élaboration du cidre 12 .
+est caractérisée par : Sa variété et sa catégorie de saveur | Ses signes de qualité | Son état de maturité | Son niveau d’altération fongique | Sa texture (fermeté, farinosité...)
+peut avoir pour défauts : Une texture trop ferme (sous-maturité) | Une texture insuffisamment ferme (sur-maturité) | Un niveau élevé d’altérations fongiques
+est issue du : La maturation complémentaire | Lavage des pommes"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Matière première de l'élaboration du cidre 12 ."
+douteux = ["12", "l'élaboration"]
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "Sa variété et sa catégorie de saveur"
+
+[[rubriques.lignes]]
+valeur = "Ses signes de qualité"
+
+[[rubriques.lignes]]
+valeur = "Son état de maturité"
+
+[[rubriques.lignes]]
+valeur = "Son niveau d’altération fongique"
+douteux = ["d’altération"]
+
+[[rubriques.lignes]]
+valeur = "Sa texture (fermeté, farinosité...)"
+douteux = ["farinosité...)"]
+
+[[rubriques]]
+titre = "peut avoir pour défauts"
+
+[[rubriques.lignes]]
+valeur = "Une texture trop ferme (sous-maturité)"
+
+[[rubriques.lignes]]
+valeur = "Une texture insuffisamment ferme (sur-maturité)"
+
+[[rubriques.lignes]]
+valeur = "Un niveau élevé d’altérations fongiques"
+
+[[rubriques]]
+titre = "est issue du"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La maturation complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Lavage des pommes"

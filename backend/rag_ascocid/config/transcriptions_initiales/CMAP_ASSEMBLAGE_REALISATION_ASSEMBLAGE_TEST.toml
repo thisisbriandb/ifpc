@@ -1,0 +1,35 @@
+# Transcription de l'illustration de la fiche 1132 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1132
+code = "CMAP_ASSEMBLAGE_REALISATION_ASSEMBLAGE_TEST"
+titre = "La réalisation de l'assemblage test"
+image_sha256 = "363b5f8b59eedfff13182e680b047a06d0facbea8ef851c3c60517e85561181e"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La réalisation de l’assemblage test
+est une : Opération de l’étape d’assemblage
+a pour fonction : D’obtenir un échantillon pour la validation
+consiste en : Une préparation de l’assemblage en laboratoire selon la « recette » établie"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape d’assemblage"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’obtenir un échantillon pour la validation"
+
+[[rubriques]]
+titre = "consiste en"
+
+[[rubriques.lignes]]
+valeur = "Une préparation de l’assemblage en laboratoire selon la « recette » établie"

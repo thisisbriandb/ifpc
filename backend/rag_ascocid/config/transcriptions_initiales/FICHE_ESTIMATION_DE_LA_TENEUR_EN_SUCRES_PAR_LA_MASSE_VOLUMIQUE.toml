@@ -1,0 +1,39 @@
+# Transcription de l'illustration de la fiche 1495 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1495
+code = "FICHE_ESTIMATION_DE_LA_TENEUR_EN_SUCRES_PAR_LA_MASSE_VOLUMIQUE"
+titre = "Estimation de la teneur en sucres par la masse volumique"
+image_sha256 = "c04d6618f659e1188325cbd9f1d717e933270ef7a1dd01eaead75273a168cac9"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Lecture des teneurs en
+sucres et alcool dans la
+table d'équivalence
+Lecture des teneurs en
+sucres et alcool! dans la
+table d'équivalence pour
+la valeur de masse
+volumique corrigée
+Figure 1: Processus d'estimation de la teneur en sucres et alcool potentiel à
+partir de la masse volumique d’un échantillon, en fonction de sa température"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Lecture des teneurs en sucres et alcool dans la table d'équivalence"
+douteux = ["d'équivalence"]
+
+[[rubriques.lignes]]
+valeur = "Lecture des teneurs en sucres et alcool! dans la table d'équivalence pour la valeur de masse volumique corrigée"
+douteux = ["alcool!", "d'équivalence"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Processus d'estimation de la teneur en sucres et alcool potentiel à partir de la masse volumique d’un échantillon, en fonction de sa température"
+douteux = ["d'estimation"]

@@ -1,0 +1,50 @@
+# Transcription de l'illustration de la fiche 1554 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1554
+code = "FICHE_DEVELOPPEMENT_DES_OENOCOCCUS"
+titre = "Le développement des Oenococcus"
+image_sha256 = "ceabca1e5b118563f2a51c678055c2dd5dd893bb0482479b26f69d3492763d1f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+1,E+08
+52 1E+07
+—— Échantillon 1
+—— Échantillon 2
+—e— Échantillon 3
+10 20 30 40 50 60
+Durée (jours)
+Figure 1 : Oenococcus oeni observé au Figure 2 : Courbe de croissance d'Oenococcus obtenue lors
+microscope électronique d'une expérience à l'IFPC.
+www.enosens-coutras.fr"""
+
+[[rubriques]]
+titre = "1,E+08"
+
+[[rubriques]]
+titre = "52 1E+07"
+
+[[rubriques.lignes]]
+valeur = "—— Échantillon 1 —— Échantillon 2"
+
+[[rubriques.lignes]]
+valeur = "—e— Échantillon 3"
+douteux = ["—e—"]
+
+[[rubriques]]
+titre = "10 20 30 40 50 60"
+
+[[rubriques.lignes]]
+valeur = "Durée (jours)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Oenococcus oeni observé au Figure 2 : Courbe de croissance d'Oenococcus obtenue lors"
+
+[[rubriques.lignes]]
+valeur = "microscope électronique d'une expérience à l'IFPC. www.enosens-coutras.fr"
+douteux = ["d'une", "l'IFPC."]

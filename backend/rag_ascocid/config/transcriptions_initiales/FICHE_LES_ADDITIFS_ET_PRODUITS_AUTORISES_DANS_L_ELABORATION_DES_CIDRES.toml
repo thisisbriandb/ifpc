@@ -1,0 +1,104 @@
+# Transcription de l'illustration de la fiche 1501 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1501
+code = "FICHE_LES_ADDITIFS_ET_PRODUITS_AUTORISES_DANS_L_ELABORATION_DES_CIDRES"
+titre = "Les additifs et produits autorisés dans l'élaboration des cidres"
+image_sha256 = "13de5868649de49db3622040b81aeb03f134190058e553bee04b53a3f0129b1f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 74.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Tableau 1: Les principaux colorants autorisés durant l'élaboration de produits cidricoles
+N° Européen ignation Quantité Maximum Catégorie de produits N° Européen Désignation Quantité Maximum Catégorie de produits
+pour ons, onde] ils sont pour lesquels ils sont
+autorisés autorisés
+Riboflavine Quantum satis Cidres (sauf cidre bouché), E 110 Jaune orange S, 200 mg/L Idem
+poirés, aromatisés ou non, Sunset yellow FCF
+tranquilles ou mousseux, E 120 Cochenille, Acide idem
+fermentés de pommes, carminique, Carmins
+pétillant de pommes, boissons E 122 Azorubine, Carmoisine 200 mg idem
+alcoolisées aromatisées à base E124 Ponceau 4R, Rouge 200 mg/L idem
+cochenille A
+Chiorophylles et Rouge allura AC idem
+chioronhyilnes E131 Idem
+E 132 Indigo, Carmin 200 mg/L idem
+Complexes cuivre- satis d'indigo TT
+chlorophyiles et E133 Bleu brillant FCF 200 mg idem
+chlorophylines E 142 verts | 200mgL Idem
+Caramel ordinaire Quantum satis Cidres (y compris cidre E151 Noir brillant EN 200 mg/L idem
+touch prés, roma ou RRCESS RE
+non, tranquilles ou mousseux, E1s5 D Brunnr | 200mg | idem
+fermentés de pommes, E160d |  ycopène |  200mgt | idem
+pétillant de pommes, boissons E 160e B-apo-carotènal-8’ 200 mg/L Idem
+alcoolisées aromatisées à base (C30)
+de pommes E 160f Ester éthylique de 200 mg/L Idem
+Caramel de sulfite l'acide B-apo-
+RE are
+[EiS0e | Caramelammoniseal | — Quantumsatis | idem Eb [|  utém | 20m | idem
+d'ammonium
+Charbon végétal Cidres (sauf cidre bouché),
+médicinal poirés, aromatisés ou non,
+tranquilles ou mousseux,
+fermentés de pommes,
+pétillant de pommes, boissons
+alcoolisées aromates à base
+capsenthine
+capsorubine
+bettanine
+[___E163 | Anthocyanes | Quantum satis |\" idem |
+[___E170 | Carbonate de calcium | Quantum satis |\" idem \"\"\" ]
+Oxyde et hydroxyde
+de fer
+[__ E100 | Curcumine \"| 200 mg | \"idem \"  }
+[_E102 |\" Tartazine | 200mg/L |\" idem
+[_____E104 |\" Jaune de quinoléine [200 mg/l [idem]"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Les principaux colorants autorisés durant l'élaboration de produits cidricoles"
+douteux = ["l'élaboration"]
+
+[[rubriques.lignes]]
+valeur = "N° Européen ignation Quantité Maximum Catégorie de produits N° Européen Désignation Quantité Maximum Catégorie de produits pour ons, onde] ils sont pour lesquels ils sont autorisés autorisés"
+douteux = ["ons,", "onde]"]
+
+[[rubriques.lignes]]
+valeur = "Riboflavine Quantum satis Cidres (sauf cidre bouché), E 110 Jaune orange S, 200 mg/L Idem poirés, aromatisés ou non, Sunset yellow FCF tranquilles ou mousseux, E 120 Cochenille, Acide idem fermentés de pommes, carminique, Carmins pétillant de pommes, boissons E 122 Azorubine, Carmoisine 200 mg idem alcoolisées aromatisées à base E124 Ponceau 4R, Rouge 200 mg/L idem cochenille A"
+douteux = ["S,", "Idem", "idem", "E", "122", "mg", "E124", "idem"]
+
+[[rubriques.lignes]]
+valeur = "Chiorophylles et Rouge allura AC idem chioronhyilnes E131 Idem E 132 Indigo, Carmin 200 mg/L idem Complexes cuivre- satis d'indigo TT chlorophyiles et E133 Bleu brillant FCF 200 mg idem chlorophylines E 142 verts | 200mgL Idem Caramel ordinaire Quantum satis Cidres (y compris cidre E151 Noir brillant EN 200 mg/L idem touch prés, roma ou RRCESS RE non, tranquilles ou mousseux, E1s5 D Brunnr | 200mg | idem fermentés de pommes, E160d |  ycopène |  200mgt | idem pétillant de pommes, boissons E 160e B-apo-carotènal-8’ 200 mg/L Idem alcoolisées aromatisées à base (C30) de pommes E 160f Ester éthylique de 200 mg/L Idem Caramel de sulfite l'acide B-apo- RE are [EiS0e | Caramelammoniseal | — Quantumsatis | idem Eb [|  utém | 20m | idem"
+douteux = ["idem", "chioronhyilnes", "E131", "idem", "TT", "chlorophyiles", "E133", "mg", "idem", "chlorophylines", "E", "142", "verts", "200mgL", "E151", "EN", "idem", "touch", "prés,", "roma", "ou", "RRCESS", "RE", "E1s5", "D", "Brunnr", "200mg", "E160d", " ycopène", " 200mgt", "idem", "E", "B-apo-carotènal-8’", "l'acide", "RE", "are", "[EiS0e", "Caramelammoniseal", "Quantumsatis", "idem", "Eb", " utém", "20m"]
+
+[[rubriques.lignes]]
+valeur = "d'ammonium Charbon végétal Cidres (sauf cidre bouché), médicinal poirés, aromatisés ou non, tranquilles ou mousseux, fermentés de pommes, pétillant de pommes, boissons alcoolisées aromates à base"
+douteux = ["d'ammonium", "aromates"]
+
+[[rubriques.lignes]]
+valeur = "capsenthine capsorubine"
+douteux = ["capsenthine"]
+
+[[rubriques.lignes]]
+valeur = "bettanine"
+
+[[rubriques]]
+titre = "[___E163 | Anthocyanes | Quantum satis |\" idem |"
+
+[[rubriques]]
+titre = "[___E170 | Carbonate de calcium | Quantum satis |\" idem \"\"\" ]"
+
+[[rubriques.lignes]]
+valeur = "Oxyde et hydroxyde de fer [__ E100 | Curcumine \"| 200 mg | \"idem \"  }"
+douteux = ["[__", "E100", "200", "mg", "\"idem"]
+
+[[rubriques]]
+titre = "[_E102 |\" Tartazine | 200mg/L |\" idem"
+
+[[rubriques]]
+titre = "[_____E104 |\" Jaune de quinoléine [200 mg/l [idem]"

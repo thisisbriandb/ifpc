@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1068 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1068
+code = "CMAP_APPRO_MATURATION_COMPLEMENTAIRE"
+titre = "La maturation complémentaire"
+image_sha256 = "c3d6a57159b304dc878ca6c615f162bc051e91c224242daa9de26b384050d748"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La maturation complémentaire
+est une : Opération facultative de l’étape de gestion de l’approvisionnement
+a pour fonctions : D’augmenter la quantité de pectines solubles | De transformer l’amidon en sucres fermentescibles
+est pilotée par : La durée de maturation
+est influencée par : L’état de maturité à réception | Le niveau d’altération fongique à réception | Le type de conditionnement | Les conditions de stockage (température et humidité) | La capacité de stockage disponible | Le planning de pressage
+nécessite : Un mode de récolte limitant les altérations physiques"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape de gestion de l’approvisionnement"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’augmenter la quantité de pectines solubles"
+
+[[rubriques.lignes]]
+valeur = "De transformer l’amidon en sucres fermentescibles"
+
+[[rubriques]]
+titre = "est pilotée par"
+
+[[rubriques.lignes]]
+valeur = "La durée de maturation"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "L’état de maturité à réception"
+
+[[rubriques.lignes]]
+valeur = "Le niveau d’altération fongique à réception"
+
+[[rubriques.lignes]]
+valeur = "Le type de conditionnement"
+
+[[rubriques.lignes]]
+valeur = "Les conditions de stockage (température et humidité)"
+
+[[rubriques.lignes]]
+valeur = "La capacité de stockage disponible"
+
+[[rubriques.lignes]]
+valeur = "Le planning de pressage"
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "Un mode de récolte limitant les altérations physiques"

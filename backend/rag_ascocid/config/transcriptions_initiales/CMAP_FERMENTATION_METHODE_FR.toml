@@ -1,0 +1,103 @@
+# Transcription de l'illustration de la fiche 1098 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1098
+code = "CMAP_FERMENTATION_METHODE_FR"
+titre = "La méthode FR (fermentation ralentie)"
+image_sha256 = "681ee3decf31cb50b5d67946fc56dd230191ff0c5a9d2faf7146fe830fc62750"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode FR (fermentation ralentie)
+est une : Modalité de l’étape fermentaire
+a pour synonyme : La méthode de fermentation par réduction de biomasse
+est constituée de : Une mise en fermentation | Une fermentation primaire | Une réduction de la quantité de levures | Une fermentation secondaire | Une élimination des levures (facultative)
+a pour fonctions : De transformer des moûts en cidres à assembler | D’échelonner les embouteillages par une diversité de vitesses de fermentation | De fermenter lentement jusqu’à la masse volumique souhaitée à l’assemblage | De maintenir une production de CO 2 pour éviter l’oxygénation des cidres | De réduire les capacités frigorifiques nécessaires en cuverie
+a pour conséquences : Une limitation des levures à voile (flores d’altération aérobies) | Une croissance éventuelle des et Brettanomyces Oenococcus
+est influencée par : La température de la cuverie | L’évolution de la population de levures vivantes (fermentation 2 re)
+s’appuie sur a pour incidents : Un suivi fermentaire | Une recroissance excessive des levures | Un blocage de fermentation (fermentation 2 re) | Une croissance de flores d’altération"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape fermentaire"
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "La méthode de fermentation par réduction de biomasse"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une mise en fermentation"
+
+[[rubriques.lignes]]
+valeur = "Une fermentation primaire"
+
+[[rubriques.lignes]]
+valeur = "Une réduction de la quantité de levures"
+
+[[rubriques.lignes]]
+valeur = "Une fermentation secondaire"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des levures (facultative)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De transformer des moûts en cidres à assembler"
+
+[[rubriques.lignes]]
+valeur = "D’échelonner les embouteillages par une diversité de vitesses de fermentation"
+
+[[rubriques.lignes]]
+valeur = "De fermenter lentement jusqu’à la masse volumique souhaitée à l’assemblage"
+
+[[rubriques.lignes]]
+valeur = "De maintenir une production de CO 2 pour éviter l’oxygénation des cidres"
+
+[[rubriques.lignes]]
+valeur = "De réduire les capacités frigorifiques nécessaires en cuverie"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une limitation des levures à voile (flores d’altération aérobies)"
+
+[[rubriques.lignes]]
+valeur = "Une croissance éventuelle des et Brettanomyces Oenococcus"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La température de la cuverie"
+
+[[rubriques.lignes]]
+valeur = "L’évolution de la population de levures vivantes (fermentation 2 re)"
+
+[[rubriques]]
+titre = "s’appuie sur a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "Un suivi fermentaire"
+
+[[rubriques.lignes]]
+valeur = "Une recroissance excessive des levures"
+
+[[rubriques.lignes]]
+valeur = "Un blocage de fermentation (fermentation 2 re)"
+
+[[rubriques.lignes]]
+valeur = "Une croissance de flores d’altération"

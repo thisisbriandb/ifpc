@@ -1,0 +1,76 @@
+# Transcription de l'illustration de la fiche 1372 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1372
+code = "FICHE_PERCEPTION_COULEUR"
+titre = "La perception de la couleur"
+image_sha256 = "48daa01e3c8828e3ee47fac06a836cbc40acdc1aeb443f91f3b50822579bf99e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 82.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+T de la CIE depuis 1931
+ravaux de la EpuIs Sphère et disque
+Perception de l'œil humain par des couleurs du
+trois récepteurs qui reçoivent système L*a*b
+l'ensemble du spectre transmis
+au travers du cidre et envoient
+trois « signaux » au cerveau
+Eclairage
+100 25 3 sara
+AR, È 0 8 20. Vert
+3 60 2 15 |
++ = 5 Rouge
+| Ë 20 | ® 0
+F 0 0
++ T L 1 + .
+400 500 600 700
+400 500 600 700 400 600
+Longueur d'onde (nm) Longueur d'onde (nm) Longueur d'onde (nm)
+Distribution spectrale de la Transmission lumineuse par Fonctions colorimétriques
+source lumineuse (illuminant) l'objet (en % de la lumière d'un « œil standard »
+incidente)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "T de la CIE depuis 1931 ravaux de la EpuIs Sphère et disque"
+douteux = ["EpuIs"]
+
+[[rubriques.lignes]]
+valeur = "Perception de l'œil humain par des couleurs du trois récepteurs qui reçoivent système L*a*b l'ensemble du spectre transmis au travers du cidre et envoient trois « signaux » au cerveau"
+douteux = ["l'ensemble"]
+
+[[rubriques.lignes]]
+valeur = "Eclairage"
+
+[[rubriques]]
+titre = "100 25 3 sara"
+
+[[rubriques.lignes]]
+valeur = "AR, È 0 8 20. Vert"
+douteux = ["AR,", "È", "0", "20."]
+
+[[rubriques]]
+titre = "3 60 2 15 |"
+
+[[rubriques.lignes]]
+valeur = "+ = 5 Rouge"
+douteux = ["5", "Rouge"]
+
+[[rubriques.lignes]]
+valeur = "| Ë 20 | ® 0 F 0 0 + T L 1 + ."
+douteux = ["Ë", "0", "F", "0", "L", "1"]
+
+[[rubriques]]
+titre = "400 500 600 700"
+
+[[rubriques]]
+titre = "400 500 600 700 400 600"
+
+[[rubriques.lignes]]
+valeur = "Longueur d'onde (nm) Longueur d'onde (nm) Longueur d'onde (nm) Distribution spectrale de la Transmission lumineuse par Fonctions colorimétriques source lumineuse (illuminant) l'objet (en % de la lumière d'un « œil standard » incidente)"
+douteux = ["d'onde", "l'objet", "d'un"]

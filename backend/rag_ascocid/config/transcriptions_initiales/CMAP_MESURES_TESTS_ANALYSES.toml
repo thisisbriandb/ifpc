@@ -1,0 +1,40 @@
+# Transcription de l'illustration de la fiche 1362 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1362
+code = "CMAP_MESURES_TESTS_ANALYSES"
+titre = "Les mesures, tests & analyses"
+image_sha256 = "cc40f95d5a5ddd43d1258457cb19d98a07a4a9ca6da6c57a03b4cf6693557670"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 39.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+\"1 pts qi L lu lassstsisis ice De Pr 77 ee SSSR fu RS RE \" RSR RSS LES TE SERRES N E LR EEE = RER ESES.. 2 2R 5 M | RE RER RS TE RTÉLSRELERER | DRM ON EPS RER
+(relation non lue) : Il its j l pale , (NEC bal Mes) K | | QUE “nl Rt| ‘1 >) | Ru | | La | 11 | | | fe | (1 LUCE | All (il | ill big) Lie, | 1 L. LEA 1D) RE | res } m | z Fe] 8 : TP 1 ) EH LE 1 | 2 EX Ze Na 0 RNNN re | ( CONNAISSANCES & SAVOIR-FAIRE CONNAISSANCES & SAVOIR-FAIRE CIDRICOLES CIDRICOLES | Pot. 2025 2939\" PS» 7) 203 “ NS | | NS É , V4"""
+anomalies = ["une colonne est loin de sa relation (inf points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "(relation non lue)"
+
+[[rubriques.lignes]]
+valeur = "Il its j l pale , (NEC bal Mes) K | | QUE “nl Rt| ‘1 >) | Ru | | La | 11 | | | fe | (1 LUCE | All (il | ill big) Lie, | 1 L. LEA 1D) RE | res } m"
+douteux = ["(NEC", "bal", "Mes)", "K", "QUE", "La", "11", "LUCE", "All", "(il", "big)", "1D)", "RE", "res", "m", "Il", "its", "j", "l", "pale", "“nl", "Rt|", "‘1", "Ru", "fe", "(1", "ill", "Lie,", "1", "L.", "LEA"]
+
+[[rubriques.lignes]]
+intitule = "Il its j l pale , (NEC bal Mes) K | | QUE “nl Rt| ‘1 >) | Ru | | La | 11 | | | fe | (1 LUCE | All (il | ill big) Lie, | 1 L. LEA 1D) RE | res } m"
+valeur = "z Fe] 8 : TP 1 ) EH LE 1"
+douteux = ["z", "Fe]", "8", "EH", "LE", "1", "TP", "1"]
+
+[[rubriques.lignes]]
+valeur = "2 EX Ze Na 0 RNNN re | ( CONNAISSANCES & SAVOIR-FAIRE CONNAISSANCES & SAVOIR-FAIRE CIDRICOLES CIDRICOLES"
+douteux = ["2", "EX", "Ze", "Na", "0", "RNNN", "re"]
+
+[[rubriques.lignes]]
+valeur = "Pot. 2025 2939\" PS» 7) 203 “ NS"
+douteux = ["2025", "PS»", "7)", "Pot.", "2939\"", "203", "NS"]
+
+[[rubriques.lignes]]
+valeur = "| NS É , V4"
+douteux = ["NS", "É", "V4"]

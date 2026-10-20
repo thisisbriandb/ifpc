@@ -1,0 +1,80 @@
+# Transcription de l'illustration de la fiche 1545 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1545
+code = "FDC_IMPACTS_SENSORIELS_DES_BRETTANOMYCES"
+titre = "Les impacts sensoriels des Brettanomyces"
+image_sha256 = "bf8a2a64036775d965555b294e79094e250db92a72454fadfb0f7cf5bc7a89a8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Diminution
+Cidres Fruités Cidres Fruité-compotés Cidres Neutres Cidres Phénolés
+Figure 1 : Composition en composés volatils odorants en fonction des catégories aromatiques des cidres
+Analyse aromatique (mg/L) de 66 cidres français en fonction de leur catégorie sensorielle (Fruité, Fruité-compoté, Neutre et Phénolé).
+A. Composition en esters d'acétate. En blanc, l'acétate d'isoamyle, en gris l'acétate d'hexyle et en noir, l'acétate de 2-phényléthyle.
+A 25
+20
+A Augmentation
+> 80
+& 60
+F 40
+20
+B. Composition en phénols volatils. En noir, le 4-éthylcatéchol et en blanc, le 4-éthylphénol.
+Adapté de Guichard et al., 2019. Brettanomyces anomalus, a double drawback for cider aroma.
+0 PREL = PF = CR = li [TE hit lu
+10
+9
+0 10 20 30 40 50
+Temps (jours)
+Figure 2 : Evolution du profil sensoriel suite à l'inoculation de Brettanomyces
+Niveau sensoriel moyen donné par un panel entraîné de 13 membres sur un cidre inoculé
+avec Brettanomyces à 10 °C (10° cellules/mL), pour les notes fruitées (A) et phénolées (#).
+Adapté de Guichard et al., 2019. Brettanomyces anomalus, a double drawback for cider aroma."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Diminution"
+
+[[rubriques.lignes]]
+valeur = "Cidres Fruités Cidres Fruité-compotés Cidres Neutres Cidres Phénolés"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Composition en composés volatils odorants en fonction des catégories aromatiques des cidres"
+
+[[rubriques.lignes]]
+valeur = "Analyse aromatique (mg/L) de 66 cidres français en fonction de leur catégorie sensorielle (Fruité, Fruité-compoté, Neutre et Phénolé). A. Composition en esters d'acétate. En blanc, l'acétate d'isoamyle, en gris l'acétate d'hexyle et en noir, l'acétate de 2-phényléthyle."
+douteux = ["l'acétate", "l'acétate"]
+
+[[rubriques.lignes]]
+valeur = "A 25 20 A Augmentation > 80 & 60 F 40 20 B. Composition en phénols volatils. En noir, le 4-éthylcatéchol et en blanc, le 4-éthylphénol. Adapté de Guichard et al., 2019. Brettanomyces anomalus, a double drawback for cider aroma."
+douteux = ["A"]
+
+[[rubriques]]
+titre = "0 PREL = PF = CR = li [TE hit lu"
+
+[[rubriques.lignes]]
+valeur = "10 9"
+
+[[rubriques]]
+titre = "0 10 20 30 40 50"
+
+[[rubriques.lignes]]
+valeur = "Temps (jours)"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Evolution du profil sensoriel suite à l'inoculation de Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "Niveau sensoriel moyen donné par un panel entraîné de 13 membres sur un cidre inoculé"
+
+[[rubriques.lignes]]
+valeur = "avec Brettanomyces à 10 °C (10° cellules/mL), pour les notes fruitées (A) et phénolées (#). Adapté de Guichard et al., 2019. Brettanomyces anomalus, a double drawback for cider aroma."
+douteux = ["(10°"]

@@ -1,0 +1,103 @@
+# Transcription de l'illustration de la fiche 1465 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1465
+code = "FDC_DOUCE_DE_L_AVENT"
+titre = "Douce de l'Avent"
+image_sha256 = "bb7180617a615fe2139f4242e9f144a8b2f193d1752e31e6ab425013347ec808"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+pas d'information ; essais en cours. Taux de nouaison assez élevé
+dans l'ensemble. Autre particularité : un nombre de pépins par fruit très important
+A la plantation, certains anticipés sélectionnés peuvent être conservés.
+Les ramifications, assez nombreuses avec des angles de plus de 45°, s'ouvrent sous la charge des fruits. La
+mise à fruit étant rapide (2°\"* - 3°\" feuille) et le bois souple, les branches s'ouvrent naturellement.
+La souplesse du bois pose problème pour maintenir l'axe bien droit ; ce dernier a tendance à s'incliner ; pour
+remédier à cela des essais de rabattage de l'axe dans le bois de 2 ans dès la 3°”° ou 4°”* année sont en cours.
+Un palissage haut peut permettre de résoudre le problème.
+La conduite de Douce de l'Avent est simple. Néanmoins il faut maintenir une bonne porosité de l'arbre par une
+taille régulière.
+Plantée dans un sol fertile, avec un soutien alimentaire suffisant et associé à une pratique régulière de
+l'éclaircissage (quelque soit le moyen utilisé), cette variété a des atouts intéressants.
+ASPECT RECOLTE
+petit à moyen environ 60 g (41 à 77g)
+ovoïde à aplatie (rouge strié à lavé) ® e ©
+fin novembre à début décembre
+1 à 2 fruits par corymbe
+moyenne à bonne [7 €: #”
+totale ;
+ECHNOLOGIE
+Faible Moyen Important
+L 12-15 |
+D 18-21 |
+D 4-6
+3,8 à 4,1
+à préciser
+douce
+profil doux proche de Clos Renaux ou Doux Véret de Carrouges
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "pas d'information ; essais en cours. Taux de nouaison assez élevé"
+douteux = ["d'information"]
+
+[[rubriques.lignes]]
+intitule = "dans l'ensemble. Autre particularité"
+valeur = "un nombre de pépins par fruit très important"
+
+[[rubriques.lignes]]
+valeur = "A la plantation, certains anticipés sélectionnés peuvent être conservés."
+
+[[rubriques.lignes]]
+valeur = "Les ramifications, assez nombreuses avec des angles de plus de 45°, s'ouvrent sous la charge des fruits. La mise à fruit étant rapide (2°\"* - 3°\" feuille) et le bois souple, les branches s'ouvrent naturellement."
+douteux = ["(2°\"*", "3°\""]
+
+[[rubriques.lignes]]
+valeur = "La souplesse du bois pose problème pour maintenir l'axe bien droit ; ce dernier a tendance à s'incliner ; pour remédier à cela des essais de rabattage de l'axe dans le bois de 2 ans dès la 3°”° ou 4°”* année sont en cours. Un palissage haut peut permettre de résoudre le problème."
+douteux = ["l'axe", "3°”°", "4°”*"]
+
+[[rubriques.lignes]]
+valeur = "La conduite de Douce de l'Avent est simple. Néanmoins il faut maintenir une bonne porosité de l'arbre par une taille régulière."
+
+[[rubriques.lignes]]
+valeur = "Plantée dans un sol fertile, avec un soutien alimentaire suffisant et associé à une pratique régulière de l'éclaircissage (quelque soit le moyen utilisé), cette variété a des atouts intéressants."
+
+[[rubriques]]
+titre = "ASPECT RECOLTE"
+
+[[rubriques.lignes]]
+valeur = "petit à moyen environ 60 g (41 à 77g)"
+
+[[rubriques.lignes]]
+valeur = "ovoïde à aplatie (rouge strié à lavé) ® e © fin novembre à début décembre"
+douteux = ["ovoïde"]
+
+[[rubriques]]
+titre = "1 à 2 fruits par corymbe"
+
+[[rubriques.lignes]]
+valeur = "moyenne à bonne [7 €: #”"
+douteux = ["[7"]
+
+[[rubriques.lignes]]
+valeur = "totale ;"
+
+[[rubriques]]
+titre = "ECHNOLOGIE"
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Important L 12-15 | D 18-21 | D 4-6 3,8 à 4,1 à préciser"
+douteux = ["L", "12-15", "D", "18-21", "D", "4-6"]
+
+[[rubriques.lignes]]
+valeur = "douce profil doux proche de Clos Renaux ou Doux Véret de Carrouges"
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

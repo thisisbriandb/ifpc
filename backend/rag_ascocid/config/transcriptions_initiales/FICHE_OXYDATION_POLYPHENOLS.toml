@@ -1,0 +1,32 @@
+# Transcription de l'illustration de la fiche 1176 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1176
+code = "FICHE_OXYDATION_POLYPHENOLS"
+titre = "L'oxydation des polyphénols"
+image_sha256 = "b47c63afd4a19d75dadb2784131d8b147d4f6df6dba183aee4aa5dc03cba50b6"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Oxydation expérimentale d'un jus extrait à l'abri de l'air (Variété Dous
+Moen).
+Sur la photo de gauche, le moût vient d'être extrait sans oxygène ; il est dépourvu de
+pigments. Les photos suivantes ont été prises à des stades d’oxydation plus avancés, atteints
+après plusieurs injections successives d'oxygène."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Oxydation expérimentale d'un jus extrait à l'abri de l'air (Variété Dous"
+
+[[rubriques.lignes]]
+valeur = "Moen)."
+
+[[rubriques.lignes]]
+valeur = "Sur la photo de gauche, le moût vient d'être extrait sans oxygène ; il est dépourvu de pigments. Les photos suivantes ont été prises à des stades d’oxydation plus avancés, atteints après plusieurs injections successives d'oxygène."
+douteux = ["d’oxydation", "d'oxygène."]

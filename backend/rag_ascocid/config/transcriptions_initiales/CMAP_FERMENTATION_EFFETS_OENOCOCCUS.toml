@@ -1,0 +1,71 @@
+# Transcription de l'illustration de la fiche 1110 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1110
+code = "CMAP_FERMENTATION_EFFETS_OENOCOCCUS"
+titre = "Les principaux effets des Oenococcus"
+image_sha256 = "11a4cdc79abc06f7b2f79ec14429e581d86ed3a2e5fe60eaf63168583db8c3f1"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principaux effets des Œnococcus
+sont des : Phénomènes se produisant principalement au cours de l’étape fermentaire
+regroupent : La transformation malolactique (TML) (induisant une hausse du pH) | La fermentation lactique (production d’acide D -lactique, diacétyle , acétoine , acide acétique, éthanal)
+sont conditionnés par : Le développement des Œnococcus
+ont pour impacts sensoriels : Une baisse de l’acidité du cidre (consommation d’acide malique) | L’apparition d’arômes lactés, beurrés | Une modification visuelle
+dépendent de : Leur population maximale atteinte | Leur survie dans le milieu (pH, S0 2)
+ont pour incidents : Une piqûre lactique en cas de forte population de Œnococcus | De favoriser le développement de bactéries d’altération (une hausse du pH)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Phénomènes se produisant principalement au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La transformation malolactique (TML) (induisant une hausse du pH)"
+
+[[rubriques.lignes]]
+valeur = "La fermentation lactique (production d’acide D -lactique, diacétyle , acétoine , acide acétique, éthanal)"
+
+[[rubriques]]
+titre = "sont conditionnés par"
+
+[[rubriques.lignes]]
+valeur = "Le développement des Œnococcus"
+
+[[rubriques]]
+titre = "ont pour impacts sensoriels"
+
+[[rubriques.lignes]]
+valeur = "Une baisse de l’acidité du cidre (consommation d’acide malique)"
+
+[[rubriques.lignes]]
+valeur = "L’apparition d’arômes lactés, beurrés"
+
+[[rubriques.lignes]]
+valeur = "Une modification visuelle"
+
+[[rubriques]]
+titre = "dépendent de"
+
+[[rubriques.lignes]]
+valeur = "Leur population maximale atteinte"
+
+[[rubriques.lignes]]
+valeur = "Leur survie dans le milieu (pH, S0 2)"
+
+[[rubriques]]
+titre = "ont pour incidents"
+
+[[rubriques.lignes]]
+valeur = "Une piqûre lactique en cas de forte population de Œnococcus"
+
+[[rubriques.lignes]]
+valeur = "De favoriser le développement de bactéries d’altération (une hausse du pH)"

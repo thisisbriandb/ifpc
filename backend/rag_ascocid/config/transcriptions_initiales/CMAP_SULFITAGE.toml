@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1147 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1147
+code = "CMAP_SULFITAGE"
+titre = "Le sulfitage"
+image_sha256 = "97223d53eac4b6f02e4642a4d9394247e2f302e9585caf1bf2b5660a92113a72"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le sulfitage
+est une : Opération de stabilisation utilisée au cours de l’élaboration du cidre
+a pour fonction : D’apporter des sulfites (SO2) qui se solubilisent en sulfites libres et sulfites combinés
+a pour conséquences : D’inhiber les microorganismes (antimicrobien) | De lutter contre l’oxydation (antioxydant)
+a pour action complémentaire : Un ajout d’acide ascorbique pour l’action antioxydante
+a pour agents : Différents types de sulfites
+est encadré par : Des limites réglementaires | Une obligation de mention sur l’étiquette"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de stabilisation utilisée au cours de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’apporter des sulfites (SO2) qui se solubilisent en sulfites libres et sulfites combinés"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "D’inhiber les microorganismes (antimicrobien)"
+
+[[rubriques.lignes]]
+valeur = "De lutter contre l’oxydation (antioxydant)"
+
+[[rubriques]]
+titre = "a pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Un ajout d’acide ascorbique pour l’action antioxydante"
+
+[[rubriques]]
+titre = "a pour agents"
+
+[[rubriques.lignes]]
+valeur = "Différents types de sulfites"
+
+[[rubriques]]
+titre = "est encadré par"
+
+[[rubriques.lignes]]
+valeur = "Des limites réglementaires"
+
+[[rubriques.lignes]]
+valeur = "Une obligation de mention sur l’étiquette"

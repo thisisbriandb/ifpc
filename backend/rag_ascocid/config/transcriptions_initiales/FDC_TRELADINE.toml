@@ -1,0 +1,112 @@
+# Transcription de l'illustration de la fiche 1477 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1477
+code = "FDC_TRELADINE"
+titre = "Tréladine"
+image_sha256 = "1e468ae74ea34fbb5f5bdc39a9d5ed4d3b5ff4475fc40d15c84f3a2ce7e22498"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Fiche variétale — mai 2014
+& TRELADINE cov
+Clone indemne : X5154
+Co-obtention : IFPC et INRA
+Exclusivité de multiplication aux adhérents CEP Innovation
+SCIENCE & IMPACT Parents : Fréquin Rouge Petit x X3189
+APPRECIATION GENERALE
+Variété douce à douce amère, à maturité mi-octobre.
+Bonne productivité avec une tendance à l'alternance cependant. Bon comportement vis-à-vis des bio-
+agresseurs (étude des nouvelles races de tavelure en cours).
+Le port de l'arbre est basitone : une taille de formation est indispensable.
+L'ARBRE
+Faible Moyen Fort
+angle à 30-40°
+hat
+fin avril - début mai (proche du parent
+Fréquin Rouge Petit)
+alternance de production assez
+30-40 tonnes/ha (essais en cours) | | == |
+Potentiel de produ |. =
+CONCEPTION DE VERGER
+Kéramère cov, Kermerrien (essais en cours)
+5 à 5.5 m X 2 à 2.5 m soit une densité réelle de 700 à 900 arbres par
+hectare sur MM106, selon le sol et le mode de conduite.
+Tavelure : bon comportement vis-à-vis des races communes ; étude de la
+sensibilité aux nouvelles races en cours. Oïdium : faible. Chancre : sensibilité moyenne."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Fiche variétale — mai 2014"
+
+[[rubriques.lignes]]
+valeur = "& TRELADINE cov"
+
+[[rubriques.lignes]]
+intitule = "Clone indemne"
+valeur = "X5154"
+
+[[rubriques.lignes]]
+intitule = "Co-obtention"
+valeur = "IFPC et INRA"
+
+[[rubriques.lignes]]
+valeur = "Exclusivité de multiplication aux adhérents CEP Innovation"
+
+[[rubriques.lignes]]
+intitule = "SCIENCE & IMPACT Parents"
+valeur = "Fréquin Rouge Petit x X3189"
+douteux = ["SCIENCE"]
+
+[[rubriques]]
+titre = "APPRECIATION GENERALE"
+
+[[rubriques.lignes]]
+valeur = "Variété douce à douce amère, à maturité mi-octobre."
+
+[[rubriques.lignes]]
+valeur = "Bonne productivité avec une tendance à l'alternance cependant. Bon comportement vis-à-vis des bio- agresseurs (étude des nouvelles races de tavelure en cours)."
+douteux = ["l'alternance"]
+
+[[rubriques.lignes]]
+intitule = "Le port de l'arbre est basitone"
+valeur = "une taille de formation est indispensable."
+douteux = ["l'arbre"]
+
+[[rubriques]]
+titre = "L'ARBRE"
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Fort"
+
+[[rubriques.lignes]]
+valeur = "angle à 30-40°"
+
+[[rubriques.lignes]]
+valeur = "hat"
+douteux = ["hat"]
+
+[[rubriques.lignes]]
+valeur = "fin avril - début mai (proche du parent Fréquin Rouge Petit)"
+
+[[rubriques.lignes]]
+valeur = "alternance de production assez 30-40 tonnes/ha (essais en cours) | | == | Potentiel de produ |. ="
+
+[[rubriques]]
+titre = "CONCEPTION DE VERGER"
+
+[[rubriques.lignes]]
+valeur = "Kéramère cov, Kermerrien (essais en cours)"
+douteux = ["cov,"]
+
+[[rubriques.lignes]]
+valeur = "5 à 5.5 m X 2 à 2.5 m soit une densité réelle de 700 à 900 arbres par hectare sur MM106, selon le sol et le mode de conduite."
+
+[[rubriques.lignes]]
+intitule = "Tavelure"
+valeur = "bon comportement vis-à-vis des races communes ; étude de la sensibilité aux nouvelles races en cours. Oïdium : faible. Chancre : sensibilité moyenne."

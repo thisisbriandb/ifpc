@@ -1,0 +1,167 @@
+# Transcription de l'illustration de la fiche 1428 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1428
+code = "FDC_DOUX_JOSEPH"
+titre = "Doux Joseph"
+image_sha256 = "3b1106d8f5f8b5204c7749c6edcb20326c5769097c007d46dd4252938c897081"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: DOUX JOSEPH
+PRINCIPALES ZONES DE PRODUCTION
+Ille-et-Vilaine : région de la Guerche.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 500 tonnes.
+Ph. Durand
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin du 9 novembre 1954)
+Dégustation du jus : amer.
+Dégustation du cidre : doux amer.
+Rendement en jus (%) : 59,6.
+Densité du jus : 1066,8 - Alcool en puissance : 89 6.
+Acidité de titration en g. SO‘'H: par litre : 1,61.
+Azote/sucres totaux : 0,36.
+Tanin (en g. par litre) : 3,92.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : très forte.
+Port : dôme étalé.
+Résistance aux maladies : bonne.
+Alternance : marquée.
+Productivité : bonne.
+Saison de floraison : 1re-2e.
+Saison de maturité : 1re.
+Conservation et transport des fruits: assez bons pour une variété de
+1re saison.
+Calibre du fruit: moyen.
+Mise à fruits : assez précoce sur porte-greffes de multiplication végétative.
+OBSERVATIONS DIVERSES
+Variété appréciée pour la fabrication de cidres se conservant naturelle-
+ment doux.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler) @
+Edition 1966"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : région de la Guerche."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Durand"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin du 9 novembre 1954"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "59,6."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1066,8"
+douteux = ["89"]
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "89 6."
+douteux = ["89"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘'H"
+valeur = "par litre : 1,61."
+douteux = ["SO‘'H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,36."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "3,92."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "très forte."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "dôme étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "marquée."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "1re-2e."
+douteux = ["1re-2e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "1re."
+douteux = ["1re."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "assez bons pour une variété de 1re saison."
+douteux = ["1re"]
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+douteux = ["fruit:"]
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "assez précoce sur porte-greffes de multiplication végétative."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété appréciée pour la fabrication de cidres se conservant naturelle- ment doux."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler) @"
+douteux = ["(ler)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1966"

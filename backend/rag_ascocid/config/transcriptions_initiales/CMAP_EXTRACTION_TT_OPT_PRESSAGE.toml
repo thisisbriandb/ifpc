@@ -1,0 +1,51 @@
+# Transcription de l'illustration de la fiche 1073 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1073
+code = "CMAP_EXTRACTION_TT_OPT_PRESSAGE"
+titre = "Les traitements d'optimisation du pressage"
+image_sha256 = "b50ff13094119edd3c3bb655c63b9fd848127448c9c8c98b662073a12b6eeb60"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les traitements d’optimisation du pressage
+sont des : Opérations facultatives de l’étape d’extraction
+regroupent : Les traitements enzymatiques de la râpure | Les traitements physico -chimiques de la râpure
+ont pour fonctions : L’adjonction d’eau à la râpure
+ont pour action complémentaire : D’améliorer la « pressabilité » de la râpure | D’augmenter le rendement de pressage | Un cuvage de la râpure traitée"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Opérations facultatives de l’étape d’extraction"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Les traitements enzymatiques de la râpure"
+
+[[rubriques.lignes]]
+valeur = "Les traitements physico -chimiques de la râpure"
+
+[[rubriques]]
+titre = "ont pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "L’adjonction d’eau à la râpure"
+
+[[rubriques]]
+titre = "ont pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "D’améliorer la « pressabilité » de la râpure"
+
+[[rubriques.lignes]]
+valeur = "D’augmenter le rendement de pressage"
+
+[[rubriques.lignes]]
+valeur = "Un cuvage de la râpure traitée"

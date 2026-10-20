@@ -1,0 +1,66 @@
+# Transcription de l'illustration de la fiche 1365 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1365
+code = "CMAP_REGROUPEMENT_VALORISATION_COPRODUITS"
+titre = "Valorisation des coproduits"
+image_sha256 = "78399b575c376a1078d3a0ef466c287547eee9886798dcdeb8720ef8de690d2c"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La valorisation des coproduits de l'élaboration des cidres
+sont un : Ensemble de procédés visant à valoriser les produits annexes de l'élaboration des cidres
+regrou pent : La valorisation des marcs | Pour le marc épuisé | Pour le marc vert | La valorisation des coproduits de la clarification des moûts (moûts non collés) | Pour les lies issues de chapeau brun | Pour les lies de dépectinisation | La valorisation des lies de collage | Pour les lies de collage des moûts | Pour les lies de collage des cidres | La valorisation des lies de fermentation | La valorisation des cidres non conformes"""
+anomalies = ["une colonne est loin de sa relation (557 points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de procédés visant à valoriser les produits annexes de l'élaboration des cidres"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "regrou pent"
+
+[[rubriques.lignes]]
+valeur = "La valorisation des marcs"
+
+[[rubriques.lignes]]
+intitule = "La valorisation des marcs"
+valeur = "Pour le marc épuisé"
+
+[[rubriques.lignes]]
+intitule = "La valorisation des marcs"
+valeur = "Pour le marc vert"
+
+[[rubriques.lignes]]
+valeur = "La valorisation des coproduits de la clarification des moûts (moûts non collés)"
+
+[[rubriques.lignes]]
+intitule = "La valorisation des coproduits de la clarification des moûts (moûts non collés)"
+valeur = "Pour les lies issues de chapeau brun"
+
+[[rubriques.lignes]]
+intitule = "La valorisation des coproduits de la clarification des moûts (moûts non collés)"
+valeur = "Pour les lies de dépectinisation"
+
+[[rubriques.lignes]]
+valeur = "La valorisation des lies de collage"
+
+[[rubriques.lignes]]
+intitule = "La valorisation des lies de collage"
+valeur = "Pour les lies de collage des moûts"
+
+[[rubriques.lignes]]
+intitule = "La valorisation des lies de collage"
+valeur = "Pour les lies de collage des cidres"
+
+[[rubriques.lignes]]
+valeur = "La valorisation des lies de fermentation"
+
+[[rubriques.lignes]]
+valeur = "La valorisation des cidres non conformes"

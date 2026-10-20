@@ -1,0 +1,73 @@
+# Transcription de l'illustration de la fiche 1488 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1488
+code = "CMAP_FERMENTATION_EFFETS_DES_ACETOBACTER"
+titre = "Les principaux effets des Acetobacter"
+image_sha256 = "f5f952a34358c1041e823c12c321e50d9b674f348ac60dedd77345dbf61a1315"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 89.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principaux effets des Acetobacter (bactéries acétiques)
+sont des : Phénomènes se produisant principalement au cours de l'étape fermentaire
+regroupent : L’oxydation de l’éthanol en acide acétique | Une production d’acétate d’éthyle
+sont conditionnés par : Le développement des Acetobacter
+ont pour impacts sensoriels : L'apparition d’une piqûre acétique (acidité volatile) | L'apparition d’une odeur caractéristique de solvant (acescence due à l’acétate d’éthyle) | Un dépassement de la limite légale en acide acétique autorisée (1g/L)
+dépendent de : Leur population maximale atteinte | Leur survie dans le milieu (azote assimilable, pH) | La présence d'oxygène (contact avec l’air) | La température du cidre"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Phénomènes se produisant principalement au cours de l'étape fermentaire"
+douteux = ["l'étape"]
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "L’oxydation de l’éthanol en acide acétique"
+douteux = ["L’oxydation"]
+
+[[rubriques.lignes]]
+valeur = "Une production d’acétate d’éthyle"
+douteux = ["d’acétate"]
+
+[[rubriques]]
+titre = "sont conditionnés par"
+
+[[rubriques.lignes]]
+valeur = "Le développement des Acetobacter"
+
+[[rubriques]]
+titre = "ont pour impacts sensoriels"
+
+[[rubriques.lignes]]
+valeur = "L'apparition d’une piqûre acétique (acidité volatile)"
+douteux = ["L'apparition", "piqûre"]
+
+[[rubriques.lignes]]
+valeur = "L'apparition d’une odeur caractéristique de solvant (acescence due à l’acétate d’éthyle)"
+douteux = ["L'apparition"]
+
+[[rubriques.lignes]]
+valeur = "Un dépassement de la limite légale en acide acétique autorisée (1g/L)"
+
+[[rubriques]]
+titre = "dépendent de"
+
+[[rubriques.lignes]]
+valeur = "Leur population maximale atteinte"
+
+[[rubriques.lignes]]
+valeur = "Leur survie dans le milieu (azote assimilable, pH)"
+
+[[rubriques.lignes]]
+valeur = "La présence d'oxygène (contact avec l’air)"
+douteux = ["d'oxygène"]
+
+[[rubriques.lignes]]
+valeur = "La température du cidre"

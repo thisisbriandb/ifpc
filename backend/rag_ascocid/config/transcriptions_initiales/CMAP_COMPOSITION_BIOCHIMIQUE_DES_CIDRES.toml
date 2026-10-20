@@ -1,0 +1,78 @@
+# Transcription de l'illustration de la fiche 1549 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1549
+code = "CMAP_COMPOSITION_BIOCHIMIQUE_DES_CIDRES"
+titre = "La composition biochimique des cidres"
+image_sha256 = "44d6d5dd129cf64bfd3d0b161e377f6f44c57dc2dcc3962521b892417af2239f"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 91.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La composition biochimique des cidres
+est un : Ensemble de composés impliqués dans différents processus et réactions, au cours de l'élaboration
+est caractérisée par : Les sucres | L'alcool | Les acides (acide malique, acides L- et D- lactiques, acide acétique) | Les polyols (le sorbitol, le glycérol) | Les composés volatils odorants | Les composés azotés | Les minéraux
+est influencée par : La variété des pommes | L'état des pommes | Les microorganismes du cidre | La fermentation alcoolique | La transformation malolactique | La méthode de clarification
+est déterminée par : Des tests et analyses"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de composés impliqués dans différents processus et réactions, au cours de l'élaboration"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "Les sucres"
+
+[[rubriques.lignes]]
+valeur = "L'alcool"
+douteux = ["L'alcool"]
+
+[[rubriques.lignes]]
+valeur = "Les acides (acide malique, acides L- et D- lactiques, acide acétique)"
+
+[[rubriques.lignes]]
+valeur = "Les polyols (le sorbitol, le glycérol)"
+
+[[rubriques.lignes]]
+valeur = "Les composés volatils odorants"
+
+[[rubriques.lignes]]
+valeur = "Les composés azotés"
+
+[[rubriques.lignes]]
+valeur = "Les minéraux"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La variété des pommes"
+
+[[rubriques.lignes]]
+valeur = "L'état des pommes"
+douteux = ["L'état"]
+
+[[rubriques.lignes]]
+valeur = "Les microorganismes du cidre"
+
+[[rubriques.lignes]]
+valeur = "La fermentation alcoolique"
+
+[[rubriques.lignes]]
+valeur = "La transformation malolactique"
+
+[[rubriques.lignes]]
+valeur = "La méthode de clarification"
+
+[[rubriques]]
+titre = "est déterminée par"
+
+[[rubriques.lignes]]
+valeur = "Des tests et analyses"

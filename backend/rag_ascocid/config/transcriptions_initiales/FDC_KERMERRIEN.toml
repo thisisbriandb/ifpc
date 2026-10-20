@@ -1,0 +1,128 @@
+# Transcription de l'illustration de la fiche 1472 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1472
+code = "FDC_KERMERRIEN"
+titre = "Kermerrien"
+image_sha256 = "a280cbfefc19e1b7faf8cb5d11179063dfa6a98df5276227c17da6b0c15b93b3"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Formation de l'arbre :
+A la plantation, le scion a souvent de nombreux anticipés à angle fermé. 3 à 5 anticipés bien répartis le long du
+tronc et parmi les plus ouverts, peuvent être conservés.
+Les premières années, la vigueur est très forte (croissance forte, érigée) sur M106 d'où un retard de la mise à
+fruits d'un an. Une suppression trop importante de branches ne fait que renforcer cette vigueur : Une arcure
+sous l'horizontale des dominantes non supprimées, est possible, en les vrillant par exemple.
+Par la suite, lorsque l'arbre a commencé à produire, la conduite est relativement facile car la variété est très
+ramifiée et l'axe assez dominant. Cependant, le problème de croissance tardive et d'annulation du bourgeon
+terminal provoque souvent des fléchissement des axes, renforcé par une surcharge de fruits.
+Une sélection rapide des branches de la base de l'arbre favorisera :
+- La présence de lumière et des ramifications nombreuses
+- un renforcement de la partie haute de l'arbre et un axe bien droit
+Calibre : moyen (36 à 57g)
+Forme : conique, bicolore à rouge.
+Epoque de récolte : fin septembre - début octobre
+Particularités : variété dont la maturité des fruits
+avance depuis quelques années !
+Conservation au sol : moyenne (sensible aux
+champignons du sol : Phytophthora, Alternaria,
+Mucor)
+Régression de l’amidon : très partielle à maturité >
+(40-60 % de régression)
+FU | we [nom | mon |
+ais at bte) _ mn |
+pH :3,8-4,1
+Conditions d'extraction : présence d’amidon parfois en grande quantité pouvant poser des problèmes.
+Saveur du moût : douce amère, légèrement parfumée.
+Cidre : saveur amère.
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Formation de l'arbre"
+valeur = ""
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion a souvent de nombreux anticipés à angle fermé. 3 à 5 anticipés bien répartis le long du tronc et parmi les plus ouverts, peuvent être conservés."
+
+[[rubriques.lignes]]
+valeur = "Les premières années, la vigueur est très forte (croissance forte, érigée) sur M106 d'où un retard de la mise à fruits d'un an. Une suppression trop importante de branches ne fait que renforcer cette vigueur : Une arcure sous l'horizontale des dominantes non supprimées, est possible, en les vrillant par exemple."
+
+[[rubriques.lignes]]
+valeur = "Par la suite, lorsque l'arbre a commencé à produire, la conduite est relativement facile car la variété est très ramifiée et l'axe assez dominant. Cependant, le problème de croissance tardive et d'annulation du bourgeon terminal provoque souvent des fléchissement des axes, renforcé par une surcharge de fruits. Une sélection rapide des branches de la base de l'arbre favorisera :"
+douteux = ["l'axe"]
+
+[[rubriques.lignes]]
+valeur = "- La présence de lumière et des ramifications nombreuses"
+douteux = ["La"]
+
+[[rubriques.lignes]]
+valeur = "- un renforcement de la partie haute de l'arbre et un axe bien droit"
+douteux = ["un"]
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "moyen (36 à 57g)"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "conique, bicolore à rouge."
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "fin septembre - début octobre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = "variété dont la maturité des fruits avance depuis quelques années !"
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "moyenne (sensible aux"
+
+[[rubriques.lignes]]
+intitule = "champignons du sol"
+valeur = "Phytophthora, Alternaria, Mucor)"
+
+[[rubriques.lignes]]
+intitule = "Régression de l’amidon"
+valeur = "très partielle à maturité >"
+
+[[rubriques.lignes]]
+valeur = "(40-60 % de régression)"
+
+[[rubriques.lignes]]
+valeur = "FU | we [nom | mon |"
+douteux = ["FU", "we", "[nom", "mon"]
+
+[[rubriques.lignes]]
+valeur = "ais at bte) _ mn |"
+douteux = ["ais", "at", "bte)", "_", "mn"]
+
+[[rubriques.lignes]]
+intitule = "pH"
+valeur = "3,8-4,1"
+douteux = ["pH", ":3,8-4,1"]
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "présence d’amidon parfois en grande quantité pouvant poser des problèmes."
+douteux = ["d'extraction", "d’amidon"]
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "douce amère, légèrement parfumée."
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "saveur amère."
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

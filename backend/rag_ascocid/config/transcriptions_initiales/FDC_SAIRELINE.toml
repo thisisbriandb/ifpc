@@ -1,0 +1,132 @@
+# Transcription de l'illustration de la fiche 1476 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1476
+code = "FDC_SAIRELINE"
+titre = "Saireline"
+image_sha256 = "c9f9aa21cd110671ef9f722af223b41c2e2d954eeecca89a213a64f46b524789"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+> SAIRELI
+Clone indemne : X5253
+Co-obtention IFPC et INRA
+Exclusivité de multiplication : adhérents CEP Innovation
+—— SCIENCE & IMPACT Parents : Kermerrien x X5100
+NE cov
+Variété douce-amère à maturité fin octobre à début novembre.
+Sa productivité moyenne à forte est associée à une montée en production rapide.
+Elle peut produire régulièrement en contexte de bon sol et si un éclaircissage complémentaire est réaliser
+régulièrement.
+Variété facile à conduire mais une gestion spécifique de l'axe est nécessaire pour conserver sa verticalité.
+FU [raie | Mon | For |
+pisueur [sos | |
+COMECNEE
+Insertion des branches : semi-ouvert, 45-60° .
+Photo : architecture de l'arbre en forme libre sur M106 (4è f)
+. ne . Faible M Fort
+Floraison : Fin avril à début mai D yen =
+articularités : -
+Production : 30-40 tonnes/ha (à confirmer)
+Variétés pollinisatrices : essais en cours
+Porte-greffe/ densité de plantation : 5 à 5.5 m X 2 à 2.5 m soit une densité réelle de 700 à 900 arbres par
+hectare sur MM106, selon le sol et le mode de conduite.
+Sensibilité aux maladies : Tavelure : faible sensibilité aux races communes ; étude de la sensibilité aux
+nouvelles races en cours - Oïdium : faible - Chancre : faible - Feu bactérien : sensible sur pousses (quelques
+floraisons secondaires)
+Réaction à l’éclaircissage chimique : moyenne (essais en cours)"""
+
+[[rubriques]]
+titre = "> SAIRELI"
+
+[[rubriques.lignes]]
+intitule = "Clone indemne"
+valeur = "X5253"
+
+[[rubriques.lignes]]
+valeur = "Co-obtention IFPC et INRA"
+
+[[rubriques.lignes]]
+intitule = "Exclusivité de multiplication"
+valeur = "adhérents CEP Innovation —— SCIENCE & IMPACT Parents : Kermerrien x X5100"
+douteux = ["SCIENCE"]
+
+[[rubriques.lignes]]
+valeur = "NE cov"
+
+[[rubriques.lignes]]
+valeur = "Variété douce-amère à maturité fin octobre à début novembre."
+
+[[rubriques.lignes]]
+valeur = "Sa productivité moyenne à forte est associée à une montée en production rapide."
+
+[[rubriques.lignes]]
+valeur = "Elle peut produire régulièrement en contexte de bon sol et si un éclaircissage complémentaire est réaliser régulièrement."
+
+[[rubriques.lignes]]
+valeur = "Variété facile à conduire mais une gestion spécifique de l'axe est nécessaire pour conserver sa verticalité."
+
+[[rubriques.lignes]]
+valeur = "FU [raie | Mon | For | pisueur [sos | |"
+douteux = ["FU", "[raie", "Mon", "For", "pisueur", "[sos"]
+
+[[rubriques]]
+titre = "COMECNEE"
+
+[[rubriques.lignes]]
+intitule = "Insertion des branches"
+valeur = "semi-ouvert, 45-60° ."
+
+[[rubriques.lignes]]
+intitule = "Photo"
+valeur = "architecture de l'arbre en forme libre sur M106 (4è f)"
+douteux = ["(4è"]
+
+[[rubriques.lignes]]
+valeur = ". ne . Faible M Fort"
+douteux = ["ne", "M"]
+
+[[rubriques.lignes]]
+intitule = "Floraison"
+valeur = "Fin avril à début mai D yen ="
+douteux = ["D", "yen"]
+
+[[rubriques.lignes]]
+intitule = "articularités"
+valeur = "-"
+
+[[rubriques.lignes]]
+intitule = "Production"
+valeur = "30-40 tonnes/ha (à confirmer)"
+
+[[rubriques.lignes]]
+intitule = "Variétés pollinisatrices"
+valeur = "essais en cours"
+
+[[rubriques.lignes]]
+intitule = "Porte-greffe/ densité de plantation"
+valeur = "5 à 5.5 m X 2 à 2.5 m soit une densité réelle de 700 à 900 arbres par hectare sur MM106, selon le sol et le mode de conduite."
+
+[[rubriques.lignes]]
+intitule = "Sensibilité aux maladies"
+valeur = "Tavelure : faible sensibilité aux races communes ; étude de la sensibilité aux nouvelles races en cours"
+
+[[rubriques.lignes]]
+intitule = "Oïdium"
+valeur = "faible"
+
+[[rubriques.lignes]]
+intitule = "Chancre"
+valeur = "faible"
+
+[[rubriques.lignes]]
+intitule = "Feu bactérien"
+valeur = "sensible sur pousses (quelques floraisons secondaires)"
+
+[[rubriques.lignes]]
+intitule = "Réaction à l’éclaircissage chimique"
+valeur = "moyenne (essais en cours)"
+douteux = ["l’éclaircissage"]

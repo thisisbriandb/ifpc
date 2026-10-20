@@ -1,0 +1,27 @@
+# Transcription de l'illustration de la fiche 1539 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1539
+code = "FDC_DEVELOPPEMENT_ET_EFFETS_DES_HANSENIASPORA"
+titre = "Le développement et les effets des Hanseniaspora"
+image_sha256 = "0cc1f11181dd30c014b5d4cecab2a0cea1ada7bfd2e51f60d2c2e99117199f44"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Hanseniaspora valbyensis.
+Ces levures ont une forme apiculée.
+(site CBS, T. van Beers et T. Boekhout)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Hanseniaspora valbyensis."
+douteux = ["Hanseniaspora"]
+
+[[rubriques.lignes]]
+valeur = "Ces levures ont une forme apiculée. (site CBS, T. van Beers et T. Boekhout)"

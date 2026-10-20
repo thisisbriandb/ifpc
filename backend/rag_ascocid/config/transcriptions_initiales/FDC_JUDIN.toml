@@ -1,0 +1,154 @@
+# Transcription de l'illustration de la fiche 1435 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1435
+code = "FDC_JUDIN"
+titre = "Judin"
+image_sha256 = "28197f12da58d0e3d8f85454fe72c2c8feb4a3b4cb695dddb4b5c7bf28675a0c"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: JUDIN
+PRINCIPALES ZONES DE PRODUCTION
+(départements et cantons)
+Ille-et-Vilaine : Guichen - Maure de Bretagne - Le Sel de Bretagne -
+Redon - Bain de Bretagne - Pipriac - Le Grand Fougeray.
+Loire-Atlantique : Derval - Guémené Penfao - St Nicolas de Redon.
+POSSIBILITES de COMMERCIALISATION en bonne année
+100 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 16-11-53)
+Dégustation du fruit : acide, dur, peu juteux.
+Dégustation du jus : acide, bien sucré.
+Rendement en jus (%) : 61,600.
+Densité du jus : 1067,6.
+Acidité de titration en g. SO* H: par litre : 6,12.
+Azote/Sucres totaux : 0,54.
+Tanin (en g. par litre) : 1,20.
+Couleur du jus : clair.
+Parfum : très prononcé
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Port : branches longues, peu garnies.
+Résistance aux maladies : bonne rusticité - ne craint pas l'humidité.
+Productivité : bonne et assez régulière dans sa zone de production.
+Saison de floraison : 3e.
+Saison de maturité : 3e.
+Conservation et transport des fruits : très bons.
+Grosseur du fruit : moyen ou assez gros.
+OBSERVATIONS DIVERSES
+Variété très intéressante pour l'industrie (jus et confitures) et pour la
+culture. À essayer en dehors de sa région de production.
+Comité des Fruits à Cidre et des Productions Cidriccles - 42, rue du Louvre - Paris (1er)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "départements et cantons"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : Guichen - Maure de Bretagne - Le Sel de Bretagne - Redon - Bain de Bretagne - Pipriac - Le Grand Fougeray."
+
+[[rubriques.lignes]]
+valeur = "Loire-Atlantique : Derval - Guémené Penfao - St Nicolas de Redon."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "100 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 16-11-53"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acide, dur, peu juteux."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acide, bien sucré."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "61,600."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1067,6."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H"
+valeur = "par litre : 6,12."
+douteux = ["H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,54."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,20."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "clair."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "très prononcé"
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "branches longues, peu garnies."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne rusticité - ne craint pas l'humidité."
+douteux = ["l'humidité."]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne et assez régulière dans sa zone de production."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen ou assez gros."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété très intéressante pour l'industrie (jus et confitures) et pour la culture. À essayer en dehors de sa région de production."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidriccles - 42, rue du Louvre - Paris (1er)"
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

@@ -1,0 +1,50 @@
+# Transcription de l'illustration de la fiche 1306 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1306
+code = "CMAP_REGROUPEMENT_PHENOMENES_FLORES_BACTERIENNES"
+titre = "Les phénomènes de croissance et d'action des flores bactériennes"
+image_sha256 = "6fd906c6d1faed407732e85c78215a2c3564da5a7f8e7ee49c3100dcbb5af852"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Phénomènes de croissance et d’action des flores bactériennes
+sont un : Ensemble de phénomènes impliquant des flores bactériennes
+regroupent : La croissance des Œnococcus | Les principaux effets des Œnococcus | La croissance des Zymomonas | Les principaux effets des Zymomonas | La croissance des bactéries acétiques ( ) Acetobacter | Les principaux effets des bactéries acétiques (Acetobacter ) | La croissance des autres flores bactériennes | Les principaux effets des autres flores bactériennes"""
+anomalies = ["une colonne est loin de sa relation (353 points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes impliquant des flores bactériennes"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La croissance des Œnococcus"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Œnococcus"
+
+[[rubriques.lignes]]
+valeur = "La croissance des Zymomonas"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Zymomonas"
+
+[[rubriques.lignes]]
+valeur = "La croissance des bactéries acétiques ( ) Acetobacter"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des bactéries acétiques (Acetobacter )"
+
+[[rubriques.lignes]]
+valeur = "La croissance des autres flores bactériennes"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des autres flores bactériennes"

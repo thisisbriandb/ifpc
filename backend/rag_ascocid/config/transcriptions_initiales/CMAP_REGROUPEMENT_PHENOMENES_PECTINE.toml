@@ -1,0 +1,47 @@
+# Transcription de l'illustration de la fiche 1303 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1303
+code = "CMAP_REGROUPEMENT_PHENOMENES_PECTINE"
+titre = "Les phénomènes de modifications de la pectine"
+image_sha256 = "9bdbdd0307b33627023e4d25c3b807323393f4008eb853c1f24a50c8f4f8eb2a"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Phénomènes de modifications de la pectine
+sont un : Ensemble de phénomènes entrainant une modification de la pectine | La déméthylation des pectines par les PME (pectines méthylestérases) | La gélification des pectines (calcium) | La flottation « spontanée » du chapeau brun
+regroupent : La dépectinisation par les pectinases (PME, PG, PL) | La diffusion de la pectine soluble au cours du cuvage de la râpure | La gélification des pectines (hautement méthylées) dans les concentrés"""
+anomalies = ["une colonne est loin de sa relation (338 points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes entrainant une modification de la pectine"
+douteux = ["modification"]
+
+[[rubriques.lignes]]
+valeur = "La déméthylation des pectines par les PME (pectines méthylestérases)"
+
+[[rubriques.lignes]]
+valeur = "La gélification des pectines (calcium)"
+
+[[rubriques.lignes]]
+valeur = "La flottation « spontanée » du chapeau brun"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La dépectinisation par les pectinases (PME, PG, PL)"
+
+[[rubriques.lignes]]
+valeur = "La diffusion de la pectine soluble au cours du cuvage de la râpure"
+douteux = ["râpure"]
+
+[[rubriques.lignes]]
+valeur = "La gélification des pectines (hautement méthylées) dans les concentrés"

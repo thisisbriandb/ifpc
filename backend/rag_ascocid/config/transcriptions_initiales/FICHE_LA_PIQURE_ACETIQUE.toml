@@ -1,0 +1,49 @@
+# Transcription de l'illustration de la fiche 1486 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1486
+code = "FICHE_LA_PIQURE_ACETIQUE"
+titre = "La piqûre acétique"
+image_sha256 = "afd99413f7b6cf8271d23c8e7b174bc87be41997d2b69ad9f3699dc90d2ff41b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+\\ Tuyau de pompe Chapeau flottant
+Figure 1 : Schéma d'un chapeau flottant
+Réseau cuves Réseau détendu
+Centrale détente
+Solution 1 : Stockage de bouteilles
+Solution 2 : Production
+Figure 2 : Schéma de deux solutions de lignes d'inertage à l’azote"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "\\ Tuyau de pompe Chapeau flottant"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schéma d'un chapeau flottant"
+
+[[rubriques.lignes]]
+valeur = "Réseau cuves Réseau détendu"
+
+[[rubriques.lignes]]
+valeur = "Centrale détente"
+
+[[rubriques.lignes]]
+intitule = "Solution 1"
+valeur = "Stockage de bouteilles"
+
+[[rubriques.lignes]]
+intitule = "Solution 2"
+valeur = "Production"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Schéma de deux solutions de lignes d'inertage à l’azote"
+douteux = ["d'inertage"]

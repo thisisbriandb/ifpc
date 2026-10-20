@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1085 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1085
+code = "FICHE_FLOTTATION_SPONTANEE_CHAPEAU_BRUN"
+titre = "La flottation \"spontanée\" du chapeau brun"
+image_sha256 = "bff129d6f8cff336b71050a9ab3569a9d350ebf228549526249a8c42e7727fd6"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Flottation spontanée du « chapeau brun »
+<—\\/ol. du chapeau brun
+(% du Vol. total)
+—€— lies de fond de cuve
+(% du Vol. total)
+—e— Total des bourbes
+(% du Vol. total)
+Durée depuis le pressage
+Figure 1 : Exemple d'évolution du volume de
+Photo 1 : Bombonne de moût de pomme en cours de chapeau et de lies (exprimé en pourcentage du
+clarification haute volume total) en fonction de la durée après pressage.
+Photo P. GESTIN - INRA L'échelle de durée n'est pas indiquée car elle dépend des
+conditions, dont la température."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Flottation spontanée du « chapeau brun »"
+
+[[rubriques.lignes]]
+valeur = "<—\\/ol. du chapeau brun (% du Vol. total)"
+douteux = ["<—\\/ol."]
+
+[[rubriques.lignes]]
+valeur = "—€— lies de fond de cuve (% du Vol. total)"
+douteux = ["lies"]
+
+[[rubriques.lignes]]
+valeur = "—e— Total des bourbes (% du Vol. total)"
+douteux = ["—e—", "Total"]
+
+[[rubriques.lignes]]
+valeur = "Durée depuis le pressage"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple d'évolution du volume de"
+
+[[rubriques.lignes]]
+intitule = "Photo 1"
+valeur = "Bombonne de moût de pomme en cours de chapeau et de lies (exprimé en pourcentage du"
+
+[[rubriques.lignes]]
+valeur = "clarification haute volume total) en fonction de la durée après pressage. Photo P. GESTIN - INRA L'échelle de durée n'est pas indiquée car elle dépend des conditions, dont la température."

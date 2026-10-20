@@ -1,0 +1,153 @@
+# Transcription de l'illustration de la fiche 1446 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1446
+code = "FDC_POMME_DE_BOUE"
+titre = "Pomme de Boué"
+image_sha256 = "9459f6bd4ff109a6c2f20e017085df371f044a6f9b5218a3f61363c4d31373b3"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: POMME DE BOUÉ
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Sarthe : Bonnétable - Mamers - St Cosme de Vair.
+POSSIBILITES de COMMERCIALISATION en bonne année
+1 000 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 18-12-61)
+Dégustation du fruit : acidulé, très juteux, parfumé.
+Dégustation du jus : agréable, équilibré.
+Rendement en jus (%) : 74,3.
+Densité du jus : 1 054,2.
+Acidité de titration en g. SO* H: par litre : 4,31.
+Azote/Sucres totaux : 0,51.
+Tanin (en g. par litre) : 1,0.
+Couleur du jus : ambré.
+Parfum : léger et agréable.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne.
+Port : régulier, harmonieuse disposition des branches charpentières.
+Résistance aux maladies : assez rustique malgré quelques attaques de
+tavelure, d'oïdium et de chenilles.
+Productivité : très grande, peu alternante.
+Saison de floraison : 2e-3e.
+Saison de maturité : 3e.
+Conservation et transport des fruits : excellents.
+Grosseur du fruit: variable suivant la production, en général moyen ou
+au-dessous de la moyenne.
+OBSERVATIONS DIVERSES
+Mise à fruit rapide. Les fruits tiennent bien à l'arbre jusqu'à complète
+maturité.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Sarthe : Bonnétable - Mamers - St Cosme de Vair."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "1 000 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 18-12-61"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acidulé, très juteux, parfumé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "agréable, équilibré."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "74,3."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 054,2."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H"
+valeur = "par litre : 4,31."
+douteux = ["SO*", "H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,51."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,0."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "ambré."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger et agréable."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "régulier, harmonieuse disposition des branches charpentières."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez rustique malgré quelques attaques de tavelure, d'oïdium et de chenilles."
+douteux = ["d'oïdium"]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "très grande, peu alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "excellents."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "variable suivant la production, en général moyen ou au-dessous de la moyenne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Mise à fruit rapide. Les fruits tiennent bien à l'arbre jusqu'à complète maturité."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)"
+douteux = ["(1+r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

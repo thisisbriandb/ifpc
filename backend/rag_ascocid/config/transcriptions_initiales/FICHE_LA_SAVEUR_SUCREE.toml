@@ -1,0 +1,28 @@
+# Transcription de l'illustration de la fiche 1528 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1528
+code = "FICHE_LA_SAVEUR_SUCREE"
+titre = "La saveur sucrée"
+image_sha256 = "54c97c5576d7df41911eea48e50547d71b812d145987f79156b79933c38edc35"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Sucré Moelleux  Sirupeux
+Figure 1 : Vocabulaire associé à l'intensité de la saveur sucrée perçue lors
+de la dégustation d’un cidre"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Sucré Moelleux  Sirupeux"
+douteux = ["Moelleux", " Sirupeux"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Vocabulaire associé à l'intensité de la saveur sucrée perçue lors de la dégustation d’un cidre"
+douteux = ["l'intensité"]

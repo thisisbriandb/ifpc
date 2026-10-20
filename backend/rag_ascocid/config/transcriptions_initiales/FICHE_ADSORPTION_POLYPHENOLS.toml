@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1368 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1368
+code = "FICHE_ADSORPTION_POLYPHENOLS"
+titre = "L'adsorption des polyphénols"
+image_sha256 = "3ca707ce029b1648c49e84da8bd9f08c4900fe4c43eab0e62439166206975489"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Concentration (g/L) Concentration (g/L)
+2.0
+1.6
+1.2
+0.8
+0.4
+0
+11 18 25 OX0 OX1 OX2 OX3
+Température (°C) Niveau d'oxydation
+Intensité de la sensation Intensité de la sensation
+10
+Astringence Amertume
+8
+6
+OXO OX1 OX2 OX3 OX0 Ox1 OX2 OX3
+Niveau d'oxydation Niveau d'oxydation
+Figures A et B : Influence de la température et du niveau d'oxydation sur la concentration en tanins et sur
+le DPm (symbole plein: concentration, symbole vide : Degré de Polymérisation Moyen) dans le jus de
+différentes variétés de pommes à cidre.
+Figures C et D : Influence du niveau d'oxydation sur les sensations perçues (astringence et amertume).
+Adapté d'après Renard et al. 2011. Modulating polyphenolic composition and organoleptic properties of apple juices by
+manipulating the pressing conditions"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Concentration (g/L) Concentration (g/L) 2.0"
+
+[[rubriques.lignes]]
+valeur = "1.6"
+
+[[rubriques.lignes]]
+valeur = "1.2"
+
+[[rubriques.lignes]]
+valeur = "0.8 0.4"
+
+[[rubriques.lignes]]
+valeur = "0"
+
+[[rubriques]]
+titre = "11 18 25 OX0 OX1 OX2 OX3"
+
+[[rubriques.lignes]]
+valeur = "Température (°C) Niveau d'oxydation"
+douteux = ["d'oxydation"]
+
+[[rubriques.lignes]]
+valeur = "Intensité de la sensation Intensité de la sensation 10"
+
+[[rubriques.lignes]]
+valeur = "Astringence Amertume"
+
+[[rubriques.lignes]]
+valeur = "8"
+
+[[rubriques.lignes]]
+valeur = "6"
+
+[[rubriques]]
+titre = "OXO OX1 OX2 OX3 OX0 Ox1 OX2 OX3"
+
+[[rubriques.lignes]]
+valeur = "Niveau d'oxydation Niveau d'oxydation"
+douteux = ["d'oxydation", "d'oxydation"]
+
+[[rubriques.lignes]]
+intitule = "Figures A et B"
+valeur = "Influence de la température et du niveau d'oxydation sur la concentration en tanins et sur"
+douteux = ["d'oxydation"]
+
+[[rubriques.lignes]]
+intitule = "le DPm (symbole plein"
+valeur = "concentration, symbole vide : Degré de Polymérisation Moyen) dans le jus de différentes variétés de pommes à cidre."
+
+[[rubriques.lignes]]
+intitule = "Figures C et D"
+valeur = "Influence du niveau d'oxydation sur les sensations perçues (astringence et amertume). Adapté d'après Renard et al. 2011. Modulating polyphenolic composition and organoleptic properties of apple juices by manipulating the pressing conditions"
+douteux = ["d'oxydation", "al."]

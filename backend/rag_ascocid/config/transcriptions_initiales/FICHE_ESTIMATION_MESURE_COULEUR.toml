@@ -1,0 +1,84 @@
+# Transcription de l'illustration de la fiche 1590 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1590
+code = "FICHE_ESTIMATION_MESURE_COULEUR"
+titre = "Estimation et mesure de la couleur"
+image_sha256 = "f630bf7f8e216e6c8b247eda6ecb760abac74eebbb4a2da170decd8267520714"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Jaune Couleur saturée > cidres se rapprochant de
+Jaune . + la gamme rouge-orangé, voire acajou
+à RQ Teinte
+ous N Teinte
+js VISU F à  Ÿ F
+CE Vert —+— Rouge
+Bleu Rouge
+Figure 1 : Le coffret des couleurs des cidres. Figure 2 : Cercle de couleur CIE Lab, projection de la palette de
+Î, H A 1. * *
+Ce coffret a été développé et réalisé par l'IFPC, pour les acteurs de la couleur des cidres français (plan équatorial a b ) |
+filière. Il comprend 14 références couleurs de cidres commerciaux, 2 Données cidricoles extraites des projets Caractérisation des cidres (2003),
+tubes pour réaliser des comparaisons avec des échantillons de cidre et CasDAR préférences consommateurs (2007-2010), Aromacidre (2013-2015) et
+une fiche explicative comportant le système international de prélèvements sur des cidres rosés et faiblement colorés. Les ronds jaunes
+représentation des couleurs (CIE Lab), pour positionner les couleurs de correspondent aux cidres classiques, les ronds rouges correspondent aux cidres
+référence parmi l’échantillonnage de cidres commerciaux. rosés et les points blancs, les cidres faiblement colorés.
+Photos : C. SEGAUST D'après Bauduin, R., Poupard, P., Le Quéré, J.-M. Symoneaux, R. 2017. Des cidres et des
+couleurs, Partie 1. Le cahier technique de l'IFPC, Pomme à cidre n°44
+—  Cuvette contenant
+l'échantillon
+—— Spectrophotomètre
+Figure 3 : Spectrophotomètre pouvant être utilisé pour analyser
+la couleur des cidres
+Photo : IFPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Jaune Couleur saturée > cidres se rapprochant de"
+
+[[rubriques.lignes]]
+valeur = "Jaune . + la gamme rouge-orangé, voire acajou à RQ Teinte ous N Teinte js VISU F à  Ÿ F CE Vert —+— Rouge"
+douteux = ["à", "RQ", "ous", "js", "VISU", "F", "à", " Ÿ", "F", "CE"]
+
+[[rubriques.lignes]]
+valeur = "Bleu Rouge"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Le coffret des couleurs des cidres. Figure 2 : Cercle de couleur CIE Lab, projection de la palette de"
+
+[[rubriques.lignes]]
+valeur = "Î, H A 1. * * Ce coffret a été développé et réalisé par l'IFPC, pour les acteurs de la couleur des cidres français (plan équatorial a b ) | filière. Il comprend 14 références couleurs de cidres commerciaux, 2 Données cidricoles extraites des projets Caractérisation des cidres (2003), tubes pour réaliser des comparaisons avec des échantillons de cidre et CasDAR préférences consommateurs (2007-2010), Aromacidre (2013-2015) et une fiche explicative comportant le système international de prélèvements sur des cidres rosés et faiblement colorés. Les ronds jaunes représentation des couleurs (CIE Lab), pour positionner les couleurs de correspondent aux cidres classiques, les ronds rouges correspondent aux cidres référence parmi l’échantillonnage de cidres commerciaux. rosés et les points blancs, les cidres faiblement colorés."
+douteux = ["Î,", "H", "A", "1.", "l'IFPC,", "b", "Il", "cidricoles", "l’échantillonnage"]
+
+[[rubriques.lignes]]
+intitule = "Photos"
+valeur = "C. SEGAUST D'après Bauduin, R., Poupard, P., Le Quéré, J.-M. Symoneaux, R. 2017. Des cidres et des"
+douteux = ["R.,", "P.,", "J.-M."]
+
+[[rubriques.lignes]]
+valeur = "couleurs, Partie 1. Le cahier technique de l'IFPC, Pomme à cidre n°44"
+douteux = ["l'IFPC,"]
+
+[[rubriques.lignes]]
+valeur = "—  Cuvette contenant l'échantillon"
+douteux = [" Cuvette"]
+
+[[rubriques.lignes]]
+valeur = "—— Spectrophotomètre"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Spectrophotomètre pouvant être utilisé pour analyser"
+
+[[rubriques.lignes]]
+valeur = "la couleur des cidres"
+
+[[rubriques.lignes]]
+intitule = "Photo"
+valeur = "IFPC"

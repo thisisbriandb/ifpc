@@ -1,0 +1,102 @@
+# Transcription de l'illustration de la fiche 1399 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1399
+code = "FICHE_LES_PRINCIPES_DE_LA_PASTEURISATION"
+titre = "Les principes de la pasteurisation"
+image_sha256 = "8ae6383fd3774c9282e1fee158c9bde38e6bcd0718b27462de9c2e0645b8ded0"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Tableau I : Risques encourus selon le facteur de réduction pour une
+population de 100 000 germes / L 10000000
+9000000
+8000000
+7000000
+100 000 100 000 1 germe/L soit 1 pour 1 L
+100 000 1 000 000 0,1 germe/L soit 1 pour 10 L
+100 000 10 000 000 _|0,01 germe/L soit 1 pour 100 L
+6000000
+5000000
+4000000
+Tableau II : Risques encourus selon la population initiale pour un 3000000
+facteur de réduction de 1 000 000
+2000000
+1000000
+0
+0 2 3 4
+Durée de traitement (min)
+100 000 1 000 000 0,1 germe/L soit 1 pour 10 L
+1 000 000 1 000 000 1 germe/L soit 1 pour 1 L
+10 000 000 1 000 000 10 germes/L soit 10 pour 1 L
+Figure 1 : Evolution de la population de germes
+survivants en fonction de la durée de traitement"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Tableau I"
+valeur = "Risques encourus selon le facteur de réduction pour une population de 100 000 germes / L 10000000"
+douteux = ["I"]
+
+[[rubriques.lignes]]
+valeur = "9000000 8000000"
+
+[[rubriques.lignes]]
+valeur = "7000000"
+
+[[rubriques]]
+titre = "100 000 100 000 1 germe/L soit 1 pour 1 L"
+
+[[rubriques]]
+titre = "100 000 1 000 000 0,1 germe/L soit 1 pour 10 L"
+
+[[rubriques]]
+titre = "100 000 10 000 000 _|0,01 germe/L soit 1 pour 100 L"
+
+[[rubriques.lignes]]
+valeur = "6000000"
+
+[[rubriques.lignes]]
+valeur = "5000000"
+douteux = ["5000000"]
+
+[[rubriques.lignes]]
+valeur = "4000000"
+
+[[rubriques.lignes]]
+intitule = "Tableau II"
+valeur = "Risques encourus selon la population initiale pour un 3000000"
+douteux = ["II"]
+
+[[rubriques.lignes]]
+valeur = "facteur de réduction de 1 000 000 2000000"
+
+[[rubriques.lignes]]
+valeur = "1000000"
+
+[[rubriques.lignes]]
+valeur = "0"
+
+[[rubriques]]
+titre = "0 2 3 4"
+
+[[rubriques.lignes]]
+valeur = "Durée de traitement (min)"
+
+[[rubriques]]
+titre = "100 000 1 000 000 0,1 germe/L soit 1 pour 10 L"
+
+[[rubriques]]
+titre = "1 000 000 1 000 000 1 germe/L soit 1 pour 1 L"
+
+[[rubriques]]
+titre = "10 000 000 1 000 000 10 germes/L soit 10 pour 1 L"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Evolution de la population de germes survivants en fonction de la durée de traitement"

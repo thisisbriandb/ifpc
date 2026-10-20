@@ -1,0 +1,39 @@
+# Transcription de l'illustration de la fiche 1323 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1323
+code = "CMAP_REGROUPEMENT_AUTRES_PHENOMENES"
+titre = "Autres phénomènes"
+image_sha256 = "095c54a6f1ac33f488c1bf5390ce8a1e068090f3da5b8b3b377ca758f81b3108"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Autres phénomènes
+sont un : Ensemble de phénomènes
+regroupent : La décantation | L’oxydation de composés du cidre | La dissolution de gaz dans un liquide | La dissolution de CO 2 dans le cidre"""
+anomalies = ["une colonne est loin de sa relation (234 points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes"
+
+[[rubriques]]
+titre = "regroupent"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La décantation"
+
+[[rubriques.lignes]]
+valeur = "L’oxydation de composés du cidre"
+
+[[rubriques.lignes]]
+valeur = "La dissolution de gaz dans un liquide"
+
+[[rubriques.lignes]]
+valeur = "La dissolution de CO 2 dans le cidre"

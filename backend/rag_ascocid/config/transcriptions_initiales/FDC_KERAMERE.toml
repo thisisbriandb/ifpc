@@ -1,0 +1,112 @@
+# Transcription de l'illustration de la fiche 1471 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1471
+code = "FDC_KERAMERE"
+titre = "Keramère"
+image_sha256 = "706240120768b564944c7e765614359f009f681adf357210934ad29e72b96f61"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Formation de l'arbre :
+A la plantation, les scions sont très peu ramifiés : il est préférable de supprimer les quelques rares anticipés car
+ils risquent de devenir dominants et rester érigés.
+Les premières années, la conduite est simple : tailler les branches trop basses et arquer éventuellement dans la
+partie supérieure celles qui ne s'arquent pas d'elle-même.
+Les branches sont naturellement dégarnies dans leur tiers supérieur permettant une bonne porosité de l'arbre.
+Quelques gourmands apparaissant sur les arcures des branches peuvent être vrillés ou supprimés.
+Les ramifications sont naturellement souples. Il en est de même pour l'axe d'où une tendance de ce dernier à
+fortement s'incliner sous le poids des fruits : des essais de rabattage de l'axe sont en cours mais un palissage
+haut peut aussi être une solution adaptée.
+Plantée dans un sol assez fertile, avec un soutien alimentaire suffisant et associé à une pratique régulière de
+l'éclaircissage (quel que soit le moyen utilisé), cette variété a des atouts intéressants.
+Calibre : moyen (50 à 80g)
+Forme : arrondi à conique (bicolore)
+Epoque de récolte : mi à fin octobre
+Particularités : -
+Conservation au sol : moyenne à bonne
+Régression de l’amidon : pas d'information
+ts Donne lt ___ em)
+PH : 3,7 à 3.9
+Conditions d'extraction : à préciser
+Saveur du moût : amère
+Cidre : peu sucré, amer et astringent (proche de Marie Ménard et Kermerrien)
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Formation de l'arbre"
+valeur = ""
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+intitule = "A la plantation, les scions sont très peu ramifiés"
+valeur = "il est préférable de supprimer les quelques rares anticipés car ils risquent de devenir dominants et rester érigés."
+
+[[rubriques.lignes]]
+intitule = "Les premières années, la conduite est simple"
+valeur = "tailler les branches trop basses et arquer éventuellement dans la partie supérieure celles qui ne s'arquent pas d'elle-même."
+douteux = ["s'arquent"]
+
+[[rubriques.lignes]]
+valeur = "Les branches sont naturellement dégarnies dans leur tiers supérieur permettant une bonne porosité de l'arbre. Quelques gourmands apparaissant sur les arcures des branches peuvent être vrillés ou supprimés."
+
+[[rubriques.lignes]]
+valeur = "Les ramifications sont naturellement souples. Il en est de même pour l'axe d'où une tendance de ce dernier à fortement s'incliner sous le poids des fruits : des essais de rabattage de l'axe sont en cours mais un palissage haut peut aussi être une solution adaptée."
+douteux = ["Il", "l'axe"]
+
+[[rubriques.lignes]]
+valeur = "Plantée dans un sol assez fertile, avec un soutien alimentaire suffisant et associé à une pratique régulière de l'éclaircissage (quel que soit le moyen utilisé), cette variété a des atouts intéressants."
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "moyen (50 à 80g)"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "arrondi à conique (bicolore)"
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "mi à fin octobre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = "-"
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "moyenne à bonne"
+
+[[rubriques.lignes]]
+intitule = "Régression de l’amidon"
+valeur = "pas d'information"
+
+[[rubriques.lignes]]
+valeur = "ts Donne lt ___ em)"
+douteux = ["ts", "Donne", "lt", "___", "em)"]
+
+[[rubriques.lignes]]
+intitule = "PH"
+valeur = "3,7 à 3.9"
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "à préciser"
+douteux = ["d'extraction"]
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "amère"
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "peu sucré, amer et astringent (proche de Marie Ménard et Kermerrien)"
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

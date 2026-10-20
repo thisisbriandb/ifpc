@@ -1,0 +1,40 @@
+# Transcription de l'illustration de la fiche 1332 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1332
+code = "FICHE_AJOUT_CALCIUM"
+titre = "Ajout de calcium"
+image_sha256 = "8a1d49453ee90fc8fedbddfdd7ae06366e302c1c92629fbd4641a26db2f2d692"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Chaines principales
+- de pectine
+7,\" déméthylée
+Figure 1 : Formation de liaisons entre
+molécules de pectines déméthylées ; liaison
+des chaînes principales par des zones
+déméthylées comprenant plusieurs acides
+galacturoniques contigus selon le modèle de
+la « boîte à œufs »
+(Axelos & Thibault 1991)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Chaines principales - de pectine"
+
+[[rubriques.lignes]]
+valeur = "7,\" déméthylée"
+douteux = ["7,\""]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Formation de liaisons entre molécules de pectines déméthylées ; liaison des chaînes principales par des zones déméthylées comprenant plusieurs acides galacturoniques contigus selon le modèle de la « boîte à œufs »"
+
+[[rubriques.lignes]]
+valeur = "(Axelos & Thibault 1991)"

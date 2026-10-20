@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1375 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1375
+code = "FICHE_FERMENTATION_METHODE_FR"
+titre = "La méthode FR (Fermentation Ralentie)"
+image_sha256 = "ccbaf3256aad60b662069161e1f61763181ad20a53fa3bc5a877094b829cca55"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Demi-sec
+Périodes d'embouteillage
+Figure 1 : Contrôler la vitesse de fermentation pour disposer de cidres à assembler au bon moment
+Avant la fin de croissance Après la fin de croissance
+Ré-encemencement
+Intervention tardive par du cidre non traité
+Intervention après une
+baisse d'environ 5 points Faible pourcentage de
+cidre non traité
+Intervention précoce Fort pourcentage
+de cidre non traité
+Sans intervention
+Durée Durée
+Figure 2 : Les stratégies de réduction de la quantité de levure pour contrôler la vitesse"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Demi-sec"
+
+[[rubriques.lignes]]
+valeur = "Périodes d'embouteillage"
+douteux = ["d'embouteillage"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Contrôler la vitesse de fermentation pour disposer de cidres à assembler au bon moment"
+
+[[rubriques.lignes]]
+valeur = "Avant la fin de croissance Après la fin de croissance"
+
+[[rubriques.lignes]]
+valeur = "Ré-encemencement Intervention tardive par du cidre non traité"
+
+[[rubriques.lignes]]
+valeur = "Intervention après une"
+
+[[rubriques.lignes]]
+valeur = "baisse d'environ 5 points Faible pourcentage de"
+douteux = ["d'environ"]
+
+[[rubriques.lignes]]
+valeur = "cidre non traité"
+
+[[rubriques.lignes]]
+valeur = "Intervention précoce Fort pourcentage de cidre non traité"
+
+[[rubriques.lignes]]
+valeur = "Sans intervention Durée Durée"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Les stratégies de réduction de la quantité de levure pour contrôler la vitesse"

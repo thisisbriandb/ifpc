@@ -1,0 +1,94 @@
+# Transcription de l'illustration de la fiche 1123 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1123
+code = "CMAP_ASSEMBLAGE_FORMULATION"
+titre = "La formulation"
+image_sha256 = "84fec1a9b698ee579929fb3aedec48d1ee92ce4b08219f08de015bfcbc5002ed"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La formulation
+est une : Opération de l'étape d'assemblage
+a pour fonctions : De définir la « recette » de l'assemblage | D’assurer une constance de la référence produit
+doit prendre en compte : Le cahier des charges du produit demandé | Les cuvées disponibles et leurs caractéristiques (analytiques et sensorielles) | Un ensemble de critères sensoriels peu identifiés (savoir-faire du maitre de chai)
+a pour contraintes qualitatives éventuelles : L'utilisation de cuvées respectant le cahier des charges « bio » | L'utilisation de cuvées respectant un cahier des charges AOP, AOC ou IGP | L'utilisation de cuvées « pur jus » | L'utilisation de cuvées issues de fruits de l'exploitation pour les cidres « fermier »
+a pour cibles quantitatives : La teneur en sucres résiduels (respect du qualificatif « doux », « demi sec » ou « brut ») | Le titre alcoométrique acquis | Les autres caractéristiques définies par le décret cidre et d'éventuels cahiers des charges
+a pour cibles organoleptiques : Les saveurs sucrée, acide et amère et leur équilibre | Un équilibre aromatique défini en interne | La couleur souhaitée"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l'étape d'assemblage"
+douteux = ["l'étape", "d'assemblage"]
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De définir la « recette » de l'assemblage"
+douteux = ["l'assemblage"]
+
+[[rubriques.lignes]]
+valeur = "D’assurer une constance de la référence produit"
+douteux = ["D’assurer"]
+
+[[rubriques]]
+titre = "doit prendre en compte"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges du produit demandé"
+
+[[rubriques.lignes]]
+valeur = "Les cuvées disponibles et leurs caractéristiques (analytiques et sensorielles)"
+
+[[rubriques.lignes]]
+valeur = "Un ensemble de critères sensoriels peu identifiés (savoir-faire du maitre de chai)"
+
+[[rubriques]]
+titre = "a pour contraintes qualitatives éventuelles"
+
+[[rubriques.lignes]]
+valeur = "L'utilisation de cuvées respectant le cahier des charges « bio »"
+douteux = ["L'utilisation"]
+
+[[rubriques.lignes]]
+valeur = "L'utilisation de cuvées respectant un cahier des charges AOP, AOC ou IGP"
+douteux = ["L'utilisation"]
+
+[[rubriques.lignes]]
+valeur = "L'utilisation de cuvées « pur jus »"
+douteux = ["L'utilisation"]
+
+[[rubriques.lignes]]
+valeur = "L'utilisation de cuvées issues de fruits de l'exploitation pour les cidres « fermier »"
+douteux = ["L'utilisation", "l'exploitation"]
+
+[[rubriques]]
+titre = "a pour cibles quantitatives"
+
+[[rubriques.lignes]]
+valeur = "La teneur en sucres résiduels (respect du qualificatif « doux », « demi sec » ou « brut »)"
+
+[[rubriques.lignes]]
+valeur = "Le titre alcoométrique acquis"
+
+[[rubriques.lignes]]
+valeur = "Les autres caractéristiques définies par le décret cidre et d'éventuels cahiers des charges"
+douteux = ["d'éventuels"]
+
+[[rubriques]]
+titre = "a pour cibles organoleptiques"
+
+[[rubriques.lignes]]
+valeur = "Les saveurs sucrée, acide et amère et leur équilibre"
+
+[[rubriques.lignes]]
+valeur = "Un équilibre aromatique défini en interne"
+
+[[rubriques.lignes]]
+valeur = "La couleur souhaitée"

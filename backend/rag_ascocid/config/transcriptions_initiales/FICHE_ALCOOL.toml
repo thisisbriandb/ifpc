@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1564 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1564
+code = "FICHE_ALCOOL"
+titre = "L'alcool"
+image_sha256 = "1d806ae087795a362a91544b63e6d0cedd40927a5edce6cf6f3f5b00ae5a4ddb"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Structure chimique de l'éthanol
+Les atomes gris de la représentation 3D correspondent aux atomes de carbone (C), les blancs aux hydrogènes (H) et le rouge
+à l'oxygène (O).
+Source de la représentation 3D : https://pubchem.ncbi.nlm.nih.gov/compound/702#section=-3D-Conformer
+2 ATP (énergie)
+Glycolyse > 2 pyruvates
+VAN Décarboxylation:
+Pyruvate décarboxylase
+2 NADH, H*
+$___J 2 CO;
+2 éthanols <« 2 éthanals
+Réduction:
+Alcool déshydrogénase
+Figure 3 : Pictogramme
+Figure 2 : La fermentation alcoolique conduite par S. uvarum dans | d'avertissement sur la consommation
+les produits cidricoles, en absence d'oxygène d'alcool par les femmes enceintes.
+Provenance du logo : Wikipédia"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure chimique de l'éthanol"
+douteux = ["l'éthanol"]
+
+[[rubriques.lignes]]
+valeur = "Les atomes gris de la représentation 3D correspondent aux atomes de carbone (C), les blancs aux hydrogènes (H) et le rouge à l'oxygène (O)."
+douteux = ["l'oxygène", "(O)."]
+
+[[rubriques.lignes]]
+intitule = "Source de la représentation 3D"
+valeur = "https://pubchem.ncbi.nlm.nih.gov/compound/702#section=-3D-Conformer"
+douteux = ["https://pubchem.ncbi.nlm.nih.gov/compound/702#section=-3D-Conformer"]
+
+[[rubriques]]
+titre = "2 ATP (énergie)"
+
+[[rubriques.lignes]]
+valeur = "Glycolyse > 2 pyruvates"
+
+[[rubriques.lignes]]
+intitule = "VAN Décarboxylation"
+valeur = ""
+douteux = ["VAN"]
+
+[[rubriques.lignes]]
+valeur = "Pyruvate décarboxylase"
+
+[[rubriques]]
+titre = "2 NADH, H*"
+
+[[rubriques.lignes]]
+valeur = "$___J 2 CO;"
+douteux = ["$___J", "CO;"]
+
+[[rubriques]]
+titre = "2 éthanols <« 2 éthanals"
+
+[[rubriques.lignes]]
+intitule = "Réduction"
+valeur = "Alcool déshydrogénase"
+douteux = ["Alcool"]
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Pictogramme"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "La fermentation alcoolique conduite par S. uvarum dans | d'avertissement sur la consommation"
+douteux = ["d'avertissement"]
+
+[[rubriques.lignes]]
+valeur = "les produits cidricoles, en absence d'oxygène d'alcool par les femmes enceintes."
+douteux = ["d'alcool"]
+
+[[rubriques.lignes]]
+intitule = "Provenance du logo"
+valeur = "Wikipédia"

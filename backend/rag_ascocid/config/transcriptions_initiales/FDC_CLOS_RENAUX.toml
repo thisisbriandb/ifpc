@@ -1,0 +1,110 @@
+# Transcription de l'illustration de la fiche 1462 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1462
+code = "FDC_CLOS_RENAUX"
+titre = "Clos Renaux"
+image_sha256 = "d9a264aa03b3e8d56f2a9c9afaea5ed5b6902a29ac79e298e5ed0a0963827a48"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+A la plantation, le scion a souvent peu d'anticipés qu'il est préférable de supprimer.
+En effet, les anticipés même ouverts au départ, ont tendance à se renforcer par la suite et peuvent donner des
+axes secondaires.
+La conduite est assez facile ; elle consiste avant tout à maîtriser les ramifications les plus vigoureuses soit par
+leur élimination soit en les arquant.
+Par la suite, la charge de fruits va contribuer à l'ouverture des autres ramifications. Très caractéristique de cette
+variété, les branches s'ouvrent en faisant la « manivelle » (même observation sur la variété Bisquet). Si
+certaines branches ne basculent pas sous l'horizontal, il est possible de les incliner en les vrillant en été.
+De nombreux repercements vigoureux ont tendance à apparaître derrière des torsions ou arcure de branches :
+leur arrachage en été de préférence est indispensable surtout dans le centre de l'arbre.
+ASPECT RECOLTE
+moyen à gros (60 à 95g)
+polygonale, aplati et légèrement conique,
+parfois rayé de rouge, pédoncule court
+2°\"* quinzaine d'octobre
+fruit tendre, peu résistant à la récolte
+mécanique et au transport
+conservation des fruits au sol
+moyenne à mauvaise.
+totale le plus souvent.
+Faible Moyen Important
+15
+105 |
+DST
+18
+642
+3.8 à 4.0
+à préciser
+douce, parfumée
+sec
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion a souvent peu d'anticipés qu'il est préférable de supprimer."
+douteux = ["d'anticipés"]
+
+[[rubriques.lignes]]
+valeur = "En effet, les anticipés même ouverts au départ, ont tendance à se renforcer par la suite et peuvent donner des axes secondaires."
+
+[[rubriques.lignes]]
+valeur = "La conduite est assez facile ; elle consiste avant tout à maîtriser les ramifications les plus vigoureuses soit par leur élimination soit en les arquant."
+
+[[rubriques.lignes]]
+valeur = "Par la suite, la charge de fruits va contribuer à l'ouverture des autres ramifications. Très caractéristique de cette variété, les branches s'ouvrent en faisant la « manivelle » (même observation sur la variété Bisquet). Si certaines branches ne basculent pas sous l'horizontal, il est possible de les incliner en les vrillant en été."
+douteux = ["l'horizontal,"]
+
+[[rubriques.lignes]]
+valeur = "De nombreux repercements vigoureux ont tendance à apparaître derrière des torsions ou arcure de branches : leur arrachage en été de préférence est indispensable surtout dans le centre de l'arbre."
+
+[[rubriques]]
+titre = "ASPECT RECOLTE"
+
+[[rubriques.lignes]]
+valeur = "moyen à gros (60 à 95g)"
+
+[[rubriques.lignes]]
+valeur = "polygonale, aplati et légèrement conique, parfois rayé de rouge, pédoncule court"
+
+[[rubriques.lignes]]
+valeur = "2°\"* quinzaine d'octobre"
+douteux = ["2°\"*"]
+
+[[rubriques.lignes]]
+valeur = "fruit tendre, peu résistant à la récolte mécanique et au transport"
+
+[[rubriques.lignes]]
+valeur = "conservation des fruits au sol moyenne à mauvaise."
+
+[[rubriques.lignes]]
+valeur = "totale le plus souvent."
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Important 15"
+douteux = ["15"]
+
+[[rubriques]]
+titre = "105 |"
+
+[[rubriques.lignes]]
+valeur = "DST"
+douteux = ["DST"]
+
+[[rubriques.lignes]]
+valeur = "18 642"
+douteux = ["18", "642"]
+
+[[rubriques]]
+titre = "3.8 à 4.0"
+
+[[rubriques.lignes]]
+valeur = "à préciser douce, parfumée sec"
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

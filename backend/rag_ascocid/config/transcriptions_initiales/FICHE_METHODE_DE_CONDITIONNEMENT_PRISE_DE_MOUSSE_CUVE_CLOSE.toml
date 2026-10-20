@@ -1,0 +1,78 @@
+# Transcription de l'illustration de la fiche 1595 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1595
+code = "FICHE_METHODE_DE_CONDITIONNEMENT_PRISE_DE_MOUSSE_CUVE_CLOSE"
+titre = "La méthode de conditionnement avec prise de mousse en cuve close"
+image_sha256 = "5bc21fb797d888fe596e6ecd6450117d1d834c57b7eb52a1e5c798c4638b9e52"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La prise de mousse en cuve close La prise de mousse en cuve close
+avec levures indigènes par ajout de LSA
+Levures indigènes Pour éliminer les microorganismes du cidre (levures
+et potentiels microorganismes d’'altération)
+Jusqu'à obtention d'une masse volumique
+cible Ajout de LSA (Levures Sèches Actives)
+Jusqu'à obtention d'une pression cible
+Le cidre effervescent est clarifié sous contre- . ; ,
+Jusqu'à obtention d'une masse volumique cible
+Jusqu'à obtention d'une pression cible
+pression pour éliminer les levures avant
+conditionnement du produit
+Embouteillage isobarométrique pour
+conserver l’effervescence du produit Éventuelle clarification du cidre effervescent, sous
+Bouchage et muselage si le conditionnement contre-pression
+se fait en bouteille
+Embouteillage isobarométrique pour conserver
+l'effervescence du produit
+Bouchage et muselage si le conditionnement se fait
+en bouteille
+Figure 1 : Les différentes possibilités lors d’un conditionnement avec prise de mousse en cuve close"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "La prise de mousse en cuve close La prise de mousse en cuve close avec levures indigènes par ajout de LSA"
+
+[[rubriques.lignes]]
+valeur = "Levures indigènes Pour éliminer les microorganismes du cidre (levures et potentiels microorganismes d’'altération)"
+douteux = ["d’'altération)"]
+
+[[rubriques.lignes]]
+valeur = "Jusqu'à obtention d'une masse volumique cible Ajout de LSA (Levures Sèches Actives) Jusqu'à obtention d'une pression cible"
+douteux = ["Jusqu'à"]
+
+[[rubriques.lignes]]
+valeur = "Le cidre effervescent est clarifié sous contre- . ; , Jusqu'à obtention d'une masse volumique cible"
+
+[[rubriques.lignes]]
+valeur = "Jusqu'à obtention d'une pression cible"
+
+[[rubriques.lignes]]
+valeur = "pression pour éliminer les levures avant conditionnement du produit"
+
+[[rubriques.lignes]]
+valeur = "Embouteillage isobarométrique pour"
+
+[[rubriques.lignes]]
+valeur = "conserver l’effervescence du produit Éventuelle clarification du cidre effervescent, sous Bouchage et muselage si le conditionnement contre-pression"
+douteux = ["l’effervescence"]
+
+[[rubriques.lignes]]
+valeur = "se fait en bouteille"
+
+[[rubriques.lignes]]
+valeur = "Embouteillage isobarométrique pour conserver l'effervescence du produit"
+
+[[rubriques.lignes]]
+valeur = "Bouchage et muselage si le conditionnement se fait en bouteille"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes possibilités lors d’un conditionnement avec prise de mousse en cuve close"
+douteux = ["d’un"]

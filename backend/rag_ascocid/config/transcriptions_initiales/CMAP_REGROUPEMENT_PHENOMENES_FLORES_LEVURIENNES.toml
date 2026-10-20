@@ -1,0 +1,56 @@
+# Transcription de l'illustration de la fiche 1305 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1305
+code = "CMAP_REGROUPEMENT_PHENOMENES_FLORES_LEVURIENNES"
+titre = "Les phénomènes de croissance et d'action des flores levuriennes"
+image_sha256 = "4ad6bb23fa043e34ac90c1a1e37ed639a30309d14951f5a515c335520226a909"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Phénomènes de croissance et d’action des flores levuriennes
+sont un : Ensemble de phénomènes impliquant des flores levuriennes
+regroupent : La croissance des Saccharomyces | Les principaux effets des Saccharomyces | La croissance des Hanseniaspora | Les principaux effets des Hanseniaspora | La croissance des Brettanomyces | Les principaux effets des Brettanomyces | La croissance des levures à voile | Les principaux effets des levures à voile | La croissance des autres flores levuriennes | Les principaux effets des autres flores levuriennes"""
+anomalies = ["une colonne est loin de sa relation (427 points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes impliquant des flores levuriennes"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La croissance des Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "La croissance des Hanseniaspora"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Hanseniaspora"
+
+[[rubriques.lignes]]
+valeur = "La croissance des Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "La croissance des levures à voile"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des levures à voile"
+
+[[rubriques.lignes]]
+valeur = "La croissance des autres flores levuriennes"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des autres flores levuriennes"

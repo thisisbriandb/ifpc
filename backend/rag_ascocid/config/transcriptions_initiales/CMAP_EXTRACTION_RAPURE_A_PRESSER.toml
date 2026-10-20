@@ -1,0 +1,96 @@
+# Transcription de l'illustration de la fiche 1076 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1076
+code = "CMAP_EXTRACTION_RAPURE_A_PRESSER"
+titre = "La râpure à presser"
+image_sha256 = "cc5b56fed1b23d6f93e693eee8f950d38d76a6fc4ca6e08335ce92b4b9ff5ed7"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La râpure à presser
+est un : Produit intermédiaire de l'élaboration du cidre
+a pour parties : Les cossettes (fragments de pulpe) | Le jus (déjà libéré) | Des résidus (pépins, queues...)
+est caractérisée par : Sa température | Sa teneur en pectines solubilisées | La taille de ses cossettes | Son niveau d’oxydation
+est décrite par : Sa consistance | Sa couleur
+a pour défauts : Une consistance grasse/collante | Une consistance sèche
+est influencée par : La taille des couteaux ou grilles de la ràpe | L'état de maturité des pommes | Le niveau d’altération fongique des pommes | Sa durée de cuvage ou de stockage tampon de la râpure | Les variétés de pommes"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Produit intermédiaire de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "a pour parties"
+
+[[rubriques.lignes]]
+valeur = "Les cossettes (fragments de pulpe)"
+
+[[rubriques.lignes]]
+valeur = "Le jus (déjà libéré)"
+
+[[rubriques.lignes]]
+valeur = "Des résidus (pépins, queues...)"
+douteux = ["queues...)"]
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "Sa température"
+
+[[rubriques.lignes]]
+valeur = "Sa teneur en pectines solubilisées"
+
+[[rubriques.lignes]]
+valeur = "La taille de ses cossettes"
+
+[[rubriques.lignes]]
+valeur = "Son niveau d’oxydation"
+douteux = ["d’oxydation"]
+
+[[rubriques]]
+titre = "est décrite par"
+
+[[rubriques.lignes]]
+valeur = "Sa consistance"
+
+[[rubriques.lignes]]
+valeur = "Sa couleur"
+
+[[rubriques]]
+titre = "a pour défauts"
+
+[[rubriques.lignes]]
+valeur = "Une consistance grasse/collante"
+douteux = ["Une"]
+
+[[rubriques.lignes]]
+valeur = "Une consistance sèche"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La taille des couteaux ou grilles de la ràpe"
+douteux = ["ràpe"]
+
+[[rubriques.lignes]]
+valeur = "L'état de maturité des pommes"
+douteux = ["L'état"]
+
+[[rubriques.lignes]]
+valeur = "Le niveau d’altération fongique des pommes"
+
+[[rubriques.lignes]]
+valeur = "Sa durée de cuvage ou de stockage tampon de la râpure"
+douteux = ["râpure"]
+
+[[rubriques.lignes]]
+valeur = "Les variétés de pommes"

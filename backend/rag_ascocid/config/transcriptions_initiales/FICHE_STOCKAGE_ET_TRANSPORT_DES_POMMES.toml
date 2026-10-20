@@ -1,0 +1,44 @@
+# Transcription de l'illustration de la fiche 1602 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1602
+code = "FICHE_STOCKAGE_ET_TRANSPORT_DES_POMMES"
+titre = "Le stockage et le transport des pommes"
+image_sha256 = "d7b4d08ed523bb03602fc609850f0f19dcac9e64e42f7d6df1fffd6e04be85ef"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 81.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+IFPC-
+Se Figure 2 : Illustration du transport des pommes en
+> remorque
+Figure 1 : Le stockage des pommes
+A. Stockage en palox (caissette-palette)
+B. Stockage en sacs filets
+C. Stockage en silo"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "IFPC-"
+douteux = ["IFPC-"]
+
+[[rubriques.lignes]]
+intitule = "Se Figure 2"
+valeur = "Illustration du transport des pommes en"
+douteux = ["Se", "2", "Illustration"]
+
+[[rubriques.lignes]]
+valeur = "> remorque"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Le stockage des pommes A. Stockage en palox (caissette-palette) B. Stockage en sacs filets"
+douteux = ["A.", "Stockage"]
+
+[[rubriques.lignes]]
+valeur = "C. Stockage en silo"
+douteux = ["en", "silo"]

@@ -1,0 +1,45 @@
+# Transcription de l'illustration de la fiche 1307 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1307
+code = "CMAP_REGROUPEMENT_PHENOMENES_AROMES"
+titre = "Les phénomènes responsables de la composition aromatique des cidres"
+image_sha256 = "44d023ee83e965ca884d1b6323411ec15f7040ec9345efb88345ce4ac4bf7c46"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Phénomènes responsables de la composition aromatique du cidre
+sont un : Ensemble de phénomènes impactant les arômes du cidre
+regroupent : La production de composés aromatiques par Saccharomyces (esters d’acétate, alcools supérieurs, esters éthyliques, thiols) | L'interaction entre et Saccharomyces dans la production de Hanseniaspora composés aromatiques | Les impacts de Hanseniaspora sur les composés fruités (esters d’acétate)
+impactent : La dégradation des arômes fruités par (esters d’acétate) Brettanomyces | Les arômes et précurseurs d’arômes"""
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes impactant les arômes du cidre"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La production de composés aromatiques par Saccharomyces (esters d’acétate, alcools supérieurs, esters éthyliques, thiols)"
+
+[[rubriques.lignes]]
+intitule = "La production de composés aromatiques par Saccharomyces (esters d’acétate, alcools supérieurs, esters éthyliques, thiols)"
+valeur = "L'interaction entre et Saccharomyces dans la production de Hanseniaspora composés aromatiques"
+
+[[rubriques.lignes]]
+valeur = "Les impacts de Hanseniaspora sur les composés fruités (esters d’acétate)"
+
+[[rubriques]]
+titre = "impactent"
+
+[[rubriques.lignes]]
+valeur = "La dégradation des arômes fruités par (esters d’acétate) Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "Les arômes et précurseurs d’arômes"

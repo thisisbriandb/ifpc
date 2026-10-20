@@ -69,6 +69,8 @@ SCHEMAS = pathlib.Path("config/schemas")
 # Illustrations en image transcrites par OCR puis relues : des données, qui
 # vivent avec le corpus (et sont corrigées sur place par la relecture).
 TRANSCRIPTIONS_IMAGES = RACINE / "transcriptions" / "images"
+# Copie de départ livrée avec le code, semée dans le volume au démarrage.
+TRANSCRIPTIONS_INITIALES = pathlib.Path("config/transcriptions_initiales")
 # Documents ajoutés depuis l'administration de la plateforme : sur le même
 # volume que le corpus, pour être sauvegardés et déplacés avec lui.
 BIBLIOTHEQUE = Bibliotheque(RACINE / "documents")
@@ -148,6 +150,11 @@ class Moteur:
                       f"({len(self.schemas)} transcriptions)")
             for alerte in anomalies + schemas.schemas_modifies(self.schemas, manifeste):
                 print(f"[ldc] schémas : {alerte}")
+            copiees, remplacees = transcriptions_images.semer(
+                TRANSCRIPTIONS_INITIALES, TRANSCRIPTIONS_IMAGES)
+            if copiees or remplacees:
+                print(f"[ldc] illustrations : {copiees} transcriptions amenées, "
+                      f"{remplacees} mises à jour (non relues)")
             erreurs: list[str] = []
             illustrations = transcriptions_images.charger_dossier(TRANSCRIPTIONS_IMAGES, erreurs)
             ecrits, anomalies = transcriptions_images.synchroniser(

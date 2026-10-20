@@ -1,0 +1,68 @@
+# Transcription de l'illustration de la fiche 1490 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1490
+code = "CMAP_TRAITEMENTS_DES_DECHETS_ET_EAUX_RESIDUAIRES"
+titre = "Traitements des déchets et eaux résiduaires"
+image_sha256 = "3258a4554821f10099831420e6f17e7e45871c11aba4e0f429d6cb4dbb55bc58"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Traitements des déchets et eaux résiduaires
+sont un : Ensemble de traitements visant à réduire l’impact environnemental
+regroupent : Le traitement des rejets saisonniers | Eaux de convoyage des fruits | Débris végétaux des eaux de convoyage | Rejets de tri (pommes pourries…) | Le traitement des rejets courants | Eaux de rinçage du matériel et des locaux | Eaux de nettoyage et désinfection du matériel et des locaux | Terres de filtration
+ont pour fonctions : De neutraliser le pH (si besoin) | De dépolluer les eaux (éliminer les matières organiques) | D’évacuer les déchets ultimes"""
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de traitements visant à réduire l’impact environnemental"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Le traitement des rejets saisonniers"
+
+[[rubriques.lignes]]
+intitule = "Le traitement des rejets saisonniers"
+valeur = "Eaux de convoyage des fruits"
+
+[[rubriques.lignes]]
+intitule = "Le traitement des rejets saisonniers"
+valeur = "Débris végétaux des eaux de convoyage"
+
+[[rubriques.lignes]]
+intitule = "Le traitement des rejets saisonniers"
+valeur = "Rejets de tri (pommes pourries…)"
+
+[[rubriques.lignes]]
+valeur = "Le traitement des rejets courants"
+
+[[rubriques.lignes]]
+intitule = "Le traitement des rejets courants"
+valeur = "Eaux de rinçage du matériel et des locaux"
+
+[[rubriques.lignes]]
+intitule = "Le traitement des rejets courants"
+valeur = "Eaux de nettoyage et désinfection du matériel et des locaux"
+
+[[rubriques.lignes]]
+intitule = "Le traitement des rejets courants"
+valeur = "Terres de filtration"
+
+[[rubriques]]
+titre = "ont pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De neutraliser le pH (si besoin)"
+
+[[rubriques.lignes]]
+valeur = "De dépolluer les eaux (éliminer les matières organiques)"
+
+[[rubriques.lignes]]
+valeur = "D’évacuer les déchets ultimes"

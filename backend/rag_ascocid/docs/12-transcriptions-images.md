@@ -85,9 +85,24 @@ valeur = "1 065,5."
 douteux = []                # mots à comparer à l'image
 ```
 
-Les transcriptions vivent **avec les données** (le volume du corpus), pas
-dans le dépôt : elles en dérivent, et la relecture les corrige sur place.
-**Sauvegarder** `transcriptions/` avec le reste du volume.
+Les transcriptions vivent **avec les données** (le volume du corpus) : la
+relecture les corrige sur place. **Sauvegarder** `transcriptions/` avec le
+reste du volume.
+
+**Comment elles arrivent en production.** Le dépôt en livre une copie de
+départ, `config/transcriptions_initiales/`, embarquée dans l'image. Au
+démarrage, le service la sème dans le volume : il copie les transcriptions qui
+manquent, remplace celles qui y sont encore « à vérifier » quand la copie
+livrée diffère (une meilleure extraction passe ainsi par un simple
+déploiement), et ne touche **jamais** à une transcription corrigée ou validée,
+ni à un fichier illisible. Aucun accès au serveur n'est nécessaire — Railway
+n'en donne pas. Premier démarrage mesuré sur un volume vide : 124 s
+(1 399 passages vectorisés) ; les suivants : 2 s. La sonde de santé laisse
+600 s.
+
+Pour livrer une nouvelle extraction : `./transcrire images` / `cartes` sur un
+poste, puis recopier `data/transcriptions/images/*.toml` dans
+`config/transcriptions_initiales/` et commiter.
 
 `./transcrire images` ne réécrit **jamais** une transcription corrigée ou
 validée ; si son image a changé dans AsCoCid, il le signale. Un fichier
@@ -177,5 +192,5 @@ indexables sur 396, 102 s de vectorisation au premier démarrage.
   relecture.
 - Les **exposants et formules** (1ʳᵉ-2ᵉ, SO⁴H²) sont les erreurs typiques : ils
   sont signalés comme douteux.
-- **Railway** n'a pas d'accès shell : les transcriptions y arrivent avec
-  l'archive du volume (spec 07 §0), puis sont relues en ligne.
+- **Les relectures restent dans le volume** de chaque installation (VM,
+  Railway) : elles ne remontent pas d'elles-mêmes dans le dépôt.

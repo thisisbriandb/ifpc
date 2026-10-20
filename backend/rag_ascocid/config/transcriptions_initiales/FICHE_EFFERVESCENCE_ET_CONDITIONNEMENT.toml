@@ -1,0 +1,91 @@
+# Transcription de l'illustration de la fiche 1596 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1596
+code = "FICHE_EFFERVESCENCE_ET_CONDITIONNEMENT"
+titre = "Effervescence et conditionnement"
+image_sha256 = "1c1a46945cd82760441a4b5a9f52ef44442bff5adcdaac438a9c87d3547321da"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 82.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Type
+Méthode Levures CO, exogène , - Avantages Inconvénients
+d’embouteillage
+- Demande une
+- Protection contre l'oxydation _ LIL TENTE
+l'effervescence finale
+du produit Risque de
+SE Indigènes - Mention « Effervescence } .
+Ne fe RES LSA Non Soutireuse à plat naturelle » bouteille et d'ex losion
+Daoutere Mélange - Autorisée par les cahiers q exp
+- Conservation des
+SEE ER EE PO bouteilles plusieurs
+: Label Rouge. P
+mois avant leur
+commercialisation
+. - Demande une
+indigènes = Mention « Effervescence maîtrise pour contrôler
+g naturelle » P
+LSA Non Isobarométrique Demi ce icseeies l'effervescence finale
+Prise de mousse
+en cuve close
+ISANgE après embouteillage - Long .
+- Equipements coûteux
+- Rapide
+- Facilite la gestion de la - Equipements coûteux
+cuverie - Non autorisée par les
+Gazéification Non Oui Isobatométrique - Effervescence maîtrisable cahiers des charges
+| - Filtration préalable des AOP et Label
+. réduisant les risques de Rouge
+” microorganismes d’altération
+- Obtention rapide de - Equipements coûteux
+l'effervescence - Risque de
+- Consommation de surpression en
+Effervescence LSA Oui Isobarométrique l'oxygène présent en bouteille et d'explosion
+mixte bouteille par les levures - Non autorisée par les
+- Filtration préalable cahiers des charges
+réduisant les risques de des AOP et Label
+microorganismes d’altération Rouge
+Tableau 1 : Les différentes méthodes d'obtention de l'effervescence des cidres français
+LSA = Levures Sèches Actives
+AOP = Appellation d'Origine Protégée"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Type"
+
+[[rubriques.lignes]]
+valeur = "Méthode Levures CO, exogène , - Avantages Inconvénients d’embouteillage - Demande une - Protection contre l'oxydation _ LIL TENTE l'effervescence finale du produit Risque de SE Indigènes - Mention « Effervescence } . Ne fe RES LSA Non Soutireuse à plat naturelle » bouteille et d'ex losion Daoutere Mélange - Autorisée par les cahiers q exp - Conservation des SEE ER EE PO bouteilles plusieurs : Label Rouge. P"
+douteux = ["d’embouteillage", "_", "LIL", "TENTE", "SE", "Ne", "fe", "RES", "bouteille", "losion", "Daoutere", "q", "exp", "SEE", "ER", "EE", "PO", "P"]
+
+[[rubriques.lignes]]
+valeur = "mois avant leur commercialisation"
+
+[[rubriques.lignes]]
+valeur = ". - Demande une indigènes = Mention « Effervescence maîtrise pour contrôler g naturelle » P"
+douteux = ["indigènes", "Effervescence", "g", "P"]
+
+[[rubriques.lignes]]
+valeur = "LSA Non Isobarométrique Demi ce icseeies l'effervescence finale"
+douteux = ["Demi", "ce", "icseeies"]
+
+[[rubriques.lignes]]
+valeur = "Prise de mousse en cuve close"
+
+[[rubriques.lignes]]
+valeur = "ISANgE après embouteillage - Long . - Equipements coûteux - Rapide - Facilite la gestion de la - Equipements coûteux cuverie - Non autorisée par les Gazéification Non Oui Isobatométrique - Effervescence maîtrisable cahiers des charges | - Filtration préalable des AOP et Label . réduisant les risques de Rouge ” microorganismes d’altération - Obtention rapide de - Equipements coûteux l'effervescence - Risque de - Consommation de surpression en Effervescence LSA Oui Isobarométrique l'oxygène présent en bouteille et d'explosion mixte bouteille par les levures - Non autorisée par les - Filtration préalable cahiers des charges réduisant les risques de des AOP et Label"
+douteux = ["ISANgE", "Long", "Isobatométrique", "maîtrisable", "d’altération", "l'effervescence", "Isobarométrique"]
+
+[[rubriques.lignes]]
+valeur = "microorganismes d’altération Rouge"
+douteux = ["d’altération"]
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Les différentes méthodes d'obtention de l'effervescence des cidres français LSA = Levures Sèches Actives AOP = Appellation d'Origine Protégée"
+douteux = ["d'obtention", "l'effervescence"]

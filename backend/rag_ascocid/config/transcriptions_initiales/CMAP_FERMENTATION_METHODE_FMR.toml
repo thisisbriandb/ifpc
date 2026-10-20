@@ -1,0 +1,90 @@
+# Transcription de l'illustration de la fiche 1099 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1099
+code = "CMAP_FERMENTATION_METHODE_FMR"
+titre = "La méthode FMR (fermentation de mouts reconstitués)"
+image_sha256 = "c8f550bf32830c656f05c80627d4cd3311d4294c49c4d795b8291764a9ccdafe"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode FMR (fermentation de moûts reconstitués)
+est une : Modalité de l’étape fermentaire
+est constituée a pour fonctions de : Une reconstitution du moût | Un ajout d’azote (facultatif) | Une mise en fermentation (avec ensemencement) | Une fermentation principale | Une élimination des levures | Une conservation à basse température (courte)
+a pour conséquences : De transformer « à la demande » des moûts concentrés en cidres | De réduire le volume de cuverie | De disposer de moûts à fermenter toute l’année | De réaliser une fermentation en flore contrôlée | Une limitation de l’action des levures « non Saccharomyces » | Une production de cidres sensoriellement différents des cidres classiques
+est influencée par : La méthode de reconstitution | La température de stockage
+s’appuie sur : Un suivi fermentaire
+a pour incident : Une difficulté de démarrage de la fermentation"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape fermentaire"
+
+[[rubriques]]
+titre = "est constituée a pour fonctions de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une reconstitution du moût"
+
+[[rubriques.lignes]]
+valeur = "Un ajout d’azote (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Une mise en fermentation (avec ensemencement)"
+
+[[rubriques.lignes]]
+valeur = "Une fermentation principale"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des levures"
+
+[[rubriques.lignes]]
+valeur = "Une conservation à basse température (courte)"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De transformer « à la demande » des moûts concentrés en cidres"
+
+[[rubriques.lignes]]
+valeur = "De réduire le volume de cuverie"
+
+[[rubriques.lignes]]
+valeur = "De disposer de moûts à fermenter toute l’année"
+
+[[rubriques.lignes]]
+valeur = "De réaliser une fermentation en flore contrôlée"
+
+[[rubriques.lignes]]
+valeur = "Une limitation de l’action des levures « non Saccharomyces »"
+
+[[rubriques.lignes]]
+valeur = "Une production de cidres sensoriellement différents des cidres classiques"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La méthode de reconstitution"
+
+[[rubriques.lignes]]
+valeur = "La température de stockage"
+
+[[rubriques]]
+titre = "s’appuie sur"
+
+[[rubriques.lignes]]
+valeur = "Un suivi fermentaire"
+
+[[rubriques]]
+titre = "a pour incident"
+
+[[rubriques.lignes]]
+valeur = "Une difficulté de démarrage de la fermentation"

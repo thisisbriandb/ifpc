@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1499 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1499
+code = "FDC_TABLE_EQUIVALENCE_MASSE_VOLUMIQUE_SUCRES_ET_ALCOOL_POTENTIEL"
+titre = "Table d'équivalence entre la masse volumique, les sucres et l'alcool potentiel"
+image_sha256 = "790b020cdf392d9f8b8583d3cca82cbd42623247ada9806b7e1419c968d5d40d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 95.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Valeur moyenne Alcool potentiel (% vol)
+leur maximale Valeur minimale Moyenne Valeur maximale
+94,8
+97
+99,1
+101,3
+103,5
+105,6
+107,8
+109,9
+112,1
+114,3
+116,4
+118,6
+120,7
+122,9
+125,1
+127,2
+129,4
+131,5
+133,7
+135,9
+138
+140,2
+142,3
+144,5
+146,7
+148,8
+151
+153,1
+155,3
+157,5
+159,6
+161,8
+163,9
+166,1
+168,3
+170,4
+t l'estimation de la teneur en sucres totaux (g/L) et alcool"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Valeur moyenne Alcool potentiel (% vol)"
+
+[[rubriques.lignes]]
+valeur = "leur maximale Valeur minimale Moyenne Valeur maximale"
+
+[[rubriques.lignes]]
+valeur = "94,8 97 99,1 101,3 103,5 105,6 107,8 109,9 112,1 114,3 116,4 118,6 120,7 122,9 125,1 127,2 129,4 131,5 133,7 135,9 138 140,2 142,3 144,5 146,7 148,8 151 153,1 155,3 157,5 159,6 161,8 163,9 166,1 168,3 170,4"
+
+[[rubriques.lignes]]
+valeur = "t l'estimation de la teneur en sucres totaux (g/L) et alcool"

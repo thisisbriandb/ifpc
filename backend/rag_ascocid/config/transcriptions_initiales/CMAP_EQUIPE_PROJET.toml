@@ -1,0 +1,88 @@
+# Transcription de l'illustration de la fiche 1360 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1360
+code = "CMAP_EQUIPE_PROJET"
+titre = "L'équipe projet"
+image_sha256 = "ace6904ceb1beaa0eb0687e7bd383d19097bbd657b1ccd771f5343644b7f712d"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 72.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Experts scentifiques & techniques
+(relation non lue) : 4 s n 4 # | HUE AU fs +. 7 ASS {e Le 2 AN” | 8. 8. | Fan | C4 | x 4 | — 4 | [4 - 7 NE 2 | 2: | N & contributeurs occasionnels | 2 CONNAISSANCES & SAVOIR-FAIRE CIDRICOLES Professionnels acteurs du projet Professionnels acteurs du projet | 2 \\ 1 A 6\\ PA 2 | Experts en livres de connaissances & Développement informatique | = 4-2 | 1 | Recueil & Assemblage de connaissances | VA OP ONNT LAN 1 ll \"7"""
+anomalies = ["une colonne est loin de sa relation (inf points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "(relation non lue)"
+
+[[rubriques.lignes]]
+valeur = "4 s n 4 #"
+douteux = ["4", "s", "n"]
+
+[[rubriques.lignes]]
+valeur = "HUE AU fs +. 7 ASS {e Le 2 AN”"
+douteux = ["HUE", "AU", "Le", "2", "AN”", "fs", "7", "ASS", "{e"]
+
+[[rubriques.lignes]]
+intitule = "HUE AU fs +. 7 ASS {e Le 2 AN”"
+valeur = "8. 8."
+douteux = ["8.", "8."]
+
+[[rubriques.lignes]]
+valeur = "Fan"
+douteux = ["Fan"]
+
+[[rubriques.lignes]]
+intitule = "Fan"
+valeur = "C4"
+douteux = ["C4"]
+
+[[rubriques.lignes]]
+valeur = "x 4"
+douteux = ["x", "4"]
+
+[[rubriques.lignes]]
+valeur = "— 4"
+douteux = ["4"]
+
+[[rubriques.lignes]]
+valeur = "[4 - 7 NE 2"
+douteux = ["[4", "7", "NE", "2"]
+
+[[rubriques.lignes]]
+intitule = "[4 - 7 NE 2"
+valeur = "2:"
+douteux = ["2:"]
+
+[[rubriques.lignes]]
+valeur = "N & contributeurs occasionnels"
+douteux = ["N"]
+
+[[rubriques.lignes]]
+valeur = "2 CONNAISSANCES & SAVOIR-FAIRE CIDRICOLES Professionnels acteurs du projet Professionnels acteurs du projet"
+douteux = ["2"]
+
+[[rubriques.lignes]]
+valeur = "2 \\ 1 A 6\\ PA 2"
+douteux = ["2", "2", "1", "A", "6\\", "PA"]
+
+[[rubriques.lignes]]
+valeur = "Experts en livres de connaissances & Développement informatique"
+douteux = ["informatique"]
+
+[[rubriques.lignes]]
+intitule = "Experts en livres de connaissances & Développement informatique"
+valeur = "= 4-2 | 1"
+douteux = ["4-2", "1"]
+
+[[rubriques.lignes]]
+valeur = "Recueil & Assemblage de connaissances"
+douteux = ["Recueil", "connaissances"]
+
+[[rubriques.lignes]]
+intitule = "Recueil & Assemblage de connaissances"
+valeur = "VA OP ONNT LAN 1 ll \"7"
+douteux = ["VA", "OP", "ONNT", "LAN", "1", "ll", "\"7"]

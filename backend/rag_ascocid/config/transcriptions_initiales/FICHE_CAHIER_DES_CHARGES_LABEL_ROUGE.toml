@@ -1,0 +1,77 @@
+# Transcription de l'illustration de la fiche 1599 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1599
+code = "FICHE_CAHIER_DES_CHARGES_LABEL_ROUGE"
+titre = "Le cahier des charges Label Rouge"
+image_sha256 = "ffad723979c540a39d07bbdd7a579b6fe0f146ad4c85fccff1e36d283fc07db2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Titre alcoométrique
+volumique acquis Minimum 2,5 Minimum 1,5
+(% vol)
+Sucres totaux
+Minimum 40
+(8/1)
+Masse volumique Minimum 1020 kg/m*
+(à 20 °C) &
+Acidité totale
+Minimum 3,5
+(8/L d'H,50;)
+Acidité volatile . Maximum 1 Figure 1 : Logo officiel du Label Rouge
+(g/L d'H,S0,) Maximum 0,6 Pour le cidre « Royal Guillevic sous Label
+Rouge », le numéro d'homologation du cahier des
+Teneur en fer Maximum 6 Maximum 10 charges LA 15/99 doit être indiqué sur l'étiquette
+(mg/L) de la bouteille labellisée.
+Teneur en dioxyde de .
+soufre total Maximum 150 Maximum 200
+Rapport Sucre/Acidité l1eR<15
+totale
+Tableau 1 : Comparaison des caractéristiques analytiques
+définies par le cahier des charges Label Rouge et le Décret
+Cidre
+Source : D'après le cahier des charges Label Rouge LA 15/99 Cidre de variété
+Guillevic (Royal Guillevic)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Titre alcoométrique"
+
+[[rubriques.lignes]]
+valeur = "volumique acquis Minimum 2,5 Minimum 1,5 (% vol) Sucres totaux Minimum 40 (8/1) Masse volumique Minimum 1020 kg/m* (à 20 °C) &"
+douteux = ["(8/1)", "kg/m*"]
+
+[[rubriques.lignes]]
+valeur = "Acidité totale"
+
+[[rubriques.lignes]]
+valeur = "Minimum 3,5"
+
+[[rubriques.lignes]]
+valeur = "(8/L d'H,50;)"
+douteux = ["(8/L", "d'H,50;)"]
+
+[[rubriques.lignes]]
+intitule = "Acidité volatile . Maximum 1 Figure 1"
+valeur = "Logo officiel du Label Rouge (g/L d'H,S0,) Maximum 0,6 Pour le cidre « Royal Guillevic sous Label Rouge », le numéro d'homologation du cahier des Teneur en fer Maximum 6 Maximum 10 charges LA 15/99 doit être indiqué sur l'étiquette (mg/L) de la bouteille labellisée. Teneur en dioxyde de . soufre total Maximum 150 Maximum 200 Rapport Sucre/Acidité l1eR<15"
+douteux = ["d'H,S0,)", "d'homologation", "(mg/L)", "l1eR<15"]
+
+[[rubriques.lignes]]
+valeur = "totale"
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Comparaison des caractéristiques analytiques"
+
+[[rubriques.lignes]]
+valeur = "définies par le cahier des charges Label Rouge et le Décret Cidre"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "D'après le cahier des charges Label Rouge LA 15/99 Cidre de variété Guillevic (Royal Guillevic)"

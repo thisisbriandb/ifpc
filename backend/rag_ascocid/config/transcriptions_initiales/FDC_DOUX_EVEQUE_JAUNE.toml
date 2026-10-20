@@ -1,0 +1,166 @@
+# Transcription de l'illustration de la fiche 1427 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1427
+code = "FDC_DOUX_EVEQUE_JAUNE"
+titre = "Doux Evêque jaune"
+image_sha256 = "369beed7b68e7aaa8a6890caff8795066b651966273d66627fb006059bdf5946"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: DOUX EVÊQUE JAUNE
+PRINCIPALES ZONES DE PRODUCTION
+Côtes-du-Nord: cantons de Lamballe, Collinée, Jugon
+Moncontour, Pléneuf, Matignon.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 1.000 tonnes.
+Ph. Durand
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin le 25 octobre 1950)
+Dégustation du jus : doux.
+Dégustation du cidre : doux amer.
+Rendement en jus (%) : 63.
+Densité du jus : 1058,6 - Alcool en puissance : 7° 5.
+Acidité de titration en g. SO‘H® par litre : 1,12.
+Azote/sucres totaux : 0,59.
+Tanin (en g. par litre) : 2,64.
+Aspect du jus : assez clair.
+Parfum : bon et assez prononcé.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : grande.
+Port : en dôme retombant.
+Résistance aux maladies : bonne, légèrement sensible à la tavelure sur
+feuilles et aux pucerons.
+Productivité : grande.
+Alternance : plutôt faible.
+Saison de floraison : 3e.
+Saison de maturité : 2e.
+Conservation et transport des fruits: mauvais, doivent être traités sur
+place.
+Grosseur du fruit : moyenne.
+OBSERVATIONS DIVERSES
+Remarquable par son développement dès le jeune âge.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1<r)
+Edition 1964"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Côtes-du-Nord: cantons de Lamballe, Collinée, Jugon Moncontour, Pléneuf, Matignon."
+douteux = ["Côtes-du-Nord:"]
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 1.000 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Durand"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin le 25 octobre 1950"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "63."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1058,6"
+douteux = ["7°"]
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "7° 5."
+douteux = ["7°"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘H® par litre"
+valeur = "1,12."
+douteux = ["SO‘H®"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,59."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,64."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "assez clair."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "bon et assez prononcé."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en dôme retombant."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne, légèrement sensible à la tavelure sur feuilles et aux pucerons."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "plutôt faible."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "mauvais, doivent être traités sur place."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyenne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Remarquable par son développement dès le jeune âge."
+douteux = ["Remarquable"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1<r)"
+douteux = ["(1<r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1964"

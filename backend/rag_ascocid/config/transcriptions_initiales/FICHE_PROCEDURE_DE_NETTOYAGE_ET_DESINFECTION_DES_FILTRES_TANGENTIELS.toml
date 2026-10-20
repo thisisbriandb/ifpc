@@ -1,0 +1,36 @@
+# Transcription de l'illustration de la fiche 1579 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1579
+code = "FICHE_PROCEDURE_DE_NETTOYAGE_ET_DESINFECTION_DES_FILTRES_TANGENTIELS"
+titre = "Procédure de nettoyage et désinfection des filtres tangentiels"
+image_sha256 = "2e59cbb90f8f02a3bb46ebda4d21782f589e9341a019bcffe8f0e60c4094bfd8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Ga Produit à filtrer
+Membranes
+microporeuses
+Figure 1 : Détails d'un filtre tangentiel et ses membranes microporeuses.
+Source: Photo DELLA TOFFOLA GROUP, Filtres tangentiels à membranes céramiques, annotée."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Ga Produit à filtrer"
+douteux = ["Ga"]
+
+[[rubriques.lignes]]
+valeur = "Membranes microporeuses"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Détails d'un filtre tangentiel et ses membranes microporeuses."
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Photo DELLA TOFFOLA GROUP, Filtres tangentiels à membranes céramiques, annotée."

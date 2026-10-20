@@ -1,0 +1,22 @@
+# Transcription de l'illustration de la fiche 1506 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1506
+code = "FICHE_LES_VERGERS_DE_POMMES_A_CIDRE"
+titre = "Les vergers de pommes à cidre"
+image_sha256 = "505d37a736850c930d1a55b4b6e57b1930118c6972be327af6f69c2a38f2a53b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1: Photos présentant un exemple de verger haute tige (A) et basse tige (B). Photos de
+quelques variétés cidricoles (C)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Photos présentant un exemple de verger haute tige (A) et basse tige (B). Photos de quelques variétés cidricoles (C)."

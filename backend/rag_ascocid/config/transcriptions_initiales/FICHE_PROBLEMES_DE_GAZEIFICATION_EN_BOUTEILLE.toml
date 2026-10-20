@@ -1,0 +1,21 @@
+# Transcription de l'illustration de la fiche 1597 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1597
+code = "FICHE_PROBLEMES_DE_GAZEIFICATION_EN_BOUTEILLE"
+titre = "Les problèmes de gazéification en bouteille"
+image_sha256 = "d6dd87bbcdfbbe8ac72b0d19e84b57d8974c210750f8885f4bb9544904160473"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = "Figure 1 : Effervescence d’un cidre"
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Effervescence d’un cidre"
+douteux = ["d’un"]

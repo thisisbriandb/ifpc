@@ -1,0 +1,26 @@
+# Transcription de l'illustration de la fiche 1383 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1383
+code = "FICHE_EFFETS_SENSORIELS_DU_COLLAGE"
+titre = "Les effets sensoriels du collage"
+image_sha256 = "85be4c2269350ada7020182724d23d314b89259675b7c95b0859adeca68bb005"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 65.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+; eg 7 )
+La dégustation : Photo Y. Corven"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "; eg 7 )"
+douteux = ["eg", "7"]
+
+[[rubriques.lignes]]
+intitule = "La dégustation"
+valeur = "Photo Y. Corven"

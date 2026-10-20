@@ -1,0 +1,98 @@
+# Transcription de l'illustration de la fiche 1593 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1593
+code = "FICHE_POST_CONDITIONNEMENT"
+titre = "Le post-conditionnement"
+image_sha256 = "f7d8fd7dff9ab18011e0ee0570780c742cb3c11e13ea5b3bc3081ae663dbdf1d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+- La dénomination du
+produit
+- Le volume net
+- Le TAV acquis
+- Le nom / raison
+sociale de l'exploitant
+- Les allergènes
+- Le message
+sanitaire
+déconseillant l'alcool
+aux femmes
+enceintes
+- Le numéro de lot
+- Le logo Triman
+(pour les bouteilles en
+lastique)
+Figure 1: Les opérations du post-
+conditionnement
+A) Une éventuelle pasteurisation (Tunnel de
+pasteurisation, source: Comac)
+B) L'étiquetage des bouteilles
+C) La conservation/stockage des bouteilles
+(photo : Y.CORVEN)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "- La dénomination du produit"
+
+[[rubriques.lignes]]
+valeur = "- Le volume net"
+
+[[rubriques.lignes]]
+valeur = "- Le TAV acquis"
+
+[[rubriques.lignes]]
+valeur = "- Le nom / raison sociale de l'exploitant - Les allergènes"
+
+[[rubriques.lignes]]
+valeur = "- Le message"
+
+[[rubriques.lignes]]
+valeur = "sanitaire"
+
+[[rubriques.lignes]]
+valeur = "déconseillant l'alcool"
+douteux = ["l'alcool"]
+
+[[rubriques.lignes]]
+valeur = "aux femmes"
+
+[[rubriques.lignes]]
+valeur = "enceintes"
+
+[[rubriques.lignes]]
+valeur = "- Le numéro de lot"
+
+[[rubriques.lignes]]
+valeur = "- Le logo Triman"
+
+[[rubriques.lignes]]
+valeur = "(pour les bouteilles en lastique)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les opérations du post- conditionnement"
+
+[[rubriques.lignes]]
+valeur = "A) Une éventuelle pasteurisation (Tunnel de"
+
+[[rubriques.lignes]]
+intitule = "pasteurisation, source"
+valeur = "Comac)"
+
+[[rubriques.lignes]]
+valeur = "B) L'étiquetage des bouteilles"
+douteux = ["L'étiquetage"]
+
+[[rubriques.lignes]]
+valeur = "C) La conservation/stockage des bouteilles"
+
+[[rubriques.lignes]]
+intitule = "(photo"
+valeur = "Y.CORVEN)"

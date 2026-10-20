@@ -1,0 +1,182 @@
+# Transcription de l'illustration de la fiche 1505 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1505
+code = "FDC_TABLEAU_DES_POLLINISATIONS"
+titre = "Tableau des pollinisations"
+image_sha256 = "490822488cf420e071a16e76307fe678b8959c6b09a2fc7e23154554dca9cfea"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 38.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+2
+IFPC
+SE Tableau des pollinisations : les variétés à associer (1/2)
+Chez le pommier, la pollinisation est croisée : la plantation d'une variété doit s'accompagner de celle
+de son pollinisateur (5-10 %).
+Lésende: |
++ : bonne vaniété pollinisatrice (2) : concordance limite - : mauvaise variété pollinisatnice
+ESS (ER AE ARE RE AE CE A RE RE CE RE A RE CE RS RE VE RE
+Diot Roux D AE A RS A A AE AE AS RS AS RE AE RE A RE A AE EE
+Sebin Blanc A AR ARS AR AE AS RS AS A AS RS RS RE AS AS A SEE
+[D Véret de Car. | 1 D LL 1 11!!!
+Bain M RE ARS A AS RS AE AE AS RS RS RE AS RE A RS AS EE
+Tesnières A AE A RS AS A AS AE AS RS A AS AS RS A A A EE
+QE 22 9 A A AE AE A ES AS A A EE A ES ES
+= ÉREFFFPEEEEREEEE—
+tt H+ER EEE L-T+
+Douce Co cétligné __| | | [1 OL OL LOL OL OT+l+ ler LE TT OL T+t-
+A RE C2 CT ET ER ER CIRE
+de Dol +|+1+1+ ++
+[Bquet _ 1! 1 1 1 LL 1 1 +) | | | | | | | | | |
+Fréquin Rouge _[ [| | LL LL LL L+L + [+1 + l+t+
+Petit Jaune ER RNENENNMEI IN EIRIEIEIEIRE:
+Com A AE A AS A A AS RE A RS A A 2 ES A A AS EE
+COR RO OT TOOTOROTO+T L+t T+r+t+t1+
+RE D D 2
+ML SO RE DS AE AE RE A RE A2 AS A A AE AE A RE RE
+mn DE 2 29 9 DE D RE SV
+Judaine® | | + | + +
+Jeanne Renard |} + | |\" 1 1\" À 1 + À 1 1 1 1 1 1 | |
+A AE A 2 AR AS AS RS RS RS A RE RE A RE VE RE DE EE
+Musee de EE CN EN 2 DS ES RS AS AS AS AS AS AS ES RS RS A ES ES ES
+Antomette D
+Everest Perpetue +
+Ep emmmlototstiltsielttiielsiululwliululilieeentn
+Hi 7 EL
+\". AE AAARAREARONE
+M MAAENAAMENE
+ss ss le L21"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "2"
+
+[[rubriques.lignes]]
+valeur = "IFPC"
+douteux = ["IFPC"]
+
+[[rubriques.lignes]]
+intitule = "SE Tableau des pollinisations"
+valeur = "les variétés à associer (1/2)"
+douteux = ["SE"]
+
+[[rubriques.lignes]]
+intitule = "Chez le pommier, la pollinisation est croisée"
+valeur = "la plantation d'une variété doit s'accompagner de celle de son pollinisateur (5-10 %)."
+douteux = ["pollinisation", "pollinisateur"]
+
+[[rubriques.lignes]]
+intitule = "Lésende"
+valeur = "|"
+douteux = ["Lésende:"]
+
+[[rubriques.lignes]]
+intitule = "+"
+valeur = "bonne vaniété pollinisatrice (2) : concordance limite - : mauvaise variété pollinisatnice"
+douteux = ["vaniété", "(2)", "pollinisatnice"]
+
+[[rubriques]]
+titre = "ESS (ER AE ARE RE AE CE A RE RE CE RE A RE CE RS RE VE RE"
+
+[[rubriques]]
+titre = "Diot Roux D AE A RS A A AE AE AS RS AS RE AE RE A RE A AE EE"
+
+[[rubriques]]
+titre = "Sebin Blanc A AR ARS AR AE AS RS AS A AS RS RS RE AS AS A SEE"
+
+[[rubriques.lignes]]
+valeur = "[D Véret de Car. | 1 D LL 1 11!!!"
+douteux = ["[D", "Véret", "de", "Car.", "1", "D", "LL", "1", "11!!!"]
+
+[[rubriques]]
+titre = "Bain M RE ARS A AS RS AE AE AS RS RS RE AS RE A RS AS EE"
+
+[[rubriques.lignes]]
+valeur = "Tesnières A AE A RS AS A AS AE AS RS A AS AS RS A A A EE"
+douteux = ["A", "AE", "A", "RS", "AS", "A", "AS", "AE", "AS", "RS", "A", "AS", "AS", "RS", "A", "A", "A", "EE"]
+
+[[rubriques]]
+titre = "QE 22 9 A A AE AE A ES AS A A EE A ES ES"
+
+[[rubriques]]
+titre = "= ÉREFFFPEEEEREEEE—"
+
+[[rubriques.lignes]]
+valeur = "tt H+ER EEE L-T+ Douce Co cétligné __| | | [1 OL OL LOL OL OT+l+ ler LE TT OL T+t-"
+douteux = ["tt", "H+ER", "EEE", "L-T+", "Douce", "Co", "cétligné", "__|", "[1", "OL", "OL", "LOL", "OL", "OT+l+", "ler", "LE", "TT", "OL", "T+t-"]
+
+[[rubriques]]
+titre = "A RE C2 CT ET ER ER CIRE"
+
+[[rubriques.lignes]]
+valeur = "de Dol +|+1+1+ ++"
+douteux = ["+|+1+1+"]
+
+[[rubriques.lignes]]
+valeur = "[Bquet _ 1! 1 1 1 LL 1 1 +) | | | | | | | | | |"
+douteux = ["[Bquet", "_", "1!", "1", "1", "1", "LL", "1", "1"]
+
+[[rubriques.lignes]]
+valeur = "Fréquin Rouge _[ [| | LL LL LL L+L + [+1 + l+t+"
+douteux = ["Rouge", "_[", "LL", "LL", "LL", "L+L", "[+1", "l+t+"]
+
+[[rubriques.lignes]]
+intitule = "Petit Jaune ER RNENENNMEI IN EIRIEIEIEIRE"
+valeur = ""
+douteux = ["ER", "RNENENNMEI", "IN", "EIRIEIEIEIRE:"]
+
+[[rubriques]]
+titre = "Com A AE A AS A A AS RE A RS A A 2 ES A A AS EE"
+
+[[rubriques]]
+titre = "COR RO OT TOOTOROTO+T L+t T+r+t+t1+"
+
+[[rubriques.lignes]]
+valeur = "RE D D 2"
+douteux = ["RE", "D", "D", "2"]
+
+[[rubriques]]
+titre = "ML SO RE DS AE AE RE A RE A2 AS A A AE AE A RE RE"
+
+[[rubriques]]
+titre = "mn DE 2 29 9 DE D RE SV"
+
+[[rubriques.lignes]]
+valeur = "Judaine® | | + | + +"
+
+[[rubriques.lignes]]
+valeur = "Jeanne Renard |} + | |\" 1 1\" À 1 + À 1 1 1 1 1 1 | |"
+douteux = ["Renard", "1", "1\"", "À", "1", "À", "1", "1", "1", "1", "1", "1"]
+
+[[rubriques]]
+titre = "A AE A 2 AR AS AS RS RS RS A RE RE A RE VE RE DE EE"
+
+[[rubriques]]
+titre = "Musee de EE CN EN 2 DS ES RS AS AS AS AS AS AS ES RS RS A ES ES ES"
+
+[[rubriques.lignes]]
+valeur = "Antomette D Everest Perpetue +"
+douteux = ["Antomette", "D"]
+
+[[rubriques.lignes]]
+valeur = "Ep emmmlototstiltsielttiielsiululwliululilieeentn"
+douteux = ["Ep", "emmmlototstiltsielttiielsiululwliululilieeentn"]
+
+[[rubriques.lignes]]
+valeur = "Hi 7 EL"
+douteux = ["Hi", "7", "EL"]
+
+[[rubriques]]
+titre = "\". AE AAARAREARONE"
+
+[[rubriques]]
+titre = "M MAAENAAMENE"
+
+[[rubriques.lignes]]
+valeur = "ss ss le L21"
+douteux = ["ss", "ss", "le", "L21"]

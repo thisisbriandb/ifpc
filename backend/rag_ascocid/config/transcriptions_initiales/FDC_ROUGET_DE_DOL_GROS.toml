@@ -1,0 +1,147 @@
+# Transcription de l'illustration de la fiche 1453 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1453
+code = "FDC_ROUGET_DE_DOL_GROS"
+titre = "Rouget de Dol gros"
+image_sha256 = "cc966b2a1d42f286ce63db74ebcf93c7df6c9f1a3078530cee349d747eaea872"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: ROUGET DE DOL GROS
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Ille-et-Vilaine : Cancale - St Servan - Châteauneuf - Dol de Bretagne -
+Pleine Fougères - Combourg - Tinténiac - Antrain.
+POSSIBILITES de COMMERCIALISATION en bonne année
+2 400 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 26-10-53)
+Dégustation du fruit : acidulé, parfumé.
+Dégustation du jus : acide et sucré.
+Rendement en jus (%) : 69,7.
+Densité du jus : 1 056,7.
+Acidité de titration en g. SO* H° par litre : 5,58.
+Azote/Sucres totaux : 0,74.
+Tanin (en g. par litre) : 1,86.
+Parfum : moyen.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne.
+Résistance aux maladies : sensible à la tavelure sur feuilles et quelquefois
+sur fruits, sensible aux pucerons lanigères.
+Productivité : moyenne à très bonne.
+Saison de floraison : 2e.
+Saison de maturité : 2°-3e,
+Conservation et transport : fruits fragiles à complète maturité.
+Grosseur du fruit : assez gros.
+OBSERVATIONS DIVERSES
+Variété à épiderme rouge.
+2 0
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : Cancale - St Servan - Châteauneuf - Dol de Bretagne - Pleine Fougères - Combourg - Tinténiac - Antrain."
+douteux = ["Ille-et-Vilaine"]
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "2 400 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 26-10-53"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acidulé, parfumé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acide et sucré."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "69,7."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 056,7."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H° par litre"
+valeur = "5,58."
+douteux = ["SO*", "H°"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,74."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,86."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "moyen."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "sensible à la tavelure sur feuilles et quelquefois sur fruits, sensible aux pucerons lanigères."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "moyenne à très bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e."
+douteux = ["2e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°-3e,"
+douteux = ["2°-3e,"]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport"
+valeur = "fruits fragiles à complète maturité."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "assez gros."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété à épiderme rouge."
+
+[[rubriques]]
+titre = "2 0"
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)"
+douteux = ["(1*r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

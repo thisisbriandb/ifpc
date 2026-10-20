@@ -1,0 +1,74 @@
+# Transcription de l'illustration de la fiche 1511 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1511
+code = "FICHE_LE_CAHIER_DES_CHARGES_DES_IGP"
+titre = "Le cahier des charges des IGP (Cidre de Bretagne et Cidre de Normandie)"
+image_sha256 = "e4c4e4fb4de903183d97cf376f7829fae0afaea60e17fc52d5671ea08916a098"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 81.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+IGP Cidre de Bretagne
+IDE L'ORIGINE ET DE PE
+4
+RUE
+AAA sY
+SA LES p*
+(+5) TT Re
+LRU
+A RIT RUE
+Dsl
+Figure 1 : Aire géographique IGP « Cidre de Bretagne » Figure 2 : Aire géographique IGP « Cidre de Normandie » DE
+Figure 3 : Logo européen de l'IGP (Indication Géographique Protégée).
+A. Logo de l’IGP coloré, utilisé pour des étiquettes au fond coloré.
+B. Logo de l'IGP en noir et blanc, pour les étiquettes n'ayant que du noir et blanc.
+C. Logo de l’IGP en noir et blanc et négatif, pour les étiquettes au fond sombre.
+Source : Règlement d'exécution (UE) n° 668/2014, Annexe X."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "IGP Cidre de Bretagne"
+
+[[rubriques]]
+titre = "IDE L'ORIGINE ET DE PE"
+
+[[rubriques.lignes]]
+valeur = "4 RUE AAA sY"
+douteux = ["4", "RUE", "AAA", "sY"]
+
+[[rubriques]]
+titre = "SA LES p*"
+
+[[rubriques.lignes]]
+valeur = "(+5) TT Re LRU"
+douteux = ["(+5)", "TT", "Re", "LRU"]
+
+[[rubriques]]
+titre = "A RIT RUE"
+
+[[rubriques.lignes]]
+valeur = "Dsl"
+douteux = ["Dsl"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Aire géographique IGP « Cidre de Bretagne » Figure 2 : Aire géographique IGP « Cidre de Normandie » DE"
+douteux = ["DE"]
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Logo européen de l'IGP (Indication Géographique Protégée). A. Logo de l’IGP coloré, utilisé pour des étiquettes au fond coloré. B. Logo de l'IGP en noir et blanc, pour les étiquettes n'ayant que du noir et blanc."
+douteux = ["l'IGP", "l’IGP", "l'IGP", "n'ayant"]
+
+[[rubriques.lignes]]
+valeur = "C. Logo de l’IGP en noir et blanc et négatif, pour les étiquettes au fond sombre."
+douteux = ["l’IGP"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Règlement d'exécution (UE) n° 668/2014, Annexe X."

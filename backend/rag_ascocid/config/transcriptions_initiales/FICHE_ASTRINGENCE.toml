@@ -1,0 +1,60 @@
+# Transcription de l'illustration de la fiche 1388 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1388
+code = "FICHE_ASTRINGENCE"
+titre = "L'astringence"
+image_sha256 = "ed66055b88db6ec0eec025d62f4097bf9e3f6d724d567374faab7a8483392eed"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+—e— 250 mg/L—e—500 mg/L—e—-750 mg/L
+5 6 7 10 11
+Degré de polymérisation
+Figure 1 : Rôle de la taille des molécules de tanins (DP) et de leur teneur sur l'astringence perçue
+(intensité sur une échelle de 1 à 10 - pH 4,12 - Sucre 8,3 g/L - Alcool! 1,8 % vol.)
+d'après Symoneaux et al., 2014 - LWT (57) pp 22 - 27
+Tanins = 800 mg/L Sucres = 40 g/L
+10
+20 g/L 40 g/L 60 g/L : 400 mg/L 800 mg/L 1200
+Sucres Tanins
+Figure 2 : Impact de la teneur en tanins, en sucres et en acide sur la perception de l'astringence
+(astringence calculée selon un modèle statistique établi d'après Symoneaux et al., 2015- LWT (61) - pp 63-69)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "—e— 250 mg/L—e—500 mg/L—e—-750 mg/L"
+douteux = ["—e—", "mg/L—e—500", "mg/L—e—-750"]
+
+[[rubriques]]
+titre = "5 6 7 10 11"
+
+[[rubriques.lignes]]
+valeur = "Degré de polymérisation"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Rôle de la taille des molécules de tanins (DP) et de leur teneur sur l'astringence perçue (intensité sur une échelle de 1 à 10 - pH 4,12 - Sucre 8,3 g/L - Alcool! 1,8 % vol.) d'après Symoneaux et al., 2014 - LWT (57) pp 22 - 27"
+douteux = ["taille", "Alcool!"]
+
+[[rubriques.lignes]]
+valeur = "Tanins = 800 mg/L Sucres = 40 g/L"
+
+[[rubriques.lignes]]
+valeur = "10"
+
+[[rubriques.lignes]]
+valeur = "20 g/L 40 g/L 60 g/L : 400 mg/L 800 mg/L 1200"
+douteux = ["g/L", "g/L"]
+
+[[rubriques.lignes]]
+valeur = "Sucres Tanins"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Impact de la teneur en tanins, en sucres et en acide sur la perception de l'astringence (astringence calculée selon un modèle statistique établi d'après Symoneaux et al., 2015- LWT (61) - pp 63-69)"

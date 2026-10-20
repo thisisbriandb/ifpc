@@ -1,0 +1,102 @@
+# Transcription de l'illustration de la fiche 1469 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1469
+code = "FDC_JUDELINE"
+titre = "Judeline"
+image_sha256 = "5b2c75bb3fba57a64063a1ade5c56764c97be1ee1563bfa665bcbc7dc2a5f1c8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+A la plantation, certains anticipés sélectionnés peuvent être conservés.
+Les ramifications ont des angles assez fermés mais qui s'ouvrent sous la charge des fruits. La fructification
+principalement à l'extrémité des branches (brindilles couronnées), la mise à fruits rapide et la souplesse du bois
+permettent une ouverture naturelle des branches.
+Les premières années, des pincements en végétation ou un rabattage dans le bois de 2 ans en hiver
+permettent de rigidifier l'axe. La gestion de la charge de fruits de la partie supérieure des arbres facilitera aussi
+le renforcement de l'axe.
+La conduite de Judeline® en axe est simple. Néanmoins il faut maintenir une bonne porosité de l'arbre par une
+taille régulière.
+Sa tendance acrotone nécessite une conduite adaptée :
+- Maintenir des structures fortes en partie basse de l'arbre
+- Gérer le développement de ramifications en partie haute par la suppression de structures trop
+importantes afin de maintenir un bon éclairement du bas de l'arbre
+ASPECT RECOLTE
+assez gros (80 à 120g)
+épiderme à fond jaune strié de rouge
+orangé sur la moitié de la surface.
+mi-octobre
+secouage mécanique difficile avant
+chute naturelle (fruits en extrémité de branches et
+long pédoncule) — tendance des fruits à murir sur
+l'arbre
+moyenne à mauvaise (fruit
+fragile)
+totale à maturité Es
+TECHNOLOGIE
+Faible Moyen Important
+3.4 à 3.6
+à préciser
+légèrement acidulée
+variété utilisée pour apporter de l'acidité aux cidres
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, certains anticipés sélectionnés peuvent être conservés. Les ramifications ont des angles assez fermés mais qui s'ouvrent sous la charge des fruits. La fructification principalement à l'extrémité des branches (brindilles couronnées), la mise à fruits rapide et la souplesse du bois permettent une ouverture naturelle des branches. Les premières années, des pincements en végétation ou un rabattage dans le bois de 2 ans en hiver permettent de rigidifier l'axe. La gestion de la charge de fruits de la partie supérieure des arbres facilitera aussi le renforcement de l'axe. La conduite de Judeline® en axe est simple. Néanmoins il faut maintenir une bonne porosité de l'arbre par une taille régulière."
+douteux = ["s'ouvrent"]
+
+[[rubriques.lignes]]
+intitule = "Sa tendance acrotone nécessite une conduite adaptée"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "- Maintenir des structures fortes en partie basse de l'arbre"
+douteux = ["Maintenir"]
+
+[[rubriques.lignes]]
+valeur = "- Gérer le développement de ramifications en partie haute par la suppression de structures trop"
+douteux = ["Gérer"]
+
+[[rubriques.lignes]]
+valeur = "importantes afin de maintenir un bon éclairement du bas de l'arbre"
+
+[[rubriques]]
+titre = "ASPECT RECOLTE"
+
+[[rubriques.lignes]]
+valeur = "assez gros (80 à 120g)"
+
+[[rubriques.lignes]]
+valeur = "épiderme à fond jaune strié de rouge orangé sur la moitié de la surface."
+
+[[rubriques.lignes]]
+valeur = "mi-octobre secouage mécanique difficile avant chute naturelle (fruits en extrémité de branches et long pédoncule) — tendance des fruits à murir sur l'arbre"
+
+[[rubriques.lignes]]
+valeur = "moyenne à mauvaise (fruit"
+
+[[rubriques.lignes]]
+valeur = "fragile) totale à maturité Es"
+douteux = ["Es"]
+
+[[rubriques]]
+titre = "TECHNOLOGIE"
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Important"
+
+[[rubriques]]
+titre = "3.4 à 3.6"
+
+[[rubriques.lignes]]
+valeur = "à préciser légèrement acidulée variété utilisée pour apporter de l'acidité aux cidres"
+douteux = ["l'acidité"]
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

@@ -1,0 +1,38 @@
+# Transcription de l'illustration de la fiche 1393 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1393
+code = "FICHE_L_AJOUT_DE_PECTINASES_EN_CLARIFICATION_BASSE"
+titre = "L’ajout de pectinases en clarification basse"
+image_sha256 = "43604b01459bedb27a373ce1b3b8e66b41415b240420a14a38e4733a3eb721af"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Acide galacturonique Groupements Acide galacturonique
+méthylé méthyles (après déméthylation)
+Chaîne principale de pectine —
+pL x PectineLyase (élimination de la chaîne méthylée)
+PE X PectineEstérase (déméthylation de la chaîne méthylée)
+pG XPolyGalaturonase (hydrolyse de la chaîne déméthylée)
+Figure 1 : Schématisation de l’action des principales enzymes sur la pectine"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Acide galacturonique Groupements Acide galacturonique méthylé méthyles (après déméthylation)"
+douteux = ["Acide"]
+
+[[rubriques.lignes]]
+valeur = "Chaîne principale de pectine —"
+
+[[rubriques.lignes]]
+valeur = "pL x PectineLyase (élimination de la chaîne méthylée) PE X PectineEstérase (déméthylation de la chaîne méthylée) pG XPolyGalaturonase (hydrolyse de la chaîne déméthylée)"
+douteux = ["pL", "x", "pG"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schématisation de l’action des principales enzymes sur la pectine"

@@ -1,0 +1,69 @@
+# Transcription de l'illustration de la fiche 1056 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1056
+code = "CMAP_RECOLTE_CHUTE_NATURELLE"
+titre = "La chute naturelle des pommes"
+image_sha256 = "ccd99b21d979c05c71ff728ee1cecc5937ada967b94f178da66061a57dc1beb2"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La chute naturelle des pommes
+est un : Phénomène se produisant au cours de l’étape de récolte
+a pour conséquences : La présence d’altérations physiques | Une maturation complémentaire au sol | Une contamination fongique par contact avec le sol
+est caractérisée par : La date moyenne de chute (date où 50 % des fruits sont au sol) | La cinétique de chute (chute en fonction du temps)
+est influencée par : L'époque de maturité de la variété | L'état réel de maturité des pommes | Les épisodes venteux | Le climat de l’année | L’atteinte par les insectes (carpocapse) | La charge de l’arbre"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant au cours de l’étape de récolte"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "La présence d’altérations physiques"
+
+[[rubriques.lignes]]
+valeur = "Une maturation complémentaire au sol"
+
+[[rubriques.lignes]]
+valeur = "Une contamination fongique par contact avec le sol"
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "La date moyenne de chute (date où 50 % des fruits sont au sol)"
+
+[[rubriques.lignes]]
+valeur = "La cinétique de chute (chute en fonction du temps)"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "L'époque de maturité de la variété"
+douteux = ["L'époque"]
+
+[[rubriques.lignes]]
+valeur = "L'état réel de maturité des pommes"
+douteux = ["L'état"]
+
+[[rubriques.lignes]]
+valeur = "Les épisodes venteux"
+
+[[rubriques.lignes]]
+valeur = "Le climat de l’année"
+
+[[rubriques.lignes]]
+valeur = "L’atteinte par les insectes (carpocapse)"
+douteux = ["L’atteinte"]
+
+[[rubriques.lignes]]
+valeur = "La charge de l’arbre"

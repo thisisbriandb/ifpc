@@ -1,0 +1,135 @@
+# Transcription de l'illustration de la fiche 1603 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1603
+code = "FICHE_AGREAGE_DES_LOTS"
+titre = "L'agréage des lots"
+image_sha256 = "a6c0c35068190c2967432ea72fc35085c129c7eeb28bf874dca15e42cf08cc49"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 78.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+PROJET DE GRILLE DE NOTATION
+(cadre utilisé par les cidreries pour élaborer leurs grilles d'agréage propres )
+N° ticket: Date de livraison: / … /..
+Varétés : Figure 2 : Exemples de pénétromètres
+A.  Pénétromètre portatif
+Non-pommes Source : https:/\\www.triangle-outillage.fr/penetrometre-
+: refractometre/871-penetrometre.html
+Pies: 5 B.  Pénétromètre
+Bois : :
+- petit (diamètre < 10/12 mm, longueur < 10/15 cm) __\"\" = CD Source : IFPC
+“vos - ©
+» Herbe et autres déchets : =
+LS à == ETAT SANITAIRE :
+C. HENRY. À NN N Absence de défauts ou - de 2%
+Propreté its x2= à 5% de défauts
+(aspect du lot, présence de terre) à 10% de défauts ou présence de pommes trop avancées
+3:> 10% de défauts ou présence de pommes trop avancées
+Etat sanitaire x2= © 1 2 3
+{pommes aitérées)
+Note Sanitaire x 6 = _
+Blessures sur fruits x2= NON POMMES : Présence | régie | Présence
+ponctuelle | ensemble |imporante
+Cailoux (0) 1 2 3
+TOTAL = 1100
+Herbes/Feuiles (0) 1 2 3
+Branches (0) 1 2 3
+Terre/Propreté (0) 0 1 2
+Base de Notation Divers (piastique ; (0) 0 1 2
+Icorps étrangers.
+10 = absence Note NON POMMES =
+9 = traces {somme des lignes)
+7 = présence signficatve NOTE TOTALE :
+5 = influence possible sur les caractéristiques Note sanitaire x 6 + Non pomme = _0 _
+4 = conséquences probables sur les produits élaborés
+5 2 Lot » Lettre Qualité A+ :0 A:1à6
+© = critère non noté A+ B :7à12 C:13à18
+Figure 1 : L’agréage des lots de pommes à cidre MOTIF REFUS :
+La grille d’agréage des lots est téléch bl le site de l'IFPC, sur! rome pauries D Dan 5
+a grille d agréage des lois est téléchargeable sur le site de , SUF la page Excès de non es (1 ice 0 : . ; ,
+suivante: SLO:  N°du silo Figure 3 : Exemple de note d’agréage
+Source: http:/Awww.ifpc.eu/bibliographie/recolte-qualite-des-fruits/recolte/demarche-dagreage- : Source : IFPC
+des-lots-de-pommes-a-cidre.html"""
+
+[[rubriques]]
+titre = "PROJET DE GRILLE DE NOTATION"
+note = "cadre utilisé par les cidreries pour élaborer leurs grilles d'agréage propres"
+
+[[rubriques.lignes]]
+intitule = "N° ticket"
+valeur = "Date de livraison: / … /.."
+douteux = ["ticket:", "livraison:"]
+
+[[rubriques.lignes]]
+intitule = "Varétés"
+valeur = "Figure 2 : Exemples de pénétromètres A.  Pénétromètre portatif"
+douteux = ["Varétés", "A.", " Pénétromètre"]
+
+[[rubriques.lignes]]
+intitule = "Non-pommes Source"
+valeur = "https:/\\www.triangle-outillage.fr/penetrometre- : refractometre/871-penetrometre.html"
+douteux = ["https:/\\www.triangle-outillage.fr/penetrometre-"]
+
+[[rubriques.lignes]]
+intitule = "Pies"
+valeur = "5 B.  Pénétromètre"
+douteux = ["Pies:", "5", "B.", " Pénétromètre"]
+
+[[rubriques.lignes]]
+intitule = "Bois"
+valeur = ": - petit (diamètre < 10/12 mm, longueur < 10/15 cm) __\"\" = CD Source : IFPC “vos - © » Herbe et autres déchets : ="
+douteux = ["cm)", "__\"\"", "CD", "“vos"]
+
+[[rubriques.lignes]]
+intitule = "LS à == ETAT SANITAIRE"
+valeur = "C. HENRY. À NN N Absence de défauts ou - de 2% Propreté its x2= à 5% de défauts (aspect du lot, présence de terre) à 10% de défauts ou présence de pommes trop avancées"
+douteux = ["LS", "à", "À", "NN", "N", "its", "(aspect"]
+
+[[rubriques.lignes]]
+intitule = "3"
+valeur = "> 10% de défauts ou présence de pommes trop avancées Etat sanitaire x2= © 1 2 3 {pommes aitérées) Note Sanitaire x 6 = _"
+douteux = ["3:>", "{pommes", "aitérées)", "6", "_"]
+
+[[rubriques.lignes]]
+intitule = "Blessures sur fruits x2= NON POMMES"
+valeur = "Présence | régie | Présence ponctuelle | ensemble |imporante Cailoux (0) 1 2 3 TOTAL = 1100 Herbes/Feuiles (0) 1 2 3 Branches (0) 1 2 3 Terre/Propreté (0) 0 1 2 Base de Notation Divers (piastique ; (0) 0 1 2 Icorps étrangers."
+douteux = ["régie", "ponctuelle", "ensemble", "|imporante", "Cailoux", "(0)", "1100", "Herbes/Feuiles", "Terre/Propreté", "0", "(piastique", "Icorps", "étrangers."]
+
+[[rubriques]]
+titre = "10 = absence Note NON POMMES ="
+
+[[rubriques]]
+titre = "9 = traces {somme des lignes)"
+
+[[rubriques.lignes]]
+valeur = "7 = présence signficatve NOTE TOTALE : 5 = influence possible sur les caractéristiques Note sanitaire x 6 + Non pomme = _0 _"
+douteux = ["7", "signficatve", "5", "pomme", "_0"]
+
+[[rubriques]]
+titre = "4 = conséquences probables sur les produits élaborés"
+
+[[rubriques.lignes]]
+valeur = "5 2 Lot » Lettre Qualité A+ :0 A:1à6 © = critère non noté A+ B :7à12 C:13à18"
+douteux = ["5", "2", "Lot", "Lettre", "A+", "non", "noté", "B", ":7à12", "C:13à18"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "L’agréage des lots de pommes à cidre MOTIF REFUS : La grille d’agréage des lots est téléch bl le site de l'IFPC, sur! rome pauries D Dan 5 a grille d agréage des lois est téléchargeable sur le site de , SUF la page Excès de non es (1 ice 0 : . ; ,"
+douteux = ["L’agréage", "d’agréage", "sur!", "rome", "pauries", "D", "Dan", "5", "d", "agréage", "SUF", "(1", "0"]
+
+[[rubriques.lignes]]
+intitule = "suivante: SLO"
+valeur = "N°du silo Figure 3 : Exemple de note d’agréage"
+douteux = ["SLO:", " N°du", "d’agréage"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "http:/Awww.ifpc.eu/bibliographie/recolte-qualite-des-fruits/recolte/demarche-dagreage- : Source : IFPC"
+douteux = ["http:/Awww.ifpc.eu/bibliographie/recolte-qualite-des-fruits/recolte/demarche-dagreage-"]
+
+[[rubriques.lignes]]
+valeur = "des-lots-de-pommes-a-cidre.html"
+douteux = ["des-lots-de-pommes-a-cidre.html"]

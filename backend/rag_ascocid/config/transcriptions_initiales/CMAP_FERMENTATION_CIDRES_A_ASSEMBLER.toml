@@ -1,0 +1,103 @@
+# Transcription de l'illustration de la fiche 1315 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1315
+code = "CMAP_FERMENTATION_CIDRES_A_ASSEMBLER"
+titre = "Les cidres à assembler"
+image_sha256 = "4f8d5f0170359d49a591b6dc549cc04d59d7bbb533be06aad16dcf00f48e5d2f"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les cidres à assembler
+sont des : Produits intermédiaires de l’élaboration du cidre
+regroupent : Les cidres de la méthode FR | Les cidres de la méthode FI | Les cidres issus de concentrés (méthode FMR)
+sont caractérisés par : Leur masse volumique | Leur acidité titrable et pH | Leur titre alcoométrique acquis | Les autres caractéristiques définies par le décret cidre et d'éventuels cahiers des charges
+sont décrits par : L'astringence et les saveurs sucrée, acide et amère | Leurs arômes fruités et floraux | Leur couleur
+peuvent avoir pour défauts : Une piqüre acétique ou lactique | Une odeur de « framboisé » | Une odeur animale excessive | Des odeurs soufrées | Une odeur de « solvant » | Un manque de corps
+sont désignés par : Des signes d’origine (AOP, AOC, IGP) | Des signes de qualité (pur jus, bio, Label Rouge...) | Diverses mentions (fermier, artisanal...)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Produits intermédiaires de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Les cidres de la méthode FR"
+
+[[rubriques.lignes]]
+valeur = "Les cidres de la méthode FI"
+douteux = ["FI"]
+
+[[rubriques.lignes]]
+valeur = "Les cidres issus de concentrés (méthode FMR)"
+
+[[rubriques]]
+titre = "sont caractérisés par"
+
+[[rubriques.lignes]]
+valeur = "Leur masse volumique"
+
+[[rubriques.lignes]]
+valeur = "Leur acidité titrable et pH"
+
+[[rubriques.lignes]]
+valeur = "Leur titre alcoométrique acquis"
+
+[[rubriques.lignes]]
+valeur = "Les autres caractéristiques définies par le décret cidre et d'éventuels cahiers des charges"
+douteux = ["d'éventuels"]
+
+[[rubriques]]
+titre = "sont décrits par"
+
+[[rubriques.lignes]]
+valeur = "L'astringence et les saveurs sucrée, acide et amère"
+douteux = ["L'astringence"]
+
+[[rubriques.lignes]]
+valeur = "Leurs arômes fruités et floraux"
+
+[[rubriques.lignes]]
+valeur = "Leur couleur"
+
+[[rubriques]]
+titre = "peuvent avoir pour défauts"
+
+[[rubriques.lignes]]
+valeur = "Une piqüre acétique ou lactique"
+
+[[rubriques.lignes]]
+valeur = "Une odeur de « framboisé »"
+
+[[rubriques.lignes]]
+valeur = "Une odeur animale excessive"
+
+[[rubriques.lignes]]
+valeur = "Des odeurs soufrées"
+
+[[rubriques.lignes]]
+valeur = "Une odeur de « solvant »"
+
+[[rubriques.lignes]]
+valeur = "Un manque de corps"
+
+[[rubriques]]
+titre = "sont désignés par"
+
+[[rubriques.lignes]]
+valeur = "Des signes d’origine (AOP, AOC, IGP)"
+
+[[rubriques.lignes]]
+valeur = "Des signes de qualité (pur jus, bio, Label Rouge...)"
+douteux = ["Rouge...)"]
+
+[[rubriques.lignes]]
+valeur = "Diverses mentions (fermier, artisanal...)"
+douteux = ["artisanal...)"]

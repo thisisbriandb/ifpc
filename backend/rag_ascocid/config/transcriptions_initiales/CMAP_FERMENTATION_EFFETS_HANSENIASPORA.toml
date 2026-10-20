@@ -1,0 +1,68 @@
+# Transcription de l'illustration de la fiche 1108 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1108
+code = "CMAP_FERMENTATION_EFFETS_HANSENIASPORA"
+titre = "Les principaux effets des Hanseniaspora"
+image_sha256 = "7edf26ea24e450a126c25748bf4b23c860f0032f1dfac903fb037744e0a6073e"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principaux effets des Hanseniaspora
+sont des : Phénomènes se produisant principalement au cours de l’étape fermentaire
+regroupent : Les impacts des Hanseniaspora sur les composés fruités (esters d’acétate) | Une interaction avec pour la Saccharomyces production de composés volatils | Une faible contribution à la fermentation alcoolique | Une faible contribution à la production de composés soufrés
+sont conditionnés par : Le développement des Hanseniaspora
+ont pour impact sensoriel : Le développement d’arômes fruités
+sont influencés par : Leur population maximale atteinte | Leur survie dans le milieu
+ont pour incident : Une production excessive d’acétate d’éthyle en présence d’oxygène (odeur de solvant)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Phénomènes se produisant principalement au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Les impacts des Hanseniaspora sur les composés fruités (esters d’acétate)"
+
+[[rubriques.lignes]]
+valeur = "Une interaction avec pour la Saccharomyces production de composés volatils"
+
+[[rubriques.lignes]]
+valeur = "Une faible contribution à la fermentation alcoolique"
+
+[[rubriques.lignes]]
+valeur = "Une faible contribution à la production de composés soufrés"
+
+[[rubriques]]
+titre = "sont conditionnés par"
+
+[[rubriques.lignes]]
+valeur = "Le développement des Hanseniaspora"
+
+[[rubriques]]
+titre = "ont pour impact sensoriel"
+
+[[rubriques.lignes]]
+valeur = "Le développement d’arômes fruités"
+
+[[rubriques]]
+titre = "sont influencés par"
+
+[[rubriques.lignes]]
+valeur = "Leur population maximale atteinte"
+
+[[rubriques.lignes]]
+valeur = "Leur survie dans le milieu"
+
+[[rubriques]]
+titre = "ont pour incident"
+
+[[rubriques.lignes]]
+valeur = "Une production excessive d’acétate d’éthyle en présence d’oxygène (odeur de solvant)"

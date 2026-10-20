@@ -1,0 +1,82 @@
+# Transcription de l'illustration de la fiche 1033 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1033
+code = "CMAP_CLARIFICATION_BASSE_AVEC_COLLAGE"
+titre = "La clarification basse avec collage"
+image_sha256 = "3557cbe878e58f684f501ccbdf5a88e4a7ee3f8e2418b166911f96a088e62fa8"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification basse avec collage
+est une : Modalité de l’étape de clarification des moûts
+a pour synonyme : La clarification par dépectinisation et collage
+est constituée de : La dépectinisation | Le collage | La séparation des lies
+a pour fonction : L’élimination du trouble
+a pour conséquences : De faciliter les opérations de séparation ultérieures | Une meilleure stabilité physicochimique
+nécessite : L’ajout de pectinases | L’ajout de protéines de collage
+a pour causes d’échec : Des pratiques inadéquates (stockage enzymes) | Des températures trop élevées du moût | Un dosage inadéquate des protéines de collage"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de clarification des moûts"
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "La clarification par dépectinisation et collage"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La dépectinisation"
+
+[[rubriques.lignes]]
+valeur = "Le collage"
+
+[[rubriques.lignes]]
+valeur = "La séparation des lies"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "L’élimination du trouble"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De faciliter les opérations de séparation ultérieures"
+
+[[rubriques.lignes]]
+valeur = "Une meilleure stabilité physicochimique"
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de pectinases"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de protéines de collage"
+
+[[rubriques]]
+titre = "a pour causes d’échec"
+
+[[rubriques.lignes]]
+valeur = "Des pratiques inadéquates (stockage enzymes)"
+
+[[rubriques.lignes]]
+valeur = "Des températures trop élevées du moût"
+
+[[rubriques.lignes]]
+valeur = "Un dosage inadéquate des protéines de collage"

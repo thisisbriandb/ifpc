@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1034 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1034
+code = "CMAP_CLARIFICATION_DEPECTINISATION"
+titre = "La dépectinisation"
+image_sha256 = "47194719aa388c72a60c79ae4b5aecee7a087a73b5294a51d6ccefa61af42871"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La dépectinisation
+est un : Phénomène se produisant au cours de la clarification basse
+a pour fonction : La dégradation des pectines
+a pour conséquences : De baisser la viscosité du moût | D’agglomérer les bourbes
+nécessite : L’ajout de pectinases
+est influencée par : La température du moût | L’acidité du moût"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant au cours de la clarification basse"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "La dégradation des pectines"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De baisser la viscosité du moût"
+
+[[rubriques.lignes]]
+valeur = "D’agglomérer les bourbes"
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de pectinases"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La température du moût"
+
+[[rubriques.lignes]]
+valeur = "L’acidité du moût"

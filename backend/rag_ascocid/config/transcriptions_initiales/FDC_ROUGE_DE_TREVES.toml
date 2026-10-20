@@ -1,0 +1,153 @@
+# Transcription de l'illustration de la fiche 1451 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1451
+code = "FDC_ROUGE_DE_TREVES"
+titre = "Rouge de Trêves"
+image_sha256 = "51966e2613510e91926ee8d117a46ce6eab2aac1fedb96593459b14ba11c2a7f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: ROUGE DE TRÊVES
+PRINCIPALES ZONES DE PRODUCTION
+Ille-et-Villaine.
+Orne.
+Maine-et-Loire.
+Ardennes.
+Seine-et-Marne.
+Loire-Atlantique.
+POSSIBILITES de COMMERCIALISATION en bonne année
+Variété trop dispersée pour pouvoir constituer des lots importants dans
+un lieu donné.
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 9-11-61)
+Dégustation du fruit : juteux, bien acidulé.
+Dégustation du jus : trop aigre, manque de sucre.
+Rendement en jus (%) : 69,1.
+Densité du jus : 1 043,5.
+Acidité de titration en g. SO* H° par litre : 5,63.
+Azote/Sucres totaux : 0,35.
+Tanin (en g. par litre) : 1,16.
+Parfum : assez prononcé.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : assez bonne.
+Port : érigé - bois cassant.
+Résistance aux maladies : sensible ou très sensible à la tavelure sur feuil-
+les, rameaux et fruits - sensible à l'oidium sur rameaux.
+Productivité : moyenne et alternante.
+Saison de floraison : 2e.
+Saison de maturité : 2e-3e.
+Conservation et transport des fruits : bons.
+Grosseur du fruit : moyen ou au-dessous de la moyenne.
+OBSERVATIONS DIVERSES
+Variété souvent plantée le long des routes au début du siècle surtout
+dans l'Est mais qui disparait avec l'élargissement des routes. Variété
+excellente pour les compotes, les confitures, les pâtisseries et naturelle-
+ment les jus. On la retrouve un peu partout mais très disséminée et en
+voie de disparition. Elle serait à traiter comme une pomme à couteau.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Villaine. Orne. Maine-et-Loire. Ardennes. Seine-et-Marne. Loire-Atlantique."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques.lignes]]
+valeur = "Variété trop dispersée pour pouvoir constituer des lots importants dans un lieu donné."
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 9-11-61"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "juteux, bien acidulé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "trop aigre, manque de sucre."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "69,1."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 043,5."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H° par litre"
+valeur = "5,63."
+douteux = ["H°"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,35."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,16."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "assez prononcé."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "assez bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "érigé - bois cassant."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "sensible ou très sensible à la tavelure sur feuil- les, rameaux et fruits - sensible à l'oidium sur rameaux."
+douteux = ["l'oidium"]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "moyenne et alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e-3e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen ou au-dessous de la moyenne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété souvent plantée le long des routes au début du siècle surtout dans l'Est mais qui disparait avec l'élargissement des routes. Variété excellente pour les compotes, les confitures, les pâtisseries et naturelle- ment les jus. On la retrouve un peu partout mais très disséminée et en voie de disparition. Elle serait à traiter comme une pomme à couteau."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er)"
+douteux = ["(1er)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

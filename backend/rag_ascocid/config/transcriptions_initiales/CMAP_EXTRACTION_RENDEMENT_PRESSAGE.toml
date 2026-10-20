@@ -1,0 +1,95 @@
+# Transcription de l'illustration de la fiche 1081 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1081
+code = "CMAP_EXTRACTION_RENDEMENT_PRESSAGE"
+titre = "Le rendement de pressage"
+image_sha256 = "37188da574ebd776ed793b191abe31452a15aed747b59a64dde54e0886c8fd5f"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le rendement de pressage
+est un : Indicateur d’efficacité de l’opération de pressage
+est égal à : La quantité de moût extrait par tonne de pommes
+est influencé par : L’état de maturité des pommes | Le niveau d’altération fongique des pommes | La durée du cycle de pressage ou le débit entrant | La conduite de la presse (savoir -faire) | Les variétés de pommes | La taille des cossettes | Les traitements de la râpure | La présence d’un cuvage
+a pour valeurs : Moyennes : 70 % | Extrêmes : 60% à 80%
+est complété par : La productivité (production par jour)
+est diminué par : Un mauvais drainage de la couche de râpure au voisinage du drain | Une consistance de râpure grasse, collante ou purée (sur -maturité) | Une consistance trop ferme de la râpure (sous -maturité) | Des grilles de râpage inadaptées à la texture des pommes | Un bouchage des drains de la presse (mauvais nettoyage) | Une mauvaise conduite de la presse"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Indicateur d’efficacité de l’opération de pressage"
+
+[[rubriques]]
+titre = "est égal à"
+
+[[rubriques.lignes]]
+valeur = "La quantité de moût extrait par tonne de pommes"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "L’état de maturité des pommes"
+
+[[rubriques.lignes]]
+valeur = "Le niveau d’altération fongique des pommes"
+
+[[rubriques.lignes]]
+valeur = "La durée du cycle de pressage ou le débit entrant"
+
+[[rubriques.lignes]]
+valeur = "La conduite de la presse (savoir -faire)"
+
+[[rubriques.lignes]]
+valeur = "Les variétés de pommes"
+
+[[rubriques.lignes]]
+valeur = "La taille des cossettes"
+
+[[rubriques.lignes]]
+valeur = "Les traitements de la râpure"
+
+[[rubriques.lignes]]
+valeur = "La présence d’un cuvage"
+
+[[rubriques]]
+titre = "a pour valeurs"
+
+[[rubriques.lignes]]
+valeur = "Moyennes : 70 %"
+
+[[rubriques.lignes]]
+valeur = "Extrêmes : 60% à 80%"
+
+[[rubriques]]
+titre = "est complété par"
+
+[[rubriques.lignes]]
+valeur = "La productivité (production par jour)"
+
+[[rubriques]]
+titre = "est diminué par"
+
+[[rubriques.lignes]]
+valeur = "Un mauvais drainage de la couche de râpure au voisinage du drain"
+
+[[rubriques.lignes]]
+valeur = "Une consistance de râpure grasse, collante ou purée (sur -maturité)"
+
+[[rubriques.lignes]]
+valeur = "Une consistance trop ferme de la râpure (sous -maturité)"
+
+[[rubriques.lignes]]
+valeur = "Des grilles de râpage inadaptées à la texture des pommes"
+
+[[rubriques.lignes]]
+valeur = "Un bouchage des drains de la presse (mauvais nettoyage)"
+
+[[rubriques.lignes]]
+valeur = "Une mauvaise conduite de la presse"

@@ -1,0 +1,26 @@
+# Transcription de l'illustration de la fiche 1500 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1500
+code = "FDC_TABLE_DE_CORRECTION_DE_LA_MASSE_VOLUMIQUE_EN_FONCTION_DE_LA_TEMPERATURE_DU_MOUT"
+titre = "Table de correction de la masse volumique en fonction de la température du moût"
+image_sha256 = "c7257fe801b4be6a7de35ff47e8519d139d810de48483264ce0cda26905d33fd"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Température du moût (°C) Coefficient de correction
+Table des coefficients de correction à appliquer à la
+masse volumique mesurée en fonction de la
+température du moût."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Température du moût (°C) Coefficient de correction"
+
+[[rubriques.lignes]]
+valeur = "Table des coefficients de correction à appliquer à la masse volumique mesurée en fonction de la température du moût."

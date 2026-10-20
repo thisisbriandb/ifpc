@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1063 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1063
+code = "CMAP_RECOLTE_TRI_ET_NETTOYAGE_A_SEC"
+titre = "Le tri et le nettoyage à sec au verger"
+image_sha256 = "549275d92e4be3ab6e54f36f58d0ef635673c073cea0a2da69b440bd43be4dfd"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le tri et le nettoyage à sec au verger
+est une : Opération facultative de l’étape de récolte
+a pour fonctions : L’élimination des souillures | L’élimination des pommes altérées
+est piloté par : Les réglages de l’équipement | Les consignes de tri
+a pour équipements : Une installation de nettoyage à sec | Un poste de tri
+est une action complémentaire du : Ramassage mécanique"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape de récolte"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "L’élimination des souillures"
+
+[[rubriques.lignes]]
+valeur = "L’élimination des pommes altérées"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Les réglages de l’équipement"
+
+[[rubriques.lignes]]
+valeur = "Les consignes de tri"
+
+[[rubriques]]
+titre = "a pour équipements"
+
+[[rubriques.lignes]]
+valeur = "Une installation de nettoyage à sec"
+
+[[rubriques.lignes]]
+valeur = "Un poste de tri"
+
+[[rubriques]]
+titre = "est une action complémentaire du"
+
+[[rubriques.lignes]]
+valeur = "Ramassage mécanique"

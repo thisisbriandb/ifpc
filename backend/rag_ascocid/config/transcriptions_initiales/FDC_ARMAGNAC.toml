@@ -1,0 +1,142 @@
+# Transcription de l'illustration de la fiche 1416 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1416
+code = "FDC_ARMAGNAC"
+titre = "Armagnac"
+image_sha256 = "f593db52d9dc13e3bbbee42ea8c02cb62c866d04a244d3e4dc78c7369a4fc6cb"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: ARMAGNAC
+PRINCIPALES ZONES DE PRODUCTION
+Aisne.
+Seine-Maritime.
+POSSIBILITES de COMMERCIALISATION en bonne année
+Plantations diffuses souvent jeunes: il n'existe actuellement pas de
+centres de production importants.
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 15-12-51)
+Dégustation du jus : acide.
+Rendement du jus (%) : 56,7.
+Densité du jus : 1 065,5.
+Acidité de titration en g. SO* H* par litre : 5,73.
+Azote/Sucres totaux : 0,33.
+Tanin (en g. par litre) : 1,68.
+Parfum : très prononcé.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : assez bonne.
+Port : érigé.
+Résistance aux maladies : variété rustique d'une façon générale - peut
+craindre les pucerons.
+Productivité : assez bonne mais mise à fruits très tardive et alternante.
+Saison de floraison : 1ère-2e,
+Saison de maturité : 2e-3e.
+Conservation et transport des fruits : très bons.
+Grosseur du fruit : petit.
+OBSERVATIONS DIVERSES
+Très bonne variété pour l'industrie : donne un jus de haute densité et
+de grande qualité. Moins bonne pour la culture à cause de ses petits
+fruits et de sa mise à fruits trop tardive.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Aisne. Seine-Maritime."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques.lignes]]
+valeur = "Plantations diffuses souvent jeunes: il n'existe actuellement pas de centres de production importants."
+douteux = ["jeunes:"]
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 15-12-51"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acide."
+
+[[rubriques.lignes]]
+intitule = "Rendement du jus (%)"
+valeur = "56,7."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 065,5."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H* par litre"
+valeur = "5,73."
+douteux = ["H*"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,33."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,68."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "très prononcé."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "assez bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "érigé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "variété rustique d'une façon générale - peut craindre les pucerons."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "assez bonne mais mise à fruits très tardive et alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "1ère-2e,"
+douteux = ["1ère-2e,"]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e-3e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "petit."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Très bonne variété pour l'industrie : donne un jus de haute densité et de grande qualité. Moins bonne pour la culture à cause de ses petits fruits et de sa mise à fruits trop tardive."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)"
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

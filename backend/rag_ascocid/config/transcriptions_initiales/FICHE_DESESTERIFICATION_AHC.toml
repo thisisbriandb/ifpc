@@ -1,0 +1,53 @@
+# Transcription de l'illustration de la fiche 1369 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1369
+code = "FICHE_DESESTERIFICATION_AHC"
+titre = "La désestérification des esters d'acides hydroxycinnamiques"
+image_sha256 = "fc1275775ba3e2e1c2ed33a1c103636e50f9749d78e38f67409af82871b0d54c"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 83.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Ho acide 5'-O-caféoylquinique Ho acide caféique acide quinique
+0; HO 4 » \\/ . HO
+62
+How Hô
+acide 4'-O-coumaroylquinique acide coumarique acide quinique
+Figure 1: Dégradation des acides hydroxycinnamiques par l’activité enzymatique de la
+cinnamoylestérase.
+a) Dégradation de l'acide caféoylquinique en acide caféique et en acide quinique.
+b) Dégradation de l'acide coumaroylquinique en acide coumarique et en acide quinique"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Ho acide 5'-O-caféoylquinique Ho acide caféique acide quinique"
+douteux = ["5'-O-caféoylquinique"]
+
+[[rubriques.lignes]]
+valeur = "0; HO 4 » \\/ . HO"
+douteux = ["0;", "4"]
+
+[[rubriques.lignes]]
+valeur = "62"
+douteux = ["62"]
+
+[[rubriques.lignes]]
+valeur = "How Hô"
+douteux = ["How", "Hô"]
+
+[[rubriques.lignes]]
+valeur = "acide 4'-O-coumaroylquinique acide coumarique acide quinique"
+douteux = ["4'-O-coumaroylquinique"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Dégradation des acides hydroxycinnamiques par l’activité enzymatique de la"
+
+[[rubriques.lignes]]
+valeur = "cinnamoylestérase. a) Dégradation de l'acide caféoylquinique en acide caféique et en acide quinique. b) Dégradation de l'acide coumaroylquinique en acide coumarique et en acide quinique"
+douteux = ["Dégradation", "caféoylquinique"]

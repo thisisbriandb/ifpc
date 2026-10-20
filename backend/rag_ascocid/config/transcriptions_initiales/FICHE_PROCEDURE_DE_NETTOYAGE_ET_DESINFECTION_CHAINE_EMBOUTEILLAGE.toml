@@ -1,0 +1,63 @@
+# Transcription de l'illustration de la fiche 1582 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1582
+code = "FICHE_PROCEDURE_DE_NETTOYAGE_ET_DESINFECTION_CHAINE_EMBOUTEILLAGE"
+titre = "Procédure de nettoyage et désinfection de la chaîne d’embouteillage"
+image_sha256 = "9bde9a4a599d2e91ef1f3820a2c1f8d7f4d0572b6500c21dd68f12356470cde5"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 85.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
++ Tuyau arrivant en
+haut de cloche
+Cloche +
+Canne }\"
+Ressort x
+de retour Mise à niveau par
+de gaz RENE surpression
+\\ pre Air comprimé
+Bec
+& Vanne
+D (snif)
+Cidre
+Bouteille ——_»
+Figure 1 : Représentation schématique des différentes zones d’une soutireuse souillées par le
+produit au cours de la mise en bouteille.
+Les zones en orange pale correspondent aux zones souillées par le cidre durant l'embouteillage.
+D'après Bauduin, R., Baconnais, S., Hingant, S. (2013). Journée technique « Hygiène et fabrication du cidre » - Focus sur le matériel de
+mise en bouteille. Présentation aux Journées techniques."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "+ Tuyau arrivant en haut de cloche"
+
+[[rubriques.lignes]]
+valeur = "Cloche +"
+
+[[rubriques.lignes]]
+valeur = "Canne }\""
+douteux = ["Canne"]
+
+[[rubriques.lignes]]
+valeur = "Ressort x de retour Mise à niveau par de gaz RENE surpression \\ pre Air comprimé Bec & Vanne D (snif) Cidre"
+douteux = ["x", "RENE", "surpression", "pre"]
+
+[[rubriques.lignes]]
+valeur = "Bouteille ——_»"
+douteux = ["——_»"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique des différentes zones d’une soutireuse souillées par le"
+
+[[rubriques.lignes]]
+valeur = "produit au cours de la mise en bouteille."
+
+[[rubriques.lignes]]
+valeur = "Les zones en orange pale correspondent aux zones souillées par le cidre durant l'embouteillage. D'après Bauduin, R., Baconnais, S., Hingant, S. (2013). Journée technique « Hygiène et fabrication du cidre » - Focus sur le matériel de mise en bouteille. Présentation aux Journées techniques."
+douteux = ["l'embouteillage.", "Baconnais,"]

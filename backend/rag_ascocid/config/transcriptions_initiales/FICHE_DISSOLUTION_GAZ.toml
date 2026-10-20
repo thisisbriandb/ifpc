@@ -1,0 +1,35 @@
+# Transcription de l'illustration de la fiche 1370 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1370
+code = "FICHE_DISSOLUTION_GAZ"
+titre = "La dissolution du gaz dans le cidre"
+image_sha256 = "e7b71fb1fde6a81892714dd253229ea39cbe97163147a359df4dfa6dd1d65e2a"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+4
+4
+7 Photo IFPC
+Figure 1 : La dissolution des gaz dans le cidre"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "4"
+douteux = ["4"]
+
+[[rubriques.lignes]]
+valeur = "4"
+douteux = ["4"]
+
+[[rubriques]]
+titre = "7 Photo IFPC"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La dissolution des gaz dans le cidre"

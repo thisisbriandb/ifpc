@@ -1,0 +1,72 @@
+# Transcription de l'illustration de la fiche 1032 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1032
+code = "CMAP_CLARIFICATION_BASSE_SS_COLLAGE"
+titre = "La clarification basse sans collage"
+image_sha256 = "963486f5dbaefb522d3572160f9298f2fc4f420a09201f74045038476e4b6f92"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification basse sans collage
+est une : Modalité de l’étape de clarification des moûts
+a pour synonyme : La clarification par dépectinisation
+est constituée a pour fonction de : La dépectinisation | La séparation des lies
+a pour conséquence : L’élimination partielle du trouble | De faciliter les opérations de séparation ultérieures | De baisser la viscosité du moût
+nécessite : L’ajout de pectinases
+a pour causes d’échec : Des pratiques inadéquates (stockage enzymes) | Des températures trop élevées du moût | Une mauvaise sédimentation pour les variétés amères, douces -amères et douces (pH élevé)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de clarification des moûts"
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "La clarification par dépectinisation"
+
+[[rubriques]]
+titre = "est constituée a pour fonction de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La dépectinisation"
+
+[[rubriques.lignes]]
+valeur = "La séparation des lies"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "L’élimination partielle du trouble"
+
+[[rubriques.lignes]]
+valeur = "De faciliter les opérations de séparation ultérieures"
+
+[[rubriques.lignes]]
+valeur = "De baisser la viscosité du moût"
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de pectinases"
+
+[[rubriques]]
+titre = "a pour causes d’échec"
+
+[[rubriques.lignes]]
+valeur = "Des pratiques inadéquates (stockage enzymes)"
+
+[[rubriques.lignes]]
+valeur = "Des températures trop élevées du moût"
+
+[[rubriques.lignes]]
+valeur = "Une mauvaise sédimentation pour les variétés amères, douces -amères et douces (pH élevé)"

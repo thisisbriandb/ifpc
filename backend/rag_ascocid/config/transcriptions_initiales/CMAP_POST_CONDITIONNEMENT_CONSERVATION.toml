@@ -1,0 +1,57 @@
+# Transcription de l'illustration de la fiche 1320 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1320
+code = "CMAP_POST_CONDITIONNEMENT_CONSERVATION"
+titre = "La conservation des bouteilles non pasteurisées"
+image_sha256 = "7f3de05f20052289332b8a365f67f3414cfd0baeb4b1ed47c0e88d4daaa7979a"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La conservation des bouteilles non pasteurisées
+est une : Opération utilisée au cours l’étape post - conditionnement
+a pour fonction : De disposer d’un stock de cidre pour la commercialisation
+est influencée par : Le niveau de flores résiduelles | Le type de flores résiduelles | La température du cidre | La présence de SO 2
+présente le risque : D’un développement de flores d’altération | D’une altération des caractéristiques sensorielles | D’une sur -saturation en CO 2 en cas de recroissance levurienne"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération utilisée au cours l’étape post - conditionnement"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De disposer d’un stock de cidre pour la commercialisation"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Le niveau de flores résiduelles"
+
+[[rubriques.lignes]]
+valeur = "Le type de flores résiduelles"
+
+[[rubriques.lignes]]
+valeur = "La température du cidre"
+
+[[rubriques.lignes]]
+valeur = "La présence de SO 2"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "D’un développement de flores d’altération"
+
+[[rubriques.lignes]]
+valeur = "D’une altération des caractéristiques sensorielles"
+
+[[rubriques.lignes]]
+valeur = "D’une sur -saturation en CO 2 en cas de recroissance levurienne"

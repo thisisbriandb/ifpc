@@ -1,0 +1,96 @@
+# Transcription de l'illustration de la fiche 1050 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1050
+code = "FICHE_TEST_ESTIMATION_ACIDITE"
+titre = "Test d'estimation de l'acidité"
+image_sha256 = "0d075ea020b497003d384acce4bba91310f150dc74b5de23dcfc565ece97afa1"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 76.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Test d'estimation de l'acidité totale
+Tableau 1 : Correspondance entre l'acidité lue (g/L d'acide
+citrique) et l'acidité du moût exprimée en H,SO, (cas d'un
+moût non dilué).
+Acidité lue en g/L
+d'acide citrique
+Quantofx' Quantofix'
+F3 : Rul ac Gesamisäure
+its0g
+= 25 30 18 el RTS Équivalent Acidité 1,9 2,3 2,7 3,1
+ons ip Terraocten totale (g/L H,S0O;)
+LED
+CELL . :
+Eumn d | Formule de conversion :
+perf T [tn Acidité H,SO, = Acidité lue (ac. citrique) x 0,766 x dilution
+b. Mere varie (ex. : dilution = 2 pour la dilution préconisée)
+Illustration 1 : Test Quantifox pour évaluer l'acidité d'un moût. a) Tube de bandelettes, b) Exemple de mesure
+de moût, c) Estimation visuelle par comparaison de la bandelette avec la photo du tube. Références des
+réactifs : Quantifox Acidité totale"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Test d'estimation de l'acidité totale"
+douteux = ["l'acidité"]
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Correspondance entre l'acidité lue (g/L d'acide citrique) et l'acidité du moût exprimée en H,SO, (cas d'un moût non dilué)."
+
+[[rubriques.lignes]]
+valeur = "Acidité lue en g/L d'acide citrique"
+douteux = ["d'acide"]
+
+[[rubriques.lignes]]
+valeur = "Quantofx' Quantofix'"
+douteux = ["Quantofx'", "Quantofix'"]
+
+[[rubriques.lignes]]
+intitule = "F3"
+valeur = "Rul ac Gesamisäure"
+douteux = ["F3", "Rul", "ac", "Gesamisäure"]
+
+[[rubriques.lignes]]
+valeur = "its0g"
+douteux = ["its0g"]
+
+[[rubriques.lignes]]
+valeur = "= 25 30 18 el RTS Équivalent Acidité 1,9 2,3 2,7 3,1"
+douteux = ["25", "30", "18", "el", "RTS"]
+
+[[rubriques.lignes]]
+valeur = "ons ip Terraocten totale (g/L H,S0O;) LED"
+douteux = ["ons", "ip", "Terraocten", "H,S0O;)", "LED"]
+
+[[rubriques.lignes]]
+intitule = "CELL ."
+valeur = ""
+douteux = ["CELL"]
+
+[[rubriques.lignes]]
+intitule = "Eumn d | Formule de conversion"
+valeur = ""
+douteux = ["Eumn", "d"]
+
+[[rubriques.lignes]]
+valeur = "perf T [tn Acidité H,SO, = Acidité lue (ac. citrique) x 0,766 x dilution"
+douteux = ["perf", "T", "[tn", "Acidité", "Acidité"]
+
+[[rubriques.lignes]]
+intitule = "b. Mere varie (ex."
+valeur = "dilution = 2 pour la dilution préconisée)"
+douteux = ["b.", "Mere", "varie"]
+
+[[rubriques.lignes]]
+intitule = "Illustration 1"
+valeur = "Test Quantifox pour évaluer l'acidité d'un moût. a) Tube de bandelettes, b) Exemple de mesure de moût, c) Estimation visuelle par comparaison de la bandelette avec la photo du tube. Références des"
+douteux = ["Illustration"]
+
+[[rubriques.lignes]]
+intitule = "réactifs"
+valeur = "Quantifox Acidité totale"

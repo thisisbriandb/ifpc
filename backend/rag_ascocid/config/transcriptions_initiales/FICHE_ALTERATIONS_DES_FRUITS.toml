@@ -1,0 +1,70 @@
+# Transcription de l'illustration de la fiche 1507 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1507
+code = "FICHE_ALTERATIONS_DES_FRUITS"
+titre = "Les altérations des fruits"
+image_sha256 = "68f8c61311a13cfe7fbe3bec70e12e6a8c31d25bbfaddb36ffa0c5dacac8e3c2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Dissimilarité
+Les altérations des
+fruits
+2
+5 on A LT
+Figure 1 : Dégât causé par 5
+la chenille du carpocapse. 3
+Photo Fredon Normandie
+Figure 4 : Dendogramme obtenu grâce à la classification
+ascendante hiérarchique des variétés étudiées.
+5 La résistance de chaque variété a été étudiée sur des fruits prélevés 15 jours
+Figure 2 : Photographie de récolteuse Figure 3 : Photographie de pommes avant la récolte (R-15), à la récolte (R), et 15 jours après la récolte (R+15). La
+automotrice avec double andaineurs. meurtries de la variété Douce-Moën Surface meurtrie sur les fruits a été calculée à l’aide du logiciel Image J. Plus la
+après récolte à la machine. couleur est foncée, plus les pommes présentent un pourcentage de
+meurtrissure important."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Dissimilarité"
+
+[[rubriques.lignes]]
+valeur = "Les altérations des fruits"
+
+[[rubriques.lignes]]
+valeur = "2"
+
+[[rubriques]]
+titre = "5 on A LT"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Dégât causé par 5"
+douteux = ["Dégât", "5"]
+
+[[rubriques.lignes]]
+valeur = "la chenille du carpocapse. 3 Photo Fredon Normandie"
+douteux = ["3"]
+
+[[rubriques.lignes]]
+intitule = "Figure 4"
+valeur = "Dendogramme obtenu grâce à la classification"
+
+[[rubriques.lignes]]
+valeur = "ascendante hiérarchique des variétés étudiées. 5 La résistance de chaque variété a été étudiée sur des fruits prélevés 15 jours"
+douteux = ["5"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Photographie de récolteuse Figure 3 : Photographie de pommes avant la récolte (R-15), à la récolte (R), et 15 jours après la récolte (R+15). La"
+
+[[rubriques.lignes]]
+valeur = "automotrice avec double andaineurs. meurtries de la variété Douce-Moën Surface meurtrie sur les fruits a été calculée à l’aide du logiciel Image J. Plus la après récolte à la machine. couleur est foncée, plus les pommes présentent un pourcentage de"
+
+[[rubriques.lignes]]
+valeur = "meurtrissure important."

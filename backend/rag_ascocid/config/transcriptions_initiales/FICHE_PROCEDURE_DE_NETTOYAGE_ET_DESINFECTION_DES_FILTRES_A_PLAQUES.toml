@@ -1,0 +1,92 @@
+# Transcription de l'illustration de la fiche 1581 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1581
+code = "FICHE_PROCEDURE_DE_NETTOYAGE_ET_DESINFECTION_DES_FILTRES_A_PLAQUES"
+titre = "Procédure de nettoyage et désinfection des filtres à plaques"
+image_sha256 = "0fee8ecadbb613d7426500ac8bbba9deabd83c1eb4504c31ccf8eaf4827b2ac9"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+e Eau claire
+e 5à 10 minutes
+Rinçage
+* Circuit fermé
+* Solution détergente (soude 2 %) à 45 — 50 °C pendant 20 minutes
+* Ajout progressif d’une solution oxydante (peroxyde d'hydrogène 1 %) à
+Nettoyage | 45 _ 50 °C pendant 20 minutes
+e Eau froide et claire
+e 5à 10 minutes
+Rinçage
+e Circuit fermé
+e Solution désinfectante (acide peracétique 1 %) à 15 — 20 °C
+Désinfection | * 20 Minutes
+Hygiène des filtres à plaques
+e Eau froide et claire pendant 5 à 10 minutes
+e Contrôle du pH de l’eau de rinçage
+Rinçage & | + Vidange du filtre, égouttage des tuyaux, pompes et bacs
+Contrôle
+Figure 1 : Exemple de procédure de nettoyage et désinfection d’un filtre à plaques
+Source de l'illustration:
+http://www. vinitroc.com/iltre-plaques-seitz-a40.html"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "e Eau claire"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = "e 5à 10 minutes Rinçage"
+douteux = ["e", "5à"]
+
+[[rubriques.lignes]]
+valeur = "* Circuit fermé * Solution détergente (soude 2 %) à 45 — 50 °C pendant 20 minutes"
+
+[[rubriques.lignes]]
+valeur = "* Ajout progressif d’une solution oxydante (peroxyde d'hydrogène 1 %) à Nettoyage | 45 _ 50 °C pendant 20 minutes"
+douteux = ["d'hydrogène", "_"]
+
+[[rubriques.lignes]]
+valeur = "e Eau froide et claire"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = "e 5à 10 minutes Rinçage"
+douteux = ["e", "5à"]
+
+[[rubriques.lignes]]
+valeur = "e Circuit fermé e Solution désinfectante (acide peracétique 1 %) à 15 — 20 °C"
+douteux = ["e", "e"]
+
+[[rubriques.lignes]]
+valeur = "Désinfection | * 20 Minutes"
+douteux = ["Minutes"]
+
+[[rubriques.lignes]]
+valeur = "Hygiène des filtres à plaques"
+
+[[rubriques.lignes]]
+valeur = "e Eau froide et claire pendant 5 à 10 minutes e Contrôle du pH de l’eau de rinçage"
+douteux = ["e", "e"]
+
+[[rubriques.lignes]]
+valeur = "Rinçage & | + Vidange du filtre, égouttage des tuyaux, pompes et bacs Contrôle"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple de procédure de nettoyage et désinfection d’un filtre à plaques"
+douteux = ["d’un"]
+
+[[rubriques.lignes]]
+intitule = "Source de l'illustration"
+valeur = ""
+
+[[rubriques.lignes]]
+intitule = "http"
+valeur = "//www. vinitroc.com/iltre-plaques-seitz-a40.html"
+douteux = ["http://www.", "vinitroc.com/iltre-plaques-seitz-a40.html"]

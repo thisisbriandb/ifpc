@@ -1,0 +1,89 @@
+# Transcription de l'illustration de la fiche 1042 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1042
+code = "CMAP_MOUT_BRUT"
+titre = "Le moût brut"
+image_sha256 = "b52f13341852ca3daa181b21424befe374fe1af18794347e13a3bc4ff285323e"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le moût brut
+est un : Produit intermédiaire de l'élaboration du cidre
+a pour synonymes : Jus de sortie de presse
+est caractérisé par : Une masse volumique | Une acidité titrable | Une teneur en polyphénols | Une teneur en matières en suspension | Une teneur en pectines solubles | Une teneur en azote assimilable | Une teneur en sucres
+est décrit par : Sa couleur | Sa saveur sucrée | Sa saveur acide | Sa saveur amère | Son astringence | Ses arômes | Ses défauts olfactifs éventuels
+est produit par : L’extraction du moût"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Produit intermédiaire de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "a pour synonymes"
+
+[[rubriques.lignes]]
+valeur = "Jus de sortie de presse"
+
+[[rubriques]]
+titre = "est caractérisé par"
+
+[[rubriques.lignes]]
+valeur = "Une masse volumique"
+
+[[rubriques.lignes]]
+valeur = "Une acidité titrable"
+
+[[rubriques.lignes]]
+valeur = "Une teneur en polyphénols"
+
+[[rubriques.lignes]]
+valeur = "Une teneur en matières en suspension"
+douteux = ["Une"]
+
+[[rubriques.lignes]]
+valeur = "Une teneur en pectines solubles"
+douteux = ["Une"]
+
+[[rubriques.lignes]]
+valeur = "Une teneur en azote assimilable"
+
+[[rubriques.lignes]]
+valeur = "Une teneur en sucres"
+
+[[rubriques]]
+titre = "est décrit par"
+
+[[rubriques.lignes]]
+valeur = "Sa couleur"
+
+[[rubriques.lignes]]
+valeur = "Sa saveur sucrée"
+
+[[rubriques.lignes]]
+valeur = "Sa saveur acide"
+
+[[rubriques.lignes]]
+valeur = "Sa saveur amère"
+
+[[rubriques.lignes]]
+valeur = "Son astringence"
+
+[[rubriques.lignes]]
+valeur = "Ses arômes"
+
+[[rubriques.lignes]]
+valeur = "Ses défauts olfactifs éventuels"
+
+[[rubriques]]
+titre = "est produit par"
+
+[[rubriques.lignes]]
+valeur = "L’extraction du moût"
+douteux = ["L’extraction"]

@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1492 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1492
+code = "CMAP_LA_VALORISATION_DES_LIES_DE_CLARIFICATION_DES_MOUTS"
+titre = "La valorisation des lies de clarification des moûts"
+image_sha256 = "b8faca9330bd53b7abe373a8fc632b8083ccf4bd94064c08533840fc173065e5"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La valorisation des lies de clarification des moûts (issues des chapeaux bruns et des dépectinisations )
+regroupe : Ensemble d’opérations annexes de la clarification des moûts | Une éventuelle filtration des lies sur filtre à lies (ex : filtre à tambour rotatif) | Une filtration fine (du surnageant et du filtrat) | Un rejet de déchets ultimes | Une intégration dans un assemblage | Un regroupement des lies et une fermentation à sec | Une décantation / soutirage
+a pour fonction : D’éviter le rejet de produits très riches en matière organique (forte DBO)
+entraine : Une production de déchets ultimes | Une production de cidres secs issus de lies de la clarification de moûts"""
+anomalies = ["4 relations pour 3 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Ensemble d’opérations annexes de la clarification des moûts"
+
+[[rubriques.lignes]]
+intitule = "Ensemble d’opérations annexes de la clarification des moûts"
+valeur = "Une éventuelle filtration des lies sur filtre à lies (ex : filtre à tambour rotatif)"
+
+[[rubriques.lignes]]
+intitule = "Ensemble d’opérations annexes de la clarification des moûts"
+valeur = "Une filtration fine (du surnageant et du filtrat)"
+
+[[rubriques.lignes]]
+intitule = "Ensemble d’opérations annexes de la clarification des moûts"
+valeur = "Un rejet de déchets ultimes"
+
+[[rubriques.lignes]]
+intitule = "Ensemble d’opérations annexes de la clarification des moûts"
+valeur = "Une intégration dans un assemblage"
+
+[[rubriques.lignes]]
+valeur = "Un regroupement des lies et une fermentation à sec"
+
+[[rubriques.lignes]]
+valeur = "Une décantation / soutirage"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’éviter le rejet de produits très riches en matière organique (forte DBO)"
+
+[[rubriques]]
+titre = "entraine"
+
+[[rubriques.lignes]]
+valeur = "Une production de déchets ultimes"
+
+[[rubriques.lignes]]
+valeur = "Une production de cidres secs issus de lies de la clarification de moûts"

@@ -1,0 +1,77 @@
+# Transcription de l'illustration de la fiche 1312 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1312
+code = "CMAP_REGROUPEMENT_PRODUIT_CIDRES"
+titre = "Les cidres"
+image_sha256 = "e651eaa3bb1cdc6d0fecbe0df396ec9dd4b2737b35cf2b254a47b33f21ce441c"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 91.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les cidres en cours d'élaboration
+sont des : Etats du cidre (produits intermédiaires de l'élaboration)
+sont constitués de : Eléments biochimiques de différentes natures
+regroupent : Les cidres à assembler | Les cidres assemblés | Les cidres « prêt à la mise » | Les cidres à commercialiser
+se distinguent par : La méthode de fermentation | Le mode d'obtention de l’effervescence | Leurs signes de qualité et d’origine | Leur catégorie de cidre (« doux », « demi-sec », « brut », « extra-brut ») | Le mode de stabilisation (pasteurisation, microfiltration.….) | La dominante de saveurs (variétés)
+sont décrits par : Leurs caractéristiques organoleptiques (visuelles, gustatives, olfactives)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Etats du cidre (produits intermédiaires de l'élaboration)"
+douteux = ["l'élaboration)"]
+
+[[rubriques]]
+titre = "sont constitués de"
+
+[[rubriques.lignes]]
+valeur = "Eléments biochimiques de différentes natures"
+
+[[rubriques]]
+titre = "regroupent"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Les cidres à assembler"
+
+[[rubriques.lignes]]
+valeur = "Les cidres assemblés"
+
+[[rubriques.lignes]]
+valeur = "Les cidres « prêt à la mise »"
+
+[[rubriques.lignes]]
+valeur = "Les cidres à commercialiser"
+
+[[rubriques]]
+titre = "se distinguent par"
+
+[[rubriques.lignes]]
+valeur = "La méthode de fermentation"
+
+[[rubriques.lignes]]
+valeur = "Le mode d'obtention de l’effervescence"
+douteux = ["d'obtention", "l’effervescence"]
+
+[[rubriques.lignes]]
+valeur = "Leurs signes de qualité et d’origine"
+
+[[rubriques.lignes]]
+valeur = "Leur catégorie de cidre (« doux », « demi-sec », « brut », « extra-brut »)"
+
+[[rubriques.lignes]]
+valeur = "Le mode de stabilisation (pasteurisation, microfiltration.….)"
+douteux = ["microfiltration.….)"]
+
+[[rubriques.lignes]]
+valeur = "La dominante de saveurs (variétés)"
+
+[[rubriques]]
+titre = "sont décrits par"
+
+[[rubriques.lignes]]
+valeur = "Leurs caractéristiques organoleptiques (visuelles, gustatives, olfactives)"

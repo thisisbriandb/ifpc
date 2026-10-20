@@ -1,0 +1,56 @@
+# Transcription de l'illustration de la fiche 1058 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1058
+code = "CMAP_RECOLTE_CONDUITE_VERGER"
+titre = "La conduite du verger"
+image_sha256 = "718d9719d7cdda3965f80f77e9a070b3cd91f172050a2aae567a3f09a734c201"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La conduite du verger
+est une : Méthode de production mise en œuvre par les arboriculteurs
+regroupe : La protection contre les ravageurs | La protection contre les maladies fongiques | La régulation de la charge de l’arbre | L'alimentation de l’arbre (eau, fertilisants) | L'entretien du verger
+est influencée par : | La conception du verger | | Les conditions pédoclimatiques | Le mode de conduite (bio, faible intrant, conventionnel...)"""
+anomalies = ["4 relations pour 3 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Méthode de production mise en œuvre par les arboriculteurs"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "La protection contre les ravageurs"
+
+[[rubriques.lignes]]
+valeur = "La protection contre les maladies fongiques"
+
+[[rubriques.lignes]]
+valeur = "La régulation de la charge de l’arbre"
+
+[[rubriques.lignes]]
+valeur = "L'alimentation de l’arbre (eau, fertilisants)"
+douteux = ["L'alimentation"]
+
+[[rubriques.lignes]]
+valeur = "L'entretien du verger"
+douteux = ["L'entretien"]
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "| La conception du verger |"
+
+[[rubriques.lignes]]
+valeur = "Les conditions pédoclimatiques"
+
+[[rubriques.lignes]]
+valeur = "Le mode de conduite (bio, faible intrant, conventionnel...)"

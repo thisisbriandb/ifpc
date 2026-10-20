@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1529 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1529
+code = "FICHE_COMPOSITION_BIOCHIMIQUE_DES_CIDRES"
+titre = "La composition biochimique des cidres"
+image_sha256 = "78be0f1c9fa44146178e3a3ab7e15e74ee8f1f4e6175a91d6ee14e1323024d80"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Composés volatils
+Composés volatils soufrés, « Thiols variétaux »,
+Esters, Phénols volatils, Alcools supérieurs…
+Acides
+Acide malique, Acide
+lactique, Acide acétique Sucres
+Fructose, Glucose
+Minéraux
+Composés azotés Poly-ols
+Acides aminés (Asparagine …), Sorbitol, Glycérol
+Ammonium, Protéines Enzym es
+Enzyme malolactique
+Figure 1 : Composition biochimique générale des cidres
+Photo Cidre : C. Ingargiola, IFPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Composés volatils Composés volatils soufrés, « Thiols variétaux »,"
+
+[[rubriques.lignes]]
+valeur = "Esters, Phénols volatils, Alcools supérieurs…"
+douteux = ["supérieurs…"]
+
+[[rubriques.lignes]]
+valeur = "Acides Acide malique, Acide"
+
+[[rubriques.lignes]]
+valeur = "lactique, Acide acétique Sucres"
+
+[[rubriques.lignes]]
+valeur = "Fructose, Glucose"
+
+[[rubriques.lignes]]
+valeur = "Minéraux"
+
+[[rubriques.lignes]]
+valeur = "Composés azotés Poly-ols Acides aminés (Asparagine …), Sorbitol, Glycérol"
+douteux = ["(Asparagine"]
+
+[[rubriques.lignes]]
+valeur = "Ammonium, Protéines Enzym es"
+
+[[rubriques.lignes]]
+valeur = "Enzyme malolactique"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Composition biochimique générale des cidres"
+
+[[rubriques.lignes]]
+intitule = "Photo Cidre"
+valeur = "C. Ingargiola, IFPC"

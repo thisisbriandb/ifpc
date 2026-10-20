@@ -1,0 +1,86 @@
+# Transcription de l'illustration de la fiche 1121 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1121
+code = "CMAP_FERMENTATION_DEV_HANSENIASPORA"
+titre = "Le développement des Hanseniaspora"
+image_sha256 = "0412d9246efc44888853e5ff7c3477b92fd703646323173b81be2a5b1ca0e88c"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le développement des Hanseniaspora
+est un : Phénomène microbiologique se produisant principalement au cours de l’étape fermentaire
+a pour phases : Une croissance exponentielle | Un arrêt de croissance (à la population max) | Une décroissance des levures viables (mortalité)
+induit : Les principaux effets des Hanseniaspora
+a pour autres conséquences : Une consommation de nutriments nécessaires à la croissance | Une carence en micronutriments (en particulier la thiamine) | Une compétition avec Saccharomyces
+est inhibé par : Le sulfitage du moût
+est influencé par : La toxicité du milieu (teneur en alcool, SO;) | La population initiale des Hanseniaspora | La population initiale des Saccharomyces | La clarification des moûts | La disponibilité en oxygène (traces) | La température du moût"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène microbiologique se produisant principalement au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "a pour phases"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une croissance exponentielle"
+douteux = ["Une"]
+
+[[rubriques.lignes]]
+valeur = "Un arrêt de croissance (à la population max)"
+
+[[rubriques.lignes]]
+valeur = "Une décroissance des levures viables (mortalité)"
+
+[[rubriques]]
+titre = "induit"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Hanseniaspora"
+
+[[rubriques]]
+titre = "a pour autres conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de nutriments nécessaires à la croissance"
+
+[[rubriques.lignes]]
+valeur = "Une carence en micronutriments (en particulier la thiamine)"
+
+[[rubriques.lignes]]
+valeur = "Une compétition avec Saccharomyces"
+
+[[rubriques]]
+titre = "est inhibé par"
+
+[[rubriques.lignes]]
+valeur = "Le sulfitage du moût"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La toxicité du milieu (teneur en alcool, SO;)"
+douteux = ["SO;)"]
+
+[[rubriques.lignes]]
+valeur = "La population initiale des Hanseniaspora"
+
+[[rubriques.lignes]]
+valeur = "La population initiale des Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "La clarification des moûts"
+
+[[rubriques.lignes]]
+valeur = "La disponibilité en oxygène (traces)"
+
+[[rubriques.lignes]]
+valeur = "La température du moût"

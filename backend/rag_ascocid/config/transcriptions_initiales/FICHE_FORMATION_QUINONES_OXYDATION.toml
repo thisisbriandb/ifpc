@@ -1,0 +1,130 @@
+# Transcription de l'illustration de la fiche 1387 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1387
+code = "FICHE_FORMATION_QUINONES_OXYDATION"
+titre = "Formation des quinones par oxydation des composés phénoliques"
+image_sha256 = "53149f67a6ddb06245ad9279d639de6abbe4cae1a3378f2afcf415bc9a97f0d5"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 84.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Décompartimentation | Figure 1 : Compartimentation et
+cellulaire décompartimentation des acteurs
+de l'oxydation.
+pets | Polyphénols [o: | 9 0 La  polyphénoloxydase (PPO), les
+vacuole composés phénoliques et l'oxygène sont
+situés dans des compartiments différents
+à l'intérieur de la cellule de pomme. Lors
+des opérations d'extraction (râpage,
+| . cuvage, pressage), les tissus sont
+Fr Mègre Cellule de la chair pressage Lens détruits et les trois acteurs sont réunis ;
+de la pomme l'oxydation enzymatique peut alors
+commencer.
+activité de la activité de b
+monophénolase l'o-diphénoloxydase
+ou crésolase ou catécholase
+monophénol o-diphénol o-quinone
+OH Figure 2 : Les étapes de l'oxydation des
+1/2 O2 on !/202 o composés phénoliques en présence d'oxygène
+1 2
+Eee Ee et de PPO.
+a : Les monophénols sont oxydés en ortho-diphénols
+par voie enzymatique (activité crésolase de la PPO)
+o-diphénol o-quinces b : Certains ortho-diphénols (substrats de la PPO) sont
+primaire secondaire oxydés en ortho-quinones dites \"primaires\" (activité
+OH R (e) catécholase de la PPO)
+XX XX c : Ces ortho-quinones dites \"primaires\" peuvent
+ensuite oxyder d'autres composés phénoliques par
+Oxydo-réduction oxydo-réduction couplée pour former des ortho-
+couplée quinones (dites secondaires). Les  ortho-quinones
+primaires reviennent à leur état réduit en étant convertis
+Lo NC en leurs ortho-diphénols d'origine.
+o-quinone o-diphénol
+primaire secondaire
+Oxydo-réduction
+enzymatique / chimique"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Décompartimentation | Figure 1"
+valeur = "Compartimentation et"
+
+[[rubriques.lignes]]
+valeur = "cellulaire décompartimentation des acteurs de l'oxydation."
+
+[[rubriques.lignes]]
+intitule = "pets | Polyphénols [o"
+valeur = "| 9 0 La  polyphénoloxydase (PPO), les"
+douteux = ["pets", "[o:", "9", " polyphénoloxydase", "(PPO),"]
+
+[[rubriques.lignes]]
+valeur = "vacuole composés phénoliques et l'oxygène sont situés dans des compartiments différents à l'intérieur de la cellule de pomme. Lors des opérations d'extraction (râpage, | . cuvage, pressage), les tissus sont Fr Mègre Cellule de la chair pressage Lens détruits et les trois acteurs sont réunis ; de la pomme l'oxydation enzymatique peut alors commencer."
+douteux = ["(râpage,", "Fr", "Mègre", "Lens"]
+
+[[rubriques.lignes]]
+valeur = "activité de la activité de b monophénolase l'o-diphénoloxydase ou crésolase ou catécholase"
+
+[[rubriques.lignes]]
+valeur = "monophénol o-diphénol o-quinone"
+douteux = ["o-diphénol", "o-quinone"]
+
+[[rubriques.lignes]]
+intitule = "OH Figure 2"
+valeur = "Les étapes de l'oxydation des"
+
+[[rubriques.lignes]]
+valeur = "1/2 O2 on !/202 o composés phénoliques en présence d'oxygène"
+douteux = ["1/2", "O2", "on", "!/202"]
+
+[[rubriques]]
+titre = "1 2"
+
+[[rubriques.lignes]]
+valeur = "Eee Ee et de PPO."
+douteux = ["Eee", "Ee"]
+
+[[rubriques.lignes]]
+intitule = "a"
+valeur = "Les monophénols sont oxydés en ortho-diphénols"
+douteux = ["monophénols"]
+
+[[rubriques.lignes]]
+valeur = "par voie enzymatique (activité crésolase de la PPO)"
+
+[[rubriques.lignes]]
+intitule = "o-diphénol o-quinces b"
+valeur = "Certains ortho-diphénols (substrats de la PPO) sont primaire secondaire oxydés en ortho-quinones dites \"primaires\" (activité"
+douteux = ["o-quinces", "ortho-diphénols", "\"primaires\""]
+
+[[rubriques.lignes]]
+valeur = "OH R (e) catécholase de la PPO)"
+douteux = ["OH", "(e)"]
+
+[[rubriques.lignes]]
+intitule = "XX XX c"
+valeur = "Ces ortho-quinones dites \"primaires\" peuvent"
+douteux = ["XX", "XX", "\"primaires\""]
+
+[[rubriques.lignes]]
+valeur = "ensuite oxyder d'autres composés phénoliques par"
+
+[[rubriques.lignes]]
+valeur = "Oxydo-réduction oxydo-réduction couplée pour former des ortho- couplée quinones (dites secondaires). Les  ortho-quinones primaires reviennent à leur état réduit en étant convertis"
+douteux = ["pour", "ortho-", " ortho-quinones"]
+
+[[rubriques.lignes]]
+valeur = "Lo NC en leurs ortho-diphénols d'origine."
+douteux = ["Lo", "NC"]
+
+[[rubriques.lignes]]
+valeur = "o-quinone o-diphénol primaire secondaire"
+douteux = ["o-quinone"]
+
+[[rubriques.lignes]]
+valeur = "Oxydo-réduction enzymatique / chimique"
+douteux = ["enzymatique"]

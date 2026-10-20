@@ -1,0 +1,88 @@
+# Transcription de l'illustration de la fiche 1055 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1055
+code = "CMAP_RECOLTE_VARIETES_POMMES"
+titre = "Les variétés de pommes à cidre"
+image_sha256 = "6ec1c0c85e40557eac96c8a6128eff0eac944b422545ba085146c94f70250a53"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les variétés de pommes à cidre
+sont des : Variétés de pommes cultivées et utilisées principalement pour l’élaboration du cidre
+regroupent : Les variétés amères | Les variétés douces-amères | Les variétés douces | Les variétés acidulées | Les variétés aigres | Les variétés aigres-amères | Des variétés atypiques
+sont caractérisées par : L'époque de floraison | L'époque de maturité | Les caractéristiques physiques des fruits (couleur, forme, taille) | L’aptitude des fruits à la transformation (conservation, pressabilité...) | Leur catégorie de saveur et leur composition (polyphénols, sucres, acides) | Les caractéristiques de l’arbre (port, résistance aux maladies, vigueur, type de fructification...)
+influencent : La période de récolte et de pressage | Certains procédés de transformation | La composition et léquilibre gustatif du moût extrait"""
+anomalies = ["6 relations pour 4 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Variétés de pommes cultivées et utilisées principalement pour l’élaboration du cidre"
+douteux = ["l’élaboration"]
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Les variétés amères"
+
+[[rubriques.lignes]]
+valeur = "Les variétés douces-amères"
+
+[[rubriques.lignes]]
+valeur = "Les variétés douces"
+
+[[rubriques.lignes]]
+valeur = "Les variétés acidulées"
+
+[[rubriques.lignes]]
+valeur = "Les variétés aigres"
+
+[[rubriques.lignes]]
+valeur = "Les variétés aigres-amères"
+
+[[rubriques.lignes]]
+valeur = "Des variétés atypiques"
+
+[[rubriques]]
+titre = "sont caractérisées par"
+
+[[rubriques.lignes]]
+valeur = "L'époque de floraison"
+douteux = ["L'époque"]
+
+[[rubriques.lignes]]
+valeur = "L'époque de maturité"
+douteux = ["L'époque"]
+
+[[rubriques.lignes]]
+valeur = "Les caractéristiques physiques des fruits (couleur, forme, taille)"
+
+[[rubriques.lignes]]
+valeur = "L’aptitude des fruits à la transformation (conservation, pressabilité...)"
+douteux = ["L’aptitude", "pressabilité...)"]
+
+[[rubriques.lignes]]
+valeur = "Leur catégorie de saveur et leur composition (polyphénols, sucres, acides)"
+
+[[rubriques.lignes]]
+valeur = "Les caractéristiques de l’arbre (port, résistance aux maladies, vigueur, type de fructification...)"
+douteux = ["fructification...)"]
+
+[[rubriques]]
+titre = "influencent"
+
+[[rubriques.lignes]]
+valeur = "La période de récolte et de pressage"
+
+[[rubriques.lignes]]
+valeur = "Certains procédés de transformation"
+
+[[rubriques.lignes]]
+valeur = "La composition et léquilibre gustatif du moût extrait"
+douteux = ["léquilibre"]

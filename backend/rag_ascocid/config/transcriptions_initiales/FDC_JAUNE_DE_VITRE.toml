@@ -1,0 +1,157 @@
+# Transcription de l'illustration de la fiche 1434 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1434
+code = "FDC_JAUNE_DE_VITRE"
+titre = "Jaune de Vitré"
+image_sha256 = "2a00199052d0beb4b66cf9db09d357c45ea2c900ad48c16778102d064b7f3d96"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: JAUNE DE VITRÉ
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Ille-et-Vilaine : St Aubin du Cormier - Sud de Fougères - Liffré - Rennes
+Nord - Châteaubourg - Châteaugiron - Janzé - Vitré - Argentré du Plessis
+- La Guerche - Retiers.
+POSSIBILITES de COMMERCIALISATION en bonne année
+500 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT |
+(analyse de M. Tavernier le 12-1-53) |
+Dégustation du fruit : acidulé.
+Dégustation du jus : acidulé.
+Rendement en jus (%) : 51,5. |
+Densité du jus : 1 069,8. |
+Acidité de titration en g. SO‘ H: par litre : 5,28.
+Azote/Sucres totaux : 0,52.
+Tanin (en g. par litre) : 1,80.
+Couleur du jus : pâle peu coloré.
+Parfum : bon.
+QUALITES CULTURALES DE L'ARBRE |
+Vigueur : moyenne.
+Port : semi-érigé au départ.
+Résistance aux maladies : assez sensible à l'oidium, et à ia tavelure. |
+Productivité : assez bonne mais alternante. { |
+Saison de floraison : 3e-4e.
+Saison de maturité : 2e-3e.
+Conservation et transport des fruits : bons en général.
+Grosseur du fruit : moyen.
+OBSERVATIONS DIVERSES
+Excellente variété pour des usages nombreux (jus, cidre, gelée, pâtis-
+serie, etc.) mais de rusticité assez faible en culture. Bien élaguée et
+surtout bien fumée, elle serait bien moins alternante.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : St Aubin du Cormier - Sud de Fougères - Liffré - Rennes Nord - Châteaubourg - Châteaugiron - Janzé - Vitré - Argentré du Plessis - La Guerche - Retiers."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "500 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT |"
+
+[[rubriques.lignes]]
+valeur = "(analyse de M. Tavernier le 12-1-53) |"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acidulé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acidulé."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "51,5. |"
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 069,8. |"
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘ H"
+valeur = "par litre : 5,28."
+douteux = ["SO‘", "H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,52."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,80."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "pâle peu coloré."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "bon."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE |"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "semi-érigé au départ."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez sensible à l'oidium, et à ia tavelure. |"
+douteux = ["l'oidium,"]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "assez bonne mais alternante. { |"
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e-4e."
+douteux = ["3e-4e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons en général."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Excellente variété pour des usages nombreux (jus, cidre, gelée, pâtis- serie, etc.) mais de rusticité assez faible en culture. Bien élaguée et surtout bien fumée, elle serait bien moins alternante."
+douteux = ["etc.)"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)"
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"
