@@ -45,7 +45,9 @@ racine.mkdir(parents=True, exist_ok=True)
 archive = racine / "_archive.zip"
 
 print(f"[amorçage] téléchargement depuis {url}", flush=True)
-with urllib.request.urlopen(url) as rep, open(archive, "wb") as f:
+# Délai par lecture : le service attend l'archive pour démarrer, un téléchargement
+# bloqué ne doit pas le figer sans fin.
+with urllib.request.urlopen(url, timeout=120) as rep, open(archive, "wb") as f:
     total = 0
     while chunk := rep.read(1 << 20):
         f.write(chunk)
@@ -59,8 +61,7 @@ with zipfile.ZipFile(archive) as zf:
 archive.unlink()
 print("[amorçage] archive extraite dans ${RACINE}.", flush=True)
 PYEOF
-  echo "[amorçage] TERMINÉ — REDÉMARRER LE SERVICE : l'index vectoriel et la carte"
-  echo "[amorçage] du corpus sont chargés au démarrage, le processus en cours les ignore."
+  echo "[amorçage] TERMINÉ — archive installée avant le démarrage du service."
   exit 0
 fi
 

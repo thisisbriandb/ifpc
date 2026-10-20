@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
-# Point d'entrée du conteneur : amorçage en tâche de fond, puis service.
+# Point d'entrée du conteneur : amorçage du corpus si besoin, puis service.
 #
-# L'ingestion dure des dizaines de minutes ; la lancer avant d'écouter ferait
-# échouer la sonde de santé et Railway annulerait le déploiement. Le service
-# répond donc tout de suite — sur un corpus encore vide, ce que /api/ldc/sante
-# annonce honnêtement — pendant que le volume se remplit derrière.
+# Deux cas, parce que les durées n'ont rien à voir :
 #
-# LDC_AMORCAGE=0 désactive complètement ce comportement.
+#   * Archive pré-construite (ASCOCID_ARCHIVE_URL) : quelques dizaines de
+#     secondes. Elle est installée AVANT de démarrer le service. Lancée en
+#     parallèle, comme autrefois, elle arrivait après lui : le service avait
+#     démarré sur une base vide — sans index vectoriel, donc en « recherche
+#     lexicale » — y avait écrit les passages des schémas et des illustrations,
+#     puis l'archive remplaçait la base et les effaçait. Rien ne rechargeait
+#     ensuite le service.
+#   * Ingestion complète depuis ascocid.fr : des dizaines de minutes. La lancer
+#     avant d'écouter ferait échouer la sonde de santé ; elle reste en tâche de
+#     fond, et le service répond sur un corpus encore vide, ce que
+#     /api/ldc/sante annonce honnêtement.
+#
+# Sur un volume déjà rempli, `amorcer` ne fait rien et rend la main aussitôt.
+# LDC_AMORCAGE=0 désactive complètement l'amorçage.
 set -u
 cd "$(dirname "$0")"
 RACINE="${ASCOCID_DATA:-data}"
@@ -15,7 +25,11 @@ if [ "${LDC_AMORCAGE:-1}" != "0" ]; then
   mkdir -p "$RACINE"
   # tee : la progression reste visible dans les journaux de l'hébergeur, et
   # une trace persiste sur le volume pour l'après-coup.
-  ( ./amorcer 2>&1 | tee -a "$RACINE/amorcage.log" ) &
+  if [ -n "${ASCOCID_ARCHIVE_URL:-}" ]; then
+    ./amorcer 2>&1 | tee -a "$RACINE/amorcage.log"
+  else
+    ( ./amorcer 2>&1 | tee -a "$RACINE/amorcage.log" ) &
+  fi
 fi
 
 exec ./serve
