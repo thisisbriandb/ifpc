@@ -42,6 +42,9 @@ class Rubrique(BaseModel):
     titre: str = ""
     note: str = ""                    # « (analyse de M. Jacquin le 9 décembre 1964) »
     lignes: list[Ligne] = Field(default_factory=list)
+    # Carte conceptuelle : les cases de la relation sont reliées par des
+    # flèches — une suite (« la pomme dans l'arbre → au sol → … »).
+    ordonnee: bool = False
 
 
 class TranscriptionImage(BaseModel):
@@ -59,10 +62,19 @@ class TranscriptionImage(BaseModel):
     verifie_le: str = ""
     rubriques: list[Rubrique] = Field(default_factory=list)
     texte_ocr: str = ""               # brut, pour la traçabilité
+    # Ce que la lecture n'a pas su trancher (relations et colonnes en nombre
+    # différent…) : la fiche attend alors sa relecture pour être indexée.
+    anomalies: list[str] = Field(default_factory=list)
+
+    @property
+    def carte(self) -> bool:
+        return self.code.startswith("CMAP_")
 
     @property
     def indexable(self) -> bool:
-        return self.statut != "a_verifier" or self.qualite_ocr >= QUALITE_MIN
+        if self.statut != "a_verifier":
+            return True
+        return self.qualite_ocr >= QUALITE_MIN and not self.anomalies
 
     @property
     def nb_douteux(self) -> int:
@@ -152,6 +164,23 @@ def structurer(lignes: list[LigneOcr]) -> tuple[str, list[Rubrique]]:
     return titre, rubriques
 
 
+def depuis_carte(idoc: int, code: str, titre_fiche: str, svg_sha256: str, lue,  # noqa: ANN001
+                 version_ocr: str = "") -> TranscriptionImage:
+    """Une carte lue (`infrastructure/parsing/carte_svg`) en transcription relisible."""
+    rubriques = [Rubrique(titre=r.libelle, ordonnee=r.ordonnee,
+                          # Sous-case d'une carte à deux niveaux : son parent en intitulé.
+                          lignes=[Ligne(intitule=e.parent, valeur=e.texte, douteux=e.douteux)
+                                  for e in r.elements])
+                 for r in lue.relations]
+    source = lue.source + (f" (tesseract {version_ocr})" if lue.source != "svg" and version_ocr else "")
+    texte = "\n".join([lue.notion] + [f"{r.libelle} : " + " | ".join(e.texte for e in r.elements)
+                                     for r in lue.relations])
+    return TranscriptionImage(
+        idoc=idoc, code=code, titre=titre_fiche or lue.notion, image_sha256=svg_sha256,
+        source=source, qualite_ocr=round(lue.qualite, 1), rubriques=rubriques,
+        texte_ocr=texte, anomalies=lue.anomalies)
+
+
 def depuis_ocr(idoc: int, code: str, titre_fiche: str, image_sha256: str,
                lignes: list[LigneOcr], version_ocr: str = "") -> TranscriptionImage:
     titre_lu, rubriques = structurer(lignes)
@@ -198,10 +227,14 @@ def en_toml(t: TranscriptionImage) -> str:
         # Avant les tables : en TOML, une clé écrite après [[rubriques]] leur appartiendrait.
         f"texte_ocr = {_chaine(t.texte_ocr)}",
     ]
+    if t.anomalies:
+        lignes.append("anomalies = [" + ", ".join(_chaine(a) for a in t.anomalies) + "]")
     for r in t.rubriques:
         lignes += ["", "[[rubriques]]", f"titre = {_chaine(r.titre)}"]
         if r.note:
             lignes.append(f"note = {_chaine(r.note)}")
+        if r.ordonnee:
+            lignes.append("ordonnee = true")
         for l in r.lignes:
             lignes += ["", "[[rubriques.lignes]]"]
             if l.intitule:
@@ -255,6 +288,8 @@ def passages(t: TranscriptionImage) -> list[tuple[str, str]]:
     Les valeurs sont recopiées telles quelles : la vérification des réponses
     compare les chiffres cités au texte des passages, caractère pour caractère.
     """
+    if t.carte:
+        return _passages_carte(t)
     source = " ".join(l.valeur for r in t.rubriques if r.titre == "Source" for l in r.lignes)
     sortie = []
     for r in t.rubriques:
@@ -267,6 +302,41 @@ def passages(t: TranscriptionImage) -> list[tuple[str, str]]:
             lignes.append(f"Source : {source}")
         sortie.append((r.titre or "Fiche", "\n".join(lignes)))
     return sortie
+
+
+def _passages_carte(t: TranscriptionImage) -> list[tuple[str, str]]:
+    """Une carte conceptuelle : une phrase par relation, et une vue d'ensemble.
+
+    « La clarification haute classique a pour causes d'échec : … ». Le titre
+    de la fiche (exact) sert de sujet, plutôt que la notion lue sur la carte
+    (que l'OCR a pu abîmer).
+    """
+    phrases = []
+    for r in t.rubriques:
+        # Une ligne avec intitulé est le détail d'une case (son intitulé) :
+        # « A (détail : x ; y) ».
+        details: dict[str, list[str]] = {}
+        for l in r.lignes:
+            if l.intitule and l.valeur.strip():
+                details.setdefault(l.intitule, []).append(l.valeur)
+        elements = []
+        for l in r.lignes:
+            if l.intitule or not l.valeur.strip():
+                continue
+            sous = details.pop(l.valeur, [])
+            elements.append(l.valeur + (f" (détail : {' ; '.join(sous)})" if sous else ""))
+        # Un détail dont le parent n'est plus dans la liste (après une correction) reste dit.
+        elements += [f"{parent} : {' ; '.join(sous)}" for parent, sous in details.items()]
+        if not elements:
+            continue
+        lien = " → " if r.ordonnee else " ; "
+        phrases.append((r.titre, f"« {t.titre} » {r.titre}" + (" (dans l'ordre)" if r.ordonnee else "")
+                        + " : " + lien.join(elements) + "."))
+    if not phrases:
+        return []
+    ensemble = (f"Carte conceptuelle « {t.titre} » du Livre de Connaissances.\n"
+                + "\n".join(texte for _, texte in phrases))
+    return [("Carte conceptuelle", ensemble)] + phrases
 
 
 def empreinte(transcriptions: list[TranscriptionImage]) -> str:

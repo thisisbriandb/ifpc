@@ -121,6 +121,76 @@ def images(
 
 
 @app.command()
+def cartes(
+    sortie: str = typer.Option(str(SORTIE)),
+    forcer: bool = typer.Option(False, help="Refaire les transcriptions encore « à vérifier »."),
+) -> None:
+    """Cartes conceptuelles (CMAP) : relations et cases, lues dans le SVG.
+
+    Le texte vient du SVG quand il y est ; quand le SVG a ses lettres en tracés,
+    il est lu par OCR case par case (Tesseract requis).
+    """
+    from ascocid.infrastructure.parsing import carte_svg
+
+    dossier = pathlib.Path(sortie)
+    dossier.mkdir(parents=True, exist_ok=True)
+    manifeste = json.loads(MANIFESTE.read_text())
+    version = _version_tesseract()
+    with MagasinSqlite(BASE) as m:
+        fiches = m.cx.execute(
+            "SELECT idoc, code, titre, illustration FROM fiche"
+            " WHERE type='CMAP' AND illustration LIKE '%.svg' ORDER BY idoc").fetchall()
+
+    compte: Counter[str] = Counter()
+    for f in fiches:
+        sha = manifeste.get(f"{f['idoc']}:img")
+        if not sha:
+            compte["image non collectée"] += 1
+            continue
+        chemin = dossier / f"{f['code']}.toml"
+        if chemin.exists():
+            try:
+                existante = ti.charger(chemin)
+            except Exception as exc:  # noqa: BLE001
+                console.print(f"[red]{f['code']} : fichier existant illisible ({exc}) — non réécrit.[/red]")
+                compte["existant illisible, conservé"] += 1
+                continue
+            if existante.statut != "a_verifier":
+                if existante.image_sha256 != sha:
+                    console.print(f"[yellow]{f['code']} : carte modifiée dans AsCoCid depuis sa "
+                                  f"relecture — à revoir, non réécrite.[/yellow]")
+                compte["déjà relue, conservée"] += 1
+                continue
+            if not forcer and existante.image_sha256 == sha:
+                compte["déjà transcrite"] += 1
+                continue
+        try:
+            lue = carte_svg.lire((DONNEES / "blobs" / sha[:2] / sha).read_bytes())
+        except Exception as exc:  # noqa: BLE001 — une carte illisible n'arrête pas le lot
+            console.print(f"[red]{f['code']} : {type(exc).__name__}: {exc}[/red]")
+            compte["échec"] += 1
+            continue
+        t = ti.depuis_carte(f["idoc"], f["code"], f["titre"], sha, lue, version)
+        chemin.write_text(ti.en_toml(t), encoding="utf-8")
+        if ti.charger(chemin) != t:
+            console.print(f"[red]{f['code']} : le TOML écrit ne se relit pas à l'identique.[/red]")
+            compte["échec"] += 1
+            continue
+        compte["lue dans le SVG" if lue.source == "svg" else "lue par OCR (lettres en tracés)"] += 1
+        if t.anomalies:
+            compte["avec anomalie (non indexée avant relecture)"] += 1
+        console.print(f"  {f['code']:55} {len(t.rubriques):>2} relations, "
+                      f"{sum(len(r.lignes) for r in t.rubriques):>3} cases"
+                      + (f"  ⚠ {t.anomalies[0]}" if t.anomalies else ""))
+
+    tableau = Table(title=f"Cartes conceptuelles — {dossier}")
+    tableau.add_column("résultat"); tableau.add_column("n", justify="right")
+    for k, v in compte.most_common():
+        tableau.add_row(k, str(v))
+    console.print(tableau)
+
+
+@app.command()
 def etat(sortie: str = typer.Option(str(SORTIE))) -> None:
     """Avancement de la relecture."""
     transcriptions = ti.charger_dossier(sortie)

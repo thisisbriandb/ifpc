@@ -430,6 +430,8 @@ export interface RubriqueTranscription {
   titre: string;
   note: string;
   lignes: LigneTranscription[];
+  /** Carte conceptuelle : cases reliées par des flèches, dans l'ordre. */
+  ordonnee?: boolean;
 }
 
 export type StatutTranscription = "a_verifier" | "corrige" | "valide";
@@ -461,6 +463,8 @@ export interface Transcription {
   verifie_le: string;
   rubriques: RubriqueTranscription[];
   texte_ocr: string;
+  /** Ce que la lecture n'a pas su trancher : à vérifier avant que la fiche n'entre dans l'assistant. */
+  anomalies?: string[];
 }
 
 export async function listerTranscriptions(

@@ -38,6 +38,8 @@ class LigneOcr(BaseModel):
                                         # qui en continue une autre y appartient
     gauche: int = 0                     # position, pour retrouver la ligne sur l'image
     haut: int = 0
+    droite: int = 0
+    bas: int = 0
 
 
 class TesseractAbsent(RuntimeError):
@@ -100,14 +102,33 @@ def lire(image: bytes, langue: str = "fra", double_page: bool = False) -> list[L
         len(re.findall(r"[^\W\d_]{3,}", l.texte)) for l in lignes))
 
 
-def _ocr(image_preparee: bytes, langue: str) -> list[LigneOcr]:
+def lire_mise_en_page_libre(image_png: bytes, langue: str = "fra") -> list[LigneOcr]:
+    """OCR d'une image dont le texte est éparpillé (carte conceptuelle rendue).
+
+    Mode « texte épars » : chaque case est lue pour elle-même, sans chercher de
+    colonnes ; les positions des lignes, en pixels de l'image donnée,
+    permettent de les ranger ensuite dans leurs cases.
+    """
+    if not disponible():
+        raise TesseractAbsent("Tesseract n'est pas installé (paquet tesseract-ocr-fra).")
+    return _ocr(image_png, langue, psm="11")
+
+
+def lire_bloc(image_png: bytes, langue: str = "fra") -> list[LigneOcr]:
+    """OCR d'un petit bloc de texte isolé (une case de carte conceptuelle)."""
+    if not disponible():
+        raise TesseractAbsent("Tesseract n'est pas installé (paquet tesseract-ocr-fra).")
+    return _ocr(image_png, langue, psm="6")
+
+
+def _ocr(image_preparee: bytes, langue: str, psm: str = "4") -> list[LigneOcr]:
     with tempfile.TemporaryDirectory() as dossier:
         entree = Path(dossier) / "page.png"
         entree.write_bytes(image_preparee)
         # psm 4 : une colonne de texte de tailles variables — la mise en page
         # des fiches. Les autres modes mélangeaient les colonnes de la photo.
         tsv = subprocess.run(
-            ["tesseract", str(entree), "stdout", "-l", langue, "--psm", "4", "tsv"],
+            ["tesseract", str(entree), "stdout", "-l", langue, "--psm", psm, "tsv"],
             capture_output=True, text=True, check=True).stdout
     return lignes_depuis_tsv(tsv)
 
@@ -136,7 +157,9 @@ def lignes_depuis_tsv(tsv: str) -> list[LigneOcr]:
                      and re.search(r"\w", m["text"])],
             confiance_moyenne=sum(confiances) / len(confiances), nb_mots=len(mots),
             paragraphe=paragraphes[cle[:2]],
-            gauche=int(mots[0]["left"]), haut=int(mots[0]["top"]),
+            gauche=min(int(m["left"]) for m in mots), haut=min(int(m["top"]) for m in mots),
+            droite=max(int(m["left"]) + int(m["width"]) for m in mots),
+            bas=max(int(m["top"]) + int(m["height"]) for m in mots),
         ))
     return sortie
 

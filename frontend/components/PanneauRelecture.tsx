@@ -37,7 +37,9 @@ const COULEURS: Record<StatutTranscription, string> = {
   valide: "bg-emerald-50 text-emerald-700",
 };
 
-const FAMILLES: Record<string, string> = { FDC: "Fiches de variété", FICHE: "Illustrations d'articles" };
+const FAMILLES: Record<string, string> = {
+  FDC: "Fiches de variété", FICHE: "Illustrations d'articles", CMAP: "Cartes conceptuelles",
+};
 
 function Statut({ statut }: { statut: StatutTranscription }) {
   return (
@@ -229,6 +231,8 @@ function EditeurTranscription({
     }
   };
 
+  const carte = code.startsWith("CMAP_");
+
   if (!t) {
     return message
       ? <p className="py-12 text-center text-sm text-red-600">{message.texte}</p>
@@ -270,11 +274,23 @@ function EditeurTranscription({
               className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold focus:border-gray-400 focus:outline-none" />
           </label>
 
+          {t.anomalies && t.anomalies.length > 0 && (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+              <p className="font-semibold">À vérifier en priorité :</p>
+              {t.anomalies.map((a) => <p key={a}>{a}</p>)}
+            </div>
+          )}
+
           {rubriques.map((r, i) => (
             <section key={i} className="rounded-xl border border-gray-200 bg-white p-4">
               <input value={r.titre} onChange={(e) => modifier(i, null, { titre: e.target.value })}
                 placeholder="Titre de la rubrique"
                 className="mb-1 w-full border-0 p-0 text-sm font-bold text-gray-900 focus:outline-none" />
+              {r.ordonnee && (
+                <p className="mb-1 text-[11px] font-semibold text-sky-700">
+                  Suite ordonnée (cases reliées par des flèches) — garder l&apos;ordre de l&apos;image.
+                </p>
+              )}
               <input value={r.note} onChange={(e) => modifier(i, null, { note: e.target.value })}
                 placeholder="Note (facultatif)"
                 className="mb-3 w-full border-0 p-0 text-xs italic text-gray-500 focus:outline-none" />
@@ -283,7 +299,7 @@ function EditeurTranscription({
                   <div key={j} className={`rounded-lg border p-2 ${l.douteux.length ? "border-amber-300 bg-amber-50/40" : "border-gray-100"}`}>
                     <div className="flex gap-2">
                       <input value={l.intitule} onChange={(e) => modifier(i, j, { intitule: e.target.value })}
-                        placeholder="Intitulé (vide : paragraphe)"
+                        placeholder={carte ? "Case parente (vide : premier niveau)" : "Intitulé (vide : paragraphe)"}
                         className="w-2/5 rounded border border-gray-200 px-2 py-1 text-xs focus:border-gray-400 focus:outline-none" />
                       <textarea value={l.valeur} onChange={(e) => modifier(i, j, { valeur: e.target.value })}
                         rows={Math.min(5, Math.ceil(l.valeur.length / 45) || 1)}

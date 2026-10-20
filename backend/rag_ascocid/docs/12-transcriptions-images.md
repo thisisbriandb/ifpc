@@ -1,6 +1,6 @@
 # Spec 12 — Illustrations en image : OCR, relecture, indexation
 
-> 257 illustrations du Livre ne sont que des images PNG : les 84 fiches de
+> 257 illustrations du Livre ne sont que des images PNG, et 139 cartes conceptuelles ne disent leur contenu que par leur dessin : les 84 fiches de
 > variété (densité du jus, acidité, tanin, zones de production, sensibilité aux
 > maladies…) et les figures des articles (légendes, tableaux). 69 fiches de
 > variété n'avaient **aucun** texte en base. Elles sont désormais lues par OCR,
@@ -11,7 +11,7 @@
 | Famille | Nombre | Source du texte | Traité par |
 |---|---|---|---|
 | Schémas de procédé, graphe d'influence | 12 | SVG (texte exact) | transcription à la main — spec 11 |
-| Cartes conceptuelles (CMAP) | 139 | SVG (texte exact) | à faire — extraction géométrique du SVG |
+| **Cartes conceptuelles (CMAP)** | 139 SVG | SVG (82), OCR case par case (57 aux lettres en tracés) | **§9 — cette spec** |
 | **Fiches de variété (FDC)** | 84 PNG | image | **OCR — cette spec** |
 | **Illustrations d'articles (FICHE)** | 173 PNG | image | **OCR — cette spec** |
 
@@ -131,7 +131,47 @@ l'Armagnac, acidité du Blanchet) : avant, **aucun** passage utile dans les 8
 envoyés au modèle ; après, la fiche de la variété au **premier rang** à chaque
 fois.
 
-## 8. Limites
+## 8. Cartes conceptuelles
+
+Une carte a toujours la même forme : une notion en haut, une rangée de
+relations (« est une », « a pour synonymes », « est constituée de », « a pour
+causes d'échec »…), une colonne de cases sous chacune. Le texte des pages n'en
+gardait que les définitions du glossaire ; les relations — le contenu de la
+carte — n'existaient que dans le dessin.
+
+`./transcrire cartes` (`infrastructure/parsing/carte_svg.py`) :
+
+- **Cases** : les images incrustées de l'export ; chaque ligne de texte va
+  dans la case qui la contient.
+- **Texte** : celui du SVG quand il y est (82 cartes, exact) ; sinon (57
+  cartes aux lettres en tracés) OCR **case par case** — lue d'un tenant, la
+  carte perdait tout le texte posé sur les cases colorées.
+- **Relations** recollées quand le SVG les coupe (« a pour   fonctions », ou
+  « est constituée » / « de » sur deux lignes).
+- **Appariement** : les colonnes, de gauche à droite, réparties en groupes
+  contigus — un par relation, une relation pouvant avoir plusieurs colonnes
+  côte à côte — en minimisant l'écart entre libellé et colonnes.
+- **Suites ordonnées** : une flèche pleine entre chaque case et la suivante
+  (« la pomme dans l'arbre → au sol → ramassée → livrée → à presser »).
+- **Deux niveaux** : une case en retrait sous une autre en est le détail
+  (14 cartes, dont le plan de nettoyage et désinfection) ; le parent est porté
+  par l'intitulé de la ligne.
+- **Anomalies** : moins de colonnes que de relations, colonne trop loin de son
+  libellé, carte sans relation (les 7 cartes de navigation : « Produits »,
+  « Phénomènes »…). La carte est alors signalée, et n'entre dans l'assistant
+  qu'une fois relue — 25 sur 139 au premier passage.
+
+Passages : une phrase par relation (« La clarification haute classique est
+fiabilisée par : … »), « → » pour une suite, « (détail : …) » pour un second
+niveau, et une vue d'ensemble de la carte. Mesure, vrai corpus, vrai modèle :
+six questions dont la réponse n'est que dans une carte (fiabiliser la
+clarification haute, défauts de la pomme livrée, pilotage du cuvage…) passent
+de 0 à 2–7 passages de carte dans les 8, le plus souvent au premier rang.
+
+Ensemble (illustrations et cartes) : 1 252 passages pour 358 transcriptions
+indexables sur 396, 102 s de vectorisation au premier démarrage.
+
+## 9. Limites
 
 - Les **tableaux** sont mal lus par l'OCR : ils demandent une saisie à la
   relecture.
