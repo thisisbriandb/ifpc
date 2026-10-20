@@ -97,6 +97,13 @@ CREATE VIRTUAL TABLE IF NOT EXISTS recherche USING fts5(
     cible, kind UNINDEXED, texte,
     tokenize = "unicode61 remove_diacritics 2"
 );
+
+-- Petites valeurs d'état de la base (empreinte des transcriptions de schémas
+-- déjà indexées, par exemple) : de quoi savoir s'il y a du travail à refaire.
+CREATE TABLE IF NOT EXISTS meta (
+    cle    TEXT PRIMARY KEY,
+    valeur TEXT NOT NULL
+);
 """
 
 
@@ -127,9 +134,34 @@ class MagasinSqlite:
         self.cx.commit()
 
     def vider(self) -> None:
-        for t in ("chunk_fts", "chunk", "recherche", "renvoi", "zone", "carte", "bloc", "fiche"):
+        for t in ("chunk_fts", "chunk", "recherche", "renvoi", "zone", "carte", "bloc",
+                  "fiche", "meta"):
             self.cx.execute(f"DELETE FROM {t}")
         self.cx.commit()
+
+    def lire_meta(self, cle: str) -> str | None:
+        ligne = self.cx.execute("SELECT valeur FROM meta WHERE cle=?", (cle,)).fetchone()
+        return ligne["valeur"] if ligne else None
+
+    def ecrire_meta(self, cle: str, valeur: str) -> None:
+        self.cx.execute("INSERT OR REPLACE INTO meta VALUES (?,?)", (cle, valeur))
+        self.cx.commit()
+
+    def retirer_chunks_de_type(self, type_: str, fiche_idoc: int | None = None) -> list[str]:
+        """Supprime les chunks d'un type (d'une fiche, si précisée), lexical compris.
+
+        Renvoie leurs clés, pour les retirer aussi de l'index vectoriel.
+        """
+        filtre, params = "type=?", [type_]
+        if fiche_idoc is not None:
+            filtre, params = "type=? AND fiche_idoc=?", [type_, fiche_idoc]
+        cles = [r["cle"] for r in self.cx.execute(f"SELECT cle FROM chunk WHERE {filtre}", params)]
+        if cles:
+            marques = ",".join("?" * len(cles))
+            self.cx.execute(f"DELETE FROM chunk_fts WHERE cle IN ({marques})", cles)
+            self.cx.execute(f"DELETE FROM chunk WHERE {filtre}", params)
+        self.cx.commit()
+        return cles
 
     def ecrire(self, corpus: Corpus) -> None:
         cx = self.cx

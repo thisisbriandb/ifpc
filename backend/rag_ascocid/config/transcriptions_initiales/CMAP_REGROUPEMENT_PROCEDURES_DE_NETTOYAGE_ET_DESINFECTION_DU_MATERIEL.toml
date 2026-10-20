@@ -1,0 +1,92 @@
+# Transcription de l'illustration de la fiche 1339 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1339
+code = "CMAP_REGROUPEMENT_PROCEDURES_DE_NETTOYAGE_ET_DESINFECTION_DU_MATERIEL"
+titre = "Les procédures de nettoyage et désinfection du matériel"
+image_sha256 = "9776d9288edc10c4b6bbb5a3e4ca1a91a33d8172f2f356742dd532497f1daec2"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Procédures de Nettoyage & Désinfection du matériel
+sont un : Ensemble de procédures d'hygiène spécifiques à un matériel
+regroupent : Un rinçage du produit résiduel | Un nettoyage mécanique et chimique (élimination des dépôts et encrassements) | Un rinçage intermédiaire | Une désinfection (destruction des levures, bactéries et moisissures) | Un éventuel maintien en conditions bactériostatiques | Un rinçage final avant réutilisation
+ont pour fonction : D’établir des méthodes pour maintenir le matériel à un bon niveau d’hygiène
+sont fondées sur : Une élimination des nutriments de croissance | Une dissolution (chimique) des encrassements qui maintiennent des foyers de contamination | Une destruction des microorganismes résiduels | Une élimination des résidus chimiques
+sont définies par : Une suite d'opérations adaptées au matériel | Des conditions de mise en œuvre de ces opérations (température, durée, concentration des produits...) | Une fréquence de mise en œuvre
+ont pour points de vigilance : Les volumes morts (vannes, dégustateurs, by-pass, jauges...)"""
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de procédures d'hygiène spécifiques à un matériel"
+douteux = ["d'hygiène"]
+
+[[rubriques]]
+titre = "regroupent"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un rinçage du produit résiduel"
+
+[[rubriques.lignes]]
+valeur = "Un nettoyage mécanique et chimique (élimination des dépôts et encrassements)"
+
+[[rubriques.lignes]]
+valeur = "Un rinçage intermédiaire"
+
+[[rubriques.lignes]]
+valeur = "Une désinfection (destruction des levures, bactéries et moisissures)"
+
+[[rubriques.lignes]]
+valeur = "Un éventuel maintien en conditions bactériostatiques"
+
+[[rubriques.lignes]]
+valeur = "Un rinçage final avant réutilisation"
+
+[[rubriques]]
+titre = "ont pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’établir des méthodes pour maintenir le matériel à un bon niveau d’hygiène"
+douteux = ["D’établir"]
+
+[[rubriques]]
+titre = "sont fondées sur"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des nutriments de croissance"
+
+[[rubriques.lignes]]
+valeur = "Une dissolution (chimique) des encrassements qui maintiennent des foyers de contamination"
+
+[[rubriques.lignes]]
+valeur = "Une destruction des microorganismes résiduels"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des résidus chimiques"
+
+[[rubriques]]
+titre = "sont définies par"
+
+[[rubriques.lignes]]
+valeur = "Une suite d'opérations adaptées au matériel"
+douteux = ["d'opérations"]
+
+[[rubriques.lignes]]
+valeur = "Des conditions de mise en œuvre de ces opérations (température, durée, concentration des produits...)"
+douteux = ["produits...)"]
+
+[[rubriques.lignes]]
+valeur = "Une fréquence de mise en œuvre"
+
+[[rubriques]]
+titre = "ont pour points de vigilance"
+
+[[rubriques.lignes]]
+valeur = "Les volumes morts (vannes, dégustateurs, by-pass, jauges...)"
+douteux = ["jauges...)"]

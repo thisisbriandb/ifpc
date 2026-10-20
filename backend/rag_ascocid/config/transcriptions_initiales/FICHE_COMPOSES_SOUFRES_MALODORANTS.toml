@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1573 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1573
+code = "FICHE_COMPOSES_SOUFRES_MALODORANTS"
+titre = "Les composés soufrés malodorants"
+image_sha256 = "7f3c409e627a4b2fa9f5fd88d42afbe47176504f84fd2fce0ab97da8db02264b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 76.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Seuil de
+aromatiques ui
+Descripteurs
+Dénomination Abréviation Formule chimique
+Sulfure d'hydrogène H2S H,S Œuf pourri 0,8
+Méthanethiol MeSH CH,S D 0,3
+choux cuits :
+Ethanethiol ES 27 0,1
+putréfaction
+Coing, truffe,
+Sulfure de diméthyle DMS CH6S asperge, cassis, 9,0 — 10,0
+framboise
+Sulfure de diéthyle ue Vo Ail 6,0
+Disulfure de carbone CS2 CS; Or Caoutchouc, choux 110,0
+‘ . C4H0S2 :
+Disulfure de diéthyle DEDS Oignon 20,0
+Disulfure de diméthyle  DMDS ©2682 À oX CHOUX CUS, DIOnOn 2,5
+intense
+Méthionol = C4H190S À Age Choux cuits 1200,0
+Acétate de 3- - C.H.0,S Choux, asperges, :
+methylthiopropyle . champignons
+Acide 3-
+méthylthiopropanoïque Fees À As . .
+3-méthylthiopropanoate 5
+d'éthyle - CH,0,S À Rp Choux, herbacée -
+Figure 1 : Les principaux composés soufrés volatils retrouvés dans les cidres, leurs descripteurs
+aromatiques associés et leur seuil de perception recensé dans les vins.
+Légende : en jaune = atomes de soufre, en gris = atomes de carbone, en rouge = atomes d'oxygène, en bleu =
+atomes d'hydrogène"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Seuil de"
+
+[[rubriques.lignes]]
+valeur = "aromatiques ui"
+douteux = ["ui"]
+
+[[rubriques.lignes]]
+valeur = "Descripteurs"
+
+[[rubriques.lignes]]
+valeur = "Dénomination Abréviation Formule chimique"
+
+[[rubriques.lignes]]
+valeur = "Sulfure d'hydrogène H2S H,S Œuf pourri 0,8 Méthanethiol MeSH CH,S D 0,3"
+douteux = ["MeSH", "D"]
+
+[[rubriques.lignes]]
+intitule = "choux cuits"
+valeur = "Ethanethiol ES 27 0,1 putréfaction Coing, truffe, Sulfure de diméthyle DMS CH6S asperge, cassis, 9,0 — 10,0 framboise Sulfure de diéthyle ue Vo Ail 6,0 Disulfure de carbone CS2 CS; Or Caoutchouc, choux 110,0"
+douteux = ["ES", "27", "CH6S", "ue", "Vo", "Ail", "Or"]
+
+[[rubriques.lignes]]
+intitule = "‘ . C4H0S2"
+valeur = "Disulfure de diéthyle DEDS Oignon 20,0"
+douteux = ["C4H0S2"]
+
+[[rubriques.lignes]]
+valeur = "Disulfure de diméthyle  DMDS ©2682 À oX CHOUX CUS, DIOnOn 2,5 intense Méthionol = C4H190S À Age Choux cuits 1200,0 Acétate de 3-"
+douteux = ["diméthyle", " DMDS", "©2682", "À", "oX", "CHOUX", "CUS,", "DIOnOn", "C4H190S", "À", "Age", "C.H.0,S"]
+
+[[rubriques.lignes]]
+intitule = "C.H.0,S Choux, asperges,"
+valeur = "methylthiopropyle . champignons Acide 3- méthylthiopropanoïque Fees À As . . 3-méthylthiopropanoate 5 d'éthyle - CH,0,S À Rp Choux, herbacée -"
+douteux = ["C.H.0,S", "méthylthiopropanoïque", "Fees", "À", "As", "5", "CH,0,S", "À", "Rp"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les principaux composés soufrés volatils retrouvés dans les cidres, leurs descripteurs"
+
+[[rubriques.lignes]]
+valeur = "aromatiques associés et leur seuil de perception recensé dans les vins."
+
+[[rubriques.lignes]]
+intitule = "Légende"
+valeur = "en jaune = atomes de soufre, en gris = atomes de carbone, en rouge = atomes d'oxygène, en bleu = atomes d'hydrogène"
+douteux = ["d'oxygène,", "d'hydrogène"]

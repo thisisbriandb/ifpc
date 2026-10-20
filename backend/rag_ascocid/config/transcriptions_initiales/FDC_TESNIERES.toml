@@ -1,0 +1,148 @@
+# Transcription de l'illustration de la fiche 1478 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1478
+code = "FDC_TESNIERES"
+titre = "Tesnières"
+image_sha256 = "8a0942c88990dd89ef238c68e195e416c3c8724b1572d929380aa09a4f287488"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: TESNIÈRES
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Ille-et-Vilaine : tout le département.
+POSSIBILITES de COMMERCIALISATION en bonne année
+20 000 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 19-10-53)
+Dégustation du fruit : légèrement acidulé, très sucré.
+Dégustation du jus : très sucré, acidulé.
+Rendement en jus (%) : 66,5.
+Densité du jus : 1 061,5.
+Acidité de titration en g. SO* H° par litre : 4,06.
+Azote/Sucres totaux : 0,44.
+Tanin (en g. par litre) : 1,52.
+Couleur du jus : jaune doré.
+Parfum : assez prononcé.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne.
+Résistance aux maladies : rustique d'une manière générale.
+Productivité : très bonne.
+Saison de floraison : 2e-3e.
+Saison de maturité : 2e.
+Conservation et transport des fruits : bons.
+Grosseur du fruit : au-dessus de la moyenne.
+OBSERVATIONS DIVERSES
+Bonne variété acidulée mais non acide, de culture aisée. Variété à
+épiderme rouge.
+Comité des Fruits à Cidre et des Productions Cidriccles - 42, rue du Louvre - Paris (ler)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : tout le département."
+douteux = ["Ille-et-Vilaine"]
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "20 000 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 19-10-53"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "légèrement acidulé, très sucré."
+douteux = ["légèrement"]
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "très sucré, acidulé."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "66,5."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 061,5."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H° par litre"
+valeur = "4,06."
+douteux = ["H°"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,44."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,52."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune doré."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "assez prononcé."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "rustique d'une manière générale."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "très bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+douteux = ["2e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "au-dessus de la moyenne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Bonne variété acidulée mais non acide, de culture aisée. Variété à épiderme rouge."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidriccles - 42, rue du Louvre - Paris (ler)"
+douteux = ["Cidriccles", "(ler)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

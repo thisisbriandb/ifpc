@@ -1,0 +1,328 @@
+# Transcription du schéma « Conditionnement et obtention de l'effervescence » (AsCoCid, fiche 1022).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+#
+# Cinq méthodes côte à côte. Les méthodes avec gazéification et en fût
+# partagent leur début (jusqu'au cidre effervescent), puis se séparent.
+# Convention : une opération dessinée à côté de la ligne principale, avec un
+# retour sur celle-ci, est facultative — transcrite par un contournement.
+
+idoc = 1022
+code = "PROCESS_CONDITIONNEMENT"
+titre = "Conditionnement et obtention de l'effervescence"
+svg_sha256 = "61d630c17fd1aad0b9d36466b52d69fdc1eb903cec24ed3812e8cbd62bca368d"
+relecture = ""
+
+# ── 1. Prise de mousse en bouteilles ─────────────────────────────────────────
+
+[[etapes]]
+id = "sulfitage_pmb"
+libelle = "Sulfitage (facultatif)"
+fiche = 1147
+groupe = "Méthode de conditionnement par prise de mousse en bouteilles"
+
+[[etapes]]
+id = "levurage_pmb"
+libelle = "Levurage (LSA)"
+groupe = "Méthode de conditionnement par prise de mousse en bouteilles"
+
+[[etapes]]
+id = "embouteillage_pmb"
+libelle = "Embouteillage de cidre plat"
+groupe = "Méthode de conditionnement par prise de mousse en bouteilles"
+
+[[etapes]]
+id = "bouchage_pmb"
+libelle = "Bouchage et muselage"
+fiche = 1136
+groupe = "Méthode de conditionnement par prise de mousse en bouteilles"
+
+[[etapes]]
+id = "prise_mousse_bouteille"
+libelle = "Prise de mousse en bouteille"
+fiche = 1145
+groupe = "Méthode de conditionnement par prise de mousse en bouteilles"
+
+# ── 2. Prise de mousse en cuve close ─────────────────────────────────────────
+
+[[etapes]]
+id = "sulfitage_pmc"
+libelle = "Sulfitage (facultatif)"
+fiche = 1147
+groupe = "Méthode de conditionnement par prise de mousse en cuve close"
+
+[[etapes]]
+id = "levurage_pmc"
+libelle = "Levurage (LSA)"
+groupe = "Méthode de conditionnement par prise de mousse en cuve close"
+
+[[etapes]]
+id = "prise_mousse_cuve"
+libelle = "Prise de mousse en cuve close"
+fiche = 1146
+groupe = "Méthode de conditionnement par prise de mousse en cuve close"
+
+[[etapes]]
+id = "elimination_levures_pmc"
+libelle = "Élimination des levures sous contre pression"
+groupe = "Méthode de conditionnement par prise de mousse en cuve close"
+
+[[etapes]]
+id = "embouteillage_pmc"
+libelle = "Embouteillage iso-barométrique"
+fiche = 1137
+groupe = "Méthode de conditionnement par prise de mousse en cuve close"
+
+[[etapes]]
+id = "bouchage_pmc"
+libelle = "Bouchage et muselage"
+fiche = 1136
+groupe = "Méthode de conditionnement par prise de mousse en cuve close"
+
+# ── 3. Effervescence « mixte » ───────────────────────────────────────────────
+
+[[etapes]]
+id = "faible_levurage"
+libelle = "Faible levurage (LSA)"
+groupe = "Méthode de conditionnement à effervescence « mixte »"
+
+[[etapes]]
+id = "gazeification_mixte"
+libelle = "Gazéification"
+fiche = 1138
+groupe = "Méthode de conditionnement à effervescence « mixte »"
+
+[[etapes]]
+id = "embouteillage_mixte"
+libelle = "Embouteillage iso-barométrique"
+fiche = 1137
+groupe = "Méthode de conditionnement à effervescence « mixte »"
+
+[[etapes]]
+id = "bouchage_mixte"
+libelle = "Bouchage et muselage"
+fiche = 1136
+groupe = "Méthode de conditionnement à effervescence « mixte »"
+
+# ── 4. Avec gazéification, et 5. en fût avec gazéification ───────────────────
+
+[[etapes]]
+id = "sulfitage_gaz"
+libelle = "Sulfitage et/ou ajout d'ac. ascorbique"
+fiche = 1147
+groupe = "Méthodes de conditionnement avec gazéification (en bouteille ou en fût)"
+
+[[etapes]]
+id = "desaeration"
+libelle = "Désaération"
+groupe = "Méthodes de conditionnement avec gazéification (en bouteille ou en fût)"
+
+[[etapes]]
+id = "stabilisation"
+libelle = "Stabilisation microbienne"
+groupe = "Méthodes de conditionnement avec gazéification (en bouteille ou en fût)"
+
+[[etapes]]
+id = "gazeification"
+libelle = "Gazéification"
+fiche = 1138
+groupe = "Méthodes de conditionnement avec gazéification (en bouteille ou en fût)"
+
+[[etapes]]
+id = "embouteillage_gaz"
+libelle = "Embouteillage iso-barométrique"
+fiche = 1137
+groupe = "Méthode de conditionnement avec gazéification"
+
+[[etapes]]
+id = "bouchage_gaz"
+libelle = "Bouchage et muselage"
+fiche = 1136
+groupe = "Méthode de conditionnement avec gazéification"
+
+[[etapes]]
+id = "flash_pasteurisation"
+libelle = "Flash pasteurisation"
+groupe = "Méthode de conditionnement en fût avec gazéification"
+
+[[etapes]]
+id = "mise_en_fut"
+libelle = "Mise en fût"
+groupe = "Méthode de conditionnement en fût avec gazéification"
+
+# ── Enchaînement : 1. prise de mousse en bouteilles ──────────────────────────
+
+[[transitions]]
+vers = "sulfitage_pmb"
+produit = "Cidres contenant des levures prêts à la mise"
+condition = "prise de mousse en bouteilles"
+
+[[transitions]]
+vers = "sulfitage_pmb"
+produit = "Cidres clarifiés prêts à la mise"
+condition = "prise de mousse en bouteilles"
+
+[[transitions]]
+de = "sulfitage_pmb"
+vers = "embouteillage_pmb"
+condition = "cidres contenant des levures"
+
+[[transitions]]
+de = "sulfitage_pmb"
+vers = "levurage_pmb"
+condition = "cidres clarifiés"
+
+[[transitions]]
+de = "levurage_pmb"
+vers = "embouteillage_pmb"
+produit = "Cidre levuré en cuve de tirage"
+
+[[transitions]]
+de = "embouteillage_pmb"
+vers = "bouchage_pmb"
+
+[[transitions]]
+de = "bouchage_pmb"
+vers = "prise_mousse_bouteille"
+produit = "Cidre plat en bouteilles"
+
+[[transitions]]
+de = "prise_mousse_bouteille"
+produit = "Cidres à effervescence naturelle conditionnés avec dépôt (levures)"
+
+# ── Enchaînement : 2. prise de mousse en cuve close ──────────────────────────
+
+[[transitions]]
+vers = "sulfitage_pmc"
+produit = "Cidres contenant des levures prêts à la mise"
+condition = "prise de mousse en cuve close"
+
+[[transitions]]
+de = "sulfitage_pmc"
+vers = "levurage_pmc"
+
+[[transitions]]
+de = "sulfitage_pmc"
+vers = "prise_mousse_cuve"
+
+[[transitions]]
+de = "levurage_pmc"
+vers = "prise_mousse_cuve"
+
+[[transitions]]
+de = "prise_mousse_cuve"
+vers = "elimination_levures_pmc"
+produit = "Cidre effervescent en cuve close sous pression"
+
+[[transitions]]
+de = "elimination_levures_pmc"
+vers = "embouteillage_pmc"
+produit = "Cidre limpide à effervescence naturelle"
+
+[[transitions]]
+de = "embouteillage_pmc"
+vers = "bouchage_pmc"
+
+[[transitions]]
+de = "bouchage_pmc"
+produit = "Cidres limpides à effervescence naturelle conditionnés"
+
+# ── Enchaînement : 3. effervescence « mixte » ────────────────────────────────
+
+[[transitions]]
+vers = "faible_levurage"
+produit = "Cidres clarifiés prêts à la mise"
+condition = "effervescence « mixte »"
+
+[[transitions]]
+de = "faible_levurage"
+vers = "gazeification_mixte"
+
+[[transitions]]
+de = "gazeification_mixte"
+vers = "embouteillage_mixte"
+produit = "Cidre effervescent légèrement trouble"
+
+[[transitions]]
+de = "embouteillage_mixte"
+vers = "bouchage_mixte"
+
+[[transitions]]
+de = "bouchage_mixte"
+produit = "Cidres légèrement troubles gazéifiés conditionnés"
+
+# ── Enchaînement : 4. avec gazéification et 5. en fût ────────────────────────
+
+# Les trois préparations sont dessinées en dérivation : chacune facultative.
+[[transitions]]
+vers = "sulfitage_gaz"
+produit = "Cidres clarifiés prêts à la mise"
+condition = "gazéification, en bouteille ou en fût"
+
+[[transitions]]
+vers = "gazeification"
+produit = "Cidres clarifiés prêts à la mise"
+condition = "gazéification, en bouteille ou en fût"
+
+[[transitions]]
+de = "sulfitage_gaz"
+vers = "desaeration"
+
+[[transitions]]
+de = "desaeration"
+vers = "stabilisation"
+
+[[transitions]]
+de = "stabilisation"
+vers = "gazeification"
+
+# Contournements : chaque préparation peut être évitée séparément.
+[[transitions]]
+vers = "desaeration"
+produit = "Cidres clarifiés prêts à la mise"
+condition = "gazéification, en bouteille ou en fût"
+
+[[transitions]]
+vers = "stabilisation"
+produit = "Cidres clarifiés prêts à la mise"
+condition = "gazéification, en bouteille ou en fût"
+
+[[transitions]]
+de = "sulfitage_gaz"
+vers = "stabilisation"
+
+[[transitions]]
+de = "sulfitage_gaz"
+vers = "gazeification"
+
+[[transitions]]
+de = "desaeration"
+vers = "gazeification"
+
+[[transitions]]
+de = "gazeification"
+vers = "embouteillage_gaz"
+produit = "Cidre effervescent"
+condition = "conditionnement en bouteille"
+
+[[transitions]]
+de = "embouteillage_gaz"
+vers = "bouchage_gaz"
+
+[[transitions]]
+de = "bouchage_gaz"
+produit = "Cidres limpides gazéifiés conditionnés"
+
+[[transitions]]
+de = "gazeification"
+vers = "flash_pasteurisation"
+produit = "Cidre effervescent"
+condition = "conditionnement en fût"
+
+[[transitions]]
+de = "flash_pasteurisation"
+vers = "mise_en_fut"
+produit = "Cidre effervescent pasteurisé"
+
+[[transitions]]
+de = "mise_en_fut"
+produit = "Cidres limpides gazéifiés conditionnés en fûts"

@@ -1,0 +1,39 @@
+# Transcription de l'illustration de la fiche 1555 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1555
+code = "FICHE_EFFET_DU_PH_SUR_DEVELOPPEMENT_MICROORGANISMES_ALTERATION"
+titre = "Effet du pH sur le développement de microorganismes d'altération"
+image_sha256 = "ccc2a6fc677cbb4c0cc701be703b77915a79fb49d1c44e55064a01b2268507ff"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+100
+Temps (h)
+Figure 1 : Effet du pH sur la croissance de Zymomonas.
+pH à 3,3 (0) — 3,4 (0) — 3,9 (0) — 3,6 (-) — 3,7 (+) = 3,8 (e) — 3,9 (+)
+— 4 (x) — 5 (A) - 6(m) et contrôle (+), correspondant à l'absence de
+changement de pH.
+Source: Coton, M. et al., 2006. « Framboisé » spoilage in French ciders :
+Zymomonas mobilis implication and characterization. LWT 39, 972-979."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "100 Temps (h)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Effet du pH sur la croissance de Zymomonas. pH à 3,3 (0) — 3,4 (0) — 3,9 (0) — 3,6 (-) — 3,7 (+) = 3,8 (e) — 3,9 (+) — 4 (x) — 5 (A) - 6(m) et contrôle (+), correspondant à l'absence de"
+douteux = ["(0)", "(A)", "6(m)", "l'absence"]
+
+[[rubriques.lignes]]
+valeur = "changement de pH."
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Coton, M. et al., 2006. « Framboisé » spoilage in French ciders : Zymomonas mobilis implication and characterization. LWT 39, 972-979."

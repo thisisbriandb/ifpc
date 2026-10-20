@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1069 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1069
+code = "CMAP_APPRO_TRANSFERT_POMMES"
+titre = "Le transfert des pommes vers l'extraction"
+image_sha256 = "8fa0fb68420e028fa0fe674a33a70e05f266383ae05e4b2d9d3642dba96eeebf"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le transfert des pommes vers l’extraction
+est une : Opération de l’étape de gestion de l’approvisionnement
+regroupe : La reprise et le transfert des pommes en contenants par manutention mécanique | La reprise et le transfert des pommes en vrac par flux d’eau
+a pour fonctions : D’approvisionner la chaîne de traitement des pommes | D’éliminer les pierres et autres débris (feuilles, branches)
+est piloté par : La demande de pommes au niveau du râpage / pressage
+est influencé par : La disponibilité des pommes stockées | Le type de conditionnement des pommes"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape de gestion de l’approvisionnement"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "La reprise et le transfert des pommes en contenants par manutention mécanique"
+
+[[rubriques.lignes]]
+valeur = "La reprise et le transfert des pommes en vrac par flux d’eau"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’approvisionner la chaîne de traitement des pommes"
+
+[[rubriques.lignes]]
+valeur = "D’éliminer les pierres et autres débris (feuilles, branches)"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "La demande de pommes au niveau du râpage / pressage"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La disponibilité des pommes stockées"
+
+[[rubriques.lignes]]
+valeur = "Le type de conditionnement des pommes"

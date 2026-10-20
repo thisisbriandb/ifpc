@@ -1,0 +1,88 @@
+# Transcription de l'illustration de la fiche 1041 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1041
+code = "CMAP_FILTRATION_KIESELGUHR"
+titre = "La filtration Kieselguhr"
+image_sha256 = "ec7bf092230faede4f3c9e9edd1b96718c319e4891ebccf3de16ec14e78fed18"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La filtration Kieselguhr
+est une : Opération facultative de la clarification basse
+est constituée : La formation de la précouche | La filtration par alluvionnage en continu | Le débatissage
+doit être complétée par : Une procédure de nettoyage / désinfection du filtre
+a pour fonctions : L'élimination des matières en suspension | L’élimination des flores levuriennes et bactériennes selon les terres utilisées
+est fondée sur : La rétention des particules par le gâteau de filtration
+a pour équipements : Différents types de filtres à Kieselguhr | Différents types de terres de filtration
+est pilotée par : Le débit d’alluvionnage selon l’évolution de la pression dans le cloche de filtration
+a pour incidents : Un « glaçage » du gâteau de filtration (colmatage) | Un relargage de matières en suspension"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de la clarification basse"
+
+[[rubriques]]
+titre = "est constituée"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La formation de la précouche"
+
+[[rubriques.lignes]]
+valeur = "La filtration par alluvionnage en continu"
+
+[[rubriques.lignes]]
+valeur = "Le débatissage"
+
+[[rubriques]]
+titre = "doit être complétée par"
+
+[[rubriques.lignes]]
+valeur = "Une procédure de nettoyage / désinfection du filtre"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "L'élimination des matières en suspension"
+douteux = ["L'élimination"]
+
+[[rubriques.lignes]]
+valeur = "L’élimination des flores levuriennes et bactériennes selon les terres utilisées"
+douteux = ["L’élimination"]
+
+[[rubriques]]
+titre = "est fondée sur"
+
+[[rubriques.lignes]]
+valeur = "La rétention des particules par le gâteau de filtration"
+
+[[rubriques]]
+titre = "a pour équipements"
+
+[[rubriques.lignes]]
+valeur = "Différents types de filtres à Kieselguhr"
+
+[[rubriques.lignes]]
+valeur = "Différents types de terres de filtration"
+
+[[rubriques]]
+titre = "est pilotée par"
+
+[[rubriques.lignes]]
+valeur = "Le débit d’alluvionnage selon l’évolution de la pression dans le cloche de filtration"
+
+[[rubriques]]
+titre = "a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "Un « glaçage » du gâteau de filtration (colmatage)"
+
+[[rubriques.lignes]]
+valeur = "Un relargage de matières en suspension"

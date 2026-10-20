@@ -1,0 +1,63 @@
+# Transcription de l'illustration de la fiche 1335 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1335
+code = "CMAP_REGROUPEMENT_ANALYSES_MICROBIOLOGIQUES"
+titre = "Analyses microbiologiques"
+image_sha256 = "a8cec8bbf7523fee96684b5623e7fa91e404716617bf3829d8bef2f028044bd3"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Analyses microbiologiques
+sont un : Ensemble de méthodes d’analyses microbiologiques
+regroupent : La numération des Saccharomyces | La numération des Hanseniaspora | La numération des Brettanomyces | La numération des bactéries lactiques
+Les méthodes rapides : L’estimation du nombre de levures par microscopie (sur cellule de Malassey) | La cytométrie en flux | L'analyse PCR quantitative (polymérase chain reaction)
+ont pour fonctions : De connaître la population d’une espèce microbienne et son évolution | De repérer l’apparition d’une flore d’altération"""
+anomalies = ["5 relations pour 4 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de méthodes d’analyses microbiologiques"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La numération des Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "La numération des Hanseniaspora"
+
+[[rubriques.lignes]]
+valeur = "La numération des Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "La numération des bactéries lactiques"
+
+[[rubriques]]
+titre = "Les méthodes rapides"
+
+[[rubriques.lignes]]
+valeur = "L’estimation du nombre de levures par microscopie (sur cellule de Malassey)"
+douteux = ["L’estimation"]
+
+[[rubriques.lignes]]
+valeur = "La cytométrie en flux"
+
+[[rubriques.lignes]]
+valeur = "L'analyse PCR quantitative (polymérase chain reaction)"
+douteux = ["L'analyse"]
+
+[[rubriques]]
+titre = "ont pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De connaître la population d’une espèce microbienne et son évolution"
+
+[[rubriques.lignes]]
+valeur = "De repérer l’apparition d’une flore d’altération"

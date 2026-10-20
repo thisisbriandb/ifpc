@@ -1,0 +1,50 @@
+# Transcription de l'illustration de la fiche 1167 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1167
+code = "FICHE_EXTRACTION_RAPAGE"
+titre = "Le râpage"
+image_sha256 = "9a223b0b3667c23429528af515e689928377b0c714afd8c5dbb1dcd5dacd8fcc"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Fruit sous-müûr Maturité optimale Fruit trop mûr
+Rupture favorisée Rupture favorisée Glissement favorisé
+Peu de rupture Beaucoup de ruptures Peu de rupture
+Tissus résistants Tissus résistants Tissus \"plastiques\"
+Drainage important Bon drainage Mauvais drainage
+Colmatage
+Figure 1 : Râpe en fonctionnement Figure 2 : Schémas formalisant les principales
+Source: Guide pratique de la fabrication du cidre, R. hypothèses pour expliquer les mauvais rendements de
+Bauduin, 2006 pressage des pommes (INRAE / IFPC)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Fruit sous-müûr Maturité optimale Fruit trop mûr"
+douteux = ["sous-müûr", "mûr"]
+
+[[rubriques.lignes]]
+valeur = "Rupture favorisée Rupture favorisée Glissement favorisé Peu de rupture Beaucoup de ruptures Peu de rupture"
+
+[[rubriques.lignes]]
+valeur = "Tissus résistants Tissus résistants Tissus \"plastiques\" Drainage important Bon drainage Mauvais drainage Colmatage"
+douteux = ["\"plastiques\""]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Râpe en fonctionnement Figure 2 : Schémas formalisant les principales"
+douteux = ["principales"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Guide pratique de la fabrication du cidre, R. hypothèses pour expliquer les mauvais rendements de"
+douteux = ["R."]
+
+[[rubriques.lignes]]
+valeur = "Bauduin, 2006 pressage des pommes (INRAE / IFPC)"
+douteux = ["Bauduin,"]

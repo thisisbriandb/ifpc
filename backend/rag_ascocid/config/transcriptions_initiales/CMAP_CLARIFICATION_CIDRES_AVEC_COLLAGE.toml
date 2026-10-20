@@ -1,0 +1,78 @@
+# Transcription de l'illustration de la fiche 1128 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1128
+code = "CMAP_CLARIFICATION_CIDRES_AVEC_COLLAGE"
+titre = "La clarification des cidres avec collage"
+image_sha256 = "9a16f5d39b214f81d5b7551b7801d09882160650ba49bfcd3d6b1c4c1a73994d"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification des cidres avec collage
+est une : Modalité de l’étape de clarification des cidres
+est constituée de : Une centrifugation pré -collage (facultative) | Un collage | Un soutirage | Une opération de séparation grossière (facultative) | Une opération de séparation fine
+a pour fonctions : D’obtenir un cidre très limpide (brillant) | D’arrêter la fermentation pour conserver la teneur en sucre de l’assemblage | D’éviter la formation de troubles physico - chimiques (post -clarification) | De diminuer l’astringence de certains cidres
+a pour conséquence : De réduire les populations de flores indésirables
+est influencée par : Les méthodes de séparation utilisées
+présente le risque : De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de clarification des cidres"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une centrifugation pré -collage (facultative)"
+
+[[rubriques.lignes]]
+valeur = "Un collage"
+
+[[rubriques.lignes]]
+valeur = "Un soutirage"
+
+[[rubriques.lignes]]
+valeur = "Une opération de séparation grossière (facultative)"
+
+[[rubriques.lignes]]
+valeur = "Une opération de séparation fine"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’obtenir un cidre très limpide (brillant)"
+
+[[rubriques.lignes]]
+valeur = "D’arrêter la fermentation pour conserver la teneur en sucre de l’assemblage"
+
+[[rubriques.lignes]]
+valeur = "D’éviter la formation de troubles physico - chimiques (post -clarification)"
+
+[[rubriques.lignes]]
+valeur = "De diminuer l’astringence de certains cidres"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "De réduire les populations de flores indésirables"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Les méthodes de séparation utilisées"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"

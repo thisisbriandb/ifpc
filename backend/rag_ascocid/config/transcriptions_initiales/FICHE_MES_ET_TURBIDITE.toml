@@ -1,0 +1,39 @@
+# Transcription de l'illustration de la fiche 1373 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1373
+code = "FICHE_MES_ET_TURBIDITE"
+titre = "Les matières en suspension et la turbidité"
+image_sha256 = "9ee5ff80bad0b30edbbe5c1c37acff781cb929897e30702e2e0977412ed0de79"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Cellule de mesure contenant
+un échantillon trouble
+Mesure de la lumière passant
+au travers de l'échantillon
+(et calcul de l'atténuation )
+Mesure de la lumière diffusée à 90° du
+faisceau (mesure par néphélométrie)
+Schéma 1 : Détermination de la turbidité d'un échantillon par la mesure de la
+lumière diffusée par les particules le constituant"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Cellule de mesure contenant un échantillon trouble"
+
+[[rubriques.lignes]]
+valeur = "Mesure de la lumière passant au travers de l'échantillon (et calcul de l'atténuation )"
+
+[[rubriques.lignes]]
+valeur = "Mesure de la lumière diffusée à 90° du faisceau (mesure par néphélométrie)"
+
+[[rubriques.lignes]]
+intitule = "Schéma 1"
+valeur = "Détermination de la turbidité d'un échantillon par la mesure de la lumière diffusée par les particules le constituant"
+douteux = ["d'un"]

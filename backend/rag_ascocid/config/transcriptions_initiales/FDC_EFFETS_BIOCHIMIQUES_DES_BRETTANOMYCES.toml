@@ -1,0 +1,160 @@
+# Transcription de l'illustration de la fiche 1544 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1544
+code = "FDC_EFFETS_BIOCHIMIQUES_DES_BRETTANOMYCES"
+titre = "Les effets biochimiques des Brettanomyces"
+image_sha256 = "d8238d695e9139f7997167d4f0f478dd91c77b8680d54c77b9af433654e69f76"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 78.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+A. 1,E+08
+: iQ: L 1,E+07
+= 12
+É 1,E+06
+2 —
+a 1.0 1,E+05 E
+& 08 1E+04 2
+- 5
+8 06 1E+03 %
+© 3
+ü 8
+5 04 1E+02 à
+F 02 1,E+01
+S— = ————ÛÙ 16400
+0 10 20 30 40
+Temps (jours)
+0,0
+Figure 1 : La dégradation des esters d'acétate par Brettanomyce
+A. Relation entre la population de Brettanomyces et la dégradation de
+pointillés noirs représentent la croissance de Brettanomyces, les li
+Données provenant de 3 cidres.
+B. Evolution de l'activité acétyle estérase d'une souche de Brettanon
+estérase (nkatal/mL), la ligne pleine avec les cercles représente la
+Figures issues de Guichard et al, 2019. Brettanomyces anomalus, a double drawback for cider 4
+1,E+08 B. Aci
+= 6:04 1,€+07
+| LED LCL LEE De …... ï
+Acide
+Acide caféique
+4-vinylcatécho
+Temps (Jours) |
+4-éthylcatécho
+(Fumé, Camphre
+Figure 2 : Biosynthèse des phénols volatils par Brettanomyces
+A. Profil de croissance de Brettanomyces (lignes en pointillés noirs) €
+Adaptée de la figure 5 de Guichard et al., 2019. Brettanomyces anomalus, a double drawback f
+B. Réactions biochimiques conduisant à la synthèse des phénols vola"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "A. 1,E+08"
+douteux = ["1,E+08"]
+
+[[rubriques.lignes]]
+intitule = ": iQ"
+valeur = "L 1,E+07"
+douteux = ["iQ:", "L"]
+
+[[rubriques.lignes]]
+valeur = "= 12"
+
+[[rubriques.lignes]]
+valeur = "É 1,E+06"
+douteux = ["É", "1,E+06"]
+
+[[rubriques]]
+titre = "2 —"
+
+[[rubriques.lignes]]
+valeur = "a 1.0 1,E+05 E & 08 1E+04 2 - 5"
+douteux = ["a", "1.0", "1,E+05", "E", "08", "1E+04", "5"]
+
+[[rubriques]]
+titre = "8 06 1E+03 %"
+
+[[rubriques.lignes]]
+valeur = "© 3 ü 8"
+douteux = ["ü", "8"]
+
+[[rubriques]]
+titre = "5 04 1E+02 à"
+
+[[rubriques.lignes]]
+valeur = "F 02 1,E+01"
+douteux = ["F", "02", "1,E+01"]
+
+[[rubriques.lignes]]
+valeur = "S— = ————ÛÙ 16400"
+douteux = ["S—", "————ÛÙ", "16400"]
+
+[[rubriques]]
+titre = "0 10 20 30 40"
+
+[[rubriques.lignes]]
+valeur = "Temps (jours)"
+
+[[rubriques.lignes]]
+valeur = "0,0"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La dégradation des esters d'acétate par Brettanomyce"
+douteux = ["d'acétate"]
+
+[[rubriques.lignes]]
+valeur = "A. Relation entre la population de Brettanomyces et la dégradation de pointillés noirs représentent la croissance de Brettanomyces, les li Données provenant de 3 cidres."
+douteux = ["de"]
+
+[[rubriques.lignes]]
+valeur = "B. Evolution de l'activité acétyle estérase d'une souche de Brettanon"
+douteux = ["l'activité", "d'une"]
+
+[[rubriques.lignes]]
+valeur = "estérase (nkatal/mL), la ligne pleine avec les cercles représente la Figures issues de Guichard et al, 2019. Brettanomyces anomalus, a double drawback for cider 4"
+douteux = ["al,", "4"]
+
+[[rubriques]]
+titre = "1,E+08 B. Aci"
+
+[[rubriques.lignes]]
+intitule = "= 6"
+valeur = "04 1,€+07"
+douteux = ["6:04", "1,€+07"]
+
+[[rubriques]]
+titre = "| LED LCL LEE De …... ï"
+
+[[rubriques.lignes]]
+valeur = "Acide"
+
+[[rubriques.lignes]]
+valeur = "Acide caféique"
+
+[[rubriques.lignes]]
+valeur = "4-vinylcatécho"
+
+[[rubriques.lignes]]
+valeur = "Temps (Jours) |"
+
+[[rubriques.lignes]]
+valeur = "4-éthylcatécho"
+
+[[rubriques.lignes]]
+valeur = "(Fumé, Camphre"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Biosynthèse des phénols volatils par Brettanomyces"
+douteux = ["Brettanomyces"]
+
+[[rubriques.lignes]]
+valeur = "A. Profil de croissance de Brettanomyces (lignes en pointillés noirs) € Adaptée de la figure 5 de Guichard et al., 2019. Brettanomyces anomalus, a double drawback f"
+
+[[rubriques.lignes]]
+valeur = "B. Réactions biochimiques conduisant à la synthèse des phénols vola"

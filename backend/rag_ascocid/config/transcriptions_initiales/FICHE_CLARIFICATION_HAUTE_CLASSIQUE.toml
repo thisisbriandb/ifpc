@@ -1,0 +1,26 @@
+# Transcription de l'illustration de la fiche 1046 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1046
+code = "FICHE_CLARIFICATION_HAUTE_CLASSIQUE"
+titre = "La clarification haute classique"
+image_sha256 = "5ab6598dcfa6725704a245512d84f19579bcdbccfc445a2f1b9160bca57ac974"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification haute
+classique
+Bombonne de moût de pomme en fin de clarification haute
+(photo P. GESTIN - INRA)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "La clarification haute classique"
+
+[[rubriques.lignes]]
+valeur = "Bombonne de moût de pomme en fin de clarification haute (photo P. GESTIN - INRA)"

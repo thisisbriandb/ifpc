@@ -1,0 +1,60 @@
+# Transcription de l'illustration de la fiche 1553 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1553
+code = "FICHE_DEVELOPPEMENT_ET_EFFETS_DES_OENOCOCCUS"
+titre = "Le développement et les effets des Oenococcus"
+image_sha256 = "8e7829ee5b3c939f6c2e5670c7a10882632c69503b136de220686d9050669f79"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Acide malique ——+ Acide L-lactique + CO;
+D-Glucose + Acide D-lactique
++ Acide acétique
+Figure 2 : Principaux effets des Oenococcus
+dans les produits cidricoles
+A) La transformation malolactique
+La synthèse d’acide D-lactique et d'acide acétique à
+partir de sucres, pouvant conduire à un défaut de
+type Piqüre lactique.
+Figure 1 : Oenococcus oeni observé
+au microscope électronique B)
+www.enosens-coutras.fr"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Acide malique ——+ Acide L-lactique + CO;"
+douteux = ["CO;"]
+
+[[rubriques.lignes]]
+valeur = "D-Glucose + Acide D-lactique"
+
+[[rubriques.lignes]]
+valeur = "+ Acide acétique"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Principaux effets des Oenococcus"
+
+[[rubriques.lignes]]
+valeur = "dans les produits cidricoles"
+
+[[rubriques.lignes]]
+valeur = "A) La transformation malolactique"
+
+[[rubriques.lignes]]
+valeur = "La synthèse d’acide D-lactique et d'acide acétique à partir de sucres, pouvant conduire à un défaut de type Piqüre lactique."
+douteux = ["d'acide"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Oenococcus oeni observé"
+douteux = ["oeni"]
+
+[[rubriques.lignes]]
+valeur = "au microscope électronique B) www.enosens-coutras.fr"

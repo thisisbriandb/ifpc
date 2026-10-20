@@ -1,0 +1,29 @@
+# Transcription de l'illustration de la fiche 1413 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1413
+code = "Fiche_LE_SULFITAGE"
+titre = "Le sulfitage"
+image_sha256 = "89a6f3c1cffcd9f49c730795b8fcfad11654709d39e170cce34b3936c91e99af"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+MN. 22 4.\"
+Figure 1 : Les différentes formulations de produits pour l'œnologie générant des sulfites :
+a) mèches de soufre, b) sulfidoseur pour introduire du SO, gazeux, c) solution de SO,
+dissous, d) métabisulfite en poudre."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "MN. 22 4.\""
+douteux = ["MN.", "22", "4.\""]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes formulations de produits pour l'œnologie générant des sulfites : a) mèches de soufre, b) sulfidoseur pour introduire du SO, gazeux, c) solution de SO, dissous, d) métabisulfite en poudre."
+douteux = ["sulfites", "SO,"]

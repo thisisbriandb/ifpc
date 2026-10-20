@@ -1,0 +1,48 @@
+# Transcription de l'illustration de la fiche 1559 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1559
+code = "FICHE_REDUCTION_DE_BIOMASSE"
+titre = "La réduction de biomasse"
+image_sha256 = "cd0e877a038b83a1e5e4bbca5cef9b6b58eb9e063e7b319e6d9dd2869d40d829"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 95.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Masse volumique
+Masse volumique
+cible
+Temps
+Figure 1 : Modulation de la vitesse de fermentation par la réduction de biomasse
+En rouge, courbe théorique de la vitesse de fermentation sans intervention
+En bleu, courbe théorique de la vitesse de fermentation suite à une réduction de biomasse précoce (entre 5 et 10 points
+de chute de masse volumique).
+En jaune, courbes théoriques de la vitesse de fermentation suite à une réduction de biomasse tardive (entre 10 et 15
+points de chute de masse volumique)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Masse volumique"
+
+[[rubriques.lignes]]
+valeur = "Masse volumique cible"
+
+[[rubriques.lignes]]
+valeur = "Temps"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Modulation de la vitesse de fermentation par la réduction de biomasse"
+
+[[rubriques.lignes]]
+valeur = "En rouge, courbe théorique de la vitesse de fermentation sans intervention"
+
+[[rubriques.lignes]]
+valeur = "En bleu, courbe théorique de la vitesse de fermentation suite à une réduction de biomasse précoce (entre 5 et 10 points de chute de masse volumique)."
+
+[[rubriques.lignes]]
+valeur = "En jaune, courbes théoriques de la vitesse de fermentation suite à une réduction de biomasse tardive (entre 10 et 15 points de chute de masse volumique)."

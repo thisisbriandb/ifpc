@@ -1,0 +1,96 @@
+# Transcription de l'illustration de la fiche 1470 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1470
+code = "FDC_JUDOR"
+titre = "Judor"
+image_sha256 = "584e8f1707e6b72d293da46f816114375caed61377a3d53d71420952c79e0e62"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+A la plantation, le scion a de nombreux anticipés. Quelques anticipés ouverts peuvent être conservés. La
+variété ayant une tendance acrotone naturelle, la sélection de quelques anticipés bien positionnés n'empêchera
+pas l'arbre de monter.
+Au contraire, éviter une arcure trop violente des charpentières du bas de l'arbre (qui affaiblirait celles-ci),
+l'acrotonie a déjà tendance à favoriser les branches de la partie supérieure : Sélectionner dans la partie basse
+des branches ouvertes mais assez vigoureuses afin d'assurer une pérennité du bas des arbres.
+Veiller cependant à arquer ou supprimer les branches dont l'angle d'insertion assez fermé ne permet pas
+l'ouverture.
+Par la suite, il faut gérer l'excès de vigueur qui apparaît généralement en tête de l'arbre voire arrêter l'arbre
+lorsqu'il atteint une hauteur au delà de 5 m.
+Dans l'ensemble, variété très facile à conduire.
+ASPECT RECOLTE
+petit à moyen (40 à 70g)
+épiderme à fond jaune à 7 au * recouvert
+d'un jaune vif strié
+fin octobre à début novembre
+bonne
+totale à maturité £
+TECHNOLOGIE
+Faible Moyen Important
+5-7
+3.10 à 3.45
+à préciser
+acide
+variété utilisée pour apporter de l'acidité aux cidres
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion a de nombreux anticipés. Quelques anticipés ouverts peuvent être conservés. La variété ayant une tendance acrotone naturelle, la sélection de quelques anticipés bien positionnés n'empêchera pas l'arbre de monter."
+
+[[rubriques.lignes]]
+valeur = "Au contraire, éviter une arcure trop violente des charpentières du bas de l'arbre (qui affaiblirait celles-ci), l'acrotonie a déjà tendance à favoriser les branches de la partie supérieure : Sélectionner dans la partie basse des branches ouvertes mais assez vigoureuses afin d'assurer une pérennité du bas des arbres."
+douteux = ["l'acrotonie"]
+
+[[rubriques.lignes]]
+valeur = "Veiller cependant à arquer ou supprimer les branches dont l'angle d'insertion assez fermé ne permet pas l'ouverture."
+
+[[rubriques.lignes]]
+valeur = "Par la suite, il faut gérer l'excès de vigueur qui apparaît généralement en tête de l'arbre voire arrêter l'arbre lorsqu'il atteint une hauteur au delà de 5 m."
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "Dans l'ensemble, variété très facile à conduire."
+douteux = ["l'ensemble,"]
+
+[[rubriques]]
+titre = "ASPECT RECOLTE"
+
+[[rubriques.lignes]]
+valeur = "petit à moyen (40 à 70g)"
+
+[[rubriques.lignes]]
+valeur = "épiderme à fond jaune à 7 au * recouvert d'un jaune vif strié"
+douteux = ["7"]
+
+[[rubriques.lignes]]
+valeur = "fin octobre à début novembre"
+
+[[rubriques.lignes]]
+valeur = "bonne totale à maturité £"
+
+[[rubriques]]
+titre = "TECHNOLOGIE"
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Important 5-7"
+douteux = ["5-7"]
+
+[[rubriques]]
+titre = "3.10 à 3.45"
+
+[[rubriques.lignes]]
+valeur = "à préciser acide"
+
+[[rubriques.lignes]]
+valeur = "variété utilisée pour apporter de l'acidité aux cidres"
+douteux = ["l'acidité"]
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

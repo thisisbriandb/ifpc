@@ -1,0 +1,59 @@
+# Transcription de l'illustration de la fiche 1318 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1318
+code = "CMAP_POST_CONDITIONNEMENT_SANS_PASTEURISATION"
+titre = "Les opérations post-conditionnement sans pasteurisation"
+image_sha256 = "ed98a432314080a67042156fc3a3de7d1d129f5f263bdbcf1bac6ad0b7411249"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le post -conditionnement sans pasteurisation
+est une : Modalité de l’étape Post -conditionnement des cidres
+est constitué de : Un étiquetage, un habillage et un emballage | Une conservation du cidre en bouteille
+a pour fonctions : De préparer le cidre à la commercialisation | De disposer d’un stock de cidre pour la commercialisation
+a pour conséquences : Une possible consommation de l’oxygène dissous dans le cidre | Une possible modification sensorielle du cidre
+présente le risque : D’une altération du cidre"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape Post -conditionnement des cidres"
+
+[[rubriques]]
+titre = "est constitué de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un étiquetage, un habillage et un emballage"
+
+[[rubriques.lignes]]
+valeur = "Une conservation du cidre en bouteille"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De préparer le cidre à la commercialisation"
+
+[[rubriques.lignes]]
+valeur = "De disposer d’un stock de cidre pour la commercialisation"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une possible consommation de l’oxygène dissous dans le cidre"
+
+[[rubriques.lignes]]
+valeur = "Une possible modification sensorielle du cidre"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "D’une altération du cidre"

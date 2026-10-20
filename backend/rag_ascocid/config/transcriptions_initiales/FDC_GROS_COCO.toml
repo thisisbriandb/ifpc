@@ -1,0 +1,156 @@
+# Transcription de l'illustration de la fiche 1432 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1432
+code = "FDC_GROS_COCO"
+titre = "Gros Coco"
+image_sha256 = "baa84328c9f658a05b8c1bc5308cb77b09060967a60336cb47a5ede5522d6e84"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: GROS COCO
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Loire-Atlantique : Moisdon la Rivière - Issé - Châteaubriant - Rougé -
+Nozay - Derval.
+POSSIBILITES de COMMERCIALISATION en bonne année
+4 000 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 10-11-53)
+Dégustation du fruit : bien acidulé.
+Dégustation du jus : bien acidulé, légère âpreté.
+Rendement en jus (4) : 60,6.
+Densité du jus : 1 056,6.
+Acidité de titration en g. SO* H? par litre : 4,90.
+Azote/Sucres totaux : 0,23.
+Tanin (en g. par litre) : 2,56.
+Couleur du jus : jaune marqué.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : grande.
+Port : érigé et buissonnant.
+Résistance aux maladies : rustique - parfois un peu de tavelure.
+Productivité : très grande, avec alternance faiblement marquée.
+Saison de floraison : 3e.
+Saison de maturité : 2e-3e.
+Conservation et transport des fruits : très bons.
+Grosseur du fruit : très variable suivant la charge de l'arbre et selon les
+secteurs où l'appellation du « gros Coco » devient « Coco » (Lusanger).
+OBSERVATIONS DIVERSES
+Variété très productive. Doit être élaguée tous les 5 ans et recevoir une
+bonne fumure si l'on veut des fruits suffisamment gros.
+2
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Loire-Atlantique : Moisdon la Rivière - Issé - Châteaubriant - Rougé - Nozay - Derval."
+douteux = ["Issé"]
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "4 000 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 10-11-53"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "bien acidulé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "bien acidulé, légère âpreté."
+douteux = ["âpreté."]
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (4)"
+valeur = "60,6."
+douteux = ["(4)"]
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 056,6."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H? par litre"
+valeur = "4,90."
+douteux = ["SO*", "H?"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,23."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,56."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune marqué."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "érigé et buissonnant."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "rustique - parfois un peu de tavelure."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "très grande, avec alternance faiblement marquée."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+douteux = ["3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "très variable suivant la charge de l'arbre et selon les secteurs où l'appellation du « gros Coco » devient « Coco » (Lusanger)."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété très productive. Doit être élaguée tous les 5 ans et recevoir une bonne fumure si l'on veut des fruits suffisamment gros."
+
+[[rubriques.lignes]]
+valeur = "2"
+douteux = ["2"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er)"
+douteux = ["(1er)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

@@ -1,0 +1,50 @@
+# Transcription de l'illustration de la fiche 1604 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1604
+code = "FICHE_TEXTURE_DES_POMMES"
+titre = "La texture des pommes"
+image_sha256 = "e9508b71be3e243691b0a0d4115ec7cbb139fc05c5ba6426523675183b42f0e2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Mitochondrie
+Paroi secondaire
+Vacuole Paroi primaire Paroi
+Lamelle moyenne
+Membrane Ribosome
+plasmique Réticulum endoplasmique
+Cytoplasme
+Noyau
+< Appareil de
+Æ Golgi
+Chloroplaste 9 vs!
+Figure 1 : Représentation simplifiée d’une cellule végétale et de ses organites Figure 2 : Exemple de pénétromètre portable pour fruits
+Source : https://www.pce-instruments.com/french/instruments-de-
+mesure/mesureur/penetrometre-pce-instruments-
+PAC3%AINAC3%AItromMAC3%ABtre-pour-fruits-pce-ptr-200n-det_175023.htm"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Mitochondrie"
+
+[[rubriques.lignes]]
+valeur = "Paroi secondaire"
+
+[[rubriques.lignes]]
+valeur = "Vacuole Paroi primaire Paroi Lamelle moyenne Membrane Ribosome plasmique Réticulum endoplasmique Cytoplasme Noyau < Appareil de Æ Golgi Chloroplaste 9 vs!"
+douteux = ["Æ", "9", "vs!"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation simplifiée d’une cellule végétale et de ses organites Figure 2 : Exemple de pénétromètre portable pour fruits"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "https://www.pce-instruments.com/french/instruments-de- mesure/mesureur/penetrometre-pce-instruments- PAC3%AINAC3%AItromMAC3%ABtre-pour-fruits-pce-ptr-200n-det_175023.htm"
+douteux = ["https://www.pce-instruments.com/french/instruments-de-", "PAC3%AINAC3%AItromMAC3%ABtre-pour-fruits-pce-ptr-200n-det_175023.htm"]

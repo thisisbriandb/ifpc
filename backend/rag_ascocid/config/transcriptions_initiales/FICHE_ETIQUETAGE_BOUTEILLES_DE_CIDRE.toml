@@ -1,0 +1,140 @@
+# Transcription de l'illustration de la fiche 1584 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1584
+code = "FICHE_ETIQUETAGE_BOUTEILLES_DE_CIDRE"
+titre = "L’étiquetage des bouteilles de cidre"
+image_sha256 = "07fec01a3cae14dac1c887265d566122abf7155c857a9101d9e8fe03be97af7a"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+HAUTEUR DE X
+2 e
+3
+4
+5
+Ligne ascendante
+Figure 2 : Logo « Pas d'alcool pendant la grossesse »
+Mention obligatoire pour les boissons alcoolisées. Il n'y a pas
+de chartre graphique particulière pour ce logo mais il doit être
+lisible, visible, compréhensible et sur un fond contrastant. Ce
+logo peut également être en dégradé noir-gris-blanc
+(notamment pour une question de lisibilité, en fonction de la
+couleur de fond de l'étiquette).
+Ligne des capitales
+Ligne médiane
+Ligne de base
+Ligne descendante
+Corps l'Comps de car caractère
+Figure 1 : Définition de la hauteur de x, définissant :
+la taille de caractères à utiliser pour l'étiquetage
+des produits alimentaires, d’après l'annexe IV du re
+Règlement (UE) N°1169/2011
+FRANCE
+Pas) Le Le *
+A PSS
+UT AGRICULTURE
+À BIOLOGIQUE
+Figure 3 : Logo « TRIMAN» Figure 4 : Les Signes d'identification de Qualité et
+Obligatoire pour les bouteilles en plastiques. Ce logo doit d'Origine (SIQO)
+être accompagné des consignes de tri, d'après les A. Logo de l’Appellation d'Origine Contrôlée/Protégée
+articles L541-9-3 et R541-12-21 du code de (AOC/AOP)
+l'environnement. B. Logo de l’Indication Géographique Protégée (IGP)
+Source logo : https:/www.notre-
+environnement.gouy.fr/actualites/breves/article/le-triman-un-logo-
+obligatoire-sur-les-produits-recyclables
+C. Logo de l'Agriculture Biologique (AB)
+D. Logo du Label Rouge
+Source des différents logos : https:/www.inao.gouv.fr/"""
+
+[[rubriques]]
+titre = "HAUTEUR DE X"
+
+[[rubriques]]
+titre = "2 e"
+
+[[rubriques.lignes]]
+valeur = "3"
+
+[[rubriques.lignes]]
+valeur = "4"
+
+[[rubriques.lignes]]
+valeur = "5"
+
+[[rubriques.lignes]]
+valeur = "Ligne ascendante"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Logo « Pas d'alcool pendant la grossesse » Mention obligatoire pour les boissons alcoolisées. Il n'y a pas de chartre graphique particulière pour ce logo mais il doit être lisible, visible, compréhensible et sur un fond contrastant. Ce logo peut également être en dégradé noir-gris-blanc (notamment pour une question de lisibilité, en fonction de la couleur de fond de l'étiquette)."
+douteux = ["d'alcool", "l'étiquette)."]
+
+[[rubriques.lignes]]
+valeur = "Ligne des capitales"
+
+[[rubriques.lignes]]
+valeur = "Ligne médiane"
+
+[[rubriques.lignes]]
+valeur = "Ligne de base"
+
+[[rubriques.lignes]]
+valeur = "Ligne descendante"
+
+[[rubriques.lignes]]
+valeur = "Corps l'Comps de car caractère"
+douteux = ["l'Comps", "car"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Définition de la hauteur de x, définissant : la taille de caractères à utiliser pour l'étiquetage des produits alimentaires, d’après l'annexe IV du re"
+douteux = ["l'annexe", "re"]
+
+[[rubriques.lignes]]
+valeur = "Règlement (UE) N°1169/2011"
+
+[[rubriques]]
+titre = "FRANCE"
+
+[[rubriques.lignes]]
+valeur = "Pas) Le Le * A PSS"
+douteux = ["Pas)", "Le", "Le", "A", "PSS"]
+
+[[rubriques]]
+titre = "UT AGRICULTURE"
+
+[[rubriques]]
+titre = "À BIOLOGIQUE"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Logo « TRIMAN» Figure 4 : Les Signes d'identification de Qualité et Obligatoire pour les bouteilles en plastiques. Ce logo doit d'Origine (SIQO)"
+
+[[rubriques.lignes]]
+valeur = "être accompagné des consignes de tri, d'après les A. Logo de l’Appellation d'Origine Contrôlée/Protégée articles L541-9-3 et R541-12-21 du code de (AOC/AOP)"
+douteux = ["l’Appellation", "Contrôlée/Protégée", "et", "R541-12-21"]
+
+[[rubriques.lignes]]
+valeur = "l'environnement. B. Logo de l’Indication Géographique Protégée (IGP)"
+douteux = ["l'environnement.", "l’Indication", "(IGP)"]
+
+[[rubriques.lignes]]
+intitule = "Source logo"
+valeur = "https:/www.notre- environnement.gouy.fr/actualites/breves/article/le-triman-un-logo- obligatoire-sur-les-produits-recyclables"
+douteux = ["https:/www.notre-", "environnement.gouy.fr/actualites/breves/article/le-triman-un-logo-"]
+
+[[rubriques.lignes]]
+valeur = "C. Logo de l'Agriculture Biologique (AB)"
+douteux = ["l'Agriculture"]
+
+[[rubriques.lignes]]
+valeur = "D. Logo du Label Rouge"
+
+[[rubriques.lignes]]
+intitule = "Source des différents logos"
+valeur = "https:/www.inao.gouv.fr/"
+douteux = ["https:/www.inao.gouv.fr/"]

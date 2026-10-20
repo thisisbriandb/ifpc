@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1129 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1129
+code = "CMAP_OPE_SEP_GROSSIERE"
+titre = "Les opérations de séparation grossière"
+image_sha256 = "4861503868a397e5586bd03e303fcc2fda1e625c62b9fa920f065ff05f7bbea4"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les opérations de séparation grossière
+sont des : Opérations de séparation utilisées au cours de la clarification des moûts et des cidres
+regroupent : La centrifugation | La filtration sur Kieselguhr (terres blanches) | La filtration sur plaques | La décantation
+ont pour fonctions : D’éliminer une partie des matières en suspension (les plus grosses) | De faciliter les opérations de séparation fine ultérieures
+ont pour conséquences : Une oxygénation du produit (variable selon les pratiques) | Un risque de contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel | Une élimination partielle des flores levuriennes et bactériennes
+ne permettent pas : D’éliminer totalement les flores indésirables"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Opérations de séparation utilisées au cours de la clarification des moûts et des cidres"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La centrifugation"
+
+[[rubriques.lignes]]
+valeur = "La filtration sur Kieselguhr (terres blanches)"
+
+[[rubriques.lignes]]
+valeur = "La filtration sur plaques"
+
+[[rubriques.lignes]]
+valeur = "La décantation"
+
+[[rubriques]]
+titre = "ont pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’éliminer une partie des matières en suspension (les plus grosses)"
+
+[[rubriques.lignes]]
+valeur = "De faciliter les opérations de séparation fine ultérieures"
+
+[[rubriques]]
+titre = "ont pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une oxygénation du produit (variable selon les pratiques)"
+
+[[rubriques.lignes]]
+valeur = "Un risque de contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"
+
+[[rubriques.lignes]]
+valeur = "Une élimination partielle des flores levuriennes et bactériennes"
+
+[[rubriques]]
+titre = "ne permettent pas"
+
+[[rubriques.lignes]]
+valeur = "D’éliminer totalement les flores indésirables"

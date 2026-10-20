@@ -1,0 +1,40 @@
+# Transcription de l'illustration de la fiche 1481 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1481
+code = "FICHE_ETAT_DE_MATURITE_DES_POMMES_A_CIDRE"
+titre = "L’état de maturité des pommes à cidre"
+image_sha256 = "05b60f4fa2e5f93c069aa1d721235b147bf7689d9644a5b1bbfd16d3fd4cfabd"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variétés 1-5 6-10 11-15 16-20 21-25 26-30 1-5 6-10 11-15 16-20 21-25 26-31 1-5 6-10 11-15
+Amanda
+Fiona
+Gilly
+Dabinett
+Judor
+Figure 1 : Date de 50% de chute observée de trois variétés d'origine anglaise (en bleu) et de 3 variétés de référence (en jaune) sur 5 sites
+(Bretagne, Pays de la Loire et Normandie) entre 2013 et 2020.
+Les variétés anglaises apparaissent plus précoces que les variétés de référence sauf pour Kermerrien, variété considérée comme précoce."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Variétés 1-5 6-10 11-15 16-20 21-25 26-30 1-5 6-10 11-15 16-20 21-25 26-31 1-5 6-10 11-15"
+douteux = ["1-5", "11-15", "21-25", "26-30", "6-10", "11-15", "21-25", "6-10"]
+
+[[rubriques.lignes]]
+valeur = "Amanda Fiona Gilly Dabinett Judor"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Date de 50% de chute observée de trois variétés d'origine anglaise (en bleu) et de 3 variétés de référence (en jaune) sur 5 sites (Bretagne, Pays de la Loire et Normandie) entre 2013 et 2020."
+
+[[rubriques.lignes]]
+valeur = "Les variétés anglaises apparaissent plus précoces que les variétés de référence sauf pour Kermerrien, variété considérée comme précoce."
+douteux = ["anglaises"]

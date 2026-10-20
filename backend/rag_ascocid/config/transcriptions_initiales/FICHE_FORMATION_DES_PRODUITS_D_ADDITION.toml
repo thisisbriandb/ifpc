@@ -1,0 +1,101 @@
+# Transcription de l'illustration de la fiche 1530 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1530
+code = "FICHE_FORMATION_DES_PRODUITS_D_ADDITION"
+titre = "La formation des produits d'addition"
+image_sha256 = "162718884a52686357933c4d66882423fa2ab33ab15e2e2af561f2904f2491e8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 81.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Libération par les enzymes L'aci :
+j i 7e DDR RSUTR TT acide para-coumarique
+Les acides Les acides de moisissures P q
+phénoliques hydroxycinnamiques __._ Libération parles enzymes _______ l'acide café
+de moisissures acide caieique
+Formation de couleur par oxydation
+Les (+}catéchines ---.----.- Formation de couleur par oxydation
+Les composés
+phénoliques Les (-}épicatéchines -------- Formation de couleur par oxydation
+des pommes Les flavan-3-ols
+et du cidre Les petits DP(< 5) ---.-: Amertume
+us I - Astri
+Les flavonoïdes . Les grands DP (> 5) nous
+Tee Formation de couleur par oxydation indirecte
+Les dihydrochalcones — Laphloridzine - nn Formation de couleur par oxydation
+Les flavonols ———— La quercétine - rm Contribue à la couleur en jaune
+acide caféoylquinique (CQA)
+Les anthocyanes L'idéaïne ---.----.-. Contribue à la couleur rouge/rosée 9
+Hooc CC
+Figure 1 : Les composés phénoliques (polyphénols) des pommes et des cidres 206
+OH 104 (remplace la catalyse
+o-quinone de per a PPO, 0;)
+l'acide caféoylquinique
+(CQAoq) o
+0
+rot k
+Décompartimentation FA
+cellulaire
+pistes | Polyphénols [c:] Q9 0;
+7
+vacuole
+Râpage &
+Fruit intègre Cellule de la chair pressage Tissus et cellules
+de la pomme déstructurés
+Figure 2 : Acteurs de l'oxydation des composés phénoliques (polyphénols). Figure 3 : Oxydation des composés phénoliques
+PPO= enzyme polyphénoloxydase (polyphénols) dans le « moût de pommes ».
+Source: Guyot, S., Le Quéré, J.-M., Poupard, P., Bauduin, R. 2017. Des cidres et des couleurs, Partie 2 : Source: Guyot, S., Poupard, P. (2011). Les polyphénols de la
+Comment se forme la couleur d'un jus de pomme ou d'un cidre ?. Le cahier technique de l'IFPC, Pomme pomme. Impact des procédés cidricoles.
+à cidre n°45."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Libération par les enzymes L'aci"
+valeur = "j i 7e DDR RSUTR TT acide para-coumarique Les acides Les acides de moisissures P q phénoliques hydroxycinnamiques __._ Libération parles enzymes _______ l'acide café de moisissures acide caieique"
+douteux = ["j", "i", "7e", "DDR", "RSUTR", "TT", "P", "__._", "Libération", "_______", "café", "caieique"]
+
+[[rubriques.lignes]]
+valeur = "Formation de couleur par oxydation"
+douteux = ["oxydation"]
+
+[[rubriques.lignes]]
+valeur = "Les (+}catéchines ---.----.- Formation de couleur par oxydation Les composés phénoliques Les (-}épicatéchines -------- Formation de couleur par oxydation des pommes Les flavan-3-ols et du cidre Les petits DP(< 5) ---.-: Amertume us I - Astri Les flavonoïdes . Les grands DP (> 5) nous Tee Formation de couleur par oxydation indirecte Les dihydrochalcones — Laphloridzine - nn Formation de couleur par oxydation Les flavonols ———— La quercétine - rm Contribue à la couleur en jaune acide caféoylquinique (CQA) Les anthocyanes L'idéaïne ---.----.-. Contribue à la couleur rouge/rosée 9 Hooc CC"
+douteux = ["DP(<", "us", "I", "nous", "Tee", "Laphloridzine", "nn", "La", "quercétine", "rm", "9", "CC"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les composés phénoliques (polyphénols) des pommes et des cidres 206 OH 104 (remplace la catalyse o-quinone de per a PPO, 0;) l'acide caféoylquinique (CQAoq) o"
+douteux = ["206", "OH", "o-quinone", "a", "PPO,", "0;)", "caféoylquinique", "(CQAoq)", "o"]
+
+[[rubriques.lignes]]
+valeur = "0 rot k Décompartimentation FA cellulaire"
+douteux = ["0", "k", "FA"]
+
+[[rubriques.lignes]]
+intitule = "pistes | Polyphénols [c"
+valeur = "] Q9 0; 7"
+douteux = ["pistes", "[c:]", "Q9", "0;", "7"]
+
+[[rubriques.lignes]]
+valeur = "vacuole"
+
+[[rubriques.lignes]]
+valeur = "Râpage & Fruit intègre Cellule de la chair pressage Tissus et cellules de la pomme déstructurés"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Acteurs de l'oxydation des composés phénoliques (polyphénols). Figure 3 : Oxydation des composés phénoliques PPO= enzyme polyphénoloxydase (polyphénols) dans le « moût de pommes »."
+douteux = ["l'oxydation"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Guyot, S., Le Quéré, J.-M., Poupard, P., Bauduin, R. 2017. Des cidres et des couleurs, Partie 2 : Source: Guyot, S., Poupard, P. (2011). Les polyphénols de la Comment se forme la couleur d'un jus de pomme ou d'un cidre ?. Le cahier technique de l'IFPC, Pomme pomme. Impact des procédés cidricoles."
+douteux = ["S.,", "S.,", "polyphénols"]
+
+[[rubriques.lignes]]
+valeur = "à cidre n°45."

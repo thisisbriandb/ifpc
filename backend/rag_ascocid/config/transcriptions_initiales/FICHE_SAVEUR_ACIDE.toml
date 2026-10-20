@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1380 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1380
+code = "FICHE_SAVEUR_ACIDE"
+titre = "La saveur acide"
+image_sha256 = "dbaac5e85c0c97131925714674afb5208d2730d9e002b49d216f94afc143b76a"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Vocabulaire spécifique lié à la saveur acide proposé par la Chambre
+Régionale d'Agriculture de Normandie (https://normandie.chambres-agriculture.fr/fileadmin/user_upload/National/FAL_commun/
+publications/Normandie/cidre-fiche-elaboration-normandie.pdf
+BE Effet biochimique Effet sur la perception acide
+. Légère hausse de l'acidité titrable Augmentation
+Croissance .
+. et baisse du pH
+Action des levures
+Fermentation Forte baisse de la teneur en sucre Augmentation
+Transformation Forte baisse de l'acidité titrable et Baisse et perception moins
+malolactique hausse du pH « agressive »
+Légère production d'acides Augmentation mais perception
+Action des bactéries Piqüre lactique (acétique et D-lactique) particulière (acide volatile)
+. Légère production d’acide Augmentation mais perception
+Piqüre acétique acétique particulière (acide volatile)
+Tableau 1 : Principaux impacts des phénomènes microbiens sur les composés en lien avec
+la saveur acide et leurs conséquences gustatives"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Vocabulaire spécifique lié à la saveur acide proposé par la Chambre"
+
+[[rubriques.lignes]]
+intitule = "Régionale d'Agriculture de Normandie (https"
+valeur = "//normandie.chambres-agriculture.fr/fileadmin/user_upload/National/FAL_commun/ publications/Normandie/cidre-fiche-elaboration-normandie.pdf"
+douteux = ["(https://normandie.chambres-agriculture.fr/fileadmin/user_upload/National/FAL_commun/"]
+
+[[rubriques.lignes]]
+valeur = "BE Effet biochimique Effet sur la perception acide"
+douteux = ["BE"]
+
+[[rubriques.lignes]]
+valeur = ". Légère hausse de l'acidité titrable Augmentation Croissance . . et baisse du pH Action des levures Fermentation Forte baisse de la teneur en sucre Augmentation Transformation Forte baisse de l'acidité titrable et Baisse et perception moins malolactique hausse du pH « agressive »"
+douteux = ["l'acidité", "l'acidité"]
+
+[[rubriques.lignes]]
+valeur = "Légère production d'acides Augmentation mais perception Action des bactéries Piqüre lactique (acétique et D-lactique) particulière (acide volatile)"
+douteux = ["d'acides"]
+
+[[rubriques.lignes]]
+valeur = ". Légère production d’acide Augmentation mais perception Piqüre acétique acétique particulière (acide volatile)"
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Principaux impacts des phénomènes microbiens sur les composés en lien avec la saveur acide et leurs conséquences gustatives"

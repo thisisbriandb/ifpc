@@ -1,0 +1,124 @@
+# Transcription de l'illustration de la fiche 1398 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1398
+code = "FICHE_CALCUL_EFFICACITE_DES_TRAITEMENTS_THERMIQUES"
+titre = "Le calcul de l'efficacité des traitements thermiques"
+image_sha256 = "7ae04ed80d06ab3862208743758d0b9142d73c5f470f293711bf2016194a7d15"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 82.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+10000000
+£ L. Tableau | : Valeur pasteurisatrice d'une minute de
+E 9000000 Echelle normale (linéaire) . P _
+Z _ 8000000 traitement à la température T pour Z = 4.
+: Æ 7000000 — 60 °C
+2 % 6000000 ___ grec
+© E 5000000 dc T(°C) VP(UP)  T(°C)  VP(UP)  T(°C)  VP (UP)
+e © 4000000 40 0,00001 , 80 100000
+© 3000000 66°C
+Z 41 0,00002 , 81 177828
+2000000
+1000000 42 0,00003 , 82 316228
+0 43 0,00006 , 83 062341
+0 1 2 3 4 5 6
+Durée de traitement (min) 44 0,00010 : 84 1000000
+10000000 — 45 0,00018 , 85 1778279
+1000000 Echelle Logarithmique 46 0,00032 62] 86 3162278
+a 100000 47 0,00056 , 87 0623413
+S 10000 48 0,00100 00! 88 10000000
+: £ “oo 49 0,00178 , 89 17782794
+SÉ 50 0,00316 23| 90 31622777
+5S 51 | 0.,00562 34 091 56234133
+5 0,1 52 0,01000 , 92 100000000
+0,01
+0 1 2 3 4 5 6 53 0,01778 , 93 177827941
+Durée de traitement (min) 94 0,03162 , 94 316227766
+99 0,05623 95 9062341325
+96 0,10000 , 96 1000000000
+97 0,17783 , 97 1778279410
+Figure 1 : Evolution du nombre de germes survivants en
+fonction de la durée de traitement pour différentes
+températures.
+Les courbes sont tracées selon 2 types de représentations graphiques 58 0,31623 , 98 3162277660
+(échelle normale et échelle log). 59 0 56234 99 5623413252"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "10000000"
+
+[[rubriques.lignes]]
+intitule = "£ L. Tableau |"
+valeur = "Valeur pasteurisatrice d'une minute de E 9000000 Echelle normale (linéaire) . P _ Z _ 8000000 traitement à la température T pour Z = 4. : Æ 7000000 — 60 °C"
+douteux = ["L.", "E", "9000000", "P", "_", "Z", "8000000", "4.", "Æ", "7000000"]
+
+[[rubriques]]
+titre = "2 % 6000000 ___ grec"
+
+[[rubriques]]
+titre = "© E 5000000 dc T(°C) VP(UP)  T(°C)  VP(UP)  T(°C)  VP (UP)"
+
+[[rubriques.lignes]]
+valeur = "e © 4000000 40 0,00001 , 80 100000 © 3000000 66°C Z 41 0,00002 , 81 177828 2000000"
+douteux = ["e", "4000000", "66°C"]
+
+[[rubriques]]
+titre = "1000000 42 0,00003 , 82 316228"
+
+[[rubriques]]
+titre = "0 43 0,00006 , 83 062341"
+
+[[rubriques]]
+titre = "0 1 2 3 4 5 6"
+
+[[rubriques.lignes]]
+intitule = "Durée de traitement (min) 44 0,00010"
+valeur = "84 1000000"
+
+[[rubriques]]
+titre = "10000000 — 45 0,00018 , 85 1778279"
+
+[[rubriques]]
+titre = "1000000 Echelle Logarithmique 46 0,00032 62] 86 3162278"
+
+[[rubriques.lignes]]
+valeur = "a 100000 47 0,00056 , 87 0623413 S 10000 48 0,00100 00! 88 10000000 : £ “oo 49 0,00178 , 89 17782794 SÉ 50 0,00316 23| 90 31622777 5S 51 | 0.,00562 34 091 56234133"
+douteux = ["a", "S", "10000", "00!", "“oo", "SÉ", "23|", "5S", "0.,00562", "34", "091"]
+
+[[rubriques]]
+titre = "5 0,1 52 0,01000 , 92 100000000"
+
+[[rubriques.lignes]]
+valeur = "0,01"
+
+[[rubriques]]
+titre = "0 1 2 3 4 5 6 53 0,01778 , 93 177827941"
+
+[[rubriques.lignes]]
+valeur = "Durée de traitement (min) 94 0,03162 , 94 316227766"
+
+[[rubriques]]
+titre = "99 0,05623 95 9062341325"
+
+[[rubriques]]
+titre = "96 0,10000 , 96 1000000000"
+
+[[rubriques]]
+titre = "97 0,17783 , 97 1778279410"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Evolution du nombre de germes survivants en fonction de la durée de traitement pour différentes"
+
+[[rubriques.lignes]]
+valeur = "températures. Les courbes sont tracées selon 2 types de représentations graphiques 58 0,31623 , 98 3162277660"
+douteux = ["58"]
+
+[[rubriques.lignes]]
+valeur = "(échelle normale et échelle log). 59 0 56234 99 5623413252"
+douteux = ["0", "56234"]

@@ -1,0 +1,101 @@
+# Transcription de l'illustration de la fiche 1592 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1592
+code = "FICHE_METHODE_CONDITIONNEMENT_PRISE_DE_MOUSSE_EN_BOUTEILLE"
+titre = "La méthode de conditionnement avec prise de mousse en bouteille"
+image_sha256 = "1a30006f61b369ed377d0e8693766a46e2a90a15ab42d577b28cc871e0ee0d2c"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Si prise de mousse avec des levures indigènes: la filtration permet de
+limiter la population de levures avant la mise en bouteille
+Si prise de mousse avec des LSA (Levures Sèches Actives): la
+filtration permet d'éliminer les microorganismes présents dans le cidre
+Clarification +/- | {oyures et potentiels microorganismes d’altération) avant levurage
+fine
+Dénombrement des cellules par comptage sur cellule de Malassez (au
+microscope), boîte de Petri ou cytométrie en flux
+Niveau de population conseillé pour une prise de mousse en bouteille:
+Comptage des entre 200 000 et 500 000 cellules/mL.
+cellules
+Ajout de LSA
+Éventuel
+Levurage
+Mise en bouteille à une masse volumique de 4 à 8 points au-dessus
+de la masse volumique cible
+Suivi d'un bouchage et muselage des bouteilles
+Embouteillage
+Fermentation en bouteille générant du gaz carbonique piégé dans la
+bouteille
+Suivi de la pression en bouteille > pression finale entre 2 et 4 bars
+Prise de Consommation de l'oxygène dans la bouteille par les levures
+mousse
+La prise de mousse en bouteille nécessite un délai entre
+l'embouteillage et la commercialisation, le temps que la prise de
+mousse ait lieu
+| Stockage des bouteilles dans un local thermorégulé, ou à une
+Conservation température inférieure à 15 °C.
+Figure 1 : Les différentes étapes d'un conditionnement avec prise de mousse en bouteille"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Si prise de mousse avec des levures indigènes"
+valeur = "la filtration permet de limiter la population de levures avant la mise en bouteille"
+
+[[rubriques.lignes]]
+intitule = "Si prise de mousse avec des LSA (Levures Sèches Actives)"
+valeur = "la filtration permet d'éliminer les microorganismes présents dans le cidre"
+douteux = ["Actives):", "d'éliminer"]
+
+[[rubriques.lignes]]
+valeur = "Clarification +/- | {oyures et potentiels microorganismes d’altération) avant levurage"
+douteux = ["{oyures", "d’altération)"]
+
+[[rubriques.lignes]]
+valeur = "fine"
+
+[[rubriques.lignes]]
+valeur = "Dénombrement des cellules par comptage sur cellule de Malassez (au microscope), boîte de Petri ou cytométrie en flux Niveau de population conseillé pour une prise de mousse en bouteille:"
+
+[[rubriques.lignes]]
+valeur = "Comptage des entre 200 000 et 500 000 cellules/mL."
+
+[[rubriques.lignes]]
+valeur = "cellules"
+
+[[rubriques.lignes]]
+valeur = "Ajout de LSA"
+
+[[rubriques.lignes]]
+valeur = "Éventuel Levurage"
+
+[[rubriques.lignes]]
+valeur = "Mise en bouteille à une masse volumique de 4 à 8 points au-dessus de la masse volumique cible Suivi d'un bouchage et muselage des bouteilles"
+douteux = ["d'un"]
+
+[[rubriques.lignes]]
+valeur = "Embouteillage"
+
+[[rubriques.lignes]]
+valeur = "Fermentation en bouteille générant du gaz carbonique piégé dans la bouteille Suivi de la pression en bouteille > pression finale entre 2 et 4 bars"
+
+[[rubriques.lignes]]
+valeur = "Prise de Consommation de l'oxygène dans la bouteille par les levures"
+
+[[rubriques.lignes]]
+valeur = "mousse"
+
+[[rubriques.lignes]]
+valeur = "La prise de mousse en bouteille nécessite un délai entre l'embouteillage et la commercialisation, le temps que la prise de mousse ait lieu | Stockage des bouteilles dans un local thermorégulé, ou à une Conservation température inférieure à 15 °C."
+douteux = ["bouteille", "l'embouteillage"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes étapes d'un conditionnement avec prise de mousse en bouteille"
+douteux = ["d'un"]

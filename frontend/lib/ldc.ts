@@ -416,3 +416,82 @@ export async function retirerDocument(idoc: number): Promise<void> {
   });
   if (!r.ok) throw new Error(await detailErreur(r, "Retrait impossible."));
 }
+
+// ── Relecture des transcriptions d'illustrations ─────────────────────────────
+
+export interface LigneTranscription {
+  intitule: string;
+  valeur: string;
+  /** Mots dont l'OCR doute : à comparer à l'image. */
+  douteux: string[];
+}
+
+export interface RubriqueTranscription {
+  titre: string;
+  note: string;
+  lignes: LigneTranscription[];
+  /** Carte conceptuelle : cases reliées par des flèches, dans l'ordre. */
+  ordonnee?: boolean;
+}
+
+export type StatutTranscription = "a_verifier" | "corrige" | "valide";
+
+export interface ResumeTranscription {
+  code: string;
+  idoc: number;
+  titre: string;
+  statut: StatutTranscription;
+  douteux: number;
+  verifie_par: string;
+  verifie_le: string;
+  famille: string;
+  qualite: number;
+  /** Faux : lecture trop mauvaise, absente de l'assistant tant qu'elle n'est pas corrigée. */
+  indexee: boolean;
+}
+
+export interface Transcription {
+  idoc: number;
+  code: string;
+  titre: string;
+  image: string;
+  image_sha256: string;
+  source: string;
+  qualite_ocr: number;
+  statut: StatutTranscription;
+  verifie_par: string;
+  verifie_le: string;
+  rubriques: RubriqueTranscription[];
+  texte_ocr: string;
+  /** Ce que la lecture n'a pas su trancher : à vérifier avant que la fiche n'entre dans l'assistant. */
+  anomalies?: string[];
+}
+
+export async function listerTranscriptions(
+  signal?: AbortSignal,
+): Promise<{ transcriptions: ResumeTranscription[]; erreurs: string[] }> {
+  const r = await fetch(`${BASE_LDC}/transcriptions`, { headers: entetes(), signal });
+  if (!r.ok) throw new Error(await detailErreur(r, "Liste des transcriptions indisponible."));
+  return r.json();
+}
+
+export async function lireTranscription(code: string, signal?: AbortSignal): Promise<Transcription> {
+  const r = await fetch(`${BASE_LDC}/transcriptions/${encodeURIComponent(code)}`,
+    { headers: entetes(), signal });
+  if (!r.ok) throw new Error(await detailErreur(r, "Transcription indisponible."));
+  return r.json();
+}
+
+/** Enregistre une relecture ; le serveur pose l'auteur et la date, et met l'assistant à jour. */
+export async function corrigerTranscription(
+  code: string,
+  correction: { titre: string; statut: "corrige" | "valide"; rubriques: RubriqueTranscription[] },
+): Promise<Transcription> {
+  const r = await fetch(`${BASE_LDC}/transcriptions/${encodeURIComponent(code)}`, {
+    method: "PUT",
+    headers: entetes(),
+    body: JSON.stringify(correction),
+  });
+  if (!r.ok) throw new Error(await detailErreur(r, "Enregistrement refusé."));
+  return r.json();
+}

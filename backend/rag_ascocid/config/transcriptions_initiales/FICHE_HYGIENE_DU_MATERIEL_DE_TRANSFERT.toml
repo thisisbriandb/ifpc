@@ -1,0 +1,56 @@
+# Transcription de l'illustration de la fiche 1576 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1576
+code = "FICHE_HYGIENE_DU_MATERIEL_DE_TRANSFERT"
+titre = "Hygiène du matériel de transfert"
+image_sha256 = "0a554ca2e0891ebada96c866c51c35afe1b76d99c508097da0d385e9f1691754"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Cuve 1000 L
+ou bac de
+lancement /
+réception
+Figure 1 : Schéma d'un circuit fermé recommandé pour | Figure 2 : Exemple de balles de nettoyage (en mousse)
+la procédure de nettoyage et désinfection des matériels |! Source: https//b2b.levequeetfils.netVendanges--5/lavage--14/accessoires--
+de t fert (t | t 40/balles-en-mousse-pour-nettoyage-de-tuyaux--V102008-BAL.aspx et
+€ transre ( uyaux SoupIes € pompes) Guichard, H. (2023). « Hygiène en cidrerie » : Diagnostic, essais et pistes
+Source photo pompe : Ammriac d'amélioration — Notions de nettoyage / Désinfection. Présentation SIVAL 2023.
+Figure 3 : Exemple d’anneaux antichocs Figure 4 : Exemple d'arbre d'égouttage.
+Source: https://storevinicole.fr/products/anneaux-antichocs Source: https://www.sas-chayoux.com/arbre-degouttage-des-tuyaux/"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Cuve 1000 L ou bac de lancement / réception"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schéma d'un circuit fermé recommandé pour | Figure 2 : Exemple de balles de nettoyage (en mousse)"
+douteux = ["d'un"]
+
+[[rubriques.lignes]]
+valeur = "la procédure de nettoyage et désinfection des matériels |! Source: https//b2b.levequeetfils.netVendanges--5/lavage--14/accessoires--"
+douteux = ["https//b2b.levequeetfils.netVendanges--5/lavage--14/accessoires--"]
+
+[[rubriques.lignes]]
+valeur = "de t fert (t | t 40/balles-en-mousse-pour-nettoyage-de-tuyaux--V102008-BAL.aspx et € transre ( uyaux SoupIes € pompes) Guichard, H. (2023). « Hygiène en cidrerie » : Diagnostic, essais et pistes"
+douteux = ["(t", "transre", "SoupIes"]
+
+[[rubriques.lignes]]
+intitule = "Source photo pompe"
+valeur = "Ammriac d'amélioration — Notions de nettoyage / Désinfection. Présentation SIVAL 2023."
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Exemple d’anneaux antichocs Figure 4 : Exemple d'arbre d'égouttage."
+douteux = ["d’anneaux", "d'arbre", "d'égouttage."]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "https://storevinicole.fr/products/anneaux-antichocs Source: https://www.sas-chayoux.com/arbre-degouttage-des-tuyaux/"

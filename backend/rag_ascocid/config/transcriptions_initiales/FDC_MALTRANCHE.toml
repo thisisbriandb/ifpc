@@ -1,0 +1,161 @@
+# Transcription de l'illustration de la fiche 1438 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1438
+code = "FDC_MALTRANCHE"
+titre = "Maltranche"
+image_sha256 = "8c9666ce5606090dbd36f1365534f58d1cef4af0a263ad5be532dc0afe5a6813"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: MALTRANCHE
+PRINCIPALES ZONES DE PRODUCTION
+(départements et cantons)
+Ille-et-Vilaine : Guichen - Maure de Bretagne - Le Sel de Bretagne -
+Redon - Bain de Bretagne - Pipriac - Le Grand Fougeray - Janzé - La
+Guerche - Retiers.
+Loire-Atlantique : St Nicolas de Redon - Guéméné Penfao - Pontchâteau
+- Derval - Nozay - Rougé - Blain.
+POSSIBILITES de COMMERCIALISATION en bonne année
+Ille-et-Vilaine : 100 tonnes.
+Loire-Atlantique : 5 000 tonnes.
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 25-11-53)
+Dégustation du fruit : acidulé, pulpe farineuse.
+Dégustation du jus : acidulé.
+Rendement du jus (%) : 64,800.
+Densité du jus : 1 052,2.
+Acidité de titration en g. SO* H? par litre : 4,5.
+Azote/Sucres totaux : 0,31.
+Tanin (en g. par litre) : 1,52.
+Couleur du jus : très claire.
+Parfum : faible.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : assez grande.
+Port : en dome.
+Résistance aux maladies: assez rustique mais parfois tavelure sur
+feuilles.
+Productivité : bonne - alternante.
+Saison de floraison : 2e-3e.
+Saison de maturité : 2e-3e.
+Conservation et transport des fruits : bons.
+Grosseur du fruit : moyen.
+OBSERVATIONS DIVERSES
+A utiliser avant maturité complète car elle devient farineuse. Se retrouve
+encore sous le nom de Dol ou de Dol Maltranche.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Poris (1*r)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "départements et cantons"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : Guichen - Maure de Bretagne - Le Sel de Bretagne - Redon - Bain de Bretagne - Pipriac - Le Grand Fougeray - Janzé - La Guerche - Retiers."
+
+[[rubriques.lignes]]
+valeur = "Loire-Atlantique : St Nicolas de Redon - Guéméné Penfao - Pontchâteau - Derval - Nozay - Rougé - Blain."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : 100 tonnes. Loire-Atlantique : 5 000 tonnes."
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 25-11-53"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acidulé, pulpe farineuse."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acidulé."
+
+[[rubriques.lignes]]
+intitule = "Rendement du jus (%)"
+valeur = "64,800."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 052,2."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H? par litre"
+valeur = "4,5."
+douteux = ["H?"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,31."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,52."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "très claire."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "faible."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "assez grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en dome."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez rustique mais parfois tavelure sur feuilles."
+douteux = ["feuilles."]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne - alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "A utiliser avant maturité complète car elle devient farineuse. Se retrouve encore sous le nom de Dol ou de Dol Maltranche."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Poris (1*r)"
+douteux = ["Cidricoles", "(1*r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

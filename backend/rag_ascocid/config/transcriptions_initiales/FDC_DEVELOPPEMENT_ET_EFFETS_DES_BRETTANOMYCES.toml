@@ -1,0 +1,89 @@
+# Transcription de l'illustration de la fiche 1542 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1542
+code = "FDC_DEVELOPPEMENT_ET_EFFETS_DES_BRETTANOMYCES"
+titre = "Le développement et les effets des Brettanomyces"
+image_sha256 = "87f20dcaa143bb2fd615b3b60d003ce99014a6e0249c8134070e84fc9397093a"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+_Brettanomyces vue en microscopie à épifluorescence
+luin, R., Gilles, Y. (2010). Diagnostic sur les odeurs animales : Suivi de
+s phénols volatils au cours de l'élaboration et de la conservation des cidres
+és. Le cahier technique de l'IFPC, Pomme à cidre n°26
+> 2 : Relation entre la population de Brettanomyces et
+Jradation de l’acétate d'hexyle (ester d’acétate aux
+de poire)
+nes en pointilés noirs représentent la croissance de
+omyces, les lignes pleines représentent l'évolution des teneurs
+ate d'hexyle. Données provenant de 3 cidres.
+la figure 3 de Guichard et al., 2019. Brettanomyces anomalus, a double
+k for cider aroma. LWT — Food Science and Technology 102 (2019) 214-222.
+re 3 : Brettanomyces et la synthèse de phénols volatils
+?rofil de croissance de la souche de levure Brettanomyces IFPC-
+1 dans 3 cidres différents à 10°C (lignes en pointillés noirs).
+-volution des teneurs en 4-éthylcatéchol, un phénol volatil, dans
+es mêmes cidres (lignes pleines).
+Cidre 1 :1
+Cidre 2 : A
+Cidre 3 :@
+e: Adaptée de la figure 5 de l’article Guichard et al., 2019. Brettanomyces
+alus, a double drawback for cider aroma.
+- Food Science and Technology 102 (2019) 214-222."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "_Brettanomyces vue en microscopie à épifluorescence"
+douteux = ["_Brettanomyces", "vue"]
+
+[[rubriques.lignes]]
+valeur = "luin, R., Gilles, Y. (2010). Diagnostic sur les odeurs animales : Suivi de s phénols volatils au cours de l'élaboration et de la conservation des cidres és. Le cahier technique de l'IFPC, Pomme à cidre n°26"
+douteux = ["s", "l'élaboration", "és."]
+
+[[rubriques.lignes]]
+intitule = "> 2"
+valeur = "Relation entre la population de Brettanomyces et Jradation de l’acétate d'hexyle (ester d’acétate aux de poire)"
+douteux = ["Jradation", "l’acétate", "d'hexyle", "d’acétate"]
+
+[[rubriques.lignes]]
+valeur = "nes en pointilés noirs représentent la croissance de"
+douteux = ["nes", "pointilés"]
+
+[[rubriques.lignes]]
+valeur = "omyces, les lignes pleines représentent l'évolution des teneurs"
+
+[[rubriques.lignes]]
+valeur = "ate d'hexyle. Données provenant de 3 cidres."
+douteux = ["d'hexyle."]
+
+[[rubriques.lignes]]
+valeur = "la figure 3 de Guichard et al., 2019. Brettanomyces anomalus, a double k for cider aroma. LWT — Food Science and Technology 102 (2019) 214-222."
+
+[[rubriques.lignes]]
+intitule = "re 3"
+valeur = "Brettanomyces et la synthèse de phénols volatils ?rofil de croissance de la souche de levure Brettanomyces IFPC- 1 dans 3 cidres différents à 10°C (lignes en pointillés noirs). -volution des teneurs en 4-éthylcatéchol, un phénol volatil, dans es mêmes cidres (lignes pleines)."
+douteux = ["?rofil", "1"]
+
+[[rubriques.lignes]]
+intitule = "Cidre 1"
+valeur = "1"
+douteux = [":1"]
+
+[[rubriques.lignes]]
+intitule = "Cidre 2"
+valeur = "A"
+
+[[rubriques.lignes]]
+intitule = "Cidre 3"
+valeur = "@"
+
+[[rubriques.lignes]]
+intitule = "e"
+valeur = "Adaptée de la figure 5 de l’article Guichard et al., 2019. Brettanomyces alus, a double drawback for cider aroma. - Food Science and Technology 102 (2019) 214-222."
+douteux = ["l’article"]

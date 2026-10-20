@@ -1,0 +1,136 @@
+# Transcription de l'illustration de la fiche 1422 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1422
+code = "FDC_C_HUERO_BRIZ"
+titre = "C'Huero Briz"
+image_sha256 = "c874950eda91df9d026d08c6dbee21a3c9600fb3e69a97200f0167ead5f3feb4"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: C'HUERO BRIZ
+PRINCIPALES ZONES DE PRODUCTION
+Finistère : région de Fouesnant.
+Ph. Durand
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin du 2 novembre 1949)
+Dégustation du jus : doux amer.
+Dégustation du cidre : doux amer.
+Rendement en jus (4) : 58.
+Densité du jus : 1056 - Alcool en puissance : 7° 2.
+Acidité de titration en g. SO'‘H: par litre : 1,02.
+Azote/sucres totaux : 0,63.
+Tanin (en g. par litre) : 3,32.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Port : dôme semi érigé.
+Résistance aux maladies : bonne.
+Alternance : marquée.
+Productivité : moyenne.
+Saison de floraison : 2e.
+Saison de maturité : 2e.
+Calibre du fruit : moyen.
+Mise à fruits : lente.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)
+Edition 1966 @"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Finistère : région de Fouesnant."
+
+[[rubriques.lignes]]
+valeur = "Ph. Durand"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin du 2 novembre 1949"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (4)"
+valeur = "58."
+douteux = ["(4)"]
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1056"
+douteux = ["Alcool"]
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "7° 2."
+douteux = ["Alcool"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'‘H"
+valeur = "par litre : 1,02."
+douteux = ["SO'‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,63."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "3,32."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "dôme semi érigé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "marquée."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "lente."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)"
+douteux = ["(1*r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1966 @"

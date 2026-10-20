@@ -1,0 +1,83 @@
+# Transcription de l'illustration de la fiche 1340 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1340
+code = "CMAP_REGROUPEMENT_PROCEDURE_NETTOYAGE_SOLS"
+titre = "Les procédures d'entretien des sols et surfaces"
+image_sha256 = "74c18ede65d213e641aa8160437ff5e4df4a1adbb87073ccad8751b9f5afa3ec"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Procédures d'entretien des sols et surfaces
+sont un : Ensemble de procédures d’hygiène | Le rinçage des zones souillées après utilisation
+regroupent : Un nettoyage mécanique et chimique périodique puis un rinçage | Une éventuelle désinfection
+ont pour fonctions : D’établir une méthode pour maintenir les sols et les surfaces à un bon niveau d'hygiène | De réduire les contaminations croisées avec le matériel en contact avec le produit | D'éviter la formation, l'installation de biofilms
+sont fondées sur : Une élimination des nutriments pour éviter l'installation de foyers de contamination | Une décontamination à une fréquence choisie pour maintenir un niveau d’hygiène minimal (nettoyage & désinfection)
+sont définies par : Une suite d’opérations adaptée aux sols et surfaces | Les conditions de mise en œuvre des opérations (température, durée, concentration des produits...) | Une fréquence de mise en œuvre des procédures
+ont pour points de vigilance : Les caniveaux et canaux"""
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de procédures d’hygiène"
+
+[[rubriques.lignes]]
+intitule = "Ensemble de procédures d’hygiène"
+valeur = "Le rinçage des zones souillées après utilisation"
+
+[[rubriques]]
+titre = "regroupent"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un nettoyage mécanique et chimique périodique puis un rinçage"
+
+[[rubriques.lignes]]
+valeur = "Une éventuelle désinfection"
+
+[[rubriques]]
+titre = "ont pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’établir une méthode pour maintenir les sols et les surfaces à un bon niveau d'hygiène"
+douteux = ["D’établir", "d'hygiène"]
+
+[[rubriques.lignes]]
+valeur = "De réduire les contaminations croisées avec le matériel en contact avec le produit"
+
+[[rubriques.lignes]]
+valeur = "D'éviter la formation, l'installation de biofilms"
+douteux = ["D'éviter", "l'installation"]
+
+[[rubriques]]
+titre = "sont fondées sur"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des nutriments pour éviter l'installation de foyers de contamination"
+douteux = ["l'installation"]
+
+[[rubriques.lignes]]
+valeur = "Une décontamination à une fréquence choisie pour maintenir un niveau d’hygiène minimal (nettoyage & désinfection)"
+
+[[rubriques]]
+titre = "sont définies par"
+
+[[rubriques.lignes]]
+valeur = "Une suite d’opérations adaptée aux sols et surfaces"
+
+[[rubriques.lignes]]
+valeur = "Les conditions de mise en œuvre des opérations (température, durée, concentration des produits...)"
+douteux = ["produits...)"]
+
+[[rubriques.lignes]]
+valeur = "Une fréquence de mise en œuvre des procédures"
+
+[[rubriques]]
+titre = "ont pour points de vigilance"
+
+[[rubriques.lignes]]
+valeur = "Les caniveaux et canaux"

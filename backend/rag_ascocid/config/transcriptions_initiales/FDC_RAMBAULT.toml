@@ -1,0 +1,159 @@
+# Transcription de l'illustration de la fiche 1448 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1448
+code = "FDC_RAMBAULT"
+titre = "Rambault"
+image_sha256 = "05e1fc75465790ba7b03a68e0b55f46ccd5c860335d97da640ee1497320e8062"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: RAMBAULT
+PRINCIPALES ZONES DE PRODUCTION
+Calvados : assez abondante vers Cambremer
+Pays d'Auge l Br.
+POSSIBILITES de COMMERCIALISATION en bonne année
+Cette variété est vendue sur les marchés comme pomme à deux fins.
+De ce fait les possibilités de commercialisation comme pomme à cidre
+restent imprécises.
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse du Laboratoire de Caen le 27-10-61)
+Dégustation du fruit : acidulé, sucré, très bon.
+Dégustation du jus : fruité, bon, assez aigre.
+Rendement en jus (%) : 67.
+Densité du jus : 1 059,12.
+Acidité de titration en g. SO* H: par litre : 4,85.
+Azote/Sucres totaux : 1,77.
+Tanin (en g. par litre) : 1,08.
+Couleur du jus : ambré rouge soutenu, un peu trouble.
+Parfum : faible, convenable à bonne maturité.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Résistance aux maladies : assez rustique.
+Productivité : assez bonne.
+Saison de floraison : 3°.
+Saison de maturité : 2e.
+Conservation et transport des fruits : bons pour des fruits de 2e saison.
+Grosseur du fruit : au-dessus de la moyenne.
+OBSERVATIONS DIVERSES
+Variété localisée dans la région du Pays d'Auge ; considérée autrefois
+comme pomme à couteau. Certainement assez rustique dans la région
+où elle se trouve.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Calvados : assez abondante vers Cambremer"
+
+[[rubriques.lignes]]
+valeur = "Pays d'Auge l Br."
+douteux = ["l", "Br."]
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques.lignes]]
+valeur = "Cette variété est vendue sur les marchés comme pomme à deux fins. De ce fait les possibilités de commercialisation comme pomme à cidre"
+
+[[rubriques.lignes]]
+valeur = "restent imprécises."
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse du Laboratoire de Caen le 27-10-61"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acidulé, sucré, très bon."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "fruité, bon, assez aigre."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "67."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 059,12."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H"
+valeur = "par litre : 4,85."
+douteux = ["H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "1,77."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,08."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "ambré rouge soutenu, un peu trouble."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "faible, convenable à bonne maturité."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez rustique."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "assez bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3°."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+douteux = ["2e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons pour des fruits de 2e saison."
+douteux = ["fruits", "2e"]
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "au-dessus de la moyenne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété localisée dans la région du Pays d'Auge ; considérée autrefois comme pomme à couteau. Certainement assez rustique dans la région"
+douteux = ["d'Auge"]
+
+[[rubriques.lignes]]
+valeur = "où elle se trouve."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)"
+douteux = ["(1+r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1570 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1570
+code = "FICHE_PROCEDES_DE_CLARIFICATION_DES_MOUTS"
+titre = "Les procédés de clarification des moûts"
+image_sha256 = "e5384ba6091965110eca31b04dba745c70cf6243b0d52d72f1655044fc064d58"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+1) Ajout
+® dCi ur
+1) Ajout
+d'enzymes
+Pectinases
+5) Remontée du gel et
+Q Piégeage des particules
+en suspension
+3) Formation du
+gel pectique par EE Diminution de la
+réaction de la EE
+pectine avec le
+calcium (Ca?)
+Figure 1 : La clarification haute (Gélification des pectines) Figure 2 : La clarification basse (Dépectinisation)
+PME = Pectine Méthyle Estérase Pour les moûts ayant une acidité supérieure à 4 g/L d'H,SO,"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "1) Ajout ® dCi ur"
+douteux = ["dCi", "ur"]
+
+[[rubriques.lignes]]
+valeur = "1) Ajout d'enzymes Pectinases"
+douteux = ["d'enzymes"]
+
+[[rubriques.lignes]]
+valeur = "5) Remontée du gel et Q Piégeage des particules en suspension"
+douteux = ["Q", "Piégeage"]
+
+[[rubriques.lignes]]
+valeur = "3) Formation du gel pectique par EE Diminution de la"
+douteux = ["EE"]
+
+[[rubriques.lignes]]
+valeur = "réaction de la EE pectine avec le calcium (Ca?)"
+douteux = ["EE", "(Ca?)"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La clarification haute (Gélification des pectines) Figure 2 : La clarification basse (Dépectinisation) PME = Pectine Méthyle Estérase Pour les moûts ayant une acidité supérieure à 4 g/L d'H,SO,"

@@ -1,0 +1,126 @@
+# Transcription de l'illustration de la fiche 1571 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1571
+code = "FICHE_ACIDITE_TOTALE"
+titre = "L'acidité totale"
+image_sha256 = "ff7fc46d611e55e9a9398cf9fbd9212681e766bfccfba12b4ac85842f7a1c9c7"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 79.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Tardive de la Sarthe
+Saint Martin
+Rouge Duret °
+Saireline
+Peau de chien
+Muscadet de Dieppe
+Noël des champs
+Kerrmerrien
+Doux Evêque Jaune |®
+Keramere
+(o) Doux Veret .
+= Treladine
+8 de Carrouges e
+© © Moulin à vent
+un Doux Normandie |®
+[0] ©
+E Doux Joseph Teshières
+4 Douce de l’avent Rambault
+(0 ._ le
+TD Douce Coetligné . Rouge de dol gros
+un | Pomme de moi e
+É Mettais Domaines Marie Menard ° Rouge de Trêves
+& ° Clozette ° Pomme de boué °
+PO Clos Renaux e René Martin
+C'huero Briz © Marin Onfroy Moeneuvie Det;
+Chevalier Jaune © Judp line Maltranche etit jaune
+Cartigny Frequin rouge petit Locard blanc nr: s
+Dabinett 2. © ° Jaune de Vitré s
+© Bisquet Frequinette  Locard vert © Judin
+. ? © 4 © Sebin gros
+e Douce Moën © © 10 L oux Rouge je Ruiz
+Bedan ° Blanc Sur
+Argile Bruyère Antoinette Blanchet Guillevic Armagnac Avrolles  Cazo Jaune Renao
+(0) 1 2 3 4 5 6 7 8 9 10 11
+Acidité totale (g/L H>SO,)
+Figure 1 : Distribution des variétés de pommes à cidre en fonction de leur acidité totale (g/L H,SO,;)
+Acides Fermentation Transformation Piqüre lactique Piqûüre acétique
+malolactique
+Acide malique
+Acide L-lactique Se
+Acide D-lactique
+Acide acétique
+Figure 2 : Évolutions possibles des différents acides, et donc de l'acidité totale, au cours de l'élaboration des cidres"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Tardive de la Sarthe"
+
+[[rubriques.lignes]]
+valeur = "Saint Martin Rouge Duret °"
+
+[[rubriques.lignes]]
+valeur = "Saireline"
+
+[[rubriques.lignes]]
+valeur = "Peau de chien Muscadet de Dieppe Noël des champs Kerrmerrien Doux Evêque Jaune |®"
+douteux = ["Muscadet", "des", "Kerrmerrien"]
+
+[[rubriques.lignes]]
+valeur = "Keramere (o) Doux Veret . = Treladine"
+douteux = ["(o)"]
+
+[[rubriques]]
+titre = "8 de Carrouges e"
+
+[[rubriques.lignes]]
+valeur = "© © Moulin à vent un Doux Normandie |® [0] © E Doux Joseph Teshières"
+douteux = ["un", "[0]", "E", "Teshières"]
+
+[[rubriques]]
+titre = "4 Douce de l’avent Rambault"
+
+[[rubriques.lignes]]
+valeur = "(0 ._ le TD Douce Coetligné . Rouge de dol gros un | Pomme de moi e É Mettais Domaines Marie Menard ° Rouge de Trêves & ° Clozette ° Pomme de boué ° PO Clos Renaux e René Martin C'huero Briz © Marin Onfroy Moeneuvie Det; Chevalier Jaune © Judp line Maltranche etit jaune"
+douteux = ["(0", "._", "le", "TD", "Rouge", "un", "e", "É", "Pomme", "PO", "Clos", "C'huero", "Det;", "Jaune", "Judp", "Maltranche"]
+
+[[rubriques.lignes]]
+intitule = "Cartigny Frequin rouge petit Locard blanc nr"
+valeur = "s Dabinett 2. © ° Jaune de Vitré s © Bisquet Frequinette  Locard vert © Judin . ? © 4 © Sebin gros e Douce Moën © © 10 L oux Rouge je Ruiz Bedan ° Blanc Sur Argile Bruyère Antoinette Blanchet Guillevic Armagnac Avrolles  Cazo Jaune Renao (0) 1 2 3 4 5 6 7 8 9 10 11"
+douteux = ["nr:", "s", "2.", "s", "4", "L", "je", "Bedan", "Blanc", "Bruyère", "Antoinette", "Avrolles", " Cazo", "(0)", "9"]
+
+[[rubriques.lignes]]
+valeur = "Acidité totale (g/L H>SO,)"
+douteux = ["H>SO,)"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Distribution des variétés de pommes à cidre en fonction de leur acidité totale (g/L H,SO,;)"
+douteux = ["H,SO,;)"]
+
+[[rubriques.lignes]]
+valeur = "Acides Fermentation Transformation Piqüre lactique Piqûüre acétique malolactique"
+douteux = ["Piqûüre"]
+
+[[rubriques.lignes]]
+valeur = "Acide malique"
+
+[[rubriques.lignes]]
+valeur = "Acide L-lactique Se"
+douteux = ["Se"]
+
+[[rubriques.lignes]]
+valeur = "Acide D-lactique"
+
+[[rubriques.lignes]]
+valeur = "Acide acétique"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Évolutions possibles des différents acides, et donc de l'acidité totale, au cours de l'élaboration des cidres"
+douteux = ["l'acidité", "l'élaboration"]

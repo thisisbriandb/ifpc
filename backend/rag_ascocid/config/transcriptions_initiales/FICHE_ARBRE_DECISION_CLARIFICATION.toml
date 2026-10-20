@@ -1,0 +1,105 @@
+# Transcription de l'illustration de la fiche 1052 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1052
+code = "FICHE_ARBRE_DECISION_CLARIFICATION"
+titre = "Choix du type de clarification"
+image_sha256 = "a2d77879da7090f6795efd4084dffb4cb9f89e48a6a064ce71033e218f740f4a"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Quantité de pectine dans le moût
+Très forte
+quantité de Test à l’Alcool
+pectine
+Faibles quantités
+de pectine
+Quantité de pectine
+normale
+Quantité d'acide malique dans le moût
+>4 g/L H,SO idité trè
+Test Acidité g 2204 Acidité très
+forte
+Acidité faible à
+moyenne Pas de gélification
+possible
+Dépectinisation
+Démarrage de la
+fermentation Très rapide
+Mousse blanche en surface Faible efficacité
+clarifiante
+Très lent | |
+Centrifugation
+après soutirage
+Séparation des |
+bourbes difficile
+Dépectinisation Situation favorable à une
+des bourbes bonne clarification haute Attendre la séparation Centrifugation
+Séparation tardive des Séparation des
+bourbes- bonne clarification bourbes impossible"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Quantité de pectine dans le moût Très forte"
+
+[[rubriques.lignes]]
+valeur = "quantité de Test à l’Alcool pectine"
+douteux = ["l’Alcool"]
+
+[[rubriques.lignes]]
+valeur = "Faibles quantités de pectine"
+
+[[rubriques.lignes]]
+valeur = "Quantité de pectine normale"
+
+[[rubriques.lignes]]
+valeur = "Quantité d'acide malique dans le moût"
+douteux = ["d'acide"]
+
+[[rubriques.lignes]]
+valeur = ">4 g/L H,SO idité trè Test Acidité g 2204 Acidité très"
+douteux = ["H,SO", "2204"]
+
+[[rubriques.lignes]]
+valeur = "forte"
+
+[[rubriques.lignes]]
+valeur = "Acidité faible à"
+
+[[rubriques.lignes]]
+valeur = "moyenne Pas de gélification"
+
+[[rubriques.lignes]]
+valeur = "possible"
+
+[[rubriques.lignes]]
+valeur = "Dépectinisation Démarrage de la"
+
+[[rubriques.lignes]]
+valeur = "fermentation Très rapide"
+
+[[rubriques.lignes]]
+valeur = "Mousse blanche en surface Faible efficacité"
+
+[[rubriques.lignes]]
+valeur = "clarifiante Très lent | | Centrifugation"
+
+[[rubriques.lignes]]
+valeur = "après soutirage"
+
+[[rubriques.lignes]]
+valeur = "Séparation des | bourbes difficile"
+
+[[rubriques.lignes]]
+valeur = "Dépectinisation Situation favorable à une"
+
+[[rubriques.lignes]]
+valeur = "des bourbes bonne clarification haute Attendre la séparation Centrifugation"
+
+[[rubriques.lignes]]
+valeur = "Séparation tardive des Séparation des bourbes- bonne clarification bourbes impossible"

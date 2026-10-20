@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1095 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1095
+code = "FICHE_DEPECTINISATION"
+titre = "La dépectinisation : dégradation de la pectine"
+image_sha256 = "3169648b9351d280112a97083e3e35d8921f451fa0f2f2ec23a0eeacb68714f2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Molécule de pectine
+Chaine principale linéaire
+Acide
+galacturonique
+méthylé *., Représentation schématique
+de la chaîne principale
+Représentation
+- schématique du
+groupe méthyle
+Fragment de la
+, chaîne principale
+déméthylée
+Acide &D galacturonique
+méthylé
+Figure 1 : Structure de la pectine.
+En a) le schéma de la structure générale comprenant la chaîne principale et les zones ramifiées; en b) le schéma de la chaîne
+principale constituée d'acide galacturonique méthylé (c) qui devient de l'acide galacturonique (d) sous l’action de la
+pectinestérase (PE) générant ainsi des zones déméthylées (e)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Molécule de pectine"
+
+[[rubriques.lignes]]
+valeur = "Chaine principale linéaire"
+
+[[rubriques.lignes]]
+valeur = "Acide galacturonique méthylé *., Représentation schématique de la chaîne principale"
+douteux = ["méthylé"]
+
+[[rubriques.lignes]]
+valeur = "Représentation - schématique du groupe méthyle"
+
+[[rubriques.lignes]]
+valeur = "Fragment de la , chaîne principale déméthylée"
+
+[[rubriques.lignes]]
+valeur = "Acide &D galacturonique méthylé"
+douteux = ["&D"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure de la pectine."
+
+[[rubriques.lignes]]
+valeur = "En a) le schéma de la structure générale comprenant la chaîne principale et les zones ramifiées; en b) le schéma de la chaîne principale constituée d'acide galacturonique méthylé (c) qui devient de l'acide galacturonique (d) sous l’action de la pectinestérase (PE) générant ainsi des zones déméthylées (e)."
+douteux = ["chaîne", "chaîne", "d'acide", "l'acide"]

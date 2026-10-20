@@ -1,0 +1,60 @@
+# Transcription de l'illustration de la fiche 1146 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1146
+code = "CMAP_CONDITIONNEMENT_PDM_CUVE_CLOSE"
+titre = "La prise de mousse en cuve close"
+image_sha256 = "f7b13bb8a8329a25d42a975d808d490b6f1e40da5152db2b802a72c39b3caf88"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La prise de mousse en cuve close
+est une : Phénomène de la modalité conditionnement avec prise de mousse en cuve close
+est constituée de : Une légère croissance des levures | Une fermentation en cuve close
+est suivie par : Une élimination des levures par filtration sous contre -pression
+a pour fonction : De saturer le cidre en gaz carbonique par fermentation en cuve (effervescence naturelle)
+a pour conséquence : Une meilleure maitrise de la saturation en CO 2 (par rapport à la prise de mousse en bouteille)
+a pour équipement : Une cuve close résistant à la pression"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Phénomène de la modalité conditionnement avec prise de mousse en cuve close"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une légère croissance des levures"
+
+[[rubriques.lignes]]
+valeur = "Une fermentation en cuve close"
+
+[[rubriques]]
+titre = "est suivie par"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des levures par filtration sous contre -pression"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De saturer le cidre en gaz carbonique par fermentation en cuve (effervescence naturelle)"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "Une meilleure maitrise de la saturation en CO 2 (par rapport à la prise de mousse en bouteille)"
+
+[[rubriques]]
+titre = "a pour équipement"
+
+[[rubriques.lignes]]
+valeur = "Une cuve close résistant à la pression"

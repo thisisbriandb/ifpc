@@ -1,0 +1,54 @@
+# Transcription de l'illustration de la fiche 1117 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1117
+code = "CMAP_FERMENTATION_MISE_EN_FERMENTATION"
+titre = "La mise en fermentation"
+image_sha256 = "3eaac6caf5fb4663e229c5be057249ada806184a8e607dbe2cc9f3644f450e59"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La mise en fermentation
+est une : Opération de l’étape fermentaire
+regroupe : Un transfert vers une cuve de fermentation | Un refroidissement (facultatif) | Un sulfitage (facultatif) | Un ensemencement en levures (facultatif) | Une addition de facteurs de croissance (facultative)
+a pour fonction : De placer le moût dans les conditions favorables au bon déroulement de la fermentation
+présente le risque : De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape fermentaire"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Un transfert vers une cuve de fermentation"
+
+[[rubriques.lignes]]
+valeur = "Un refroidissement (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Un sulfitage (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Un ensemencement en levures (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Une addition de facteurs de croissance (facultative)"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De placer le moût dans les conditions favorables au bon déroulement de la fermentation"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"

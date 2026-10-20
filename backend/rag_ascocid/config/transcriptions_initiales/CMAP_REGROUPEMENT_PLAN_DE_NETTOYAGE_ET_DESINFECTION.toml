@@ -1,0 +1,103 @@
+# Transcription de l'illustration de la fiche 1338 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1338
+code = "CMAP_REGROUPEMENT_PLAN_DE_NETTOYAGE_ET_DESINFECTION"
+titre = "Le plan de nettoyage et désinfection"
+image_sha256 = "3c9d1aa7e486b9341d93bbdf9c6eda301f0f68d89a7e10fc977e0073d039f119"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 89.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le plan de Nettoyage & Désinfection
+est un : Ensemble de procédures d'hygiène
+regroupe : Les procédures de nettoyage & désinfection du matériel | La chaîne de pressage (râpe, presse) | Les cuves et leurs accessoires | Le matériel de transfert de liquide (pompes, tuyaux...) | Les centrifugeuses | Les filtres à Kieselguhr | Les filtres à plaques | Les filtres tangentiels | La chaîne d’embouteillage (saturateur, embouteilleuse...) | Les bouteilles recyclées | Les procédures d'entretien des sols et surfaces | Les silos à pommes | Le local de pressage | La cuverie, les locaux de traitement et d'embouteillage | Les procédures d'assainissement de l'ambiance | La désinsectisation
+a pour fonctions : D’éliminer des résidus de matière organique | De réduire la contamination en microorganismes d’altérations et leur développement"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de procédures d'hygiène"
+douteux = ["d'hygiène"]
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Les procédures de nettoyage & désinfection du matériel"
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "La chaîne de pressage (râpe, presse)"
+douteux = ["chaîne"]
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "Les cuves et leurs accessoires"
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "Le matériel de transfert de liquide (pompes, tuyaux...)"
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "Les centrifugeuses"
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "Les filtres à Kieselguhr"
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "Les filtres à plaques"
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "Les filtres tangentiels"
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "La chaîne d’embouteillage (saturateur, embouteilleuse...)"
+douteux = ["d’embouteillage", "embouteilleuse...)"]
+
+[[rubriques.lignes]]
+intitule = "Les procédures de nettoyage & désinfection du matériel"
+valeur = "Les bouteilles recyclées"
+
+[[rubriques.lignes]]
+valeur = "Les procédures d'entretien des sols et surfaces"
+douteux = ["d'entretien"]
+
+[[rubriques.lignes]]
+intitule = "Les procédures d'entretien des sols et surfaces"
+valeur = "Les silos à pommes"
+
+[[rubriques.lignes]]
+intitule = "Les procédures d'entretien des sols et surfaces"
+valeur = "Le local de pressage"
+
+[[rubriques.lignes]]
+intitule = "Les procédures d'entretien des sols et surfaces"
+valeur = "La cuverie, les locaux de traitement et d'embouteillage"
+douteux = ["d'embouteillage"]
+
+[[rubriques.lignes]]
+valeur = "Les procédures d'assainissement de l'ambiance"
+douteux = ["d'assainissement", "l'ambiance"]
+
+[[rubriques.lignes]]
+intitule = "Les procédures d'assainissement de l'ambiance"
+valeur = "La désinsectisation"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’éliminer des résidus de matière organique"
+douteux = ["D’éliminer"]
+
+[[rubriques.lignes]]
+valeur = "De réduire la contamination en microorganismes d’altérations et leur développement"

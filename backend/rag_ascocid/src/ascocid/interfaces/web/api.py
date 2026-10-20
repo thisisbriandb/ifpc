@@ -26,6 +26,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import re
 import time
 from collections.abc import Iterator
 from concurrent.futures import ThreadPoolExecutor
@@ -39,8 +40,11 @@ from fastapi.responses import FileResponse, StreamingResponse
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
+from ascocid.application.ingestion import schemas
+from ascocid.application.ingestion import transcriptions_images
 from ascocid.application.ingestion.documents import (
     TAILLE_MAX,
+    VERROU as VERROU_ECRITURE,
     Bibliotheque,
     DocumentAjoute,
     DocumentRefuse,
@@ -61,6 +65,12 @@ BLOBS = RACINE / "blobs"
 MANIFESTE = RACINE / "manifeste.json"
 RETOURS = RACINE / "retours.jsonl"
 SUGGESTIONS = pathlib.Path("config/suggestions.json")
+SCHEMAS = pathlib.Path("config/schemas")
+# Illustrations en image transcrites par OCR puis relues : des données, qui
+# vivent avec le corpus (et sont corrigées sur place par la relecture).
+TRANSCRIPTIONS_IMAGES = RACINE / "transcriptions" / "images"
+# Copie de départ livrée avec le code, semée dans le volume au démarrage.
+TRANSCRIPTIONS_INITIALES = pathlib.Path("config/transcriptions_initiales")
 # Documents ajoutés depuis l'administration de la plateforme : sur le même
 # volume que le corpus, pour être sauvegardés et déplacés avec lui.
 BIBLIOTHEQUE = Bibliotheque(RACINE / "documents")
@@ -99,6 +109,7 @@ class Moteur:
         self.analyseur_modele: Any = None
         self.generateur: Any = None
         self.carte = ""
+        self.schemas: list = []
         self.generation_disponible = False
         self.modele_redaction = ""
         self.modele_analyse = ""
@@ -126,8 +137,34 @@ class Moteur:
             print(f"[ldc] index vectoriel indisponible ({type(exc).__name__}: {exc}) "
                   f"— recherche lexicale seule")
 
+        # Le sens des schémas (ordre des étapes, branches) vient des
+        # transcriptions versionnées avec le code : une nouvelle version déployée
+        # est indexée ici, sans commande à lancer sur le serveur.
+        self.schemas = schemas.charger(SCHEMAS)
+        manifeste = json.loads(MANIFESTE.read_text()) if MANIFESTE.exists() else {}
         with MagasinSqlite(BASE_DONNEES) as magasin:
-            self.carte = gabarit.carte_du_corpus(magasin)
+            ecrits, anomalies = schemas.synchroniser(
+                self.schemas, magasin, self.embedder, self.index)
+            if ecrits is not None:
+                print(f"[ldc] schémas : {ecrits} passages indexés "
+                      f"({len(self.schemas)} transcriptions)")
+            for alerte in anomalies + schemas.schemas_modifies(self.schemas, manifeste):
+                print(f"[ldc] schémas : {alerte}")
+            copiees, remplacees = transcriptions_images.semer(
+                TRANSCRIPTIONS_INITIALES, TRANSCRIPTIONS_IMAGES)
+            if copiees or remplacees:
+                print(f"[ldc] illustrations : {copiees} transcriptions amenées, "
+                      f"{remplacees} mises à jour (non relues)")
+            erreurs: list[str] = []
+            illustrations = transcriptions_images.charger_dossier(TRANSCRIPTIONS_IMAGES, erreurs)
+            ecrits, anomalies = transcriptions_images.synchroniser(
+                illustrations, magasin, self.embedder, self.index)
+            if ecrits is not None:
+                print(f"[ldc] illustrations : {ecrits} passages indexés "
+                      f"({len(illustrations)} transcriptions)")
+            for alerte in erreurs + anomalies:
+                print(f"[ldc] illustrations : {alerte}")
+            self.carte = gabarit.carte_du_corpus(magasin, self.schemas)
 
         from ascocid.infrastructure.llm import fabrique
 
@@ -154,7 +191,7 @@ class Moteur:
         jusqu'au prochain redémarrage qu'un document existe.
         """
         with MagasinSqlite(BASE_DONNEES) as magasin:
-            self.carte = gabarit.carte_du_corpus(magasin)
+            self.carte = gabarit.carte_du_corpus(magasin, self.schemas)
         if self.generateur is not None:
             self.generateur.carte = self.carte
 
@@ -190,7 +227,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=os.environ.get("LDC_ORIGINES", "*").split(","),
     allow_credentials=True,
-    allow_methods=["GET", "POST", "DELETE"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
 
@@ -473,6 +510,74 @@ def fichier_document(idoc: int) -> FileResponse:
         # « inline » : un PDF s'ouvre dans le navigateur au lieu d'être téléchargé.
         content_disposition_type="inline",
     )
+
+
+# ── Relecture des transcriptions d'illustrations ─────────────────────────────
+
+
+CODE_VALIDE = re.compile(r"^[A-Za-z0-9_]{1,120}$")
+
+
+class Correction(BaseModel):
+    titre: str = Field(min_length=1, max_length=300)
+    statut: str = Field(pattern="^(corrige|valide)$")
+    rubriques: list[transcriptions_images.Rubrique]
+
+
+def _transcription(code: str) -> transcriptions_images.TranscriptionImage:
+    # Le code devient un nom de fichier : rien d'autre que lettres, chiffres, _.
+    chemin = TRANSCRIPTIONS_IMAGES / f"{code}.toml"
+    if not CODE_VALIDE.match(code) or not chemin.exists():
+        raise HTTPException(status_code=404, detail="Transcription inconnue.")
+    return transcriptions_images.charger(chemin)
+
+
+@app.get(f"{PREFIXE}/transcriptions")
+def lister_transcriptions(_: dict | None = Depends(administrateur)) -> dict:
+    erreurs: list[str] = []
+    liste = transcriptions_images.charger_dossier(TRANSCRIPTIONS_IMAGES, erreurs)
+    return {
+        "transcriptions": [
+            {"code": t.code, "idoc": t.idoc, "titre": t.titre, "statut": t.statut,
+             "douteux": t.nb_douteux, "verifie_par": t.verifie_par, "verifie_le": t.verifie_le,
+             "famille": t.code.split("_", 1)[0], "qualite": t.qualite_ocr,
+             # Trop mal lue pour entrer dans l'assistant avant correction.
+             "indexee": t.indexable}
+            for t in liste],
+        "erreurs": erreurs,
+    }
+
+
+@app.get(f"{PREFIXE}/transcriptions/{{code}}")
+def lire_transcription(code: str, _: dict | None = Depends(administrateur)) -> dict:
+    t = _transcription(code)
+    return {**t.model_dump(), "image": f"{PREFIXE}/illustration/{t.idoc}"}
+
+
+@app.put(f"{PREFIXE}/transcriptions/{{code}}")
+def corriger_transcription(code: str, correction: Correction,
+                           admin: dict | None = Depends(administrateur)) -> dict:
+    """Enregistre une relecture et met à jour l'assistant pour cette fiche.
+
+    Ce qui vient de l'OCR (empreinte de l'image, texte brut) n'est pas
+    modifiable : seuls le titre, les rubriques et le statut le sont. L'auteur
+    et la date de la relecture sont posés par le serveur, d'après le jeton.
+    """
+    with VERROU_ECRITURE:
+        t = _transcription(code)
+        t = t.model_copy(update={
+            "titre": correction.titre.strip(),
+            "statut": correction.statut,
+            "rubriques": correction.rubriques,
+            "verifie_par": (admin or {}).get("sub", ""),
+            "verifie_le": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        })
+        transcriptions_images.enregistrer(TRANSCRIPTIONS_IMAGES, t)
+        toutes = transcriptions_images.charger_dossier(TRANSCRIPTIONS_IMAGES, [])
+        with MagasinSqlite(BASE_DONNEES) as magasin:
+            passages = transcriptions_images.remplacer_une(
+                t, toutes, magasin, moteur.embedder, moteur.index)
+    return {**t.model_dump(), "image": f"{PREFIXE}/illustration/{t.idoc}", "passages": passages}
 
 
 @app.get(f"{PREFIXE}/suggestions")

@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1376 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1376
+code = "FICHE_CHIMIE_DES_POLYPHENOLS"
+titre = "La chimie des composés phénoliques (\" polyphénols \")"
+image_sha256 = "c6e267b9a36763c47c390c8b1d118af262fecdcfd301d30ed4c4845617e9cb34"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Benzene un phénol un ortho-diphénol
++120, OH LP OH O
+. , x | +120;
+Oxydations des phénols + « >»
+L'oxydation d’un mono-phénol en L'oxydation d’un ortho-diphénol en
+ortho-diphénol ortho-quinone
+Figure 1 : Le noyau benzénique, le groupe phénol et l'oxydation des composés
+phénoliques.
+Le noyau benzénique est une molécule cyclique de 6 carbones et 6 hydrogènes, qui peut être
+schématisée de différentes façons (a) ; les hydrogènes n'étant généralement pas représentés.
+Lorsqu'un des hydrogènes est remplacé par un OH, on forme un groupe phénol (b) ou un diphénol,
+s’il y a deux OH. Si les deux OH sont sur des carbones voisins (c), il sera appelé un ortho-diphénol.
+Ces groupes phénols peuvent être oxydés en présence d'oxygène pour donner une ortho-quinone à
+partir d’un ortho-diphénol (e). Les mono-phénols sont d’abord oxydés en ortho-diphénol, puis en
+ortho-quinone (d)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Benzene un phénol un ortho-diphénol"
+
+[[rubriques]]
+titre = "+120, OH LP OH O"
+
+[[rubriques.lignes]]
+valeur = ". , x | +120; Oxydations des phénols + « >»"
+douteux = ["x", "+120;"]
+
+[[rubriques.lignes]]
+valeur = "L'oxydation d’un mono-phénol en L'oxydation d’un ortho-diphénol en ortho-diphénol ortho-quinone"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Le noyau benzénique, le groupe phénol et l'oxydation des composés"
+
+[[rubriques.lignes]]
+valeur = "phénoliques."
+
+[[rubriques.lignes]]
+valeur = "Le noyau benzénique est une molécule cyclique de 6 carbones et 6 hydrogènes, qui peut être schématisée de différentes façons (a) ; les hydrogènes n'étant généralement pas représentés. Lorsqu'un des hydrogènes est remplacé par un OH, on forme un groupe phénol (b) ou un diphénol, s’il y a deux OH. Si les deux OH sont sur des carbones voisins (c), il sera appelé un ortho-diphénol. Ces groupes phénols peuvent être oxydés en présence d'oxygène pour donner une ortho-quinone à partir d’un ortho-diphénol (e). Les mono-phénols sont d’abord oxydés en ortho-diphénol, puis en ortho-quinone (d)."
+douteux = ["d'oxygène"]

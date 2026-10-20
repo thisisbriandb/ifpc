@@ -1,0 +1,64 @@
+# Transcription de l'illustration de la fiche 1169 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1169
+code = "FICHE_EXTRACTION_CUVAGE"
+titre = "Le cuvage"
+image_sha256 = "9185b466a460aceb41acbdb2c26788eb57033632de8cbaa5ef5af15cc494f4be"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Pressage
+Tanins non oxydés
+(astringents)
+en solution
+Moût peu coloré,
+Forte teneur en
+tanins astringents
+Fixation des tanins
+astringents sur le
+isolées marc
+| cellulaires
+Cellules intactes
+Moût coloré,
+. Faible teneur en
+en tanins tanins astringents
+Râpure de pommes riches
+Figure 1 : Schéma expliquant le principe de fixation des tannins de grandes tailles sur le marc, au cours
+d'un cuvage avec oxydation. L'adsorption des tanins sur le marc entraîne une diminution de
+l'astringence des moûts obtenus, et l'oxydation des marcs conduit à une augmentation de leur couleur."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Pressage"
+
+[[rubriques.lignes]]
+valeur = "Tanins non oxydés (astringents) en solution"
+
+[[rubriques.lignes]]
+valeur = "Moût peu coloré, Forte teneur en tanins astringents"
+
+[[rubriques.lignes]]
+valeur = "Fixation des tanins astringents sur le"
+
+[[rubriques.lignes]]
+valeur = "isolées marc"
+
+[[rubriques.lignes]]
+valeur = "| cellulaires Cellules intactes"
+
+[[rubriques.lignes]]
+valeur = "Moût coloré, . Faible teneur en en tanins tanins astringents"
+douteux = ["Moût"]
+
+[[rubriques.lignes]]
+valeur = "Râpure de pommes riches"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schéma expliquant le principe de fixation des tannins de grandes tailles sur le marc, au cours d'un cuvage avec oxydation. L'adsorption des tanins sur le marc entraîne une diminution de l'astringence des moûts obtenus, et l'oxydation des marcs conduit à une augmentation de leur couleur."

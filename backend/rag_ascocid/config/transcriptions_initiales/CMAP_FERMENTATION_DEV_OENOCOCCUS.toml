@@ -1,0 +1,81 @@
+# Transcription de l'illustration de la fiche 1103 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1103
+code = "CMAP_FERMENTATION_DEV_OENOCOCCUS"
+titre = "Le développement des Oenococcus"
+image_sha256 = "728e75b4ccc87c67a43751f41bc9784fddee322e5e631ba225c8e24b0b7f6d70"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le développement des Œnococcus
+est un : Phénomène se produisant au cours de l’étape fermentaire
+a pour phases : Une phase de latence | Une croissance exponentielle | Une phase stationnaire | Une décroissance des bactéries viables (forte mortalité)
+induit : Les principaux effets des Oenococcus
+a pour autres conséquences : Une consommation de nutriments nécessaires à la croissance | Une utilisation d'éléments produits par Saccharomyces (démarrage en fin de fermentation alcoolique)
+est inhibé par : La présence de sulfites libres dans le moût (SO,) | Un pH trop bas (<3,3)
+est influencé par : La température du moût | La population initiale des Œnococus | La teneur en nutriments de croissance des Oenococcus"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "a pour phases"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une phase de latence"
+
+[[rubriques.lignes]]
+valeur = "Une croissance exponentielle"
+
+[[rubriques.lignes]]
+valeur = "Une phase stationnaire"
+
+[[rubriques.lignes]]
+valeur = "Une décroissance des bactéries viables (forte mortalité)"
+
+[[rubriques]]
+titre = "induit"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Oenococcus"
+
+[[rubriques]]
+titre = "a pour autres conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de nutriments nécessaires à la croissance"
+
+[[rubriques.lignes]]
+valeur = "Une utilisation d'éléments produits par Saccharomyces (démarrage en fin de fermentation alcoolique)"
+douteux = ["d'éléments"]
+
+[[rubriques]]
+titre = "est inhibé par"
+
+[[rubriques.lignes]]
+valeur = "La présence de sulfites libres dans le moût (SO,)"
+douteux = ["(SO,)"]
+
+[[rubriques.lignes]]
+valeur = "Un pH trop bas (<3,3)"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La température du moût"
+
+[[rubriques.lignes]]
+valeur = "La population initiale des Œnococus"
+douteux = ["population", "initiale"]
+
+[[rubriques.lignes]]
+valeur = "La teneur en nutriments de croissance des Oenococcus"

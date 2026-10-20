@@ -1,0 +1,71 @@
+# Transcription de l'illustration de la fiche 1131 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1131
+code = "CMAP_ASSEMBLAGE_CIDRES_ASSEMBLES"
+titre = "Les cidres assemblés"
+image_sha256 = "bf8fc55d7d9c0bb7494531795dc2ed4dced19be27dcfa3bf6074ba7861247616"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les cidres assemblés
+sont des : Produits intermédiaires de l’élaboration du cidre
+sont caracterises par : Leur masse volumique | Leur acidité titrable et pH | Le titre alcoométrique acquis | Les autres caractéristiques définies par le décret cidre et d'éventuels cahiers des charges
+sont décrits par : Les saveurs sucrée, acide et amère et leur équilibre | Les arômes (fruités, floraux) et leur équilibre | Leur couleur | Leur turbidité
+sont désignés par : Des signes d’origine (AOP, AOC, IGP) | La catégorie de cidre (« doux », « demi-sec », « brut », « extra-brut ») | Des signes de qualité (pur jus, bio, Label Rouge...) | Diverses mentions (fermier, artisanal, ...)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Produits intermédiaires de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "sont caracterises par"
+
+[[rubriques.lignes]]
+valeur = "Leur masse volumique"
+
+[[rubriques.lignes]]
+valeur = "Leur acidité titrable et pH"
+
+[[rubriques.lignes]]
+valeur = "Le titre alcoométrique acquis"
+
+[[rubriques.lignes]]
+valeur = "Les autres caractéristiques définies par le décret cidre et d'éventuels cahiers des charges"
+douteux = ["d'éventuels"]
+
+[[rubriques]]
+titre = "sont décrits par"
+
+[[rubriques.lignes]]
+valeur = "Les saveurs sucrée, acide et amère et leur équilibre"
+
+[[rubriques.lignes]]
+valeur = "Les arômes (fruités, floraux) et leur équilibre"
+
+[[rubriques.lignes]]
+valeur = "Leur couleur"
+
+[[rubriques.lignes]]
+valeur = "Leur turbidité"
+
+[[rubriques]]
+titre = "sont désignés par"
+
+[[rubriques.lignes]]
+valeur = "Des signes d’origine (AOP, AOC, IGP)"
+
+[[rubriques.lignes]]
+valeur = "La catégorie de cidre (« doux », « demi-sec », « brut », « extra-brut »)"
+
+[[rubriques.lignes]]
+valeur = "Des signes de qualité (pur jus, bio, Label Rouge...)"
+douteux = ["Rouge...)"]
+
+[[rubriques.lignes]]
+valeur = "Diverses mentions (fermier, artisanal, ...)"

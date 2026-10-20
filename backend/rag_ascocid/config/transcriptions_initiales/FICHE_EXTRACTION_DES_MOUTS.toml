@@ -1,0 +1,97 @@
+# Transcription de l'illustration de la fiche 1569 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1569
+code = "FICHE_EXTRACTION_DES_MOUTS"
+titre = "L'extraction des moûts"
+image_sha256 = "f351b4fe87cd7dd9dda3b43f835391dd03765bab39e6bfc9f0671d81008704dd"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Râpage
+Obtention de la räpure
+Lavage et tri des
+Rémiage Ô
+Traitement (Facultatif)
+de la râpure
+(Facultatif)
+Obtention
+« petit jus »
+Diffusion de la pectine
+Adsorption des tanins Récupération du moût
+Oxydation des polyphénols Diffusion de la pectine
+Oxydation des polyphénols
+Figure 1 : Les différentes étapes de l'extraction des moûts
+À. Pommes lavées puis triées pour ôter les fruits altérés
+B. Râpage (Râpes)
+C. Pressage (presse à bandes et presse à paquet)
+D. Marc résultant du pressage
+E. Moût « pur jus » issu du pressage
+Sources: Photos IFPC et IDAC
+Refroidissement
+du moût
+Amélioration de la qualité de la clarification haute
+Limitation du développement des microorganismes d'altération"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Râpage"
+
+[[rubriques.lignes]]
+valeur = "Obtention de la räpure"
+douteux = ["räpure"]
+
+[[rubriques.lignes]]
+valeur = "Lavage et tri des"
+
+[[rubriques.lignes]]
+valeur = "Rémiage Ô Traitement (Facultatif)"
+douteux = ["Ô"]
+
+[[rubriques.lignes]]
+valeur = "de la râpure (Facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Obtention « petit jus »"
+
+[[rubriques.lignes]]
+valeur = "Diffusion de la pectine"
+
+[[rubriques.lignes]]
+valeur = "Adsorption des tanins Récupération du moût"
+
+[[rubriques.lignes]]
+valeur = "Oxydation des polyphénols Diffusion de la pectine Oxydation des polyphénols"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes étapes de l'extraction des moûts À. Pommes lavées puis triées pour ôter les fruits altérés"
+douteux = ["l'extraction"]
+
+[[rubriques.lignes]]
+valeur = "B. Râpage (Râpes)"
+douteux = ["Râpage", "(Râpes)"]
+
+[[rubriques.lignes]]
+valeur = "C. Pressage (presse à bandes et presse à paquet)"
+
+[[rubriques.lignes]]
+valeur = "D. Marc résultant du pressage"
+
+[[rubriques.lignes]]
+valeur = "E. Moût « pur jus » issu du pressage"
+
+[[rubriques.lignes]]
+intitule = "Sources"
+valeur = "Photos IFPC et IDAC"
+
+[[rubriques.lignes]]
+valeur = "Refroidissement du moût"
+
+[[rubriques.lignes]]
+valeur = "Amélioration de la qualité de la clarification haute Limitation du développement des microorganismes d'altération"

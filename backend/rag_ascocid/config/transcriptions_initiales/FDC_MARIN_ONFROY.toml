@@ -1,0 +1,163 @@
+# Transcription de l'illustration de la fiche 1439 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1439
+code = "FDC_MARIN_ONFROY"
+titre = "Marin Onfroy"
+image_sha256 = "bdadcf3ac045b5dc13883973ba770f9913b7c9724d8a2d2493337d9a6125346b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: MARIN ONFROY
+PRINCIPALES ZONES DE PRODUCTION
+Centre de la Manche.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 100 tonnes.
+Ph. Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Jacquin du 1e\" décembre 1965)
+Dégustation du jus : doux amer.
+Densité du jus : 1051 - Alcool en puissance : 6° 5.
+Acidité de titration en g. SO‘H: par litre : 2,64.
+Azote/sucres totaux : 3,46.
+Tanin (en g. par litre) : 1,80.
+Parfum : faible.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : très grande.
+Port : arbre en cylindre.
+Résistance aux maladies : sensible à l'anthonome et à la tavelure qui par
+la suite peut causer des chancres.
+Alternance : très marquée.
+Productivité : faible.
+Saison de floraison : 2e.
+Saison de maturité : 3e.
+Conservation et transport des fruits : assez bons.
+Calibre du fruit : gros.
+Mise à fruits : tardive sur franc.
+OBSERVATIONS DIVERSES
+La floraison s'annonce abondante (nombreux boutons) mais peu de fleurs
+arrivent à éclosion du fait de l'anthonome.
+Arbre très important et très beau.
+Très beaux fruits, estimés en cidrerie.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1-'})
+Edition 1966 [G)"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Centre de la Manche."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 100 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Jacquin du 1e\" décembre 1965"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1051"
+douteux = ["6°", "5."]
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "6° 5."
+douteux = ["6°", "5."]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘H"
+valeur = "par litre : 2,64."
+douteux = ["SO‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "3,46."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,80."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "faible."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "très grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "arbre en cylindre."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "sensible à l'anthonome et à la tavelure qui par la suite peut causer des chancres."
+douteux = ["l'anthonome"]
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "très marquée."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "faible."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "assez bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "gros."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "tardive sur franc."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "La floraison s'annonce abondante (nombreux boutons) mais peu de fleurs arrivent à éclosion du fait de l'anthonome."
+
+[[rubriques.lignes]]
+valeur = "Arbre très important et très beau."
+
+[[rubriques.lignes]]
+valeur = "Très beaux fruits, estimés en cidrerie."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1-'})"
+douteux = ["(1-'})"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1966 [G)"
+douteux = ["[G)"]

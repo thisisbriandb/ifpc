@@ -1,0 +1,64 @@
+# Transcription de l'illustration de la fiche 1039 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1039
+code = "CMAP_CENTRIFUGATION"
+titre = "La centrifugation"
+image_sha256 = "c563f9f157043ddf54d945a189ca32845bb3c7eebb166a45d7478e57c005e5ad"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La centrifugation
+est une : Opération de séparation utilisée au cours de la clarification des moûts et des cidres
+doit être complétée par : Une procédure de nettoyage / désinfection de la centrifugeuse
+a pour fonction : Une élimination rapide des matières en suspension
+est fondée sur : La séparation des particules et du liquide du fait de leur différence de masse volumique | L'augmentation de la vitesse de sédimentation (force centrifuge)
+a pour équipements : Les différents types de centrifugeuses
+est pilotée par : Le débit réel de la centrifugeuse (selon la turbidité du produit sortant) | La fréquence des débourbages (selon la turbidité du produit entrant)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de séparation utilisée au cours de la clarification des moûts et des cidres"
+douteux = ["moûts"]
+
+[[rubriques]]
+titre = "doit être complétée par"
+
+[[rubriques.lignes]]
+valeur = "Une procédure de nettoyage / désinfection de la centrifugeuse"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "Une élimination rapide des matières en suspension"
+
+[[rubriques]]
+titre = "est fondée sur"
+
+[[rubriques.lignes]]
+valeur = "La séparation des particules et du liquide du fait de leur différence de masse volumique"
+
+[[rubriques.lignes]]
+valeur = "L'augmentation de la vitesse de sédimentation (force centrifuge)"
+douteux = ["L'augmentation"]
+
+[[rubriques]]
+titre = "a pour équipements"
+
+[[rubriques.lignes]]
+valeur = "Les différents types de centrifugeuses"
+
+[[rubriques]]
+titre = "est pilotée par"
+
+[[rubriques.lignes]]
+valeur = "Le débit réel de la centrifugeuse (selon la turbidité du produit sortant)"
+
+[[rubriques.lignes]]
+valeur = "La fréquence des débourbages (selon la turbidité du produit entrant)"

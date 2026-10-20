@@ -1,0 +1,92 @@
+# Transcription de l'illustration de la fiche 1534 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1534
+code = "FDC_NUTRIMENTS_NECESSAIRES_A_LA_CROISSANCE_DES_LEVURES"
+titre = "Les nutriments nécessaires à la croissance des levures"
+image_sha256 = "da053d5a934dc258ac8be15135afcb6a589a136a6299e507e68f39b9719fc376"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+200
+150 à
+10 N5
+— Arrêt de croissance
+—+— Azote résiduel
+—e— Nombre de levures 50 vo
+30 40 50 60
+de fermentation (en jours)
+levures et de l’azote au cours d’une fermentation
+ue l'azote assimilable est consommé.
+6,0
+—+— Masse volumique
+—— Vitesse de fermentation
+— Arrêt de croissance
+5,0 ©
+4,0 =
+3,0 © À
+2,0 T
+1,0 n
+0,0
+30 40 50
+entation (en jours)
+e et de la vitesse de fermentation dans les produits
+population de levures viables est maximale."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "200"
+
+[[rubriques]]
+titre = "150 à"
+
+[[rubriques]]
+titre = "10 N5"
+
+[[rubriques.lignes]]
+valeur = "— Arrêt de croissance —+— Azote résiduel"
+
+[[rubriques.lignes]]
+valeur = "—e— Nombre de levures 50 vo"
+douteux = ["—e—", "vo"]
+
+[[rubriques]]
+titre = "30 40 50 60"
+
+[[rubriques.lignes]]
+valeur = "de fermentation (en jours)"
+
+[[rubriques.lignes]]
+valeur = "levures et de l’azote au cours d’une fermentation ue l'azote assimilable est consommé."
+
+[[rubriques.lignes]]
+valeur = "6,0 —+— Masse volumique —— Vitesse de fermentation"
+douteux = ["Masse"]
+
+[[rubriques.lignes]]
+valeur = "— Arrêt de croissance"
+
+[[rubriques.lignes]]
+valeur = "5,0 © 4,0 = 3,0 © À 2,0 T"
+douteux = ["À", "T"]
+
+[[rubriques.lignes]]
+valeur = "1,0 n"
+douteux = ["n"]
+
+[[rubriques.lignes]]
+valeur = "0,0"
+
+[[rubriques]]
+titre = "30 40 50"
+
+[[rubriques.lignes]]
+valeur = "entation (en jours)"
+
+[[rubriques.lignes]]
+valeur = "e et de la vitesse de fermentation dans les produits population de levures viables est maximale."

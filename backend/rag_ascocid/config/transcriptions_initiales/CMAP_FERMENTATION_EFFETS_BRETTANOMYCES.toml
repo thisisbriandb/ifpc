@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1107 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1107
+code = "CMAP_FERMENTATION_EFFETS_BRETTANOMYCES"
+titre = "Les principaux effets des Brettanomyces"
+image_sha256 = "b0a1f17a3c2b50ae3567ebeb23821db0053df7ae1d22c7fb870fc58766096b50"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principaux effets des Brettanomyces
+sont des : Phénomènes se produisant au cours de l’étape fermentaire et après le conditionnement
+regroupent : La production de phénols volatils (odeurs animales) | La dégradation des esters d’acétate (arômes fruités) | La production de composés soufrés lourds
+sont conditionnés par : La croissance des Brettanomyces
+ont pour impacts sensoriels : Une apparition d’odeurs animales (cuir, étable, écurie…) | Une diminution des arômes fruités
+sont influencés par : Leur population maximale atteinte | Leur survie dans le moût"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Phénomènes se produisant au cours de l’étape fermentaire et après le conditionnement"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La production de phénols volatils (odeurs animales)"
+
+[[rubriques.lignes]]
+valeur = "La dégradation des esters d’acétate (arômes fruités)"
+
+[[rubriques.lignes]]
+valeur = "La production de composés soufrés lourds"
+
+[[rubriques]]
+titre = "sont conditionnés par"
+
+[[rubriques.lignes]]
+valeur = "La croissance des Brettanomyces"
+
+[[rubriques]]
+titre = "ont pour impacts sensoriels"
+
+[[rubriques.lignes]]
+valeur = "Une apparition d’odeurs animales (cuir, étable, écurie…)"
+
+[[rubriques.lignes]]
+valeur = "Une diminution des arômes fruités"
+
+[[rubriques]]
+titre = "sont influencés par"
+
+[[rubriques.lignes]]
+valeur = "Leur population maximale atteinte"
+
+[[rubriques.lignes]]
+valeur = "Leur survie dans le moût"

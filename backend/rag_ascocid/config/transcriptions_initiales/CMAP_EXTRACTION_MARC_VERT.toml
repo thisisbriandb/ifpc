@@ -1,0 +1,68 @@
+# Transcription de l'illustration de la fiche 1080 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1080
+code = "CMAP_EXTRACTION_MARC_VERT"
+titre = "Le marc vert"
+image_sha256 = "9841605245a623d906578c8273b262fdb97897e0ba7d168a24b0da0be7e12679"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le marc vert
+est un : Coproduit de l'élaboration du cidre
+a pour synonyme : Le marc frais
+est caractérisé par : Sa teneur en sucres résiduels | Son taux d'humidité | Sa température
+est décrit par : Sa consistance
+est issu de : Du pressage de la râpure
+est valorisé par : Le rémiage | D’autres utilisations"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Coproduit de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "Le marc frais"
+
+[[rubriques]]
+titre = "est caractérisé par"
+
+[[rubriques.lignes]]
+valeur = "Sa teneur en sucres résiduels"
+
+[[rubriques.lignes]]
+valeur = "Son taux d'humidité"
+douteux = ["d'humidité"]
+
+[[rubriques.lignes]]
+valeur = "Sa température"
+
+[[rubriques]]
+titre = "est décrit par"
+
+[[rubriques.lignes]]
+valeur = "Sa consistance"
+
+[[rubriques]]
+titre = "est issu de"
+
+[[rubriques.lignes]]
+valeur = "Du pressage de la râpure"
+
+[[rubriques]]
+titre = "est valorisé par"
+
+[[rubriques.lignes]]
+valeur = "Le rémiage"
+
+[[rubriques.lignes]]
+valeur = "D’autres utilisations"
+douteux = ["D’autres"]

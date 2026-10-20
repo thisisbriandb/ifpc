@@ -1,0 +1,26 @@
+# Transcription de l'illustration de la fiche 1234 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1234
+code = "FICHE_CONDNT_OXYGENATION_EMBOUTEILLAGE"
+titre = "L'oxygénation du cidre à l'embouteillage"
+image_sha256 = "269d280962889cd6e8b151186356c532ac7716bca029cc124a9cb4e6947b5781"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : L'embouteillage.
+Photo de Y. CORVEN."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "L'embouteillage."
+douteux = ["L'embouteillage."]
+
+[[rubriques.lignes]]
+valeur = "Photo de Y. CORVEN."

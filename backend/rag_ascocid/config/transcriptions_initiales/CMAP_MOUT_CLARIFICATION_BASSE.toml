@@ -1,0 +1,93 @@
+# Transcription de l'illustration de la fiche 1044 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1044
+code = "CMAP_MOUT_CLARIFICATION_BASSE"
+titre = "Les moûts clarifiés par clarification basse"
+image_sha256 = "6fd41ff9575381be5126a61999d630d6153e709452c095fa5e2ddcf2475d991d"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les moûts clarifiés par clarification basse
+sont des : Produits intermédiaires de l'élaboration du cidre
+regroupent : Le moût « dépectinisé » (clarification basse sans collage) | Le moût « dépectinisé et collé » (clarification basse avec collage) | Le moût « limpide » (dépectinisé et microfiltré)
+sont caractérisés par : Leur teneur en sucres | Leur teneur en acide malique | Leur teneur en polyphénols | Leur teneur résiduelle en pectines solubles | Leur teneur en azote assimilable | Leur teneur en matières en suspension | Leur teneur en minéraux
+sont décrits par : Leur turbidité | Leur couleur | Leur saveur sucrée | Leur saveur acide | Leur saveur amère | Leur astringence | Leurs arômes
+sont produits par : La clarification basse des moûts"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Produits intermédiaires de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Le moût « dépectinisé » (clarification basse sans collage)"
+
+[[rubriques.lignes]]
+intitule = "Le moût « dépectinisé » (clarification basse sans collage)"
+valeur = "Le moût « dépectinisé et collé » (clarification basse avec collage)"
+
+[[rubriques.lignes]]
+valeur = "Le moût « limpide » (dépectinisé et microfiltré)"
+
+[[rubriques]]
+titre = "sont caractérisés par"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en sucres"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en acide malique"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en polyphénols"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur résiduelle en pectines solubles"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en azote assimilable"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en matières en suspension"
+
+[[rubriques.lignes]]
+valeur = "Leur teneur en minéraux"
+
+[[rubriques]]
+titre = "sont décrits par"
+
+[[rubriques.lignes]]
+valeur = "Leur turbidité"
+
+[[rubriques.lignes]]
+valeur = "Leur couleur"
+
+[[rubriques.lignes]]
+valeur = "Leur saveur sucrée"
+
+[[rubriques.lignes]]
+valeur = "Leur saveur acide"
+
+[[rubriques.lignes]]
+valeur = "Leur saveur amère"
+
+[[rubriques.lignes]]
+valeur = "Leur astringence"
+
+[[rubriques.lignes]]
+valeur = "Leurs arômes"
+
+[[rubriques]]
+titre = "sont produits par"
+
+[[rubriques.lignes]]
+valeur = "La clarification basse des moûts"

@@ -1,0 +1,159 @@
+# Transcription de l'illustration de la fiche 1444 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1444
+code = "FDC_NOEL_DES_CHAMPS"
+titre = "Noël des champs"
+image_sha256 = "643367845ffcac02a540de02a6fc3aca077be3512660162e860f38c3a3b7b99e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: NOEL DES CHAMPS
+PRINCIPALES ZONES DE PRODUCTION
+Calvados : Centre et sud du Pays d'Auge.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 1.500 tonnes.
+Ph. Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. jacquin du 4 janvier 1965)
+Dégustation du jus : doux amer.
+Dégustation du cidre : doux amer.
+Rendement en jus (%) : 53,7.
+Densité du jus : 1078,5 - Alcool en puissance : 10°.
+Acidité de titration en g. SO'‘H: par litre : 1,07.
+Azote/sucres totaux : 0,28.
+Tanin (en g. par litre) : 2,96.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : très grande.
+Port : cône retombant.
+Résistance aux maladies : très grande (légère sensibilité aux pucerons
+sur feuilles).
+Productivité : bonne.
+Saison de floraison : fin 3e.
+Saison de maturité : 3°.
+Conservation et transport des fruits : très bons.
+Calibre du fruit : moyen à petit.
+Précocité de mise à fruits: assez bonne sur porte-greffes de multiplica-
+tion végétative.
+OBSERVATIONS DIVERSES
+Brassage en janvier-février. Variété recommandée pour la fabrication de
+cidres doux et de cidres mousseux.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Poris (1er)
+Edition 1966"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Calvados : Centre et sud du Pays d'Auge."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 1.500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. jacquin du 4 janvier 1965"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "53,7."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1078,5"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "10°."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'‘H"
+valeur = "par litre : 1,07."
+douteux = ["SO'‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,28."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,96."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "très grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "cône retombant."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "très grande (légère sensibilité aux pucerons sur feuilles)."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "fin 3e."
+douteux = ["3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3°."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à petit."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "assez bonne sur porte-greffes de multiplica- tion végétative."
+douteux = ["fruits:"]
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Brassage en janvier-février. Variété recommandée pour la fabrication de cidres doux et de cidres mousseux."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Poris (1er)"
+douteux = ["(1er)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1966"

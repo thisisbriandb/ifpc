@@ -1,0 +1,37 @@
+# Transcription de l'illustration de la fiche 1594 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1594
+code = "FICHE_METHODE_DE_CONDITIONNEMENT_AVEC_GAZEIFICATION"
+titre = "La méthode de conditionnement avec gazéification"
+image_sha256 = "75a9c41b67d68db2ad577dd7e1a00fc1ee97b38ae15b7c9895c067f94dcf5d0f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Manomètre
+Figure 1 : Exemple de modèle de saturateur
+Le saturateur correspond à une enceinte sous pression, permettant
+d'incorporer du gaz carbonique (CO,) dans le cidre, pour lui apporter son
+effervescence. Le manomètre permet de suivre la pression de saturation.
+Sources: https://rizzolio.net/fr/prodotto/unites-de-saturation-co2-de-produits/ et Y.Corven."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Manomètre"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple de modèle de saturateur Le saturateur correspond à une enceinte sous pression, permettant d'incorporer du gaz carbonique (CO,) dans le cidre, pour lui apporter son"
+douteux = ["d'incorporer", "(CO,)"]
+
+[[rubriques.lignes]]
+valeur = "effervescence. Le manomètre permet de suivre la pression de saturation."
+
+[[rubriques.lignes]]
+intitule = "Sources"
+valeur = "https://rizzolio.net/fr/prodotto/unites-de-saturation-co2-de-produits/ et Y.Corven."

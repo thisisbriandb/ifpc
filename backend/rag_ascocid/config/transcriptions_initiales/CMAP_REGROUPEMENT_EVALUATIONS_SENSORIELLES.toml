@@ -1,0 +1,50 @@
+# Transcription de l'illustration de la fiche 1337 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1337
+code = "CMAP_REGROUPEMENT_EVALUATIONS_SENSORIELLES"
+titre = "Évaluations sensorielles"
+image_sha256 = "8aaee898670c262b6737025028ca7414bcf63e3ed26b416b595fd178c9c3b68f"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Evaluations sensorielles
+sont un : Ensemble de méthodes d'analyses organoleptiques
+regroupent : La caractérisation sensorielle pour la formulation d’un assemblage | Les tests comparatifs pour évaluer l'effet d’un procédé (ex : test triangulaire) | L’appréciation hédonique pour évaluer un nouveau produit
+ont pour critères : Les perceptions en bouche (saveurs et astringence) | Les perceptions olfactives pour les arômes et défauts olfactifs | La perception visuelle pour la couleur et la turbidité"""
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de méthodes d'analyses organoleptiques"
+douteux = ["d'analyses"]
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La caractérisation sensorielle pour la formulation d’un assemblage"
+
+[[rubriques.lignes]]
+valeur = "Les tests comparatifs pour évaluer l'effet d’un procédé (ex : test triangulaire)"
+douteux = ["l'effet"]
+
+[[rubriques.lignes]]
+valeur = "L’appréciation hédonique pour évaluer un nouveau produit"
+douteux = ["L’appréciation"]
+
+[[rubriques]]
+titre = "ont pour critères"
+
+[[rubriques.lignes]]
+valeur = "Les perceptions en bouche (saveurs et astringence)"
+
+[[rubriques.lignes]]
+valeur = "Les perceptions olfactives pour les arômes et défauts olfactifs"
+
+[[rubriques.lignes]]
+valeur = "La perception visuelle pour la couleur et la turbidité"

@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1319 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1319
+code = "CMAP_POST_CONDITIONNEMENT_AVEC_PASTEURISATION"
+titre = "Les opérations post-conditionnement avec pasteurisation"
+image_sha256 = "e15f9bc6d0038303d5725cc79151e0c4ab99a4dfe95e47aede534b77c4db2d66"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le post -conditionnement avec pasteurisation
+est une : Modalité de l’étape Post -conditionnement des cidres
+est constitué de : Une pasteurisation en bouteille | Un étiquetage, un habillage et un emballage | Un stockage du cidre pasteurisé en bouteille
+a pour fonctions : De stabiliser le cidre et de le préparer à la commercialisation | De disposer d’un stock de cidre prêt pour la commercialisation
+a pour conséquences : Une modification sensorielle du cidre | Une possible apparition de trouble post -clarification (en cas de stockage long)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape Post -conditionnement des cidres"
+
+[[rubriques]]
+titre = "est constitué de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une pasteurisation en bouteille"
+
+[[rubriques.lignes]]
+valeur = "Un étiquetage, un habillage et un emballage"
+
+[[rubriques.lignes]]
+valeur = "Un stockage du cidre pasteurisé en bouteille"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De stabiliser le cidre et de le préparer à la commercialisation"
+
+[[rubriques.lignes]]
+valeur = "De disposer d’un stock de cidre prêt pour la commercialisation"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une modification sensorielle du cidre"
+
+[[rubriques.lignes]]
+valeur = "Une possible apparition de trouble post -clarification (en cas de stockage long)"

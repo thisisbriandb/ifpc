@@ -1,0 +1,28 @@
+# Transcription de l'illustration de la fiche 1540 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1540
+code = "FDC_LE_DEVELOPPEMENT_DES_HANSENIASPORA"
+titre = "Le développement des Hanseniaspora"
+image_sha256 = "1c94f5346104ce79d80e197aa9fd9ccbc82aa1f1a47302f4cd3deff4c7909bc8"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Hanseniaspora valbyensis.
+Les levures Hanseniaspora ont une forme
+caractéristique, dite apiculée.
+(site CBS, T. van Beers et T. Boekhout)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Hanseniaspora valbyensis. Les levures Hanseniaspora ont une forme"
+douteux = ["Hanseniaspora"]
+
+[[rubriques.lignes]]
+valeur = "caractéristique, dite apiculée. (site CBS, T. van Beers et T. Boekhout)"

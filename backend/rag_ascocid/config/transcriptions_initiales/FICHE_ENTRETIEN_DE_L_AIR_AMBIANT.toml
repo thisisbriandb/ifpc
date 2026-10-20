@@ -1,0 +1,28 @@
+# Transcription de l'illustration de la fiche 1567 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1567
+code = "FICHE_ENTRETIEN_DE_L_AIR_AMBIANT"
+titre = "Entretien de l'air ambiant"
+image_sha256 = "6f90c8e6d1215f1caf18034ec732a80191ce935a5155558d603ba2f1614fdf3f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 85.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Exemple de déshumidificateur
+Source: https://www.pop-industrie.com/deshumidificateur-a-condensation-pour-l-industrie-0-85-1-55-kg-h-
+aquasorb-produit-8529-182"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple de déshumidificateur"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "https://www.pop-industrie.com/deshumidificateur-a-condensation-pour-l-industrie-0-85-1-55-kg-h- aquasorb-produit-8529-182"
+douteux = ["https://www.pop-industrie.com/deshumidificateur-a-condensation-pour-l-industrie-0-85-1-55-kg-h-"]

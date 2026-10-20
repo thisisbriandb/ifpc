@@ -1,0 +1,79 @@
+# Transcription de l'illustration de la fiche 1061 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1061
+code = "CMAP_RECOLTE_RAMASSAGE_MECANIQUE"
+titre = "Le ramassage mécanique des pommes"
+image_sha256 = "288d42628071cf759924a4f323291ee87c5f4095e76c654724de4595bc61cfda"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le ramassage mécanique des pommes
+est une : Opération de l’étape de récolte
+a pour action complémentaire : Un tri et un nettoyage à Sec au verger
+a pour conséquences : La présence d’altérations physiques sur les fruits | Une contamination fongique (contact avec le sol et le matériel) | L'impossibilité de faire une maturation complémentaire | Une limitation des périodes de stockage
+est piloté par : Le nombre de passages | La vitesse de la récolteuse
+est influencé par : Le type de récolteuse | La quantité de pommes au sol | Les plannings de livraison | L'époque de maturité de la variété | Les conditions climatiques | Le niveau d’altération fongique"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape de récolte"
+
+[[rubriques]]
+titre = "a pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Un tri et un nettoyage à Sec au verger"
+douteux = ["Un", "Sec"]
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "La présence d’altérations physiques sur les fruits"
+
+[[rubriques.lignes]]
+valeur = "Une contamination fongique (contact avec le sol et le matériel)"
+
+[[rubriques.lignes]]
+valeur = "L'impossibilité de faire une maturation complémentaire"
+douteux = ["L'impossibilité"]
+
+[[rubriques.lignes]]
+valeur = "Une limitation des périodes de stockage"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Le nombre de passages"
+
+[[rubriques.lignes]]
+valeur = "La vitesse de la récolteuse"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "Le type de récolteuse"
+
+[[rubriques.lignes]]
+valeur = "La quantité de pommes au sol"
+
+[[rubriques.lignes]]
+valeur = "Les plannings de livraison"
+
+[[rubriques.lignes]]
+valeur = "L'époque de maturité de la variété"
+douteux = ["L'époque"]
+
+[[rubriques.lignes]]
+valeur = "Les conditions climatiques"
+
+[[rubriques.lignes]]
+valeur = "Le niveau d’altération fongique"

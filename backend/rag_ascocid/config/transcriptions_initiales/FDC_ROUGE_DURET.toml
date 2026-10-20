@@ -1,0 +1,158 @@
+# Transcription de l'illustration de la fiche 1452 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1452
+code = "FDC_ROUGE_DURET"
+titre = "Rouge duret"
+image_sha256 = "1d2ca326b19574f065bd19ce292f2412061c14faceaec6a50c7afe7f3d6d3bdb"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: ROUGE DURET
+PRINCIPALES ZONES DE PRODUCTION
+Calvados : sud du Pays d'Auge.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 400 tonnes.
+Ph. Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin du 29 décembre 1949)
+Dégustation du jus : doux.
+Dégustation du cidre : sec, amer.
+Rendement en jus (%) : 56.
+Densité du jus : 1053,5 - Alcool en puissance : 6° 9.
+Acidité de titration en g. SO*H: par litre : 1,27.
+Azote/sucres totaux : 1,0.
+Tanin (en g. par litre) : 1,56.
+Jus incolore assez parfumé.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne à grande.
+Port : arrondi élevé.
+Résistance aux maladies : assez bonne. Tavelure à craindre certaines
+années.
+Productivité : forte.
+Saison de floraison : 3e.
+Saison de maturité : 3e.
+Conservation et transport des fruits : bons.
+Calibre du fruit : moyen à gros.
+Précocité de mise à fruits : moyenne à précoce.
+OBSERVATIONS DIVERSES
+Variété très tardive à brasser en décembre-janvier.
+Comité des Fruits à Cidre et des Productions Cidricoles - “42, rue du Louvre - Paris (1er)
+Edition 1966 (Q)"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Calvados : sud du Pays d'Auge."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 400 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin du 29 décembre 1949"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "sec, amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "56."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1053,5"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "6° 9."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO*H"
+valeur = "par litre : 1,27."
+douteux = ["SO*H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "1,0."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,56."
+
+[[rubriques.lignes]]
+valeur = "Jus incolore assez parfumé."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne à grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "arrondi élevé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez bonne. Tavelure à craindre certaines années."
+douteux = ["maladies"]
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "forte."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+douteux = ["3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3e."
+douteux = ["3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à gros."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "moyenne à précoce."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété très tardive à brasser en décembre-janvier."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - “42, rue du Louvre - Paris (1er)"
+douteux = ["“42,"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1966 (Q)"
+douteux = ["(Q)"]

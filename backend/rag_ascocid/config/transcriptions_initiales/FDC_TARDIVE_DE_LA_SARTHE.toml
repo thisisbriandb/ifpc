@@ -1,0 +1,176 @@
+# Transcription de l'illustration de la fiche 1456 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1456
+code = "FDC_TARDIVE_DE_LA_SARTHE"
+titre = "Tardive de la Sarthe"
+image_sha256 = "ddd57e6d8dee38f5b8bf2d98487e938f4df874e1a99bf76345e01b3563e94e70"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété : TARDIVE DE LA SARTHE
+Synonymes connus : Frequin tardif, Normandie amère.
+PRINCIPALES ZONES DE PRODUCTION
+Sarthe, Orne, Eure-et-Loir (surtout dans le Perche).
+CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT
+(Moyenne des analyses effectuées
+à la Station de recherches cidricoles du Rheu)
+Dégustation du jus : doux amer.
+Dégustation du cidre : doux amer agréable.
+Rendement en jus (%) : 64,7.
+Densité du jus : 1,0613.
+Alcool en puissance : 7085.
+Acidité de titration (en g SO4H2 par litre) : 1,40.
+(en milliéquivalents par litre) : 29.
+Tanin (en g par litre) : 3,89.
+Aspect du jus : très coloré.
+Parfum : léger et agréable.
+CARACTERISTIQUES CULTURALES DE L'ARBRE
+Vigueur : grande.
+Port : semi-érigé.
+Résistance aux maladies : très bonne.
+Mise à fruits : précocité moyenne.
+Productivité : bonne mais alternante.
+Saison de floraison : 3°-4°.
+Saison de maturité : 3°.
+Conservation et transport des fruits : très bons.
+Calibre du fruit : moyen.
+Photo Ferté
+OBSERVATIONS DIVERSES
+Variété rustique et productive. S'est bien adaptée partout où elle a été
+introduite
+Fruits à saveur amère de bonne qualité permettant l'élaboration de cidre
+et de Calvados de qualité
+0
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*') @
+Edition 1978"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Synonymes connus"
+valeur = "Frequin tardif, Normandie amère."
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Sarthe, Orne, Eure-et-Loir (surtout dans le Perche)."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(Moyenne des analyses effectuées à la Station de recherches cidricoles du Rheu)"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux amer agréable."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "64,7."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1,0613."
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "7085."
+douteux = ["Alcool"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration (en g SO4H2 par litre)"
+valeur = "1,40."
+douteux = ["SO4H2"]
+
+[[rubriques.lignes]]
+intitule = "(en milliéquivalents par litre)"
+valeur = "29."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g par litre)"
+valeur = "3,89."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "très coloré."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger et agréable."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "semi-érigé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "très bonne."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "précocité moyenne."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne mais alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3°-4°."
+douteux = ["3°-4°."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3°."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+
+[[rubriques.lignes]]
+valeur = "Photo Ferté"
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété rustique et productive. S'est bien adaptée partout où elle a été introduite"
+
+[[rubriques.lignes]]
+valeur = "Fruits à saveur amère de bonne qualité permettant l'élaboration de cidre et de Calvados de qualité"
+
+[[rubriques.lignes]]
+valeur = "0"
+douteux = ["0"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*') @"
+douteux = ["(1*')"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1978"

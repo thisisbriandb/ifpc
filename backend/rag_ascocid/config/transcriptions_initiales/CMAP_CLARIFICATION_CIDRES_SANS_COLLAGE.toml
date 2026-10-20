@@ -1,0 +1,66 @@
+# Transcription de l'illustration de la fiche 1127 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1127
+code = "CMAP_CLARIFICATION_CIDRES_SANS_COLLAGE"
+titre = "La clarification des cidres sans collage"
+image_sha256 = "11a10098b3d59649c62b320ea33a5be05165dc4be5e5812414dba2fde806698e"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification des cidres sans collage
+est une : Modalité de Modalité de l’étape de l’étape de clarification des clarification des cidres cidres
+est constituée de : Une (ou plusieurs) Une (ou plusieurs) opération de opération de séparation grossière séparation grossière | Une opération de séparation fine
+a pour fonctions : D’obtenir un cidre D’obtenir un cidre clarifié voir limpide clarifié (voir limpide) | D’arrêter la fermentation pour conserver la teneur en sucre de l’assemblage
+a pour conséquences : De réduire les De réduire les populations de populations de flores indésirables flores indésirables | D’oxygéner le produit (variable suivant les pratiques)
+est influencée par : Les méthodes de séparation utilisées
+présente le risque : De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de Modalité de l’étape de l’étape de clarification des clarification des cidres cidres"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une (ou plusieurs) Une (ou plusieurs) opération de opération de séparation grossière séparation grossière"
+
+[[rubriques.lignes]]
+valeur = "Une opération de séparation fine"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’obtenir un cidre D’obtenir un cidre clarifié voir limpide clarifié (voir limpide)"
+
+[[rubriques.lignes]]
+valeur = "D’arrêter la fermentation pour conserver la teneur en sucre de l’assemblage"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De réduire les De réduire les populations de populations de flores indésirables flores indésirables"
+
+[[rubriques.lignes]]
+valeur = "D’oxygéner le produit (variable suivant les pratiques)"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Les méthodes de séparation utilisées"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "De contaminer le cidre par des flores d’altération en cas de mauvaise hygiène du matériel"

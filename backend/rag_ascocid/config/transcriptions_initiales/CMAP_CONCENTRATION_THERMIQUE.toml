@@ -1,0 +1,65 @@
+# Transcription de l'illustration de la fiche 1134 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1134
+code = "CMAP_CONCENTRATION_THERMIQUE"
+titre = "La concentration thermique"
+image_sha256 = "a19214be2b40591b119a9843388ad4e56ec340c6dc9875f41f19638504f23104"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La concentration thermique des moûts
+est une : Opération de l’étape d’assemblage
+a pour équipement : Un concentrateur sous vide à tubes de vapeur (multiples effets)
+a pour procédés alternatifs possibles : L’osmose inverse | La concentration par congélation
+a pour action complémentaire : Une récupération d’arômes volatils dans les vapeurs
+est pilotée selon : Le niveau de concentration en sortie (72 ° Brix)
+est influencée par : La conception de l’installation (nombres d’effets) | La concentration du moût entrant | La turbidité du moût entrant"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape d’assemblage"
+
+[[rubriques]]
+titre = "a pour équipement"
+
+[[rubriques.lignes]]
+valeur = "Un concentrateur sous vide à tubes de vapeur (multiples effets)"
+
+[[rubriques]]
+titre = "a pour procédés alternatifs possibles"
+
+[[rubriques.lignes]]
+valeur = "L’osmose inverse"
+
+[[rubriques.lignes]]
+valeur = "La concentration par congélation"
+
+[[rubriques]]
+titre = "a pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Une récupération d’arômes volatils dans les vapeurs"
+
+[[rubriques]]
+titre = "est pilotée selon"
+
+[[rubriques.lignes]]
+valeur = "Le niveau de concentration en sortie (72 ° Brix)"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La conception de l’installation (nombres d’effets)"
+
+[[rubriques.lignes]]
+valeur = "La concentration du moût entrant"
+
+[[rubriques.lignes]]
+valeur = "La turbidité du moût entrant"

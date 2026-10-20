@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 
+from ascocid.application.ingestion import schemas
 from ascocid.application.requete import prompt as gabarit
 from ascocid.application.requete.analyse import Analyseur, RegistreOutils
 from ascocid.application.requete.pipeline import Pipeline
@@ -96,7 +97,7 @@ def poser(
             raise typer.Exit(code=2)
 
         generateur = fabrique.generateur()
-        generateur.carte = gabarit.carte_du_corpus(magasin)
+        generateur.carte = gabarit.carte_du_corpus(magasin, schemas.charger("config/schemas"))
         chaine = Pipeline(analyseur, recherche, generateur, verifier, magasin, k=k)
 
         for ev in chaine.repondre(question, [precedent] if precedent else None):

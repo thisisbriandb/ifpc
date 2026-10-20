@@ -1,0 +1,35 @@
+# Transcription de l'illustration de la fiche 1394 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1394
+code = "FICHE_AJOUT_DE_PECTINE_METHYLESTERASE_EN_CLARIFICATION_HAUTE_"
+titre = "L’ajout de pectine méthylestérase en clarification haute"
+image_sha256 = "10690df54d576cdb29ccb834a309b40155795ea007be106206af416248d97b4e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Acide galacturonique Groupements Acide galacturonique
+méthylé méthyles (après déméthylation)
+Chaîne principale de pectine —
+PE X PectineEstérase (déméthylation de la chaîne méthylée)
+Figure 1 : Schématisation de l’action de la PME sur la pectine"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Acide galacturonique Groupements Acide galacturonique méthylé méthyles (après déméthylation)"
+douteux = ["Acide"]
+
+[[rubriques.lignes]]
+valeur = "Chaîne principale de pectine —"
+
+[[rubriques.lignes]]
+valeur = "PE X PectineEstérase (déméthylation de la chaîne méthylée)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schématisation de l’action de la PME sur la pectine"

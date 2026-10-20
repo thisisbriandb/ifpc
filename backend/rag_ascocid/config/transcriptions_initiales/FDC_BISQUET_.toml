@@ -1,0 +1,123 @@
+# Transcription de l'illustration de la fiche 1461 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1461
+code = "FDC_BISQUET_"
+titre = "Bisquet"
+image_sha256 = "3be3f2dbe5d291cb807ed41115dd5d3c143be2a1b6f6bb719a1d10e15f13ee53"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+*> BISQ ET
+C\\ieec > BISQUET
+— Porc Clone indemne : X5102
+CIORIQOLES Variété implantée principalement en Normandie
+(5,6% des surfaces en basse tige).
+Variété douce amère à maturité à partir de mi-octobre.
+Variété productive, peu alternante mais nécessitant des interventions éclaircissage; la richesse en sucres des
+fruits est insuffisante (masse volumique des moûts faible).
+Lorsque les branches érigées des premières années ont été gérées correctement, la conduite de l'arbre est
+assez simple.
+Bisquet est inscrite au catalogue CTPS parmi les variétés recommandées pour la production.
+| Faite | Moyen | For |
+CSC EE
+COLE EE
+Insertion des branches : ouvert — 60° (plat) .
+Photo : architecture de l'arbre en forme libre
+TEE
+. . . Faibl M Fort
+Floraison : Début mai — 16 jours après Domaines ( nn cn n
++ 11 jours à Angers) |__|
+Production : 35-40 tonnes/ha _—
+Variétés pollinisatrices : Douce Coëtligné, Petit Jaune, Fréquin Rouge, Saint Martin
+Porte-greffe/ densité de plantation : 5 à 5.5 m X 2 à 2.5 m soit une densité réelle de 700 à 900 arbres par
+hectare sur MM106, selon le sol et le mode de conduite.
+Sensibilité aux maladies : Tavelure : faible. Oïdium : moyenne. Chancre : moyenne. Feu bactérien : sensible
+sur fleurs et sur pousses.
+Réaction à l'éclaircissage chimique : assez bonne, variété facile à réguler."""
+
+[[rubriques]]
+titre = "*> BISQ ET"
+
+[[rubriques.lignes]]
+valeur = "C\\ieec > BISQUET"
+douteux = ["C\\ieec"]
+
+[[rubriques.lignes]]
+intitule = "— Porc Clone indemne"
+valeur = "X5102"
+douteux = ["Porc"]
+
+[[rubriques]]
+titre = "CIORIQOLES Variété implantée principalement en Normandie"
+
+[[rubriques.lignes]]
+valeur = "(5,6% des surfaces en basse tige)."
+
+[[rubriques.lignes]]
+valeur = "Variété douce amère à maturité à partir de mi-octobre. Variété productive, peu alternante mais nécessitant des interventions éclaircissage; la richesse en sucres des fruits est insuffisante (masse volumique des moûts faible)."
+
+[[rubriques.lignes]]
+valeur = "Lorsque les branches érigées des premières années ont été gérées correctement, la conduite de l'arbre est assez simple. Bisquet est inscrite au catalogue CTPS parmi les variétés recommandées pour la production."
+
+[[rubriques.lignes]]
+valeur = "| Faite | Moyen | For |"
+douteux = ["Faite", "For"]
+
+[[rubriques.lignes]]
+valeur = "CSC EE"
+douteux = ["CSC", "EE"]
+
+[[rubriques]]
+titre = "COLE EE"
+
+[[rubriques.lignes]]
+intitule = "Insertion des branches"
+valeur = "ouvert — 60° (plat) ."
+
+[[rubriques.lignes]]
+intitule = "Photo"
+valeur = "architecture de l'arbre en forme libre"
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "TEE"
+douteux = ["TEE"]
+
+[[rubriques.lignes]]
+valeur = ". . . Faibl M Fort"
+douteux = ["Faibl"]
+
+[[rubriques.lignes]]
+intitule = "Floraison"
+valeur = "Début mai — 16 jours après Domaines ( nn cn n"
+douteux = ["nn", "cn", "n"]
+
+[[rubriques.lignes]]
+valeur = "+ 11 jours à Angers) |__|"
+douteux = ["|__|"]
+
+[[rubriques.lignes]]
+intitule = "Production"
+valeur = "35-40 tonnes/ha _—"
+douteux = ["_—"]
+
+[[rubriques.lignes]]
+intitule = "Variétés pollinisatrices"
+valeur = "Douce Coëtligné, Petit Jaune, Fréquin Rouge, Saint Martin"
+
+[[rubriques.lignes]]
+intitule = "Porte-greffe/ densité de plantation"
+valeur = "5 à 5.5 m X 2 à 2.5 m soit une densité réelle de 700 à 900 arbres par hectare sur MM106, selon le sol et le mode de conduite."
+
+[[rubriques.lignes]]
+intitule = "Sensibilité aux maladies"
+valeur = "Tavelure : faible. Oïdium : moyenne. Chancre : moyenne. Feu bactérien : sensible sur fleurs et sur pousses."
+
+[[rubriques.lignes]]
+intitule = "Réaction à l'éclaircissage chimique"
+valeur = "assez bonne, variété facile à réguler."
+douteux = ["l'éclaircissage"]

@@ -1,0 +1,168 @@
+# Transcription de l'illustration de la fiche 1445 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1445
+code = "FDC_PEAU_DE_CHIEN"
+titre = "Peau de chien"
+image_sha256 = "28d29efc9d85aa44e7a45e28153183156b57069829ab7b8863c81c97b47821ad"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: PEAU DE CHIEN
+PRINCIPALES ZONES DE PRODUCTION
+Morbihan : région d'Auray.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 500 tonnes.
+Ph. Durand
+QUALITES TECHNOLOGIQUES DU FRUIT
+(moyenne des deux analyses de MM. Tavernier et Jacquin
+des 27-10-1949 et 29-11-1950)
+Dégustation du jus : doux et même très sucré.
+Dégustation du cidre : doux amer.
+Rendement en jus (%) : 62.
+Densité du jus : 1069 - Alcool en puissance : 8° 8.
+Acidité de titration en g. SO'H: par litre : 1,45.
+Azote/sucres totaux : 0,61.
+Tanin (en g. par litre) : 2,80.
+Aspect du jus : doré bien coloré.
+Parfum : assez marqué.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Port : assez étalé.
+Résistance aux maladies : bonne.
+Productivité : bonne à très bonne.
+Alternance : assez marquée.
+Saison de floraison : 2e-3e.
+Saison de maturité : 2°.
+Conservation et transport des fruits : bons.
+Calibre du fruit : moyen à gros.
+Précocité de mise à fruits : assez bonne.
+OBSERVATIONS DIVERSES
+Variété très localisée.
+Jus de haute densité.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*\")
+Edition 1965"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Morbihan : région d'Auray."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Durand"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(moyenne des deux analyses de MM. Tavernier et Jacquin des 27-10-1949 et 29-11-1950)"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux et même très sucré."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "62."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1069"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "8° 8."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'H"
+valeur = "par litre : 1,45."
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,61."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,80."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "doré bien coloré."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "assez marqué."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "assez étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne à très bonne."
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "assez marquée."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+douteux = ["2°."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à gros."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "assez bonne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété très localisée. Jus de haute densité."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*\")"
+douteux = ["(1*\")"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1965"

@@ -1,0 +1,40 @@
+# Transcription de l'illustration de la fiche 1556 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1556
+code = "FICHE_DEVELOPPEMENT_DES_BACTERIES_ACETIQUES"
+titre = "Le développement des bactéries acétiques"
+image_sha256 = "9129041754e13859b583c67372684c43ae9613d16ff39ef8ab6b1a1d7a6006b5"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Niveau du cidre Chapeau flottant
+Gaz inerte
+Figure 1 : Les différentes solutions pour éviter le contact entre le cidre et l'oxygène en cuve
+À. Cuve pleine
+B. Cuve équipée d'un chapeau flottant
+C. Inertage de la cuve avec un gaz inerte de type CO, ou N,"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Niveau du cidre Chapeau flottant"
+
+[[rubriques.lignes]]
+valeur = "Gaz inerte"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes solutions pour éviter le contact entre le cidre et l'oxygène en cuve À. Cuve pleine"
+douteux = ["l'oxygène", "À."]
+
+[[rubriques.lignes]]
+valeur = "B. Cuve équipée d'un chapeau flottant"
+douteux = ["d'un"]
+
+[[rubriques.lignes]]
+valeur = "C. Inertage de la cuve avec un gaz inerte de type CO, ou N,"

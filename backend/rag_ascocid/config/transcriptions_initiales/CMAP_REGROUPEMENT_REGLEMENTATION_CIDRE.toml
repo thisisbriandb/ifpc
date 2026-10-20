@@ -1,0 +1,63 @@
+# Transcription de l'illustration de la fiche 1313 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1313
+code = "CMAP_REGROUPEMENT_REGLEMENTATION_CIDRE"
+titre = "La réglementation du cidre"
+image_sha256 = "8d63552c6a1d703b821a57a59ca9d00c3d7c332777cd693739c8e3afa640f748"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Réglementation du cidre
+est un : Ensemble de textes législatifs et de cahiers des charges
+regroupe : Le décret cidre | Le cahier des charges des AOP et AOC | Le cahier des charges des IGP | Le cahier des charges du cidre bio | Le cahier des charges Label Rouge
+concerne : La production des fruits | Les étapes de transformation des fruits | Certaines propriétés physico-chimiques des boissons cidricoles | Les matériaux en contact avec les denrées alimentaires | Les additifs et produits autorisés | L'étiquetage des bouteilles"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de textes législatifs et de cahiers des charges"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Le décret cidre"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges des AOP et AOC"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges des IGP"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges du cidre bio"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges Label Rouge"
+
+[[rubriques]]
+titre = "concerne"
+
+[[rubriques.lignes]]
+valeur = "La production des fruits"
+
+[[rubriques.lignes]]
+valeur = "Les étapes de transformation des fruits"
+
+[[rubriques.lignes]]
+valeur = "Certaines propriétés physico-chimiques des boissons cidricoles"
+
+[[rubriques.lignes]]
+valeur = "Les matériaux en contact avec les denrées alimentaires"
+
+[[rubriques.lignes]]
+valeur = "Les additifs et produits autorisés"
+
+[[rubriques.lignes]]
+valeur = "L'étiquetage des bouteilles"
+douteux = ["L'étiquetage"]

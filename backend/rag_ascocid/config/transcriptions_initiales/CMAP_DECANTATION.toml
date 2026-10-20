@@ -1,0 +1,65 @@
+# Transcription de l'illustration de la fiche 1037 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1037
+code = "CMAP_DECANTATION"
+titre = "La décantation"
+image_sha256 = "a6d20d230681a5e968ac9702e04149e580c0ae669718cbdf88ef84fb8bc9145a"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La décantation
+est un : Phénomène se produisant au cours de l’élaboration du cidre
+est suivie par : Un soutirage
+a pour fonction : De laisser sédimenter les particules dans une cuve au repos
+est fondée sur : La séparation des particules et du liquide du fait de leur différence de masse volumique
+est évaluée par : La turbidité résiduelle du produit surnagent
+est influencée par : La taille des particules | La viscosité du produit | Les mouvements de convection dans le produit (stabilité thermique et absence de fermentation) | La géométrie de la cuve"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant au cours de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "est suivie par"
+
+[[rubriques.lignes]]
+valeur = "Un soutirage"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De laisser sédimenter les particules dans une cuve au repos"
+
+[[rubriques]]
+titre = "est fondée sur"
+
+[[rubriques.lignes]]
+valeur = "La séparation des particules et du liquide du fait de leur différence de masse volumique"
+
+[[rubriques]]
+titre = "est évaluée par"
+
+[[rubriques.lignes]]
+valeur = "La turbidité résiduelle du produit surnagent"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La taille des particules"
+
+[[rubriques.lignes]]
+valeur = "La viscosité du produit"
+
+[[rubriques.lignes]]
+valeur = "Les mouvements de convection dans le produit (stabilité thermique et absence de fermentation)"
+
+[[rubriques.lignes]]
+valeur = "La géométrie de la cuve"

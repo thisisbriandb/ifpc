@@ -1,0 +1,123 @@
+# Transcription de l'illustration de la fiche 1153 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1153
+code = "FICHE_RECOLTE_VARIETES_POMMES"
+titre = "Les variétés de pommes à cidre"
+image_sha256 = "d4ac3ab9a60fe7c32ead189b3cee280326cda4486452d06f7cfacaefefb31de3"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 74.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Amères Aigres-Amères
+Marie ménard <e
+Fréquin rouge petit -
+Frequinette +
+e\"ilbéry
+Petit amer
+C'huero briz
+Jeanne Renard e ® eChevalier jaune
+Cidor .
+4 ° e Doux joseph
+Mettais e
+Tardive de la Sarthe ® epomanes, > Moul t
+oulin à ven j
+Cahouest - Keramère Cazo jaune
+Marin Onfroy e eSaireling Kermerrien e
+3 Long bois Daucé moën
+NOET GES Camp | eGros bois Peau de chien
+C'huero ru orne V. y dun à vent du Calkados Gros céco
+. Bedan,® ugc. e Dieppe .
+Dabinett e e Noé Bi
+Binet r.@ Binet b! ES RE in @eAntoindtie
+Cartigny - FL br re ® l'aureau
+2 Doux Lozon eOmont &, lozette Coco d'Issé nné Martin
+Doux EVeque jaune 5 reladine ocard blanc [Moeneuvre
+Muscadet petit de l'Omé Noir de Vitry | . e . Rouggt de .. PCT e Juliana
+Rousse de la Sarthe e © Clos Renaux . Jaune de Vitré Sam
+Douce de l’avent Tesnières agnac
+Dobx Veret de Carrouges® Rouge Duret ® P. de mb, Avrolle
+e Douce Coetligné Blanch us e mêle Builldic Rouge de Trêves e Avrolles
+Doux ancnere e Locard vert Génot . eudin
+1 Normandie . Dol® . e eRambault ® Petit Jaune
+Fil jaune Pomme *Blanc sur iud
+- udor
+Judeline e de boué e °
+Judaine © Jurella e Sébin
+0 Douces Acidulées Aigres
+(0) 1 2 3 4 5 6 7 8 9 10
+Acidité (g/L H2SO4)
+Figure 1: Classification des variétés de pommes à cidre en fonction de leur teneur en polyphénols et de leur acidité.
+Musc. de Dieppe= Muscadet de Dieppe; Binet v.= Binet violet; Binet r.= Binet rouge; Binet b.= Binet blanc.
+e Renao
+11
+12"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Amères Aigres-Amères"
+
+[[rubriques.lignes]]
+valeur = "Marie ménard <e Fréquin rouge petit - Frequinette + e\"ilbéry Petit amer C'huero briz Jeanne Renard e ® eChevalier jaune Cidor ."
+douteux = ["<e", "e\"ilbéry", "C'huero", "briz", "e"]
+
+[[rubriques]]
+titre = "4 ° e Doux joseph"
+
+[[rubriques.lignes]]
+valeur = "Mettais e Tardive de la Sarthe ® epomanes, > Moul t oulin à ven j Cahouest - Keramère Cazo jaune Marin Onfroy e eSaireling Kermerrien e"
+douteux = ["e", "epomanes,", "Moul", "j", "eSaireling", "e"]
+
+[[rubriques]]
+titre = "3 Long bois Daucé moën"
+
+[[rubriques.lignes]]
+valeur = "NOET GES Camp | eGros bois Peau de chien C'huero ru orne V. y dun à vent du Calkados Gros céco . Bedan,® ugc. e Dieppe . Dabinett e e Noé Bi Binet r.@ Binet b! ES RE in @eAntoindtie Cartigny - FL br re ® l'aureau"
+douteux = ["NOET", "Camp", "Peau", "C'huero", "ru", "orne", "V.", "y", "dun", "Calkados", "céco", "Bedan,®", "ugc.", "e", "e", "r.@", "Binet", "b!", "ES", "RE", "in", "@eAntoindtie", "Cartigny", "FL", "br"]
+
+[[rubriques]]
+titre = "2 Doux Lozon eOmont &, lozette Coco d'Issé nné Martin"
+
+[[rubriques.lignes]]
+valeur = "Doux EVeque jaune 5 reladine ocard blanc [Moeneuvre Muscadet petit de l'Omé Noir de Vitry | . e . Rouggt de .. PCT e Juliana Rousse de la Sarthe e © Clos Renaux . Jaune de Vitré Sam Douce de l’avent Tesnières agnac Dobx Veret de Carrouges® Rouge Duret ® P. de mb, Avrolle e Douce Coetligné Blanch us e mêle Builldic Rouge de Trêves e Avrolles Doux ancnere e Locard vert Génot . eudin"
+douteux = ["EVeque", "jaune", "5", "ocard", "[Moeneuvre", "l'Omé", "e", "Rouggt", "PCT", "e", "e", "Clos", "Sam", "Dobx", "Carrouges®", "P.", "mb,", "e", "us", "mêle", "Builldic", "e", "ancnere", "e", "Locard", "eudin"]
+
+[[rubriques]]
+titre = "1 Normandie . Dol® . e eRambault ® Petit Jaune"
+
+[[rubriques.lignes]]
+valeur = "Fil jaune Pomme *Blanc sur iud - udor Judeline e de boué e ° Judaine © Jurella e Sébin"
+douteux = ["*Blanc", "iud", "e", "e", "e"]
+
+[[rubriques]]
+titre = "0 Douces Acidulées Aigres"
+
+[[rubriques.lignes]]
+valeur = "(0) 1 2 3 4 5 6 7 8 9 10"
+douteux = ["(0)"]
+
+[[rubriques.lignes]]
+valeur = "Acidité (g/L H2SO4)"
+douteux = ["H2SO4)"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Classification des variétés de pommes à cidre en fonction de leur teneur en polyphénols et de leur acidité."
+
+[[rubriques.lignes]]
+valeur = "Musc. de Dieppe= Muscadet de Dieppe; Binet v.= Binet violet; Binet r.= Binet rouge; Binet b.= Binet blanc."
+douteux = ["v.="]
+
+[[rubriques.lignes]]
+valeur = "e Renao"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+valeur = "11"
+
+[[rubriques.lignes]]
+valeur = "12"

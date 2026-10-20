@@ -1,0 +1,47 @@
+# Transcription du schéma « Gestion de l'approvisionnement en pommes » (AsCoCid, fiche 1015).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+
+idoc = 1015
+code = "PROCESS_GESTION_APPROVISIONNEMENT"
+titre = "Gestion de l'approvisionnement en pommes"
+svg_sha256 = "a62ffd21e8adefbd46d44d4c6eaa151848bec665e91443c5fe6aa1bc2ebb2918"
+relecture = ""
+
+[[etapes]]
+id = "reception"
+libelle = "Réception"
+fiche = 1066
+
+[[etapes]]
+id = "stockage_tampon"
+libelle = "Stockage tampon"
+fiche = 1067
+
+[[etapes]]
+id = "maturation"
+libelle = "Maturation complémentaire"
+fiche = 1068
+
+[[transitions]]
+vers = "reception"
+produit = "Pommes livrées"
+
+# Le schéma bifurque après la réception, sans condition écrite : stockage
+# tampon ou maturation complémentaire, qui se rejoignent ensuite.
+[[transitions]]
+de = "reception"
+vers = "stockage_tampon"
+produit = "Pommes réceptionnées"
+
+[[transitions]]
+de = "reception"
+vers = "maturation"
+produit = "Pommes réceptionnées"
+
+[[transitions]]
+de = "stockage_tampon"
+produit = "Pommes en stock"
+
+[[transitions]]
+de = "maturation"
+produit = "Pommes en stock"

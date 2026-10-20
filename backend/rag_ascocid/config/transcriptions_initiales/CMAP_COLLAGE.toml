@@ -1,0 +1,82 @@
+# Transcription de l'illustration de la fiche 1035 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1035
+code = "CMAP_COLLAGE"
+titre = "Le collage"
+image_sha256 = "3329c67b209c826d8f8aa0f4f97aa4657fc317557a20f1fa2c498f19860cd7d2"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le collage
+est un : Phénomène provoqué lors de la clarification des moûts et des cidres
+est constitué est amélioré de : Un ajout de protéines de collage | Une floculation des protéines avec des polyphénols (tanins) | Une sédimentation des floculats
+par : Un ajout d’autres auxiliaires technologiques (bentonite, gel de silice…)
+est suivi par : Un soutirage
+a pour fonctions : De provoquer le piégeage et la séparation des matières en suspension | De faciliter les opérations de séparation ultérieures | D’éliminer une partie des polyphénols (tanins ou procyanidines )
+a pour conséquences : De réduire l’astringence | De diminuer le risque de trouble physico -chimique (post -clarification) | Une meilleure limpidité du produit
+est fiabilisé par : Un test de collage (point de colle)"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène provoqué lors de la clarification des moûts et des cidres"
+
+[[rubriques]]
+titre = "est constitué est amélioré de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un ajout de protéines de collage"
+
+[[rubriques.lignes]]
+valeur = "Une floculation des protéines avec des polyphénols (tanins)"
+
+[[rubriques.lignes]]
+valeur = "Une sédimentation des floculats"
+
+[[rubriques]]
+titre = "par"
+
+[[rubriques.lignes]]
+valeur = "Un ajout d’autres auxiliaires technologiques (bentonite, gel de silice…)"
+
+[[rubriques]]
+titre = "est suivi par"
+
+[[rubriques.lignes]]
+valeur = "Un soutirage"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De provoquer le piégeage et la séparation des matières en suspension"
+
+[[rubriques.lignes]]
+valeur = "De faciliter les opérations de séparation ultérieures"
+
+[[rubriques.lignes]]
+valeur = "D’éliminer une partie des polyphénols (tanins ou procyanidines )"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De réduire l’astringence"
+
+[[rubriques.lignes]]
+valeur = "De diminuer le risque de trouble physico -chimique (post -clarification)"
+
+[[rubriques.lignes]]
+valeur = "Une meilleure limpidité du produit"
+
+[[rubriques]]
+titre = "est fiabilisé par"
+
+[[rubriques.lignes]]
+valeur = "Un test de collage (point de colle)"

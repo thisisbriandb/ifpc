@@ -1,0 +1,121 @@
+# Transcription de l'illustration de la fiche 1467 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1467
+code = "FDC_FREQUIN_ROUGE_PETIT"
+titre = "Fréquin Rouge petit"
+image_sha256 = "cb63d3aeb9f9bdf88105c1423161df6d079783d6d50e0d8a1cfc0230bee9acb3"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Réaction à l’éclaircissage chimique : moyenne (moyenne à forte au PRM12)
+Formation de l’arbre :
+A la plantation, le scion est souvent peu ramifié. Les anticipés situés surtout en partie basse ont tendance à
+provoquer rapidement une réduction de l'axe terminal, lorsqu'ils sont conservés. Leur suppression à la
+plantation facilite la conduite par la suite.
+Les charpentières ont un angle très ouvert. La conduite les premières années consiste à arquer sous
+l'horizontal ou supprimer progressivement les fortes branches de la partie basse de l'arbre afin de rigidifier l'axe
+en partie haute et le maintenir droit.
+En sol fertile, éviter les tailles trop importantes surtout pendant la phase de jeunesse de l'arbre ; elles
+vigoriseront les arbres, pénaliseront la nouaison (coulure des fleurs) et peuvent aussi favoriser le chancre.
+L'axe a naturellement tendance à s'incliner : décharger le surplus de jeunes fruits sur l'axe aidera au maintien
+de l'axe vertical.
+Calibre : moyen à gros (50 à 60 g)
+Forme : conique, très rouge avec rayures.
+Epoque de récolte : début octobre
+Particularités : -
+Conservation au sol : moyenne (sensible aux
+champignons du sol : Phytophthora, Alternaria,
+Mucor)
+Régression de l’amidon : très partielle à maturité
+Acidité (g/l HSO:)
+pH : 3,9 à 4,1
+Conditions d'extraction : à préciser
+Saveur du moût : douce amère, parfumée.
+Cidre : amer.
+Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Réaction à l’éclaircissage chimique"
+valeur = "moyenne (moyenne à forte au PRM12)"
+douteux = ["l’éclaircissage"]
+
+[[rubriques.lignes]]
+intitule = "Formation de l’arbre"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion est souvent peu ramifié. Les anticipés situés surtout en partie basse ont tendance à provoquer rapidement une réduction de l'axe terminal, lorsqu'ils sont conservés. Leur suppression à la plantation facilite la conduite par la suite."
+
+[[rubriques.lignes]]
+valeur = "Les charpentières ont un angle très ouvert. La conduite les premières années consiste à arquer sous l'horizontal ou supprimer progressivement les fortes branches de la partie basse de l'arbre afin de rigidifier l'axe en partie haute et le maintenir droit."
+douteux = ["l'horizontal"]
+
+[[rubriques.lignes]]
+valeur = "En sol fertile, éviter les tailles trop importantes surtout pendant la phase de jeunesse de l'arbre ; elles vigoriseront les arbres, pénaliseront la nouaison (coulure des fleurs) et peuvent aussi favoriser le chancre."
+
+[[rubriques.lignes]]
+intitule = "L'axe a naturellement tendance à s'incliner"
+valeur = "décharger le surplus de jeunes fruits sur l'axe aidera au maintien de l'axe vertical."
+douteux = ["s'incliner"]
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "moyen à gros (50 à 60 g)"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "conique, très rouge avec rayures."
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "début octobre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = "-"
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "moyenne (sensible aux"
+
+[[rubriques.lignes]]
+intitule = "champignons du sol"
+valeur = "Phytophthora, Alternaria, Mucor)"
+
+[[rubriques.lignes]]
+intitule = "Régression de l’amidon"
+valeur = "très partielle à maturité"
+douteux = ["l’amidon"]
+
+[[rubriques.lignes]]
+intitule = "Acidité (g/l HSO"
+valeur = ")"
+douteux = ["(g/l", "HSO:)"]
+
+[[rubriques.lignes]]
+intitule = "pH"
+valeur = "3,9 à 4,1"
+douteux = ["pH"]
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "à préciser"
+douteux = ["d'extraction"]
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "douce amère, parfumée."
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "amer."
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."

@@ -1,0 +1,159 @@
+# Transcription de l'illustration de la fiche 1425 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1425
+code = "FDC_DIOT_ROUX"
+titre = "Diot roux"
+image_sha256 = "4ce6d09137fb2da7be5da86ccba3d908ef20bc489c815d28c38770f90f97388b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: DIOT ROUX
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Ille-et-Vilaine : Janzé - Rennes Nord - Châteaubourg - Châteaugiron -
+Vitré - Argentré du Plessis - La Guerche - St Aubin du Cormier - Sud
+de Fougères.
+POSSIBILITES de COMMERCIALISATION en bonne année
+100 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 22-11-53)
+Dégustation du fruit : juteux, acidulé, peu sucré.
+Dégustation du jus : nettement acidulé.
+Rendement en jus (4) : 62,700.
+Densité du jus : 1 055,6.
+Acidité de titration en g. SO* H:° par litre : 6,07.
+Azote/Sucres totaux : 0,59.
+Tanin (en g. par litre) : 1,84.
+Couleur du jus : jaune pâle.
+Parfum : faible. |
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne.
+Port : en dome.
+Résistance aux maladies : légèrement sensible à la tavelure, aux chenilles
+et aux pucerons.
+Productivité : bonne, alternance moyenne.
+Saison de floraison : 2e.
+Saison de maturité : 2e.
+Conservation et transport des fruits : assez bons.
+Grosseur du fruit : moyen.
+OBSERVATIONS DIVERSES
+La reprise à l'écussonnage paraît irrégulière.
+RS RE 2
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er)
+Edition 1963 |"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : Janzé - Rennes Nord - Châteaubourg - Châteaugiron - Vitré - Argentré du Plessis - La Guerche - St Aubin du Cormier - Sud de Fougères."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "100 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 22-11-53"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "juteux, acidulé, peu sucré."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "nettement acidulé."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (4)"
+valeur = "62,700."
+douteux = ["(4)"]
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 055,6."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H"
+valeur = "° par litre : 6,07."
+douteux = ["H:°"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,59."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,84."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune pâle."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "faible. |"
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en dome."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "légèrement sensible à la tavelure, aux chenilles et aux pucerons."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne, alternance moyenne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+douteux = ["2e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "assez bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "La reprise à l'écussonnage paraît irrégulière."
+douteux = ["paraît"]
+
+[[rubriques.lignes]]
+valeur = "RS RE 2"
+douteux = ["RS", "RE", "2"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1er)"
+douteux = ["(1er)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963 |"

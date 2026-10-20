@@ -1,0 +1,35 @@
+# Transcription de l'illustration de la fiche 1047 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1047
+code = "FICHE_PECTINE_DU_MOUT"
+titre = "La pectine du moût"
+image_sha256 = "29cefdcbda2ddacb505e26b3811831f1d3f40202ec80574279e7edc021dce73d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La pectine
+Zone ramifiée possédant
+des chaînes latérales
+Chaïne principale linéaire ee
+Figure 1 : Schéma de la structure générale de la pectine"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "La pectine"
+
+[[rubriques.lignes]]
+valeur = "Zone ramifiée possédant des chaînes latérales"
+
+[[rubriques.lignes]]
+valeur = "Chaïne principale linéaire ee"
+douteux = ["Chaïne", "ee"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schéma de la structure générale de la pectine"

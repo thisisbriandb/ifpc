@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1583 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1583
+code = "FICHE_PROCEDURE_DE_NETTOYAGE_ET_DESINFECTION_DES_SOUTIREUSES_ISOBAROMETRIQUES"
+titre = "Procédure de nettoyage et désinfection des soutireuses isobarométriques"
+image_sha256 = "1cb295f253f5f814911f873df1fd9dc0b5b6a8bcbd30dc66c74505bfd8ee48b0"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Les différentes zones d’une Figure 2 : Exemples de « fausses bouteilles »
+soutireuse isobarométrique souillées utilisées lors du nettoyage d'une soutireuse
+par le produit (jus/cidre) À. Fausse bouteille
+B. Fausse bouteille et le dispositif de maintient sur le bec
+de tirage
+C. Fausse bouteille montée sur le bec de tirage de la
+soutireuse isobarométrique
+Source: IFPC
+Figure 3 : Exemple d'appui manuel Figure 4 : Exemple de bac de lancement
+réalisé sur les deux commandes récupérant la solution de nettoyage chargée en
+d'ouverture de vannes résidus de matières organiques
+Source: IFPC Source: IFPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes zones d’une Figure 2 : Exemples de « fausses bouteilles »"
+
+[[rubriques.lignes]]
+valeur = "soutireuse isobarométrique souillées utilisées lors du nettoyage d'une soutireuse par le produit (jus/cidre) À. Fausse bouteille B. Fausse bouteille et le dispositif de maintient sur le bec de tirage"
+douteux = ["d'une", "Fausse"]
+
+[[rubriques.lignes]]
+valeur = "C. Fausse bouteille montée sur le bec de tirage de la"
+
+[[rubriques.lignes]]
+valeur = "soutireuse isobarométrique"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "IFPC"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Exemple d'appui manuel Figure 4 : Exemple de bac de lancement réalisé sur les deux commandes récupérant la solution de nettoyage chargée en d'ouverture de vannes résidus de matières organiques"
+douteux = ["d'appui"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "IFPC Source: IFPC"

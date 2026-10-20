@@ -1,0 +1,39 @@
+# Transcription de l'illustration de la fiche 1402 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1402
+code = "FICHE_LE_RENDEMENT_ET_LE_DEBIT_DE_PRESSAGE"
+titre = "Le rendement et le débit de pressage"
+image_sha256 = "23c78d88f074353e08be76486303991659c8f51e00825ffd6b0538e622d4c67e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Fruit sous-müûr Maturité optimale Fruit trop mür
+Rupture favorisée Rupture favorisée Glissement favorisé
+Peu de rupture Beaucoup de ruptures Peu de rupture
+Tissus résistants Tissus résistants Tissus \"plastiques\"
+Drainage important Bon drainage Mauvais drainage
+Colmatage
+Figure 1 : Schémas formalisant les principales hypothèses
+rencontrées lors du pressage des pommes (INRAE / IFPC)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Fruit sous-müûr Maturité optimale Fruit trop mür"
+douteux = ["sous-müûr", "mür"]
+
+[[rubriques.lignes]]
+valeur = "Rupture favorisée Rupture favorisée Glissement favorisé Peu de rupture Beaucoup de ruptures Peu de rupture"
+
+[[rubriques.lignes]]
+valeur = "Tissus résistants Tissus résistants Tissus \"plastiques\" Drainage important Bon drainage Mauvais drainage Colmatage"
+douteux = ["\"plastiques\""]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schémas formalisant les principales hypothèses rencontrées lors du pressage des pommes (INRAE / IFPC)"

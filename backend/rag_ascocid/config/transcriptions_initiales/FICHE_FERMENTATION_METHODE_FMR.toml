@@ -1,0 +1,66 @@
+# Transcription de l'illustration de la fiche 1374 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1374
+code = "FICHE_FERMENTATION_METHODE_FMR"
+titre = "La méthode FMR (Fermentation de Moûts Reconstitués)"
+image_sha256 = "ddf3e500c7181953fbb1709e58851a51b3496ce8f87b7ad491551e2f4dfaf2b5"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 74.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+LL. Concentration
+thermique
+LL. Stockage + A basse température
+L.. Moûts *_ Forte concentration en sucres (environ 72 Brix)
+concentrés + _ Stabilité microbienne
+LL. Reconstitution
+du moût
+LL. Mise en + Ensemencement avec des LSA
+fermentation *_ Apport de nutriments (facultatif)
+Fermentation . .
+LL. - + _Fermentation principale
+alcoolique
+LL. Elimination des |, 4 5e MV cible atteinte pour l'assemblage
+levures
+L.. + A basse température
+LL. Étape
+d'assemblage
+Figure 1 : Production de cidre à base de concentrés, par la méthode FMR (Fermentation de Moûts Reconstitués)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "LL. Concentration thermique LL. Stockage + A basse température L.. Moûts *_ Forte concentration en sucres (environ 72 Brix) concentrés + _ Stabilité microbienne LL. Reconstitution du moût"
+douteux = ["LL.", "LL.", "A", "L..", "*_", "Brix)", "_", "LL."]
+
+[[rubriques.lignes]]
+valeur = "LL. Mise en + Ensemencement avec des LSA"
+douteux = ["LL.", "Ensemencement"]
+
+[[rubriques.lignes]]
+valeur = "fermentation *_ Apport de nutriments (facultatif)"
+douteux = ["*_"]
+
+[[rubriques.lignes]]
+valeur = "Fermentation . . LL. - + _Fermentation principale"
+douteux = ["LL.", "_Fermentation"]
+
+[[rubriques.lignes]]
+valeur = "alcoolique LL. Elimination des |, 4 5e MV cible atteinte pour l'assemblage levures L.. + A basse température"
+douteux = ["LL.", "des", "4", "5e", "l'assemblage", "L..", "A"]
+
+[[rubriques.lignes]]
+valeur = "LL. Étape"
+douteux = ["LL."]
+
+[[rubriques.lignes]]
+valeur = "d'assemblage"
+douteux = ["d'assemblage"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Production de cidre à base de concentrés, par la méthode FMR (Fermentation de Moûts Reconstitués)"

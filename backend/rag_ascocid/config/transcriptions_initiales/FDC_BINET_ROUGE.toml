@@ -1,0 +1,120 @@
+# Transcription de l'illustration de la fiche 1460 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1460
+code = "FDC_BINET_ROUGE"
+titre = "Binet Rouge"
+image_sha256 = "64ba6e3a18d2e44a9ea27f0904a4207450f3238f2b14626fb44a7365bbc0c941"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Formation de l’arbre :
+A la plantation, les anticipés sont nombreux. Lorsque certains anticipés sont conservés, veiller à les choisir bien
+répartis le long de l'axe, en choisissant les plus faibles (risque de blocage ou étranglement) et en évitant les
+anticipés perpendiculaires au rang (problème de passage dans le rang à terme).
+Pour permettre à l'arbre de monter, il est recommandé de :
+- Bien gérer, dès le départ, les branches fortes : suppression progressive des plus érigées (dont les
+perpendiculaires au passage) avec possibilité d'arcure sous l'horizontale de certaines.
+- Conserver en tête des branches fortes pour créer un appel de sève.
+- Eviter les sur-charges des têtes qui risquent de casser ces dernières et renforcer la basitonie.
+Binet Rouge a la capacité de produire sur bois de tout âge, son taux de nouaison est élevé. Il faut donc
+favoriser l'éclairement de l'intérieur de l'arbre et supprimer si possible les fleurs/fruits sur l'axe qui participent au
+renforcement de la basitonie (par un blocage de l'axe).
+Calibre : petit à moyen 44.5 g (30 à 78g)
+Forme : symétrique, aplatie ; épiderme rayé rouge
+Epoque de récolte : mi à fin octobre
+Particularités : vitrescence des fruits évoluant en
+pourriture interne à l'approche de la récolte sur
+jeunes arbres ou arbres peu chargés
+Conservation au sol : moyenne
+Régression de l’amidon : totale
+Masse volumique (kg/m3)
+Acidité (g/l H:SO:)
+Rendement en jus (%) un
+pH:38à4,2
+Conditions d'extraction : à préciser
+Saveur du moût : douce, parfumée
+Cidre : peu amer, peu astringent ; caractéristiques sensorielles proches de Douce Moën
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Formation de l’arbre"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, les anticipés sont nombreux. Lorsque certains anticipés sont conservés, veiller à les choisir bien répartis le long de l'axe, en choisissant les plus faibles (risque de blocage ou étranglement) et en évitant les anticipés perpendiculaires au rang (problème de passage dans le rang à terme)."
+
+[[rubriques.lignes]]
+intitule = "Pour permettre à l'arbre de monter, il est recommandé de"
+valeur = "- Bien gérer, dès le départ, les branches fortes : suppression progressive des plus érigées (dont les perpendiculaires au passage) avec possibilité d'arcure sous l'horizontale de certaines. - Conserver en tête des branches fortes pour créer un appel de sève. - Eviter les sur-charges des têtes qui risquent de casser ces dernières et renforcer la basitonie."
+douteux = ["Bien"]
+
+[[rubriques.lignes]]
+valeur = "Binet Rouge a la capacité de produire sur bois de tout âge, son taux de nouaison est élevé. Il faut donc"
+douteux = ["Il"]
+
+[[rubriques.lignes]]
+valeur = "favoriser l'éclairement de l'intérieur de l'arbre et supprimer si possible les fleurs/fruits sur l'axe qui participent au renforcement de la basitonie (par un blocage de l'axe)."
+douteux = ["l'éclairement", "l'axe"]
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "petit à moyen 44.5 g (30 à 78g)"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "symétrique, aplatie ; épiderme rayé rouge"
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "mi à fin octobre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = "vitrescence des fruits évoluant en pourriture interne à l'approche de la récolte sur"
+
+[[rubriques.lignes]]
+valeur = "jeunes arbres ou arbres peu chargés"
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "moyenne"
+
+[[rubriques.lignes]]
+intitule = "Régression de l’amidon"
+valeur = "totale"
+
+[[rubriques.lignes]]
+valeur = "Masse volumique (kg/m3)"
+
+[[rubriques.lignes]]
+intitule = "Acidité (g/l H"
+valeur = "SO:) Rendement en jus (%) un"
+douteux = ["(g/l", "H:SO:)", "un"]
+
+[[rubriques.lignes]]
+intitule = "pH"
+valeur = "38à4,2"
+douteux = ["pH:38à4,2"]
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "à préciser"
+douteux = ["d'extraction"]
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "douce, parfumée"
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "peu amer, peu astringent ; caractéristiques sensorielles proches de Douce Moën"
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."

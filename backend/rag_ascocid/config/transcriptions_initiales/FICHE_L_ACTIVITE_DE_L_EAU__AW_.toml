@@ -1,0 +1,81 @@
+# Transcription de l'illustration de la fiche 1406 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1406
+code = "FICHE_L_ACTIVITE_DE_L_EAU__AW_"
+titre = "L’activité de l’eau (Aw)"
+image_sha256 = "c33a585021d2536a2093cfc83de0aea0296753bc3563fe10f5e7d93fd2d7797f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 84.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Tableau 1  : Conditions de développement des
+microorganismes dans les aliments, d'après M. EL ATYQY
+(2018), https://www.scientecal.com/cours/conditions-de-d%C3%A9veloppement-des-
+Figure 1 : Activité de l'eau (Aw) de solutions de  \"9'20'ganismes-dans-les-aliments
+saccharose à 25 °C en fonction du degré Brix des A, Microorganismes \"\"\"\"\"\"\"\"#awiimite
+solutions (calculé d'après M. MATHLOUTHI, Laboratoire Bactéries 0,91
+de Chimie Physique Industrielle, Faculté des Sciences,
+. ur . Clostridium botuli E 0,97
+Université de Reims Champagne-Ardenne) 9ÉTIQIUM POUTINE
+C. perfringens 0,97
+C. botulinum A, B 0,95
+Activité de l'eau en fonction Escherichia coli 0,95
+12 du degré Brix Salmonella sp 0,95
+Jus de Demi Concentré Staphylococcus aureus 0,86
+s 11 pere concentré 72 °Brix Bactéries halophiles 0,75
+’ Levures 0,87
+— Saccharomyces cerevisiae 0,9-0,94
+T 0,9
+@ Levures osmophiles 0,62
+O 0,8 Moisissures 0,7
+Fusarium 0,9
+0,7
+Mucor 0,8-0,9
+0,6 .
+o 10 20 30 40 50 60 70 80 Aspergillus clavatus 0,85
+Penicillium expansum 0,85
+Degré Brix
+Aspergillus flavus 0,78
+Moisissures xérophiles 0,7"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Conditions de développement des microorganismes dans les aliments, d'après M. EL ATYQY"
+douteux = ["Tableau", "1"]
+
+[[rubriques.lignes]]
+intitule = "(2018), https"
+valeur = "//www.scientecal.com/cours/conditions-de-d%C3%A9veloppement-des-"
+douteux = ["https://www.scientecal.com/cours/conditions-de-d%C3%A9veloppement-des-"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Activité de l'eau (Aw) de solutions de  \"9'20'ganismes-dans-les-aliments"
+douteux = ["de", " \"9'20'ganismes-dans-les-aliments"]
+
+[[rubriques.lignes]]
+valeur = "saccharose à 25 °C en fonction du degré Brix des A, Microorganismes \"\"\"\"\"\"\"\"#awiimite"
+douteux = ["A,", "Microorganismes", "\"\"\"\"\"\"\"\"#awiimite"]
+
+[[rubriques.lignes]]
+valeur = "solutions (calculé d'après M. MATHLOUTHI, Laboratoire Bactéries 0,91 de Chimie Physique Industrielle, Faculté des Sciences,"
+
+[[rubriques.lignes]]
+valeur = ". ur . Clostridium botuli E 0,97 Université de Reims Champagne-Ardenne) 9ÉTIQIUM POUTINE C. perfringens 0,97 C. botulinum A, B 0,95 Activité de l'eau en fonction Escherichia coli 0,95"
+douteux = ["ur", "9ÉTIQIUM", "POUTINE", "A,"]
+
+[[rubriques]]
+titre = "12 du degré Brix Salmonella sp 0,95"
+
+[[rubriques.lignes]]
+valeur = "Jus de Demi Concentré Staphylococcus aureus 0,86 s 11 pere concentré 72 °Brix Bactéries halophiles 0,75 ’ Levures 0,87 — Saccharomyces cerevisiae 0,9-0,94 T 0,9 @ Levures osmophiles 0,62 O 0,8 Moisissures 0,7 Fusarium 0,9 0,7 Mucor 0,8-0,9 0,6 . o 10 20 30 40 50 60 70 80 Aspergillus clavatus 0,85 Penicillium expansum 0,85 Degré Brix Aspergillus flavus 0,78"
+douteux = ["s", "11", "pere", "°Brix", "T", "O", "o"]
+
+[[rubriques.lignes]]
+valeur = "Moisissures xérophiles 0,7"

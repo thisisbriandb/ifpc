@@ -1,0 +1,81 @@
+# Transcription de l'illustration de la fiche 1191 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1191
+code = "FICHE_CAHIER_DES_CHARGES_AOP_AOC"
+titre = "Le cahier des charges des AOP et AOC"
+image_sha256 = "36627dcfd54fc51804ef0b4eada0a8b83eafb144297703db4b905092677d1727"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+FRANCE
+Figure 1 : Logos de l'AOC (Appellation d'Origine Contrôlée), utilisé au niveau du territoire français, et l'AOP (Appellation d'Origine Protégée), utilisé
+au niveau européen.
+A. Logos de l’'AOC et de l’'AOP. Le logo coloré de l’AOP est utilisé pour des étiquettes au fond coloré. B. Logo de l’AOP en noir et blanc, pour les étiquettes n'ayant que du
+noir et blanc. C. Logo de l'AOP en noir et blanc, et négatif, pour les étiquettes au fond sombre.
+Sources : site INAO et Règlement d'exécution (UE) n° 668/2014, Annexe X
+Carte des Cidres AOP
+Pays de Caux
+BRITTANY
+D mm 1 \\ 7 |
+(RENNES
+AOP Cidre }
+du Per e/
+Figure 2 : Cartes des répartitions —— des différents cidres AOC/AOP normands (Cotentin, Pays d’Auge et du Perche) et breton
+(Cornouaille).
+Sources : sites INAO et route du cidre."""
+
+[[rubriques]]
+titre = "FRANCE"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Logos de l'AOC (Appellation d'Origine Contrôlée), utilisé au niveau du territoire français, et l'AOP (Appellation d'Origine Protégée), utilisé"
+douteux = ["l'AOC", "d'Origine"]
+
+[[rubriques.lignes]]
+valeur = "au niveau européen. A. Logos de l’'AOC et de l’'AOP. Le logo coloré de l’AOP est utilisé pour des étiquettes au fond coloré. B. Logo de l’AOP en noir et blanc, pour les étiquettes n'ayant que du"
+douteux = ["l’'AOC", "l’'AOP.", "l’AOP", "l’AOP", "n'ayant"]
+
+[[rubriques.lignes]]
+valeur = "noir et blanc. C. Logo de l'AOP en noir et blanc, et négatif, pour les étiquettes au fond sombre."
+douteux = ["l'AOP"]
+
+[[rubriques.lignes]]
+intitule = "Sources"
+valeur = "site INAO et Règlement d'exécution (UE) n° 668/2014, Annexe X"
+
+[[rubriques.lignes]]
+valeur = "Carte des Cidres AOP"
+
+[[rubriques.lignes]]
+valeur = "Pays de Caux"
+
+[[rubriques]]
+titre = "BRITTANY"
+
+[[rubriques.lignes]]
+valeur = "D mm 1 \\ 7 |"
+douteux = ["D", "mm", "1", "7"]
+
+[[rubriques]]
+titre = "(RENNES"
+
+[[rubriques.lignes]]
+valeur = "AOP Cidre } du Per e/"
+douteux = ["AOP", "e/"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Cartes des répartitions —— des différents cidres AOC/AOP normands (Cotentin, Pays d’Auge et du Perche) et breton"
+douteux = ["d’Auge"]
+
+[[rubriques.lignes]]
+valeur = "(Cornouaille)."
+
+[[rubriques.lignes]]
+intitule = "Sources"
+valeur = "sites INAO et route du cidre."

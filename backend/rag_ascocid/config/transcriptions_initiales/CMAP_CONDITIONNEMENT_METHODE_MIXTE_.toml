@@ -1,0 +1,77 @@
+# Transcription de l'illustration de la fiche 1143 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1143
+code = "CMAP_CONDITIONNEMENT_METHODE_MIXTE_"
+titre = "La méthode de conditionnement par effervescence \"mixte\""
+image_sha256 = "dbd7b96725719dc4ea3f2cdea6c0f20d5c9ac620ca4bf32f6a35baa529af7cc8"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode de conditionnement à effervescence « mixte » (gazéification en présence de levures)
+est une : Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres
+est constitué de : Un faible levurage par des levures sèches actives | Une gazéification en saturateur | Un embouteillage iso-barométrique | Un bouchage & muselage
+a pour action complémentaire : Un sulfitage (facultatif)
+a pour fonctions : De produire un cidre effervescent par un apport contrôlé de CO, exogène | D'obtenir rapidement un cidre prêt à la commercialisation | De consommer l’oxygène par les levures présentes
+a pour conséquences : De limiter la quantité de flores indésirables en bouteille | De générer un léger trouble ou dépôt en bouteille
+présente le risque : D'une sur-gazéification due à une croissance des levures ajoutées (explosion des bouteilles)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres"
+
+[[rubriques]]
+titre = "est constitué de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un faible levurage par des levures sèches actives"
+
+[[rubriques.lignes]]
+valeur = "Une gazéification en saturateur"
+
+[[rubriques.lignes]]
+valeur = "Un embouteillage iso-barométrique"
+
+[[rubriques.lignes]]
+valeur = "Un bouchage & muselage"
+
+[[rubriques]]
+titre = "a pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Un sulfitage (facultatif)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De produire un cidre effervescent par un apport contrôlé de CO, exogène"
+
+[[rubriques.lignes]]
+valeur = "D'obtenir rapidement un cidre prêt à la commercialisation"
+douteux = ["D'obtenir"]
+
+[[rubriques.lignes]]
+valeur = "De consommer l’oxygène par les levures présentes"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De limiter la quantité de flores indésirables en bouteille"
+
+[[rubriques.lignes]]
+valeur = "De générer un léger trouble ou dépôt en bouteille"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "D'une sur-gazéification due à une croissance des levures ajoutées (explosion des bouteilles)"
+douteux = ["D'une"]

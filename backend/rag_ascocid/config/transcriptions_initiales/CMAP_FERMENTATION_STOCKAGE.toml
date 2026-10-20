@@ -1,0 +1,73 @@
+# Transcription de l'illustration de la fiche 1120 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1120
+code = "CMAP_FERMENTATION_STOCKAGE"
+titre = "Le stockage à basse température"
+image_sha256 = "3e770336f949260988b0744102e4fb68fa658ed4f04b23825b89cfd0935e632e"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le stockage à basse température
+est une : Opération de l’étape fermentaire (méthodes FI et FMR)
+a pour fonction : De conserver les cidres à assembler sans fermentation jusqu’à l’assemblage
+est influencé par : La température de la cuverie | La population de levures résiduelles | La présence d’oxygène en surface
+est surveillé par : L’estimation de la teneur en sucres par mesure de masse volumique | L’estimation de la population de levures totales par la turbidité
+a pour incidents : Un redémarrage en fermentation | La croissance et l’action des levures à voile | La croissance et l’action de Brettanomyces (en cas de température trop élevée) | L’oxydation des cidres à assembler | Un framboisé : action des Zymomonas | Une piqûre acétique : action des Acetobacter"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape fermentaire (méthodes FI et FMR)"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De conserver les cidres à assembler sans fermentation jusqu’à l’assemblage"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La température de la cuverie"
+
+[[rubriques.lignes]]
+valeur = "La population de levures résiduelles"
+
+[[rubriques.lignes]]
+valeur = "La présence d’oxygène en surface"
+
+[[rubriques]]
+titre = "est surveillé par"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la teneur en sucres par mesure de masse volumique"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la population de levures totales par la turbidité"
+
+[[rubriques]]
+titre = "a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "Un redémarrage en fermentation"
+
+[[rubriques.lignes]]
+valeur = "La croissance et l’action des levures à voile"
+
+[[rubriques.lignes]]
+valeur = "La croissance et l’action de Brettanomyces (en cas de température trop élevée)"
+
+[[rubriques.lignes]]
+valeur = "L’oxydation des cidres à assembler"
+
+[[rubriques.lignes]]
+valeur = "Un framboisé : action des Zymomonas"
+
+[[rubriques.lignes]]
+valeur = "Une piqûre acétique : action des Acetobacter"

@@ -1,0 +1,64 @@
+# Transcription de l'illustration de la fiche 1122 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1122
+code = "CMAP_ASSEMBLAGE_VALIDATION"
+titre = "La validation de la formulation"
+image_sha256 = "da8223662fd3b0207e7532b5fd00e8f5ce5e4c2f685f3449f7ee9413589e0b94"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La validation de la formulation
+est une : Opération de l’étape d’assemblage
+regroupe : Une validation analytique | Une validation organoleptique
+a pour préalable : La formulation | La réalisation de l’assemblage test
+a pour fonctions : De vérifier la conformité analytique de l’assemblage test par rapport au cahier des charges | De vérifier la conformité organoleptique de l’assemblage test par rapport à une cible définie | D’identifier les corrections éventuelles en cas de non validation | D’identifier les opérations complémentaires à effectuer (filtration, collage…)
+aboutit à : La « recette » définitive de l’assemblage à réaliser"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape d’assemblage"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Une validation analytique"
+
+[[rubriques.lignes]]
+valeur = "Une validation organoleptique"
+
+[[rubriques]]
+titre = "a pour préalable"
+
+[[rubriques.lignes]]
+valeur = "La formulation"
+
+[[rubriques.lignes]]
+valeur = "La réalisation de l’assemblage test"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De vérifier la conformité analytique de l’assemblage test par rapport au cahier des charges"
+
+[[rubriques.lignes]]
+valeur = "De vérifier la conformité organoleptique de l’assemblage test par rapport à une cible définie"
+
+[[rubriques.lignes]]
+valeur = "D’identifier les corrections éventuelles en cas de non validation"
+
+[[rubriques.lignes]]
+valeur = "D’identifier les opérations complémentaires à effectuer (filtration, collage…)"
+
+[[rubriques]]
+titre = "aboutit à"
+
+[[rubriques.lignes]]
+valeur = "La « recette » définitive de l’assemblage à réaliser"

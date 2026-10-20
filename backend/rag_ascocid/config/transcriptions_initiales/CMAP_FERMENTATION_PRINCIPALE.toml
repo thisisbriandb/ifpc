@@ -1,0 +1,88 @@
+# Transcription de l'illustration de la fiche 1115 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1115
+code = "CMAP_FERMENTATION_PRINCIPALE"
+titre = "La fermentation principale"
+image_sha256 = "b5104e6ead87cc40d464ac093f19259e349a99ae412278647f28015bbf216793"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La fermentation principale
+est un : Ensemble de phénomènes microbiens de l’étape fermentaire (méthode FI) | Le développement des Hanseniaspora | Les principaux effets des Hanseniaspora
+est suivie de : L’élimination des levures | Un stockage à basse température | Le développement des Saccharomyces | Les principaux effets des Saccharomyces
+est caractérisée par : Un développement éventuel des Oenococcus | Un développement éventuel des Brettanomyces
+est pilotée selon : Une vitesse maximum de fermentation de 1 à 5 points MV/jour | Une consommation de sucres de 20 (doux) à 50 (brut) points MV | Une durée moyenne de 2 semaines (doux) à 2 mois (brut) | Une population maximale de Saccharomyces de 1.10 7 à 6.10 7 ufc / mL | Une population maximale d’Hanseniaspora de 1.10 6 à 2.10 6 ufc / mL (en cas d’absence de sulfites)
+a pour incidents : L’estimation de la teneur en sucres par mesure de masse volumique | L’estimation de la population de levures totales par la turbidité | Une production excessive de composés soufrés (H2S)"""
+anomalies = ["7 relations pour 6 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes microbiens de l’étape fermentaire (méthode FI)"
+
+[[rubriques.lignes]]
+intitule = "Ensemble de phénomènes microbiens de l’étape fermentaire (méthode FI)"
+valeur = "Le développement des Hanseniaspora"
+
+[[rubriques.lignes]]
+intitule = "Ensemble de phénomènes microbiens de l’étape fermentaire (méthode FI)"
+valeur = "Les principaux effets des Hanseniaspora"
+
+[[rubriques]]
+titre = "est suivie de"
+
+[[rubriques.lignes]]
+valeur = "L’élimination des levures"
+
+[[rubriques.lignes]]
+valeur = "Un stockage à basse température"
+
+[[rubriques.lignes]]
+valeur = "Le développement des Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Saccharomyces"
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "Un développement éventuel des Oenococcus"
+
+[[rubriques.lignes]]
+valeur = "Un développement éventuel des Brettanomyces"
+
+[[rubriques]]
+titre = "est pilotée selon"
+
+[[rubriques.lignes]]
+valeur = "Une vitesse maximum de fermentation de 1 à 5 points MV/jour"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de sucres de 20 (doux) à 50 (brut) points MV"
+
+[[rubriques.lignes]]
+valeur = "Une durée moyenne de 2 semaines (doux) à 2 mois (brut)"
+
+[[rubriques.lignes]]
+valeur = "Une population maximale de Saccharomyces de 1.10 7 à 6.10 7 ufc / mL"
+
+[[rubriques.lignes]]
+valeur = "Une population maximale d’Hanseniaspora de 1.10 6 à 2.10 6 ufc / mL (en cas d’absence de sulfites)"
+
+[[rubriques]]
+titre = "a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la teneur en sucres par mesure de masse volumique"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la population de levures totales par la turbidité"
+
+[[rubriques.lignes]]
+valeur = "Une production excessive de composés soufrés (H2S)"

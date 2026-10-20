@@ -1,0 +1,142 @@
+# Transcription de l'illustration de la fiche 1431 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1431
+code = "FDC_FIL_JAUNE"
+titre = "Fil jaune"
+image_sha256 = "64d9989414740029b647be7bf602f63917d94ef0c6a54d3e03e7dac95fdf6f9d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: FIL JAUNE
+PRINCIPALES ZONES DE PRODUCTION
+(département et cantons)
+Morbihan : Auray - Pluvigner - Hennebont.
+POSSIBILITES de COMMERCIALISATION en bonne année
+500 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 30-11-49)
+Dégustation du fruit : acidulé.
+Dégustation du jus : acidulé.
+Rendement en jus (%) : 65,0.
+Densité du jus : 1 063,8.
+Acidité de titration en g. SO‘ H: par litre : 3,38.
+Azote/Sucres totaux : 0,54.
+Tanin (en g. par litre) : 1,0.
+Couleur du jus : clair.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne - les arbres restent de petite taille.
+Port : assez étalé.
+Résistance aux maladies : craint la tavelure sur feuilles.
+Productivité : moyenne et alternante.
+Saison de floraison : 2e-3e.
+Saison de maturité : 2e-3e.
+Conservation et transport des fruits : assez bons.
+Grosseur du fruit : assez gros.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "département et cantons"
+
+[[rubriques.lignes]]
+valeur = "Morbihan : Auray - Pluvigner - Hennebont."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "500 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 30-11-49"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acidulé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acidulé."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "65,0."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 063,8."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘ H"
+valeur = "par litre : 3,38."
+douteux = ["SO‘", "H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,54."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,0."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "clair."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne - les arbres restent de petite taille."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "assez étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "craint la tavelure sur feuilles."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "moyenne et alternante."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "assez bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "assez gros."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)"
+douteux = ["(ler)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

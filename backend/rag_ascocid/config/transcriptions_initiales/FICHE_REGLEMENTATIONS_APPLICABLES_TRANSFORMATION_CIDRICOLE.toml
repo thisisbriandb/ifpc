@@ -1,0 +1,49 @@
+# Transcription de l'illustration de la fiche 1605 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1605
+code = "FICHE_REGLEMENTATIONS_APPLICABLES_TRANSFORMATION_CIDRICOLE"
+titre = "Réglementations applicables à la transformation cidricole"
+image_sha256 = "55b221b31d95b29e35f97d9b407ab762720655320c605cefccb585d7f5235f23"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Elaboration
+cidricole
+Additifs et
+auxiliaires
+technologiques
+Sécurité
+alimentaire
+Etiquetage
+Figure 1 : Les réglementations applicables à la transformation cidricole
+SIQO = Signes d'identification de la Qualité et de l’Origine"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Elaboration cidricole"
+
+[[rubriques.lignes]]
+valeur = "Additifs et auxiliaires"
+
+[[rubriques.lignes]]
+valeur = "technologiques"
+
+[[rubriques.lignes]]
+valeur = "Sécurité"
+
+[[rubriques.lignes]]
+valeur = "alimentaire"
+
+[[rubriques.lignes]]
+valeur = "Etiquetage"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les réglementations applicables à la transformation cidricole SIQO = Signes d'identification de la Qualité et de l’Origine"
+douteux = ["d'identification", "l’Origine"]

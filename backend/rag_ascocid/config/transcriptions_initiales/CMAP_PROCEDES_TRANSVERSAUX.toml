@@ -1,0 +1,31 @@
+# Transcription de l'illustration de la fiche 1364 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1364
+code = "CMAP_PROCEDES_TRANSVERSAUX"
+titre = "Procédés transversaux"
+image_sha256 = "0016e30652a2de0f441d962da3b0021940e5a0ef11b35de1136820bf36c9b286"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 30.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+EL : È rs PP d ‘ # £ PEAR Dante de SR DES PAGES Je CET RER C0 ln DER ” À: fa MR cafe © Pr RAA y ? + \"où hit PROS) # RE MERCI, LE 4 mn CNET ES ta À É DA D 2 she re , \"i T &. +: k, ee 208 =, 2 y DU OPEN es S Des. F re pe CU EN 4 DM rR — . Ve, = * As € 4 Le A 2 TES + € OT MODS CUS an \"€. Læ$ 7 ” 4 #. er, Pa, aie. Se a Pas L. 4 . ‘ . PL | 17 La eE- 4 Le €. : 4 LA eE- VA SO Er NE, PUY ? 7 S ” . 2\" 4 * te 4 740 | Loope ef, à LE LAS PS AUER LL - » Fat à : : : A . PSN 4° à . re 2 qu 2 L2 à.
+(relation non lue) : LÉ LS UES @ 4 4 pe 1 8) ÿ : LR”. » | PS | ÉCORT— ET . \\ S 4 ru , 1 el \\ 4 F1 æ fl { | “#4 = / | F Ù fl «je | Ps T Ces _—_ À «TT 0 | RS er : f PPT 10 | RS /\\SOR iQ CONNAISSANCES & SAVOIR-FAIRE CONNAISSANCES & SAVOIR-FAIRE CIDRICOLES CIDRICOLES | PRIT. VERT Va DA bn 1 CE à RP 7 ESS ASS TRE EE Ee. de CEE ee. SP PE NE “a Mers tsar jé Per: : Eee et ner. ce A A7 ; + * SE À PES 10 0 - 3 NTM MEET | 2 22) mlbiesireninnt NC CPR 7” CEE x ES re ! TS nu #4 Par. L- Re È : 24 à Poe DE 7 0 …' w Le LED GE CL à L ” 4 Gas SE L , DT er ge 4 A ' | er 6 en RE ne 0 — \\ : LL à fs 7 À. FÉRNES 1 8 . LÉ dé > ur …” 1 J « à CSS : « il 7.4 An Æ (it role, L) LR EN F2 he LDC” s SES ne. VER NN : LRSACRE GER en"""
+anomalies = ["une colonne est loin de sa relation (inf points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "(relation non lue)"
+
+[[rubriques.lignes]]
+valeur = "LÉ LS UES @ 4 4 pe 1 8) ÿ : LR”. » | PS | ÉCORT— ET . \\ S 4 ru , 1 el \\ 4 F1 æ fl { | “#4 = / | F Ù fl «je"
+douteux = ["PS", "ÉCORT—", "ET", "S", "4", "ru", "1", "“#4", "F", "Ù", "fl", "«je", "LÉ", "LS", "UES", "4", "4", "pe", "1", "8)", "ÿ", "LR”.", "el", "4", "F1", "æ", "fl"]
+
+[[rubriques.lignes]]
+valeur = "Ps T Ces _—_ À «TT 0 | RS er : f PPT 10 | RS /\\SOR iQ CONNAISSANCES & SAVOIR-FAIRE CONNAISSANCES & SAVOIR-FAIRE CIDRICOLES CIDRICOLES"
+douteux = ["RS", "er", "f", "PPT", "10", "RS", "/\\SOR", "iQ", "Ps", "T", "Ces", "_—_", "À", "«TT", "0"]
+
+[[rubriques.lignes]]
+valeur = "PRIT. VERT Va DA bn 1 CE à RP 7 ESS ASS TRE EE Ee. de CEE ee. SP PE NE “a Mers tsar jé Per: : Eee et ner. ce A A7 ; + * SE À PES 10 0 - 3 NTM MEET | 2 22) mlbiesireninnt NC CPR 7” CEE x ES re ! TS nu #4 Par. L- Re È : 24 à Poe DE 7 0 …' w Le LED GE CL à L ” 4 Gas SE L , DT er ge 4 A ' | er 6 en RE ne 0 — \\ : LL à fs 7 À. FÉRNES 1 8 . LÉ dé > ur …” 1 J « à CSS : « il 7.4 An Æ (it role, L) LR EN F2 he LDC” s SES ne. VER NN : LRSACRE GER en"
+douteux = ["PRIT.", "VERT", "Va", "de", "CEE", "ee.", "SP", "PE", "NE", "jé", "Per:", "Eee", "et", "ner.", "ce", "A", "A7", "NC", "CPR", "7”", "CEE", "x", "ES", "re", "TS", "nu", "#4", "Poe", "DE", "7", "0", "w", "Le", "LED", "GE", "CL", "à", "L", "4", "DT", "er", "ge", "4", "A", "er", "6", "en", "RE", "ne", "0", "1", "8", "LÉ", "dé", "à", "CSS", "il", "7.4", "An", "Æ", "(it", "role,", "he", "LDC”", "L)", "LR", "EN", "F2", "ne.", "VER", "NN", "LRSACRE", "GER", "en", "DA", "bn", "1", "CE", "à", "RP", "7", "ESS", "ASS", "TRE", "EE", "Ee.", "“a", "Mers", "tsar", "SE", "À", "PES", "10", "0", "3", "NTM", "MEET", "2", "22)", "mlbiesireninnt", "Par.", "L-", "Re", "È", "24", "à", "Gas", "SE", "L", "LL", "à", "fs", "7", "À.", "FÉRNES", "ur", "1", "J", "s", "SES"]

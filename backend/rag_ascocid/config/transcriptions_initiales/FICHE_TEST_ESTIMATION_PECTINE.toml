@@ -1,0 +1,70 @@
+# Transcription de l'illustration de la fiche 1051 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1051
+code = "FICHE_TEST_ESTIMATION_PECTINE"
+titre = "Test d'estimation de la pectine"
+image_sha256 = "805d6bb93e9e70988507e8126e8c3318c2b323d36f8ae034046344d8ef084598"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Test d'estimation de la teneur en pectine
++ Le moût A contenu dans les
+2 tubes à gauche ne
+contient pas assez de
+pectine pour permettre une
+clarification haute.
+- Le moût B contenu dans les
+2 tubes du milieu contient
+une teneur moyenne en
+pectine.
+- Le moût C contenu dans les
+2 tubes à droite contient une
+quantité de pectine
+importante.
+Illustration 1 : Réalisation du test à l'alcool pour 3 moûts ayant
+des teneurs différentes en pectine. Les photos représentent les
+résultats du test pour quatre temps de lecture, T=0 correspondant
+au mélange du moût avec l'alcool. Cette planche a pour objectif
+de faciliter l'interprétation visuelle du test."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Test d'estimation de la teneur en pectine"
+
+[[rubriques.lignes]]
+valeur = "+ Le moût A contenu dans les"
+
+[[rubriques]]
+titre = "2 tubes à gauche ne"
+
+[[rubriques.lignes]]
+valeur = "contient pas assez de pectine pour permettre une clarification haute."
+
+[[rubriques.lignes]]
+valeur = "- Le moût B contenu dans les"
+
+[[rubriques]]
+titre = "2 tubes du milieu contient"
+
+[[rubriques.lignes]]
+valeur = "une teneur moyenne en pectine."
+
+[[rubriques.lignes]]
+valeur = "- Le moût C contenu dans les"
+
+[[rubriques]]
+titre = "2 tubes à droite contient une"
+
+[[rubriques.lignes]]
+valeur = "quantité de pectine importante."
+
+[[rubriques.lignes]]
+intitule = "Illustration 1"
+valeur = "Réalisation du test à l'alcool pour 3 moûts ayant des teneurs différentes en pectine. Les photos représentent les résultats du test pour quatre temps de lecture, T=0 correspondant au mélange du moût avec l'alcool. Cette planche a pour objectif de faciliter l'interprétation visuelle du test."
+douteux = ["Illustration"]

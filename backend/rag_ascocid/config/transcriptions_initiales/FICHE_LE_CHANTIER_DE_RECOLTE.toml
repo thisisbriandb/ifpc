@@ -1,0 +1,39 @@
+# Transcription de l'illustration de la fiche 1504 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1504
+code = "FICHE_LE_CHANTIER_DE_RECOLTE"
+titre = "Le chantier de récolte"
+image_sha256 = "7e2c022f1f1e611bd02b19e50b01b2c08a813f6426aff2b61231037fa05d07ec"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Le secouage au verger cidricole:
+a) secouage mécanique
+b) secouage manuel
+Figure 3 : Les différentes machines à récolter:
+a) Récolteuse automotrice à l'avant,
+b) Récolteuse tractée à ramassage latéral avec andaineur à l'avant,
+c) Récolteuse automotrice à ramassage central"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Le secouage au verger cidricole: a) secouage mécanique b) secouage manuel"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Les différentes machines à récolter:"
+
+[[rubriques.lignes]]
+valeur = "a) Récolteuse automotrice à l'avant,"
+douteux = ["automotrice"]
+
+[[rubriques.lignes]]
+valeur = "b) Récolteuse tractée à ramassage latéral avec andaineur à l'avant, c) Récolteuse automotrice à ramassage central"
+douteux = ["l'avant,"]

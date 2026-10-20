@@ -1,0 +1,78 @@
+# Transcription de l'illustration de la fiche 1551 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1551
+code = "FICHE_DEVELOPPEMENT_DES_SACCHAROMYCES"
+titre = "Le développement des Saccharomyces"
+image_sha256 = "15b9ff7296dfabf46e17575afcc1e831594f7bf102af3c9794cdcc76ea84ac34"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 77.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+spores a ne a
+00 a des
+oO: contenant
+O: spores a et a
+Méiose et Levure
+a sporulation 7. bourgeonnante
+Reproduction Ô EE. à! Û Reproduction
+asexuée asexuée asexuee
+(e) haploïde
+diploïde haploïde
+Fusion des
+levures haploïdes
+aeta
+Levure a © a
+haploïde haploïde
+Figure 1 : Les modes de reproduction de Saccharomyces
+Image IFPC représentant des levures Saccharomyces bourgeonnantes (reproduction végétative asexuée)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "spores a ne a"
+douteux = ["spores", "ne"]
+
+[[rubriques]]
+titre = "00 a des"
+
+[[rubriques.lignes]]
+intitule = "oO"
+valeur = "contenant"
+douteux = ["oO:"]
+
+[[rubriques.lignes]]
+intitule = "O"
+valeur = "spores a et a"
+douteux = ["O:", "spores", "a", "et", "a"]
+
+[[rubriques.lignes]]
+valeur = "Méiose et Levure"
+
+[[rubriques.lignes]]
+valeur = "a sporulation 7. bourgeonnante"
+douteux = ["a", "7."]
+
+[[rubriques.lignes]]
+valeur = "Reproduction Ô EE. à! Û Reproduction"
+douteux = ["Ô", "EE.", "à!", "Û"]
+
+[[rubriques.lignes]]
+valeur = "asexuée asexuée asexuee (e) haploïde"
+douteux = ["(e)"]
+
+[[rubriques.lignes]]
+valeur = "diploïde haploïde"
+
+[[rubriques.lignes]]
+valeur = "Fusion des levures haploïdes aeta"
+
+[[rubriques.lignes]]
+valeur = "Levure a © a haploïde haploïde"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les modes de reproduction de Saccharomyces Image IFPC représentant des levures Saccharomyces bourgeonnantes (reproduction végétative asexuée)"

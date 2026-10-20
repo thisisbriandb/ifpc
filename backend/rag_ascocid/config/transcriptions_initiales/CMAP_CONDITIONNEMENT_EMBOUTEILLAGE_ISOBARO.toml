@@ -1,0 +1,76 @@
+# Transcription de l'illustration de la fiche 1137 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1137
+code = "CMAP_CONDITIONNEMENT_EMBOUTEILLAGE_ISOBARO"
+titre = "L'embouteillage iso-barométrique"
+image_sha256 = "1c4af28ccd3e4838c0d49ab95ff8dd9f4dcc11673cbae6968c8dbcd161f14c66"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+L’embouteillage iso -barométrique
+est une : Opération utilisée au cours des méthodes de conditionnement de cidres saturés
+est constitué de : Une mise en place de la bouteille sous la tête de soutirage | Une à deux mises sous vide de la bouteille (facultatif) | Une mise en pression de la bouteille à la pression de la cloche de soutirage (de 2,5 à 3 bars relatifs) | Un remplissage en condition iso -barométrique (pression bouteille = pression cloche) | Une dépressurisation contrôlée de la bouteille
+par : Un nettoyage de la soutireuse
+a pour conséquence : De conditionner en bouteille un cidre effervescent sans désaturation
+est piloté par : Une oxygénation du cidre variable selon le type d’embouteilleuse
+a pour incidents : La pression dans la cloche de soutirage | Un moussage excessif lors du remplissage ou de la dépressurisation | Une contamination par des flores indésirables en cas de mauvaise hygiène du matériel"""
+anomalies = ["8 relations pour 7 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération utilisée au cours des méthodes de conditionnement de cidres saturés"
+
+[[rubriques]]
+titre = "est constitué de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une mise en place de la bouteille sous la tête de soutirage"
+
+[[rubriques.lignes]]
+valeur = "Une à deux mises sous vide de la bouteille (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Une mise en pression de la bouteille à la pression de la cloche de soutirage (de 2,5 à 3 bars relatifs)"
+
+[[rubriques.lignes]]
+valeur = "Un remplissage en condition iso -barométrique (pression bouteille = pression cloche)"
+
+[[rubriques.lignes]]
+valeur = "Une dépressurisation contrôlée de la bouteille"
+
+[[rubriques]]
+titre = "par"
+
+[[rubriques.lignes]]
+valeur = "Un nettoyage de la soutireuse"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "De conditionner en bouteille un cidre effervescent sans désaturation"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Une oxygénation du cidre variable selon le type d’embouteilleuse"
+
+[[rubriques]]
+titre = "a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "La pression dans la cloche de soutirage"
+
+[[rubriques.lignes]]
+valeur = "Un moussage excessif lors du remplissage ou de la dépressurisation"
+
+[[rubriques.lignes]]
+valeur = "Une contamination par des flores indésirables en cas de mauvaise hygiène du matériel"

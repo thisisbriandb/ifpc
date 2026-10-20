@@ -1,0 +1,71 @@
+# Transcription de l'illustration de la fiche 1072 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1072
+code = "CMAP_EXTRACTION_RAPAGE"
+titre = "Le râpage"
+image_sha256 = "0e9453c0611096dc23f3e090bcb09c1ba2399376ce78844d1168ed520475c60c"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le râpage
+est une : Opération de l’étape d’extraction
+a pour synonymes : Le broyage | Le pilage
+est piloté par : Le débit réel d’entrée | Le contenu du stockage tampon | La taille des grilles ou couteaux
+est influencé par : Les caractéristiques de la râpe (type, débit nominal…) | La texture des fruits | L’état d’usure de la râpe
+influence : Le rendement de pressage
+a pour conséquence : L’oxydation de certains composés du moût (polyphénols, lipides…)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape d’extraction"
+
+[[rubriques]]
+titre = "a pour synonymes"
+
+[[rubriques.lignes]]
+valeur = "Le broyage"
+
+[[rubriques.lignes]]
+valeur = "Le pilage"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Le débit réel d’entrée"
+
+[[rubriques.lignes]]
+valeur = "Le contenu du stockage tampon"
+
+[[rubriques.lignes]]
+valeur = "La taille des grilles ou couteaux"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "Les caractéristiques de la râpe (type, débit nominal…)"
+
+[[rubriques.lignes]]
+valeur = "La texture des fruits"
+
+[[rubriques.lignes]]
+valeur = "L’état d’usure de la râpe"
+
+[[rubriques]]
+titre = "influence"
+
+[[rubriques.lignes]]
+valeur = "Le rendement de pressage"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "L’oxydation de certains composés du moût (polyphénols, lipides…)"

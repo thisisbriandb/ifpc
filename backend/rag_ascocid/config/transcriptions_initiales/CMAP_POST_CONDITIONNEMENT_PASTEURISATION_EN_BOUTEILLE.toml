@@ -1,0 +1,66 @@
+# Transcription de l'illustration de la fiche 1321 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1321
+code = "CMAP_POST_CONDITIONNEMENT_PASTEURISATION_EN_BOUTEILLE"
+titre = "La pasteurisation en bouteille"
+image_sha256 = "06da51708121adf697188a4cec1176ce070b467a4080c5b672e9a2ce26093cc1"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La pasteurisation du cidre en bouteille
+est une : Opération utilisée au cours l’étape Post -conditionnement
+a pour fonction : De stabiliser le cidre sur le plan microbiologique
+a pour principe : La destruction des micro - organismes résiduels par un traitement thermique du contenant / contenu
+a pour équipement : Un pasteurisateur tunnel
+est pilotée selon : Un barème de pasteurisation (durée - température)
+a pour conséquences : Une modification sensorielle du cidre (goût de cuit, odeur compoté, couleur)
+est influencée par : La population à détruire | Le micro -organisme le plus thermorésistant"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération utilisée au cours l’étape Post -conditionnement"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De stabiliser le cidre sur le plan microbiologique"
+
+[[rubriques]]
+titre = "a pour principe"
+
+[[rubriques.lignes]]
+valeur = "La destruction des micro - organismes résiduels par un traitement thermique du contenant / contenu"
+
+[[rubriques]]
+titre = "a pour équipement"
+
+[[rubriques.lignes]]
+valeur = "Un pasteurisateur tunnel"
+
+[[rubriques]]
+titre = "est pilotée selon"
+
+[[rubriques.lignes]]
+valeur = "Un barème de pasteurisation (durée - température)"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une modification sensorielle du cidre (goût de cuit, odeur compoté, couleur)"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La population à détruire"
+
+[[rubriques.lignes]]
+valeur = "Le micro -organisme le plus thermorésistant"

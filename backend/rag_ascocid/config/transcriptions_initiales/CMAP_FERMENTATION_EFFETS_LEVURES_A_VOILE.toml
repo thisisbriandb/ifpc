@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1109 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1109
+code = "CMAP_FERMENTATION_EFFETS_LEVURES_A_VOILE"
+titre = "Les principaux effets de levures à voile"
+image_sha256 = "0a5831ced9f6896a44d8d0f93203652eaf261f55f4e74d5076898a40939ef085"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principaux effets des levures à voile
+sont des : Phénomènes se produisant principalement au cours du Stockage (méthode FI)
+regroupent : La production d’un composé volatil (acétate d’éthyle) | La dégradation de l’éthanol en éthanal (acétaldéhyde)
+sont conditionnés par : Le développement des levures à voile
+ont pour impacts sensoriels : Une modification des arômes (éventé, solvant…) | L’apparition d’un trouble (combinaison des polyphénols avec l’éthanal) | Une baisse de l’acidité
+dépendent de : Leur population maximale atteinte | Leur survie dans le milieu (aération)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Phénomènes se produisant principalement au cours du Stockage (méthode FI)"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La production d’un composé volatil (acétate d’éthyle)"
+
+[[rubriques.lignes]]
+valeur = "La dégradation de l’éthanol en éthanal (acétaldéhyde)"
+
+[[rubriques]]
+titre = "sont conditionnés par"
+
+[[rubriques.lignes]]
+valeur = "Le développement des levures à voile"
+
+[[rubriques]]
+titre = "ont pour impacts sensoriels"
+
+[[rubriques.lignes]]
+valeur = "Une modification des arômes (éventé, solvant…)"
+
+[[rubriques.lignes]]
+valeur = "L’apparition d’un trouble (combinaison des polyphénols avec l’éthanal)"
+
+[[rubriques.lignes]]
+valeur = "Une baisse de l’acidité"
+
+[[rubriques]]
+titre = "dépendent de"
+
+[[rubriques.lignes]]
+valeur = "Leur population maximale atteinte"
+
+[[rubriques.lignes]]
+valeur = "Leur survie dans le milieu (aération)"

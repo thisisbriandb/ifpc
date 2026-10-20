@@ -1,0 +1,102 @@
+# Transcription du schéma « Récolte et livraison » (AsCoCid, fiche 1025).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+
+idoc = 1025
+code = "PROCESS_RECOLTE"
+titre = "Récolte et livraison"
+svg_sha256 = "f465324ec683b9e3ecf86f477a79a2b4987dcec79642ffcd2cfc175362233de7"
+relecture = ""
+
+[[etapes]]
+id = "chute"
+libelle = "Chute naturelle"
+fiche = 1056
+
+[[etapes]]
+id = "secouage"
+libelle = "Secouage"
+fiche = 1057
+
+[[etapes]]
+id = "ramassage_manuel"
+libelle = "Ramassage manuel"
+fiche = 1062
+
+[[etapes]]
+id = "mise_en_contenants"
+libelle = "Mise en contenants"
+
+[[etapes]]
+id = "ramassage_mecanique"
+libelle = "Ramassage mécanique"
+fiche = 1061
+
+[[etapes]]
+id = "tri_verger"
+libelle = "Tri au verger"
+fiche = 1063
+
+[[etapes]]
+id = "stockage_livraison"
+libelle = "Stockage & Livraison"
+fiche = 1064
+
+[[transitions]]
+vers = "chute"
+produit = "Pommes dans l'arbre"
+
+# Le secouage est un détour facultatif : la chute naturelle mène aussi
+# directement aux pommes au sol. Aucune condition n'est écrite sur le schéma.
+[[transitions]]
+de = "chute"
+vers = "secouage"
+
+[[transitions]]
+de = "chute"
+vers = "ramassage_manuel"
+produit = "Pommes au sol"
+
+[[transitions]]
+de = "chute"
+vers = "ramassage_mecanique"
+produit = "Pommes au sol"
+
+[[transitions]]
+de = "secouage"
+vers = "ramassage_manuel"
+produit = "Pommes au sol"
+
+[[transitions]]
+de = "secouage"
+vers = "ramassage_mecanique"
+produit = "Pommes au sol"
+
+# Après le ramassage manuel, la mise en contenants est un détour facultatif
+# avant le stockage.
+[[transitions]]
+de = "ramassage_manuel"
+vers = "mise_en_contenants"
+produit = "Pommes ramassées manuellement"
+
+[[transitions]]
+de = "ramassage_manuel"
+vers = "stockage_livraison"
+produit = "Pommes ramassées manuellement"
+
+[[transitions]]
+de = "mise_en_contenants"
+vers = "stockage_livraison"
+
+[[transitions]]
+de = "ramassage_mecanique"
+vers = "tri_verger"
+produit = "Pommes ramassées mécaniquement"
+
+[[transitions]]
+de = "tri_verger"
+vers = "stockage_livraison"
+produit = "Pommes de récolte mécanique nettoyées"
+
+[[transitions]]
+de = "stockage_livraison"
+produit = "Pommes livrées"

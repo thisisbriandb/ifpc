@@ -1,0 +1,123 @@
+# Transcription de l'illustration de la fiche 1561 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1561
+code = "FICHE_ESTIMATION_VITESSE_DE_FERMENTATION"
+titre = "L'estimation de la vitesse de fermentation"
+image_sha256 = "2991625fa37bfee91b41b0e08d9f109ea7689f226c0c546d878acf18bf652deb"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 83.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+1070
+Masse
+. Masse Masse
+volumique ; =
+Jours (kg/mÿ) Jours volumique Jours volumique
+1060
+0 1066,7 18 1020,2 42 999,3
+1 1066,1 21 1015,4 46 999,1
+1050 4 1057,3 25 1010,1 49 999,0
+7 1045,3 28 1006,5 53 998,8
+9 1039,2 32 1003,1 56 998,9
+1040 11 1034,1 35 1001,2 59 998,8
+14 1026,9 39 999,8
+1030 1075
+1065 °*
+& 1057
+E 1055 * *
+1020 Ÿ 1045 e
+2 e
+Sœ 1035 .
+E 1026
+3 1025 #5 2
+1010 S |
+@ 1015 Ke ,
+G 1005 .
+Z 1008 re ee + + +
+1000 99
+12345 10 20 31 0 4 10 14 20 30 40 50 60
+Jours Temps (jours)
+Figure 1 : Exemple de fiche permettant de suivre la Figure 2 : Exemple de tableau et courbe
+fermentation d'une cuve, par relevé de masse permettant d'estimer la vitesse de fermentation
+volumique. d'une cuve à partir des masses volumiques
+relevées au cours du temps."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "1070 Masse"
+
+[[rubriques.lignes]]
+valeur = ". Masse Masse volumique ; = Jours (kg/mÿ) Jours volumique Jours volumique 1060"
+douteux = ["(kg/mÿ)"]
+
+[[rubriques]]
+titre = "0 1066,7 18 1020,2 42 999,3"
+
+[[rubriques]]
+titre = "1 1066,1 21 1015,4 46 999,1"
+
+[[rubriques]]
+titre = "1050 4 1057,3 25 1010,1 49 999,0"
+
+[[rubriques]]
+titre = "7 1045,3 28 1006,5 53 998,8"
+
+[[rubriques]]
+titre = "9 1039,2 32 1003,1 56 998,9"
+
+[[rubriques]]
+titre = "1040 11 1034,1 35 1001,2 59 998,8"
+
+[[rubriques]]
+titre = "14 1026,9 39 999,8"
+
+[[rubriques]]
+titre = "1030 1075"
+
+[[rubriques]]
+titre = "1065 °*"
+
+[[rubriques.lignes]]
+valeur = "& 1057 E 1055 * *"
+douteux = ["1057"]
+
+[[rubriques]]
+titre = "1020 Ÿ 1045 e"
+
+[[rubriques]]
+titre = "2 e"
+
+[[rubriques.lignes]]
+valeur = "Sœ 1035 . E 1026"
+douteux = ["Sœ", "E"]
+
+[[rubriques]]
+titre = "3 1025 #5 2"
+
+[[rubriques]]
+titre = "1010 S |"
+
+[[rubriques.lignes]]
+valeur = "@ 1015 Ke , G 1005 . Z 1008 re ee + + +"
+douteux = ["Ke", "G", "Z", "1008", "re", "ee"]
+
+[[rubriques]]
+titre = "1000 99"
+
+[[rubriques]]
+titre = "12345 10 20 31 0 4 10 14 20 30 40 50 60"
+
+[[rubriques.lignes]]
+valeur = "Jours Temps (jours)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple de fiche permettant de suivre la Figure 2 : Exemple de tableau et courbe fermentation d'une cuve, par relevé de masse permettant d'estimer la vitesse de fermentation volumique. d'une cuve à partir des masses volumiques"
+
+[[rubriques.lignes]]
+valeur = "relevées au cours du temps."

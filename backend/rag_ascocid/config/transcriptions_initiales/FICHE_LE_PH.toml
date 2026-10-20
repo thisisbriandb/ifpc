@@ -1,0 +1,45 @@
+# Transcription de l'illustration de la fiche 1508 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1508
+code = "FICHE_LE_PH"
+titre = "Le pH"
+image_sha256 = "3c459eec918b357138d74c9436767eb5a41622f69156dbf801351a487b69cd53"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Solution Acide Solution Basique
+lons H* > OH lons OH > H*
+pH < 4,2: Bactéries lactiques
+3-45: __ pH > 3,8: Développement possible de Z.mobilis
+7 pH du cidre 3-4: pH 3,7: pH mise en bouteille
+pommes nn pH < 3,5: Mise en bouteille pour un cidre vif
+pH du cidre pH de l'eau pH de la javel
+Figure 1: Echelle de pH Figure 2: Quelques valeurs de pH dans le domaine cidricole"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Solution Acide Solution Basique lons H* > OH lons OH > H*"
+douteux = ["H*", "OH", "H*"]
+
+[[rubriques.lignes]]
+intitule = "pH < 4,2"
+valeur = "Bactéries lactiques"
+
+[[rubriques.lignes]]
+intitule = "3-45"
+valeur = "__ pH > 3,8: Développement possible de Z.mobilis 7 pH du cidre 3-4: pH 3,7: pH mise en bouteille pommes nn pH < 3,5: Mise en bouteille pour un cidre vif"
+douteux = ["3-45:", "__", "3-4:", "nn"]
+
+[[rubriques.lignes]]
+valeur = "pH du cidre pH de l'eau pH de la javel"
+douteux = ["l'eau"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Echelle de pH Figure 2: Quelques valeurs de pH dans le domaine cidricole"

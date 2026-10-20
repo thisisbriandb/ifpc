@@ -1,0 +1,74 @@
+# Transcription de l'illustration de la fiche 1317 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1317
+code = "CMAP_FILTRATION_SUR_PLAQUES"
+titre = "La filtration sur plaques"
+image_sha256 = "0f07b7955e127a1060ce31221a59f3ac6d6d873580d3150c77fec6dc4d4442b0"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 95.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La filtration sur plaques
+est une : Opération facultative de la clarification basse
+est constituée : Le montage du filtre (incluant le choix des plaques) | La filtration | Le débatissage
+doit être complétée par : Une procédure de nettoyage / désinfection du filtre
+a pour fonctions : L’élimination de petites quantités de matières en suspension | L’élimination des flores levuriennes et bactériennes selon les plaques utilisées
+a pour équipements : Un filtre à plaque | Les différents types de plaques de filtration
+a pour inconvénients : Un colmatage rapide des plaques (produits trop chargés) | Un changement fréquent des plaques (coût de consommable)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de la clarification basse"
+
+[[rubriques]]
+titre = "est constituée"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Le montage du filtre (incluant le choix des plaques)"
+
+[[rubriques.lignes]]
+valeur = "La filtration"
+
+[[rubriques.lignes]]
+valeur = "Le débatissage"
+
+[[rubriques]]
+titre = "doit être complétée par"
+
+[[rubriques.lignes]]
+valeur = "Une procédure de nettoyage / désinfection du filtre"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "L’élimination de petites quantités de matières en suspension"
+douteux = ["L’élimination"]
+
+[[rubriques.lignes]]
+valeur = "L’élimination des flores levuriennes et bactériennes selon les plaques utilisées"
+douteux = ["L’élimination"]
+
+[[rubriques]]
+titre = "a pour équipements"
+
+[[rubriques.lignes]]
+valeur = "Un filtre à plaque"
+
+[[rubriques.lignes]]
+valeur = "Les différents types de plaques de filtration"
+
+[[rubriques]]
+titre = "a pour inconvénients"
+
+[[rubriques.lignes]]
+valeur = "Un colmatage rapide des plaques (produits trop chargés)"
+
+[[rubriques.lignes]]
+valeur = "Un changement fréquent des plaques (coût de consommable)"

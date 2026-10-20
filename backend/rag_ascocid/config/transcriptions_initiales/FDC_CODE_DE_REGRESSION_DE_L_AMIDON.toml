@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1502 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1502
+code = "FDC_CODE_DE_REGRESSION_DE_L_AMIDON"
+titre = "Code de régression de l'amidon"
+image_sha256 = "b0fd481737bffe6aa8c3e8a003ca5009438161bfa0286cca14f51bb4b660b897"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 75.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Ctifl Pomme
+= Code de régression de l’amidon
+Starch conversion chart for apples
+type Circulaire (C) Circular type (C)
+1C : légère décoloration centrale
+SAght central discolouration [ic |
+20-30 - 4C : décoloration centrale, de la pièce de monnaie au “trèfle à 5 feuilles\"
+central discalouration, from “coin bo Sleaved cover
+000
+50 - 6 € - 7C : décoloration centrale croissante et taches dans la périphérie
+inéreasing central discoleuration with peripheral spots
+8C - gC - 10C : décoloration croissante de la périphérie
+increasing peripheral discolouration"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Ctifl Pomme = Code de régression de l’amidon Starch conversion chart for apples"
+douteux = ["Code"]
+
+[[rubriques.lignes]]
+valeur = "type Circulaire (C) Circular type (C)"
+
+[[rubriques.lignes]]
+intitule = "1C"
+valeur = "légère décoloration centrale"
+douteux = ["1C"]
+
+[[rubriques.lignes]]
+valeur = "SAght central discolouration [ic |"
+douteux = ["SAght", "discolouration", "[ic"]
+
+[[rubriques.lignes]]
+intitule = "20-30 - 4C"
+valeur = "décoloration centrale, de la pièce de monnaie au “trèfle à 5 feuilles\" central discalouration, from “coin bo Sleaved cover"
+douteux = ["20-30", "4C", "“trèfle", "central", "discalouration,", "from", "“coin", "bo", "Sleaved", "cover"]
+
+[[rubriques.lignes]]
+valeur = "000"
+douteux = ["000"]
+
+[[rubriques.lignes]]
+valeur = "50 - 6 € - 7C : décoloration centrale croissante et taches dans la périphérie inéreasing central discoleuration with peripheral spots"
+douteux = ["50", "inéreasing", "central", "discoleuration", "peripheral"]
+
+[[rubriques.lignes]]
+valeur = "8C - gC - 10C : décoloration croissante de la périphérie increasing peripheral discolouration"
+douteux = ["8C", "gC", "10C", "peripheral"]

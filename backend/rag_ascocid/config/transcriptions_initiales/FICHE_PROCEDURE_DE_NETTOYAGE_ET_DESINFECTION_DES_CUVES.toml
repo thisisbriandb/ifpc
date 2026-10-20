@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1580 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1580
+code = "FICHE_PROCEDURE_DE_NETTOYAGE_ET_DESINFECTION_DES_CUVES"
+titre = "Procédure de nettoyage et désinfection des cuves"
+image_sha256 = "1e507720b9056175530627213cf9f788b5fbecc0217a02cfc5bc29fa00248116"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Autres éléments d'une cuve
+À. Exemple de vannes type « papillon »
+B. Exemple de robinet dégustateur
+Sources: https://reservoir-inox.com/categorie-produit/reservoirs-et-cuves-inox/options-vannes-din-sms-cuves-inox/annes-papillon-inox/
+https://storevinicole.fr/search?type=product#2Carticle%2Cpage&q=-d%C3%A9gustateur+heclipse
+Figure 2 : Matériels utiles pour le nettoyage des cuves
+À. Exemple de système de boules d’aspersion
+B. Exemple de tête de lavage rotative (système « fury »)
+Sources: https:/www.gea.com/fr/products/cleaners-sterilizers/tank-cleaning/static-cleaners/spray-balls-tank-cleaner.jsp
+https://tetelavage.gedo.fr/BRECON/ury.htm"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Autres éléments d'une cuve À. Exemple de vannes type « papillon »"
+douteux = ["d'une", "À."]
+
+[[rubriques.lignes]]
+valeur = "B. Exemple de robinet dégustateur"
+
+[[rubriques.lignes]]
+intitule = "Sources"
+valeur = "https://reservoir-inox.com/categorie-produit/reservoirs-et-cuves-inox/options-vannes-din-sms-cuves-inox/annes-papillon-inox/"
+douteux = ["https://reservoir-inox.com/categorie-produit/reservoirs-et-cuves-inox/options-vannes-din-sms-cuves-inox/annes-papillon-inox/"]
+
+[[rubriques.lignes]]
+intitule = "https"
+valeur = "//storevinicole.fr/search?type=product#2Carticle%2Cpage&q=-d%C3%A9gustateur+heclipse"
+douteux = ["https://storevinicole.fr/search?type=product#2Carticle%2Cpage&q=-d%C3%A9gustateur+heclipse"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Matériels utiles pour le nettoyage des cuves À. Exemple de système de boules d’aspersion"
+douteux = ["À.", "d’aspersion"]
+
+[[rubriques.lignes]]
+valeur = "B. Exemple de tête de lavage rotative (système « fury »)"
+
+[[rubriques.lignes]]
+intitule = "Sources"
+valeur = "https:/www.gea.com/fr/products/cleaners-sterilizers/tank-cleaning/static-cleaners/spray-balls-tank-cleaner.jsp"
+douteux = ["https:/www.gea.com/fr/products/cleaners-sterilizers/tank-cleaning/static-cleaners/spray-balls-tank-cleaner.jsp"]
+
+[[rubriques.lignes]]
+intitule = "https"
+valeur = "//tetelavage.gedo.fr/BRECON/ury.htm"
+douteux = ["https://tetelavage.gedo.fr/BRECON/ury.htm"]

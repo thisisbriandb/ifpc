@@ -1,0 +1,46 @@
+# Transcription de l'illustration de la fiche 1412 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1412
+code = "FICHE_LES_SULFITES"
+titre = "Les sulfites"
+image_sha256 = "086d9330d9f1be84c4934d2a3a018f1b8bbd47f37e6bd2d9003fbf435990f406"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+SO, total apporté
+Aldéhydes
+& Cétones
+Ethanal - SO,
+(98%)
+Autres - SO,
+(2%)
+pH du cidre
+Figure 1 : Les différentes formes des sulfites après Figure 2 : Equilibre de dissociation des
+dissolution dans le cidre suffites libres selon le pH"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "SO, total apporté"
+
+[[rubriques.lignes]]
+valeur = "Aldéhydes & Cétones"
+
+[[rubriques.lignes]]
+valeur = "Ethanal - SO, (98%)"
+
+[[rubriques.lignes]]
+valeur = "Autres - SO, (2%)"
+
+[[rubriques.lignes]]
+valeur = "pH du cidre"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différentes formes des sulfites après Figure 2 : Equilibre de dissociation des dissolution dans le cidre suffites libres selon le pH"
+douteux = ["sulfites", "suffites"]

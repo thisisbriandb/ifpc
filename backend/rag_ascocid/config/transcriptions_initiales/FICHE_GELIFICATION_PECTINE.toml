@@ -1,0 +1,57 @@
+# Transcription de l'illustration de la fiche 1053 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1053
+code = "FICHE_GELIFICATION_PECTINE"
+titre = "La gélification de la pectine"
+image_sha256 = "b6f5dde7b7eba9d485be4becb87c8d83ec45850c82668ed80fb49a6252be6929"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Chaînes
+principales de
+7 pectine
+déméthylée
+|—— Linéaire |
+20 30
+Figure 1 : Formation de liaisons entre Figure 2 : Courbes de dgélification (NTU=f(t)) interprétées
+molécules de pectines déméthylées ; comme une évolution de la fermeté du gel en fonction de la
+liaison des chaînes principales par des durée de déméthylation. Critères extraits : l'amorce de
+zones déméthylées comprenant plusieurs gélification (AG) et la vitesse de gélification (VG)
+acides galacturoniques contigus selon le a) Courbe type sans polygalacturonase
+modèle de la « boîte à œufs » b) Effet de doses croissantes de polygalaturonase (PG) sur
+(Axelos & Thibault 1991) la formation du gel
+c) Effet de la concentration en calcium sur AG et VG"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Chaînes"
+
+[[rubriques.lignes]]
+valeur = "principales de"
+
+[[rubriques]]
+titre = "7 pectine"
+
+[[rubriques.lignes]]
+valeur = "déméthylée"
+
+[[rubriques.lignes]]
+valeur = "|—— Linéaire |"
+douteux = ["Linéaire"]
+
+[[rubriques]]
+titre = "20 30"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Formation de liaisons entre Figure 2 : Courbes de dgélification (NTU=f(t)) interprétées molécules de pectines déméthylées ; comme une évolution de la fermeté du gel en fonction de la liaison des chaînes principales par des durée de déméthylation. Critères extraits : l'amorce de zones déméthylées comprenant plusieurs gélification (AG) et la vitesse de gélification (VG) acides galacturoniques contigus selon le a) Courbe type sans polygalacturonase modèle de la « boîte à œufs » b) Effet de doses croissantes de polygalaturonase (PG) sur (Axelos & Thibault 1991) la formation du gel"
+douteux = ["(NTU=f(t))", "liaison", "l'amorce"]
+
+[[rubriques.lignes]]
+valeur = "c) Effet de la concentration en calcium sur AG et VG"

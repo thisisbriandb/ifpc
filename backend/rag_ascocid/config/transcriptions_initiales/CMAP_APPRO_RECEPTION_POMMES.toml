@@ -1,0 +1,74 @@
+# Transcription de l'illustration de la fiche 1066 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1066
+code = "CMAP_APPRO_RECEPTION_POMMES"
+titre = "La réception des pommes"
+image_sha256 = "0df9a59daa274db4c95c21b3e51518206ce4a79b224049f80864e4ed83d233bc"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La réception des pommes
+est une : Opération de l’étape de gestion de l’approvisionnement
+regroupe : Le pesage | L’agréage des lots | L’attribution d’un positionnement du lot dans le silo
+a pour fonctions : La quantification et la qualification de l’approvisionnement | La fixation de la rémunération des fruits (quantité / qualité) | L’orientation des lots
+est guidée par : Des grilles d’agréage internes | L’existence de signes de qualité et d’origine (IGP, AOC, bio…) | La connaissance des catégories de saveur
+s’appuie sur : Une estimation visuelle du niveau d’altérations du lot | Des informations certifiées (bio, IGP…) | Une pesée du lot"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape de gestion de l’approvisionnement"
+
+[[rubriques]]
+titre = "regroupe"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Le pesage"
+
+[[rubriques.lignes]]
+valeur = "L’agréage des lots"
+
+[[rubriques.lignes]]
+valeur = "L’attribution d’un positionnement du lot dans le silo"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "La quantification et la qualification de l’approvisionnement"
+
+[[rubriques.lignes]]
+valeur = "La fixation de la rémunération des fruits (quantité / qualité)"
+
+[[rubriques.lignes]]
+valeur = "L’orientation des lots"
+
+[[rubriques]]
+titre = "est guidée par"
+
+[[rubriques.lignes]]
+valeur = "Des grilles d’agréage internes"
+
+[[rubriques.lignes]]
+valeur = "L’existence de signes de qualité et d’origine (IGP, AOC, bio…)"
+
+[[rubriques.lignes]]
+valeur = "La connaissance des catégories de saveur"
+
+[[rubriques]]
+titre = "s’appuie sur"
+
+[[rubriques.lignes]]
+valeur = "Une estimation visuelle du niveau d’altérations du lot"
+
+[[rubriques.lignes]]
+valeur = "Des informations certifiées (bio, IGP…)"
+
+[[rubriques.lignes]]
+valeur = "Une pesée du lot"

@@ -1,0 +1,158 @@
+# Transcription de l'illustration de la fiche 1449 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1449
+code = "FDC_RENAO"
+titre = "Rénao"
+image_sha256 = "59653761f600d5171433ba80410d7850d77cc11f0bf6eb9aa78d70325f0b6e46"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: RENAO
+PRINCIPALES ZONES DE PRODUCTION
+Originaire de Loire-Atlantique, cette variété s'est bien comportée
+partout où elle a été introduite, en Normandie comme en Bretagne.
+POSSIBILITES DE COMMERCIALISATION
+Plantations jeunes et diffuses. Il n'existe pas de centres de production.
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Jacquin du 5 janvier 1965)
+Dégustation du jus : aigre.
+Rendement en jus (%) : 73,3.
+Densité du jus : 1061 - Alcool en puissance : 7° 9,
+Acidité de titration en g. SO*H: par litre : 10,82.
+Azote/sucres totaux : 1,16.
+Tanin (en g. par litre) : 1,20.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : grande.
+Port : en cône renversé, retombant extérieurement.
+Résistance aux maladies : bonne.
+Alternance : très faible.
+Productivité : forte.
+Saison de floraison : 3e-4e.
+Saison de maturité : 2°.
+Conservation et transport des fruits : bons.
+Calibre du fruit : moyen.
+Mise à fruits : assez précoce sur porte-greffes de multiplication végétative.
+OBSERVATIONS DIVERSES
+Variété produisant un jus à acidité très élevé et à très bonne densité.
+La végétation se poursuit tardivement en saison.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)
+u Edition 1966 (@&)"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Originaire de Loire-Atlantique, cette variété s'est bien comportée partout où elle a été introduite, en Normandie comme en Bretagne."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "Plantations jeunes et diffuses. Il n'existe pas de centres de production."
+douteux = ["Il"]
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Jacquin du 5 janvier 1965"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "aigre."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "73,3."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1061"
+douteux = ["7°", "9,"]
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "7° 9,"
+douteux = ["7°", "9,"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO*H"
+valeur = "par litre : 10,82."
+douteux = ["SO*H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "1,16."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,20."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en cône renversé, retombant extérieurement."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "très faible."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "forte."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e-4e."
+douteux = ["3e-4e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+douteux = ["2°."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "assez précoce sur porte-greffes de multiplication végétative."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété produisant un jus à acidité très élevé et à très bonne densité. La végétation se poursuit tardivement en saison."
+
+[[rubriques.lignes]]
+valeur = "u Edition 1966 (@&)"
+douteux = ["u"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)"
+douteux = ["(1+r)"]

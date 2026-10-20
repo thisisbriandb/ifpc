@@ -1,0 +1,130 @@
+# Transcription de l'illustration de la fiche 1466 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1466
+code = "FDC_DOUCE_MOEN"
+titre = "Douce Moen"
+image_sha256 = "f55bb5ea36813712b0caf5b61002ab0ecf022401c636d058deb27e5385a6ed09"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Formation de l'arbre :
+A la plantation, le scion a souvent de nombreux anticipés de vigueur moyenne. 3 à 5 anticipés bien répartis le
+long du tronc peuvent être conservés mais un suivi rapproché des étranglements doit être réalisé par la suite.
+Les premières années, dès qu'un étranglement est pressent, la suppression progressive des quelques
+ramifications les plus concurrentes est nécessaire afin de faire monter l'arbre. Une arcure sous l'horizontale des
+autres dominantes, bien positionnées, est possible, en les vrillant par exemple.
+Les gourmands sont supprimés lorsqu'ils se situent à la base des branches, près du tronc. Vers l'extrémité de la
+branche, leur conservation contribue à augmenter la ramification. Ils peuvent être inclinés en les vrillant s'ils
+sont trop vigoureux.
+En port naturel, cette variété renouvelle très mal sa zone de production. Les rendements peuvent ainsi en
+verger adulte plafonner, voire régresser. Une bonne gestion de la lumière à l'intérieur de l'arbre est nécessaire.
+Il faudra donc tout particulièrement veiller à ne pas laisser s'installer une « couronne » de branches trop fortes,
+érigées à semi-érigées en partie haute de l'arbre et faire en sorte d'obtenir un axe le plus vertical possible, ne
+fléchissant pas trop sous la charge.
+Calibre : petit à moyen (38 à 64g) Régression de l’amidon : totale sur arbres très
+chargés. Sur arbres moyennement chargés, la
+Forme : tonnelet. Epiderme de couleur doré lavé régression de l'amidon peut ne pas être complète à
+de rouge, avec souvent de la rugosité. la récolte.
+Epoque de récolte : mi-octobre
+Particularités : variété réagissant fortement à un
+stress (taille d'été, manque d'eau...) par un
+blocage du calibre du fruit. De même, la récolte
+peut, certaines années, être plus étalée avec 2 pics
+de chute des fruits : fin septembre puis mi-octobre.
+Conservation au sol : moyenne (sensible aux
+champignons du sol : Phytophthora, Alternaria,
+Mucor)
+COS
+sis La bte _ —
+pH :4,0-4,1
+Conditions d'extraction : à préciser
+Saveur du moût : parfumée, saveur douce amère, moût très coloré.
+Cidre : saveur amertumée.
+Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Formation de l'arbre"
+valeur = ""
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion a souvent de nombreux anticipés de vigueur moyenne. 3 à 5 anticipés bien répartis le long du tronc peuvent être conservés mais un suivi rapproché des étranglements doit être réalisé par la suite. Les premières années, dès qu'un étranglement est pressent, la suppression progressive des quelques ramifications les plus concurrentes est nécessaire afin de faire monter l'arbre. Une arcure sous l'horizontale des autres dominantes, bien positionnées, est possible, en les vrillant par exemple."
+douteux = ["pressent,", "l'arbre."]
+
+[[rubriques.lignes]]
+valeur = "Les gourmands sont supprimés lorsqu'ils se situent à la base des branches, près du tronc. Vers l'extrémité de la branche, leur conservation contribue à augmenter la ramification. Ils peuvent être inclinés en les vrillant s'ils sont trop vigoureux."
+douteux = ["Ils"]
+
+[[rubriques.lignes]]
+valeur = "En port naturel, cette variété renouvelle très mal sa zone de production. Les rendements peuvent ainsi en verger adulte plafonner, voire régresser. Une bonne gestion de la lumière à l'intérieur de l'arbre est nécessaire. Il faudra donc tout particulièrement veiller à ne pas laisser s'installer une « couronne » de branches trop fortes, érigées à semi-érigées en partie haute de l'arbre et faire en sorte d'obtenir un axe le plus vertical possible, ne fléchissant pas trop sous la charge."
+douteux = ["l'intérieur", "Il"]
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "petit à moyen (38 à 64g) Régression de l’amidon : totale sur arbres très"
+
+[[rubriques.lignes]]
+valeur = "chargés. Sur arbres moyennement chargés, la"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "tonnelet. Epiderme de couleur doré lavé régression de l'amidon peut ne pas être complète à de rouge, avec souvent de la rugosité. la récolte."
+douteux = ["l'amidon"]
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "mi-octobre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = "variété réagissant fortement à un stress (taille d'été, manque d'eau...) par un blocage du calibre du fruit. De même, la récolte peut, certaines années, être plus étalée avec 2 pics"
+douteux = ["d'eau...)"]
+
+[[rubriques.lignes]]
+intitule = "de chute des fruits"
+valeur = "fin septembre puis mi-octobre."
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "moyenne (sensible aux"
+
+[[rubriques.lignes]]
+intitule = "champignons du sol"
+valeur = "Phytophthora, Alternaria, Mucor)"
+
+[[rubriques.lignes]]
+valeur = "COS"
+douteux = ["COS"]
+
+[[rubriques.lignes]]
+valeur = "sis La bte _ —"
+douteux = ["sis", "La", "bte", "_"]
+
+[[rubriques.lignes]]
+intitule = "pH"
+valeur = "4,0-4,1"
+douteux = ["pH", ":4,0-4,1"]
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "à préciser"
+douteux = ["d'extraction"]
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "parfumée, saveur douce amère, moût très coloré."
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "saveur amertumée."
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."
+douteux = ["l'ensemble"]

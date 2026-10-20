@@ -1,0 +1,96 @@
+# Transcription de l'illustration de la fiche 1589 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1589
+code = "FICHE_LE_GLYCEROL"
+titre = "Le glycérol"
+image_sha256 = "a19a06f61e64500fa18efb6968e9807a7b025599759b1416bb822e2da167d682"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 83.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Glucose
+« 2 ATP
+v 2 ADP
+Fructose 1,6-biphosphate
+Figure 1 : Structure chimique du glycérol | | n.
+Sur la représentation 3D, les atomes gris Dihydroxyacétone Glycéraldéhyde-3-
+correspondent aux atomes de carbone (C), les phosphate phosphate
+= NAD*
+bleus, aux hydrogènes (H) et les rouges, aux Réduction
+atomes d'oxygène (O). NADH + H*
+Glycérol-3-phosphate 1,3-Biphosphoglycérate
+H,0 ‘# 2 ADP
+Déphosphorylation «
+H,PO;, :® 2 ATP
+Glycérol 2 Pyruvates
+Peu de
+Pyruvate
+décarboxylase
+2 Acétaldéhyde
+(éthanal)
+Peu d’ alcool
+Doux Demi-sec Brut déshydrogénase
+Figure 3 : Concentration moyenne en 2 Ethanol
+ghoëror (g/l) en fonction qu Iype de cidre. Figure 2 : Voies de la fermentation glycéropyruvique
+Cidres Brut : n = 50 dans le modèle vin"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Glucose « 2 ATP v 2 ADP"
+douteux = ["v"]
+
+[[rubriques.lignes]]
+valeur = "Fructose 1,6-biphosphate"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure chimique du glycérol | | n. Sur la représentation 3D, les atomes gris Dihydroxyacétone Glycéraldéhyde-3-"
+douteux = ["n.", "Glycéraldéhyde-3-"]
+
+[[rubriques.lignes]]
+valeur = "correspondent aux atomes de carbone (C), les phosphate phosphate = NAD*"
+
+[[rubriques.lignes]]
+valeur = "bleus, aux hydrogènes (H) et les rouges, aux Réduction"
+
+[[rubriques.lignes]]
+valeur = "atomes d'oxygène (O). NADH + H*"
+
+[[rubriques.lignes]]
+valeur = "Glycérol-3-phosphate 1,3-Biphosphoglycérate"
+
+[[rubriques.lignes]]
+valeur = "H,0 ‘# 2 ADP Déphosphorylation «"
+
+[[rubriques.lignes]]
+intitule = "H,PO;,"
+valeur = "® 2 ATP"
+douteux = ["H,PO;,"]
+
+[[rubriques.lignes]]
+valeur = "Glycérol 2 Pyruvates Peu de Pyruvate décarboxylase"
+
+[[rubriques]]
+titre = "2 Acétaldéhyde"
+note = "éthanal"
+
+[[rubriques.lignes]]
+valeur = "Peu d’ alcool Doux Demi-sec Brut déshydrogénase"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Concentration moyenne en 2 Ethanol"
+
+[[rubriques.lignes]]
+valeur = "ghoëror (g/l) en fonction qu Iype de cidre. Figure 2 : Voies de la fermentation glycéropyruvique"
+douteux = ["ghoëror", "(g/l)", "fonction", "qu", "Iype", "cidre."]
+
+[[rubriques.lignes]]
+intitule = "Cidres Brut"
+valeur = "n = 50 dans le modèle vin"
+douteux = ["50"]

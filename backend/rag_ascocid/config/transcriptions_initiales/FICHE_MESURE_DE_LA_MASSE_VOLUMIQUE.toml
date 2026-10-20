@@ -1,0 +1,142 @@
+# Transcription de l'illustration de la fiche 1494 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1494
+code = "FICHE_MESURE_DE_LA_MASSE_VOLUMIQUE"
+titre = "Mesure de la masse volumique"
+image_sha256 = "2b880c39152d386af722806853f2283b414c74ed3463c6a50c3f3e2e6ccbf234"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 84.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Mesure de la masse volumique
+d'un échantillon avec un aréomètre
+Si la température de l'échantillon n'est pas de 20 °C
+“Lecture de la masse volumique lors de la mesure, il faut reporter la valeur de masse
+volumique lue sur l’aréomètre dans la table de
+Se reporter à la table d'équivalence correction, avant de lire la correspondance en teneur
+Masse Volumique — Teneurs en en sucres.
+sucres & alcool potentiel
+«<—— Aréomètre
+Masse volumique Sucres totaux Alcool Potentiel
+(20°C) (g/L) (vol)
+Ti ; 323 , 54 Ex]
+1042 35,1 , , 55 58
+1043 97,2 2 57 EX]
+1044 2 34 , 58 6
+1045 1016 , 53 62
+1046 À 103,7 , Q 63
+1047 105,3 À 62 64
+1048 108 , 6,3 65
+1049 10,2 , 64 67
+1050 123 , 65 68
+1051 1145 , 67 69
+1052 16,6 A 6,8 7
+1053 188 , 63 72
+1054 120,3 , 71 73
+1055 13,1 , 7,2 74
+1056 125,2 À 73 7,5
+Figure 2: Mesure de la masse
+volumique avec un densimètre
+électronique
+Densimètre électronique
+4 1
+Valeur de la pa Nom de l'échantillon
+masse volumique d 0.998219
+Température
+Tube contenant
+l'échantillon en cours
+de mesure"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Mesure de la masse volumique"
+
+[[rubriques.lignes]]
+valeur = "d'un échantillon avec un aréomètre Si la température de l'échantillon n'est pas de 20 °C “Lecture de la masse volumique lors de la mesure, il faut reporter la valeur de masse volumique lue sur l’aréomètre dans la table de Se reporter à la table d'équivalence correction, avant de lire la correspondance en teneur Masse Volumique — Teneurs en en sucres. sucres & alcool potentiel"
+douteux = ["l'échantillon", "n'est", "“Lecture", "l’aréomètre", "d'équivalence"]
+
+[[rubriques.lignes]]
+valeur = "«<—— Aréomètre"
+douteux = ["Aréomètre"]
+
+[[rubriques.lignes]]
+valeur = "Masse volumique Sucres totaux Alcool Potentiel"
+
+[[rubriques]]
+titre = "(20°C) (g/L) (vol)"
+
+[[rubriques.lignes]]
+valeur = "Ti ; 323 , 54 Ex]"
+douteux = ["Ti", "54", "Ex]"]
+
+[[rubriques]]
+titre = "1042 35,1 , , 55 58"
+
+[[rubriques]]
+titre = "1043 97,2 2 57 EX]"
+
+[[rubriques]]
+titre = "1044 2 34 , 58 6"
+
+[[rubriques]]
+titre = "1045 1016 , 53 62"
+
+[[rubriques]]
+titre = "1046 À 103,7 , Q 63"
+
+[[rubriques]]
+titre = "1047 105,3 À 62 64"
+
+[[rubriques]]
+titre = "1048 108 , 6,3 65"
+
+[[rubriques]]
+titre = "1049 10,2 , 64 67"
+
+[[rubriques]]
+titre = "1050 123 , 65 68"
+
+[[rubriques]]
+titre = "1051 1145 , 67 69"
+
+[[rubriques]]
+titre = "1052 16,6 A 6,8 7"
+
+[[rubriques]]
+titre = "1053 188 , 63 72"
+
+[[rubriques]]
+titre = "1054 120,3 , 71 73"
+
+[[rubriques]]
+titre = "1055 13,1 , 7,2 74"
+
+[[rubriques]]
+titre = "1056 125,2 À 73 7,5"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Mesure de la masse volumique avec un densimètre électronique"
+douteux = ["avec", "densimètre"]
+
+[[rubriques.lignes]]
+valeur = "Densimètre électronique"
+
+[[rubriques]]
+titre = "4 1"
+
+[[rubriques.lignes]]
+valeur = "Valeur de la pa Nom de l'échantillon masse volumique d 0.998219"
+douteux = ["pa", "l'échantillon", "d"]
+
+[[rubriques.lignes]]
+valeur = "Température"
+
+[[rubriques.lignes]]
+valeur = "Tube contenant l'échantillon en cours de mesure"

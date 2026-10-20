@@ -1,0 +1,20 @@
+# Transcription de l'illustration de la fiche 1397 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1397
+code = "FICHE_LA_PASTEURISATION_EN_BOUTEILLES"
+titre = "La pasteurisation en bouteilles"
+image_sha256 = "e7d761dbb33103dfe24fed1f25b7c781a69e7f6754e037cd155f55ed2a15cb05"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = "Figure 1 : Tunnel de pasteurisation Figure 2 : Courbe de pasteurisation"
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Tunnel de pasteurisation Figure 2 : Courbe de pasteurisation"

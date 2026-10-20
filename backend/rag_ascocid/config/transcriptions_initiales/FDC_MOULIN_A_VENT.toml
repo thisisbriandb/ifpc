@@ -1,0 +1,156 @@
+# Transcription de l'illustration de la fiche 1442 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1442
+code = "FDC_MOULIN_A_VENT"
+titre = "Moulin à vent"
+image_sha256 = "f263c469b158f660e4f961a63e1ec39eaacc044b851f0330476298ab3482317b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: MOULIN A VENT
+PRINCIPALES ZONES DE PRODUCTION
+Normandie : Pays d'Auge - Lieuvin - Plateaux d'Evreux et
+du Neubourg - Pays d'Ouche - Plaine d'Alençon
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 10.000 tonnes.
+Ph. Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin le 13 janvier 1953)
+Dégustation du jus : doux.
+Dégustation du cidre : très sucré.
+Rendement en jus (%) : 55,4.
+Densité du jus : 1067 - Alcool en puissance : 8° 6.
+Acidité de titration en g. SO“‘H: par litre : 2,11.
+Azote/sucres totaux : 0,27.
+Tanin (en g. par litre) : 3,56.
+Aspect du jus : assez coloré.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne.
+Port : en dôme.
+Résistance aux maladies : un peu sensible à la tavelure.
+Productivité : grande.
+Alternance : faible.
+Saison de floraison : 2e.
+Saison de maturité : 3°.
+Conservation et transport des fruits : très bons.
+Calibre du fruit : petit.
+OBSERVATIONS DIVERSES
+Variété intéressante pour la fabrication de cidres doux à la ferme.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)
+Edition 1964"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Normandie : Pays d'Auge - Lieuvin - Plateaux d'Evreux et du Neubourg - Pays d'Ouche - Plaine d'Alençon"
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 10.000 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin le 13 janvier 1953"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "très sucré."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "55,4."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1067"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "8° 6."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO“‘H"
+valeur = "par litre : 2,11."
+douteux = ["SO“‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,27."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "3,56."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "assez coloré."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en dôme."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "un peu sensible à la tavelure."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "faible."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3°."
+douteux = ["3°."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "petit."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété intéressante pour la fabrication de cidres doux à la ferme."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1+r)"
+douteux = ["(1+r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1964"

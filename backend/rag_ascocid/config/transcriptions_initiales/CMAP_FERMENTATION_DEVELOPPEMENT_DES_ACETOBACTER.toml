@@ -1,0 +1,63 @@
+# Transcription de l'illustration de la fiche 1489 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1489
+code = "CMAP_FERMENTATION_DEVELOPPEMENT_DES_ACETOBACTER"
+titre = "Le développement des Acetobacter"
+image_sha256 = "b564f90095ce0a47ff161bcd421b2c18ded1618ff7cc9789d8cad372c821b7e1"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le développement des Acetobacter (bactéries acétiques)
+est un : Phénomène microbiologique se produisant principalement au cours de l’étape fermentaire
+a pour phases : Une phase de latence | Une croissance exponentielle | Une phase stationnaire | Une décroissance éventuelle des bactéries viables (mortalité)
+induit : Les principaux effets des Acetobacter
+necessite : La présence d'oxygène (contact avec l’air) | La présence d’éthanol
+est inhibé par : La présence de CO,"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène microbiologique se produisant principalement au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "a pour phases"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une phase de latence"
+
+[[rubriques.lignes]]
+valeur = "Une croissance exponentielle"
+
+[[rubriques.lignes]]
+valeur = "Une phase stationnaire"
+
+[[rubriques.lignes]]
+valeur = "Une décroissance éventuelle des bactéries viables (mortalité)"
+
+[[rubriques]]
+titre = "induit"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Acetobacter"
+
+[[rubriques]]
+titre = "necessite"
+
+[[rubriques.lignes]]
+valeur = "La présence d'oxygène (contact avec l’air)"
+douteux = ["d'oxygène"]
+
+[[rubriques.lignes]]
+valeur = "La présence d’éthanol"
+
+[[rubriques]]
+titre = "est inhibé par"
+
+[[rubriques.lignes]]
+valeur = "La présence de CO,"

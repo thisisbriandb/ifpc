@@ -1,0 +1,98 @@
+# Transcription de l'illustration de la fiche 1324 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1324
+code = "CMAP_CIDRES_COMMERCIALISABLES"
+titre = "Les cidres commercialisables"
+image_sha256 = "0a1d3f35aed6169bf23db5f57215675bfc7e5f10250970f3cd380ad60bb86109"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les cidres commercialisés
+sont des : Produits finaux de l'élaboration du cidre
+regroupent : Cidre à effervescence naturelle non pasteurisé | Cidre gazéifié non pasteurisé | Cidre gazéifié pasteurisé
+sont identifiables par : Leur titre alcoométrique acquis | Leur catégorie de cidre (« doux », « demi-sec », « brut », « extra-brut ») | Leurs signes de qualité, d’origine, et autres mentions
+sont décrits par : Leur aspect (couleur, turbidité, dépôt) | Leurs arômes (fruités, floraux) | Leurs saveurs (sucrée, acide, amère) et l’astringence | Leurs défauts éventuels
+ont pour défauts éventuels : Des odeurs soufrées | Des odeurs « animales » excessives | Des odeurs chimiques (clou de girofle, solvant...) | Des goûts excessifs de « cuit » | Des odeurs « d’éventé » (carton, éthanal) | Une odeur de bouchon | Les piqûres (acétique et lactique) | Les casses ferriques et oxydasiques | La maladie de la graisse"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Produits finaux de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Cidre à effervescence naturelle non pasteurisé"
+
+[[rubriques.lignes]]
+valeur = "Cidre gazéifié non pasteurisé"
+
+[[rubriques.lignes]]
+valeur = "Cidre gazéifié pasteurisé"
+
+[[rubriques]]
+titre = "sont identifiables par"
+
+[[rubriques.lignes]]
+valeur = "Leur titre alcoométrique acquis"
+
+[[rubriques.lignes]]
+valeur = "Leur catégorie de cidre (« doux », « demi-sec », « brut », « extra-brut »)"
+
+[[rubriques.lignes]]
+valeur = "Leurs signes de qualité, d’origine, et autres mentions"
+
+[[rubriques]]
+titre = "sont décrits par"
+
+[[rubriques.lignes]]
+valeur = "Leur aspect (couleur, turbidité, dépôt)"
+
+[[rubriques.lignes]]
+valeur = "Leurs arômes (fruités, floraux)"
+
+[[rubriques.lignes]]
+valeur = "Leurs saveurs (sucrée, acide, amère) et l’astringence"
+
+[[rubriques.lignes]]
+valeur = "Leurs défauts éventuels"
+
+[[rubriques]]
+titre = "ont pour défauts éventuels"
+
+[[rubriques.lignes]]
+valeur = "Des odeurs soufrées"
+
+[[rubriques.lignes]]
+valeur = "Des odeurs « animales » excessives"
+
+[[rubriques.lignes]]
+valeur = "Des odeurs chimiques (clou de girofle, solvant...)"
+douteux = ["solvant...)"]
+
+[[rubriques.lignes]]
+valeur = "Des goûts excessifs de « cuit »"
+
+[[rubriques.lignes]]
+valeur = "Des odeurs « d’éventé » (carton, éthanal)"
+douteux = ["d’éventé"]
+
+[[rubriques.lignes]]
+valeur = "Une odeur de bouchon"
+
+[[rubriques.lignes]]
+valeur = "Les piqûres (acétique et lactique)"
+douteux = ["piqûres"]
+
+[[rubriques.lignes]]
+valeur = "Les casses ferriques et oxydasiques"
+
+[[rubriques.lignes]]
+valeur = "La maladie de la graisse"

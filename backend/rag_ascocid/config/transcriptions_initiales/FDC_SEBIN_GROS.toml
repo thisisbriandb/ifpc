@@ -1,0 +1,142 @@
+# Transcription de l'illustration de la fiche 1455 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1455
+code = "FDC_SEBIN_GROS"
+titre = "Sébin gros"
+image_sha256 = "7cb8b0cf50187160a717bea9f28fe1504f4b45a4a157a5793bc059e49906365d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: SEBIN GROS
+PRINCIPALES ZONES DE PRODUCTION
+(départements et cantons)
+Yonne : toutes régions.
+Loiret.
+POSSIBILITES de COMMERCIALISATION en bonne année
+2 000 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 26-12-57)
+Dégustation du jus : acide.
+Rendement en jus (%) : 60,8.
+Densité du jus : 1 070,0.
+Acidité de titration en g. SO* H? par litre : 7,15.
+Azote/Sucres totaux : 0,60.
+Tanin (en g. par litre) : 0,56.
+Parfum : peu prononcé avant maturité.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : assez grande.
+Port : assez érigé.
+Résistance aux maladies : assez bonne - variété rustique.
+Productivité : grande - alternance moyenne - mais mise à fruits tardive.
+Saison de floraison : 3e.
+Saison de maturité : 2°-3e.
+Conservation et transport des fruits : excellents.
+Grosseur du fruit : moyen.
+OBSERVATIONS DIVERSES
+Il existe plusieurs types très voisins sous les noms de Sebin rouge, vert,
+jaune, gros, petit, assez difficiles à différencier.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "départements et cantons"
+
+[[rubriques.lignes]]
+valeur = "Yonne : toutes régions. Loiret."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "2 000 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 26-12-57"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acide."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "60,8."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 070,0."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO* H? par litre"
+valeur = "7,15."
+douteux = ["H?"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,60."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "0,56."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "peu prononcé avant maturité."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "assez grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "assez érigé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez bonne - variété rustique."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "grande - alternance moyenne - mais mise à fruits tardive."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+douteux = ["3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°-3e."
+douteux = ["2°-3e."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "excellents."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Il existe plusieurs types très voisins sous les noms de Sebin rouge, vert, jaune, gros, petit, assez difficiles à différencier."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler)"
+douteux = ["(ler)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

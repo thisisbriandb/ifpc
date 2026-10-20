@@ -1,0 +1,138 @@
+# Transcription de l'illustration de la fiche 1527 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1527
+code = "FICHE_LA_COULEUR_DES_CIDRES"
+titre = "La couleur des cidres"
+image_sha256 = "9113c8bd78db59a6902a5123c5d0fa678c6e40d15c5c542aa69bc0f184cf24cb"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 71.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Jaune , |
++b* Couleur saturée > cidres se rapprochant
+- de la gamme rouge-orangé, voire acajou
+ration
+# 44 *  —
+EC ui LEE RRENT |
+RARES TT sa van joues
+LHREEER ÉLREMECEEE ECS
+FE mes nsss ceci ER SEE
+HI SIT OT
+EDP VET]
+PPDA EOIT
+CII: at
+LIWAT1I1) PSN
+FTNEN
+ÉCLLPELE DEN EN
+___SAafLirAafIO. À 10 - un mmS Hu
+AT FR SUN NS NESEE
+EE HAÏBIEL LA LEE
+ACEEDEE EYE
+tt ke MATTT
+Bleu
+Figure 1 : Cercle de couleur CIE Lab, projection de la palette de couleur des cidres français (plan équatorial a*,b*).
+Données cidricoles extraites des projets Caractérisation des cidres (2003), CasDAR préférences consommateurs (2007-2010),
+Aromacidre (2013-2015) et prélèvements sur des cidres rosés et faiblement colorés. Les ronds jaunes correspondent aux cidres
+classiques, les ronds rouges correspondent aux cidres rosés et les points blancs, les cidres faiblement colorés.
+D'après Bauduin, R., Poupard, P., Le Quéré, J.-M., Symoneaux, R. 2017. Des cidres et des couleurs, Partie 1. Le cahier technique de l'IFPC, Pomme à cidre
+n°44
+Jaune pâle Jaune paille Jaune doré Jaune orangé Ambré
+Figure 2 : Vocabulaire associé aux couleurs des cidres Figure 3 : Palette des couleurs possibles des cidres
+D'après agricultures & territoires, Chambre d'Agriculture Normandie, Photo IFPC.
+Elaboration des cidres. La couleur des cidres, Fiche n°6"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Jaune , | +b* Couleur saturée > cidres se rapprochant - de la gamme rouge-orangé, voire acajou"
+douteux = ["+b*"]
+
+[[rubriques.lignes]]
+valeur = "ration"
+
+[[rubriques.lignes]]
+valeur = "# 44 *  —"
+
+[[rubriques]]
+titre = "EC ui LEE RRENT |"
+
+[[rubriques.lignes]]
+valeur = "RARES TT sa van joues"
+douteux = ["RARES", "TT", "sa", "van", "joues"]
+
+[[rubriques]]
+titre = "LHREEER ÉLREMECEEE ECS"
+
+[[rubriques.lignes]]
+valeur = "FE mes nsss ceci ER SEE"
+douteux = ["FE", "mes", "nsss", "ceci", "ER", "SEE"]
+
+[[rubriques]]
+titre = "HI SIT OT"
+
+[[rubriques]]
+titre = "EDP VET]"
+
+[[rubriques]]
+titre = "PPDA EOIT"
+
+[[rubriques.lignes]]
+intitule = "CII"
+valeur = "at"
+douteux = ["CII:", "at"]
+
+[[rubriques]]
+titre = "LIWAT1I1) PSN"
+
+[[rubriques.lignes]]
+valeur = "FTNEN"
+douteux = ["FTNEN"]
+
+[[rubriques]]
+titre = "ÉCLLPELE DEN EN"
+
+[[rubriques.lignes]]
+valeur = "___SAafLirAafIO. À 10 - un mmS Hu"
+douteux = ["___SAafLirAafIO.", "À", "10", "un", "mmS", "Hu"]
+
+[[rubriques]]
+titre = "AT FR SUN NS NESEE"
+
+[[rubriques]]
+titre = "EE HAÏBIEL LA LEE"
+
+[[rubriques]]
+titre = "ACEEDEE EYE"
+
+[[rubriques.lignes]]
+valeur = "tt ke MATTT"
+douteux = ["tt", "ke", "MATTT"]
+
+[[rubriques.lignes]]
+valeur = "Bleu"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Cercle de couleur CIE Lab, projection de la palette de couleur des cidres français (plan équatorial a*,b*). Données cidricoles extraites des projets Caractérisation des cidres (2003), CasDAR préférences consommateurs (2007-2010), Aromacidre (2013-2015) et prélèvements sur des cidres rosés et faiblement colorés. Les ronds jaunes correspondent aux cidres"
+
+[[rubriques.lignes]]
+valeur = "classiques, les ronds rouges correspondent aux cidres rosés et les points blancs, les cidres faiblement colorés."
+
+[[rubriques.lignes]]
+valeur = "D'après Bauduin, R., Poupard, P., Le Quéré, J.-M., Symoneaux, R. 2017. Des cidres et des couleurs, Partie 1. Le cahier technique de l'IFPC, Pomme à cidre n°44"
+
+[[rubriques.lignes]]
+valeur = "Jaune pâle Jaune paille Jaune doré Jaune orangé Ambré"
+douteux = ["Ambré"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Vocabulaire associé aux couleurs des cidres Figure 3 : Palette des couleurs possibles des cidres"
+
+[[rubriques.lignes]]
+valeur = "D'après agricultures & territoires, Chambre d'Agriculture Normandie, Photo IFPC. Elaboration des cidres. La couleur des cidres, Fiche n°6"
+douteux = ["d'Agriculture"]

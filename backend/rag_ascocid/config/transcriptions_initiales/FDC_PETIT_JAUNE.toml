@@ -1,0 +1,91 @@
+# Transcription de l'illustration de la fiche 1474 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1474
+code = "FDC_PETIT_JAUNE"
+titre = "Petit Jaune"
+image_sha256 = "186b11707465a75f1e960c3f5f698892d75e501c81a58e016b1a89806793fc91"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+A la plantation, le scion est souvent petit et trapu avec de nombreux anticipés. Ces derniers sont souvent trop
+bas pour en conserver 4 à 5 d'où une suppression de l'ensemble des anticipés le plus souvent.
+La présence de grosses branches à la base de l'arbre n'entraîne pas d'étranglement mais limite la croissance
+de l'axe et empêche la pénétration de la lumière au centre de la haie.
+Cette variété a un bois rigide qui malgré de fortes charges s'ouvre très lentement.
+La sélection trop rapide des branches basses ou la conservation de branches fortes se traduira par des
+structures qui resteront oblique : Favoriser l'ouverture des branches basses en les arquant sous l'horizontal est
+recommandé.
+Peu de repercement derrière les arcures ; par contre un excès de taille se traduira par des repercements à
+angle fermé très vigoureux.
+ASPECT RECOLTE
+moyen à gros (56 à 96g)
+conique à allongé (couleur de fond jaune
+avec parfois une face rouge orangée)
+début à mi-novembre d
+moyenne à bonne eo - e
+totale à maturité
+TECHNOLOGIE
+Faible Moyen Important
+3.15 à 3.55
+à préciser
+jus acide et parfumé
+variété utilisée pour apporter de l'acidité aux cidres
+Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion est souvent petit et trapu avec de nombreux anticipés. Ces derniers sont souvent trop bas pour en conserver 4 à 5 d'où une suppression de l'ensemble des anticipés le plus souvent."
+
+[[rubriques.lignes]]
+valeur = "La présence de grosses branches à la base de l'arbre n'entraîne pas d'étranglement mais limite la croissance de l'axe et empêche la pénétration de la lumière au centre de la haie."
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "Cette variété a un bois rigide qui malgré de fortes charges s'ouvre très lentement. La sélection trop rapide des branches basses ou la conservation de branches fortes se traduira par des"
+
+[[rubriques.lignes]]
+intitule = "structures qui resteront oblique"
+valeur = "Favoriser l'ouverture des branches basses en les arquant sous l'horizontal est"
+douteux = ["l'ouverture", "l'horizontal"]
+
+[[rubriques.lignes]]
+valeur = "recommandé."
+
+[[rubriques.lignes]]
+valeur = "Peu de repercement derrière les arcures ; par contre un excès de taille se traduira par des repercements à angle fermé très vigoureux."
+
+[[rubriques]]
+titre = "ASPECT RECOLTE"
+
+[[rubriques.lignes]]
+valeur = "moyen à gros (56 à 96g)"
+douteux = ["96g)"]
+
+[[rubriques.lignes]]
+valeur = "conique à allongé (couleur de fond jaune avec parfois une face rouge orangée) début à mi-novembre d moyenne à bonne eo - e"
+douteux = ["d", "eo", "e"]
+
+[[rubriques.lignes]]
+valeur = "totale à maturité"
+
+[[rubriques]]
+titre = "TECHNOLOGIE"
+
+[[rubriques.lignes]]
+valeur = "Faible Moyen Important"
+
+[[rubriques]]
+titre = "3.15 à 3.55"
+
+[[rubriques.lignes]]
+valeur = "à préciser jus acide et parfumé variété utilisée pour apporter de l'acidité aux cidres"
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l’ensemble des techniciens de la filière cidricole."
+douteux = ["l’ensemble"]

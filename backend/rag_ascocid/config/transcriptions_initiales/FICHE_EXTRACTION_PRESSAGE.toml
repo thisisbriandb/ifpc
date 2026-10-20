@@ -1,0 +1,35 @@
+# Transcription de l'illustration de la fiche 1171 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1171
+code = "FICHE_EXTRACTION_PRESSAGE"
+titre = "Le pressage"
+image_sha256 = "e843a3180c7208da16c0555d3ea36b160c2e723fbaed436458f4f1cf3c8dc154"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Différents types de presse
+A) La presse à bandes
+B) La presse à paquets
+C) La presse pneumatique
+Photos de Y. CORVEN."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Différents types de presse A) La presse à bandes"
+
+[[rubriques.lignes]]
+valeur = "B) La presse à paquets"
+
+[[rubriques.lignes]]
+valeur = "C) La presse pneumatique"
+
+[[rubriques.lignes]]
+valeur = "Photos de Y. CORVEN."
+douteux = ["Y."]

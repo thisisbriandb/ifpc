@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1310 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1310
+code = "CMAP_REGROUPEMENT_PRODUIT_POMMES"
+titre = "Les pommes"
+image_sha256 = "f6db61d0f250e43345470ae111cb3c01b58924b1a160e5d99d24a386547a9486"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les pommes
+sont des : Etats de la pomme (produits intermédiaires de l'élaboration)
+regroupent : La pomme dans l’arbre | La pomme au sol | La pomme ramassée | La pomme livrée | La pomme à presser
+se distinguent par : La catégorie de saveur de la variété | Leurs signes de qualité et d’origine | Leur état de maturité | Leur qualité sanitaire (agréage)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Etats de la pomme (produits intermédiaires de l'élaboration)"
+douteux = ["l'élaboration)"]
+
+[[rubriques]]
+titre = "regroupent"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La pomme dans l’arbre"
+
+[[rubriques.lignes]]
+valeur = "La pomme au sol"
+
+[[rubriques.lignes]]
+valeur = "La pomme ramassée"
+
+[[rubriques.lignes]]
+valeur = "La pomme livrée"
+
+[[rubriques.lignes]]
+valeur = "La pomme à presser"
+
+[[rubriques]]
+titre = "se distinguent par"
+
+[[rubriques.lignes]]
+valeur = "La catégorie de saveur de la variété"
+
+[[rubriques.lignes]]
+valeur = "Leurs signes de qualité et d’origine"
+
+[[rubriques.lignes]]
+valeur = "Leur état de maturité"
+
+[[rubriques.lignes]]
+valeur = "Leur qualité sanitaire (agréage)"

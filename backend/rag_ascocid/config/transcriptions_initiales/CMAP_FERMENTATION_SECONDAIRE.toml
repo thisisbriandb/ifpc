@@ -1,0 +1,105 @@
+# Transcription de l'illustration de la fiche 1116 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1116
+code = "CMAP_FERMENTATION_SECONDAIRE"
+titre = "La fermentation secondaire"
+image_sha256 = "ac1fc34452d8dd2ec6917d84612653c0b419ce86ae0d570210d7ceb16eb4b1ab"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La fermentation secondaire (ralentie)
+est un : Ensemble de phénomènes microbiens de l’étape fermentaire (méthode FR) | Les principaux effets des Hanseniaspora (mineurs)
+peut être accompagnée par : Le développement éventuel des Oenococcus | Le développement éventuel des Brettanomyces | Les principaux effets des Saccharomyces
+est influencée par : Une vitesse maximum de fermentation de 0,5 à 3 points MV/semaine | Une consommation de sucres de 10 points MV (doux) à 40 points MV (brut) | Une durée moyenne de 6 semaines à 12 mois | Une population maximale de de Saccharomyces 6 à 8.10 6 ufc / mL 1,5.10 | Une population maximale d’Hanseniaspora de 1.10 6 à 2.10 6 ufc / mL (en cas d’absence de sulfites)
+est pilotée selon : La température de la cuverie | La population de levures en début de fermentation 2 re | Le statut nutritionnel (carences) | L’hygiène d’élaboration
+a pour incidents : L’estimation de la teneur en sucres par mesure de masse volumique | L’estimation de la vitesse de fermentation (perte de points MV/jour) | L’estimation de la population de levures totales par la turbidité | Un blocage de fermentation | Un framboisé : action de Zymomonas | Une action excessive des Brettanomyces | Une production excessive de composés soufrés | Une recroissance excessive des levures d’intérêt | Une piqûre acétique : action des Acetobacter (si blocage fermentaire)"""
+anomalies = ["7 relations pour 6 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes microbiens de l’étape fermentaire (méthode FR)"
+
+[[rubriques.lignes]]
+intitule = "Ensemble de phénomènes microbiens de l’étape fermentaire (méthode FR)"
+valeur = "Les principaux effets des Hanseniaspora (mineurs)"
+
+[[rubriques]]
+titre = "peut être accompagnée par"
+
+[[rubriques.lignes]]
+valeur = "Le développement éventuel des Oenococcus"
+
+[[rubriques.lignes]]
+valeur = "Le développement éventuel des Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des Saccharomyces"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "Une vitesse maximum de fermentation de 0,5 à 3 points MV/semaine"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de sucres de 10 points MV (doux) à 40 points MV (brut)"
+
+[[rubriques.lignes]]
+valeur = "Une durée moyenne de 6 semaines à 12 mois"
+
+[[rubriques.lignes]]
+valeur = "Une population maximale de de Saccharomyces 6 à 8.10 6 ufc / mL 1,5.10"
+
+[[rubriques.lignes]]
+valeur = "Une population maximale d’Hanseniaspora de 1.10 6 à 2.10 6 ufc / mL (en cas d’absence de sulfites)"
+
+[[rubriques]]
+titre = "est pilotée selon"
+
+[[rubriques.lignes]]
+valeur = "La température de la cuverie"
+
+[[rubriques.lignes]]
+valeur = "La population de levures en début de fermentation 2 re"
+
+[[rubriques.lignes]]
+valeur = "Le statut nutritionnel (carences)"
+
+[[rubriques.lignes]]
+valeur = "L’hygiène d’élaboration"
+
+[[rubriques]]
+titre = "a pour incidents"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la teneur en sucres par mesure de masse volumique"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la vitesse de fermentation (perte de points MV/jour)"
+
+[[rubriques.lignes]]
+valeur = "L’estimation de la population de levures totales par la turbidité"
+
+[[rubriques.lignes]]
+valeur = "Un blocage de fermentation"
+
+[[rubriques.lignes]]
+valeur = "Un framboisé : action de Zymomonas"
+
+[[rubriques.lignes]]
+valeur = "Une action excessive des Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "Une production excessive de composés soufrés"
+
+[[rubriques.lignes]]
+valeur = "Une recroissance excessive des levures d’intérêt"
+
+[[rubriques.lignes]]
+valeur = "Une piqûre acétique : action des Acetobacter (si blocage fermentaire)"

@@ -1,0 +1,75 @@
+# Transcription de l'illustration de la fiche 1316 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1316
+code = "CMAP_FERMENTATION_ALCOOLIQUE"
+titre = "La fermentation alcoolique"
+image_sha256 = "903de54ede553b6c08220ac22add2fe534d298229de127fe755ee3e5a14ffe3f"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La fermentation alcoolique sur le plan métabolique
+est un : Processus métabolique se déroulant au cours de l’étape fermentaire
+regroupe : La glycolyse sucres > acide pyruvique | La décarboxylation acide pyruvique > éthanal (induisant une libération de CO;) | La transformation de l’éthanal en éthanol
+a pour fonction : De fournir de l’énergie à la levure
+a pour conséquences : Une production d’éthanol | Une production de CO, | Une consommation de sucres
+est accompagnée par : Un développement d’arômes fermentaires | Une production de glycérol
+a pour agents : Des levures"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Processus métabolique se déroulant au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "regroupe"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La glycolyse sucres > acide pyruvique"
+
+[[rubriques.lignes]]
+valeur = "La décarboxylation acide pyruvique > éthanal (induisant une libération de CO;)"
+
+[[rubriques.lignes]]
+valeur = "La transformation de l’éthanal en éthanol"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De fournir de l’énergie à la levure"
+douteux = ["l’énergie"]
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une production d’éthanol"
+douteux = ["d’éthanol"]
+
+[[rubriques.lignes]]
+valeur = "Une production de CO,"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de sucres"
+douteux = ["Une"]
+
+[[rubriques]]
+titre = "est accompagnée par"
+
+[[rubriques.lignes]]
+valeur = "Un développement d’arômes fermentaires"
+
+[[rubriques.lignes]]
+valeur = "Une production de glycérol"
+
+[[rubriques]]
+titre = "a pour agents"
+
+[[rubriques.lignes]]
+valeur = "Des levures"

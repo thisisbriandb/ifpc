@@ -10,6 +10,7 @@ import { Loader2, Search, X, Check, Activity, ShieldCheck, Trash2 } from "lucide
 import { useI18n } from "@/lib/i18n";
 import PanneauFonctionnalites from "@/components/PanneauFonctionnalites";
 import PanneauDocuments from "@/components/PanneauDocuments";
+import PanneauRelecture from "@/components/PanneauRelecture";
 
 interface UserData {
   id: number;
@@ -24,7 +25,7 @@ interface UserData {
 }
 
 
-type Tab = "pending" | "users" | "fonctionnalites" | "documents";
+type Tab = "pending" | "users" | "fonctionnalites" | "documents" | "relecture";
 
 function formatRelativeTime(iso: string | null, t: any): string {
   if (!iso) return t("admin.never");
@@ -175,6 +176,7 @@ export default function AdminPage() {
             { id: "users", label: t("admin.tabUsers") },
             { id: "fonctionnalites", label: "Fonctionnalités" },
             { id: "documents", label: "Documents de l'assistant" },
+            { id: "relecture", label: "Relecture des illustrations" },
           ].map(tab => (
             <button
               key={tab.id}
@@ -198,6 +200,7 @@ export default function AdminPage() {
 
         {activeTab === "fonctionnalites" && <PanneauFonctionnalites />}
         {activeTab === "documents" && <PanneauDocuments />}
+        {activeTab === "relecture" && <PanneauRelecture />}
         
         {/* PENDING USERS */}
         {activeTab === "pending" && (

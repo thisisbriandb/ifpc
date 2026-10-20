@@ -1,0 +1,116 @@
+# Transcription de l'illustration de la fiche 1334 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1334
+code = "CMAP_REGROUPEMENT_DOSAGES_BIOCHIMIQUES"
+titre = "Dosages biochimiques et chimiques"
+image_sha256 = "a6bbfcfe213c9a24356eb1ae5f8c374a37553b7c9d03730924871ceef20ea01b"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Dosages biochimiques et physico-chimiques
+sont un : Ensemble de méthodes d'analyses biochimiques
+Le dosage des acides et acidités : Le dosage de la teneur en acide L-malique | Le dosage de la teneur en acides L- et D-lactique | Le dosage de la teneur en acide acétique | La titration de l’acidité volatile | La titration de l’acidité totale | La titration de l'acidité fixe
+regroupent : Le dosage de la teneur en alcool | Le dosage de la teneur en sucres | Le dosage de la teneur en azote total ou assimilable | Le dosage de l’asparagine
+Le dosage des composés volatils : Le dosage des phénols volatils | Le dosage des composés soufrés volatils (HS, méthanthiol,éthanthiol.….) | Le dosage de l’éthanal | Le dosage des composés aromatiques (alcools, esters...)
+Autres dosages : Le dosage des composés phénoliques (polyphénols) | L’extrait sec réduit | Le dosage de fer | Le dosage des autres minéraux
+ont pour fonctions : De suivre les phénomènes fermentaires | De caractériser un moût ou un cidre | De s'assurer de la conformité à un cahier des charges et au décret cidre | D'identifier une cause de défaut"""
+anomalies = ["7 relations pour 6 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de méthodes d'analyses biochimiques"
+douteux = ["d'analyses"]
+
+[[rubriques]]
+titre = "Le dosage des acides et acidités"
+
+[[rubriques.lignes]]
+valeur = "Le dosage de la teneur en acide L-malique"
+
+[[rubriques.lignes]]
+valeur = "Le dosage de la teneur en acides L- et D-lactique"
+
+[[rubriques.lignes]]
+valeur = "Le dosage de la teneur en acide acétique"
+
+[[rubriques.lignes]]
+valeur = "La titration de l’acidité volatile"
+
+[[rubriques.lignes]]
+valeur = "La titration de l’acidité totale"
+
+[[rubriques.lignes]]
+valeur = "La titration de l'acidité fixe"
+douteux = ["l'acidité"]
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Le dosage de la teneur en alcool"
+
+[[rubriques.lignes]]
+valeur = "Le dosage de la teneur en sucres"
+
+[[rubriques.lignes]]
+valeur = "Le dosage de la teneur en azote total ou assimilable"
+
+[[rubriques.lignes]]
+valeur = "Le dosage de l’asparagine"
+douteux = ["l’asparagine"]
+
+[[rubriques]]
+titre = "Le dosage des composés volatils"
+
+[[rubriques.lignes]]
+valeur = "Le dosage des phénols volatils"
+
+[[rubriques.lignes]]
+valeur = "Le dosage des composés soufrés volatils (HS, méthanthiol,éthanthiol.….)"
+douteux = ["(HS,", "méthanthiol,éthanthiol.….)"]
+
+[[rubriques.lignes]]
+valeur = "Le dosage de l’éthanal"
+douteux = ["l’éthanal"]
+
+[[rubriques.lignes]]
+valeur = "Le dosage des composés aromatiques (alcools, esters...)"
+
+[[rubriques]]
+titre = "Autres dosages"
+
+[[rubriques.lignes]]
+valeur = "Le dosage des composés phénoliques (polyphénols)"
+
+[[rubriques.lignes]]
+valeur = "L’extrait sec réduit"
+douteux = ["L’extrait"]
+
+[[rubriques.lignes]]
+valeur = "Le dosage de fer"
+
+[[rubriques.lignes]]
+valeur = "Le dosage des autres minéraux"
+
+[[rubriques]]
+titre = "ont pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De suivre les phénomènes fermentaires"
+
+[[rubriques.lignes]]
+valeur = "De caractériser un moût ou un cidre"
+
+[[rubriques.lignes]]
+valeur = "De s'assurer de la conformité à un cahier des charges et au décret cidre"
+douteux = ["s'assurer"]
+
+[[rubriques.lignes]]
+valeur = "D'identifier une cause de défaut"
+douteux = ["D'identifier"]

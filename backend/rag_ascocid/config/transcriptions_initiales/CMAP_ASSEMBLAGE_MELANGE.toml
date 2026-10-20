@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1124 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1124
+code = "CMAP_ASSEMBLAGE_MELANGE"
+titre = "La réalisation de l'assemblage"
+image_sha256 = "3e360de94cd19cb2a1819c7114334b087f04f6a3f18709d80fc968dfb6c19705"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La réalisation de l’assemblage
+est une : Opération de l’étape d’assemblage
+regroupe : Le transfert et le volumage | L’ajout éventuel d’additifs | L’homogénéisation
+a pour préalable : La validation de l’assemblage test
+a pour fonction : De réaliser le cidre assemblé
+s’appuie sur : La « recette » définitive"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape d’assemblage"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Le transfert et le volumage"
+
+[[rubriques.lignes]]
+valeur = "L’ajout éventuel d’additifs"
+
+[[rubriques.lignes]]
+valeur = "L’homogénéisation"
+
+[[rubriques]]
+titre = "a pour préalable"
+
+[[rubriques.lignes]]
+valeur = "La validation de l’assemblage test"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De réaliser le cidre assemblé"
+
+[[rubriques]]
+titre = "s’appuie sur"
+
+[[rubriques.lignes]]
+valeur = "La « recette » définitive"

@@ -1,0 +1,136 @@
+# Transcription de l'illustration de la fiche 1459 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1459
+code = "FDC_BEDAN"
+titre = "Bedan"
+image_sha256 = "9f8fc38a0be0a6c5b41ae3d7e69727e6e39f9c96b4c14c710e6856df9adcb2b9"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Formation de l'arbre :
+A la plantation, les anticipés sont nombreux. Lorsque certains anticipés sont conservés, veiller à bien les
+« étager » en choisissant les plus faibles (risque de blocage ou étranglement) et en évitant les anticipés
+perpendiculaires au rang (problème de passage dans le rang à terme).
+Pour permettre à l'arbre de monter, il est recommandé de :
+- Bien gérer, dès le départ, les branches fortes : suppression progressive des plus érigées (dont les
+perpendiculaires au passage) avec possibilité d'arcure sous l'horizontale de certaines. L'arcure est
+particulièrement intéressante pour cette variété à faible repercement !
+-__ Conserver en tête des branches fortes pour créer un appel de sève.
+-_ Eviter les sur-charges des têtes qui risquent de casser ces dernières et renforcer la basitonie.
+Lorsque l'arbre a été bien formé les premières années, la conduite en verger adulte ne nécessite plus une taille
+chaque année : peu de charpentières et peu de repercements !
+Pour faciliter les repercements sur le tronc, lors de suppression de branches, effectuer des coupes à1-2cm du
+tronc.
+Calibre : petit à moyen 44.5 g (30 à 78g)
+Forme : aplatie, épiderme jaune à maturité avec
+parfois une joue orangée
+Epoque de récolte : mi-novembre
+Particularités :
+Conservation au sol : bonne
+Régression de l'amidon : totale
+(me | mom men |
+Acidité (g/l H,S0:)
+Rendement en jus (%) Eu
+PH : 4,02 à 4,25
+Conditions d'extraction : à préciser
+Saveur du moût : douce à douce amère
+Cidre : parfumé (arôme particuliers de clou de girofle)
+Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Formation de l'arbre"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, les anticipés sont nombreux. Lorsque certains anticipés sont conservés, veiller à bien les « étager » en choisissant les plus faibles (risque de blocage ou étranglement) et en évitant les anticipés perpendiculaires au rang (problème de passage dans le rang à terme)."
+douteux = ["A"]
+
+[[rubriques.lignes]]
+intitule = "Pour permettre à l'arbre de monter, il est recommandé de"
+valeur = ""
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+valeur = "- Bien gérer, dès le départ, les branches fortes : suppression progressive des plus érigées (dont les perpendiculaires au passage) avec possibilité d'arcure sous l'horizontale de certaines. L'arcure est particulièrement intéressante pour cette variété à faible repercement !"
+douteux = ["Bien", "d'arcure"]
+
+[[rubriques.lignes]]
+valeur = "-__ Conserver en tête des branches fortes pour créer un appel de sève."
+douteux = ["-__"]
+
+[[rubriques.lignes]]
+valeur = "-_ Eviter les sur-charges des têtes qui risquent de casser ces dernières et renforcer la basitonie."
+douteux = ["-_"]
+
+[[rubriques.lignes]]
+valeur = "Lorsque l'arbre a été bien formé les premières années, la conduite en verger adulte ne nécessite plus une taille"
+douteux = ["l'arbre"]
+
+[[rubriques.lignes]]
+intitule = "chaque année"
+valeur = "peu de charpentières et peu de repercements !"
+
+[[rubriques.lignes]]
+valeur = "Pour faciliter les repercements sur le tronc, lors de suppression de branches, effectuer des coupes à1-2cm du tronc."
+douteux = ["tronc."]
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "petit à moyen 44.5 g (30 à 78g)"
+douteux = ["78g)"]
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "aplatie, épiderme jaune à maturité avec parfois une joue orangée"
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "mi-novembre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = ""
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "bonne"
+
+[[rubriques.lignes]]
+intitule = "Régression de l'amidon"
+valeur = "totale"
+douteux = ["l'amidon"]
+
+[[rubriques.lignes]]
+valeur = "(me | mom men |"
+douteux = ["(me", "mom", "men"]
+
+[[rubriques.lignes]]
+intitule = "Acidité (g/l H,S0"
+valeur = ") Rendement en jus (%) Eu"
+douteux = ["H,S0:)", "Eu"]
+
+[[rubriques.lignes]]
+intitule = "PH"
+valeur = "4,02 à 4,25"
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "à préciser"
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "douce à douce amère"
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "parfumé (arôme particuliers de clou de girofle)"
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."

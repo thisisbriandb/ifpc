@@ -1,0 +1,87 @@
+# Transcription de l'illustration de la fiche 1586 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1586
+code = "FICHE_ETAPE_D_ASSEMBLAGE"
+titre = "L'étape d'assemblage"
+image_sha256 = "23d0605f4849c052e46b44b496e8a7e968645a5ca5927f3a90ba84a65391b6c3"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 84.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+N° d'assemblage :
+Date de réalisation de l'assemblage :
+Composition de l’assemblage post-fermentaire
+Cuvée n° Cuvéen® Cuvéen® Cuvéen® Cuvée n° Total
+Volume
+Opération * Date Produit Dose ! x N° de lot Fournisseur
+ajouté quantité
+* Opération = levurage, filtration, centrifugation, sulfitage, collage, ajout d'acide malique, … Catégorie de Cidre Cidre Cidre Cidre « rond »
+. . , . pommes « standard » « acidulé » « amertumé »
+Volume disponible pour l'embouteillage :
+Acidulées
+Analyses réalisées sur l'assemblage : (Judeline, 10% 40 % 10% 10%
+Guillevic, ...)
+Masse volumique pH
+Douces
+A (Douce
+RU ds Coetligné, 40% 40 % 10% 60 %
+. Doux Evêque
+Masse volumique Levures jaune, …)
+corrigée à 20 °C
+- —— Douces-
+Titre alcoométrique Amères
+volumique (TAV, % Turbidité (Bedan, Douce 40 % 20 % 30 % 30 %
+vol) moën, Peau de
+Teneur totale en SO, Avancement TML chien, …)
+. duc - - Amères
+Acidité totale Dégustation (Marie ménard, 10 % 0% 40 % 0%
+Acidité volatile Autres analyses Kermerrien, …)
+Figure 1: Modèle de fiche d'assemblage post-fermentaire Figure 2: Quelques exemples d’assemblages variétaux
+Source: D'après Bauduin, R., Cassin, D., Legavre, N., Desvigne, M., Didier, AÀ., Lefevre, C., Source: D'après Bauduin R. 2006. Guide pratique de la fabrication du cidre
+Lepage, A. (2018). Guide de bonnes pratiques et d'hygiène et Guide d'application des principales
+HACCP à la fabrication du cidre et du poiré."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "N° d'assemblage"
+valeur = ""
+douteux = ["d'assemblage"]
+
+[[rubriques.lignes]]
+intitule = "Date de réalisation de l'assemblage"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "Composition de l’assemblage post-fermentaire"
+
+[[rubriques.lignes]]
+valeur = "Cuvée n° Cuvéen® Cuvéen® Cuvéen® Cuvée n° Total Volume Opération * Date Produit Dose ! x N° de lot Fournisseur ajouté quantité * Opération = levurage, filtration, centrifugation, sulfitage, collage, ajout d'acide malique, … Catégorie de Cidre Cidre Cidre Cidre « rond » . . , . pommes « standard » « acidulé » « amertumé »"
+douteux = ["Cuvéen®", "Cuvéen®", "Cuvéen®", "Cuvée", "Date", "x", "d'acide", "Catégorie", "acidulé"]
+
+[[rubriques.lignes]]
+intitule = "Volume disponible pour l'embouteillage"
+valeur = "Acidulées"
+
+[[rubriques.lignes]]
+intitule = "Analyses réalisées sur l'assemblage"
+valeur = "(Judeline, 10% 40 % 10% 10% Guillevic, ...) Masse volumique pH Douces A (Douce RU ds Coetligné, 40% 40 % 10% 60 % . Doux Evêque Masse volumique Levures jaune, …) corrigée à 20 °C - —— Douces- Titre alcoométrique Amères volumique (TAV, % Turbidité (Bedan, Douce 40 % 20 % 30 % 30 % vol) moën, Peau de Teneur totale en SO, Avancement TML chien, …) . duc - - Amères Acidité totale Dégustation (Marie ménard, 10 % 0% 40 % 0% Acidité volatile Autres analyses Kermerrien, …)"
+douteux = ["l'assemblage", "10%", "A", "RU", "ds", "Coetligné,", "chien,", "duc", "ménard,", "0%"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Modèle de fiche d'assemblage post-fermentaire Figure 2: Quelques exemples d’assemblages variétaux"
+douteux = ["d’assemblages"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "D'après Bauduin, R., Cassin, D., Legavre, N., Desvigne, M., Didier, AÀ., Lefevre, C., Source: D'après Bauduin R. 2006. Guide pratique de la fabrication du cidre"
+douteux = ["N.,", "AÀ.,", "C.,"]
+
+[[rubriques.lignes]]
+valeur = "Lepage, A. (2018). Guide de bonnes pratiques et d'hygiène et Guide d'application des principales HACCP à la fabrication du cidre et du poiré."
+douteux = ["d'application"]

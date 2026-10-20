@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1029 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1029
+code = "CMAP_CLARIFICATION_GELIFICATION"
+titre = "La gélification de la pectine"
+image_sha256 = "64ded63d5b7f228e2b5a2720683c3fffff1981913bb511b734ed0f94306c0941"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La gélification de la pectine
+est un : Phénomène se produisant au cours de la clarification haute
+a pour préalable : La déméthylation de la pectine
+a pour conséquence : Le piégeage des bourbes et des levures dans le gel
+est fiabilisée par : L’ajout de calcium
+a pour causes d’échec : Une acidité trop élevée du moût (variétés acides) | Une dégradation de la pectine | Une trop faible quantité de pectines solubles | Une trop faible quantité de calcium | Un taux de déméthylation de la pectine insuffisant"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant au cours de la clarification haute"
+
+[[rubriques]]
+titre = "a pour préalable"
+
+[[rubriques.lignes]]
+valeur = "La déméthylation de la pectine"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "Le piégeage des bourbes et des levures dans le gel"
+
+[[rubriques]]
+titre = "est fiabilisée par"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de calcium"
+
+[[rubriques]]
+titre = "a pour causes d’échec"
+
+[[rubriques.lignes]]
+valeur = "Une acidité trop élevée du moût (variétés acides)"
+
+[[rubriques.lignes]]
+valeur = "Une dégradation de la pectine"
+
+[[rubriques.lignes]]
+valeur = "Une trop faible quantité de pectines solubles"
+
+[[rubriques.lignes]]
+valeur = "Une trop faible quantité de calcium"
+
+[[rubriques.lignes]]
+valeur = "Un taux de déméthylation de la pectine insuffisant"

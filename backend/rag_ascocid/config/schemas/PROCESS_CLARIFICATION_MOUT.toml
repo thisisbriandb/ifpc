@@ -1,0 +1,220 @@
+# Transcription du schéma « Clarification des moûts » (AsCoCid, fiche 1018).
+# Format et principe : voir PROCESS_FABRICATION_GENERAL.toml et docs/11-schemas.md.
+#
+# À relire en priorité : un trait horizontal relie le soutirage de la
+# clarification haute par flottation provoquée à la centrifugation de la
+# clarification basse ; son sens n'est pas lisible sur le schéma, il n'est pas
+# transcrit.
+
+idoc = 1018
+code = "PROCESS_CLARIFICATION_MOUT"
+titre = "Clarification des moûts"
+svg_sha256 = "3910f2272687d6b51bfed1073bf37e67739eeed1fdea8b57a601446873cd7df2"
+relecture = ""
+
+[[etapes]]
+id = "choix"
+libelle = "Choix du type de clarification"
+fiche = 1052
+
+# ── Clarification haute ──────────────────────────────────────────────────────
+
+[[etapes]]
+id = "demethylation"
+libelle = "Déméthylation de la pectine"
+fiche = 1028
+groupe = "Clarification haute (classique ou par flottation provoquée)"
+intrants = ["Pectinestérase"]
+
+[[etapes]]
+id = "gelification"
+libelle = "Gélification de la pectine"
+fiche = 1029
+groupe = "Clarification haute classique"
+intrants = ["Calcium"]
+
+[[etapes]]
+id = "flottation_spontanee"
+libelle = "Flottation « spontanée » du chapeau brun"
+fiche = 1030
+groupe = "Clarification haute classique"
+
+[[etapes]]
+id = "soutirage_classique"
+libelle = "Soutirage"
+fiche = 1038
+groupe = "Clarification haute classique"
+
+[[etapes]]
+id = "transfert_flottateur"
+libelle = "Transfert en « flottateur » (ajout calcium et gaz)"
+groupe = "Clarification haute par flottation provoquée"
+
+[[etapes]]
+id = "flottation_provoquee"
+libelle = "Flottation « provoquée » du chapeau brun"
+fiche = 1031
+groupe = "Clarification haute par flottation provoquée"
+
+[[etapes]]
+id = "soutirage_flottation"
+libelle = "Soutirage"
+fiche = 1038
+groupe = "Clarification haute par flottation provoquée"
+
+# ── Clarification basse ──────────────────────────────────────────────────────
+
+[[etapes]]
+id = "depectinisation"
+libelle = "Dépectinisation"
+fiche = 1034
+groupe = "Clarification basse (sans ou avec collage)"
+intrants = ["Pectinases"]
+
+[[etapes]]
+id = "decantation"
+libelle = "Décantation"
+fiche = 1037
+groupe = "Clarification basse sans collage"
+
+[[etapes]]
+id = "collage"
+libelle = "Collage"
+fiche = 1035
+groupe = "Clarification basse avec collage"
+intrants = ["Protéines et autres adjuvants de collage"]
+
+[[etapes]]
+id = "soutirage_basse"
+libelle = "Soutirage"
+fiche = 1038
+groupe = "Clarification basse (sans ou avec collage)"
+
+[[etapes]]
+id = "centrifugation"
+libelle = "Centrifugation"
+fiche = 1039
+groupe = "Clarification basse sans collage"
+
+[[etapes]]
+id = "microfiltration"
+libelle = "Microfiltration tangentielle"
+fiche = 1040
+groupe = "Clarification basse sans collage"
+
+[[etapes]]
+id = "centrifugation_filtration"
+libelle = "Centrifugation et/ou filtration"
+groupe = "Clarification basse avec collage"
+
+# ── Enchaînement ─────────────────────────────────────────────────────────────
+
+[[transitions]]
+vers = "choix"
+produit = "Moûts bruts"
+
+[[transitions]]
+de = "choix"
+vers = "demethylation"
+condition = "clarification haute"
+
+[[transitions]]
+de = "choix"
+vers = "depectinisation"
+condition = "clarification basse"
+
+[[transitions]]
+de = "demethylation"
+vers = "gelification"
+produit = "Moût déméthylé"
+condition = "clarification haute classique"
+
+[[transitions]]
+de = "demethylation"
+vers = "transfert_flottateur"
+produit = "Moût déméthylé"
+condition = "clarification haute par flottation provoquée"
+
+[[transitions]]
+de = "gelification"
+vers = "flottation_spontanee"
+produit = "Moût gélifié"
+
+[[transitions]]
+de = "flottation_spontanee"
+vers = "soutirage_classique"
+
+[[transitions]]
+de = "soutirage_classique"
+produit = "Moûts clarifiés par Clarification haute"
+
+[[transitions]]
+de = "transfert_flottateur"
+vers = "flottation_provoquee"
+produit = "Moût gélifié"
+
+[[transitions]]
+de = "flottation_provoquee"
+vers = "soutirage_flottation"
+
+[[transitions]]
+de = "soutirage_flottation"
+produit = "Moûts clarifiés par Clarification haute"
+
+[[transitions]]
+de = "depectinisation"
+vers = "decantation"
+produit = "Moût dépectinisé"
+condition = "clarification basse sans collage"
+
+[[transitions]]
+de = "depectinisation"
+vers = "collage"
+produit = "Moût dépectinisé"
+condition = "clarification basse avec collage"
+
+[[transitions]]
+de = "decantation"
+vers = "soutirage_basse"
+
+[[transitions]]
+de = "collage"
+vers = "soutirage_basse"
+
+[[transitions]]
+de = "soutirage_basse"
+vers = "centrifugation"
+produit = "Moût dépectinisé et décanté"
+condition = "sans collage"
+
+[[transitions]]
+de = "soutirage_basse"
+vers = "microfiltration"
+produit = "Moût dépectinisé et décanté"
+condition = "sans collage"
+
+[[transitions]]
+de = "soutirage_basse"
+vers = "centrifugation_filtration"
+produit = "Moût collé et décanté"
+condition = "avec collage"
+
+[[transitions]]
+de = "centrifugation"
+produit = "Moûts dépectinisés"
+
+[[transitions]]
+de = "microfiltration"
+produit = "Moûts dépectinisés et microfiltrés"
+
+[[transitions]]
+de = "centrifugation_filtration"
+produit = "Moûts dépectinisés et collés"
+
+# ── Coproduits ───────────────────────────────────────────────────────────────
+
+[[rattachements]]
+etapes = ["soutirage_classique", "soutirage_flottation", "soutirage_basse"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Lies de clarification haute et basse", "Lies de collage"]

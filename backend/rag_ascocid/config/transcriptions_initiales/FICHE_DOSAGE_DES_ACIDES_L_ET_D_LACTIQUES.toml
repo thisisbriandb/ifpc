@@ -1,0 +1,122 @@
+# Transcription de l'illustration de la fiche 1517 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1517
+code = "FICHE_DOSAGE_DES_ACIDES_L_ET_D_LACTIQUES"
+titre = "Dosage des acides L-et D-lactiques"
+image_sha256 = "9ecd879b523d3ed3a72d1561599218820f1d647ad1f2ac8615b5e7376f42ec8c"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Couvercle
+hermétique Lo
+<— Front de migration
+Papier Whatman Après 3-4 h de <— Migration de l'acide
+migration par capillarité lactique
+puis temps de séchage
+Cuve de …:
+chromatographie <——— Migration de l'acide
+malique
+Dépôt
+Ligne de dépôt Ligne de dépôt des
+échantillons
+Solvant d'élution
+Figure 1 : La chromatographie sur papier pour suivre l'apparition d'acide lactique
+1) Témoin Acide malique (acide malique dans de l’eau)
+2) Témoin Acide lactique (acide lactique dans de l’eau)
+3) Tâches importantes d'acide malique mais pas d'acide lactique = la TML n'a pas commencé
+4) Tâches d'acide malique et d'acide lactique = la TML a commencé
+9) Tâches importantes d'acide lactique mais pas d'acide malique = la TML est terminée
+L-LDH
+Acide L-lactique + NAD* + Pyruvate + NADH + H*
+D-LDH
+Acide D-lactique + NAD* + Pyruvate + NADH + H*
+L D-GPT
+il) Pyruvate + D-glutamate —+  2-oxoglutarate + D-alanine
+Figure 2 : Réactions sur lesquelles repose le dosage enzymatique de l'acide L- ou D-lactique
+La quantité de NADH formée suite à ces deux réactions est mesurée par spectrophotométrie, permettant de déterminer
+la quantité d'acide L- ou D-lactique.
+L-LDH / D-LDH = enzyme L-lactate déshydrogénase / D-lactate déshydrogénase
+D-GPT = enzyme D-glutamate-pyruvate transaminase
+Sources: Megazyme, L-lactic acid (L-lactate) assay procedure et D-lactic acid (D-lactate) (rapid) assay procedure."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Couvercle"
+
+[[rubriques.lignes]]
+valeur = "hermétique Lo <— Front de migration"
+douteux = ["Lo"]
+
+[[rubriques.lignes]]
+valeur = "Papier Whatman Après 3-4 h de <— Migration de l'acide migration par capillarité lactique puis temps de séchage"
+douteux = ["l'acide"]
+
+[[rubriques.lignes]]
+intitule = "Cuve de …"
+valeur = "chromatographie <——— Migration de l'acide"
+
+[[rubriques.lignes]]
+valeur = "malique"
+
+[[rubriques.lignes]]
+valeur = "Dépôt"
+
+[[rubriques.lignes]]
+valeur = "Ligne de dépôt Ligne de dépôt des échantillons"
+
+[[rubriques.lignes]]
+valeur = "Solvant d'élution"
+douteux = ["d'élution"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La chromatographie sur papier pour suivre l'apparition d'acide lactique 1) Témoin Acide malique (acide malique dans de l’eau)"
+douteux = ["d'acide"]
+
+[[rubriques.lignes]]
+valeur = "2) Témoin Acide lactique (acide lactique dans de l’eau)"
+
+[[rubriques.lignes]]
+valeur = "3) Tâches importantes d'acide malique mais pas d'acide lactique = la TML n'a pas commencé 4) Tâches d'acide malique et d'acide lactique = la TML a commencé"
+douteux = ["d'acide", "d'acide", "n'a", "d'acide", "d'acide"]
+
+[[rubriques.lignes]]
+valeur = "9) Tâches importantes d'acide lactique mais pas d'acide malique = la TML est terminée"
+douteux = ["9)", "d'acide", "d'acide"]
+
+[[rubriques.lignes]]
+valeur = "L-LDH Acide L-lactique + NAD* + Pyruvate + NADH + H*"
+douteux = ["NAD*", "H*"]
+
+[[rubriques.lignes]]
+valeur = "D-LDH Acide D-lactique + NAD* + Pyruvate + NADH + H*"
+douteux = ["NAD*", "Pyruvate", "H*"]
+
+[[rubriques.lignes]]
+valeur = "L D-GPT il) Pyruvate + D-glutamate —+  2-oxoglutarate + D-alanine"
+douteux = ["L", " 2-oxoglutarate"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Réactions sur lesquelles repose le dosage enzymatique de l'acide L- ou D-lactique"
+douteux = ["l'acide"]
+
+[[rubriques.lignes]]
+valeur = "La quantité de NADH formée suite à ces deux réactions est mesurée par spectrophotométrie, permettant de déterminer la quantité d'acide L- ou D-lactique."
+douteux = ["d'acide"]
+
+[[rubriques.lignes]]
+valeur = "L-LDH / D-LDH = enzyme L-lactate déshydrogénase / D-lactate déshydrogénase"
+
+[[rubriques.lignes]]
+valeur = "D-GPT = enzyme D-glutamate-pyruvate transaminase"
+
+[[rubriques.lignes]]
+intitule = "Sources"
+valeur = "Megazyme, L-lactic acid (L-lactate) assay procedure et D-lactic acid (D-lactate) (rapid) assay procedure."

@@ -1,0 +1,154 @@
+# Transcription de l'illustration de la fiche 1419 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1419
+code = "FDC_CARTIGNY"
+titre = "Cartigny"
+image_sha256 = "8d2fff747a2ab84f998d0cc70f90ed2b306f85f4e7b0ec04d4246e50af689f9f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: CARTIGNY
+PRINCIPALES ZONES DE PRODUCTION
+Normandie : Bessin et Bocage.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 500 tonnes.
+Ph. Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de MM. Tavernier et Jacquin le 29 novembre 1950)
+Dégustation du jus : doux.
+Dégustation du cidre : doux.
+Rendement en jus (%) : 60,2.
+Densité du jus : 1057,2 - Alcool en puissance : 7° 3.
+Acidité de titration en g. SO‘H: par litre : 1,27.
+Azote/sucres totaux : 0,66.
+Tanin (en g. par litre) : 2,24.
+Aspect du jus : teinté.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : grande.
+Port : en cône retombant.
+Résistance aux maladies : variété résistante d'une façon générale, mais
+craignant la tavelure surtout sur feuilles.
+Productivité : assez grande.
+Saison de floraison : 2e-3e.
+Saison de maturité : 2°.
+Conservation et transport des fruits : moyens.
+Calibre du fruit : moyen à gros.
+OBSERVATIONS DIVERSES
+Cette variété produisant beaucoup, a souvent des branches trop chargées
+qui cassent et sont remplacées par de nouvelles branches qui s'élèvent
+trop haut. Une culture rationnelle comporterait un élagage régulier qui
+éviterait les déformations et le renouvellement de la tête de l'arbre.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r) ©
+Edition 1964"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Normandie : Bessin et Bocage."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de MM. Tavernier et Jacquin le 29 novembre 1950"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "60,2."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1057,2"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "7° 3."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘H"
+valeur = "par litre : 1,27."
+douteux = ["SO‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,66."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,24."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "teinté."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "en cône retombant."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "variété résistante d'une façon générale, mais craignant la tavelure surtout sur feuilles."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "assez grande."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "2e-3e."
+douteux = ["2e-3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "moyens."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à gros."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Cette variété produisant beaucoup, a souvent des branches trop chargées qui cassent et sont remplacées par de nouvelles branches qui s'élèvent trop haut. Une culture rationnelle comporterait un élagage régulier qui éviterait les déformations et le renouvellement de la tête de l'arbre."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r) ©"
+douteux = ["(1*r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1964"

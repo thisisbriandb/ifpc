@@ -1,0 +1,71 @@
+# Transcription de l'illustration de la fiche 1513 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1513
+code = "FICHE_ANALYSE_SENSORIELLE_DES_CIDRES"
+titre = "L'analyse sensorielle des cidres"
+image_sha256 = "2f6263c58919185904c209aab13e1e334bf0ea3b032269b30026649712159037"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Un cidre codé vous est présenté. Ce cidre doit être senti tout d'abord sans agitation puis après agitation. Cette évaluation réalisée, vous pouvez
+passer l'échantillon en bouche et indiquer vos notes et éventuels commentaires en prenant en compte vos perceptions ortho et rétro nasales.
+Pour chaque descripteur proposé, vous devez donner une note de 0 à 10 en fonction de l'intensité perçue. Vous pouvez également indiquer
+librement une ou des perceptions non présentes dans la liste.
+Intensité du fruité-floral (Fruits frais) Intensité du soufré
+0 10 0 10
+Très faible Très prononcé Très faible Très prononcé
+Intensité des saveurs et astringence
+Sucrosité
+Banane - Poire 0
+Fruits rouges /Z NŸ
+(fraise, framboise ….) Astringence 10 _ 0 Amertume
+Fruits exotiques
+(litchi, mangue.)
+(rose, fleurs blanches...) 10
+0
+Agrumes ue
+(citron, pamplemousse …) Acidité
+Figure 1 : Exemple d'une fiche d'analyse sensorielle descriptive."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Un cidre codé vous est présenté. Ce cidre doit être senti tout d'abord sans agitation puis après agitation. Cette évaluation réalisée, vous pouvez passer l'échantillon en bouche et indiquer vos notes et éventuels commentaires en prenant en compte vos perceptions ortho et rétro nasales."
+douteux = ["agitation", "agitation.", "l'échantillon"]
+
+[[rubriques.lignes]]
+valeur = "Pour chaque descripteur proposé, vous devez donner une note de 0 à 10 en fonction de l'intensité perçue. Vous pouvez également indiquer librement une ou des perceptions non présentes dans la liste."
+douteux = ["0"]
+
+[[rubriques.lignes]]
+valeur = "Intensité du fruité-floral (Fruits frais) Intensité du soufré"
+
+[[rubriques]]
+titre = "0 10 0 10"
+
+[[rubriques.lignes]]
+valeur = "Très faible Très prononcé Très faible Très prononcé"
+
+[[rubriques.lignes]]
+valeur = "Intensité des saveurs et astringence"
+
+[[rubriques.lignes]]
+valeur = "Sucrosité"
+
+[[rubriques.lignes]]
+valeur = "Banane - Poire 0 Fruits rouges /Z NŸ (fraise, framboise ….) Astringence 10 _ 0 Amertume Fruits exotiques (litchi, mangue.) (rose, fleurs blanches...) 10 0"
+douteux = ["/Z", "NŸ", "framboise", "(litchi,", "mangue.)", "blanches...)"]
+
+[[rubriques.lignes]]
+valeur = "Agrumes ue (citron, pamplemousse …) Acidité"
+douteux = ["ue", "pamplemousse"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple d'une fiche d'analyse sensorielle descriptive."
+douteux = ["d'une", "d'analyse"]

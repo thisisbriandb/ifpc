@@ -1,0 +1,77 @@
+# Transcription de l'illustration de la fiche 1112 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1112
+code = "CMAP_FERMENTATION_EFFETS_ZYMOMONAS"
+titre = "Les principaux effets des Zymomonas"
+image_sha256 = "73c7d2aaac74d5711338a9406630d1d199a1d55fafdc90729728c167c7a21783"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principaux effets des : Zymomonas le framboisé
+sont des : Phénomènes se produisant principalement au cours de l’étape fermentaire
+regroupent : Une production d’éthanal | Une fermentation particulière du glucose en éthanol + CO 2
+sont conditionnés par : Le développement des Zymomonas
+ont pour autres conséquences : Une forte production de CO2 en cas de framboisé en cuve | L’apparition d’une mousse blanche persistante | Un risque de sur -pression en cas de framboisé en bouteille | Un dépassement de la limite légale en éthanal autorisée (100 mg/L)
+ont pour impacts sensoriels : Une baisse rapide de la saveur sucrée | L’apparition d’une odeur spécifique du framboisé (végétal/vert, tige coupée…) | La formation d’un trouble (précipitation des polyphénols avec l’éthanal)
+dépendent de : Leur population maximale atteinte | Leur survie dans le milieu (pH, SO 2)"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Phénomènes se produisant principalement au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Une production d’éthanal"
+
+[[rubriques.lignes]]
+valeur = "Une fermentation particulière du glucose en éthanol + CO 2"
+
+[[rubriques]]
+titre = "sont conditionnés par"
+
+[[rubriques.lignes]]
+valeur = "Le développement des Zymomonas"
+
+[[rubriques]]
+titre = "ont pour autres conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une forte production de CO2 en cas de framboisé en cuve"
+
+[[rubriques.lignes]]
+valeur = "L’apparition d’une mousse blanche persistante"
+
+[[rubriques.lignes]]
+valeur = "Un risque de sur -pression en cas de framboisé en bouteille"
+
+[[rubriques.lignes]]
+valeur = "Un dépassement de la limite légale en éthanal autorisée (100 mg/L)"
+
+[[rubriques]]
+titre = "ont pour impacts sensoriels"
+
+[[rubriques.lignes]]
+valeur = "Une baisse rapide de la saveur sucrée"
+
+[[rubriques.lignes]]
+valeur = "L’apparition d’une odeur spécifique du framboisé (végétal/vert, tige coupée…)"
+
+[[rubriques.lignes]]
+valeur = "La formation d’un trouble (précipitation des polyphénols avec l’éthanal)"
+
+[[rubriques]]
+titre = "dépendent de"
+
+[[rubriques.lignes]]
+valeur = "Leur population maximale atteinte"
+
+[[rubriques.lignes]]
+valeur = "Leur survie dans le milieu (pH, SO 2)"

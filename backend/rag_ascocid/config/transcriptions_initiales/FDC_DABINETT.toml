@@ -1,0 +1,107 @@
+# Transcription de l'illustration de la fiche 1463 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1463
+code = "FDC_DABINETT"
+titre = "Dabinett"
+image_sha256 = "310875936c79730b4f3aa114c62c04096989af447001c1472ade577ce48e13f6"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Réaction à l'éclaircissage chimique : moyenne. Effet stressant des hormones (ANA) sur le développement
+des fruits (présence de fruits « pygmées » à la récolte)
+Formation de l'arbre :
+A la plantation, le scion est souvent peu ramifié. Sa croissance est assez faible : la gestion de la charge par un
+éclaircissage adapté est indispensable pour un bon développement de l'arbre les premières années.
+Les charpentières sont réparties de façon équilibrée sur le tronc. Quelques ramifications plus vigoureuses
+peuvent nécessiter une arcure ou une suppression.
+Dans l'ensemble, la conduite est assez facile.
+Sa croissance modérée associée à sa forte productivité pose souvent problème pour le maintien de l'axe droit :
+des pincements de l'axe pour le renforcer ou un palissage haut, accompagnés d'un éclaircissage en tête,
+permettent de conserver la verticalité de l'axe.
+Maintenir des branches érigées en partie supérieure de l'arbre contribue aussi à renforcer l'axe et le rigidifier.
+Calibre : moyen à gros (70-80 g)
+Forme : fruit avoïde à aplati (rouge strié)
+Epoque de récolte : fin octobre à début novembre
+Particularités :
+Conservation au sol : bonne
+Régression de l'amidon : totale
+pH:4,1à4,7
+Conditions d'extraction : à préciser
+Saveur du moût : douce amère
+Cidre : moyennement tannique (amertume et astringence plus perceptibles que sur les cidres mono-variétaux
+de variétés douce-amères françaises type Douce Moën, Bedan, Bisquet, Binet Rouge, …)
+Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Réaction à l'éclaircissage chimique"
+valeur = "moyenne. Effet stressant des hormones (ANA) sur le développement des fruits (présence de fruits « pygmées » à la récolte)"
+douteux = ["l'éclaircissage"]
+
+[[rubriques.lignes]]
+intitule = "Formation de l'arbre"
+valeur = ""
+
+[[rubriques.lignes]]
+valeur = "A la plantation, le scion est souvent peu ramifié. Sa croissance est assez faible : la gestion de la charge par un éclaircissage adapté est indispensable pour un bon développement de l'arbre les premières années."
+
+[[rubriques.lignes]]
+valeur = "Les charpentières sont réparties de façon équilibrée sur le tronc. Quelques ramifications plus vigoureuses peuvent nécessiter une arcure ou une suppression."
+
+[[rubriques.lignes]]
+valeur = "Dans l'ensemble, la conduite est assez facile. Sa croissance modérée associée à sa forte productivité pose souvent problème pour le maintien de l'axe droit : des pincements de l'axe pour le renforcer ou un palissage haut, accompagnés d'un éclaircissage en tête,"
+douteux = ["droit"]
+
+[[rubriques.lignes]]
+valeur = "permettent de conserver la verticalité de l'axe. Maintenir des branches érigées en partie supérieure de l'arbre contribue aussi à renforcer l'axe et le rigidifier."
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "moyen à gros (70-80 g)"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "fruit avoïde à aplati (rouge strié)"
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "fin octobre à début novembre"
+
+[[rubriques.lignes]]
+intitule = "Particularités"
+valeur = ""
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "bonne"
+
+[[rubriques.lignes]]
+intitule = "Régression de l'amidon"
+valeur = "totale"
+
+[[rubriques.lignes]]
+intitule = "pH"
+valeur = "4,1à4,7"
+douteux = ["pH:4,1à4,7"]
+
+[[rubriques.lignes]]
+intitule = "Conditions d'extraction"
+valeur = "à préciser"
+
+[[rubriques.lignes]]
+intitule = "Saveur du moût"
+valeur = "douce amère"
+
+[[rubriques.lignes]]
+intitule = "Cidre"
+valeur = "moyennement tannique (amertume et astringence plus perceptibles que sur les cidres mono-variétaux de variétés douce-amères françaises type Douce Moën, Bedan, Bisquet, Binet Rouge, …)"
+douteux = ["Rouge,"]
+
+[[rubriques.lignes]]
+valeur = "Fiche réalisée avec la collaboration de l'ensemble des techniciens de la filière cidricole."

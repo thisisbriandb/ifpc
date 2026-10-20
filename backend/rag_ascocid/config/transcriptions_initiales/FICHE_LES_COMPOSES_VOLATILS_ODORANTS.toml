@@ -1,0 +1,20 @@
+# Transcription de l'illustration de la fiche 1519 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1519
+code = "FICHE_LES_COMPOSES_VOLATILS_ODORANTS"
+titre = "Les composés volatils odorants"
+image_sha256 = "652ae075fd7e7b8b8bef507eba430070e8bacce8694164e6696d4827f889c3a7"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 95.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = "Figure 1 : Les différents types de composés volatils odorants pouvant être perçus lors de la dégustation d’un cidre."
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les différents types de composés volatils odorants pouvant être perçus lors de la dégustation d’un cidre."

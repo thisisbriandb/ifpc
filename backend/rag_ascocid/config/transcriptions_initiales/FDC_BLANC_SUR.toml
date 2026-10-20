@@ -1,0 +1,167 @@
+# Transcription de l'illustration de la fiche 1417 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1417
+code = "FDC_BLANC_SUR"
+titre = "Blanc Sur"
+image_sha256 = "b1959e33a837e64e531aacd3f143b31b5a7a8e941a7b22a15a9c2e60bef838af"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: BLANC SUR
+PRINCIPALES ZONES DE PRODUCTION
+Sarthe : Nord-Ouest du département (Fresnay-sur-Sarthe
+- Beaumont-sur-Sarthe).
+CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT
+(Moyenne des analyses effectuées
+à la Station cidricole de Rennes INRA)
+Poids moyen du fruit (g.): 99.
+Rendement en jus (%): 72,5.
+Densité du jus : 1,0578.
+Sucres totaux (en g. par litre): 125,1.
+Acidité de titration (en g. H,SO, par litre): 5,3.
+(en m.eq.) : 108.
+Rapport sucres/acidité : 23,6.
+Extrait sec réduit (en g. par litre): 23,9.
+Tanins (en g. par litre) : 0,99.
+Couleur du jus : jaune très pâle.
+Dégustation : aigre, sans parfum.
+CARACTERISTIQUES CULTURALES DE L'ARBRE
+Vigueur : moyenne à grande.
+Port: semi-étalé.
+Résistance aux maladies : assez rustique - mais parfois un peu sensible
+à l'oidium et au chancre ainsi qu'à la tavelure en sol calcaire.
+Mise à fruits : assez rapide.
+Productivité : moyenne et assez régulière.
+Saison de floraison : 4e.
+Saison de maturité : 2e.
+Calibre du fruit: moyen.
+Conservation et transport des fruits: se marquent au transport mais se
+conservent bien.
+OBSERVATIONS DIVERSES
+Il convient d'être prudent en ce qui concerne l'extension de cette variété.
+Ne se plait pas en sol calcaire, recherche des terrains acides.
+Les fruits doivent être cueillis assez tôt car ils tombent facilement.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*)
+Documentation I.N.R.A. - Edition 1973"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Sarthe : Nord-Ouest du département (Fresnay-sur-Sarthe - Beaumont-sur-Sarthe)."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(Moyenne des analyses effectuées à la Station cidricole de Rennes INRA)"
+douteux = ["effectuées"]
+
+[[rubriques.lignes]]
+intitule = "Poids moyen du fruit (g.)"
+valeur = "99."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "72,5."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1,0578."
+
+[[rubriques.lignes]]
+intitule = "Sucres totaux (en g. par litre)"
+valeur = "125,1."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration (en g. H,SO, par litre)"
+valeur = "5,3."
+douteux = ["H,SO,"]
+
+[[rubriques.lignes]]
+intitule = "(en m.eq.)"
+valeur = "108."
+douteux = ["m.eq.)"]
+
+[[rubriques.lignes]]
+intitule = "Rapport sucres/acidité"
+valeur = "23,6."
+
+[[rubriques.lignes]]
+intitule = "Extrait sec réduit (en g. par litre)"
+valeur = "23,9."
+
+[[rubriques.lignes]]
+intitule = "Tanins (en g. par litre)"
+valeur = "0,99."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune très pâle."
+
+[[rubriques.lignes]]
+intitule = "Dégustation"
+valeur = "aigre, sans parfum."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne à grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "semi-étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "assez rustique - mais parfois un peu sensible à l'oidium et au chancre ainsi qu'à la tavelure en sol calcaire."
+douteux = ["l'oidium"]
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "assez rapide."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "moyenne et assez régulière."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "4e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "se marquent au transport mais se conservent bien."
+douteux = ["fruits:"]
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Il convient d'être prudent en ce qui concerne l'extension de cette variété. Ne se plait pas en sol calcaire, recherche des terrains acides. Les fruits doivent être cueillis assez tôt car ils tombent facilement."
+douteux = ["Il"]
+
+[[rubriques.lignes]]
+valeur = "Documentation I.N.R.A. - Edition 1973"
+douteux = ["I.N.R.A."]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*)"
+douteux = ["(1*)"]

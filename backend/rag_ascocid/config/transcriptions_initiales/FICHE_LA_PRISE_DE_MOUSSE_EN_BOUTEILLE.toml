@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1410 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1410
+code = "FICHE_LA_PRISE_DE_MOUSSE_EN_BOUTEILLE"
+titre = "La prise de mousse en bouteille"
+image_sha256 = "a1f4eb27931f105e3b4c6dfb9aa9bba2c364b286edbe5e7fe500fc70c261a6be"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 79.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Tableau 1: Préconisation des conseillers cidricoles de Basse Normandie Figure 1: Evolution de la teneur en gaz carbonique en fonction de la
+Source : https://normandie.chambres-agriculture.fr/fileadmin/user_upload/ durée de prise de mousse (INRAE Stage de Jean-Paul Simon)
+National/FAL_commun/publications/Normandie/cidre-fiche-elaboration-normandie.pdf !
+pe . e CO2 à 10°C
+Doses indicatives pour un cidre exempt de 10 à 460 0,5
+| à la mi /hL de LSA, millions/mL s ° cozaise
+evures à la mise (en g e , Millions/mL) D Evolution de la _ Vitesse à 10°C
+ou 8 teneur en CO, : N 0,4
+ Epoquedelamise(mois) | MERS TES
+5 6 à 0,3
+Dir | Sin | sn LE |
+1à2 15à4 3à5 8 ||
+Densité < 1020 0,2 à 0,4 0,3 à 0,8 06à1 ER 4 N 0,2
+Le 0,5 à 1,5 1à3 2à5 d 2 | Vitesse de _ 01
+Densité > 1020 01à03 02à0,6 04à1 5 _— 77\" production de CO; ’
+= 4
+Ces doses sont à adapter aux conditions particulières | & 0 0
+(historique de la cave, millésime, fermentescibilité.…). 0 30 60 90 120 150
+Le poiré nécessite des doses beaucoup plus faibles. Durée (j)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Préconisation des conseillers cidricoles de Basse Normandie Figure 1: Evolution de la teneur en gaz carbonique en fonction de la"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "https://normandie.chambres-agriculture.fr/fileadmin/user_upload/ durée de prise de mousse (INRAE Stage de Jean-Paul Simon) National/FAL_commun/publications/Normandie/cidre-fiche-elaboration-normandie.pdf !"
+douteux = ["https://normandie.chambres-agriculture.fr/fileadmin/user_upload/", "(INRAE"]
+
+[[rubriques.lignes]]
+valeur = "pe . e CO2 à 10°C Doses indicatives pour un cidre exempt de 10 à 460 0,5 | à la mi /hL de LSA, millions/mL s ° cozaise evures à la mise (en g e , Millions/mL) D Evolution de la _ Vitesse à 10°C ou 8 teneur en CO, : N 0,4 Epoquedelamise(mois) | MERS TES"
+douteux = ["pe", "CO2", "10", "à", "/hL", "millions/mL", "s", "cozaise", "D", "_", "ou", "N", " Epoquedelamise(mois)", "MERS", "TES"]
+
+[[rubriques]]
+titre = "5 6 à 0,3"
+
+[[rubriques.lignes]]
+valeur = "Dir | Sin | sn LE | 1à2 15à4 3à5 8 || Densité < 1020 0,2 à 0,4 0,3 à 0,8 06à1 ER 4 N 0,2 Le 0,5 à 1,5 1à3 2à5 d 2 | Vitesse de _ 01 Densité > 1020 01à03 02à0,6 04à1 5 _— 77\" production de CO; ’ = 4 Ces doses sont à adapter aux conditions particulières | & 0 0 (historique de la cave, millésime, fermentescibilité.…). 0 30 60 90 120 150"
+douteux = ["Dir", "Sin", "sn", "LE", "8", "06à1", "ER", "N", "Le", "d", "2", "_", "02à0,6", "04à1", "_—", "77\"", "CO;", "4", "0", "fermentescibilité.…)."]
+
+[[rubriques.lignes]]
+valeur = "Le poiré nécessite des doses beaucoup plus faibles. Durée (j)"

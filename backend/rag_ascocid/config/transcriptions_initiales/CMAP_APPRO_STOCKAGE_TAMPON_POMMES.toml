@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1067 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1067
+code = "CMAP_APPRO_STOCKAGE_TAMPON_POMMES"
+titre = "Le stockage tampon des pommes"
+image_sha256 = "9e55aca0915ca1b5d5ac18af995bc17e5375cda448185e5b4ef2f52bd61ade57"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le stockage « tampon » des pommes
+est une : Opération de l’étape de gestion de l’approvisionnement
+a pour fonction : D’ajuster le flux d’approvisionnement au flux de traitement des fruits
+est influencé par : Le débit d’approvisionnement | Le débit réel de traitement des pommes | La capacité de stockage disponible | Les conditions de stockage
+a pour consigne : Une durée de stockage à ne pas dépasser (quelques jours)
+peut avoir pour conséquence : Une augmentation du niveau d’altération fongique des fruits"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape de gestion de l’approvisionnement"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’ajuster le flux d’approvisionnement au flux de traitement des fruits"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "Le débit d’approvisionnement"
+
+[[rubriques.lignes]]
+valeur = "Le débit réel de traitement des pommes"
+
+[[rubriques.lignes]]
+valeur = "La capacité de stockage disponible"
+
+[[rubriques.lignes]]
+valeur = "Les conditions de stockage"
+
+[[rubriques]]
+titre = "a pour consigne"
+
+[[rubriques.lignes]]
+valeur = "Une durée de stockage à ne pas dépasser (quelques jours)"
+
+[[rubriques]]
+titre = "peut avoir pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "Une augmentation du niveau d’altération fongique des fruits"

@@ -1,0 +1,37 @@
+# Transcription de l'illustration de la fiche 1213 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1213
+code = "FICHE_MICROFILTRATION_TANGENTIELLE"
+titre = "La microfiltration tangentielle"
+image_sha256 = "1e059cbb3b476536edea0868c4cee0a599bc67d06b52c42296ef56f88ba51545"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Filtrat
+Membrane , O @) e
+Figure 1 : Principe de fonctionnement | Figure 2 : Principe de fonctionnement
+d'un filtre tangentiel des membranes
+Figure 3 : Exemple de filtre tangentiel | Figure 4 : Exemple de filtre tangentiel à
+(Bücher) fibres creuses (Pall)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Filtrat"
+
+[[rubriques.lignes]]
+valeur = "Membrane , O @) e"
+douteux = ["e"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Principe de fonctionnement | Figure 2 : Principe de fonctionnement d'un filtre tangentiel des membranes"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Exemple de filtre tangentiel | Figure 4 : Exemple de filtre tangentiel à (Bücher) fibres creuses (Pall)"

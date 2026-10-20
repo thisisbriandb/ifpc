@@ -1,0 +1,64 @@
+# Transcription de l'illustration de la fiche 1070 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1070
+code = "CMAP_APPRO_LAVAGE_ET_TRI_POMMES"
+titre = "Le lavage et le tri des pommes"
+image_sha256 = "756e6fd07c59d534b64f7f3611e35b110f251649ced4190783344f53e0e78b8b"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le lavage et le tri des pommes
+est une : Opération de l’étape de gestion de l’approvisionnement
+regroupe : La lavage à l’eau des pommes | Le tri des pommes
+a pour fonctions : L’élimination des souillures | L’élimination des fruits altérés
+est influencé par : Le type d’équipement de lavage et de tri | La durée de lavage | Le débit d’eau de lavage | Le débit de pommes | Le niveau d’altération fongique des pommes | Les consignes de tri et l’efficacité du tri"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape de gestion de l’approvisionnement"
+
+[[rubriques]]
+titre = "regroupe"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La lavage à l’eau des pommes"
+
+[[rubriques.lignes]]
+valeur = "Le tri des pommes"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "L’élimination des souillures"
+
+[[rubriques.lignes]]
+valeur = "L’élimination des fruits altérés"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "Le type d’équipement de lavage et de tri"
+
+[[rubriques.lignes]]
+valeur = "La durée de lavage"
+
+[[rubriques.lignes]]
+valeur = "Le débit d’eau de lavage"
+
+[[rubriques.lignes]]
+valeur = "Le débit de pommes"
+
+[[rubriques.lignes]]
+valeur = "Le niveau d’altération fongique des pommes"
+
+[[rubriques.lignes]]
+valeur = "Les consignes de tri et l’efficacité du tri"

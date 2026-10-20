@@ -1,0 +1,158 @@
+# Transcription de l'illustration de la fiche 1424 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1424
+code = "FDC_CLOZETTE"
+titre = "Clozette"
+image_sha256 = "8031b6601324fdd3f921f752aec5ded00a54283af01a231b9b2f912f46b1146d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: CLOZETTE
+PRINCIPALES ZONES DE PRODUCTION
+Manche : sud et centre.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 800 tonnes.
+Ph. Desmier de Chenon
+QUALITES TECHNOLOGIQUES DU FRUIT
+des 19-12-1957 et 27-12-1965)
+(moyenne des deux analyses de MM. Tavernier et Jacquin
+Dégustation du jus : doux sucré.
+Dégustation du cidre : amer.
+Rendement en jus (%) : 69,1.
+Densité du jus : 1057 - Alcool en puissance : 79 3.
+Acidité de titration en g. SO'H: par litre : 1,96.
+Azote/sucres totaux : 1,42.
+Tanin (en g. par litre) : 2,14.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : très grande.
+Port : dôme retombant.
+Résistance aux maladies : bonne : tavelure et oïdium rares.
+Productivité : bonne.
+Saison de floraison : 3e.
+Saison de maturité : 2e-3e,
+Conservation et transport des fruits : assez bons.
+Calibre du fruit : gros.
+Précocité de mise à fruits : bonne.
+OBSERVATIONS DIVERSES
+Variété se rapprochant du type Argile, paraissant très intéressante.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler [®)
+Edition 1965"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Manche : sud et centre."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 800 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Desmier de Chenon"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "des 19-12-1957 et 27-12-1965)"
+
+[[rubriques.lignes]]
+valeur = "(moyenne des deux analyses de MM. Tavernier et Jacquin"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux sucré."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "69,1."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1057"
+douteux = ["Alcool", "79"]
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "79 3."
+douteux = ["Alcool", "79"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'H"
+valeur = "par litre : 1,96."
+douteux = ["SO'H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "1,42."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "2,14."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "très grande."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "dôme retombant."
+douteux = ["retombant."]
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne : tavelure et oïdium rares."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e-3e,"
+douteux = ["2e-3e,"]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "assez bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "gros."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "bonne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété se rapprochant du type Argile, paraissant très intéressante."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler [®)"
+
+[[rubriques.lignes]]
+valeur = "Edition 1965"

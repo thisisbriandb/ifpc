@@ -1,0 +1,109 @@
+# Transcription de l'illustration de la fiche 1547 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1547
+code = "FICHE_LE_FRAMBOISE"
+titre = "Le framboisé"
+image_sha256 = "0ba7786863ed9e92b1749bd37e36c6ea9373aeb610faa40621bd11f0381c16d2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Contamination par Cidre sain
+Zymomonas mobilis
+ENT
+ST Quantité d'azote
+résiduel
+ffet du pH/Température
+et niveau de contamination
+pH faible pH élevé
+Température faible Température élevée
+Faible niveau de contamination Fort niveau de contamination
+Cidre sain Sucres > Éthanal + CO,
+Cidre Framboisé
+Figure 1 : Processus de développement du framboisé dans les produits cidricoles
+TON
+H > 3,75
+pH < 3,75 P ,
+TML peu avancée TML avancée
+Test PAF non nécessaire* Test PAF nécessaire
+V4 N Figure 2 : Utilisation du test PAF
+(Test Prédictif d'Apparition du Framboisé)
+Mis au point et développé par l'ARAC, validé par l'IFPC.
+| | Source : http:/www.ifpc.eu/infos-techniques/transformation/test-pañ. html
+Test PAF négatif Test PAF positif
+Très peu de risques Risque limité** Risque extrême
+Embouteillage après les Embouteillage avec quelques Réorientation du lot de cidre ou
+traitements habituels précautions embouteillage après des traitements
+de stabilisation forts
+* Le test PAF est néanmoins envisageable pour plus de sérénité
+** Le test PAF à 30 jours permet de réduire le taux de faux négatifs au test. Ainsi, le risque maximal d'avoir
+un cidre framboisé avec le test PAF négatif à 30 jours est de 12 % contre 21 % avec le test à 15 jours"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Contamination par Cidre sain Zymomonas mobilis"
+douteux = ["mobilis"]
+
+[[rubriques.lignes]]
+valeur = "ENT"
+douteux = ["ENT"]
+
+[[rubriques.lignes]]
+valeur = "ST Quantité d'azote résiduel ffet du pH/Température et niveau de contamination"
+douteux = ["ST"]
+
+[[rubriques.lignes]]
+valeur = "pH faible pH élevé"
+
+[[rubriques.lignes]]
+valeur = "Température faible Température élevée Faible niveau de contamination Fort niveau de contamination"
+
+[[rubriques.lignes]]
+valeur = "Cidre sain Sucres > Éthanal + CO, Cidre Framboisé"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Processus de développement du framboisé dans les produits cidricoles"
+
+[[rubriques.lignes]]
+valeur = "TON"
+douteux = ["TON"]
+
+[[rubriques.lignes]]
+valeur = "H > 3,75 pH < 3,75 P , TML peu avancée TML avancée"
+douteux = ["P"]
+
+[[rubriques.lignes]]
+valeur = "Test PAF non nécessaire* Test PAF nécessaire"
+
+[[rubriques.lignes]]
+intitule = "V4 N Figure 2"
+valeur = "Utilisation du test PAF"
+douteux = ["V4"]
+
+[[rubriques.lignes]]
+valeur = "(Test Prédictif d'Apparition du Framboisé)"
+douteux = ["d'Apparition"]
+
+[[rubriques.lignes]]
+valeur = "Mis au point et développé par l'ARAC, validé par l'IFPC."
+douteux = ["l'ARAC,"]
+
+[[rubriques.lignes]]
+intitule = "| | Source"
+valeur = "http:/www.ifpc.eu/infos-techniques/transformation/test-pañ. html"
+douteux = ["http:/www.ifpc.eu/infos-techniques/transformation/test-pañ.", "html"]
+
+[[rubriques.lignes]]
+valeur = "Test PAF négatif Test PAF positif"
+
+[[rubriques.lignes]]
+valeur = "Très peu de risques Risque limité** Risque extrême Embouteillage après les Embouteillage avec quelques Réorientation du lot de cidre ou traitements habituels précautions embouteillage après des traitements de stabilisation forts * Le test PAF est néanmoins envisageable pour plus de sérénité"
+
+[[rubriques.lignes]]
+valeur = "** Le test PAF à 30 jours permet de réduire le taux de faux négatifs au test. Ainsi, le risque maximal d'avoir un cidre framboisé avec le test PAF négatif à 30 jours est de 12 % contre 21 % avec le test à 15 jours"

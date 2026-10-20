@@ -1,0 +1,169 @@
+# Transcription de l'illustration de la fiche 1418 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1418
+code = "FDC_BLANCHET"
+titre = "Blanchet"
+image_sha256 = "0b59b722a086f0cdda81c48fe8d79d9cb08c45762e99d7b08d161c419899fa5f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: BLANCHET
+PRINCIPALES ZONES DE PRODUCTION
+Mayenne : Evron - Sainte-Suzanne et le Sud du
+département.
+CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT
+(Moyenne des analyses effectuées
+à la Station cidricole de Rennes INRA)
+Poids moyen du fruit (g.): 51,2.
+Rendement en jus (%) : 68,1.
+Densité du jus : 1,0501.
+Sucres totaux (en g. par litre): 108,3.
+Acidité de titration (en g. H.SO, par litre): 3,5.
+(en m.eq.): 71.
+Rapport sucres/acidité : 31.
+Extrait sec réduit (en g. par litre): 22,1.
+Tanins (en g. par litre) : 1,28.
+Couleur du jus : jaune.
+Dégustation : acidulé, peu parfumé.
+CARACTERISTIQUES CULTURALES DE L'ARBRE
+Vigueur : moyenne.
+Port : érigé puis semi-érigé.
+Résistance aux maladies : sensible à la tavelure sur feuilles, aux chenilles
+et aux pucerons. Hors de la Mayenne serait sensible à l'oidium et au
+chancre.
+Mise à fruits : lente.
+Productivité : bonne avec alternance.
+Saison de floraison: 3e.
+Saison de maturité : 2e.
+Calibre du fruit: moyen.
+Conservation et transport: fruits assez délicats au transport, se meur-
+trissent en silos.
+OBSERVATIONS DIVERSES
+Arbre se formant seul.
+Sensible à l'oidium sur doucin et Malling Merton.
+Variété à ne planter qu'en Mayenne.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1)
+Documentation I.N.R.A. - Edition 1973 ©)"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Mayenne : Evron - Sainte-Suzanne et le Sud du département."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(Moyenne des analyses effectuées à la Station cidricole de Rennes INRA)"
+
+[[rubriques.lignes]]
+intitule = "Poids moyen du fruit (g.)"
+valeur = "51,2."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "68,1."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1,0501."
+
+[[rubriques.lignes]]
+intitule = "Sucres totaux (en g. par litre)"
+valeur = "108,3."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration (en g. H.SO, par litre)"
+valeur = "3,5."
+
+[[rubriques.lignes]]
+intitule = "(en m.eq.)"
+valeur = "71."
+douteux = ["m.eq.):"]
+
+[[rubriques.lignes]]
+intitule = "Rapport sucres/acidité"
+valeur = "31."
+
+[[rubriques.lignes]]
+intitule = "Extrait sec réduit (en g. par litre)"
+valeur = "22,1."
+
+[[rubriques.lignes]]
+intitule = "Tanins (en g. par litre)"
+valeur = "1,28."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune."
+
+[[rubriques.lignes]]
+intitule = "Dégustation"
+valeur = "acidulé, peu parfumé."
+
+[[rubriques]]
+titre = "CARACTERISTIQUES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "érigé puis semi-érigé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "sensible à la tavelure sur feuilles, aux chenilles"
+
+[[rubriques.lignes]]
+valeur = "et aux pucerons. Hors de la Mayenne serait sensible à l'oidium et au chancre."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "lente."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne avec alternance."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+douteux = ["floraison:", "3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+douteux = ["2e."]
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport"
+valeur = "fruits assez délicats au transport, se meur- trissent en silos."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Arbre se formant seul. Sensible à l'oidium sur doucin et Malling Merton. Variété à ne planter qu'en Mayenne."
+douteux = ["l'oidium"]
+
+[[rubriques.lignes]]
+valeur = "Documentation I.N.R.A. - Edition 1973 ©)"
+douteux = ["I.N.R.A."]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1)"
+douteux = ["(1)"]

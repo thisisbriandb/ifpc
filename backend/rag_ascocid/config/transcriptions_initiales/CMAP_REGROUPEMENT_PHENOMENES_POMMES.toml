@@ -1,0 +1,45 @@
+# Transcription de l'illustration de la fiche 1302 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1302
+code = "CMAP_REGROUPEMENT_PHENOMENES_POMMES"
+titre = "Les phénomènes de maturation et d'altération des pommes"
+image_sha256 = "9e6e48de3c96bf334db1f29b3f2f656ac93a9a8f10dbae8529ec0d8fc3b60736"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Phénomènes de maturation et d’altération des pommes
+sont un : Ensemble de phénomènes provoquant une évolution des pommes
+regroupent : La maturation des pommes dans l’arbre | La chute naturelle des pommes | La maturation complémentaire | Les altérations physiques | Les altérations fongiques | Les atteintes par les ravageurs"""
+anomalies = ["une colonne est loin de sa relation (327 points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes provoquant une évolution des pommes"
+
+[[rubriques]]
+titre = "regroupent"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La maturation des pommes dans l’arbre"
+
+[[rubriques.lignes]]
+valeur = "La chute naturelle des pommes"
+
+[[rubriques.lignes]]
+valeur = "La maturation complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Les altérations physiques"
+
+[[rubriques.lignes]]
+valeur = "Les altérations fongiques"
+
+[[rubriques.lignes]]
+valeur = "Les atteintes par les ravageurs"

@@ -1,0 +1,72 @@
+# Transcription de l'illustration de la fiche 1600 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1600
+code = "FICHE_CONTRAINTES_A_L_ASSEMBLAGE"
+titre = "Les contraintes à l'assemblage"
+image_sha256 = "1cf2191b9fd818f195b3402a1a06a57051deff5758130777839249b7514664d2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les contraintes réglementaires : Le décret cidre
+(Définitions et seuils limites)
+Les cahiers des charges des SIQO
+(Aire géographique, techniques,
+seuils limites,.….)
+Les préférences consommateurs
+(Evolution des préférences)
+L'assemblage
+post-fermentaire Les contraintes techniques
+(Volumes, dates d'assemblage, …)
+Les cahiers des charges
+des distributeurs
+(Caractéristiques, volumes, .….)
+Les caractéristiques des cuvées Les contraintes logistiques
+(Masse volumique, saveurs, arômes, (Cuvées de l’année précédente, …)
+défauts organoleptiques, …)
+Figure 1 : Les contraintes à l'assemblage post-fermentaire
+SIQO = Signes officiels de la qualité et de l’origine"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Les contraintes réglementaires"
+valeur = "Le décret cidre (Définitions et seuils limites)"
+
+[[rubriques.lignes]]
+valeur = "Les cahiers des charges des SIQO (Aire géographique, techniques, seuils limites,.….)"
+douteux = ["limites,.….)"]
+
+[[rubriques.lignes]]
+valeur = "Les préférences consommateurs (Evolution des préférences)"
+
+[[rubriques.lignes]]
+valeur = "L'assemblage"
+douteux = ["L'assemblage"]
+
+[[rubriques.lignes]]
+valeur = "post-fermentaire Les contraintes techniques"
+
+[[rubriques.lignes]]
+valeur = "(Volumes, dates d'assemblage, …)"
+douteux = ["d'assemblage,"]
+
+[[rubriques.lignes]]
+valeur = "Les cahiers des charges des distributeurs (Caractéristiques, volumes, .….)"
+douteux = ["volumes,"]
+
+[[rubriques.lignes]]
+valeur = "Les caractéristiques des cuvées Les contraintes logistiques"
+
+[[rubriques.lignes]]
+valeur = "(Masse volumique, saveurs, arômes, (Cuvées de l’année précédente, …) défauts organoleptiques, …)"
+douteux = ["précédente,", "organoleptiques,"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les contraintes à l'assemblage post-fermentaire SIQO = Signes officiels de la qualité et de l’origine"
+douteux = ["l'assemblage"]

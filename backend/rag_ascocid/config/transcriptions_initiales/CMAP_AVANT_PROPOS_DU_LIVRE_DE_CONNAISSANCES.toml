@@ -1,0 +1,14 @@
+# Transcription de l'illustration de la fiche 1359 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1359
+code = "CMAP_AVANT_PROPOS_DU_LIVRE_DE_CONNAISSANCES"
+titre = "Avant-propos du livre de connaissances"
+image_sha256 = "c02c4844a8c4dbce89c25a32a609fbc75bc2dd7b67dd66d9db7bc9c86101a7a8"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 0.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = ""
+anomalies = ["aucune case lue"]

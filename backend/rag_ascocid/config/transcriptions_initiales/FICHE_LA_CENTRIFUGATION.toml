@@ -1,0 +1,43 @@
+# Transcription de l'illustration de la fiche 1509 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1509
+code = "FICHE_LA_CENTRIFUGATION"
+titre = "La centrifugation"
+image_sha256 = "11fe7718bb79e2aaf048af56646265e9098a540288e5b6f187c9fe544759a235"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+T7 Flottweg
+Separation Technology
+Figure 1 : Schéma des principaux éléments du bol d'une centrifugeuse.
+(1) Bol du séparateur, (2) Tube d'alimentation fixe, (3) Distributeur pour accélérer le
+produit, (4) Chambre à boues, (5) Pile d’assiettes, (6) Turbine fixe pour la sortie du
+liquide clarifié, (7) Garde hydraulique.
+Source schéma: Flottweg"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "T7 Flottweg"
+douteux = ["T7"]
+
+[[rubriques.lignes]]
+valeur = "Separation Technology"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schéma des principaux éléments du bol d'une centrifugeuse."
+douteux = ["d'une"]
+
+[[rubriques.lignes]]
+valeur = "(1) Bol du séparateur, (2) Tube d'alimentation fixe, (3) Distributeur pour accélérer le produit, (4) Chambre à boues, (5) Pile d’assiettes, (6) Turbine fixe pour la sortie du liquide clarifié, (7) Garde hydraulique."
+douteux = ["d'alimentation", "d’assiettes,"]
+
+[[rubriques.lignes]]
+intitule = "Source schéma"
+valeur = "Flottweg"

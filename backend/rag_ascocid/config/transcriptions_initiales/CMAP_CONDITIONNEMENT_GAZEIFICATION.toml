@@ -1,0 +1,70 @@
+# Transcription de l'illustration de la fiche 1138 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1138
+code = "CMAP_CONDITIONNEMENT_GAZEIFICATION"
+titre = "La gazéification"
+image_sha256 = "ac9e8547f9acd504de8c09e84ccceba5a38691e80d323eddfb276b4cc3eaa3d2"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 95.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La gazéification
+est une : Opération utilisée au cours des méthodes de conditionnement avec gazéification
+a pour fonction : De dissoudre du CO, exogène dans du cidre de façon maitrisée
+a pour principe : De favoriser la dissolution du CO, sous pression en créant une importante interface gaz/liquide
+a pour équipement : Un saturateur
+est pilotée selon : La teneur en CO, dissous en sortie de saturateur
+est pilotée par : La pression dans le saturateur
+est influencée par : La température du cidre | Le type de saturateur | Le temps de séjour du cidre"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération utilisée au cours des méthodes de conditionnement avec gazéification"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De dissoudre du CO, exogène dans du cidre de façon maitrisée"
+douteux = ["CO,"]
+
+[[rubriques]]
+titre = "a pour principe"
+
+[[rubriques.lignes]]
+valeur = "De favoriser la dissolution du CO, sous pression en créant une importante interface gaz/liquide"
+
+[[rubriques]]
+titre = "a pour équipement"
+
+[[rubriques.lignes]]
+valeur = "Un saturateur"
+
+[[rubriques]]
+titre = "est pilotée selon"
+
+[[rubriques.lignes]]
+valeur = "La teneur en CO, dissous en sortie de saturateur"
+
+[[rubriques]]
+titre = "est pilotée par"
+
+[[rubriques.lignes]]
+valeur = "La pression dans le saturateur"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La température du cidre"
+
+[[rubriques.lignes]]
+valeur = "Le type de saturateur"
+
+[[rubriques.lignes]]
+valeur = "Le temps de séjour du cidre"

@@ -1,0 +1,217 @@
+# Transcription du schéma « Diagramme général d'élaboration » (AsCoCid, fiche 1014).
+#
+# Le sens de ce schéma — l'ordre des étapes, ce qui passe de l'une à l'autre,
+# les branches — n'existe que dans le dessin : ce fichier le rend cherchable
+# (voir src/ascocid/application/ingestion/schemas.py et docs/11-schemas.md).
+#
+# Libellés repris du SVG. `svg_sha256` est l'empreinte du SVG transcrit : si
+# AsCoCid modifie le schéma, le service le signale au démarrage.
+# `relecture` : à remplir (nom, date) une fois la transcription relue par l'IFPC.
+
+idoc = 1014
+code = "PROCESS_FABRICATION_GENERAL"
+titre = "Diagramme général d'élaboration"
+svg_sha256 = "d4e156be53bab0f5d87a05b462fe319c43244f9b13ff299f8ad233f0eee2086c"
+relecture = ""
+
+[[etapes]]
+id = "recolte"
+libelle = "Récolte"
+fiche = 1025
+
+[[etapes]]
+id = "approvisionnement"
+libelle = "Gestion de l'approvisionnement en pommes"
+fiche = 1015
+
+[[etapes]]
+id = "extraction"
+libelle = "Extraction des moûts"
+fiche = 1016
+variantes = ["Extraction avec rémiage", "Extraction sans rémiage"]
+# Synonymes : servent à retrouver le passage, ne sont jamais montrés au modèle.
+synonymes = ["extraction du jus", "obtention du jus de pomme"]
+
+[[etapes]]
+id = "clarification_mouts"
+libelle = "Clarification des moûts"
+fiche = 1018
+synonymes = ["clarification du jus"]
+variantes = [
+  "Clarification haute (classique ou par flottation provoquée)",
+  "Clarification basse (avec ou sans collage)",
+]
+
+[[etapes]]
+id = "concentration"
+libelle = "Concentration & Stockage"
+fiche = 1017
+
+[[etapes]]
+id = "fermentation"
+libelle = "Étape fermentaire"
+fiche = 1019
+variantes = [
+  "Méthode FR (ralentie)",
+  "Méthode FI (interrompue)",
+  "Méthode FMR (moûts reconstitués)",
+]
+
+[[etapes]]
+id = "assemblage"
+libelle = "Étape d'assemblage"
+fiche = 1021
+
+[[etapes]]
+id = "clarification_cidres"
+libelle = "Clarification des cidres"
+fiche = 1020
+variantes = [
+  "Clarification par simple décantation",
+  "Clarification sans collage",
+  "Clarification avec collage",
+]
+
+[[etapes]]
+id = "conditionnement"
+libelle = "Conditionnement et obtention de l'effervescence"
+fiche = 1022
+variantes = [
+  "Conditionnement et prise de mousse en bouteille",
+  "Prise de mousse en cuve close et conditionnement",
+  "Conditionnement à effervescence « mixte »",
+  "Gazéification et conditionnement",
+]
+
+[[etapes]]
+id = "post_conditionnement"
+libelle = "Étape post-conditionnement"
+fiche = 1023
+variantes = ["Sans pasteurisation", "Avec pasteurisation"]
+
+# ── Enchaînement ─────────────────────────────────────────────────────────────
+
+[[transitions]]
+vers = "recolte"
+produit = "Pommes dans l'arbre"
+
+[[transitions]]
+de = "recolte"
+vers = "approvisionnement"
+produit = "Pommes livrées"
+
+[[transitions]]
+de = "approvisionnement"
+vers = "extraction"
+produit = "Pommes à presser"
+
+[[transitions]]
+de = "extraction"
+vers = "clarification_mouts"
+produit = "Moûts bruts"
+
+# Tracé qui part sous « Moûts bruts », longe la gauche du schéma et rejoint
+# l'étape fermentaire : les moûts peuvent être fermentés sans clarification
+# (le schéma de l'étape fermentaire attend des « moûts à fermenter (clarifiés
+# ou non) »).
+[[transitions]]
+de = "extraction"
+vers = "fermentation"
+produit = "Moûts bruts"
+condition = "sans clarification des moûts"
+
+[[transitions]]
+de = "clarification_mouts"
+vers = "fermentation"
+produit = "Moûts clarifiés"
+condition = "après une clarification haute"
+
+[[transitions]]
+de = "clarification_mouts"
+vers = "concentration"
+produit = "Moûts dépectinisés à concentrer"
+condition = "après une clarification basse"
+
+[[transitions]]
+de = "concentration"
+vers = "fermentation"
+produit = "Moûts concentrés"
+condition = "fermentés selon la méthode FMR (moûts reconstitués)"
+
+[[transitions]]
+de = "fermentation"
+vers = "assemblage"
+produit = "Cidres à assembler"
+
+[[transitions]]
+de = "assemblage"
+vers = "clarification_cidres"
+produit = "Cidres assemblés"
+
+[[transitions]]
+de = "clarification_cidres"
+vers = "conditionnement"
+produit = "Cidres « prêts à la mise »"
+
+[[transitions]]
+de = "conditionnement"
+vers = "post_conditionnement"
+produit = "Cidres effervescents conditionnés"
+
+[[transitions]]
+de = "post_conditionnement"
+produit = "Cidres à commercialiser"
+
+# ── Procédés annexes et coproduits (liens en pointillés) ─────────────────────
+
+[[rattachements]]
+etapes = ["approvisionnement", "extraction"]
+nature = "annexe"
+libelle = "Procédés annexes saisonniers"
+elements = [
+  "Traitement des eaux de transport et de lavage des pommes",
+  "Traitement des eaux de nettoyage du matériel d'extraction",
+]
+
+[[rattachements]]
+etapes = ["clarification_mouts", "fermentation", "assemblage", "clarification_cidres", "conditionnement"]
+nature = "annexe"
+libelle = "Procédés annexes généraux"
+elements = [
+  "Lavage du matériel, des cuves et des locaux",
+  "Traitement des eaux de lavage du matériel et des locaux",
+  "Traitement des terres de filtration",
+]
+
+[[rattachements]]
+etapes = ["conditionnement"]
+nature = "annexe"
+libelle = "Procédés annexes généraux"
+elements = [
+  "Nettoyage des bouteilles à recycler",
+  "Traitement des eaux de lavage de bouteille",
+]
+
+[[rattachements]]
+etapes = ["extraction"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Marc vert", "Marc épuisé"]
+
+[[rattachements]]
+etapes = ["clarification_mouts"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Lies de clarification haute et basse", "Lies de collage"]
+
+[[rattachements]]
+etapes = ["fermentation"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Lies de fermentation"]
+
+[[rattachements]]
+etapes = ["clarification_cidres"]
+nature = "coproduit"
+libelle = "Valorisation des coproduits"
+elements = ["Lies de fermentation", "Lies de collage"]

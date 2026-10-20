@@ -1,0 +1,84 @@
+# Transcription de l'illustration de la fiche 1078 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1078
+code = "CMAP_EXTRACTION_REMIAGE"
+titre = "Le rémiage"
+image_sha256 = "ed198d454679ad850aa917a124f62b0c572d9126d1bc769c046c96a58960cd84"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le rémiage
+est une : Opération facultative de l’étape d’extraction
+a pour synonymes : L’extraction à l’eau | L’extraction non pur jus | L’extraction par « bande de diffusion »
+regroupe : Le mouillage du marc avec un second pressage | La percolation du marc à contre -courant avec un second pressage
+a pour fonctions : Un « désucrage » du marc | Une production de moût (dilué) supplémentaire
+est piloté par : Le débit ou la quantité de marc mis en œuvre | Le débit ou la quantité d’eau incorporée
+est évalué par : Le rendement de rémiage | La composition du moût de rémiage
+est influencé par : La consistance du marc vert | Le type de rémiage et le matériel utilisé"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape d’extraction"
+
+[[rubriques]]
+titre = "a pour synonymes"
+
+[[rubriques.lignes]]
+valeur = "L’extraction à l’eau"
+
+[[rubriques.lignes]]
+valeur = "L’extraction non pur jus"
+
+[[rubriques.lignes]]
+valeur = "L’extraction par « bande de diffusion »"
+
+[[rubriques]]
+titre = "regroupe"
+
+[[rubriques.lignes]]
+valeur = "Le mouillage du marc avec un second pressage"
+
+[[rubriques.lignes]]
+valeur = "La percolation du marc à contre -courant avec un second pressage"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "Un « désucrage » du marc"
+
+[[rubriques.lignes]]
+valeur = "Une production de moût (dilué) supplémentaire"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Le débit ou la quantité de marc mis en œuvre"
+
+[[rubriques.lignes]]
+valeur = "Le débit ou la quantité d’eau incorporée"
+
+[[rubriques]]
+titre = "est évalué par"
+
+[[rubriques.lignes]]
+valeur = "Le rendement de rémiage"
+
+[[rubriques.lignes]]
+valeur = "La composition du moût de rémiage"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "La consistance du marc vert"
+
+[[rubriques.lignes]]
+valeur = "Le type de rémiage et le matériel utilisé"

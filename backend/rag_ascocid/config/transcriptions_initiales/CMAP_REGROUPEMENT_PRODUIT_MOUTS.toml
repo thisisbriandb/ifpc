@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1311 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1311
+code = "CMAP_REGROUPEMENT_PRODUIT_MOUTS"
+titre = "Les moûts"
+image_sha256 = "f6a073ae3c666efee2f9e6f23c65c5821fe27191ce54409b5d3b771e9db2cee3"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les moûts
+sont des : Etats du moût (produits intermédiaires de l'élaboration)
+sont constitués de : Eléments biochimiques de différentes natures
+regroupent : Les moûts bruts | Les moûts de clarification haute | Les moûts clarifiés | Les moûts de clarification basse | Les moûts issus de concentrés
+se distinqg uent par : Leurs signes de qualité et d’origine | La catégorie de saveur des variétés utilisées | La technologie d'extraction (pur jus ou non pur jus) | Le mode de clarification"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Etats du moût (produits intermédiaires de l'élaboration)"
+douteux = ["l'élaboration)"]
+
+[[rubriques]]
+titre = "sont constitués de"
+
+[[rubriques.lignes]]
+valeur = "Eléments biochimiques de différentes natures"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Les moûts bruts"
+
+[[rubriques.lignes]]
+intitule = "Les moûts bruts"
+valeur = "Les moûts de clarification haute"
+
+[[rubriques.lignes]]
+valeur = "Les moûts clarifiés"
+
+[[rubriques.lignes]]
+intitule = "Les moûts clarifiés"
+valeur = "Les moûts de clarification basse"
+
+[[rubriques.lignes]]
+valeur = "Les moûts issus de concentrés"
+
+[[rubriques]]
+titre = "se distinqg uent par"
+
+[[rubriques.lignes]]
+valeur = "Leurs signes de qualité et d’origine"
+
+[[rubriques.lignes]]
+valeur = "La catégorie de saveur des variétés utilisées"
+
+[[rubriques.lignes]]
+valeur = "La technologie d'extraction (pur jus ou non pur jus)"
+douteux = ["d'extraction"]
+
+[[rubriques.lignes]]
+valeur = "Le mode de clarification"

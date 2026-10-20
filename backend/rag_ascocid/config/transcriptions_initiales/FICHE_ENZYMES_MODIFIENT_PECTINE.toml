@@ -1,0 +1,38 @@
+# Transcription de l'illustration de la fiche 1329 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1329
+code = "FICHE_ENZYMES_MODIFIENT_PECTINE"
+titre = "Les enzymes qui modifient la pectine"
+image_sha256 = "2fb6e54f251371593c9466f062bbda3c26058210126d52d625c26d79780c045a"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Acide galacturonique Groupements Acide galacturonique
+méthylé méthyles (après déméthylation)
+Chaîne principale de pectine —
+pL <x PectineLyase (élimination de la chaîne méthylée)
+PE X PectineEstérase (déméthylation de la chaîne méthylée)
+pG XPolyGalaturonase (hydrolyse de la chaîne déméthylée)
+Figure 1 : Schématisation de l’action des principales enzymes sur la pectine"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Acide galacturonique Groupements Acide galacturonique méthylé méthyles (après déméthylation)"
+douteux = ["Acide"]
+
+[[rubriques.lignes]]
+valeur = "Chaîne principale de pectine —"
+
+[[rubriques.lignes]]
+valeur = "pL <x PectineLyase (élimination de la chaîne méthylée) PE X PectineEstérase (déméthylation de la chaîne méthylée) pG XPolyGalaturonase (hydrolyse de la chaîne déméthylée)"
+douteux = ["<x", "pG"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schématisation de l’action des principales enzymes sur la pectine"

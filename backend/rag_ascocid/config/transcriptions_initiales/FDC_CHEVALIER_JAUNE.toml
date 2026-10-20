@@ -1,0 +1,175 @@
+# Transcription de l'illustration de la fiche 1421 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1421
+code = "FDC_CHEVALIER_JAUNE"
+titre = "Chevalier jaune"
+image_sha256 = "5364f0a67c21108a5ad001bfd9f20e9ac759a6f3c158e16558b33f86807526c4"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: CHEVALIER JAUNE
+PRINCIPALES ZONES DE PRODUCTION
+Côtes-du-Nord: cantons de Dinan - Evran - Caulnes -
+Broons - Jugon - Lamballe - Plélan -
+Plancoët - Ploubalay - Matignon - Pléneuf.
+Ille-et-Vilaine : Combourg - Tinténiac.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 1.000 à 1.500 tonnes.
+Ph. Durand
+QUALITES TECHNOLOGIQUES DU FRUIT
+(moyenne des deux analyses de MM. Tavernier et Jacquin
+des 14-11-1949 et 22-12-1965)
+Dégustation du jus : doux amer.
+Dégustation du cidre : amer doux.
+Rendement en jus (%) : 62,4.
+Densité du jus : 1060,6 - Alcool en puissance : 7° 75.
+Acidité de titration en g. SO'H* par litre : 1,76.
+Azote/sucres totaux : 0,76.
+Tanin (en g. par litre) : 4,20.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Port : dôme étalé.
+Résistance aux maladies : un peu sensible à la tavelure.
+Productivité : très bonne.
+Alternance : peu sensible.
+Saison de floraison : 3e.
+Saison de maturité : 2°.
+Conservation et transport des fruits : bons.
+Calibre du fruit : moyen à gros.
+Précocité de mise à fruits : bonne.
+OBSERVATIONS DIVERSES
+Mise à fruits très précoce.
+Très bonne variété dans l'ensemble.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (l* (®)
+Edition 196!"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Côtes-du-Nord: cantons de Dinan - Evran - Caulnes - Broons - Jugon - Lamballe - Plélan - Plancoët - Ploubalay - Matignon - Pléneuf."
+
+[[rubriques.lignes]]
+valeur = "Ille-et-Vilaine : Combourg - Tinténiac."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 1.000 à 1.500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Durand"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(moyenne des deux analyses de MM. Tavernier et Jacquin"
+
+[[rubriques.lignes]]
+valeur = "des 14-11-1949 et 22-12-1965)"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "amer doux."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "62,4."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1060,6"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "7° 75."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'H* par litre"
+valeur = "1,76."
+douteux = ["SO'H*"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,76."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "4,20."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "dôme étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "un peu sensible à la tavelure."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "très bonne."
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "peu sensible."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e."
+douteux = ["3e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+douteux = ["2°."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à gros."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "bonne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Mise à fruits très précoce. Très bonne variété dans l'ensemble."
+
+[[rubriques.lignes]]
+valeur = "Edition 196!"
+douteux = ["196!"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (l* (®)"
+douteux = ["rue", "(l*"]

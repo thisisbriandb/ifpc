@@ -1,0 +1,95 @@
+# Transcription de l'illustration de la fiche 1566 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1566
+code = "FICHE_ENTRETIEN_DES_LOCAUX"
+titre = "Entretien des locaux"
+image_sha256 = "ead59631429df4b12c2e206581be2edc147b125d946c951043c1353effa1962a"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Outils d'aide au nettoyage des locaux
+À. Exemple de centrale de lavage
+Source: LaboPlus
+B. Exemple de canon à mousse mobile, en inox
+Source: Delcourt
+C. Exemple de pulvérisateur
+Source: https://www.iksprayers.com/fr/pulverisateurs-
+industriels/nettoyage-et-desinfection.html
+Propriétés Ciment brut Carrelage Revêtement Association ciment-
+vinylique polyuréthane
+Imperméabilité Faible Assez bonne Bonne Très bonne Très bonne
+Résistance à la Moyenne Moyenne Bonne Bonne Bonne
+charge
+Résistance à l’usure Faible Faible Bonne Assez bonne Moyenne
+Résistance aux Faible Moyenne Bonne Bonne Bonne
+agents de (sensible aux acides) | (sensible aux bases) (sauf joints ciment)
+nettoyage
+Faible Assez faible Assez faible Assez faible Assez faible
+(avec silice)
+Figure 2 : Comparaison des propriétés de différents revêtements de sol.
+Source: Guérin, L., Poupault, P., Caboulet, D., Desseigne, J.-M., Rochard, J., Leroy, F. (2004). Hygiène en œnologie. Nettoyage — Désinfection
+— HACCP. Éditions La Vigne, DUNOD."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Outils d'aide au nettoyage des locaux"
+douteux = ["d'aide"]
+
+[[rubriques.lignes]]
+valeur = "À. Exemple de centrale de lavage"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "LaboPlus"
+
+[[rubriques.lignes]]
+valeur = "B. Exemple de canon à mousse mobile, en inox"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Delcourt"
+
+[[rubriques.lignes]]
+valeur = "C. Exemple de pulvérisateur"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "https://www.iksprayers.com/fr/pulverisateurs- industriels/nettoyage-et-desinfection.html"
+douteux = ["https://www.iksprayers.com/fr/pulverisateurs-"]
+
+[[rubriques.lignes]]
+valeur = "Propriétés Ciment brut Carrelage Revêtement Association ciment- vinylique polyuréthane"
+
+[[rubriques.lignes]]
+valeur = "Imperméabilité Faible Assez bonne Bonne Très bonne Très bonne"
+
+[[rubriques.lignes]]
+valeur = "Résistance à la Moyenne Moyenne Bonne Bonne Bonne charge"
+
+[[rubriques.lignes]]
+valeur = "Résistance à l’usure Faible Faible Bonne Assez bonne Moyenne"
+
+[[rubriques.lignes]]
+valeur = "Résistance aux Faible Moyenne Bonne Bonne Bonne agents de (sensible aux acides) | (sensible aux bases) (sauf joints ciment) nettoyage"
+
+[[rubriques.lignes]]
+valeur = "Faible Assez faible Assez faible Assez faible Assez faible (avec silice)"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Comparaison des propriétés de différents revêtements de sol."
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Guérin, L., Poupault, P., Caboulet, D., Desseigne, J.-M., Rochard, J., Leroy, F. (2004). Hygiène en œnologie. Nettoyage — Désinfection"
+
+[[rubriques.lignes]]
+valeur = "— HACCP. Éditions La Vigne, DUNOD."
+douteux = ["HACCP."]

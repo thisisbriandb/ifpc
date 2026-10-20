@@ -1,0 +1,59 @@
+# Transcription de l'illustration de la fiche 1331 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1331
+code = "FICHE_AJOUT_DE_PECTINESTERASE"
+titre = "Ajout de pectinestérase"
+image_sha256 = "b2b6d4b2572fae8bb5dab362adeeeb0a5badd87dbc3a47dd9bdfc182078f785e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 83.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La déméthylation de la pectine
+Acide galacturonique
+Acide galacturonique ès déméthylati Portion de la chaine . : h |
+méthylé (après eméthyia ion) principale déméthylée Représentation schématique
+Représentation schématique [ A ed de la chaine principale
+du groupe méthyl : e De
+COooCH,
+Acide aD galacturonique
+méthylé
+acide aD galacturonique
+Figure 1 : Représentation schématique de la structure de la chaîne principale de la pectine et modification par la pectinestérase.
+Schéma de la chaîne principale (a) constitué d'acide galcturonique méthylé (b) et d'acide galacturonique (c) après déméthylation
+par la pectinestérase (PE) générant ainsi des zones déméthylées (d)"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "La déméthylation de la pectine"
+
+[[rubriques.lignes]]
+valeur = "Acide galacturonique"
+
+[[rubriques.lignes]]
+valeur = "Acide galacturonique ès déméthylati Portion de la chaine . : h | méthylé (après eméthyia ion) principale déméthylée Représentation schématique Représentation schématique [ A ed de la chaine principale"
+douteux = ["ès", "h", "(après", "eméthyia", "A", "ed"]
+
+[[rubriques.lignes]]
+intitule = "du groupe méthyl"
+valeur = "e De"
+douteux = ["e", "De"]
+
+[[rubriques.lignes]]
+valeur = "COooCH,"
+douteux = ["COooCH,"]
+
+[[rubriques.lignes]]
+valeur = "Acide aD galacturonique méthylé"
+
+[[rubriques.lignes]]
+valeur = "acide aD galacturonique"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique de la structure de la chaîne principale de la pectine et modification par la pectinestérase. Schéma de la chaîne principale (a) constitué d'acide galcturonique méthylé (b) et d'acide galacturonique (c) après déméthylation par la pectinestérase (PE) générant ainsi des zones déméthylées (d)"
+douteux = ["d'acide"]

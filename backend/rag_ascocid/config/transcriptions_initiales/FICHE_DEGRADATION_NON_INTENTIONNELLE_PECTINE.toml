@@ -1,0 +1,75 @@
+# Transcription de l'illustration de la fiche 1087 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1087
+code = "FICHE_DEGRADATION_NON_INTENTIONNELLE_PECTINE"
+titre = "La dégradation non intentionnelle de la pectine"
+image_sha256 = "ae8c58016f7b93b26a7194735fec7afab87656c8b7007fc67b799bf597d21af7"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Molécule de pectine
+Zone ramifiée possédant
+des chaïnes latérales Chaîne principale linéaire
+Acide Acide
+galacturonique
+déméthylé
+galacturonique
+Représentation
+méthylé *., p
+- schématique du
+L groupe méthyle
+Représentation schématique de la
+Coupure de la chaîne principale de pectine par la chaine principale de la pectine
+PG entre deux acides galacturoniques
+préalablement déméthylés par la PE
+PE X PectineEstérase (déméthylation de la chaîne méthylée)
+PG XPolyGalaturonase (hydrolyse de la chaîne déméthylée)
+Figure 1 : La dégradation de la pectine"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Molécule de pectine"
+
+[[rubriques.lignes]]
+valeur = "Zone ramifiée possédant"
+
+[[rubriques.lignes]]
+valeur = "des chaïnes latérales Chaîne principale linéaire"
+douteux = ["chaïnes"]
+
+[[rubriques.lignes]]
+valeur = "Acide Acide galacturonique déméthylé"
+
+[[rubriques.lignes]]
+valeur = "galacturonique"
+
+[[rubriques.lignes]]
+valeur = "Représentation méthylé *., p"
+douteux = ["méthylé", "p"]
+
+[[rubriques.lignes]]
+valeur = "- schématique du L groupe méthyle"
+douteux = ["L"]
+
+[[rubriques.lignes]]
+valeur = "Représentation schématique de la"
+
+[[rubriques.lignes]]
+valeur = "Coupure de la chaîne principale de pectine par la chaine principale de la pectine"
+
+[[rubriques.lignes]]
+valeur = "PG entre deux acides galacturoniques préalablement déméthylés par la PE"
+
+[[rubriques.lignes]]
+valeur = "PE X PectineEstérase (déméthylation de la chaîne méthylée) PG XPolyGalaturonase (hydrolyse de la chaîne déméthylée)"
+douteux = ["PG"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "La dégradation de la pectine"

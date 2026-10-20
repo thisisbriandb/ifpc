@@ -1,0 +1,85 @@
+# Transcription de l'illustration de la fiche 1097 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1097
+code = "CMAP_FERMENTATION_METHODE_FI"
+titre = "La méthode FI (fermentation interrompue)"
+image_sha256 = "0f163c7351466bb6d05d76197018e052494e16c24a2913bb1c30dec7b75a1400"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode FI (fermentation interrompue)
+est une : Modalité de l’étape fermentaire
+est constituée de : Une mise en fermentation | Une fermentation principale | Une élimination des levures | Une conservation à basse température
+a pour fonctions : De transformer des moûts en cidres à assembler | De conserver des cidres à assembler sans fermentation (stabilisés) | De simplifier la gestion de la cuverie
+a pour conséquences : Une limitation de l’action des et Brettanomyces , Oenococcus bactéries acétiques en cas de T° (<6 °C) conservation à basse | Un risque de croissance et d’action des levures à voile (en l’absence d’inertage)
+est influencée par : La méthode d’élimination des levures | La température de stockage
+s’appuie sur : Un suivi fermentaire
+a pour incident : Un redémarrage en fermentation pendant la conservation"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape fermentaire"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une mise en fermentation"
+
+[[rubriques.lignes]]
+valeur = "Une fermentation principale"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des levures"
+
+[[rubriques.lignes]]
+valeur = "Une conservation à basse température"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De transformer des moûts en cidres à assembler"
+
+[[rubriques.lignes]]
+valeur = "De conserver des cidres à assembler sans fermentation (stabilisés)"
+
+[[rubriques.lignes]]
+valeur = "De simplifier la gestion de la cuverie"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une limitation de l’action des et Brettanomyces , Oenococcus bactéries acétiques en cas de T° (<6 °C) conservation à basse"
+
+[[rubriques.lignes]]
+valeur = "Un risque de croissance et d’action des levures à voile (en l’absence d’inertage)"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La méthode d’élimination des levures"
+
+[[rubriques.lignes]]
+valeur = "La température de stockage"
+
+[[rubriques]]
+titre = "s’appuie sur"
+
+[[rubriques.lignes]]
+valeur = "Un suivi fermentaire"
+
+[[rubriques]]
+titre = "a pour incident"
+
+[[rubriques.lignes]]
+valeur = "Un redémarrage en fermentation pendant la conservation"

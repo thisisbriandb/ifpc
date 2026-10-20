@@ -1,0 +1,53 @@
+# Transcription de l'illustration de la fiche 1409 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1409
+code = "FICHE_LE_REFROIDISSEMENT_DES_MOUTS_ET_DES_CIDRES"
+titre = "Le refroidissement des moûts et des cidres"
+image_sha256 = "e70e17088d54cf2b6b660f14522b80613bf270a5ffa0b468c7787621b1ea0d9f"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+æ=} Fluide froid Mi
+==} Fluide chaud
+Figure 1 : Différents échangeurs tubulaires, Figure 2 : Echangeur à plaques
+monotubes (a), multitube (b) et annulaire (c)
+Source : http://genie-alimentaire.com/spip.php?article217&artbpage=2-3
+Figure 3 : Echangeur drapeau. Figure 4 : Echangeur serpentin.
+Surface d'échange comprise entre 0,38 m° et 4,48 m° Surface d'échange comprise entre 0,6 m° et 6 m°
+Source : https://www.groupeserap.fr/tank-a-lait_process-vinicole_echangeurs-thermiques.phtml"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "æ=} Fluide froid Mi"
+douteux = ["æ=}", "Mi"]
+
+[[rubriques.lignes]]
+valeur = "==} Fluide chaud"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Différents échangeurs tubulaires, Figure 2 : Echangeur à plaques"
+
+[[rubriques.lignes]]
+valeur = "monotubes (a), multitube (b) et annulaire (c)"
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "http://genie-alimentaire.com/spip.php?article217&artbpage=2-3"
+douteux = ["http://genie-alimentaire.com/spip.php?article217&artbpage=2-3"]
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Echangeur drapeau. Figure 4 : Echangeur serpentin. Surface d'échange comprise entre 0,38 m° et 4,48 m° Surface d'échange comprise entre 0,6 m° et 6 m°"
+douteux = ["m°", "m°"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "https://www.groupeserap.fr/tank-a-lait_process-vinicole_echangeurs-thermiques.phtml"
+douteux = ["https://www.groupeserap.fr/tank-a-lait_process-vinicole_echangeurs-thermiques.phtml"]

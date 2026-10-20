@@ -1,0 +1,154 @@
+# Transcription de l'illustration de la fiche 1430 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1430
+code = "FDC_DOUX_VERET_DE_CARROUGES"
+titre = "Doux Veret de Carrouges"
+image_sha256 = "45957e1f09137d6c21eba77362eaac398ac61cc5be97a8763b7b5c55c7618bf3"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: DOUX VERET DE CARROUGES
+PRINCIPALES ZONES DE PRODUCTION
+Eure.
+Seine-Maritime : Pays de Caux.
+Orne : cantons de Domfront - Vimoutiers - La Ferté Macé.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 500 tonnes.
+Ph. Laurent
+QUALITES TECHNOLOGIQUES DU FRUIT
+(moyenne de trois analyses de MM. Tavernier et Jacquin
+des 28-11-1949, 15-11-1965 et 22-11-1965)
+Dégustation du jus : doux parfumé.
+Dégustation du cidre : doux.
+Rendement en jus (%) : 66,3.
+Densité du jus : 1051,3 - Alcool en puissance : 6° 5.
+Acidité de titration en g. SO‘H: par litre : 1,14.
+Azote/sucres totaux : 1,66.
+Tanin (en g. par litre) : 1,50.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : faible.
+Port : demi-étalé.
+Résistance aux maladies: bonne - parfois sensible à l'oidium et au
+chancre sur arbres vieux.
+Productivité : très bonne.
+Saison de floraison : 3°-4e.
+Saison de maturité : 2°.
+Conservation et transport des fruits : assez bons.
+Calibre du fruit : moyen à petit en années de forte production.
+Mise à fruits : rapide.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler) ©
+Edition 1965"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Eure. Seine-Maritime : Pays de Caux."
+
+[[rubriques.lignes]]
+valeur = "Orne : cantons de Domfront - Vimoutiers - La Ferté Macé."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 500 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Laurent"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(moyenne de trois analyses de MM. Tavernier et Jacquin des 28-11-1949, 15-11-1965 et 22-11-1965)"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux parfumé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "66,3."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1051,3"
+douteux = ["Alcool", "6°"]
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "6° 5."
+douteux = ["Alcool", "6°"]
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘H"
+valeur = "par litre : 1,14."
+douteux = ["SO‘H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "1,66."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,50."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "faible."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "demi-étalé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne - parfois sensible à l'oidium et au chancre sur arbres vieux."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "très bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3°-4e."
+douteux = ["3°-4e."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+douteux = ["2°."]
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "assez bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen à petit en années de forte production."
+
+[[rubriques.lignes]]
+intitule = "Mise à fruits"
+valeur = "rapide."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (ler) ©"
+douteux = ["(ler)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1965"

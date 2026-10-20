@@ -1,0 +1,56 @@
+# Transcription de l'illustration de la fiche 1314 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1314
+code = "CMAP_EXTRACTION_TYPES_PRESSES"
+titre = "Les types de presses"
+image_sha256 = "5936a1d9d99154a4b946c53b3f5ef6713b0b73c06d1dc3bdff1c413082d052c6"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les types de presses
+sont des : Equipements utilisés pour l’opération de pressage
+regroupent : Les presses Bücher | Les presses à bandes | Les presses à paquets | Les presses pneumatiques
+peut induire : Des rendements de pressage différents | Des temps de pressage différents | Des niveaux d’oxydation différents (inertage ou non) | Des turbidités différentes | Des compositions de moûts différentes"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Equipements utilisés pour l’opération de pressage"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Les presses Bücher"
+
+[[rubriques.lignes]]
+valeur = "Les presses à bandes"
+
+[[rubriques.lignes]]
+valeur = "Les presses à paquets"
+
+[[rubriques.lignes]]
+valeur = "Les presses pneumatiques"
+
+[[rubriques]]
+titre = "peut induire"
+
+[[rubriques.lignes]]
+valeur = "Des rendements de pressage différents"
+
+[[rubriques.lignes]]
+valeur = "Des temps de pressage différents"
+
+[[rubriques.lignes]]
+valeur = "Des niveaux d’oxydation différents (inertage ou non)"
+
+[[rubriques.lignes]]
+valeur = "Des turbidités différentes"
+
+[[rubriques.lignes]]
+valeur = "Des compositions de moûts différentes"

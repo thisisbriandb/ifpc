@@ -1,0 +1,75 @@
+# Transcription de l'illustration de la fiche 1030 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1030
+code = "CMAP_CLARIFICATION_FLOTTATION_SPONTANEE"
+titre = "La flottation spontanée"
+image_sha256 = "0775eac204b8beff90fcc33dea2c82a4987864f0a5f18304c61993a4c94b7f9a"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La flottation « spontanée »
+est un : Phénomène se produisant au cours de la clarification haute
+a pour synonyme : La montée du « chapeau brun »
+a pour préalable : La gélification de la pectine
+a pour conséquence : La remontée des bourbes et des levures prises dans le gel
+nécessite : Une production de gaz par départ en fermentation
+est évaluée par : Un contrôle visuel en surface | Une estimation de la quantité de « chapeau brun » | La limpidité du moût situé sous le « chapeau brun »
+a pour causes d’échec : Une croissance trop rapide des levures (T° > 15 °C) | Une croissance trop lente des levures (T°< 5 °C) | Un gel pectique trop fragile"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant au cours de la clarification haute"
+
+[[rubriques]]
+titre = "a pour synonyme"
+
+[[rubriques.lignes]]
+valeur = "La montée du « chapeau brun »"
+
+[[rubriques]]
+titre = "a pour préalable"
+
+[[rubriques.lignes]]
+valeur = "La gélification de la pectine"
+
+[[rubriques]]
+titre = "a pour conséquence"
+
+[[rubriques.lignes]]
+valeur = "La remontée des bourbes et des levures prises dans le gel"
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "Une production de gaz par départ en fermentation"
+
+[[rubriques]]
+titre = "est évaluée par"
+
+[[rubriques.lignes]]
+valeur = "Un contrôle visuel en surface"
+
+[[rubriques.lignes]]
+valeur = "Une estimation de la quantité de « chapeau brun »"
+
+[[rubriques.lignes]]
+valeur = "La limpidité du moût situé sous le « chapeau brun »"
+
+[[rubriques]]
+titre = "a pour causes d’échec"
+
+[[rubriques.lignes]]
+valeur = "Une croissance trop rapide des levures (T° > 15 °C)"
+
+[[rubriques.lignes]]
+valeur = "Une croissance trop lente des levures (T°< 5 °C)"
+
+[[rubriques.lignes]]
+valeur = "Un gel pectique trop fragile"

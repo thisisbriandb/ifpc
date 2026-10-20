@@ -1,0 +1,24 @@
+# Transcription de l'illustration de la fiche 1381 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1381
+code = "FICHE_SAVEUR_AMERE"
+titre = "La saveur amère des cidres"
+image_sha256 = "7f843b64d1ebc72ed84b06a1b04e7373b2329305cde85111952543d1921ce776"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 85.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+F_DP3 F_DP5 F DP7 F_DP1
+Figure 1 : Amertume des procyanidines selon leur degré de polymérisation (DP)
+D'après R. Symoneaux,*, A. Baron, N. Marnet, R. Bauduin, S. Chollet (2014) LWT"""
+
+[[rubriques]]
+titre = "F_DP3 F_DP5 F DP7 F_DP1"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Amertume des procyanidines selon leur degré de polymérisation (DP) D'après R. Symoneaux,*, A. Baron, N. Marnet, R. Bauduin, S. Chollet (2014) LWT"
+douteux = ["Symoneaux,*,"]

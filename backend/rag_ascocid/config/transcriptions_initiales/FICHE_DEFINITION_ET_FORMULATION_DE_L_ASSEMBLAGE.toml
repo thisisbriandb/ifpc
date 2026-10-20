@@ -1,0 +1,38 @@
+# Transcription de l'illustration de la fiche 1598 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1598
+code = "FICHE_DEFINITION_ET_FORMULATION_DE_L_ASSEMBLAGE"
+titre = "Définition et formulation de l'assemblage"
+image_sha256 = "8a4225d8e68d5d1085fa6013141853a63e1f82a603c04ab39cedfbe0ebed740e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Le coffret des couleurs des cidres.
+Ce coffret a été développé et réalisé par l'IFPC, pour les acteurs de la filière. Il comprend 14 références couleurs de cidres
+commerciaux (6 rosés et 8 cidres classiques), 2 tubes pour réaliser des comparaisons avec des échantillons de cidre et une fiche
+explicative comportant le système international de représentation des couleurs (CIE Lab), pour positionner les couleurs de
+référence parmi l'échantillonnage de cidres commerciaux.
+Photos: C. SEGAUST"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Le coffret des couleurs des cidres."
+
+[[rubriques.lignes]]
+valeur = "Ce coffret a été développé et réalisé par l'IFPC, pour les acteurs de la filière. Il comprend 14 références couleurs de cidres commerciaux (6 rosés et 8 cidres classiques), 2 tubes pour réaliser des comparaisons avec des échantillons de cidre et une fiche explicative comportant le système international de représentation des couleurs (CIE Lab), pour positionner les couleurs de"
+douteux = ["Il"]
+
+[[rubriques.lignes]]
+valeur = "référence parmi l'échantillonnage de cidres commerciaux."
+douteux = ["l'échantillonnage"]
+
+[[rubriques.lignes]]
+intitule = "Photos"
+valeur = "C. SEGAUST"

@@ -1,0 +1,111 @@
+# Transcription de l'illustration de la fiche 1125 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1125
+code = "CMAP_ASSEMBLAGE_ETAPE"
+titre = "L'étape d'assemblage"
+image_sha256 = "266f74f0d7fed9eebca04e4948649d183dbaf604984cc05d43d3e8e5fd2a337b"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+L’étape d’assemblage des cidres
+est une : Etape de l’élaboration du cidre
+est constituée de : La formulation | La réalisation de l’assemblage test | La validation de la formulation | La réalisation de l’assemblage | Un stockage court (facultatif)
+a pour fonctions : De répondre aux besoins de produits finis | D’assurer une régularité des produits finis | De valoriser en cidres la majorité des produits de la cidrerie
+s’appuie sur : Le décret cidre (définition du cidre français) | Le cahier des charges du cidre bio | Le cahier des charges des AOP et AOC | Le cahier des charges des IGP | Le cahier des charges Label Rouge | Des cahiers des charges internes
+met en œuvre : Des cidres à assembler (cuvées « tout venant ») | Des cidres issus de concentrés reconstitués | Des concentrés (reconstitués ou non) | Des cuvées correctrices (acides, amères) | Des cidres ou moûts issus de la valorisation des coproduits (en faible %) | Des cuvées ayant un défaut organoleptique (en faible %) | D’éventuels additifs (acidifiants, colorants, arômes)
+présente les risques : De recroissance des flores (levée de carence nutritionnelle ou stockage trop long) | De formation d’un trouble physico -chimique"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Etape de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La formulation"
+
+[[rubriques.lignes]]
+valeur = "La réalisation de l’assemblage test"
+
+[[rubriques.lignes]]
+valeur = "La validation de la formulation"
+
+[[rubriques.lignes]]
+valeur = "La réalisation de l’assemblage"
+
+[[rubriques.lignes]]
+valeur = "Un stockage court (facultatif)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De répondre aux besoins de produits finis"
+
+[[rubriques.lignes]]
+valeur = "D’assurer une régularité des produits finis"
+
+[[rubriques.lignes]]
+valeur = "De valoriser en cidres la majorité des produits de la cidrerie"
+
+[[rubriques]]
+titre = "s’appuie sur"
+
+[[rubriques.lignes]]
+valeur = "Le décret cidre (définition du cidre français)"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges du cidre bio"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges des AOP et AOC"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges des IGP"
+
+[[rubriques.lignes]]
+valeur = "Le cahier des charges Label Rouge"
+
+[[rubriques.lignes]]
+valeur = "Des cahiers des charges internes"
+
+[[rubriques]]
+titre = "met en œuvre"
+
+[[rubriques.lignes]]
+valeur = "Des cidres à assembler (cuvées « tout venant »)"
+
+[[rubriques.lignes]]
+valeur = "Des cidres issus de concentrés reconstitués"
+
+[[rubriques.lignes]]
+valeur = "Des concentrés (reconstitués ou non)"
+
+[[rubriques.lignes]]
+valeur = "Des cuvées correctrices (acides, amères)"
+
+[[rubriques.lignes]]
+valeur = "Des cidres ou moûts issus de la valorisation des coproduits (en faible %)"
+
+[[rubriques.lignes]]
+valeur = "Des cuvées ayant un défaut organoleptique (en faible %)"
+
+[[rubriques.lignes]]
+valeur = "D’éventuels additifs (acidifiants, colorants, arômes)"
+
+[[rubriques]]
+titre = "présente les risques"
+
+[[rubriques.lignes]]
+valeur = "De recroissance des flores (levée de carence nutritionnelle ou stockage trop long)"
+
+[[rubriques.lignes]]
+valeur = "De formation d’un trouble physico -chimique"

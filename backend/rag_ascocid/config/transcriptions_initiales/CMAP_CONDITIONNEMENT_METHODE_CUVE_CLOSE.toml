@@ -1,0 +1,84 @@
+# Transcription de l'illustration de la fiche 1139 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1139
+code = "CMAP_CONDITIONNEMENT_METHODE_CUVE_CLOSE"
+titre = "La méthode de conditionnement par prise de mousse en cuve close"
+image_sha256 = "8b152d2928ff111f658284a6e0fc28a4c8d4154eb7d10e4ec352b37dee74b3ac"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode de conditionnement avec prise de mousse en cuve close
+est une : Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres
+est constituée de : Un levurage par des levures sèches actives (facultatif) | Une prise de mousse en cuve close (PMC) | Une élimination des levures sous contre -pression | Un embouteillage iso -barométrique en bouteille | Un bouchage & muselage
+a pour action complémentaire : Un sulfitage (facultatif)
+a pour fonctions : De produire un cidre limpide à effervescence naturelle | D’obtenir un cidre prêt à la commercialisation dès l’embouteillage
+a pour conséquences : Une limitation de la quantité de flores indésirables en bouteille | Un coût d’investissement élevé (cuve résistant à la pression et soutireuse iso -barométrique) | Une consommation de sucre pour la prise de mousse (environ 4 points de MV) | De différer l’embouteillage (1 à 2 mois de fermentation en cuve close)
+présente le risque : D’une oxygénation du cidre à l’embouteillage | D’une dissolution de CO 2 exogène lors du soutirage (au -delà de la limite de détection)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Un levurage par des levures sèches actives (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Une prise de mousse en cuve close (PMC)"
+
+[[rubriques.lignes]]
+valeur = "Une élimination des levures sous contre -pression"
+
+[[rubriques.lignes]]
+valeur = "Un embouteillage iso -barométrique en bouteille"
+
+[[rubriques.lignes]]
+valeur = "Un bouchage & muselage"
+
+[[rubriques]]
+titre = "a pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Un sulfitage (facultatif)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De produire un cidre limpide à effervescence naturelle"
+
+[[rubriques.lignes]]
+valeur = "D’obtenir un cidre prêt à la commercialisation dès l’embouteillage"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une limitation de la quantité de flores indésirables en bouteille"
+
+[[rubriques.lignes]]
+valeur = "Un coût d’investissement élevé (cuve résistant à la pression et soutireuse iso -barométrique)"
+
+[[rubriques.lignes]]
+valeur = "Une consommation de sucre pour la prise de mousse (environ 4 points de MV)"
+
+[[rubriques.lignes]]
+valeur = "De différer l’embouteillage (1 à 2 mois de fermentation en cuve close)"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "D’une oxygénation du cidre à l’embouteillage"
+
+[[rubriques.lignes]]
+valeur = "D’une dissolution de CO 2 exogène lors du soutirage (au -delà de la limite de détection)"

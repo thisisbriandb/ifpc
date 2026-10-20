@@ -1,0 +1,58 @@
+# Transcription de l'illustration de la fiche 1407 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1407
+code = "FICHE_LES_ECHANGEURS_DE_CHALEUR"
+titre = "Les échangeurs de chaleur"
+image_sha256 = "00805ea4fa2292995ee074b4f70a820a520fc6cf09b60c14096b2d277d708552"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 76.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+— Sortie du
+produit Chambrage
+pasteurisé
+et refroidi
+BEEN T
+Récupération L
+d'énergie Chauffage
+em} Fluide froid
+produit à
+pasteuriser
+=} Fluide chaud
+Tee
+Ps L nl L 1 1 ns 1 n Te
+Figure 5 : Fonctionnement à co-courant Figure 6 : Fonctionnement à contre-courant"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "— Sortie du"
+
+[[rubriques.lignes]]
+valeur = "produit Chambrage pasteurisé et refroidi"
+
+[[rubriques.lignes]]
+valeur = "BEEN T Récupération L d'énergie Chauffage em} Fluide froid"
+douteux = ["BEEN", "T", "L", "em}"]
+
+[[rubriques.lignes]]
+valeur = "produit à pasteuriser"
+
+[[rubriques.lignes]]
+valeur = "=} Fluide chaud"
+
+[[rubriques.lignes]]
+valeur = "Tee"
+douteux = ["Tee"]
+
+[[rubriques.lignes]]
+valeur = "Ps L nl L 1 1 ns 1 n Te"
+douteux = ["Ps", "L", "nl", "L", "1", "1", "ns", "1", "n", "Te"]
+
+[[rubriques.lignes]]
+intitule = "Figure 5"
+valeur = "Fonctionnement à co-courant Figure 6 : Fonctionnement à contre-courant"

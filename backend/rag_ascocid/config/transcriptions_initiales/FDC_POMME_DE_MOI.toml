@@ -1,0 +1,166 @@
+# Transcription de l'illustration de la fiche 1447 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1447
+code = "FDC_POMME_DE_MOI"
+titre = "Pomme de moi"
+image_sha256 = "81641a5e4398f3be9b72ed72599a5bbae76128ea0cf4cee0a8ecf2f07c168bff"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: POMME DE MOI
+PRINCIPALES ZONES DE PRODUCTION
+Morbihan: cantons de Malestroit - Ploermel - Guer -
+La Gacilly - Questembert.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 800 à 1.000 tonnes.
+Ph. Durand
+QUALITES TECHNOLOGIQUES DU FRUIT
+(moyenne des deux analyses de MM. Tavernier et Jacquin
+des 26-11-1952 et 23-11-1964)
+Dégustation du jus : doux légèrement acidulé et parfumé.
+Dégustation du cidre : acidulé.
+Rendement en jus (%) : 62,6.
+Densité du jus : 1059 - Alcool en puissance : 70 6.
+Acidité de titration en g. SO'‘H* par litre : 4,1.
+Azote/sucres totaux : 0,36.
+Tanin (en g. par litre) : 1,38.
+Aspect du jus : belle coloration jaune.
+Parfum : léger.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne.
+Port: dôme élevé.
+Résistance aux maladies : bonne.
+Productivité : assez régulière.
+Saison de floraison : 3°.
+Saison de maturité : 2°.
+Conservation et transport des fruits : très bons.
+Calibre du fruit : plutôt gros.
+Précocité de mise à fruits : moyenne à assez bonne.
+OBSERVATIONS DIVERSES
+Variété acidulée intéressante pour la fabrication des cidres doux, des jus
+et jus concentrés.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (Î®r
+Edition 1965"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Morbihan: cantons de Malestroit - Ploermel - Guer - La Gacilly - Questembert."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 800 à 1.000 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Durand"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(moyenne des deux analyses de MM. Tavernier et Jacquin des 26-11-1952 et 23-11-1964)"
+douteux = ["Jacquin"]
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux légèrement acidulé et parfumé."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "acidulé."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "62,6."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1059"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "70 6."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'‘H* par litre"
+valeur = "4,1."
+douteux = ["SO'‘H*"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,36."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,38."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "belle coloration jaune."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "léger."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "dôme élevé."
+douteux = ["Port:"]
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "assez régulière."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3°."
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2°."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "très bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "plutôt gros."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "moyenne à assez bonne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété acidulée intéressante pour la fabrication des cidres doux, des jus et jus concentrés."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (Î®r"
+douteux = ["(Î®r"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1965"

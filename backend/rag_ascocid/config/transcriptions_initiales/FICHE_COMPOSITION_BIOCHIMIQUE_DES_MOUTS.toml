@@ -1,0 +1,54 @@
+# Transcription de l'illustration de la fiche 1531 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1531
+code = "FICHE_COMPOSITION_BIOCHIMIQUE_DES_MOUTS"
+titre = "La composition biochimique des moûts"
+image_sha256 = "1e277b8443d479e0bf28134151b4946669e22041b1be0a0d5e21c446ae167b01"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 90.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Pectines
+Polyphénols Sucres
+Acides phénoliques, Saccharose,
+Flavonoïdes Glucose, Fructose
+Acides
+Acide malique
+Minéraux
+Composés azotés
+Acides aminés (Asparagine…),
+Enzymes Ammonium, Protéines
+PPO, PME
+Figure 1 : Composition biochimique générale des moûts
+Photo Moût : P. Gestin, INRAE"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Pectines"
+
+[[rubriques.lignes]]
+valeur = "Polyphénols Sucres Acides phénoliques, Saccharose, Flavonoïdes Glucose, Fructose"
+douteux = ["Flavonoïdes"]
+
+[[rubriques.lignes]]
+valeur = "Acides Acide malique Minéraux"
+
+[[rubriques.lignes]]
+valeur = "Composés azotés Acides aminés (Asparagine…), Enzymes Ammonium, Protéines"
+douteux = ["(Asparagine…),"]
+
+[[rubriques]]
+titre = "PPO, PME"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Composition biochimique générale des moûts"
+
+[[rubriques.lignes]]
+intitule = "Photo Moût"
+valeur = "P. Gestin, INRAE"

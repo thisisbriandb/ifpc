@@ -1,0 +1,107 @@
+# Transcription de l'illustration de la fiche 1522 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1522
+code = "FICHE_LES_AROMES_DU_CIDRE"
+titre = "Les arômes du cidre"
+image_sha256 = "6dc1e477bec502a7167b6de4a946f6043a89bab3252052eef711337c76dc02f2"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 82.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Les arômes des cidres. S GG. |
+Lait, Beurre Pomme, Poire, Banane, Pêche, Abricot, Coing, Pamplemousse,
+Gr » fs Citron, Ananas, Passion, Mangue, Framboise, Fraise, Cassis, Cerise
+Gouache, Cuir, Etable, Musc
+5 + { 1! { Lé
+Coupes | Fruits cuits, Compote, Fruits confits, Amande,
+Oignon, Chou cuit, Œuf pourri Noisette, Noix, Figue, Pruneau
+@..… a 0...
+Silex, Pierre à fusil Rose, Miel, Fleurs blanches, Chèvrefeuille,
+Violette, Acacia
+Fumé, Torréfaction, Pain grillé, Brioche, IFPC
+Caramel, Caramel au beurre, Chocolat
+om Herbe fraiche, Foin coupé, Menthe, Thé, Levure,
+UCeA Sous-bois, Bois frais, Humus, Champignon, Mousse
+Clou de girofle, Cannelle, Anis, Régiisse,
+Vanille, Poivre, Résine, Pin, Cèdre
+Figure 2 : Le coffret des arômes des cidres, IFPC.
+Ce coffret, fabriqué par l'IFPC, comprend 25 arômes pouvant être
+rencontrés lors de la dégustation d’un cidre (20 positifs, 5 négatifs), 1
+fiche descriptive plastifiée et 50 touches à sentir. 9 LES ARÔMES Hi |
+Pour passer commande: expe.cidricole@ifpc.eu . E : TrTS
+Pour plus d'informations: http://www.ifpc.eu/ HS
+. 5
+FPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les arômes des cidres. S GG. |"
+douteux = ["S", "GG."]
+
+[[rubriques.lignes]]
+valeur = "Lait, Beurre Pomme, Poire, Banane, Pêche, Abricot, Coing, Pamplemousse,"
+douteux = ["Lait,"]
+
+[[rubriques.lignes]]
+valeur = "Gr » fs Citron, Ananas, Passion, Mangue, Framboise, Fraise, Cassis, Cerise"
+douteux = ["Gr", "fs"]
+
+[[rubriques.lignes]]
+valeur = "Gouache, Cuir, Etable, Musc"
+
+[[rubriques]]
+titre = "5 + { 1! { Lé"
+
+[[rubriques.lignes]]
+valeur = "Coupes | Fruits cuits, Compote, Fruits confits, Amande,"
+douteux = ["Coupes"]
+
+[[rubriques.lignes]]
+valeur = "Oignon, Chou cuit, Œuf pourri Noisette, Noix, Figue, Pruneau"
+
+[[rubriques.lignes]]
+valeur = "@..… a 0..."
+douteux = ["a", "0..."]
+
+[[rubriques.lignes]]
+valeur = "Silex, Pierre à fusil Rose, Miel, Fleurs blanches, Chèvrefeuille, Violette, Acacia"
+douteux = ["Chèvrefeuille,"]
+
+[[rubriques.lignes]]
+valeur = "Fumé, Torréfaction, Pain grillé, Brioche, IFPC"
+
+[[rubriques.lignes]]
+valeur = "Caramel, Caramel au beurre, Chocolat om Herbe fraiche, Foin coupé, Menthe, Thé, Levure, UCeA Sous-bois, Bois frais, Humus, Champignon, Mousse"
+douteux = ["om", "UCeA"]
+
+[[rubriques.lignes]]
+valeur = "Clou de girofle, Cannelle, Anis, Régiisse, Vanille, Poivre, Résine, Pin, Cèdre"
+douteux = ["Régiisse,", "Cèdre"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Le coffret des arômes des cidres, IFPC. Ce coffret, fabriqué par l'IFPC, comprend 25 arômes pouvant être rencontrés lors de la dégustation d’un cidre (20 positifs, 5 négatifs), 1"
+
+[[rubriques.lignes]]
+valeur = "fiche descriptive plastifiée et 50 touches à sentir. 9 LES ARÔMES Hi |"
+douteux = ["9", "LES", "Hi"]
+
+[[rubriques.lignes]]
+intitule = "Pour passer commande"
+valeur = "expe.cidricole@ifpc.eu . E : TrTS"
+douteux = ["E", "TrTS"]
+
+[[rubriques.lignes]]
+intitule = "Pour plus d'informations"
+valeur = "http://www.ifpc.eu/ HS"
+douteux = ["d'informations:", "http://www.ifpc.eu/", "HS"]
+
+[[rubriques.lignes]]
+valeur = ". 5 FPC"
+douteux = ["5", "FPC"]

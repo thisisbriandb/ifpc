@@ -1,0 +1,48 @@
+# Transcription de l'illustration de la fiche 1304 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1304
+code = "CMAP_REGROUPEMENT_PHENOMENES_POLYPHENOLS"
+titre = "Les phénomènes de réactions des polyphénols"
+image_sha256 = "1134544c89d42bee71329cb7b35d1dfce8fe677331387adebdc9c0453fbb5a58"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Phénomènes de réactions des polyphénols
+sont un : Ensemble de phénomènes impliquant les polyphénols
+regroupent : L’adsorption des polyphénols sur la râpure | L’oxydation des polyphénols | Le brunissement enzymatique | Le collage (précipitation des tanins avec les protéines de collage) | Le trouble physico -chimique (post -clarification) | Astringence : réaction des tanins avec les protéines salivaires | Amertume : saveur liée aux tanins de petite taille"""
+anomalies = ["une colonne est loin de sa relation (553 points) : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes impliquant les polyphénols"
+
+[[rubriques]]
+titre = "regroupent"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "L’adsorption des polyphénols sur la râpure"
+
+[[rubriques.lignes]]
+valeur = "L’oxydation des polyphénols"
+
+[[rubriques.lignes]]
+valeur = "Le brunissement enzymatique"
+
+[[rubriques.lignes]]
+valeur = "Le collage (précipitation des tanins avec les protéines de collage)"
+
+[[rubriques.lignes]]
+valeur = "Le trouble physico -chimique (post -clarification)"
+
+[[rubriques.lignes]]
+valeur = "Astringence : réaction des tanins avec les protéines salivaires"
+
+[[rubriques.lignes]]
+valeur = "Amertume : saveur liée aux tanins de petite taille"

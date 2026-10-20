@@ -1,0 +1,26 @@
+# Transcription de l'illustration de la fiche 1328 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1328
+code = "FICHE_CAUSES_ECHEC_CLARIFICATION_HAUTE"
+titre = "Les causes d'échec de la clarification haute"
+image_sha256 = "7719e1fbabab2d45b7ecacfa8f436620cb22b22fbb7d9ab93ac01531936ecec4"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1 : Bombonne de moût de pomme en fin de
+clarification haute
+Photo P. GESTIN - INRA"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Bombonne de moût de pomme en fin de"
+
+[[rubriques.lignes]]
+valeur = "clarification haute Photo P. GESTIN - INRA"

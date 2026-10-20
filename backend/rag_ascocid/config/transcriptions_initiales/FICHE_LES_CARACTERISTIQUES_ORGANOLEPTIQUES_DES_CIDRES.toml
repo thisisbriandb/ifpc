@@ -1,0 +1,29 @@
+# Transcription de l'illustration de la fiche 1526 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1526
+code = "FICHE_LES_CARACTERISTIQUES_ORGANOLEPTIQUES_DES_CIDRES"
+titre = "Les caractéristiques organoleptiques des cidres"
+image_sha256 = "0e04dd2dcbf6c9ddb742a4ee443bca816d9ca91061cdaaf47e0c9a98b84789c5"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 88.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les caractéristiques organoleptiques des cidres ©
+Figure 1 : Quelques caractéristiques organoleptiques des cidres, caractéristiques perçues par nos 5 sens,
+telles que l’effervescence et taille des bulles, la couleur, les arômes (fruités, floraux, boisés, fumés,
+animaux...), ou les saveurs (sucrosité, acidité.….)."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Les caractéristiques organoleptiques des cidres ©"
+douteux = ["des"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Quelques caractéristiques organoleptiques des cidres, caractéristiques perçues par nos 5 sens, telles que l’effervescence et taille des bulles, la couleur, les arômes (fruités, floraux, boisés, fumés, animaux...), ou les saveurs (sucrosité, acidité.….)."
+douteux = ["l’effervescence", "fumés,", "animaux...),", "acidité.….)."]

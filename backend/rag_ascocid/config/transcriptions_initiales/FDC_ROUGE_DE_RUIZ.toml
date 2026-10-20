@@ -1,0 +1,156 @@
+# Transcription de l'illustration de la fiche 1475 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1475
+code = "FDC_ROUGE_DE_RUIZ"
+titre = "Rouge de Ruiz"
+image_sha256 = "f863fa81c427ca360452bfd10bad1e51cbc28a8db4e699e7ad29ea4131fec23b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Rouge de Ruiz
+Clone : X4876
+Obtention Inrae, site d'Angers, pommier à chair rouge destiné à l'élaboration de
+cidre rosé. Editée par CEP Innovation.
+1. L'arbre
+Vigueur : moyenne
+Port : très souple, retombant, palissage fortement recommandé
+Floraison : précoce en même temps que les pommes à jus type
+Judeline (les « 3J »), 10 jours après Golden, 20-25 avril à Sées
+Alternance : variété régulière
+Production : donnée non disponible
+2. Conception du verger
+Variétés pollinisatrices : Judeline, Judaine, Amanda, Shamrock,
+Douce de l’Aventcov
+Porte-greffe recommandé : M116, à adapter selon sol et mode de
+conduite
+Sensibilité aux maladies : variété rustique (pas de sensibilité
+aux maladies tavelure, oïdium, chancre) ; des monilioses peuvent
+être observées en cas d’amas de fruits
+Etre vigilant sur les symptômes éventuels de feu bactérien
+Réaction à l’éclaircissage chimique : donnée non disponible
+3. Le fruit
+3.1 Récolte
+Calibre : gros (environ 80g)
+Forme : globuleuse
+Epoque de récolte : fin septembre, 10 jours après Golden,
+environ une semaine après Kermerrien, vers le 25 septembre à
+Sées.
+Conservation au sol : donnée non disponible attention, les
+variétés à chair rouge peuvent perdre leur potentiel colorant
+avec l'avancée de la maturité
+Couleur de la chair : rouge sombre
+3.2 Technologie
+Stabilité de la couleur du jus : stable en condition d’oxydation forcée
+Masse volumique : moyenne 1048-1052 kg/m°
+pH : environ 3.2-3.3 ; acidité totale :8 g/l exprimé en H2SO4
+Fiche élaborée par l'Inrae, l'IFPC et CEP Innovation Version du 18/05/21"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Rouge de Ruiz"
+
+[[rubriques.lignes]]
+intitule = "Clone"
+valeur = "X4876 Obtention Inrae, site d'Angers, pommier à chair rouge destiné à l'élaboration de cidre rosé. Editée par CEP Innovation."
+douteux = ["d'Angers,", "l'élaboration"]
+
+[[rubriques]]
+titre = "1. L'arbre"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne"
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "très souple, retombant, palissage fortement recommandé"
+
+[[rubriques.lignes]]
+intitule = "Floraison"
+valeur = "précoce en même temps que les pommes à jus type Judeline (les « 3J »), 10 jours après Golden, 20-25 avril à Sées"
+
+[[rubriques.lignes]]
+intitule = "Alternance"
+valeur = "variété régulière"
+
+[[rubriques.lignes]]
+intitule = "Production"
+valeur = "donnée non disponible"
+
+[[rubriques]]
+titre = "2. Conception du verger"
+
+[[rubriques.lignes]]
+intitule = "Variétés pollinisatrices"
+valeur = "Judeline, Judaine, Amanda, Shamrock, Douce de l’Aventcov"
+douteux = ["Shamrock,", "l’Aventcov"]
+
+[[rubriques.lignes]]
+intitule = "Porte-greffe recommandé"
+valeur = "M116, à adapter selon sol et mode de conduite"
+
+[[rubriques.lignes]]
+intitule = "Sensibilité aux maladies"
+valeur = "variété rustique (pas de sensibilité aux maladies tavelure, oïdium, chancre) ; des monilioses peuvent être observées en cas d’amas de fruits Etre vigilant sur les symptômes éventuels de feu bactérien"
+
+[[rubriques.lignes]]
+intitule = "Réaction à l’éclaircissage chimique"
+valeur = "donnée non disponible"
+
+[[rubriques]]
+titre = "3. Le fruit"
+
+[[rubriques]]
+titre = "3.1 Récolte"
+
+[[rubriques.lignes]]
+intitule = "Calibre"
+valeur = "gros (environ 80g)"
+
+[[rubriques.lignes]]
+intitule = "Forme"
+valeur = "globuleuse"
+
+[[rubriques.lignes]]
+intitule = "Epoque de récolte"
+valeur = "fin septembre, 10 jours après Golden, environ une semaine après Kermerrien, vers le 25 septembre à Sées."
+
+[[rubriques.lignes]]
+intitule = "Conservation au sol"
+valeur = "donnée non disponible attention, les variétés à chair rouge peuvent perdre leur potentiel colorant avec l'avancée de la maturité"
+douteux = ["l'avancée"]
+
+[[rubriques.lignes]]
+intitule = "Couleur de la chair"
+valeur = "rouge sombre"
+
+[[rubriques]]
+titre = "3.2 Technologie"
+
+[[rubriques.lignes]]
+intitule = "Stabilité de la couleur du jus"
+valeur = "stable en condition d’oxydation forcée"
+douteux = ["d’oxydation"]
+
+[[rubriques.lignes]]
+intitule = "Masse volumique"
+valeur = "moyenne 1048-1052 kg/m°"
+douteux = ["kg/m°"]
+
+[[rubriques.lignes]]
+intitule = "pH"
+valeur = "environ 3.2-3.3 ; acidité totale :8 g/l exprimé en H2SO4"
+douteux = ["3.2-3.3", "g/l", "H2SO4"]
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Fiche élaborée par l'Inrae, l'IFPC et CEP Innovation Version du 18/05/21"
+douteux = ["l'Inrae,"]

@@ -1,0 +1,73 @@
+# Transcription de l'illustration de la fiche 1548 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1548
+code = "CMAP_COMPOSITION_BIOCHIMIQUE_DES_MOUTS"
+titre = "La composition biochimique des moûts"
+image_sha256 = "71cd67434108597a205986297bf009e62e7ea2272d993f785bbb96b25fdd35e4"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La composition biochimique des moûts
+est un : Ensemble de composés impliqués dans différents processus et réactions, au cours de l’élaboration
+est caractérisée par : Les sucres du moût | Les acides (acide malique) | Les polyols (le sorbitol) | Les polyphénols | Les composés azotés | Les minéraux | Les enzymes
+est influencée par : La variété des pommes | La maturité des pommes | L'état des pommes | La conduite de verger | Les conditions pédoclimatiques
+est déterminée par : Des tests et analyses"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de composés impliqués dans différents processus et réactions, au cours de l’élaboration"
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "Les sucres du moût"
+
+[[rubriques.lignes]]
+valeur = "Les acides (acide malique)"
+
+[[rubriques.lignes]]
+valeur = "Les polyols (le sorbitol)"
+
+[[rubriques.lignes]]
+valeur = "Les polyphénols"
+
+[[rubriques.lignes]]
+valeur = "Les composés azotés"
+
+[[rubriques.lignes]]
+valeur = "Les minéraux"
+
+[[rubriques.lignes]]
+valeur = "Les enzymes"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La variété des pommes"
+
+[[rubriques.lignes]]
+valeur = "La maturité des pommes"
+
+[[rubriques.lignes]]
+valeur = "L'état des pommes"
+douteux = ["L'état"]
+
+[[rubriques.lignes]]
+valeur = "La conduite de verger"
+
+[[rubriques.lignes]]
+valeur = "Les conditions pédoclimatiques"
+
+[[rubriques]]
+titre = "est déterminée par"
+
+[[rubriques.lignes]]
+valeur = "Des tests et analyses"

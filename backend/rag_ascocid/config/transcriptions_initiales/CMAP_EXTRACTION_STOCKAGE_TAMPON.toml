@@ -1,0 +1,42 @@
+# Transcription de l'illustration de la fiche 1075 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1075
+code = "CMAP_EXTRACTION_STOCKAGE_TAMPON"
+titre = "Le stockage tampon de la râpure"
+image_sha256 = "7cf505aa09ef5d3a2b89a82f3814b1ce3c88c0ef2e237ae9cb4acc4fc3cf47ff"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le stockage tampon de la râpure
+est une : Opération facultative de l’étape d’extraction
+a pour fonction : D’ajuster le flux de râpage au flux de pressage
+est piloté par : Le temps de séjour en cuve
+a pour conséquences : Les effets d’un cuvage court (selon le temps de séjour)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape d’extraction"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "D’ajuster le flux de râpage au flux de pressage"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Le temps de séjour en cuve"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Les effets d’un cuvage court (selon le temps de séjour)"

@@ -1,0 +1,39 @@
+# Transcription de l'illustration de la fiche 1497 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1497
+code = "FICHE_ACIDE_MALIQUE"
+titre = "L'acide malique"
+image_sha256 = "5baf25062bb744a4145f812ad485fb7924810faca291947bc7388456e8e07b11"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Figure 1: Structure chimique Figure 2: Transformation de l'acide L-malique
+de l'acide malique en acide L-lactique lors de la Transformation
+Malolactique (TML)
+Enzyme
+malolactique
+Acide L-malique ———+ Acide L-lactique + CO;
+Acides
+carboxyliques"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure chimique Figure 2: Transformation de l'acide L-malique de l'acide malique en acide L-lactique lors de la Transformation Malolactique (TML)"
+douteux = ["l'acide", "l'acide"]
+
+[[rubriques.lignes]]
+valeur = "Enzyme malolactique"
+
+[[rubriques.lignes]]
+valeur = "Acide L-malique ———+ Acide L-lactique + CO;"
+douteux = ["CO;"]
+
+[[rubriques.lignes]]
+valeur = "Acides carboxyliques"

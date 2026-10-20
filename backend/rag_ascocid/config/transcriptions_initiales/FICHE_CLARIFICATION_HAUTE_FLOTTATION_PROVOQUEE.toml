@@ -1,0 +1,52 @@
+# Transcription de l'illustration de la fiche 1086 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1086
+code = "FICHE_CLARIFICATION_HAUTE_FLOTTATION_PROVOQUEE"
+titre = "La clarification haute par flottation \"provoquée\""
+image_sha256 = "f82087bd9415e855482565161c5b32ede5620e7fc18114d6c82b5039f00cce8c"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 86.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Raclage des bourbes
+a titÉ 2
+Recirculation de moût clarifié pour production de bulles d’azote
+Sortie de Sortie des
+moüût clarifié bourbes
+Entrée du moût
+préalablement
+déméthylé
+Figure 1 : Schéma du principe d’un flottateur continu destiné à clarifier les moûts de pommes à cidre par
+« clarification haute à flottation provoquée »"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Raclage des bourbes"
+
+[[rubriques.lignes]]
+valeur = "a titÉ 2"
+douteux = ["a", "titÉ", "2"]
+
+[[rubriques.lignes]]
+valeur = "Recirculation de moût clarifié pour production de bulles d’azote"
+
+[[rubriques.lignes]]
+valeur = "Sortie de Sortie des moüût clarifié bourbes"
+douteux = ["moüût"]
+
+[[rubriques.lignes]]
+valeur = "Entrée du moût"
+douteux = ["moût"]
+
+[[rubriques.lignes]]
+valeur = "préalablement déméthylé"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Schéma du principe d’un flottateur continu destiné à clarifier les moûts de pommes à cidre par « clarification haute à flottation provoquée »"
+douteux = ["d’un"]

@@ -1,0 +1,52 @@
+# Transcription de l'illustration de la fiche 1126 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1126
+code = "CMAP_CLARIFICATION_CIDRES_PAR_DECANTATION"
+titre = "La clarification des cidres par simple décantation"
+image_sha256 = "3d8e9ab25cf509f09f9c858fa5d92de344dffde6d3546a188a220c511653e537"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification des cidres par simple décantation
+est une : Modalité minimaliste de l’étape de clarification des cidres
+est constituée de : Une décantation | Un soutirage
+a pour fonctions : D’éliminer les éventuels floculats formés après l’assemblage | De réduire la population de levures avant conditionnement
+a pour conséquences : Un risque de maintenir les flores d’altération issues de la fermentation | Un risque de prise de mousse excessive en bouteilles"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité minimaliste de l’étape de clarification des cidres"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une décantation"
+
+[[rubriques.lignes]]
+valeur = "Un soutirage"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "D’éliminer les éventuels floculats formés après l’assemblage"
+
+[[rubriques.lignes]]
+valeur = "De réduire la population de levures avant conditionnement"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Un risque de maintenir les flores d’altération issues de la fermentation"
+
+[[rubriques.lignes]]
+valeur = "Un risque de prise de mousse excessive en bouteilles"

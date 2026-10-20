@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1060 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1060
+code = "CMAP_RECOLTE_POMME_AU_SOL"
+titre = "La pomme au sol"
+image_sha256 = "ddbd020a785de1ee17c3510ea33ca25611cddb0eb0c56a9ee8827ae439456845"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La pomme au sol
+est une : Matière première de l'élaboration du cidre
+est caractérisée par : Sa variété | Son état de maturité | Son poids moyen
+est influencée par : La durée de contact avec le sol | L'enherbement inter-rang | Les conditions pédoclimatiques | L’atteinte par les ravageurs
+a pour défauts : Des altérations fongiques | Des altérations physiques"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Matière première de l'élaboration du cidre"
+douteux = ["l'élaboration"]
+
+[[rubriques]]
+titre = "est caractérisée par"
+
+[[rubriques.lignes]]
+valeur = "Sa variété"
+
+[[rubriques.lignes]]
+valeur = "Son état de maturité"
+
+[[rubriques.lignes]]
+valeur = "Son poids moyen"
+
+[[rubriques]]
+titre = "est influencée par"
+
+[[rubriques.lignes]]
+valeur = "La durée de contact avec le sol"
+
+[[rubriques.lignes]]
+valeur = "L'enherbement inter-rang"
+douteux = ["L'enherbement"]
+
+[[rubriques.lignes]]
+valeur = "Les conditions pédoclimatiques"
+
+[[rubriques.lignes]]
+valeur = "L’atteinte par les ravageurs"
+
+[[rubriques]]
+titre = "a pour défauts"
+
+[[rubriques.lignes]]
+valeur = "Des altérations fongiques"
+
+[[rubriques.lignes]]
+valeur = "Des altérations physiques"

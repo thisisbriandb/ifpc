@@ -1,0 +1,153 @@
+# Transcription de l'illustration de la fiche 1420 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1420
+code = "FDC_CAZO_JAUNE"
+titre = "Cazo Jaune"
+image_sha256 = "42b1514ca20ad6fb508968cb5f6c9389faa837e59f720523780ae52c145b21f3"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: CAZO JAUNE
+PRINCIPALES ZONES DE PRODUCTION
+(départements et cantons)
+Côtes-du-Nord : Loudéac - Mur de Bretagne - Corlay - Uzel - St Nicolas
+du Pélem.
+Morbihan : Tout le département mais pas de secteur bien défini.
+POSSIBILITES de COMMERCIALISATION en bonne année
+1 000 tonnes
+QUALITES TECHNOLOGIQUES DU FRUIT
+(analyse de M. Tavernier le 4-12-50)
+Dégustation du fruit : acide-amer.
+Dégustation du jus : acide-amer.
+Rendement en jus (%) : 63,3.
+Densité du jus : 1 055,0.
+Acidité de titration en g. SO‘ H: par litre : 8,47.
+Azote/Sucres totaux : 0,38.
+Tanin (en g. par litre) : 3,40.
+Couleur du jus : jaune paille.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : moyenne.
+Port : assez érigé.
+Résistance aux maladies : bonne d'une façon générale.
+Productivité : bonne.
+Saison de floraison : 3e-4e,
+Saison de maturité : 2e.
+Conservation et transport des fruits : assez bons.
+Grosseur du fruit: moyen et assez gros sauf pour les variétés virosées.
+OBSERVATIONS DIVERSES
+Variété critiquée à cause de son amertume mais très intéressante pour
+son acidité et ses qualités culturales. Néanmoins il convient de faire
+attention à l'origine des souches (beaucoup sont virosées et donnent des
+fruits plus petits, plus amers et de maturité incomplète). Une sélection
+clonale est en cours.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)
+Edition 1963"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+note = "départements et cantons"
+
+[[rubriques.lignes]]
+valeur = "Côtes-du-Nord : Loudéac - Mur de Bretagne - Corlay - Uzel - St Nicolas du Pélem."
+
+[[rubriques.lignes]]
+valeur = "Morbihan : Tout le département mais pas de secteur bien défini."
+
+[[rubriques]]
+titre = "POSSIBILITES de COMMERCIALISATION en bonne année"
+
+[[rubriques]]
+titre = "1 000 tonnes"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+note = "analyse de M. Tavernier le 4-12-50"
+
+[[rubriques.lignes]]
+intitule = "Dégustation du fruit"
+valeur = "acide-amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "acide-amer."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "63,3."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1 055,0."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO‘ H"
+valeur = "par litre : 8,47."
+douteux = ["SO‘", "H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/Sucres totaux"
+valeur = "0,38."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "3,40."
+
+[[rubriques.lignes]]
+intitule = "Couleur du jus"
+valeur = "jaune paille."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "moyenne."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "assez érigé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "bonne d'une façon générale."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "3e-4e,"
+douteux = ["3e-4e,"]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "2e."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "assez bons."
+
+[[rubriques.lignes]]
+intitule = "Grosseur du fruit"
+valeur = "moyen et assez gros sauf pour les variétés virosées."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété critiquée à cause de son amertume mais très intéressante pour son acidité et ses qualités culturales. Néanmoins il convient de faire attention à l'origine des souches (beaucoup sont virosées et donnent des fruits plus petits, plus amers et de maturité incomplète). Une sélection clonale est en cours."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*r)"
+douteux = ["(1*r)"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1963"

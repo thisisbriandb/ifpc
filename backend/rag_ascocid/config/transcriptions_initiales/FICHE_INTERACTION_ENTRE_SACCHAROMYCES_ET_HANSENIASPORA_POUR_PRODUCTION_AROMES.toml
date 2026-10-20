@@ -1,0 +1,92 @@
+# Transcription de l'illustration de la fiche 1552 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1552
+code = "FICHE_INTERACTION_ENTRE_SACCHAROMYCES_ET_HANSENIASPORA_POUR_PRODUCTION_AROMES"
+titre = "L'interaction entre Saccharomyces et Hanseniaspora pour la production d'arômes"
+image_sha256 = "0179d514ec54458280c5728a88c05042d2e1173e128c7c2a46df05211236367b"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 83.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Population Temps d'interaction pour la Population Temps d'interaction pour la
+(ufc/mL) synthèse d’arômes restreint (ufc/ mb) synthèse d'arômes important
+105 Ans eh 105 AT nu Saccharomyces
+/ / NN all à
+5| / / 5| / \\
+105|, / \\ 105! , | \\
+V ré \\ 4 / \\
+277 à / \\
+1 04 Lo _— \\ 1 04 L \\
+Saccharomyces \\ \\
+10% \\ 103 \\
+Hanseniaspora Hanseniaspora
+102 10°
+10! 10!
+Temps Temps
+Figure 1 : Représentation schématique de l'importance des niveaux de populations des levures
+Saccharomyces et Hansenjiaspora, ainsi que du temps d'interaction entre ces populations pour la
+production d’arômes.
+A) La population de Saccharomyces met du temps à croître (latence due à la synthèse de thiamine, par exemple), tandis
+que la population d'Hanseniaspora diminue ; le temps d'interaction permettant la synthèse de composés volatils
+d'intérêt aromatique est donc restreint.
+B) La population de Saccharomyces augmente rapidement ; le temps d'interaction avec Hanseniaspora pour la synthèse
+de composés volatils d'intérêt aromatique est donc important."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Population Temps d'interaction pour la Population Temps d'interaction pour la (ufc/mL) synthèse d’arômes restreint (ufc/ mb) synthèse d'arômes important"
+douteux = ["d'interaction", "(ufc/mL)", "(ufc/", "d'arômes"]
+
+[[rubriques]]
+titre = "105 Ans eh 105 AT nu Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "/ / NN all à 5| / / 5| / \\ 105|, / \\ 105! , | \\ V ré \\ 4 / \\"
+douteux = ["NN", "à", "105|,", "105!", "V", "ré", "4"]
+
+[[rubriques]]
+titre = "277 à / \\"
+
+[[rubriques]]
+titre = "1 04 Lo _— \\ 1 04 L \\"
+
+[[rubriques.lignes]]
+valeur = "Saccharomyces \\ \\"
+
+[[rubriques.lignes]]
+valeur = "10% \\ 103 \\"
+douteux = ["10%", "103"]
+
+[[rubriques.lignes]]
+valeur = "Hanseniaspora Hanseniaspora"
+
+[[rubriques]]
+titre = "102 10°"
+
+[[rubriques.lignes]]
+valeur = "10! 10!"
+
+[[rubriques.lignes]]
+valeur = "Temps Temps"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique de l'importance des niveaux de populations des levures Saccharomyces et Hansenjiaspora, ainsi que du temps d'interaction entre ces populations pour la"
+douteux = ["Hansenjiaspora,"]
+
+[[rubriques.lignes]]
+valeur = "production d’arômes."
+douteux = ["d’arômes."]
+
+[[rubriques.lignes]]
+valeur = "A) La population de Saccharomyces met du temps à croître (latence due à la synthèse de thiamine, par exemple), tandis que la population d'Hanseniaspora diminue ; le temps d'interaction permettant la synthèse de composés volatils d'intérêt aromatique est donc restreint."
+douteux = ["d'Hanseniaspora", "d'interaction", "d'intérêt"]
+
+[[rubriques.lignes]]
+valeur = "B) La population de Saccharomyces augmente rapidement ; le temps d'interaction avec Hanseniaspora pour la synthèse de composés volatils d'intérêt aromatique est donc important."
+douteux = ["d'interaction", "d'intérêt"]

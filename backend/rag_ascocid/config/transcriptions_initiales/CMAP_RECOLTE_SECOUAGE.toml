@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1057 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1057
+code = "CMAP_RECOLTE_SECOUAGE"
+titre = "Le secouage des pommes"
+image_sha256 = "f3bc1095d540fbf18489683f6b0689cacf8f376fe9a4dac10f0ff7cc5b15aa1c"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 92.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le secouage des pommes
+est une : Opération facultative de l’étape de récolte
+a pour fonction : De compléter la chute des pommes avant ramassage
+a pour conséquences : La présence d’altérations physiques | Une contamination fongique par contact avec le sol
+est piloté par : La durée d’agitation | L'intensité d’agitation
+nécessite : Un porte greffe adapté au secouage
+est influencé par : L'état de maturité des pommes | L’aptitude au secouage de la variété"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération facultative de l’étape de récolte"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De compléter la chute des pommes avant ramassage"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "La présence d’altérations physiques"
+
+[[rubriques.lignes]]
+valeur = "Une contamination fongique par contact avec le sol"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "La durée d’agitation"
+
+[[rubriques.lignes]]
+valeur = "L'intensité d’agitation"
+douteux = ["L'intensité"]
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "Un porte greffe adapté au secouage"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "L'état de maturité des pommes"
+douteux = ["L'état"]
+
+[[rubriques.lignes]]
+valeur = "L’aptitude au secouage de la variété"

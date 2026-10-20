@@ -1,0 +1,67 @@
+# Transcription de l'illustration de la fiche 1308 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1308
+code = "CMAP_REGROUPEMENT_PHENOMENES_DEFAUTS"
+titre = "Les phénomènes responsables des défauts des cidres"
+image_sha256 = "2cf29c694e9b60673db9ac7d06d2562ed79f4e16d5e5821c39b3a60639708315"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Phénomènes responsables des défauts aromatiques des cidres
+sont un : Ensemble de phénomènes induisant la production d’odeurs/goûts non désirés
+des phénomènes bactériens : La production d’une odeur spécifique de framboisé par Zymomonas | La piqûre lactique par Œnococcus | La piqûre acétique par les bactéries acétiques
+regroupent : La production de composés soufrés par Saccharomyces | La production excessive d’odeurs « animales » par Brettanomyces (phénols volatils) | La production de goût/odeur de chimique par (clou de girofle) Brettanomyces | La production excessive d’acétate d’éthyle par et Hanseniaspora les levures à voile (odeur de solvant)
+des phénomènes physico -chimiques : La production excessive de goût/odeur de « cuit » au cours du chauffage | La production de goût/odeur de bouchon | L’oxydation de composés du cidre responsable du goût « d’éventé » | Le noircissement du cidre en présence d’oxygène dû au fer ou à (casse ferrique) une enzyme fongique (casse oxydasique )"""
+anomalies = ["5 relations pour 4 colonnes de cases : rattachement à vérifier"]
+
+[[rubriques]]
+titre = "sont un"
+
+[[rubriques.lignes]]
+valeur = "Ensemble de phénomènes induisant la production d’odeurs/goûts non désirés"
+
+[[rubriques]]
+titre = "des phénomènes bactériens"
+
+[[rubriques.lignes]]
+valeur = "La production d’une odeur spécifique de framboisé par Zymomonas"
+
+[[rubriques.lignes]]
+valeur = "La piqûre lactique par Œnococcus"
+
+[[rubriques.lignes]]
+valeur = "La piqûre acétique par les bactéries acétiques"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La production de composés soufrés par Saccharomyces"
+
+[[rubriques.lignes]]
+valeur = "La production excessive d’odeurs « animales » par Brettanomyces (phénols volatils)"
+
+[[rubriques.lignes]]
+valeur = "La production de goût/odeur de chimique par (clou de girofle) Brettanomyces"
+
+[[rubriques.lignes]]
+valeur = "La production excessive d’acétate d’éthyle par et Hanseniaspora les levures à voile (odeur de solvant)"
+
+[[rubriques]]
+titre = "des phénomènes physico -chimiques"
+
+[[rubriques.lignes]]
+valeur = "La production excessive de goût/odeur de « cuit » au cours du chauffage"
+
+[[rubriques.lignes]]
+valeur = "La production de goût/odeur de bouchon"
+
+[[rubriques.lignes]]
+valeur = "L’oxydation de composés du cidre responsable du goût « d’éventé »"
+
+[[rubriques.lignes]]
+valeur = "Le noircissement du cidre en présence d’oxygène dû au fer ou à (casse ferrique) une enzyme fongique (casse oxydasique )"

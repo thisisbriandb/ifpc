@@ -1,0 +1,71 @@
+# Transcription de l'illustration de la fiche 1111 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1111
+code = "CMAP_FERMENTATION_EFFETS_SACCHAROMYCES"
+titre = "Les principaux effets des Saccharomyces"
+image_sha256 = "1bcb83cdee031446afd265de4f64caacad62fc54b23f8922014c91e5da326820"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les principaux effets des Saccharomyces
+sont des : Phénomène se produisant principalement au cours de l’étape fermentaire
+regroupent : Une forte contribution à la fermentation alcoolique | La production de composés aromatiques (esters d’acétate, alcools supérieurs, esters éthyliques, thiols) | Une interaction avec pour la Hanseniaspora production d’arômes
+sont conditionnés par : La croissance des Saccharomyces uvarum
+ont pour impacts sensoriels : Une baisse de la saveur sucrée | Une augmentation du degré d’alcool | Un développement d’arômes fermentaires
+sont influencés par : Leur population maximale atteinte | Leur survie dans le milieu
+ont pour incident : Une production excessive de composés soufrés lourds"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant principalement au cours de l’étape fermentaire"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Une forte contribution à la fermentation alcoolique"
+
+[[rubriques.lignes]]
+valeur = "La production de composés aromatiques (esters d’acétate, alcools supérieurs, esters éthyliques, thiols)"
+
+[[rubriques.lignes]]
+valeur = "Une interaction avec pour la Hanseniaspora production d’arômes"
+
+[[rubriques]]
+titre = "sont conditionnés par"
+
+[[rubriques.lignes]]
+valeur = "La croissance des Saccharomyces uvarum"
+
+[[rubriques]]
+titre = "ont pour impacts sensoriels"
+
+[[rubriques.lignes]]
+valeur = "Une baisse de la saveur sucrée"
+
+[[rubriques.lignes]]
+valeur = "Une augmentation du degré d’alcool"
+
+[[rubriques.lignes]]
+valeur = "Un développement d’arômes fermentaires"
+
+[[rubriques]]
+titre = "sont influencés par"
+
+[[rubriques.lignes]]
+valeur = "Leur population maximale atteinte"
+
+[[rubriques.lignes]]
+valeur = "Leur survie dans le milieu"
+
+[[rubriques]]
+titre = "ont pour incident"
+
+[[rubriques.lignes]]
+valeur = "Une production excessive de composés soufrés lourds"

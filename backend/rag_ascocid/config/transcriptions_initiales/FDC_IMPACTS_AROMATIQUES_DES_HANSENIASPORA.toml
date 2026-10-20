@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1541 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1541
+code = "FDC_IMPACTS_AROMATIQUES_DES_HANSENIASPORA"
+titre = "Les impacts aromatiques des Hanseniaspora"
+image_sha256 = "331ab4dc23349d355fb7ca4569b71de7b3b914f147b3a27f2ae37144d06029a6"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 81.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+= mMé
+< 0
+Cidre 1 Cidre2 Cidre 3
+Figure 1 : Production d’acétate de 2-phényléthyle (notes de ros:
+en comparaison avec des cidres témoins fermentés par Sacchar
+Le seuil de 3,8 mg/L correspond au seuil de perception de ce cor
+1070 1060 1050 1040 1030 1020
+Masse volumique (kg/m)
+—#— Moût ---@-:: À 1016 ufc/mL — @ -B 106 ufc/mL —6— C_106 ufc/mLl
+Figure 2 : Evolution de l'acétate d'hexyle d'une
+inoculation sur moût de Hanseniaspora valbyensis."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "= mMé"
+douteux = ["mMé"]
+
+[[rubriques.lignes]]
+valeur = "< 0"
+douteux = ["0"]
+
+[[rubriques.lignes]]
+valeur = "Cidre 1 Cidre2 Cidre 3"
+douteux = ["Cidre"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Production d’acétate de 2-phényléthyle (notes de ros: en comparaison avec des cidres témoins fermentés par Sacchar Le seuil de 3,8 mg/L correspond au seuil de perception de ce cor"
+douteux = ["d’acétate", "ros:"]
+
+[[rubriques]]
+titre = "1070 1060 1050 1040 1030 1020"
+
+[[rubriques.lignes]]
+valeur = "Masse volumique (kg/m)"
+douteux = ["(kg/m)"]
+
+[[rubriques.lignes]]
+intitule = "—#— Moût ---@-:"
+valeur = "À 1016 ufc/mL — @ -B 106 ufc/mL —6— C_106 ufc/mLl"
+douteux = ["1016", "-B", "106", "—6—", "C_106", "ufc/mLl"]
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Evolution de l'acétate d'hexyle d'une inoculation sur moût de Hanseniaspora valbyensis."
+douteux = ["l'acétate", "d'hexyle"]

@@ -1,0 +1,43 @@
+# Transcription de l'illustration de la fiche 1537 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1537
+code = "FDC_DEVELOPPEMENT_ET_EFFETS_DES_SACCHAROMYCES"
+titre = "Le développement et les effets des Saccharomyces"
+image_sha256 = "8a58a0755f80a660e06e28be4c41057cd5a6c6ba7ea3370b6667e2c704569adb"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 85.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Bourgeonnement
+(future levure)
+Mitochondrie
+Vacuole
+*——— Membrane plasmique
+Noyau
+evure Saccharomyces bourgeonnante et ses
+rganites."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Bourgeonnement (future levure)"
+
+[[rubriques.lignes]]
+valeur = "Mitochondrie"
+douteux = ["Mitochondrie"]
+
+[[rubriques.lignes]]
+valeur = "Vacuole"
+
+[[rubriques.lignes]]
+valeur = "*——— Membrane plasmique"
+
+[[rubriques.lignes]]
+valeur = "Noyau"
+
+[[rubriques.lignes]]
+valeur = "evure Saccharomyces bourgeonnante et ses rganites."

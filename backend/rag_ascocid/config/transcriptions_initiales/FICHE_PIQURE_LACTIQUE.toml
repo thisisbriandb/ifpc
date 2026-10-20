@@ -1,0 +1,111 @@
+# Transcription de l'illustration de la fiche 1379 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1379
+code = "FICHE_PIQURE_LACTIQUE"
+titre = "La piqûre lactique"
+image_sha256 = "0029554464ef3102ca7a30c9396fb27c60c994388f78e0b8f58142656131637e"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 65.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
++ 2 ADP +2Pi — _
+OH H3C OH
+SGA CO DNS NES NES Figure 2 : Bilan de la fermentation lactique
+Figure 1 : Oenococcus oeni CéH1206 + 2 ADP + 2 Pi 3 2C:Hç03 + 2 ATP
+photographié en microscopie
+électronique. O
+/ _6-
+CH,OH CH,0 YoH Frosphot Suconais
+Con OH Ga OH FT à Il
+bas — ee: \\
+dH ATP ADP” OH NADP+4{ 1!
+Glucose Glucose-6P >
+NADPH + H+4° YŸ
+H Xylulose-5-phosphate
+CH OH 0, Lo
+0 E OK F2 o À Lo
+Acétyl-phosphate  O-P-0O
+cétyl-phosphate © HS èH Glycéraldéhyde-3-phosphate
+H3C +, À ee: Pyruvate
+Ethanal Acide acétique NADP* À O
+. . . . | NADPH + H+
+Figure 3 : Les principales voies 2
+métaboliques d'Oenococcus oeni TN cH-c C7 Lactate
+, . H;C — CH,0H
+lors de la fermentation lactique. H;C 7 Not
+Ethanol"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "+ 2 ADP +2Pi — _"
+douteux = ["2", "ADP", "_"]
+
+[[rubriques]]
+titre = "OH H3C OH"
+
+[[rubriques.lignes]]
+intitule = "SGA CO DNS NES NES Figure 2"
+valeur = "Bilan de la fermentation lactique"
+douteux = ["SGA", "CO", "DNS", "NES", "NES"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Oenococcus oeni CéH1206 + 2 ADP + 2 Pi 3 2C:Hç03 + 2 ATP photographié en microscopie"
+douteux = ["CéH1206", "3", "2C:Hç03"]
+
+[[rubriques.lignes]]
+valeur = "électronique. O"
+
+[[rubriques.lignes]]
+valeur = "/ _6- CH,OH CH,0 YoH Frosphot Suconais Con OH Ga OH FT à Il"
+douteux = ["_6-", "CH,OH", "YoH", "Frosphot", "Suconais", "Con", "Ga", "FT", "à", "Il"]
+
+[[rubriques.lignes]]
+intitule = "bas — ee"
+valeur = "\\"
+douteux = ["bas", "ee:"]
+
+[[rubriques]]
+titre = "dH ATP ADP” OH NADP+4{ 1!"
+
+[[rubriques.lignes]]
+valeur = "Glucose Glucose-6P >"
+
+[[rubriques]]
+titre = "NADPH + H+4° YŸ"
+
+[[rubriques.lignes]]
+valeur = "H Xylulose-5-phosphate"
+douteux = ["H"]
+
+[[rubriques]]
+titre = "CH OH 0, Lo"
+
+[[rubriques]]
+titre = "0 E OK F2 o À Lo"
+
+[[rubriques.lignes]]
+valeur = "Acétyl-phosphate  O-P-0O cétyl-phosphate © HS èH Glycéraldéhyde-3-phosphate"
+douteux = ["Acétyl-phosphate", " O-P-0O", "cétyl-phosphate", "HS", "èH"]
+
+[[rubriques.lignes]]
+intitule = "H3C +, À ee"
+valeur = "Pyruvate"
+douteux = ["À", "ee:"]
+
+[[rubriques.lignes]]
+valeur = "Ethanal Acide acétique NADP* À O"
+douteux = ["O"]
+
+[[rubriques]]
+titre = ". . . . | NADPH + H+"
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Les principales voies 2 métaboliques d'Oenococcus oeni TN cH-c C7 Lactate , . H;C — CH,0H lors de la fermentation lactique. H;C 7 Not Ethanol"
+douteux = ["2", "d'Oenococcus", "TN", "cH-c", "C7", "H;C", "CH,0H", "H;C", "7", "Not"]

@@ -1,0 +1,109 @@
+# Transcription de l'illustration de la fiche 1026 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1026
+code = "CMAP_CLARIFICATION_HAUTE_CLASSIQUE"
+titre = "La clarification haute classique"
+image_sha256 = "1197db75616aea99dd07820c33accd172ccda6e7bef5fe0960db04fe6c0a3d68"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La clarification haute classique
+est une : Modalité de l’étape de clarification des moûts
+a pour synonymes : La défécation | La clarification par le haut
+est constituée de : La déméthylation des pectines | La gélification des pectines | La flottation du chapeau brun | Le soutirage du moût clarifié
+a pour fonction : L’élimination du trouble
+a pour conséquences : De faciliter les opérations de séparation ultérieures | De baisser la vitesse de fermentation | D’accroitre la croissance des levures Hanseniaspora
+est fiabilisée par : L’ajout de pectinestérase | L’ajout de sels de calcium | La maitrise de la température
+a pour causes d’échec : Une trop faible quantité de pectines solubles du moût | Une dégradation de la pectine | Une acidité trop élevée du moût (variétés acides) | Une mauvaise remontée du chapeau brun | Un soutirage trop tardif | Des pratiques inadéquates (stockage PE, Ca) | Des températures extrêmes du moût (basses ou élevées) | Un ajout important de SO2 (empêche la flottation)"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de clarification des moûts"
+
+[[rubriques]]
+titre = "a pour synonymes"
+
+[[rubriques.lignes]]
+valeur = "La défécation"
+
+[[rubriques.lignes]]
+valeur = "La clarification par le haut"
+
+[[rubriques]]
+titre = "est constituée de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "La déméthylation des pectines"
+
+[[rubriques.lignes]]
+valeur = "La gélification des pectines"
+
+[[rubriques.lignes]]
+valeur = "La flottation du chapeau brun"
+
+[[rubriques.lignes]]
+valeur = "Le soutirage du moût clarifié"
+
+[[rubriques]]
+titre = "a pour fonction"
+
+[[rubriques.lignes]]
+valeur = "L’élimination du trouble"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De faciliter les opérations de séparation ultérieures"
+
+[[rubriques.lignes]]
+valeur = "De baisser la vitesse de fermentation"
+
+[[rubriques.lignes]]
+valeur = "D’accroitre la croissance des levures Hanseniaspora"
+
+[[rubriques]]
+titre = "est fiabilisée par"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de pectinestérase"
+
+[[rubriques.lignes]]
+valeur = "L’ajout de sels de calcium"
+
+[[rubriques.lignes]]
+valeur = "La maitrise de la température"
+
+[[rubriques]]
+titre = "a pour causes d’échec"
+
+[[rubriques.lignes]]
+valeur = "Une trop faible quantité de pectines solubles du moût"
+
+[[rubriques.lignes]]
+valeur = "Une dégradation de la pectine"
+
+[[rubriques.lignes]]
+valeur = "Une acidité trop élevée du moût (variétés acides)"
+
+[[rubriques.lignes]]
+valeur = "Une mauvaise remontée du chapeau brun"
+
+[[rubriques.lignes]]
+valeur = "Un soutirage trop tardif"
+
+[[rubriques.lignes]]
+valeur = "Des pratiques inadéquates (stockage PE, Ca)"
+
+[[rubriques.lignes]]
+valeur = "Des températures extrêmes du moût (basses ou élevées)"
+
+[[rubriques.lignes]]
+valeur = "Un ajout important de SO2 (empêche la flottation)"

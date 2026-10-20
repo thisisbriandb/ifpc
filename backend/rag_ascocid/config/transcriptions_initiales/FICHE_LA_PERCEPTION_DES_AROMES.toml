@@ -1,0 +1,127 @@
+# Transcription de l'illustration de la fiche 1524 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1524
+code = "FICHE_LA_PERCEPTION_DES_AROMES"
+titre = "La perception des arômes"
+image_sha256 = "caa4fcfc34c6933ebad7f0b8dddbad3416ff2589c1f6170d11149ea846aabffd"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 78.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Bulbe olfactif
+1) Entrée des || O7 =—) 4) Transmission des
+molécules D , —\\N 1%) signaux vers d’autres
+odorantes dans la \\# ee) _ À QE SN Dr ne régions du cerveau
+cavité nasale à X
+Molécules LL RS
+/ 2 criblée L\"°
+odorantes ee. ALP A
+Épithélium
+olfactif
+£ oie rétro-nasale
+Neurones olfactifs
+Cavité nasale
+2) Liaison des molécules
++) odorantes aux récepteurs
+e @œ des neurones olfactifs
+Récepteur
+olfactif .
+Figure 1 : Représentation schématique simplifiée du système olfactif lors de la dégustation d'un cidre.
+La couleur des neurones olfactifs regroupe les neurones portant le même type de récepteur. Les récepteurs présentent des affinités
+différentes en fonction des molécules odorantes. Une molécule odorante ne va pas activer tous les récepteurs mais certains, créant une
+diversité des combinaisons possibles.
+Figure 2 : Le coffret des arômes des cidres,
+IFPC.
+Ce coffret, fabriqué par l'IFPC, comprend 25
+arômes pouvant être rencontrés lors de la FETE
+dégustation d’un cidre (20 positifs, 5 négatifs), 1 is tee 2 LES ARÔMES 8 3
+DES CIDRES ve
+See eo...
+fiche descriptive plastifiée et 50 touches à sentir. EE = ! S LC \\\\ cc
+Pour passer commande: expe.cidricole@ifpc.eu D °°:
+Pour plus d'informations: http://www.ifpc.eu/ + êx"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Bulbe olfactif"
+
+[[rubriques.lignes]]
+valeur = "1) Entrée des || O7 =—) 4) Transmission des molécules D , —\\N 1%) signaux vers d’autres"
+douteux = ["O7", "D", "—\\N", "1%)"]
+
+[[rubriques.lignes]]
+valeur = "odorantes dans la \\# ee) _ À QE SN Dr ne régions du cerveau cavité nasale à X"
+douteux = ["ee)", "_", "À", "QE", "SN", "Dr", "ne", "X"]
+
+[[rubriques.lignes]]
+valeur = "Molécules LL RS / 2 criblée L\"° odorantes ee. ALP A"
+douteux = ["LL", "RS", "L\"°", "ee.", "ALP", "A"]
+
+[[rubriques.lignes]]
+valeur = "Épithélium"
+douteux = ["Épithélium"]
+
+[[rubriques.lignes]]
+valeur = "olfactif £ oie rétro-nasale"
+
+[[rubriques.lignes]]
+valeur = "Neurones olfactifs"
+
+[[rubriques.lignes]]
+valeur = "Cavité nasale"
+douteux = ["nasale"]
+
+[[rubriques.lignes]]
+valeur = "2) Liaison des molécules +) odorantes aux récepteurs e @œ des neurones olfactifs"
+douteux = ["@œ"]
+
+[[rubriques.lignes]]
+valeur = "Récepteur olfactif ."
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Représentation schématique simplifiée du système olfactif lors de la dégustation d'un cidre."
+douteux = ["d'un"]
+
+[[rubriques.lignes]]
+valeur = "La couleur des neurones olfactifs regroupe les neurones portant le même type de récepteur. Les récepteurs présentent des affinités différentes en fonction des molécules odorantes. Une molécule odorante ne va pas activer tous les récepteurs mais certains, créant une diversité des combinaisons possibles."
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Le coffret des arômes des cidres,"
+
+[[rubriques.lignes]]
+valeur = "IFPC."
+
+[[rubriques.lignes]]
+valeur = "Ce coffret, fabriqué par l'IFPC, comprend 25"
+
+[[rubriques.lignes]]
+valeur = "arômes pouvant être rencontrés lors de la FETE dégustation d’un cidre (20 positifs, 5 négatifs), 1 is tee 2 LES ARÔMES 8 3"
+douteux = ["FETE", "d’un", "is", "tee", "2", "8", "3"]
+
+[[rubriques]]
+titre = "DES CIDRES ve"
+
+[[rubriques.lignes]]
+valeur = "See eo..."
+douteux = ["See", "eo..."]
+
+[[rubriques.lignes]]
+valeur = "fiche descriptive plastifiée et 50 touches à sentir. EE = ! S LC \\\\ cc"
+douteux = ["EE", "S", "LC", "cc"]
+
+[[rubriques.lignes]]
+intitule = "Pour passer commande"
+valeur = "expe.cidricole@ifpc.eu D °°:"
+douteux = ["D"]
+
+[[rubriques.lignes]]
+intitule = "Pour plus d'informations"
+valeur = "http://www.ifpc.eu/ + êx"
+douteux = ["http://www.ifpc.eu/", "êx"]

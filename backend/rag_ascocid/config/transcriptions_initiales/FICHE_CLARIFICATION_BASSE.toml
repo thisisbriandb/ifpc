@@ -1,0 +1,88 @@
+# Transcription de l'illustration de la fiche 1094 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1094
+code = "FICHE_CLARIFICATION_BASSE"
+titre = "La clarification basse"
+image_sha256 = "4910da03aee3fb5139ed09759874f3ee1d7af178cbc07467e865ce30d5f38865"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 87.2
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Pectinases
+(Polygalacturonase
++ Pectinestérase)
+Solubilisation Hydrolyse complète
+Baisse de viscosité
+Pectines Pectine partiellement 5 \\ Acide
+solubles hydrolysées galacturonique
+Pectine insoluble autour des
+2 £ : PT Floculati
+Schéma 1 : Mécanisme de la clarification 27 a00r
+d'après Endo AÀ., Studies on pectolytic enzymes of molds -
+Part XVI. Mechanism of enzymatic clarification of apple
+juice. Agricultural and Biological Chemistry 1965, 29(3):
+229-233.
+4
+Figure 1 : Effet du pH sur la
+clarification des jus de pomme ,
+d'après Endo AÀ., Studies on pectolytic enzymes of floculation
+molds - Part XV. Effects of pH and some chemical d'après Yamasaki M., Pectic enzymes in the
+agents on the clarification of apple juice. clarification of apple juice - Part I. Study of the
+Agricultural and Biological Chemistry 1965, 29(3): clarification reaction in a simplified model. Agricultural
+222-228. and Biological Chemistry 1964, 28 (11): 779-787."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Pectinases (Polygalacturonase"
+
+[[rubriques.lignes]]
+valeur = "+ Pectinestérase) Solubilisation Hydrolyse complète Baisse de viscosité"
+douteux = ["Baisse"]
+
+[[rubriques.lignes]]
+valeur = "Pectines Pectine partiellement 5 \\ Acide solubles hydrolysées galacturonique"
+douteux = ["5"]
+
+[[rubriques.lignes]]
+valeur = "Pectine insoluble autour des"
+
+[[rubriques.lignes]]
+intitule = "2 £"
+valeur = "PT Floculati"
+douteux = ["2", "PT"]
+
+[[rubriques.lignes]]
+intitule = "Schéma 1"
+valeur = "Mécanisme de la clarification 27 a00r"
+douteux = ["27", "a00r"]
+
+[[rubriques.lignes]]
+valeur = "d'après Endo AÀ., Studies on pectolytic enzymes of molds - Part XVI. Mechanism of enzymatic clarification of apple juice. Agricultural and Biological Chemistry 1965, 29(3): 229-233."
+douteux = ["AÀ.,", "Part"]
+
+[[rubriques.lignes]]
+valeur = "4"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Effet du pH sur la"
+
+[[rubriques.lignes]]
+valeur = "clarification des jus de pomme ,"
+
+[[rubriques.lignes]]
+valeur = "d'après Endo AÀ., Studies on pectolytic enzymes of floculation"
+douteux = ["AÀ.,"]
+
+[[rubriques.lignes]]
+valeur = "molds - Part XV. Effects of pH and some chemical d'après Yamasaki M., Pectic enzymes in the agents on the clarification of apple juice. clarification of apple juice - Part I. Study of the"
+douteux = ["I.", "of", "the"]
+
+[[rubriques.lignes]]
+intitule = "Agricultural and Biological Chemistry 1965, 29(3)"
+valeur = "clarification reaction in a simplified model. Agricultural 222-228. and Biological Chemistry 1964, 28 (11): 779-787."

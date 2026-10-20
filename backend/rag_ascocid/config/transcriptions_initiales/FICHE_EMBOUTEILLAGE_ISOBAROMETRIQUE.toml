@@ -1,0 +1,29 @@
+# Transcription de l'illustration de la fiche 1606 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1606
+code = "FICHE_EMBOUTEILLAGE_ISOBAROMETRIQUE"
+titre = "L'embouteillage isobarométrique"
+image_sha256 = "335ef906d9c3b22a4eae9bfee84f0cfdbbf0c4bf50ef629f58068416ba673bdd"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 78.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+wowcoco |
+vuveñsse |
+Figure 1 : Exemple d’un modèle de soutireuse isobarométrique
+Photo IFPC"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "wowcoco | vuveñsse |"
+douteux = ["wowcoco", "vuveñsse"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Exemple d’un modèle de soutireuse isobarométrique Photo IFPC"
+douteux = ["d’un"]

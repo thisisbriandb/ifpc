@@ -1,0 +1,69 @@
+# Transcription de l'illustration de la fiche 1059 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1059
+code = "CMAP_RECOLTE_CONDITIONS_PEDO_CLIMATIQUES"
+titre = "Les conditions pédo-climatiques"
+image_sha256 = "ecf9e837790461e59bdd2414dae9bfd9256c15e17f3daeb3c2d7e7a4bbb3b330"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les conditions pédoclimatiques
+sont des : Conditions climatiques et géographiques (sol) du verger
+regroupent : Le type de sol | La pluviométrie | L'ensoleillement | Les températures (annuelles) | Les épisodes venteux
+sont influencées par : La localisation du verger
+influencent : La composition des fruits (sucres...) | Le poids moyen des fruits | Le développement de ravageurs et d’altérations fongiques | L'époque de maturité et de chute des fruits | La conservation des fruits au sol"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Conditions climatiques et géographiques (sol) du verger"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "Le type de sol"
+
+[[rubriques.lignes]]
+valeur = "La pluviométrie"
+
+[[rubriques.lignes]]
+valeur = "L'ensoleillement"
+douteux = ["L'ensoleillement"]
+
+[[rubriques.lignes]]
+valeur = "Les températures (annuelles)"
+
+[[rubriques.lignes]]
+valeur = "Les épisodes venteux"
+
+[[rubriques]]
+titre = "sont influencées par"
+
+[[rubriques.lignes]]
+valeur = "La localisation du verger"
+
+[[rubriques]]
+titre = "influencent"
+
+[[rubriques.lignes]]
+valeur = "La composition des fruits (sucres...)"
+
+[[rubriques.lignes]]
+valeur = "Le poids moyen des fruits"
+
+[[rubriques.lignes]]
+valeur = "Le développement de ravageurs et d’altérations fongiques"
+douteux = ["d’altérations"]
+
+[[rubriques.lignes]]
+valeur = "L'époque de maturité et de chute des fruits"
+douteux = ["L'époque"]
+
+[[rubriques.lignes]]
+valeur = "La conservation des fruits au sol"

@@ -1,0 +1,78 @@
+# Transcription de l'illustration de la fiche 1141 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1141
+code = "CMAP_CONDITIONNEMENT_METHODE_GAZEIFICATION"
+titre = "La méthode de conditionnement avec gazéification"
+image_sha256 = "78bacaf8b2a0372efe7fef204668b81a5dc4e6f80ff48441126cd540991858d3"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode de conditionnement avec gazéification
+est une : Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres
+est constitué de : Une désaération (facultative) | Une stabilisation microbienne (facultative) | Une gazéification en saturateur | Un embouteillage iso -barométrique | Un bouchage & muselage
+a pour action complémentaire : Un sulfitage et/ou ajout d’acide ascorbique (facultatif)
+a pour fonctions : De produire un cidre effervescent par un apport contrôlé de CO 2 exogène | De conditionner en bouteille un cidre en général limpide | D’obtenir rapidement un cidre prêt à la commercialisation
+a pour conséquences : De permettre une saturation précise en CO 2 en fonction de l’effet recherché | De limiter la quantité de flores indésirables en bouteille
+présente le risque : D’une oxygénation du cidre à la gazéification et à l’embouteillage"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres"
+
+[[rubriques]]
+titre = "est constitué de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une désaération (facultative)"
+
+[[rubriques.lignes]]
+valeur = "Une stabilisation microbienne (facultative)"
+
+[[rubriques.lignes]]
+valeur = "Une gazéification en saturateur"
+
+[[rubriques.lignes]]
+valeur = "Un embouteillage iso -barométrique"
+
+[[rubriques.lignes]]
+valeur = "Un bouchage & muselage"
+
+[[rubriques]]
+titre = "a pour action complémentaire"
+
+[[rubriques.lignes]]
+valeur = "Un sulfitage et/ou ajout d’acide ascorbique (facultatif)"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De produire un cidre effervescent par un apport contrôlé de CO 2 exogène"
+
+[[rubriques.lignes]]
+valeur = "De conditionner en bouteille un cidre en général limpide"
+
+[[rubriques.lignes]]
+valeur = "D’obtenir rapidement un cidre prêt à la commercialisation"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De permettre une saturation précise en CO 2 en fonction de l’effet recherché"
+
+[[rubriques.lignes]]
+valeur = "De limiter la quantité de flores indésirables en bouteille"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "D’une oxygénation du cidre à la gazéification et à l’embouteillage"

@@ -1,0 +1,171 @@
+# Transcription de l'illustration de la fiche 1429 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1429
+code = "FDC_DOUX_NORMANDIE"
+titre = "Doux Normandie"
+image_sha256 = "8bcf633718f705283bdb7530f614e6c06aa5759498f2ef82afd7ecd62f3d1bfd"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 93.6
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Variété: DOUX NORMANDIE
+PRINCIPALES ZONES DE PRODUCTION
+Maine - Perche - Eure.
+POSSIBILITES DE COMMERCIALISATION
+en bonne année : 8.000 tonnes.
+Ph. Hersemeule
+QUALITES TECHNOLOGIQUES DU FRUIT
+(moyenne de deux analyses de MM. Tavernier et Jacquin
+des 22-1-1951 et 20-12-1965)
+Dégustation du jus : doux à doux amer.
+Dégustation du cidre : doux.
+Rendement en jus (%) : 60,7.
+Densité du jus : 1067,4 - Alcool en puissance : 8° 6.
+Acidité de titration en g. SO'H: par litre : 1,25.
+Azote/sucres totaux : 0,39.
+Tanin (en g. par litre) : 1,33.
+Aspect du jus : légèrement teinté.
+Parfum : agréable.
+QUALITES CULTURALES DE L'ARBRE
+Vigueur : bonne. Pousses droites et longues chez les arbres jeunes.
+Port : dressé.
+Résistance aux maladies : variété des plus rustiques.
+Productivité : très bonne.
+Saison de floraison : 4°.
+Saison de maturité : 3°.
+Conservation et transport des fruits : bons.
+Calibre du fruit : moyen.
+Précocité de mise à fruits : moyenne.
+OBSERVATIONS DIVERSES
+Variété faisant de beaux arbres bien équilibrés. Floraison très tardive
+ne craignant pas les gelées. Fruits aptes à la fabrication de cidres se
+conservant naturellement doux.
+Variété d'assez grande souplesse d'adaptation, réussissant en Bretagne
+où elle a été introduite en différents endroits depuis assez longtemps.
+Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*') @
+Edition 1965"""
+
+[[rubriques]]
+titre = "PRINCIPALES ZONES DE PRODUCTION"
+
+[[rubriques.lignes]]
+valeur = "Maine - Perche - Eure."
+
+[[rubriques]]
+titre = "POSSIBILITES DE COMMERCIALISATION"
+
+[[rubriques.lignes]]
+valeur = "en bonne année : 8.000 tonnes."
+
+[[rubriques.lignes]]
+valeur = "Ph. Hersemeule"
+
+[[rubriques]]
+titre = "QUALITES TECHNOLOGIQUES DU FRUIT"
+
+[[rubriques.lignes]]
+valeur = "(moyenne de deux analyses de MM. Tavernier et Jacquin des 22-1-1951 et 20-12-1965)"
+douteux = ["Jacquin"]
+
+[[rubriques.lignes]]
+intitule = "Dégustation du jus"
+valeur = "doux à doux amer."
+
+[[rubriques.lignes]]
+intitule = "Dégustation du cidre"
+valeur = "doux."
+
+[[rubriques.lignes]]
+intitule = "Rendement en jus (%)"
+valeur = "60,7."
+
+[[rubriques.lignes]]
+intitule = "Densité du jus"
+valeur = "1067,4"
+
+[[rubriques.lignes]]
+intitule = "Alcool en puissance"
+valeur = "8° 6."
+
+[[rubriques.lignes]]
+intitule = "Acidité de titration en g. SO'H"
+valeur = "par litre : 1,25."
+douteux = ["SO'H:"]
+
+[[rubriques.lignes]]
+intitule = "Azote/sucres totaux"
+valeur = "0,39."
+
+[[rubriques.lignes]]
+intitule = "Tanin (en g. par litre)"
+valeur = "1,33."
+
+[[rubriques.lignes]]
+intitule = "Aspect du jus"
+valeur = "légèrement teinté."
+
+[[rubriques.lignes]]
+intitule = "Parfum"
+valeur = "agréable."
+
+[[rubriques]]
+titre = "QUALITES CULTURALES DE L'ARBRE"
+
+[[rubriques.lignes]]
+intitule = "Vigueur"
+valeur = "bonne. Pousses droites et longues chez les arbres jeunes."
+
+[[rubriques.lignes]]
+intitule = "Port"
+valeur = "dressé."
+
+[[rubriques.lignes]]
+intitule = "Résistance aux maladies"
+valeur = "variété des plus rustiques."
+
+[[rubriques.lignes]]
+intitule = "Productivité"
+valeur = "très bonne."
+
+[[rubriques.lignes]]
+intitule = "Saison de floraison"
+valeur = "4°."
+douteux = ["4°."]
+
+[[rubriques.lignes]]
+intitule = "Saison de maturité"
+valeur = "3°."
+
+[[rubriques.lignes]]
+intitule = "Conservation et transport des fruits"
+valeur = "bons."
+
+[[rubriques.lignes]]
+intitule = "Calibre du fruit"
+valeur = "moyen."
+
+[[rubriques.lignes]]
+intitule = "Précocité de mise à fruits"
+valeur = "moyenne."
+
+[[rubriques]]
+titre = "OBSERVATIONS DIVERSES"
+
+[[rubriques.lignes]]
+valeur = "Variété faisant de beaux arbres bien équilibrés. Floraison très tardive ne craignant pas les gelées. Fruits aptes à la fabrication de cidres se conservant naturellement doux."
+
+[[rubriques.lignes]]
+valeur = "Variété d'assez grande souplesse d'adaptation, réussissant en Bretagne où elle a été introduite en différents endroits depuis assez longtemps."
+
+[[rubriques]]
+titre = "Source"
+
+[[rubriques.lignes]]
+valeur = "Comité des Fruits à Cidre et des Productions Cidricoles - 42, rue du Louvre - Paris (1*') @"
+douteux = ["(1*')"]
+
+[[rubriques.lignes]]
+valeur = "Edition 1965"

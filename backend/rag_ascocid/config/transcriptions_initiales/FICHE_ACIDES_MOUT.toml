@@ -1,0 +1,57 @@
+# Transcription de l'illustration de la fiche 1082 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1082
+code = "FICHE_ACIDES_MOUT"
+titre = "Les acides organiques du moût"
+image_sha256 = "86b6a0767320990ee4a8e80a3af6582387156d02df097bb5fc6fbff03fb01024"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 84.7
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Acides carboxyliques
+Figure 1: Structure chimique de l'acide malique
+tt meet
+0 0
+0 0
+0 +
+Tableau 1: Évolution théorique de l'acidité d’un cidre.
+Source: Chambre d'agriculture Normandie, 2011. Elaboration des cidres — Maïtrise des
+caractéristiques organoleptiques des cidres, Fiche n°4."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Acides carboxyliques"
+douteux = ["Acides"]
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Structure chimique de l'acide malique"
+douteux = ["l'acide"]
+
+[[rubriques.lignes]]
+valeur = "tt meet"
+douteux = ["tt", "meet"]
+
+[[rubriques]]
+titre = "0 0"
+
+[[rubriques]]
+titre = "0 0"
+
+[[rubriques]]
+titre = "0 +"
+
+[[rubriques.lignes]]
+intitule = "Tableau 1"
+valeur = "Évolution théorique de l'acidité d’un cidre."
+douteux = ["l'acidité"]
+
+[[rubriques.lignes]]
+intitule = "Source"
+valeur = "Chambre d'agriculture Normandie, 2011. Elaboration des cidres — Maïtrise des caractéristiques organoleptiques des cidres, Fiche n°4."
+douteux = ["d'agriculture"]

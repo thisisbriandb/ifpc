@@ -1,0 +1,109 @@
+# Transcription de l'illustration de la fiche 1560 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1560
+code = "FICHE_CONSOMMATION_AZOTE_ASSIMILABLE"
+titre = "La consommation de l'azote assimilable"
+image_sha256 = "26eb1271877fac0fce84e8eeedd83126b88b6d5dbf569e2618ed2a323fd88c2d"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 89.9
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+2,0
+80% Figure 1 : Les formes d'azote assimilable dans un jus
+1,5 150% de pomme contenant 80 mg/L d'azote total.
+Les chiffres en gras correspondent au pourcentage de chaque
+10 | forme azotée par rapport aux acides aminés.
+Les chiffres en italique indiquent le pourcentage de chaque
+forme azotée par rapport à l'azote total du jus.
+9% Source: Le Quéré J.-M., Bauduin, Baron A. (2010). Elaboration des jus de
+(5%) 3% 2% 4 pommes et des cidres. Techniques de l'ingénieur.
+% 1%
+(2%) (2%) °
+(1%) (1%) 1% 1%
+10 000 000
+1 000 000
+—— Arrêt de croissance
+—+— Azote résiduel
+100 000 —e— Nombre de levures
+0
+10 20 30 40 50 60
+Durée de fermentation (en jours)
+Figure 2 : Exemple de courbes d'évolution de la population de levures et de l'azote au cours d'une
+fermentation de cidre.
+La croissance exponentielle s'arrête lorsque l'azote assimilable est consommé."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "2,0"
+
+[[rubriques.lignes]]
+intitule = "80% Figure 1"
+valeur = "Les formes d'azote assimilable dans un jus"
+douteux = ["d'azote"]
+
+[[rubriques.lignes]]
+valeur = "1,5 150% de pomme contenant 80 mg/L d'azote total."
+douteux = ["150%", "d'azote"]
+
+[[rubriques.lignes]]
+valeur = "Les chiffres en gras correspondent au pourcentage de chaque"
+
+[[rubriques]]
+titre = "10 | forme azotée par rapport aux acides aminés."
+
+[[rubriques.lignes]]
+valeur = "Les chiffres en italique indiquent le pourcentage de chaque"
+
+[[rubriques.lignes]]
+valeur = "forme azotée par rapport à l'azote total du jus."
+douteux = ["l'azote"]
+
+[[rubriques.lignes]]
+intitule = "9% Source"
+valeur = "Le Quéré J.-M., Bauduin, Baron A. (2010). Elaboration des jus de"
+
+[[rubriques.lignes]]
+valeur = "(5%) 3% 2% 4 pommes et des cidres. Techniques de l'ingénieur."
+douteux = ["(5%)", "3%", "2%", "4"]
+
+[[rubriques.lignes]]
+valeur = "% 1% (2%) (2%) ° (1%) (1%) 1% 1%"
+douteux = ["1%", "1%"]
+
+[[rubriques]]
+titre = "10 000 000"
+
+[[rubriques]]
+titre = "1 000 000"
+
+[[rubriques.lignes]]
+valeur = "—— Arrêt de croissance"
+
+[[rubriques.lignes]]
+valeur = "—+— Azote résiduel"
+douteux = ["Azote"]
+
+[[rubriques]]
+titre = "100 000 —e— Nombre de levures"
+
+[[rubriques.lignes]]
+valeur = "0"
+
+[[rubriques]]
+titre = "10 20 30 40 50 60"
+
+[[rubriques.lignes]]
+valeur = "Durée de fermentation (en jours)"
+
+[[rubriques.lignes]]
+intitule = "Figure 2"
+valeur = "Exemple de courbes d'évolution de la population de levures et de l'azote au cours d'une"
+douteux = ["d'évolution", "l'azote"]
+
+[[rubriques.lignes]]
+valeur = "fermentation de cidre. La croissance exponentielle s'arrête lorsque l'azote assimilable est consommé."

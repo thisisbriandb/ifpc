@@ -1,0 +1,55 @@
+# Transcription de l'illustration de la fiche 1367 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1367
+code = "FICHE_POLYPHENOLS"
+titre = "Les composés phénoliques des cidres (\"polyphénols\")"
+image_sha256 = "f65180ecee4843f03904773ea73238f688310476f91fa0622111392cd5f99c57"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 76.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+dé moisissures L'acide para-coumarique
+Les acides Les acides
+phénoliques hydroxycinnamiques
+Libération par les enzymes  , . ,.
+TT demoisissures l'acide caféique
+Les (+)-catéchines ------.-.-.- Formation de couleur par oxydation
+L F _ ques Les (-)-épicatéchines -------- Formation de couleur par oxydation
+des pommes et Les flavan-3-ols
+du cidre Les petits DP(<5) -------: Amertume
+\\ Les grands DP(> 5) -.-.---- Astringence
+Le - Formation de couleur par oxydation indirecte
+cons — THE
+Les flavonols —— La quercétine - DEEE = Contribue à la couleur en jaune
+Les anthocyanes —————  L'idéaïne -------.--- Contribue à la couleur rouge/rosée
+Formation de couleur par oxydation
+Figure 1 : Les composés phénoliques des cidres"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "dé moisissures L'acide para-coumarique Les acides Les acides phénoliques hydroxycinnamiques Libération par les enzymes  , . ,. TT demoisissures l'acide caféique"
+douteux = ["moisissures", "enzymes", "TT", "demoisissures", "l'acide"]
+
+[[rubriques.lignes]]
+valeur = "Les (+)-catéchines ------.-.-.- Formation de couleur par oxydation L F _ ques Les (-)-épicatéchines -------- Formation de couleur par oxydation des pommes et Les flavan-3-ols du cidre Les petits DP(<5) -------: Amertume \\ Les grands DP(> 5) -.-.---- Astringence"
+douteux = ["L", "F", "_", "ques", "Astringence"]
+
+[[rubriques.lignes]]
+valeur = "Le - Formation de couleur par oxydation indirecte cons — THE Les flavonols —— La quercétine - DEEE = Contribue à la couleur en jaune"
+douteux = ["Le", "cons", "THE", "La", "DEEE", "Contribue"]
+
+[[rubriques.lignes]]
+valeur = "Les anthocyanes —————  L'idéaïne -------.--- Contribue à la couleur rouge/rosée"
+douteux = [" L'idéaïne"]
+
+[[rubriques.lignes]]
+valeur = "Formation de couleur par oxydation"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Les composés phénoliques des cidres"

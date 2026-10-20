@@ -1,0 +1,44 @@
+# Transcription de l'illustration de la fiche 1135 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1135
+code = "CMAP_CONCENTRATION_MOUTS_CONCENTRES"
+titre = "Les moûts concentrés"
+image_sha256 = "23b89634c7058d557322190af3504797c363b56a0dcf06b5e73e7faf43566121"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 93.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les moûts concentrées
+sont des : Produits intermédiaires de l’élaboration du cidre
+sont caractérisés par : Une forte concentration en sucres (72° Brix) | Une stabilité microbienne (faible Aw) | Une viscosité élevée | Une modification des caractéristiques sensorielles (odeur de cuit, brunissement) | La nature du moût avant concentration (pur jus, jus de rémiage...) | Leur composition"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Produits intermédiaires de l’élaboration du cidre"
+
+[[rubriques]]
+titre = "sont caractérisés par"
+
+[[rubriques.lignes]]
+valeur = "Une forte concentration en sucres (72° Brix)"
+
+[[rubriques.lignes]]
+valeur = "Une stabilité microbienne (faible Aw)"
+
+[[rubriques.lignes]]
+valeur = "Une viscosité élevée"
+
+[[rubriques.lignes]]
+valeur = "Une modification des caractéristiques sensorielles (odeur de cuit, brunissement)"
+
+[[rubriques.lignes]]
+valeur = "La nature du moût avant concentration (pur jus, jus de rémiage...)"
+douteux = ["rémiage...)"]
+
+[[rubriques.lignes]]
+valeur = "Leur composition"

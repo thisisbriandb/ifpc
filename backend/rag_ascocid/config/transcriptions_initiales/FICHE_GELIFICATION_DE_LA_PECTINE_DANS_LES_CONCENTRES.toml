@@ -1,0 +1,52 @@
+# Transcription de l'illustration de la fiche 1395 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1395
+code = "FICHE_GELIFICATION_DE_LA_PECTINE_DANS_LES_CONCENTRES"
+titre = "La gélification de la pectine dans les concentrés"
+image_sha256 = "efd659143e508964a4fecea9e2f34855e4474a24b562f91b7b8c6cc40be0fccf"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 92.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Effet du pH Effet du degré d'estérification
+sur la fermeté du gel sur la fermeté du gel
+e DM-72 %
+a DM-38 %
+1,5 2,5 3 3,5 4,5 20 40 60 80 100
+pH Degré d'estérification (%)
+Figure 1 : Courbes de fermeté du gel pectique en fonction du pH pour || Figure 2 : Courbe de fermeté du gel pectique en fonction du degré
+deux degrés d'estérification contrastés. d'estérification pour des pectines à 1% dans de l'éthylène glycol à 60%
+D'après E. R. Morris, M. J. Gidley, E. J. Murray, D. A. Powell and D. A. Rees _ 1980, à pH 1,9.
+Int. J. Biol. Macromol., Vol 2, pp 327 - 330 D'après E. R. Morris, M. J. Gidley, E. J. Murray, D. A. Powell and D. A. Rees __ 1980,
+Int. J. Biol. Macromol., Vol 2, pp 327 - 330"""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Effet du pH Effet du degré d'estérification sur la fermeté du gel sur la fermeté du gel"
+
+[[rubriques.lignes]]
+valeur = "e DM-72 %"
+
+[[rubriques.lignes]]
+valeur = "a DM-38 %"
+douteux = ["a"]
+
+[[rubriques.lignes]]
+valeur = "1,5 2,5 3 3,5 4,5 20 40 60 80 100 pH Degré d'estérification (%)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Courbes de fermeté du gel pectique en fonction du pH pour || Figure 2 : Courbe de fermeté du gel pectique en fonction du degré"
+
+[[rubriques.lignes]]
+valeur = "deux degrés d'estérification contrastés. d'estérification pour des pectines à 1% dans de l'éthylène glycol à 60% D'après E. R. Morris, M. J. Gidley, E. J. Murray, D. A. Powell and D. A. Rees _ 1980, à pH 1,9."
+douteux = ["A.", "A."]
+
+[[rubriques.lignes]]
+valeur = "Int. J. Biol. Macromol., Vol 2, pp 327 - 330 D'après E. R. Morris, M. J. Gidley, E. J. Murray, D. A. Powell and D. A. Rees __ 1980, Int. J. Biol. Macromol., Vol 2, pp 327 - 330"
+douteux = ["__"]

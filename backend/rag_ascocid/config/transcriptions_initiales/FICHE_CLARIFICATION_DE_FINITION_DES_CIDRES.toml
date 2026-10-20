@@ -1,0 +1,101 @@
+# Transcription de l'illustration de la fiche 1587 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1587
+code = "FICHE_CLARIFICATION_DE_FINITION_DES_CIDRES"
+titre = "La clarification de finition des cidres"
+image_sha256 = "9d8f0048fd6798c206fe890238f3b67510db0a72055d4618052f1a9149d688df"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 94.3
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Objectifs de clarification
+Cidre avec un trouble
+Cidres assemblés (exemple: cidre traditionnel, Cidre limpide, brillant
+prise de mousse en bouteille)
+Séparation grossière puis
+Cidre très trouble éventuelle séparation fine, à
+(turbidité 2 100 NTU) adapter suivant le trouble
+recherché
+Centrifugation puis collage,
+séparation grossière et
+séparation fine
+Cidre trouble Séparation grossière puis Éventuelle centrifugation puis
+(turbidité entre 30 et 100 éventuelle séparation fine, à collage, suivi d'une éventuelle
+NTU) adapter suivant le trouble séparation grossière et enfin
+recherché séparation fine
+Cidre légèrement trouble Possible décantation ou
+(turbidité entre 10 et 30 NTU) | Séparation grossière, à adapter
+suivant le trouble recherché
+Séparation grossière puis
+séparation fine
+Possible décantation ou
+Séparation grossière, à adapter Séparation fine
+suivant le trouble recherché
+Cidre avec un léger voile
+(turbidité entre 1 et 10 NTU)
+Figure 1 : Aide au choix de clarification post-fermentaire en fonction de la turbidité initiale du produit
+assemblé et du niveau de turbidité/limpidité souhaité pour le produit après clarification.
+NTU = Nephelometric Turbidity Unit, unité de turbidité
+Séparation grossière = centrifugation, filtration sur Kieselguhr, Filtration sur plaques à haut seuil de coupure
+Séparation fine = filtration sur plaques à bas seuil de coupure, microfiltration tangentielle
+Indications seuils de coupure : filtration fine (stérilisante) entre 0,1 et 0,45 um -— filtration clarifiante entre 4 et 10 um —
+filtration dégrossissante entre 15 et 25 um."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Objectifs de clarification"
+
+[[rubriques.lignes]]
+valeur = "Cidre avec un trouble"
+
+[[rubriques.lignes]]
+intitule = "Cidres assemblés (exemple"
+valeur = "cidre traditionnel, Cidre limpide, brillant prise de mousse en bouteille)"
+
+[[rubriques.lignes]]
+valeur = "Séparation grossière puis Cidre très trouble éventuelle séparation fine, à"
+
+[[rubriques.lignes]]
+valeur = "(turbidité 2 100 NTU) adapter suivant le trouble recherché"
+douteux = ["2"]
+
+[[rubriques.lignes]]
+valeur = "Centrifugation puis collage, séparation grossière et séparation fine"
+
+[[rubriques.lignes]]
+valeur = "Cidre trouble Séparation grossière puis Éventuelle centrifugation puis (turbidité entre 30 et 100 éventuelle séparation fine, à collage, suivi d'une éventuelle NTU) adapter suivant le trouble séparation grossière et enfin recherché séparation fine"
+douteux = ["d'une"]
+
+[[rubriques.lignes]]
+valeur = "Cidre légèrement trouble Possible décantation ou (turbidité entre 10 et 30 NTU) | Séparation grossière, à adapter suivant le trouble recherché"
+
+[[rubriques.lignes]]
+valeur = "Séparation grossière puis séparation fine"
+
+[[rubriques.lignes]]
+valeur = "Possible décantation ou Séparation grossière, à adapter Séparation fine suivant le trouble recherché"
+
+[[rubriques.lignes]]
+valeur = "Cidre avec un léger voile (turbidité entre 1 et 10 NTU)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Aide au choix de clarification post-fermentaire en fonction de la turbidité initiale du produit"
+
+[[rubriques.lignes]]
+valeur = "assemblé et du niveau de turbidité/limpidité souhaité pour le produit après clarification."
+
+[[rubriques.lignes]]
+valeur = "NTU = Nephelometric Turbidity Unit, unité de turbidité"
+
+[[rubriques.lignes]]
+valeur = "Séparation grossière = centrifugation, filtration sur Kieselguhr, Filtration sur plaques à haut seuil de coupure Séparation fine = filtration sur plaques à bas seuil de coupure, microfiltration tangentielle"
+
+[[rubriques.lignes]]
+intitule = "Indications seuils de coupure"
+valeur = "filtration fine (stérilisante) entre 0,1 et 0,45 um -— filtration clarifiante entre 4 et 10 um — filtration dégrossissante entre 15 et 25 um."

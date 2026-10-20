@@ -1,0 +1,61 @@
+# Transcription de l'illustration de la fiche 1130 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1130
+code = "CMAP_OPE_SEP_FINE"
+titre = "Les opérations de séparation fine"
+image_sha256 = "611b2fda6b63422d36dd8f62c168d9b6c3728cd89a52d92b1f60d2933e2dfdbf"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Les opérations de séparation fine
+sont des : Opérations de séparation utilisées au cours de la clarification des moûts et des cidres
+regroupent : La microfiltration tangentielle | La filtration sur Kieselguhr | La filtration sur plaques | La filtration frontale sur cartouches ou sur membranes
+ont pour fonction : De rendre le cidre limpide par élimination des matières en suspension résiduelles et des flores
+ont pour conséquences : Une élimination quasi -totale des flores indésirables | Une oxygénation du produit (variable selon les pratiques)
+sont limitées par : Une teneur élevée de matières en suspension"""
+
+[[rubriques]]
+titre = "sont des"
+
+[[rubriques.lignes]]
+valeur = "Opérations de séparation utilisées au cours de la clarification des moûts et des cidres"
+
+[[rubriques]]
+titre = "regroupent"
+
+[[rubriques.lignes]]
+valeur = "La microfiltration tangentielle"
+
+[[rubriques.lignes]]
+valeur = "La filtration sur Kieselguhr"
+
+[[rubriques.lignes]]
+valeur = "La filtration sur plaques"
+
+[[rubriques.lignes]]
+valeur = "La filtration frontale sur cartouches ou sur membranes"
+
+[[rubriques]]
+titre = "ont pour fonction"
+
+[[rubriques.lignes]]
+valeur = "De rendre le cidre limpide par élimination des matières en suspension résiduelles et des flores"
+
+[[rubriques]]
+titre = "ont pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Une élimination quasi -totale des flores indésirables"
+
+[[rubriques.lignes]]
+valeur = "Une oxygénation du produit (variable selon les pratiques)"
+
+[[rubriques]]
+titre = "sont limitées par"
+
+[[rubriques.lignes]]
+valeur = "Une teneur élevée de matières en suspension"

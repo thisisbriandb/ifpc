@@ -1,0 +1,79 @@
+# Transcription de l'illustration de la fiche 1378 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1378
+code = "FICHE_PERCEPTION_DES_SAVEURS"
+titre = "La perception des saveurs"
+image_sha256 = "2c537543ef3ae60279fb481ca393ae9c9956121dac852d94a49eef5bc5bc1316"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.8
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+a) Les différentes papilles D) c)
+Cils gustatifs
+Bourgeons Pore gustatif L
+gustatifs
+Cellules Nerfs
+gustatives gustatifs
+Figure 1 : a) Localisation des différents types de papilles sur la langue b) Schémas des Figure 2 : Cartographie de la
+différentes papilles c) Schéma d'un bourgeon gustatif. perception des saveurs selon
+Selon Briand L., La chimie du goût un modèle erroné.
+MB Amer
+|! Salé
+B Sucré
+B Umami
+M Acide
+Figure 3 : Encodage de la perception gustative par les cellules réceptrices du goût :
+a) Chaque cellule réceptrice possède un type de récepteur et sont innervées par des fibres nerveuses réglées individuellement.
+Dans ce cas, chaque qualité gustative est spécifiée par l'activité de cellules et de fibres individualisées.
+b) Les cellules réceptrices du goût sont adaptées à plusieurs qualités gustatives et par conséquent, la même fibre afférente porte
+des informations pour plus d'une modalité gustative.
+c) Les cellules réceptrices du goût sont toujours réglées sur des qualités gustatives uniques mais la même fibre afférente porte
+des informations pour plus d'une modalité gustative.
+D'après Chandrashekar et al., 2006."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "a) Les différentes papilles D) c)"
+douteux = ["D)", "c)"]
+
+[[rubriques.lignes]]
+valeur = "Cils gustatifs"
+
+[[rubriques.lignes]]
+valeur = "Bourgeons Pore gustatif L gustatifs"
+douteux = ["L"]
+
+[[rubriques.lignes]]
+valeur = "Cellules Nerfs"
+
+[[rubriques.lignes]]
+valeur = "gustatives gustatifs"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "a) Localisation des différents types de papilles sur la langue b) Schémas des Figure 2 : Cartographie de la différentes papilles c) Schéma d'un bourgeon gustatif. perception des saveurs selon Selon Briand L., La chimie du goût un modèle erroné."
+
+[[rubriques.lignes]]
+valeur = "MB Amer |! Salé B Sucré B Umami M Acide"
+douteux = ["MB", "B", "B", "M"]
+
+[[rubriques.lignes]]
+intitule = "Figure 3"
+valeur = "Encodage de la perception gustative par les cellules réceptrices du goût :"
+
+[[rubriques.lignes]]
+valeur = "a) Chaque cellule réceptrice possède un type de récepteur et sont innervées par des fibres nerveuses réglées individuellement. Dans ce cas, chaque qualité gustative est spécifiée par l'activité de cellules et de fibres individualisées."
+
+[[rubriques.lignes]]
+valeur = "b) Les cellules réceptrices du goût sont adaptées à plusieurs qualités gustatives et par conséquent, la même fibre afférente porte des informations pour plus d'une modalité gustative."
+
+[[rubriques.lignes]]
+valeur = "c) Les cellules réceptrices du goût sont toujours réglées sur des qualités gustatives uniques mais la même fibre afférente porte"
+
+[[rubriques.lignes]]
+valeur = "des informations pour plus d'une modalité gustative. D'après Chandrashekar et al., 2006."

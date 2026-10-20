@@ -1,0 +1,62 @@
+# Transcription de l'illustration de la fiche 1096 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1096
+code = "FICHE_COLLAGE"
+titre = "Le collage"
+image_sha256 = "ac4dc98a8c4f75134de1cd490f3cbce38a245e0bc1e4874dc73e7b4110506069"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 91.5
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Noyau cellulaire
+&-15 jours
+Ciment _0
+pectique
+B +15 jours
+Paroi cellulaire
+Plaste
+(Contenant la PPO)
+Membrane cellulaire
+Vacuole (moût)
+d'après Langlais & Bauduin, 2006, Pomme(14)
+Figure 1 : Tissus de pomme - vues macroscopique (a) et Figure 2 : Evolution de la pectine du moût en fonction de
+microscopique (b) - et schéma d’une cellule de pomme (c ) permettant la conservation des fruits après leur chute, pour quelques
+de situer la position de la pectine dans les tissus. variétés de pommes à cidre."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Noyau cellulaire &-15 jours"
+douteux = ["&-15"]
+
+[[rubriques.lignes]]
+valeur = "Ciment _0 pectique"
+douteux = ["_0"]
+
+[[rubriques.lignes]]
+valeur = "B +15 jours"
+douteux = ["B"]
+
+[[rubriques.lignes]]
+valeur = "Paroi cellulaire"
+
+[[rubriques.lignes]]
+valeur = "Plaste (Contenant la PPO)"
+
+[[rubriques.lignes]]
+valeur = "Membrane cellulaire"
+
+[[rubriques.lignes]]
+valeur = "Vacuole (moût)"
+douteux = ["(moût)"]
+
+[[rubriques.lignes]]
+valeur = "d'après Langlais & Bauduin, 2006, Pomme(14)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Tissus de pomme - vues macroscopique (a) et Figure 2 : Evolution de la pectine du moût en fonction de microscopique (b) - et schéma d’une cellule de pomme (c ) permettant la conservation des fruits après leur chute, pour quelques de situer la position de la pectine dans les tissus. variétés de pommes à cidre."

@@ -1,0 +1,65 @@
+# Transcription de l'illustration de la fiche 1062 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1062
+code = "CMAP_RECOLTE_RAMASSAGE_MANUEL"
+titre = "Le ramassage manuel des pommes"
+image_sha256 = "7709684bbefef7cdb20732815f2e0312db9dc1831dd0e7dda829f4050da3b3c1"
+source = "svg+ocr (tesseract 5.3.4)"
+qualite_ocr = 94.4
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le ramassage manuel des pommes
+est une : Opération de l’étape de récolte
+est piloté par : Le nombre de passages | Les consignes de tri à la récolte
+est influencé par : L'état de maturité des pommes | La quantité de pommes au sol | Les conditions pédoclimatiques | Le niveau d’altération fongique des pommes | La disponibilité des récolteurs
+a pour conséquences : Un faible taux d’altérations physiques sur les fruits | La possibilité de faire une maturation complémentaire | L'existence d’un tri dès la récolte"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Opération de l’étape de récolte"
+
+[[rubriques]]
+titre = "est piloté par"
+
+[[rubriques.lignes]]
+valeur = "Le nombre de passages"
+
+[[rubriques.lignes]]
+valeur = "Les consignes de tri à la récolte"
+
+[[rubriques]]
+titre = "est influencé par"
+
+[[rubriques.lignes]]
+valeur = "L'état de maturité des pommes"
+douteux = ["L'état"]
+
+[[rubriques.lignes]]
+valeur = "La quantité de pommes au sol"
+
+[[rubriques.lignes]]
+valeur = "Les conditions pédoclimatiques"
+
+[[rubriques.lignes]]
+valeur = "Le niveau d’altération fongique des pommes"
+
+[[rubriques.lignes]]
+valeur = "La disponibilité des récolteurs"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "Un faible taux d’altérations physiques sur les fruits"
+
+[[rubriques.lignes]]
+valeur = "La possibilité de faire une maturation complémentaire"
+
+[[rubriques.lignes]]
+valeur = "L'existence d’un tri dès la récolte"
+douteux = ["L'existence"]

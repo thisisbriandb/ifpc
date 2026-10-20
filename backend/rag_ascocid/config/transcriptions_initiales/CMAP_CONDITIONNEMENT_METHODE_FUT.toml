@@ -1,0 +1,78 @@
+# Transcription de l'illustration de la fiche 1140 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1140
+code = "CMAP_CONDITIONNEMENT_METHODE_FUT"
+titre = "La méthode de conditionnement en fût"
+image_sha256 = "278c96145e266438fa5a730a4ba721785b73edce1b954b648e0970776f24cdd6"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+La méthode de conditionnement en fût
+est une : Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres
+est constitué de : Une désaération (facultative) | Une gazéification en saturateur | Une flash pasteurisation sous pression (facultative) | Un conditionnement en fût iso -barométrique
+a pour actions complémentaires : Un sulfitage et/ou ajout d’acide ascorbique (facultatif) | Une désinfection des fûts
+a pour fonctions : De produire un cidre effervescent par un apport contrôlé de CO 2 exogène | De conditionner en fût un cidre en général limpide | D’obtenir rapidement un cidre prêt à la commercialisation
+a pour conséquences : De permettre une saturation précise en CO 2 | De limiter la quantité de flores indésirables en fût
+présente le risque : Une oxygénation du cidre à la gazéification et à la mise en fût"""
+
+[[rubriques]]
+titre = "est une"
+
+[[rubriques.lignes]]
+valeur = "Modalité de l’étape de conditionnement et obtention de l’effervescence des cidres"
+
+[[rubriques]]
+titre = "est constitué de"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une désaération (facultative)"
+
+[[rubriques.lignes]]
+valeur = "Une gazéification en saturateur"
+
+[[rubriques.lignes]]
+valeur = "Une flash pasteurisation sous pression (facultative)"
+
+[[rubriques.lignes]]
+valeur = "Un conditionnement en fût iso -barométrique"
+
+[[rubriques]]
+titre = "a pour actions complémentaires"
+
+[[rubriques.lignes]]
+valeur = "Un sulfitage et/ou ajout d’acide ascorbique (facultatif)"
+
+[[rubriques.lignes]]
+valeur = "Une désinfection des fûts"
+
+[[rubriques]]
+titre = "a pour fonctions"
+
+[[rubriques.lignes]]
+valeur = "De produire un cidre effervescent par un apport contrôlé de CO 2 exogène"
+
+[[rubriques.lignes]]
+valeur = "De conditionner en fût un cidre en général limpide"
+
+[[rubriques.lignes]]
+valeur = "D’obtenir rapidement un cidre prêt à la commercialisation"
+
+[[rubriques]]
+titre = "a pour conséquences"
+
+[[rubriques.lignes]]
+valeur = "De permettre une saturation précise en CO 2"
+
+[[rubriques.lignes]]
+valeur = "De limiter la quantité de flores indésirables en fût"
+
+[[rubriques]]
+titre = "présente le risque"
+
+[[rubriques.lignes]]
+valeur = "Une oxygénation du cidre à la gazéification et à la mise en fût"

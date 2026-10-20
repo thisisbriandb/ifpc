@@ -1,0 +1,96 @@
+# Transcription de l'illustration de la fiche 1400 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1400
+code = "FICHE_EVITER_L_APPARITION_DES_TROUBLES_ET_DEPOTS_PHYSICO_CHIMIQUES"
+titre = "Éviter l’apparition des troubles et dépôts physico-chimiques"
+image_sha256 = "94b530ae93f488e0ec0bd77c4d54bc88f8f80d4d0bfe79cb028bae9363c603ac"
+source = "ocr-tesseract 5.3.4"
+qualite_ocr = 75.1
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Turbidité 2500
+(NTU) I
+4 Pommeaux
+2000 +
+L. «@.… PMO1
+D: - © - PMO2
+1500 .
+° \\ -e- PMO4
+['\\ \\ …@.… PMOS
+1000 +5}
+\\ \\ - © - PMO7
+4. e. \\.
+500 +3. &. +
+LS 8. RSS
+O + Tree ==<0e-= 0e -—-—-e-—--0e
+0 10 20 30 40 50 60 70
+Température (°C)
+Figure 1 : Impact de la température sur la réversibilité des troubles du pommeau. À chaud (> 40 °C), les
+pommeaux testés sont limpides tandis qu'à froid, ces mêmes pommeaux redeviennent troubles. A noter que la
+turbidité est maximale à 2 °C, dans les conditions testées."""
+
+[[rubriques]]
+titre = ""
+
+[[rubriques.lignes]]
+valeur = "Turbidité 2500"
+
+[[rubriques.lignes]]
+valeur = "(NTU) I"
+douteux = ["I"]
+
+[[rubriques]]
+titre = "4 Pommeaux"
+
+[[rubriques]]
+titre = "2000 +"
+
+[[rubriques.lignes]]
+valeur = "L. «@.… PMO1"
+douteux = ["L."]
+
+[[rubriques.lignes]]
+intitule = "D"
+valeur = "- © - PMO2"
+douteux = ["D:"]
+
+[[rubriques]]
+titre = "1500 ."
+
+[[rubriques.lignes]]
+valeur = "° \\ -e- PMO4"
+douteux = ["-e-"]
+
+[[rubriques.lignes]]
+valeur = "['\\ \\ …@.… PMOS"
+douteux = ["PMOS"]
+
+[[rubriques]]
+titre = "1000 +5}"
+
+[[rubriques.lignes]]
+valeur = "\\ \\ - © - PMO7"
+
+[[rubriques]]
+titre = "4. e. \\."
+
+[[rubriques]]
+titre = "500 +3. &. +"
+
+[[rubriques.lignes]]
+valeur = "LS 8. RSS O + Tree ==<0e-= 0e -—-—-e-—--0e"
+douteux = ["LS", "8.", "RSS", "O", "Tree", "==<0e-=", "0e", "-—-—-e-—--0e"]
+
+[[rubriques]]
+titre = "0 10 20 30 40 50 60 70"
+
+[[rubriques.lignes]]
+valeur = "Température (°C)"
+
+[[rubriques.lignes]]
+intitule = "Figure 1"
+valeur = "Impact de la température sur la réversibilité des troubles du pommeau. À chaud (> 40 °C), les pommeaux testés sont limpides tandis qu'à froid, ces mêmes pommeaux redeviennent troubles. A noter que la turbidité est maximale à 2 °C, dans les conditions testées."
+douteux = ["À"]

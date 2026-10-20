@@ -1,0 +1,82 @@
+# Transcription de l'illustration de la fiche 1102 (AsCoCid).
+# Produite par OCR ; l'image reste la référence. Statuts : a_verifier, corrige, valide.
+
+idoc = 1102
+code = "CMAP_FERMENTATION_DEV_LEVURES_A_VOILE"
+titre = "Le développement des levures à voile"
+image_sha256 = "c74be94fdc03f0e0e2e32e2d9b2f6d05dd9e185f306c2e7f9abf4ce0745b3f41"
+source = "svg"
+qualite_ocr = 100.0
+statut = "a_verifier"
+verifie_par = ""
+verifie_le = ""
+texte_ocr = """
+Le développement des levures à voile
+est un : Phénomène se produisant principalement au cours du Stockage (méthode FI)
+a pour phases : Une croissance exponentielle | Un arrêt de croissance | Une décroissance éventuelle des levures viables (mortalité)
+induit : Les principaux effets des levures à voile
+a pour autre conséquence : La formation d’un voile en surface
+a pour agents : Candida | Pichia | Hansenula
+nécessite : La présence d’oxygène (contact avec l’air)
+est inhibé par : La présence d’une fermentation (dégagement de CO 2) | Les protections contre l’aération du cidre (inertage, chapeau flottant) | La toxicité du milieu (SO2, degré d’alcool)"""
+
+[[rubriques]]
+titre = "est un"
+
+[[rubriques.lignes]]
+valeur = "Phénomène se produisant principalement au cours du Stockage (méthode FI)"
+
+[[rubriques]]
+titre = "a pour phases"
+ordonnee = true
+
+[[rubriques.lignes]]
+valeur = "Une croissance exponentielle"
+
+[[rubriques.lignes]]
+valeur = "Un arrêt de croissance"
+
+[[rubriques.lignes]]
+valeur = "Une décroissance éventuelle des levures viables (mortalité)"
+
+[[rubriques]]
+titre = "induit"
+
+[[rubriques.lignes]]
+valeur = "Les principaux effets des levures à voile"
+
+[[rubriques]]
+titre = "a pour autre conséquence"
+
+[[rubriques.lignes]]
+valeur = "La formation d’un voile en surface"
+
+[[rubriques]]
+titre = "a pour agents"
+
+[[rubriques.lignes]]
+valeur = "Candida"
+
+[[rubriques.lignes]]
+valeur = "Pichia"
+
+[[rubriques.lignes]]
+valeur = "Hansenula"
+
+[[rubriques]]
+titre = "nécessite"
+
+[[rubriques.lignes]]
+valeur = "La présence d’oxygène (contact avec l’air)"
+
+[[rubriques]]
+titre = "est inhibé par"
+
+[[rubriques.lignes]]
+valeur = "La présence d’une fermentation (dégagement de CO 2)"
+
+[[rubriques.lignes]]
+valeur = "Les protections contre l’aération du cidre (inertage, chapeau flottant)"
+
+[[rubriques.lignes]]
+valeur = "La toxicité du milieu (SO2, degré d’alcool)"
