@@ -11,6 +11,9 @@ import {
   historiquePour,
   normaliserBase,
   envoyerDocument,
+  formaterNotations,
+  numerosCites,
+  demanderReponse,
 } from "@/lib/ldc";
 
 const evenement = (nom: string, charge: object) =>
@@ -203,5 +206,51 @@ describe("envoyerDocument", () => {
       json: async () => ({ detail: "Ce fichier a déjà été ajouté, sous le titre « Guide »." }),
     }) as unknown as typeof fetch;
     await expect(envoyerDocument(new File(["x"], "a.pdf"), "")).rejects.toThrow(/déjà été ajouté/);
+  });
+});
+
+describe("formaterNotations", () => {
+  it.each([
+    ["exprimée en g/l de H2SO4 [S2].", "exprimée en g/l de H₂SO₄ [S2]."],
+    ["SO2 libre, CO2 dissous et O2", "SO₂ libre, CO₂ dissous et O₂"],
+    ["10^6 UFC/mL et 10^-3", "10⁶ UFC/mL et 10⁻³"],
+    ["50 m3 et 20 m2", "50 m³ et 20 m²"],
+    ["$10^{6}$ cellules, $\\mathrm{SO_2}$ total, 5 \\times 10^{3}", "10⁶ cellules, SO₂ total, 5 × 10³"],
+    ["12 $^\\circ$C, pH de 3,5 \\pm 0,2", "12 °C, pH de 3,5 ± 0,2"],
+    ["C6H12O6 → 2 C2H5OH + 2 CO2", "C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂"],
+  ])("%s", (avant, apres) => {
+    expect(formaterNotations(avant)).toBe(apres);
+  });
+
+  it("ne touche ni aux codes qui ressemblent à des formules, ni aux citations", () => {
+    const texte = "porte-greffe M116, clone X4876, vitamine B12, méthode FMR [S5, S7]";
+    expect(formaterNotations(texte)).toBe(texte);
+  });
+
+  it("garde les chiffres : seule leur écriture change", () => {
+    const chiffres = (t: string) => (t.match(/\d/g) ?? []).join("");
+    expect(chiffres(formaterNotations("1048,6 et 1 065,5 et 6° 2"))).toBe("104861065562");
+  });
+});
+
+describe("numerosCites", () => {
+  it("rend les sources citées, sans doublon, dans l'ordre de première citation", () => {
+    expect(numerosCites("a [S5] b [S6, S5] c [S2]")).toEqual([5, 6, 2]);
+    expect(numerosCites("aucune citation")).toEqual([]);
+  });
+});
+
+describe("demanderReponse", () => {
+  const fetchOrigine = global.fetch;
+  afterEach(() => { global.fetch = fetchOrigine; });
+
+  it("« Voir plus » demande une réponse détaillée, sur plus de passages", async () => {
+    const appel = jest.fn().mockResolvedValue({ ok: false, status: 503, text: async () => "{}" });
+    global.fetch = appel as unknown as typeof fetch;
+    await demanderReponse({ question: "q" }, () => undefined);
+    await demanderReponse({ question: "q", detaille: true }, () => undefined);
+    expect(JSON.parse(appel.mock.calls[0][1].body)).toEqual({ question: "q", historique: [] });
+    expect(JSON.parse(appel.mock.calls[1][1].body)).toEqual(
+      { question: "q", historique: [], detaille: true, k: 12 });
   });
 });

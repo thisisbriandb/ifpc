@@ -125,8 +125,9 @@ class GenerateurArgo:
 
     def repondre(
         self, question: str, passages: list[Passage], contexte: dict, carte: str,
+        detaille: bool = False,
     ) -> Iterator[dict]:
-        systeme = p.REGLES + ("\n\n" + carte if carte else "")
+        systeme = p.systeme(carte, detaille)
         morceaux = [p.passages_en_texte(passages)]
         if (graphe := p.contexte_en_texte(contexte, passages)):
             morceaux.append(graphe)

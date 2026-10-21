@@ -285,6 +285,8 @@ class Demande(BaseModel):
     # rendre une relance autonome (« et pour les pommes douces ? »).
     historique: list[str] = Field(default_factory=list, max_length=8)
     k: int = Field(default=8, ge=1, le=20)
+    # « Voir plus » : la même question, en réponse détaillée.
+    detaille: bool = False
 
 
 class Retour(BaseModel):
@@ -308,7 +310,8 @@ def _flux(demande: Demande) -> Iterator[str]:
     magasin = MagasinSqlite(BASE_DONNEES, multi_threads=True)
     try:
         chaine = moteur.pipeline(magasin, demande.k)
-        for evenement in chaine.repondre(demande.question, demande.historique or None):
+        for evenement in chaine.repondre(demande.question, demande.historique or None,
+                                         detaille=demande.detaille):
             type_ = evenement.pop("type")
             yield _sse(type_, evenement)
     except Exception as exc:  # noqa: BLE001
