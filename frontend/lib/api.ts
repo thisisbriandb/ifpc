@@ -204,6 +204,26 @@ export async function updateHelpText(key: string, content: string, locale = "fr"
   return data;
 }
 
+// ── Help desk ───────────────────────────────────────────────────────────────
+
+export type CategorieSupport = "BUG" | "QUESTION" | "IDEE";
+
+export async function getStatutSupport(): Promise<{ actif: boolean }> {
+  const { data } = await api.get("/support/statut");
+  return data;
+}
+
+export async function envoyerDemandeSupport(demande: {
+  categorie: CategorieSupport;
+  titre: string;
+  description: string;
+  page?: string;
+  version?: string;
+}): Promise<{ numero: number; url: string }> {
+  const { data } = await api.post("/support/demandes", demande);
+  return data;
+}
+
 // ── Référentiels ────────────────────────────────────────────────────────────
 
 export async function getProduits(locale = "fr") {

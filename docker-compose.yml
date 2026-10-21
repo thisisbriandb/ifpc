@@ -66,6 +66,8 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-service-informatique@ifpc.eu}
       RESEND_ADMIN_EMAIL: ${RESEND_ADMIN_EMAIL:-service-informatique@ifpc.eu}
+      SUPPORT_GITHUB_TOKEN: ${SUPPORT_GITHUB_TOKEN:-}
+      SUPPORT_GITHUB_REPO: ${SUPPORT_GITHUB_REPO:-IFPC-APPS/PADOC}
     ports:
       - "8080:8080"
     depends_on:

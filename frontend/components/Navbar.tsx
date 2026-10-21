@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   FlaskConical, BarChart3, Home, LogOut, Shield, User,
-  ChevronRight, Thermometer, Palette, Container, Clock, Menu, X, BookOpen
+  ChevronRight, Thermometer, Palette, Container, Clock, Menu, X, BookOpen, LifeBuoy
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -15,6 +15,8 @@ import { useAuthStore } from "@/lib/store";
 import { useSidebar } from "@/lib/sidebar-context";
 import { useI18n } from "@/lib/i18n";
 import { useNavigation } from "@/lib/fonctionnalites";
+import { getStatutSupport } from "@/lib/api";
+import SupportModal from "@/components/SupportModal";
 
 interface NavGroup {
   key: string;
@@ -36,6 +38,17 @@ export default function Sidebar() {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   useEffect(() => { checkAuth(); }, [checkAuth]);
+
+  // Help desk : le bouton n'apparaît que si une demande peut réellement
+  // partir (jeton GitHub configuré côté serveur), et pour un compte connecté.
+  const [supportActif, setSupportActif] = useState(false);
+  const [supportOuvert, setSupportOuvert] = useState(false);
+  useEffect(() => {
+    if (!user) return;
+    getStatutSupport()
+      .then((s) => setSupportActif(s.actif))
+      .catch(() => setSupportActif(false));
+  }, [user]);
 
   // Navigation complète, symétrique de la connexion : le cookie de session
   // vient d'être effacé, et le cache du routeur client garde encore les pages
@@ -276,6 +289,11 @@ export default function Sidebar() {
             user ? (
               collapsed && !mobileOpen ? (
                 <div className="flex flex-col items-center gap-1.5">
+                  {supportActif && (
+                    <button onClick={() => setSupportOuvert(true)} title={t("support.button")} className="p-2 text-gray-400 hover:text-brand-primary rounded-lg transition-colors">
+                      <LifeBuoy className="w-4 h-4" />
+                    </button>
+                  )}
                   <Link href="/profil" onClick={closeMobile} title={t("nav.profile")} className="p-2 text-gray-400 hover:text-brand-primary rounded-lg transition-colors">
                     <User className="w-4 h-4" />
                   </Link>
@@ -285,6 +303,12 @@ export default function Sidebar() {
                 </div>
               ) : (
                 <div className="space-y-1.5">
+                  {supportActif && (
+                    <button onClick={() => { closeMobile(); setSupportOuvert(true); }} className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] text-gray-400 hover:text-brand-primary hover:bg-brand-primary/5 transition-colors">
+                      <LifeBuoy className="w-3.5 h-3.5" />
+                      {t("support.button")}
+                    </button>
+                  )}
                   <Link href="/profil" onClick={closeMobile} className="flex items-center gap-2 px-1 py-1 rounded-lg hover:bg-gray-50 transition-colors group">
                     <div className="w-7 h-7 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center text-[10px] font-bold shrink-0">
                       {user.firstName.charAt(0)}{user.lastName.charAt(0)}
@@ -315,6 +339,8 @@ export default function Sidebar() {
           )}
         </div>
       </aside>
+
+      <SupportModal open={supportOuvert} onClose={() => setSupportOuvert(false)} />
     </>
   );
 }

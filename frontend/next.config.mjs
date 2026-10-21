@@ -81,6 +81,10 @@ const nextConfig = {
         destination: `${SPRING_URL}/api/operations/:path*`,
       },
       {
+        source: '/api/support/:path*',
+        destination: `${SPRING_URL}/api/support/:path*`,
+      },
+      {
         source: '/api/ldc/:path*',
         destination: `${LDC_URL}/api/ldc/:path*`,
       },

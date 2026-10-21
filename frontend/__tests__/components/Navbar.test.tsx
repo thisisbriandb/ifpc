@@ -7,6 +7,7 @@ import { useAuthStore } from '@/lib/store';
 jest.mock('@/lib/api', () => ({
   getMe: jest.fn().mockImplementation(() => Promise.resolve(null)),
   logout: jest.fn(),
+  getStatutSupport: jest.fn().mockImplementation(() => Promise.resolve({ actif: false })),
   // Par défaut tout est ouvert : les tests existants décrivent la navigation
   // complète, et c'est aussi l'état d'une installation neuve.
   getEtatFonctionnalites: jest.fn().mockImplementation(() => Promise.resolve({
@@ -15,7 +16,7 @@ jest.mock('@/lib/api', () => ({
   })),
 }));
 
-const { getEtatFonctionnalites } = jest.requireMock('@/lib/api');
+const { getEtatFonctionnalites, getStatutSupport } = jest.requireMock('@/lib/api');
 
 describe('Sidebar / Navbar Component', () => {
   beforeEach(() => {
@@ -92,6 +93,35 @@ describe('Sidebar / Navbar Component', () => {
     await waitFor(() => {
       expect(liens(container)).toEqual(expect.arrayContaining(['/colorimetrie/assemblage', '/assistant']));
     });
+  });
+
+  // ── Help desk ─────────────────────────────────────────────────────────
+
+  const connecter = () => useAuthStore.setState({
+    user: { firstName: 'Jean', lastName: 'Valjean', email: 'jean@ifpc.eu', role: 'USER' },
+    isLoading: false,
+    checkAuth: jest.fn(),
+  });
+
+  test('propose « Signaler un problème » quand le help desk est configuré', async () => {
+    getStatutSupport.mockImplementationOnce(() => Promise.resolve({ actif: true }));
+    connecter();
+
+    renderComponent();
+    expect(await screen.findByTitle('Signaler un problème')).toBeInTheDocument();
+  });
+
+  test("n'offre pas un formulaire qui ne partirait nulle part", async () => {
+    connecter();
+
+    renderComponent();
+    await waitFor(() => expect(getStatutSupport).toHaveBeenCalled());
+    expect(screen.queryByTitle('Signaler un problème')).not.toBeInTheDocument();
+  });
+
+  test('ne demande rien pour un visiteur non connecté', () => {
+    renderComponent();
+    expect(getStatutSupport).not.toHaveBeenCalled();
   });
 
   test('renders Admin link when user is ADMIN', () => {

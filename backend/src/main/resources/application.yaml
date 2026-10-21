@@ -81,6 +81,17 @@ federation:
     roles-admin: ${FEDERATION_CLIENT_ROLES_ADMIN:animateur,creneaux}
     post-logout-uris: ${FEDERATION_CLIENT_POST_LOGOUT_URIS:}
 
+# ── Help desk (SupportService) ───────────────────────────────────────────────
+# Chaque demande devient une issue du dépôt ci-dessous. Sans jeton, le help
+# desk est fermé et le bouton n'apparaît pas. Le jeton : « fine-grained » sur ce
+# seul dépôt, permission Issues en lecture/écriture, rien d'autre.
+# Le dépôt par défaut est public : les issues n'y portent jamais l'identité du
+# demandeur, transmise par e-mail au service informatique (RESEND_ADMIN_EMAIL).
+support:
+  github:
+    token: ${SUPPORT_GITHUB_TOKEN:}
+    repo: ${SUPPORT_GITHUB_REPO:IFPC-APPS/PADOC}
+
 resend:
   api-key: ${RESEND_API_KEY:}
   from-email: ${RESEND_FROM_EMAIL:service-informatique@ifpc.eu}
