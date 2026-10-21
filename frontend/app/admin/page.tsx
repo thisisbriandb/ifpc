@@ -150,6 +150,9 @@ export default function AdminPage() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">{t("admin.title")}</h1>
             <p className="text-sm text-gray-500 mt-1 font-medium">{t("admin.subtitle")}</p>
+            {process.env.NEXT_PUBLIC_VERSION && (
+              <p className="text-xs text-gray-400 mt-1">Version {process.env.NEXT_PUBLIC_VERSION}</p>
+            )}
           </div>
           <div className="flex items-center gap-4">
             <div className="bg-white border border-gray-200/60 rounded-xl px-4 py-3 shadow-sm flex flex-col min-w-[120px]">

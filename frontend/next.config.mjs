@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 /** @type {import('next').NextConfig} */
 const SPRING_URL = process.env.SPRING_URL || 'http://localhost:8080';
 const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
@@ -11,7 +12,12 @@ const LDC_URL = (process.env.LDC_URL || 'http://localhost:8100')
   .replace(/\/+$/, '')
   .replace(/\/api\/ldc$/, '');
 
+// Version publiée (release-please tient package.json à jour), affichée dans
+// l'administration : savoir quelle version tourne, sans ouvrir un terminal.
+const VERSION = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')).version;
+
 const nextConfig = {
+  env: { NEXT_PUBLIC_VERSION: VERSION },
   // Sortie autonome : embarque un serveur Node minimal + les seules dépendances
   // réellement utilisées, pour une image Docker sans node_modules complet.
   output: 'standalone',

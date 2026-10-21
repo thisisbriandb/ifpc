@@ -57,6 +57,19 @@ from ascocid.application.requete.verification import verifier
 from ascocid.infrastructure.graphe.sqlite import MagasinSqlite
 
 PREFIXE = "/api/ldc"
+
+
+def _version() -> str:
+    """Version publiée (release-please tient pyproject.toml à jour)."""
+    from importlib import metadata
+
+    try:
+        return metadata.version("ascocid")
+    except metadata.PackageNotFoundError:     # lancé depuis les sources, sans installation
+        return "dev"
+
+
+VERSION = _version()
 # Toutes les données du corpus sont sous une même racine : le répertoire du
 # projet en local, un volume monté en production (ASCOCID_DATA=/data).
 RACINE = pathlib.Path(os.environ.get("ASCOCID_DATA", "data"))
@@ -612,6 +625,7 @@ def sante() -> dict:
     with MagasinSqlite(BASE_DONNEES) as magasin:
         comptes = magasin.compter()
     return {
+        "version": VERSION,
         "corpus": comptes,
         "documents": len(BIBLIOTHEQUE.lister()),
         "chunks": moteur.index.taille if moteur.index else 0,

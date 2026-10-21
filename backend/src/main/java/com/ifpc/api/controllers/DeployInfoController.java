@@ -3,6 +3,8 @@ package com.ifpc.api.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import com.ifpc.api.repositories.CuveRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,9 @@ public class DeployInfoController {
     private static final String MARKER = "ifpc-backend-2026-08-21-tenant-isolation-v12";
 
     private final CuveRepository cuveRepository;
+    // Absent quand l'application tourne hors d'un jar construit par Maven
+    // (tests, IDE) : la version vaut alors « inconnue ».
+    private final ObjectProvider<BuildProperties> buildProperties;
 
     @GetMapping("/info")
     public Map<String, Object> getDeployInfo(HttpServletRequest request) {
@@ -59,6 +64,8 @@ public class DeployInfoController {
     private Map<String, Object> baseInfo() {
         Map<String, Object> info = new LinkedHashMap<>();
         info.put("marker", MARKER);
+        BuildProperties build = buildProperties.getIfAvailable();
+        info.put("version", build != null ? build.getVersion() : "inconnue");
         info.put("checkedAt", Instant.now().toString());
         info.put("railwayCommitSha", env("RAILWAY_GIT_COMMIT_SHA"));
         info.put("railwayDeploymentId", env("RAILWAY_DEPLOYMENT_ID"));
