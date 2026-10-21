@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/IFPC-APPS/PADOC/compare/v0.2.0...v0.3.0) (2026-10-21)
+
+
+### Nouveautés
+
+* **support:** help desk « Signaler un problème », chaque demande devient une issue GitHub ([35ab593](https://github.com/IFPC-APPS/PADOC/commit/35ab593b75c60b0a17a20d3e9d307d4d64f10003))
+
 ## [0.2.0](https://github.com/IFPC-APPS/PADOC/compare/v0.1.0...v0.2.0) (2026-10-21)
 
 
