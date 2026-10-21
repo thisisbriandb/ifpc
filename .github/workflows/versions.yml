@@ -1,0 +1,94 @@
+name: Versions
+
+# Pourquoi ce fichier existe
+# --------------------------
+# Jusqu'ici, « main » était la production : Vercel et Railway déployaient
+# chaque merge, que la CI soit passée ou non (le 29/09/2026, un déploiement
+# cassé est resté en ligne trois heures). Désormais :
+#
+#   main        intégration ; on y merge librement, la VM sert à le tester ;
+#   production  la seule branche que Vercel et Railway déploient ;
+#   vX.Y.Z      une version : un tag et une page « Releases » sur GitHub, avec
+#               ses notes, générées depuis les messages feat: / fix:.
+#
+# Comment une version naît
+# ------------------------
+# 1. À chaque merge sur main dont la CI est verte, release-please met à jour
+#    une PR « chore: version X.Y.Z » : le numéro (feat → mineure, fix →
+#    correctif, « ! » ou BREAKING CHANGE → majeure) et le CHANGELOG.md.
+# 2. Merger cette PR, c'est décider d'une mise en production : la CI repasse,
+#    puis ce workflow publie le tag et la Release, et avance « production »
+#    sur ce commit. Vercel et Railway déploient.
+#
+# Revenir en arrière : workflow « Retour à une version » (onglet Actions).
+# Procédure complète : docs/versions.md.
+
+on:
+  # Après la CI, et seulement si elle est verte : on ne publie jamais un main
+  # qui ne passe pas ses tests.
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Deux merges rapprochés : les publications s'enchaînent, sans se croiser.
+concurrency:
+  group: versions
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: PR de version, ou publication
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-24.04
+    outputs:
+      publiee: ${{ steps.rp.outputs.release_created }}
+      tag: ${{ steps.rp.outputs.tag_name }}
+      sha: ${{ steps.rp.outputs.sha }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: rp
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  production:
+    name: Mise en production
+    needs: version
+    if: needs.version.outputs.publiee == 'true'
+    runs-on: ubuntu-24.04
+    # Un environnement GitHub « production » permet, si l'équipe le souhaite,
+    # d'exiger une approbation avant ce pas (Settings → Environments).
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Avancer la branche production sur la version
+        env:
+          TAG: ${{ needs.version.outputs.tag }}
+        run: |
+          set -euo pipefail
+          SHA=$(git rev-list -n 1 "$TAG")
+          # Une publication ne fait qu'avancer : si production a été reposée
+          # sur une version plus ancienne (retour arrière), la nouvelle version
+          # la contient forcément. Un historique divergent est une anomalie
+          # qu'on signale plutôt que d'écraser.
+          if git ls-remote --exit-code --heads origin production >/dev/null; then
+            git fetch origin production
+            if ! git merge-base --is-ancestor origin/production "$SHA"; then
+              echo "::error::production contient des commits absents de $TAG : mise en production refusée, à examiner."
+              exit 1
+            fi
+          fi
+          git push origin "$SHA:refs/heads/production"
+          {
+            echo "### $TAG en production"
+            echo
+            echo "Commit \`$SHA\` — Vercel et Railway déploient la branche \`production\`."
+          } >> "$GITHUB_STEP_SUMMARY"
