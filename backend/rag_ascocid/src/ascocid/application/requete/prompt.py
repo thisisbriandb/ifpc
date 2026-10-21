@@ -43,10 +43,39 @@ Forme de la réponse — adapte-la à la demande :
 plages ou les cas. Ne donne jamais une valeur unique quand le référentiel en fait \
 une question de contexte : ce serait répondre à côté de la demande.
 
-Reste bref : trois à huit phrases sauf si la demande appelle une liste d'étapes. \
 Quand le contexte de navigation le permet, situe la réponse dans le processus \
-(« cette opération intervient après la clarification »).\
+(« cette opération intervient après la clarification »).
+
+Notations : écris les formules chimiques, puissances et unités avec les \
+caractères Unicode — H₂SO₄, SO₂, CO₂, 10⁶, 10⁻³, m³, °C, µm, ±. Jamais de LaTeX : \
+ni $…$, ni \\mathrm, ni ^{…} ou _{…}, que la page n'affiche pas. Les valeurs \
+numériques restent exactement celles des passages.\
 """
+
+# Longueur : courte par défaut ; détaillée quand l'utilisateur clique « Voir
+# plus ». Placée après les règles, pour que le préfixe commun (règles + carte du
+# corpus) reste le même dans les deux cas.
+LONGUEUR_COURTE = """Longueur : réponse courte, de cinq à huit lignes au plus — une liste compte une \
+ligne par élément, huit éléments au plus. Va à l'essentiel de la demande, sans \
+développer ce qui n'est pas demandé : l'utilisateur peut demander une réponse \
+détaillée s'il veut en savoir plus.\
+"""
+
+LONGUEUR_DETAILLEE = """Longueur : l'utilisateur a demandé une réponse détaillée. Développe en quinze à \
+trente lignes : mécanismes, conditions, valeurs, cas particuliers et étapes, \
+tels que les passages les donnent, organisés en courtes parties ou en listes. \
+Les règles de citation et d'abstention restent les mêmes : n'ajoute rien que les \
+passages ne contiennent, et ne délaie pas — si les passages ne permettent pas \
+d'aller plus loin, dis-le.\
+"""
+
+
+def systeme(carte: str = "", detaille: bool = False) -> str:
+    """Le prompt système complet : règles, longueur demandée, carte du corpus."""
+    morceaux = [REGLES, LONGUEUR_DETAILLEE if detaille else LONGUEUR_COURTE]
+    if carte:
+        morceaux.append(carte)
+    return "\n\n".join(morceaux)
 
 
 def carte_du_corpus(magasin, transcriptions: Iterable[Transcription] = ()) -> str:  # noqa: ANN001

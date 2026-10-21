@@ -224,6 +224,97 @@ export function baliserCitations(texte: string): string {
   });
 }
 
+/** Numéros des sources réellement citées par la réponse, dans l'ordre de première citation. */
+export function numerosCites(texte: string): number[] {
+  const vus: number[] = [];
+  for (const bloc of texte.match(/\[\s*S\s*\d+(?:\s*[,;]\s*S?\s*\d+)*\s*\]/gi) ?? []) {
+    for (const n of bloc.match(/\d+/g) ?? []) {
+      const numero = Number(n);
+      if (!vus.includes(numero)) vus.push(numero);
+    }
+  }
+  return vus;
+}
+
+// ── Notations scientifiques ──────────────────────────────────────────────────
+
+const EXPOSANTS: Record<string, string> = {
+  "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸",
+  "9": "⁹", "+": "⁺", "-": "⁻", "−": "⁻", "=": "⁼", "(": "⁽", ")": "⁾", n: "ⁿ", i: "ⁱ",
+};
+const INDICES: Record<string, string> = {
+  "0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈",
+  "9": "₉", "+": "₊", "-": "₋", "−": "₋", "=": "₌", "(": "₍", ")": "₎",
+};
+const SYMBOLES_LATEX: [RegExp, string][] = [
+  [/\\times/g, "×"], [/\\cdot/g, "·"], [/\\pm/g, "±"], [/\\mu/g, "µ"],
+  [/\\leq?\b/g, "≤"], [/\\geq?\b/g, "≥"], [/\\approx/g, "≈"], [/\\sim/g, "~"],
+  [/\\degree/g, "°"], [/\^\s*\{?\\circ\}?/g, "°"], [/\\circ/g, "°"], [/\\%/g, "%"],
+  [/\\(?:rightarrow|to)\b/g, "→"], [/\\alpha/g, "α"], [/\\beta/g, "β"],
+  [/\\gamma/g, "γ"], [/\\Delta/g, "Δ"], [/\\[,;:!]|~/g, " "],
+];
+/** Symboles chimiques : seule une suite de vrais symboles est une formule. */
+const ELEMENTS = new Set(("H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Ti Cr Mn Fe Co " +
+  "Ni Cu Zn As Se Br Rb Sr Ag Cd Sn I Ba Pt Au Hg Pb").split(" "));
+const MOLECULES_SIMPLES = new Set(["O2", "O3", "N2", "H2", "Cl2"]);
+
+function convertir(texte: string, table: Record<string, string>): string | null {
+  const chars = Array.from(texte);
+  return chars.every((c) => c in table) ? chars.map((c) => table[c]).join("") : null;
+}
+
+/** Le contenu d'une formule LaTeX, en texte Unicode. */
+function depuisLatex(formule: string): string {
+  let t = formule.replace(/\\(?:mathrm|text|textrm|mathit|operatorname)\s*\{([^{}]*)\}/g, "$1");
+  for (const [motif, remplacement] of SYMBOLES_LATEX) t = t.replace(motif, remplacement);
+  t = t.replace(/\^\s*\{([^{}]*)\}|\^\s*(-?[\w+])/g, (tout, groupe, seul) =>
+    convertir((groupe ?? seul).trim(), EXPOSANTS) ?? `^(${(groupe ?? seul).trim()})`);
+  t = t.replace(/_\s*\{([^{}]*)\}|_\s*(\w)/g, (tout, groupe, seul) =>
+    convertir((groupe ?? seul).trim(), INDICES) ?? (groupe ?? seul));
+  return t.replace(/[{}]/g, "").replace(/\s{2,}/g, " ").trim();
+}
+
+/**
+ * Notations scientifiques lisibles, quelle que soit la façon dont le modèle les écrit.
+ *
+ * La page n'affiche pas le LaTeX (ni module de formules, ni KaTeX), et le modèle
+ * écrit parfois les puissances et les formules à plat. On convertit en
+ * caractères Unicode : 10^6 → 10⁶, $\\mathrm{SO_2}$ → SO₂, H2SO4 → H₂SO₄, m3 → m³.
+ * Une formule chimique n'est reconnue que si elle est faite de vrais symboles :
+ * « M116 » (un porte-greffe) ou « X4876 » (un clone) restent intacts. Les
+ * valeurs ne changent pas — seule leur écriture change.
+ */
+export function formaterNotations(texte: string): string {
+  // 1. Formules LaTeX délimitées : $$…$$, $…$, \(…\).
+  let t = texte
+    .replace(/\$\$([^$]+)\$\$/g, (_, f) => depuisLatex(f))
+    .replace(/\\\(([\s\S]+?)\\\)/g, (_, f) => depuisLatex(f))
+    .replace(/\$([^$\n]+)\$/g, (tout, f) => (/[\\^_{]/.test(f) ? depuisLatex(f) : tout));
+  // 2. Commandes LaTeX isolées, hors délimiteurs.
+  if (/\\[a-zA-Z]+/.test(t)) {
+    t = t.replace(/\\(?:mathrm|text|textrm|mathit)\s*\{([^{}]*)\}/g, (_, x) => depuisLatex(x));
+    for (const [motif, remplacement] of SYMBOLES_LATEX) t = t.replace(motif, remplacement);
+  }
+  // 3. Puissances à plat : 10^6, 10^-3, 10^{-3}, 10⁻³ déjà propre.
+  t = t.replace(/(\d)\s*\^\s*(?:\{\s*([+\-−]?\d+)\s*\}|([+\-−]?\d+))/g,
+    (tout, chiffre, entre, seul) => {
+      const exp = entre ?? seul;
+      return chiffre + (convertir(exp, EXPOSANTS) ?? `^${exp}`);
+    });
+  // 4. Unités au carré ou au cube : m3, cm2, m^3 (après un nombre, une barre, un espace).
+  t = t.replace(/(^|[\d\s/(])((?:[kcdmµ]|mm)?m)\^?([23])(?![\w²³])/g,
+    (_, avant, unite, p) => avant + unite + (p === "2" ? "²" : "³"));
+  // 5. Formules chimiques : H2SO4, SO2, CO2, C6H12O6, O2.
+  t = t.replace(/(^|[^\w#\-])((?:[A-Z][a-z]?\d*){1,8})(?![\w])/g, (tout, avant, formule) => {
+    const jetons = formule.match(/[A-Z][a-z]?\d*/g) ?? [];
+    const valide = jetons.every((j: string) => ELEMENTS.has(j.replace(/\d+/, "")))
+      && /\d/.test(formule)
+      && (jetons.length >= 2 || MOLECULES_SIMPLES.has(formule));
+    return valide ? avant + formule.replace(/\d/g, (c: string) => INDICES[c]) : tout;
+  });
+  return t;
+}
+
 /** Numéro de source d'un lien produit par `baliserCitations`, sinon null. */
 export function numeroDeCitation(href: string | undefined): number | null {
   const trouve = /^#source-(\d+)$/.exec(href ?? "");
@@ -245,6 +336,8 @@ export interface DemandeLdc {
   question: string;
   /** Tours précédents, pour qu'une relance courte reste interprétable. */
   historique?: string[];
+  /** « Voir plus » : la même question, en réponse détaillée et sur plus de passages. */
+  detaille?: boolean;
   signal?: AbortSignal;
 }
 
@@ -264,6 +357,7 @@ export async function demanderReponse(
     body: JSON.stringify({
       question: demande.question,
       historique: demande.historique ?? [],
+      ...(demande.detaille ? { detaille: true, k: 12 } : {}),
     }),
     signal: demande.signal,
   });

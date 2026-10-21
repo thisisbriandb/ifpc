@@ -2,13 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, BookOpen, Plus, ShieldAlert, WifiOff } from "lucide-react";
+import { AlertTriangle, BookOpen, ChevronDown, Plus, ShieldAlert, WifiOff } from "lucide-react";
 
 import {
   demanderReponse,
   historiquePour,
   lireSante,
   lireSuggestions,
+  numerosCites,
   type AnalyseLdc,
   type IllustrationLdc,
   type LatenceLdc,
@@ -40,11 +41,14 @@ interface Tour {
   latence?: LatenceLdc;
   erreur?: string;
   termine: boolean;
+  /** Réponse détaillée, demandée par « Voir plus » sur la même question. */
+  detaille?: boolean;
 }
 
-const tourVide = (question: string): Tour => ({
+const tourVide = (question: string, detaille = false): Tour => ({
   id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
   question,
+  detaille,
   sources: [],
   illustrations: [],
   texte: "",
@@ -106,7 +110,7 @@ export default function AssistantChat({
   }, []);
 
   const poser = useCallback(
-    async (question: string) => {
+    async (question: string, detaille = false) => {
       const propre = question.trim();
       if (!propre || enCours) return;
 
@@ -116,7 +120,7 @@ export default function AssistantChat({
 
       setSaisie("");
       setEnCours(true);
-      setTours((liste) => [...liste, tourVide(propre)]);
+      setTours((liste) => [...liste, tourVide(propre, detaille)]);
       remonterLaQuestion();
 
       const controleur = new AbortController();
@@ -124,7 +128,10 @@ export default function AssistantChat({
 
       try {
         await demanderReponse(
-          { question: propre, historique: historiquePour(precedents), signal: controleur.signal },
+          {
+            question: propre, historique: historiquePour(precedents), detaille,
+            signal: controleur.signal,
+          },
           (ev) => {
             switch (ev.type) {
               case "analyse":
@@ -282,6 +289,12 @@ export default function AssistantChat({
                         bg-white px-4 py-2.5 text-[14px] leading-relaxed text-brand-text
                         shadow-[0_1px_6px_rgba(0,0,0,0.04)]">
                         {tour.question}
+                        {tour.detaille && (
+                          <span className="ml-2 rounded bg-brand-primary/10 px-1.5 py-0.5 text-[10px]
+                            font-semibold text-brand-primary align-middle">
+                            réponse détaillée
+                          </span>
+                        )}
                       </p>
                     </div>
 
@@ -346,6 +359,10 @@ export default function AssistantChat({
 
                       <SourceList
                         sources={tour.sources}
+                        // Seules les sources citées : dès la première citation
+                        // reçue, ou à la fin (réponse sans citation).
+                        cites={tour.termine || numerosCites(tour.texte).length
+                          ? numerosCites(tour.texte) : undefined}
                         surligne={citation}
                         onOuvrir={ouvrirCitation}
                       />
@@ -368,6 +385,19 @@ export default function AssistantChat({
                             reponse={tour.texte}
                             sources={tour.sources.map((s) => s.fiche_idoc)}
                           />
+                          {!tour.detaille && tour.sources.length > 0
+                            && !tour.verification?.bloquee && (
+                            <button
+                              onClick={() => poser(tour.question, true)}
+                              disabled={enCours}
+                              className="flex items-center gap-1 rounded-lg border border-brand-primary/20
+                                px-2.5 py-1 text-[12px] font-medium text-brand-primary transition-colors
+                                hover:bg-brand-primary/5 disabled:opacity-40"
+                            >
+                              <ChevronDown className="h-3.5 w-3.5" />
+                              Voir plus
+                            </button>
+                          )}
                           {tour.latence && (
                             <span className="text-[11px] text-gray-300">
                               {(tour.latence.total_ms / 1000).toFixed(1).replace(".", ",")} s

@@ -42,7 +42,7 @@ class Pipeline:
         self.base_illustrations = base_illustrations
 
     def repondre(
-        self, question: str, historique: list[str] | None = None,
+        self, question: str, historique: list[str] | None = None, detaille: bool = False,
     ) -> Iterator[dict]:
         t0 = time.perf_counter()
         analyse = self.analyseur.analyser(question, historique)
@@ -94,7 +94,7 @@ class Pipeline:
         carte = self.generateur.carte if hasattr(self.generateur, "carte") else ""
         texte, ttft, reponse = "", None, None
         for ev in self.generateur.repondre(
-                analyse.requete_recherche, passages, contexte, carte):
+                analyse.requete_recherche, passages, contexte, carte, detaille=detaille):
             if ev["type"] == "delta":
                 if ttft is None:
                     ttft = (time.perf_counter() - t0) * 1000

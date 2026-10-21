@@ -187,3 +187,21 @@ def test_erreur_http_remonte_avec_son_corps(monkeypatch):
 
     with pytest.raises(httpx.HTTPStatusError):
         collecter(argo.GenerateurArgo().repondre("q", [PASSAGE], {}, ""))
+
+
+def test_voir_plus_change_seulement_la_consigne_de_longueur(monkeypatch):
+    """« Voir plus » : même question, mêmes règles, longueur détaillée."""
+    courte = brancher(monkeypatch, sse(delta_contenu("ok")))
+    collecter(argo.GenerateurArgo().repondre("q", [PASSAGE], {}, "CARTE"))
+    detaillee = brancher(monkeypatch, sse(delta_contenu("ok")))
+    collecter(argo.GenerateurArgo().repondre("q", [PASSAGE], {}, "CARTE", detaille=True))
+
+    sys_court = courte[0]["messages"][0]["content"]
+    sys_long = detaillee[0]["messages"][0]["content"]
+    assert "Longueur : réponse courte" in sys_court
+    assert "Longueur : l'utilisateur a demandé une réponse détaillée" not in sys_court
+    assert "Longueur : l'utilisateur a demandé une réponse détaillée" in sys_long
+    assert "Longueur : réponse courte" not in sys_long
+    # Les règles (citations, abstention, notations) et la carte sont les mêmes.
+    for commun in ("CITATIONS", "Notations", "CARTE"):
+        assert commun in sys_court and commun in sys_long
