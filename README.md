@@ -92,6 +92,13 @@ Accès : http://localhost:3000
 
 ---
 
+## Versions et mises en production
+
+`main` n'est pas la production : Vercel et Railway déploient la branche
+`production`, avancée par la publication d'une version numérotée (onglet
+*Releases*). Publier, revenir en arrière, déployer sur la VM :
+[`docs/versions.md`](docs/versions.md).
+
 ## Déploiement Vercel
 
 ### Backend (API)

@@ -120,6 +120,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- build-info : la version publiée (release-please la tient à jour
+				     ci-dessus) est lue par /api/deploy/info, pour savoir quelle
+				     version tourne réellement. -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<excludes>
 						<exclude>

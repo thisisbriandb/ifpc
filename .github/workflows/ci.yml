@@ -12,10 +12,10 @@ name: CI
 # chose, et elle manquait : aucun code n'atteint « main » sans que les trois
 # suites soient passées.
 #
-# Ce qu'il ne fait PAS encore, et qu'il faudra ajouter :
-#   - bloquer le déploiement Railway/Vercel sur l'échec de ce workflow
-#     (aujourd'hui ils déploient sur push, indépendamment d'ici) ;
-#   - couvrir backend/rag_ascocid, qui n'a aucun test.
+# La production ne suit plus main : elle suit la branche « production »,
+# avancée par la publication d'une version, qui n'a lieu qu'après une CI verte
+# (workflow « Versions », docs/versions.md). Un main rouge n'atteint donc plus
+# Vercel ni Railway.
 
 on:
   push:

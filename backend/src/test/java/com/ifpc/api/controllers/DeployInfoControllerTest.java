@@ -2,6 +2,8 @@ package com.ifpc.api.controllers;
 
 import com.ifpc.api.repositories.CuveRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.info.BuildProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,6 +22,7 @@ class DeployInfoControllerTest {
 
     @Mock private CuveRepository cuveRepository;
     @Mock private HttpServletRequest request;
+    @Mock private ObjectProvider<BuildProperties> buildProperties;
 
     @InjectMocks private DeployInfoController deployInfoController;
 
@@ -59,5 +63,23 @@ class DeployInfoControllerTest {
         assertEquals("none", res.get("errorMessage"));
         assertEquals("java.lang.IllegalArgumentException", res.get("causeClass"));
         assertEquals("none", res.get("causeMessage"));
+    }
+
+    @Test
+    @DisplayName("getDeployInfo dit quelle version tourne réellement")
+    void testVersionPubliee() {
+        Properties proprietes = new Properties();
+        proprietes.setProperty("version", "1.4.0");
+        when(buildProperties.getIfAvailable()).thenReturn(new BuildProperties(proprietes));
+
+        assertEquals("1.4.0", deployInfoController.getDeployInfo(request).get("version"));
+    }
+
+    @Test
+    @DisplayName("hors d'un jar construit par Maven, la version est « inconnue », sans erreur")
+    void testVersionInconnue() {
+        when(buildProperties.getIfAvailable()).thenReturn(null);
+
+        assertEquals("inconnue", deployInfoController.getDeployInfo(request).get("version"));
     }
 }

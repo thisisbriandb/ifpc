@@ -1,0 +1,53 @@
+name: Retour à une version
+
+# Remet la production sur une version déjà publiée, en un clic (onglet Actions
+# → « Retour à une version » → Run workflow). Le 29/09/2026, ce retour arrière
+# avait été fait à la main sur Railway, trois heures après la panne.
+#
+# La branche « production » est reposée sur le commit du tag : Vercel et
+# Railway redéploient cette version. main n'est pas touché — la correction s'y
+# fait ensuite, et sortira dans la version suivante.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version à remettre en production (ex. v1.2.3)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  retour:
+    name: Remettre une version en production
+    runs-on: ubuntu-24.04
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reposer production sur la version
+        # La saisie passe par l'environnement, jamais interpolée dans le
+        # script : un texte saisi ne doit pas pouvoir devenir une commande.
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::« $VERSION » n'est pas un numéro de version (attendu : v1.2.3)."
+            exit 1
+          fi
+          if ! git rev-parse -q --verify "refs/tags/$VERSION" >/dev/null; then
+            echo "::error::La version $VERSION n'existe pas. Versions publiées : $(git tag -l 'v*' --sort=-v:refname | head -5 | tr '\n' ' ')"
+            exit 1
+          fi
+          SHA=$(git rev-list -n 1 "$VERSION")
+          git push --force origin "$SHA:refs/heads/production"
+          {
+            echo "### Production remise sur $VERSION"
+            echo
+            echo "Commit \`$SHA\`. Vercel et Railway redéploient cette version."
+            echo "La prochaine publication repartira de main et avancera à nouveau production."
+          } >> "$GITHUB_STEP_SUMMARY"
