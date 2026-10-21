@@ -2,7 +2,7 @@
 
 import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
-import { baliserCitations, numeroDeCitation, type SourceLdc } from "@/lib/ldc";
+import { baliserCitations, formaterNotations, numeroDeCitation, type SourceLdc } from "@/lib/ldc";
 
 /**
  * Rendu de la réponse : markdown + citations cliquables.
@@ -11,6 +11,9 @@ import { baliserCitations, numeroDeCitation, type SourceLdc } from "@/lib/ldc";
  * avant le rendu (`baliserCitations`), puis interceptés ici. On évite ainsi de
  * parcourir l'arbre rendu à la main, et le texte reste du markdown valide à
  * chaque fragment reçu — le streaming n'a pas d'état intermédiaire illisible.
+ *
+ * Les notations scientifiques sont remises en forme à l'affichage seulement
+ * (`formaterNotations`) : le texte vérifié et conservé reste celui du modèle.
  *
  * Une citation dont la source n'existe pas est affichée en gris et sans lien :
  * un numéro inventé par le modèle ne doit pas ressembler à une référence
@@ -73,7 +76,7 @@ export default function AnswerMarkdown({
           },
         }}
       >
-        {baliserCitations(texte)}
+        {baliserCitations(formaterNotations(texte))}
       </ReactMarkdown>
     </div>
   );
