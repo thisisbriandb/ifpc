@@ -401,5 +401,29 @@
     "EXPERT": "Expert",
     "USER": "User",
     "PENDING": "Pending"
+  },
+  "support": {
+    "button": "Report a problem",
+    "title": "Help desk",
+    "intro": "A problem, a question, an idea? Your request is sent to the IFPC team.",
+    "type": "Request type",
+    "types": {
+      "BUG": "Problem",
+      "QUESTION": "Question",
+      "IDEE": "Suggestion"
+    },
+    "subject": "Title",
+    "subjectPlaceholder": "In a few words",
+    "description": "Description",
+    "descriptionPlaceholder": "What happened? What did you expect?",
+    "privacy": "Your request is published without your name or e-mail; only the IFPC team knows it comes from you, so they can reply.",
+    "send": "Send",
+    "sending": "Sending…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "success": "Request #{numero} received. The IFPC team will reply by e-mail.",
+    "errorTooMany": "Too many requests sent: try again in an hour.",
+    "errorUnavailable": "The help desk is temporarily unavailable. Write to service-informatique@ifpc.eu.",
+    "errorGeneric": "The request could not be sent."
   }
 }

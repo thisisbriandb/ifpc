@@ -236,6 +236,82 @@ public class EmailService {
         sendEmail(user.getEmail(), subject, htmlContent);
     }
 
+    /**
+     * Prévient le service informatique d'une demande du help desk.
+     *
+     * <p>L'issue GitHub est publique et anonyme : c'est ce message, et lui
+     * seul, qui dit qui a écrit et à qui répondre. La référence est la même
+     * des deux côtés.</p>
+     */
+    @Async
+    public void sendSupportTicketNotification(User user, int numero, String issueUrl, String titre, String reference) {
+        String subject = "[IFPC] Help desk #" + numero + " : " + safeString(titre);
+
+        String template = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="utf-8">
+              <style>
+                body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; background-color: #f4f6f8; margin: 0; padding: 20px; }
+                .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+                .header { background-color: #1e293b; color: #ffffff; padding: 20px; text-align: center; }
+                .header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+                .content { padding: 24px; }
+                .info-table { width: 100%; border-collapse: collapse; margin-top: 16px; margin-bottom: 20px; }
+                .info-table td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; }
+                .info-table td.label { font-weight: bold; width: 35%; color: #475569; background-color: #f8fafc; }
+                .footer { background-color: #f8fafc; text-align: center; padding: 16px; font-size: 13px; color: #64748b; border-top: 1px solid #e2e8f0; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1>IFPC — Help desk #{{NUMERO}}</h1>
+                </div>
+                <div class="content">
+                  <p>Une demande a été envoyée depuis la plateforme : <strong>{{TITRE}}</strong></p>
+                  <table class="info-table">
+                    <tr>
+                      <td class="label">Demandeur</td>
+                      <td>{{FIRST_NAME}} {{LAST_NAME}}</td>
+                    </tr>
+                    <tr>
+                      <td class="label">Email</td>
+                      <td><a href="mailto:{{EMAIL}}">{{EMAIL}}</a></td>
+                    </tr>
+                    <tr>
+                      <td class="label">Entreprise</td>
+                      <td>{{COMPANY_NAME}}</td>
+                    </tr>
+                    <tr>
+                      <td class="label">Référence</td>
+                      <td>{{REFERENCE}}</td>
+                    </tr>
+                  </table>
+                  <p><a href="{{ISSUE_URL}}" style="color: #2563eb;">Voir la demande sur GitHub</a></p>
+                </div>
+                <div class="footer">
+                  Cet email a été envoyé automatiquement par le help desk IFPC.
+                </div>
+              </div>
+            </body>
+            </html>
+            """;
+
+        String htmlContent = template
+                .replace("{{NUMERO}}", String.valueOf(numero))
+                .replace("{{TITRE}}", escapeHtml(safeString(titre)))
+                .replace("{{FIRST_NAME}}", escapeHtml(safeString(user.getFirstName())))
+                .replace("{{LAST_NAME}}", escapeHtml(safeString(user.getLastName())))
+                .replace("{{EMAIL}}", escapeHtml(safeString(user.getEmail())))
+                .replace("{{COMPANY_NAME}}", escapeHtml(safeString(user.getCompanyName())))
+                .replace("{{REFERENCE}}", escapeHtml(safeString(reference)))
+                .replace("{{ISSUE_URL}}", escapeHtml(safeString(issueUrl)));
+
+        sendEmail(adminEmail, subject, htmlContent);
+    }
+
     private void sendEmail(String toEmail, String subject, String htmlContent) {
         String effectiveApiKey = (apiKey != null && !apiKey.isBlank()) ? apiKey : System.getenv("RESEND_API_KEY");
 

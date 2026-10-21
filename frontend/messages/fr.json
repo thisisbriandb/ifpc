@@ -401,5 +401,29 @@
     "EXPERT": "Expert",
     "USER": "Utilisateur",
     "PENDING": "En attente"
+  },
+  "support": {
+    "button": "Signaler un problème",
+    "title": "Help desk",
+    "intro": "Un problème, une question, une idée ? Votre demande est transmise à l'équipe IFPC.",
+    "type": "Type de demande",
+    "types": {
+      "BUG": "Problème",
+      "QUESTION": "Question",
+      "IDEE": "Suggestion"
+    },
+    "subject": "Titre",
+    "subjectPlaceholder": "En quelques mots",
+    "description": "Description",
+    "descriptionPlaceholder": "Que s'est-il passé ? Qu'attendiez-vous ?",
+    "privacy": "Votre demande est publiée sans votre nom ni votre e-mail ; seule l'équipe IFPC sait qu'elle vient de vous, pour pouvoir vous répondre.",
+    "send": "Envoyer",
+    "sending": "Envoi…",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "success": "Demande n°{numero} enregistrée. L'équipe IFPC vous répondra par e-mail.",
+    "errorTooMany": "Trop de demandes envoyées : réessayez dans une heure.",
+    "errorUnavailable": "Le help desk est momentanément indisponible. Écrivez à service-informatique@ifpc.eu.",
+    "errorGeneric": "La demande n'a pas pu être envoyée."
   }
 }
