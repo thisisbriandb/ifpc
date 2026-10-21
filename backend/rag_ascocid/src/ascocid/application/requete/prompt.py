@@ -8,6 +8,7 @@ fournisseur.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Iterable
 
 from ascocid.application.ingestion.schemas import Transcription, ordre
@@ -68,6 +69,24 @@ Les règles de citation et d'abstention restent les mêmes : n'ajoute rien que l
 passages ne contiennent, et ne délaie pas — si les passages ne permettent pas \
 d'aller plus loin, dis-le.\
 """
+
+
+def reponse_courte_en_texte(texte: str) -> str:
+    """La réponse courte déjà donnée, pour que « Voir plus » la complète.
+
+    Sans elle, la réponse détaillée repartait de zéro et pouvait perdre ce que
+    la courte disait (la conservation sous 4 °C jusqu'au conditionnement,
+    disparue d'une réponse détaillée sur la température de fermentation).
+
+    Ses numéros [S…] sont retirés : ils renvoient à la liste de passages de la
+    réponse courte, que la réponse détaillée, plus fournie, numérote autrement.
+    Recopiés, ils pointeraient vers de mauvais passages.
+    """
+    sans_marqueurs = re.sub(r"\s*\[\s*S[^\]]*\]", "", texte).strip()
+    return ("Réponse courte déjà donnée à l'utilisateur. Reprends TOUT ce qu'elle "
+            "contient — rien ne doit disparaître —, puis développe à partir des passages. "
+            "Cite à nouveau chaque information avec les numéros des passages ci-dessus ; "
+            "n'ajoute rien qu'ils ne contiennent :\n" + sans_marqueurs)
 
 
 def systeme(carte: str = "", detaille: bool = False) -> str:

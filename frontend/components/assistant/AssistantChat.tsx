@@ -110,7 +110,7 @@ export default function AssistantChat({
   }, []);
 
   const poser = useCallback(
-    async (question: string, detaille = false) => {
+    async (question: string, detaille = false, reponseCourte = "") => {
       const propre = question.trim();
       if (!propre || enCours) return;
 
@@ -129,7 +129,7 @@ export default function AssistantChat({
       try {
         await demanderReponse(
           {
-            question: propre, historique: historiquePour(precedents), detaille,
+            question: propre, historique: historiquePour(precedents), detaille, reponseCourte,
             signal: controleur.signal,
           },
           (ev) => {
@@ -388,7 +388,7 @@ export default function AssistantChat({
                           {!tour.detaille && tour.sources.length > 0
                             && !tour.verification?.bloquee && (
                             <button
-                              onClick={() => poser(tour.question, true)}
+                              onClick={() => poser(tour.question, true, tour.texte)}
                               disabled={enCours}
                               className="flex items-center gap-1 rounded-lg border border-brand-primary/20
                                 px-2.5 py-1 text-[12px] font-medium text-brand-primary transition-colors

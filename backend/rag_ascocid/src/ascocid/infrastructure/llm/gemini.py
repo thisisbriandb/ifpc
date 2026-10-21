@@ -62,7 +62,7 @@ class GenerateurGemini:
 
     def repondre(
         self, question: str, passages: list[Passage], contexte: dict, carte: str,
-        detaille: bool = False,
+        detaille: bool = False, reponse_courte: str = "",
     ) -> Iterator[dict]:
         from google.genai import types
 
@@ -70,6 +70,8 @@ class GenerateurGemini:
         morceaux = [p.passages_en_texte(passages)]
         if (graphe := p.contexte_en_texte(contexte, passages)):
             morceaux.append(graphe)
+        if detaille and reponse_courte:
+            morceaux.append(p.reponse_courte_en_texte(reponse_courte))
         morceaux.append(f"Question : {question}")
 
         config = types.GenerateContentConfig(
