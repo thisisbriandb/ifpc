@@ -25,9 +25,8 @@ feat/…  ──PR──▶  main  ──▶  PR « chore: version 1.4.0 »  ─
 
 1. Les PR sont mergées sur `main` comme d'habitude. Les messages de commit
    suivent la convention déjà en usage :
-   - `feat: …` → nouveauté → version **mineure** (1.3.0 → 1.4.0) ;
-   - `fix: …` → correction → **correctif** (1.3.0 → 1.3.1) ;
-   - `feat!: …` ou un pied `BREAKING CHANGE:` → **majeure** (1.3.0 → 2.0.0) ;
+   - `feat: …` → nouveauté ; `fix: …` → correction ; `feat!: …` → rupture
+     (numéros : voir « Numérotation » plus bas) ;
    - `chore:`, `docs:`, `test:`, `ci:`, `refactor:` → n'apparaissent pas dans les notes.
 2. Après chaque merge dont la CI est verte, une PR **« chore: version X.Y.Z »**
    est créée ou mise à jour : elle contient le numéro et le `CHANGELOG.md`
@@ -85,19 +84,43 @@ continuent de déployer `main`.
    Environments → production* : facultatif, exiger une approbation avant chaque
    mise en production ou retour arrière.
 
-## Première version
+## Numérotation : 0.x pendant la phase de test
 
-`release-please-config.json` force la première version à **1.0.0**
-(`"release-as": "1.0.0"`) : PADOC est déjà en service, il ne repart pas de
-0.x. **Retirer cette ligne après la publication de v1.0.0**, sinon chaque PR
-de version proposerait 1.0.0.
+PADOC est en phase de test : les versions sont numérotées **0.x** (on part de
+0.1.0) et marquées **« Pre-release »** sur GitHub.
 
-Ordre conseillé — la branche `production` n'existe qu'après la première
+| Commit | Pendant la phase de test (0.x) | Après la version stable (1.x et plus) |
+|---|---|---|
+| `fix: …` | 0.2.0 → 0.2.1 | 1.3.0 → 1.3.1 |
+| `feat: …` | 0.2.0 → 0.3.0 | 1.3.0 → 1.4.0 |
+| `feat!: …` ou `BREAKING CHANGE:` | 0.2.0 → 0.3.0 (jamais 1.0.0 d'office) | 1.3.0 → 2.0.0 |
+
+**Passer à la version stable 1.0.0**, le jour du lancement officiel : merger
+sur `main` un commit dont le message porte, en pied, la ligne
+
+```
+Release-As: 1.0.0
+```
+
+(par exemple `chore: version stable` suivi d'une ligne vide puis de cette
+ligne). La PR de version proposera alors 1.0.0 ; la merger publie la version
+stable, qui n'est plus marquée « Pre-release ». Les versions suivantes suivent
+la colonne de droite.
+
+## Être prévenu d'une nouvelle version
+
+GitHub ne prévient pas les membres de l'organisation d'office : seulement ceux
+qui suivent le dépôt avec les releases cochées. Chacun le règle une fois, sur
+la page du dépôt : **Watch → Custom → Releases**. La notification (mail ou
+web) suit ensuite ses réglages GitHub.
+
+## Mise en place
+
+L'ordre compte — la branche `production` n'existe qu'après la première
 publication, Vercel et Railway ne peuvent la suivre qu'ensuite :
 
 1. merger ce changement sur `main` ;
-2. merger la PR « chore: version 1.0.0 » qui apparaît : `v1.0.0` est publiée
+2. merger la PR « chore: version 0.2.0 » qui apparaît : la version est publiée
    et la branche `production` créée ;
 3. faire les réglages Vercel, Railway et GitHub ci-dessus ;
-4. vérifier « Version 1.0.0 » dans l'administration et `/api/deploy/info` ;
-5. retirer `"release-as": "1.0.0"` de `release-please-config.json`.
+4. vérifier « Version 0.2.0 » dans l'administration et `/api/deploy/info`.
