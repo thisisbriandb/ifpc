@@ -43,7 +43,13 @@ concurrency:
 jobs:
   version:
     name: PR de version, ou publication
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    # « push » : le cas normal, un merge sur main. « workflow_dispatch » : une
+    # CI relancée à la main sur main (onglet Actions) quand GitHub n'a pas
+    # déclenché celle du merge — sans cela, la version mergée ne serait jamais
+    # publiée. Les CI de pull_request restent exclues.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      (github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch')
     runs-on: ubuntu-24.04
     outputs:
       publiee: ${{ steps.rp.outputs.release_created }}
