@@ -338,6 +338,8 @@ export interface DemandeLdc {
   historique?: string[];
   /** « Voir plus » : la même question, en réponse détaillée et sur plus de passages. */
   detaille?: boolean;
+  /** La réponse courte déjà donnée : la détaillée la reprend entièrement, puis développe. */
+  reponseCourte?: string;
   signal?: AbortSignal;
 }
 
@@ -357,7 +359,9 @@ export async function demanderReponse(
     body: JSON.stringify({
       question: demande.question,
       historique: demande.historique ?? [],
-      ...(demande.detaille ? { detaille: true, k: 12 } : {}),
+      ...(demande.detaille
+        ? { detaille: true, k: 12, reponse_courte: (demande.reponseCourte ?? "").slice(0, 6000) }
+        : {}),
     }),
     signal: demande.signal,
   });

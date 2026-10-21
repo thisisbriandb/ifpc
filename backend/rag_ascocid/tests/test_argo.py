@@ -205,3 +205,24 @@ def test_voir_plus_change_seulement_la_consigne_de_longueur(monkeypatch):
     # Les règles (citations, abstention, notations) et la carte sont les mêmes.
     for commun in ("CITATIONS", "Notations", "CARTE"):
         assert commun in sys_court and commun in sys_long
+
+
+def test_voir_plus_reprend_la_reponse_courte_sans_ses_numeros(monkeypatch):
+    """La réponse détaillée complète la courte ; ses anciens numéros ne sont pas transmis."""
+    vues = brancher(monkeypatch, sse(delta_contenu("ok")))
+    courte = "Maintenir vers 10 à 12 °C [S4]. Conserver sous 4 °C [S4, S2]."
+    collecter(argo.GenerateurArgo().repondre(
+        "q", [PASSAGE], {}, "", detaille=True, reponse_courte=courte))
+
+    utilisateur = vues[0]["messages"][1]["content"]
+    assert "Maintenir vers 10 à 12 °C. Conserver sous 4 °C." in utilisateur
+    assert "[S4" not in utilisateur and "[S2" not in utilisateur
+    assert "rien ne doit disparaître" in utilisateur
+    # La question reste en dernier : c'est à elle que le modèle répond.
+    assert utilisateur.rstrip().endswith("Question : q")
+
+
+def test_reponse_courte_ignoree_hors_voir_plus(monkeypatch):
+    vues = brancher(monkeypatch, sse(delta_contenu("ok")))
+    collecter(argo.GenerateurArgo().repondre("q", [PASSAGE], {}, "", reponse_courte="déjà dit"))
+    assert "déjà dit" not in vues[0]["messages"][1]["content"]

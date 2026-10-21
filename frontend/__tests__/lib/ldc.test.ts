@@ -248,9 +248,12 @@ describe("demanderReponse", () => {
     const appel = jest.fn().mockResolvedValue({ ok: false, status: 503, text: async () => "{}" });
     global.fetch = appel as unknown as typeof fetch;
     await demanderReponse({ question: "q" }, () => undefined);
-    await demanderReponse({ question: "q", detaille: true }, () => undefined);
+    await demanderReponse(
+      { question: "q", detaille: true, reponseCourte: "Vers 10 à 12 °C [S4]." }, () => undefined);
     expect(JSON.parse(appel.mock.calls[0][1].body)).toEqual({ question: "q", historique: [] });
-    expect(JSON.parse(appel.mock.calls[1][1].body)).toEqual(
-      { question: "q", historique: [], detaille: true, k: 12 });
+    expect(JSON.parse(appel.mock.calls[1][1].body)).toEqual({
+      question: "q", historique: [], detaille: true, k: 12,
+      reponse_courte: "Vers 10 à 12 °C [S4].",
+    });
   });
 });
