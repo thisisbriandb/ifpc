@@ -81,10 +81,6 @@ const nextConfig = {
         destination: `${SPRING_URL}/api/operations/:path*`,
       },
       {
-        source: '/api/support/:path*',
-        destination: `${SPRING_URL}/api/support/:path*`,
-      },
-      {
         source: '/api/ldc/:path*',
         destination: `${LDC_URL}/api/ldc/:path*`,
       },
@@ -132,6 +128,9 @@ const nextConfig = {
         source: '/api/referentiels/:path*',
         destination: `${FASTAPI_URL}/api/referentiels/:path*`,
       },
+      // Les routes propres au front (app/api : le help desk) passent avant
+      // ce renvoi général : Next sert ses fichiers avant d'appliquer les
+      // rewrites d'un tableau simple.
       {
         source: '/api/:path*',
         destination: `${FASTAPI_URL}/api/:path*`,
